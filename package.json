@@ -1,6 +1,6 @@
 {
   "name": "angular2-image-popup",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Image popup directive for angular2",
   "main": "index.js",
   "dependencies": {
