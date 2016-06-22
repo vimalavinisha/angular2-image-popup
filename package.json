@@ -1,6 +1,6 @@
 {
   "name": "angular2-image-popup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Image popup directive for angular2",
   "main": "index.js",
   "dependencies": {
@@ -28,14 +28,22 @@
   },
   "license": "MIT",
   "author": "Vimala A",
-    "keywords": [
-      "angular2",
-      "angular2-image-popup",
+  "keywords": [
+    "angular2",
+    "angular2-image-popup",
     "angular2-image",
     "image-popup",
     "popup",
     "modal",
     "angular2-modal-popup",
     "modal-popup"
-    ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vimalavinisha/angular2-image-popup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vimalavinisha/angular2-image-popup/issues"
+  },
+  "homepage": "https://github.com/vimalavinisha/angular2-image-popup#readme"
 }
