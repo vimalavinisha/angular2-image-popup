@@ -1,0 +1,31 @@
+{
+  "name": "angular2-image-popup",
+  "authors": [
+    "Vimala A (vimalamca1991@gmcail.com)"
+  ],
+  "description": "Image popup directive for angular2",
+  "main": "",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "keywords": [
+    "angular2",
+    "angular2-image-popup",
+  "angular2-image",
+  "image-popup",
+  "popup",
+  "modal",
+  "angular2-modal-popup",
+  "modal-popup"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
