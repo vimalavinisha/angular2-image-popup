@@ -4,8 +4,8 @@ Angular2 image popup
 The sources for this package are in (https://github.com/vimalavinisha/angular2-image-popup) repo. Please file issues and pull requests against this repo.
 
 ## Demo Output
-  ![listing-images](https://cloud.githubusercontent.com/assets/11042288/16260728/4402112a-3886-11e6-92f9-4235efe9fe42.png)
-  ![angular2-image-popup](https://cloud.githubusercontent.com/assets/11042288/16260731/4835d4ac-3886-11e6-9dbf-d92fbd687f86.png)
+  ![angular2-image-popup](https://cloud.githubusercontent.com/assets/11042288/16330239/78a57df6-3a05-11e6-98b9-7414c0eaf794.png)
+  ![popup](https://cloud.githubusercontent.com/assets/11042288/16330244/861f3cc4-3a05-11e6-8757-7baf315eda8c.png)
 ##Usage
     node install
       npm install angular2-image-popup
