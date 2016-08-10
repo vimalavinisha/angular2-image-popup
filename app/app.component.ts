@@ -2,7 +2,7 @@
  * @author Vimala A
  */
 
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {ImageModal} from '../directives/angular2-image-popup/image-modal-popup';
 @Component({
     selector : 'my-app',

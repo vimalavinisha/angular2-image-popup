@@ -1,4 +1,4 @@
-import {Component, Input,Output,ElementRef,EventEmitter,OnInit} from 'angular2/core';
+import {Component, Input,Output,ElementRef,EventEmitter,OnInit} from '@angular/core';
 
 @Component({
     selector: 'ImageModal',
@@ -73,7 +73,6 @@ export class ImageModal implements OnInit {
             if (i === this.currentImageIndex ) {
               this.imgSrc = this.modalImages[i].img;
               this.loading = false;
-              console.log('this.loading',this.loading);
               break;
             }
        }
