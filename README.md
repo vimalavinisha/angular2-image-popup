@@ -16,7 +16,7 @@ The sources for this package are in (https://github.com/vimalavinisha/angular2-i
       <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.css">
       <link rel="stylesheet" type="text/css" href="app/assets/css/main.css">
 ###2.component file use like below
-      import {Component} from 'angular2/core';
+      import {Component} from '@angular/core';
       import {ImageModal} from '../directives/angular2-image-popup/image-modal-popup';
       @Component({
           selector : 'my-app',
