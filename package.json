@@ -28,7 +28,7 @@
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
-    "typescript": "^1.8.10",
+    "typescript": "^2.0.0",
     "typings": "^0.8.1"
   },
   "license": "MIT",
