@@ -3,10 +3,8 @@
  */
 
 import {Component} from '@angular/core';
-import {ImageModal} from '../directives/angular2-image-popup/image-modal-popup';
 @Component({
     selector : 'my-app',
-    directives: [ImageModal],
     template:  `
       <h2> Example - Default</h2>
       <p> you can directly access "ImageModel" directive for both listing thumbnails and popup images</p>
