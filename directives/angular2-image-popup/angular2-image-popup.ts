@@ -1,4 +1,4 @@
-import {Component, Input,Output,ElementRef,EventEmitter,OnInit} from '@angular/core';
+import { Component, Input, Output, ElementRef, EventEmitter, OnInit, HostListener } from '@angular/core';
 
 @Component({
     selector: 'ImageModal',
@@ -32,6 +32,21 @@ export class ImageModal implements OnInit {
   @Output('cancelEvent') cancelEvent = new EventEmitter<any>();
   constructor(public element: ElementRef) {
     this._element = this.element.nativeElement;
+  }
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(e) {
+    if (!this.opened) {
+      return;
+    }
+    if (e.keyCode === 27) { // esc
+      this.closeGallery();
+    }
+    if (e.keyCode === 37) { // left
+      this.prevImage();
+    }
+    if (e.keyCode === 39) { // right
+      this.nextImage();
+    }
   }
   ngOnInit() {
       this.loading = true;
