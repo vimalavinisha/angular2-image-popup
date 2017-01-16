@@ -1,7 +1,7 @@
 Angular2 image popup
 =========
 
-The sources for this package are in (https://github.com/vimalavinisha/angular2-image-popup) repo. Please file issues and pull requests against this repo.
+The sources for this package are in (https://github.com/Ks89/angular2-image-popup) repo. Please file issues and pull requests against this repo.
 
 ## Demo Output
   ![angular2-image-popup](https://cloud.githubusercontent.com/assets/11042288/16330239/78a57df6-3a05-11e6-98b9-7414c0eaf794.png)

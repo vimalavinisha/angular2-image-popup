@@ -1,8 +1,8 @@
-import {Component, Input,Output,ElementRef,EventEmitter,OnInit} from '@angular/core';
+import {Component, Input, Output, ElementRef, EventEmitter, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'ImageModal',
-   template: `
+  selector: 'ImageModal',
+  template: `
    <div class="ng-gallery" *ngIf="showRepeat"> 
      <div *ngFor ="let i of modalImages; let index = index">
        <img src="{{ i.thumb }}" class="ng-thumb" (click)="openGallery(index)" alt="Image {{ index + 1 }}" />
@@ -18,63 +18,73 @@ import {Component, Input,Output,ElementRef,EventEmitter,OnInit} from '@angular/c
      <span class="info-text">{{ currentImageIndex + 1 }}/{{ modalImages.length }} - Image {{currentImageIndex+1}}</span>
    </div>
    </div>
-       ` 
+       `
 })
 export class ImageModal implements OnInit {
-   public _element:any;
-   public opened:boolean = false;
-   public imgSrc:string;
-   public currentImageIndex:number;
-   public loading:boolean= false;
-   public showRepeat:boolean= false;
-  @Input('modalImages') public modalImages:any;
-  @Input('imagePointer') public imagePointer:number;
+  public _element: any;
+  public opened: boolean = false;
+  public imgSrc: string;
+  public currentImageIndex: number = 0;
+  public loading: boolean = false;
+  public showRepeat: boolean = false;
+  @Input('modalImages') public modalImages: any;
+  @Input('imagePointer') public imagePointer: number;
   @Output('cancelEvent') cancelEvent = new EventEmitter<any>();
+
   constructor(public element: ElementRef) {
     this._element = this.element.nativeElement;
   }
+
   ngOnInit() {
-      this.loading = true;
-      if(this.imagePointer >= 0) {
+    console.log("this.currentImageIndex oninit: " + this.currentImageIndex);
+    this.loading = true;
+    if (this.imagePointer >= 0) {
       this.showRepeat = false;
       this.openGallery(this.imagePointer);
     } else {
       this.showRepeat = true;
     }
   }
+
   closeGallery() {
+    console.log("this.currentImageIndex opengallery: " + this.currentImageIndex);
     this.opened = false;
     this.cancelEvent.emit(null);
   }
+
   prevImage() {
+    console.log("this.currentImageIndex previmage: " + this.currentImageIndex);
     this.loading = true;
     this.currentImageIndex--;
-    if(this.currentImageIndex < 0) {
-      this.currentImageIndex = this.modalImages.length-1  ;
+    if (this.currentImageIndex < 0) {
+      this.currentImageIndex = this.modalImages.length - 1;
     }
     this.openGallery(this.currentImageIndex);
   }
+
   nextImage() {
+    console.log("this.currentImageIndex nextimage: " + this.currentImageIndex);
     this.loading = true;
     this.currentImageIndex++;
-    if(this.modalImages.length === this.currentImageIndex) {
+    if (this.modalImages.length === this.currentImageIndex) {
       this.currentImageIndex = 0;
     }
     this.openGallery(this.currentImageIndex);
 
   }
+
   openGallery(index) {
-    if(!index) {
-    this.currentImageIndex = 1;
-    }
+    console.log("index: " + index);
+    // if (!index) {
+    //   console.log("this.currentImageIndex if before: " + this.currentImageIndex);
+    //   this.currentImageIndex = 1;
+    //   console.log("this.currentImageIndex if after: " + this.currentImageIndex);
+    // }
+    console.log("this.currentImageIndex before: " + this.currentImageIndex);
     this.currentImageIndex = index;
-      this.opened = true;
-     for (var i = 0; i < this.modalImages.length; i++) {
-            if (i === this.currentImageIndex ) {
-              this.imgSrc = this.modalImages[i].img;
-              this.loading = false;
-              break;
-            }
-       }
+    console.log("this.currentImageIndex after: " + this.currentImageIndex);
+    this.opened = true;
+    this.imgSrc = this.modalImages[this.currentImageIndex].img;
+    this.loading = false;
   }
 }

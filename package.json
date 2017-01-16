@@ -1,7 +1,7 @@
 {
   "name": "angular2-image-popup",
-  "version": "1.1.1",
-  "description": "Image popup directive for angular2",
+  "version": "2.0.0",
+  "description": "Image popup directive for angular",
   "main": "index.js",
   "dependencies": {
     "@angular/common": "^2.1.0-beta.0",
@@ -13,9 +13,9 @@
     "core-js": "^2.4.0",
     "font-awesome": "^4.6.3",
     "reflect-metadata": "^0.1.3",
-    "rxjs": "5.0.0-beta.6",
-    "systemjs": "0.19.27",
-    "zone.js": "^0.6.12"
+    "rxjs": "^5.0.3",
+    "systemjs": "^0.19.41",
+    "zone.js": "^0.7.5"
   },
   "scripts": {
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
@@ -26,13 +26,15 @@
     "postinstall": "typings install"
   },
   "devDependencies": {
-    "concurrently": "^2.0.0",
+    "@types/es6-shim": "^0.31.32",
+    "@types/jasmine": "^2.5.40",
+    "concurrently": "^3.1.0",
     "lite-server": "^2.2.0",
     "typescript": "^2.0.0",
-    "typings": "^0.8.1"
+    "typings": "^2.1.0"
   },
   "license": "MIT",
-  "author": "Vimala A",
+  "author": "Stefano Cappa",
   "keywords": [
     "angular2",
     "angular2-image-popup",
@@ -45,10 +47,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vimalavinisha/angular2-image-popup.git"
+    "url": "git+https://github.com/Ks89/angular2-image-popup.git"
   },
   "bugs": {
-    "url": "https://github.com/vimalavinisha/angular2-image-popup/issues"
+    "url": "https://github.com/Ks89/angular2-image-popup/issues"
   },
-  "homepage": "https://github.com/vimalavinisha/angular2-image-popup#readme"
+  "homepage": "https://github.com/Ks89/angular2-image-popup#readme"
 }
