@@ -19,17 +19,14 @@ System.register(["@angular/core"], function (exports_1, context_1) {
         ],
         execute: function () {
             ImageModal = (function () {
-                function ImageModal(element) {
-                    this.element = element;
+                function ImageModal() {
                     this.opened = false;
                     this.currentImageIndex = 0;
                     this.loading = false;
                     this.showRepeat = false;
                     this.cancelEvent = new core_1.EventEmitter();
-                    this._element = this.element.nativeElement;
                 }
                 ImageModal.prototype.ngOnInit = function () {
-                    console.log("this.currentImageIndex oninit: " + this.currentImageIndex);
                     this.loading = true;
                     if (this.imagePointer >= 0) {
                         this.showRepeat = false;
@@ -40,41 +37,57 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                     }
                 };
                 ImageModal.prototype.closeGallery = function () {
-                    console.log("this.currentImageIndex opengallery: " + this.currentImageIndex);
                     this.opened = false;
                     this.cancelEvent.emit(null);
                 };
                 ImageModal.prototype.prevImage = function () {
-                    console.log("this.currentImageIndex previmage: " + this.currentImageIndex);
                     this.loading = true;
-                    this.currentImageIndex--;
-                    if (this.currentImageIndex < 0) {
-                        this.currentImageIndex = this.modalImages.length - 1;
-                    }
+                    this.currentImageIndex = this.prevIndex(this.currentImageIndex);
                     this.openGallery(this.currentImageIndex);
                 };
                 ImageModal.prototype.nextImage = function () {
-                    console.log("this.currentImageIndex nextimage: " + this.currentImageIndex);
                     this.loading = true;
-                    this.currentImageIndex++;
-                    if (this.modalImages.length === this.currentImageIndex) {
-                        this.currentImageIndex = 0;
-                    }
+                    this.currentImageIndex = this.nextIndex(this.currentImageIndex);
                     this.openGallery(this.currentImageIndex);
                 };
                 ImageModal.prototype.openGallery = function (index) {
-                    console.log("index: " + index);
-                    // if (!index) {
-                    //   console.log("this.currentImageIndex if before: " + this.currentImageIndex);
-                    //   this.currentImageIndex = 1;
-                    //   console.log("this.currentImageIndex if after: " + this.currentImageIndex);
-                    // }
-                    console.log("this.currentImageIndex before: " + this.currentImageIndex);
                     this.currentImageIndex = index;
-                    console.log("this.currentImageIndex after: " + this.currentImageIndex);
                     this.opened = true;
                     this.imgSrc = this.modalImages[this.currentImageIndex].img;
                     this.loading = false;
+                };
+                ImageModal.prototype.nextIndex = function (index) {
+                    // -2   -1  -1
+                    // -1   0   0
+                    //  0   1   1
+                    //  1   2   2
+                    //  2   3   0  (modalImages.length == 3 for instance)
+                    //  3   4   4
+                    //  4   5   5
+                    //  5   6   6
+                    //  6   7   7
+                    index++;
+                    if (index)
+                        if (this.modalImages.length === index) {
+                            index = 0;
+                        }
+                    return index;
+                };
+                ImageModal.prototype.prevIndex = function (index) {
+                    // -2   -3  2
+                    // -1   -2  2
+                    //  0   -1  2
+                    //  1   0   0
+                    //  2   1   1  (modalImages.length == 3 for instance)
+                    //  3   2   2
+                    //  4   3   3
+                    //  5   4   4
+                    //  6   5   5
+                    index--;
+                    if (index < 0) {
+                        index = this.modalImages.length - 1;
+                    }
+                    return index;
                 };
                 return ImageModal;
             }());
@@ -93,9 +106,8 @@ System.register(["@angular/core"], function (exports_1, context_1) {
             ImageModal = __decorate([
                 core_1.Component({
                     selector: 'ImageModal',
-                    template: "\n   <div class=\"ng-gallery\" *ngIf=\"showRepeat\"> \n     <div *ngFor =\"let i of modalImages; let index = index\">\n       <img src=\"{{ i.thumb }}\" class=\"ng-thumb\" (click)=\"openGallery(index)\" alt=\"Image {{ index + 1 }}\" />\n      </div>\n   </div>\n   <div class=\"ng-overlay\" *ngIf=\"opened\">\n    <div class=\"ng-gallery-content\" >\n    <div class=\"uil-ring-css\" *ngIf=\"loading\"><div></div></div>         \n    <a class=\"close-popup\" (click)=\"closeGallery()\"><i class=\"fa fa-close\"></i></a>\n     <a class=\"nav-left\" *ngIf=\"modalImages.length >1\" (click)=\"prevImage()\"><i class=\"fa fa-angle-left\"></i></a>\n     <img *ngIf=\"!loading\" src=\"{{imgSrc}}\" (click)=\"nextImage()\" class=\"effect\" />\n     <a class=\"nav-right\" *ngIf=\"modalImages.length >1\" (click)=\"nextImage()\"><i class=\"fa fa-angle-right\"></i></a>\n     <span class=\"info-text\">{{ currentImageIndex + 1 }}/{{ modalImages.length }} - Image {{currentImageIndex+1}}</span>\n   </div>\n   </div>\n       "
-                }),
-                __metadata("design:paramtypes", [core_1.ElementRef])
+                    template: "\n   <div class=\"ng-gallery\" *ngIf=\"showRepeat\"> \n     <div *ngFor =\"let i of modalImages; let index = index\">\n       <img src=\"{{ i.thumb }}\" class=\"ng-thumb\" (click)=\"openGallery(index)\" alt=\"Image {{ index + 1 }}\" />\n      </div>\n   </div>\n   <div class=\"ng-overlay\" *ngIf=\"opened\">\n    <div class=\"ng-gallery-content\" >\n    <div class=\"uil-ring-css\" *ngIf=\"loading\"><div></div></div>         \n    <a class=\"close-popup\" (click)=\"closeGallery()\"><i class=\"fa fa-close\"></i></a>\n     <a class=\"nav-left\" *ngIf=\"modalImages.length >1\" (click)=\"prevImage()\"><i class=\"fa fa-angle-left\"></i></a>\n     <img *ngIf=\"!loading\" src=\"{{ imgSrc }}\" (click)=\"nextImage()\" class=\"effect\" />\n     <a class=\"nav-right\" *ngIf=\"modalImages.length >1\" (click)=\"nextImage()\"><i class=\"fa fa-angle-right\"></i></a>\n     <span class=\"info-text\">{{ currentImageIndex + 1 }}/{{ modalImages.length }} - Image {{ currentImageIndex+1 }}</span>\n   </div>\n   </div>\n       "
+                })
             ], ImageModal);
             exports_1("ImageModal", ImageModal);
         }
