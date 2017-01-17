@@ -1,5 +1,5 @@
 {
-  "name": "angular2-image-popup",
+  "name": "angular-modal-gallery",
   "authors": [
     "Stefano Cappa (stefano.cappa.ks89@gmail.com)"
   ],
@@ -10,12 +10,13 @@
     "node"
   ],
   "keywords": [
-    "angular2",
-    "angular2-image-popup",
-    "angular2-image",
-    "image-popup",
-    "angular4-image-popup",
-    "angular4-image",
+    "angular-modal-gallery",
+    "angular2-gsllery",
+    "angular2-modal-gallery",
+    "angular2-modal",
+    "modal-gallery",
+    "angular4-modal-gallery",
+    "angular4-modal",
     "popup",
     "modal",
     "angular2-modal-popup",

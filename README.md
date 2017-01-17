@@ -1,4 +1,4 @@
-# Angular-image-popup
+# Angular modal gallery (--- work in progress ---)
 
 Forked from [THIS REPO](https://github.com/vimalavinisha/angular2-image-popup) and improved.
 

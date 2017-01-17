@@ -1,6 +1,6 @@
 {
-  "name": "angular2-image-popup",
-  "version": "2.0.0",
+  "name": "angular-modal-gallery",
+  "version": "0.0.1",
   "description": "Image popup directive for angular",
   "main": "index.js",
   "dependencies": {
@@ -36,12 +36,13 @@
   "license": "MIT",
   "author": "Stefano Cappa",
   "keywords": [
-    "angular2",
-    "angular2-image-popup",
-    "angular2-image",
-    "image-popup",
-    "angular4-image-popup",
-    "angular4-image",
+    "angular-modal-gallery",
+    "angular2-gsllery",
+    "angular2-modal-gallery",
+    "angular2-modal",
+    "modal-gallery",
+    "angular4-modal-gallery",
+    "angular4-modal",
     "popup",
     "modal",
     "angular2-modal-popup",
@@ -52,10 +53,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ks89/angular2-image-popup.git"
+    "url": "git+https://github.com/Ks89/angular-modal-gallery.git"
   },
   "bugs": {
-    "url": "https://github.com/Ks89/angular2-image-popup/issues"
+    "url": "https://github.com/Ks89/angular-modal-gallery/issues"
   },
-  "homepage": "https://github.com/Ks89/angular2-image-popup#readme"
+  "homepage": "https://github.com/Ks89/angular-modal-gallery#readme"
 }
