@@ -31,12 +31,7 @@ export class ImageModal implements OnInit {
   @Input('imagePointer') public imagePointer: number;
   @Output('cancelEvent') cancelEvent = new EventEmitter<any>();
 
-  constructor(public element: ElementRef) {
-    this._element = this.element.nativeElement;
-  }
-
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(e) {
+  @HostListener('window:keydown', ['$event']) onKeyDown(e) {
     if (!this.opened) {
       return;
     }
@@ -86,20 +81,20 @@ export class ImageModal implements OnInit {
   }
 
   private nextIndex(index: number) {
-   // -2   -1  -1
-   // -1   0   0
-   //  0   1   1
-   //  1   2   2
-   //  2   3   0  (modalImages.length == 3 for instance)
-   //  3   4   4
-   //  4   5   5
-   //  5   6   6
-   //  6   7   7
+    // -2   -1  -1
+    // -1   0   0
+    //  0   1   1
+    //  1   2   2
+    //  2   3   0  (modalImages.length == 3 for instance)
+    //  3   4   4
+    //  4   5   5
+    //  5   6   6
+    //  6   7   7
     index++;
-    if(index )
-    if (this.modalImages.length === index) {
-      index = 0;
-    }
+    if (index)
+      if (this.modalImages.length === index) {
+        index = 0;
+      }
     return index;
   }
 

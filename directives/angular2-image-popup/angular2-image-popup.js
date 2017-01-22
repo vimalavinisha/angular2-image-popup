@@ -26,6 +26,20 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                     this.showRepeat = false;
                     this.cancelEvent = new core_1.EventEmitter();
                 }
+                ImageModal.prototype.onKeyDown = function (e) {
+                    if (!this.opened) {
+                        return;
+                    }
+                    if (e.keyCode === 27) {
+                        this.closeGallery();
+                    }
+                    if (e.keyCode === 37) {
+                        this.prevImage();
+                    }
+                    if (e.keyCode === 39) {
+                        this.nextImage();
+                    }
+                };
                 ImageModal.prototype.ngOnInit = function () {
                     this.loading = true;
                     if (this.imagePointer >= 0) {
@@ -103,6 +117,12 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                 core_1.Output('cancelEvent'),
                 __metadata("design:type", Object)
             ], ImageModal.prototype, "cancelEvent", void 0);
+            __decorate([
+                core_1.HostListener('window:keydown', ['$event']),
+                __metadata("design:type", Function),
+                __metadata("design:paramtypes", [Object]),
+                __metadata("design:returntype", void 0)
+            ], ImageModal.prototype, "onKeyDown", null);
             ImageModal = __decorate([
                 core_1.Component({
                     selector: 'ImageModal',
