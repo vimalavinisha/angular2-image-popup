@@ -1,12 +1,14 @@
 <html>
 
 <head>
-  <!--<base href="/">-->
   <title>Hello Angular</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {color:#369;font-family: Arial,Helvetica,sans-serif;}
+    body {
+      color: #369;
+      font-family: Arial, Helvetica, sans-serif;
+    }
   </style>
 
   <!-- Polyfills for older browsers -->
@@ -16,71 +18,19 @@
   <script src="node_modules/typescript/lib/typescript.js"></script>
   <script src="node_modules/systemjs/dist/system.src.js"></script>
 
-  <!--<link rel="stylesheet" type="text/css" href="styles/style.css">-->
-  <!--<link rel="stylesheet" type="text/css" href="styles/main.css">-->
   <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.css">
 
   <script src="systemjs.config.js"></script>
   <script>
-    System.import('app').catch(function(err){ console.error(err); });
+    System.import('app').catch(function (err) {
+      console.error(err);
+    });
   </script>
 </head>
 
-
-
-
-  <head>
-    <base href="/">
-    <title>Angular 2 QuickStart</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-
-    <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
-    <!--<script src="node_modules/core-js/client/shim.min.js"></script>-->
-    <!--<script src="node_modules/zone.js/dist/zone.js"></script>-->
-    <!--<script src="node_modules/reflect-metadata/Reflect.js"></script>-->
-    <!--<script src="node_modules/systemjs/dist/system.src.js"></script>-->
-    <!--<script src="https://www.gstatic.com/charts/loader.js"></script>-->
-
-   <!-- <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>   
-
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="node_modules/angular2/bundles/router.dev.js"></script>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>-->
-
-    <!-- 2. Configure SystemJS -->
-    <!--<script>
-      System.config({
-        packages: {        
-          app: {
-            format: 'register',
-            defaultExtension: 'js'
-          },
-           directives: {
-            format: 'register',
-            defaultExtension: 'js'
-          }
-        }
-      });
-      var googleLoaded = false;
-      System.import('app/main')
-            .then(null, console.error.bind(console));
-    </script>-->
-    <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.js"></script>
-    <script>
-      System.import('app').catch(function(err){ console.error(err); });
-    </script>
-  </head>
-
-  <!-- 3. Display the application -->
-  <body>
-    <my-app>Loading...</my-app>
-  </body>
+<!-- 3. Display the application -->
+<body>
+<my-app>Loading...</my-app>
+</body>
 </html>
 

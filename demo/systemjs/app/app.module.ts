@@ -23,21 +23,15 @@
  SOFTWARE.
  */
 
-import postcss from 'rollup-plugin-postcss';
+import {NgModule}       from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent}   from './app.component';
+import {ModalGalleryModule} from 'angular-modal-gallery';
 
-export default {
-  entry     : 'dist/index.js',
-  dest      : 'dist/bundles/angular-modal-gallery.umd.js',
-  format    : 'umd',
-  sourceMap: false,
-  globals   : {
-    '@angular/core': 'ng.core',
-    '@angular/common': 'ng.common'
-  },
-  moduleName: 'ng.angular.modal.gallery',
-  plugins: [
-    postcss({
-      extensions: [ '.css' ],
-    })
-  ]
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, ModalGalleryModule.forRoot(),],
+  bootstrap: [AppComponent],
+})
+export class AppModule {
 }
