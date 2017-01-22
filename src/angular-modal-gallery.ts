@@ -3,7 +3,7 @@ import { OnInit, Input, Output, EventEmitter, HostListener, Component } from '@a
 @Component({
     selector: 'ImageModal',
     exportAs: 'ImageModal',
-    styleUrls: ['./main.css', './style.css'],
+    // styleUrls: ['./main.css', './style.css'],
     template: `
    <div class="ng-gallery" *ngIf="showRepeat"> 
      <div *ngFor ="let i of modalImages; let index = index">

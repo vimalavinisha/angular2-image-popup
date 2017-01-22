@@ -21,7 +21,8 @@
     "bundling": "rollup -c",
     "minify": "uglifyjs dist/bundles/angular-modal-gallery.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/angular-modal-gallery.umd.min.js",
     "copy": "copyfiles LICENSE README.md dist",
-    "build": "npm run cleanup && ngc && npm run bundling && npm run minify && npm run copy"
+    "copy:css": "copyfiles -f src/main.css src/style.css dist/bundles",
+    "build": "npm run cleanup && ngc && npm run bundling && npm run minify && npm run copy && npm run copy:css"
   },
   "devDependencies": {
     "@angular/compiler": "^2.4.4",
