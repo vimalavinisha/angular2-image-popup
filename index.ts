@@ -10,6 +10,8 @@ import {NgModule, ModuleWithProviders} from "@angular/core";
 import {AngularModalGalleryModule} from "./src/angular-modal-gallery_module";
 export { AngularModalGalleryModule } from './src/angular-modal-gallery_module';
 
+import './main.css'
+import './style.css'
 
 @NgModule({
   imports: [
