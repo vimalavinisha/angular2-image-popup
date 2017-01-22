@@ -1,15 +1,12 @@
-/* 
- * @author Vimala A
- */
-
 import {Component} from '@angular/core';
+
 @Component({
     selector : 'my-app',
     template:  `
       <h2> Example - Default</h2>
       <p> you can directly access "ImageModel" directive for both listing thumbnails and popup images</p>
 
-      <ImageModal [modalImages]="images"></ImageModal>
+      <imageModal [modalImages]="images"></imageModal>
       <h2>  Example with thumbnail pointers </h2>
       <p> you can list images in your file and then calling "ImageModel" directive to show images on popup only</p>
       <div *ngFor="let img of images; let i= index"> 
@@ -19,7 +16,7 @@ import {Component} from '@angular/core';
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <ImageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent) ="cancelImageModel()"></ImageModal>
+        <imageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent) ="cancelImageModel()"></imageModal>
       </div>
 	`    
 })
