@@ -13,6 +13,7 @@ export class HomeComponent {
     this.message = 'Welcome to my website';
   }
 
+
   openModalWindow: boolean = false;
   imagePointer: number;
   images = [

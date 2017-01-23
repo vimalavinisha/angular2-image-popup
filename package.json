@@ -27,7 +27,11 @@
     "minify": "uglifyjs dist/bundles/angular-modal-gallery.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/angular-modal-gallery.umd.min.js",
     "copy": "copyfiles LICENSE README.md dist",
     "copy:css": "copyfiles -f styles/style.css dist/styles",
-    "build": "npm run cleanup && ngc && npm run copy:css && npm run bundling && npm run minify && npm run copy"
+    "copy:dist": "copyfiles -f dist/* demo/webpack/node_modules/angular-modal-gallery",
+    "copy:src": "copyfiles -f dist/src/* demo/webpack/node_modules/angular-modal-gallery/src",
+    "copy:styles": "copyfiles -f dist/styles/* demo/webpack/node_modules/angular-modal-gallery/styles",
+    "copy:bundles": "copyfiles -f dist/bundles/* demo/webpack/node_modules/angular-modal-gallery/bundles",
+    "build": "npm run cleanup && ngc && npm run copy:css && npm run bundling && npm run minify && npm run copy && npm run copy:dist && npm run copy:src && npm run copy:styles && npm run copy:bundles"
   },
   "devDependencies": {
     "@angular/compiler": "^2.4.4",

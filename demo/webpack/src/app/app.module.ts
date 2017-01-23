@@ -12,7 +12,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './common/components/navbar/navbar.component';
 import { NotFound404Component } from "./pages/404/not-found404.component";
 
-import { ModalGalleryModule } from '../../../../dist/index';
+import { ModalGalleryModule } from 'angular-modal-gallery';
 import { removeNgStyles, createNewHosts, createInputTransfer } from "@angularclass/hmr";
 import { IdlePreloadModule } from "@angularclass/idle-preload";
 import { RouterModule, PreloadAllModules } from "@angular/router";
@@ -22,7 +22,7 @@ import { RouterModule, PreloadAllModules } from "@angular/router";
     IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
     BrowserModule,
     RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
-    ModalGalleryModule.forRoot()
+    ModalGalleryModule.forRoot(),
 ],
   declarations: [
     ApplicationComponent,

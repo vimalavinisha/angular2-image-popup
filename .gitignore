@@ -51,3 +51,7 @@ jspm_packages
 .idea
 
 .DS_Store
+
+aot
+.awcache
+demo/webpack/dist

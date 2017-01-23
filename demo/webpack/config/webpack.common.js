@@ -138,7 +138,7 @@ module.exports = {
     new CommonsChunkPlugin({
       name: 'vendor',
       chunks: ['app'],
-      minChunks: module => /node_modules\//.test(module.resource)
+      minChunks: module => /node_modules\//.test(module.resource)//|| /..\/..\/..\/..\/dist\/angular2-image-popup\//.test(module.resource)
     }),
     new CommonsChunkPlugin({
       name: ['polyfills', 'vendor'].reverse()
