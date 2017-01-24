@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery",
-  "version": "1.0.0-alpha.1",
+  "version": "2.0.0-alpha.1",
   "description": "Image popup directive for angular",
   "main": "dist/bundles/angular-modal-gallery.umd.js",
   "module": "dist/index.js",

@@ -4,17 +4,18 @@ import { RouterModule } from '@angular/router';
 
 import { routes } from './lazy.routes';
 import { LazyComponent } from './lazy.component';
+import { ModalGalleryModule } from "../../../../../../index";
 
 console.log('`Lazy` bundle loaded asynchronously');
 
 @NgModule({
   declarations: [
-    // Components / Directives/ Pipes
-    LazyComponent,
+    LazyComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    ModalGalleryModule.forRoot(),
   ],
 })
 export class LazyModule {

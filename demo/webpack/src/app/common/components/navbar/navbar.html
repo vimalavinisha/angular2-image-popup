@@ -4,19 +4,12 @@
     &#9776;
   </button>
   <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-    <a class="navbar-brand m-b-0" [routerLink]="['/']" href="#">KS</a>
     <ul class="nav navbar-nav">
       <li class="nav-item">
-        <a class="nav-link {{isNavItemActive('/')}}" [routerLink]="['/']">Projects <span class="sr-only">(current)</span></a>
+        <a class="nav-link {{isNavItemActive('/')}}" [routerLink]="['/']">Main <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{isNavItemActive('/lazy')}}" [routerLink]="['/lazy']">LAZY-LOADING-PAGE</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {{isNavItemActive('/other')}}" [routerLink]="['/other']">Other-pages-(error)</a>
-      </li>
-      <li *ngIf="isLoggedIn" class="nav-item">
-        <a class="nav-link {{isNavItemActive('/')}}" [routerLink]="['/']">Profile</a>
+        <a class="nav-link {{isNavItemActive('/lazy')}}" [routerLink]="['/lazy']">Lazy loaded page</a>
       </li>
     </ul>
   </div>

@@ -10,7 +10,6 @@ import '../loading.css'; // css to show a centered spinner before angular's boot
 import { ApplicationComponent } from './application/application.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './common/components/navbar/navbar.component';
-import { NotFound404Component } from "./pages/404/not-found404.component";
 
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { removeNgStyles, createNewHosts, createInputTransfer } from "@angularclass/hmr";
@@ -27,8 +26,7 @@ import { RouterModule, PreloadAllModules } from "@angular/router";
   declarations: [
     ApplicationComponent,
     HomeComponent,
-    NavbarComponent,
-    NotFound404Component
+    NavbarComponent
   ],
   providers: [],
   bootstrap: [ ApplicationComponent ]
