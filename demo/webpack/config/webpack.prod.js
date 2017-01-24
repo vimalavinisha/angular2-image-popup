@@ -15,12 +15,17 @@ const helpers = require('./helpers');
 const ENV = process.env.NODE_ENV = 'production';
 const METADATA = {env: ENV};
 
+// GITHUB => use deploy config for github
+const GITHUB = helpers.hasNpmFlag('github');
+
+console.log(`isGithub: ${GITHUB}`);
+
 module.exports = webpackMerge(commonConfig, {
   output: {
-    path: helpers.root('dist'),
+    path:  GITHUB ? '../../docs' : helpers.root('dist'),
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
-    publicPath: './'
+    publicPath: GITHUB ? '/angular-modal-gallery/' : '/'
   },
   plugins: [
     new ExtractTextPlugin({
