@@ -1,30 +1,32 @@
-<div>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-11 col-lg-10">
-        <section id="Images">
-          <h3>Example in a LAZY LOADED MODULE- Default</h3>
-          <br>
-          <p> you can directly access "ImageModal" directive for both listing thumbnails and popup images</p>
-          <br>
-          <imageModal [modalImages]="images"></imageModal>
-        </section>
-        <section id="Images2">
-          <h3>Example  in a LAZY LOADED MODULE with thumbnail pointers</h3>
-          <br>
-          <p> you can list images in your file and then calling "ImageModal" directive to show images on popup only</p>
-          <br>
-          <div *ngFor="let img of images; let i= index">
-            <div class="float-left" *ngIf="i <= 2" >
-              <a class="more" *ngIf="i==2" (click)="openImageModal(img.img, images)"> +{{images.length - 3}} more </a>
-              <img class="list-img" src="{{img.thumb}}"(click)="openImageModal(img.img, images)" alt='Image' />
-            </div>
-          </div>
-          <div *ngIf="openModalWindow">
-            <imageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent) ="cancelImageModal()"></imageModal>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-</div>
+Work in progress
+
+<!--<div>-->
+  <!--<div class="container-fluid">-->
+    <!--<div class="row">-->
+      <!--<div class="col-xs-12 col-sm-12 col-md-11 col-lg-10">-->
+        <!--<section id="Images">-->
+          <!--<h3>Example in a LAZY LOADED MODULE- Default</h3>-->
+          <!--<br>-->
+          <!--<p> you can directly access "ImageModal" directive for both listing thumbnails and popup images</p>-->
+          <!--<br>-->
+          <!--<imageModal [modalImages]="images"></imageModal>-->
+        <!--</section>-->
+        <!--<section id="Images2">-->
+          <!--<h3>Example  in a LAZY LOADED MODULE with thumbnail pointers</h3>-->
+          <!--<br>-->
+          <!--<p> you can list images in your file and then calling "ImageModal" directive to show images on popup only</p>-->
+          <!--<br>-->
+          <!--<div *ngFor="let img of images; let i= index">-->
+            <!--<div class="float-left" *ngIf="i <= 2" >-->
+              <!--<a class="more" *ngIf="i==2" (click)="openImageModal(img.img, images)"> +{{images.length - 3}} more </a>-->
+              <!--<img class="list-img" src="{{img.thumb}}"(click)="openImageModal(img.img, images)" alt='Image' />-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div *ngIf="openModalWindow">-->
+            <!--<imageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent) ="cancelImageModal()"></imageModal>-->
+          <!--</div>-->
+        <!--</section>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

@@ -22,6 +22,8 @@ const TITLE                        = 'My MEAN Website';
 const TEMPLATE_PATH                = './src/index.ejs';
 const TEMPLATE_HTML                = 'index.html';
 
+// GITHUB => use deploy config for github
+const GITHUB = helpers.hasNpmFlag('github');
 const AOT                          = helpers.hasNpmFlag('aot');
 
 module.exports = {
@@ -60,31 +62,6 @@ module.exports = {
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
       },
-
-
-      // {
-      //   test: /\.ts$/,
-      //   loaders: 'awesome-typescript-loader',
-      //   query: {
-      //     forkChecker: true
-      //   },
-      //   exclude: [/\.(spec|e2e)\.ts$/]
-      // },
-      // {
-      //   test: /\.ts$/,
-      //   loaders: [
-      //     'angular2-template-loader',
-      //     '@angularclass/hmr-loader'
-      //   ],
-      //   exclude: [/\.(spec|e2e)\.ts$/]
-      // },
-      // {
-      //   test: /\.ts$/,
-      //   loaders: [
-      //     'angular-router-loader' // lazy Loading
-      //   ],
-      //   exclude: [/\.(spec|e2e)\.ts$/]
-      // },
       {
         test: /\.html$/,
         loader: 'raw-loader'
@@ -141,6 +118,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: TITLE,
+      baseHref: GITHUB ? '/angular-modal-gallery/' : '/',
       inject: true,
       // chunksSortMode: 'auto', // auto is the default value
       chunks: ['polyfills', 'vendor', 'app'],

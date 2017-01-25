@@ -4,9 +4,15 @@ console.log('`Lazy` component loaded asynchronously');
 
 @Component({
   selector: 'mmw-cv-page',
+  styleUrls: ['lazy.scss'],
   templateUrl: 'lazy.html'
 })
 export class LazyComponent {
+
+  constructor() {
+
+  }
+
   openModalWindow: boolean = false;
   imagePointer: number;
   images = [

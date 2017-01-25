@@ -6,6 +6,11 @@ import { Component } from '@angular/core';
   templateUrl: 'home.html'
 })
 export class HomeComponent {
+
+  constructor() {
+
+  }
+
   openModalWindow: boolean = false;
   imagePointer: number;
   images = [
