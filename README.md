@@ -37,11 +37,29 @@ COMING SOON
 
 ### Webpack (recommended)
 
-check the official demo in demo/webpack and the live example compiled with `npm run build:aot:github` [HERE](https://ks89.github.io/angular-modal-gallery/)
+check the official demo in `demo/webpack` and the live example [HERE](https://ks89.github.io/angular-modal-gallery/), compiled with `npm run build:aot:github`
+
+To be able to run it follow these steps:
+1. `npm i` (from the root folder of this project)
+2. `npm run build`
+3. `sudo npm run link` (requires sudo)
+3. `cd demo/systemjs`
+4. `npm i`
+5. `npm run link` (sudo not required here)
+6. `npm start`
 
 ### Systemjs
 
-check the official demo in demo/systemjs with also index.html and systemjs.config.js
+check the official demo in `demo/systemjs` (not for production)
+
+To be able to run it follow these steps:
+1. `npm i` (from the root folder of this project)
+2. `npm run build`
+3. `sudo npm run link` (requires sudo)
+3. `cd demo/systemjs`
+4. `npm i`
+5. `npm run link` (sudo not required here)
+6. `npm start`
 
 ### Angular-cli (COMING SOON)
 
@@ -53,7 +71,7 @@ TODO
 TODO
 
 
-## Developers informations
+## Developer informations
 
 TODO
 

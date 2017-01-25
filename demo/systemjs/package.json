@@ -11,7 +11,8 @@
   },
   "scripts": {
     "link": "npm link angular-modal-gallery",
-    "start": "tsc && concurrently \"tsc -w\" \"lite-server\""
+    "start": "tsc && concurrently \"tsc -w\" \"lite-server\"",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@angular/common": "^2.4.4",
