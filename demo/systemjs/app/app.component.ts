@@ -27,7 +27,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'my-app',
-  styleUrls: ['demo/systemjs/app/main.css'],
+  styleUrls: ['./app/main.css'],
   template: `
       <h2> Example - Default</h2>
       <p> you can directly access "ImageModal" directive for both listing thumbnails and popup images</p>
@@ -52,28 +52,28 @@ export class AppComponent {
   imagePointer: number;
   images = [
     {
-      thumb: './demo/systemjs/app/assets/images/gallery/thumbs/img1.jpg',
-      img: './demo/systemjs/app/assets/images/gallery/img1.jpg',
+      thumb: './app/assets/images/gallery/thumbs/img1.jpg',
+      img: './app/assets/images/gallery/img1.jpg',
       description: 'Image 1'
     },
     {
-      thumb: './demo/systemjs/app/assets/images/gallery/thumbs/img2.jpg',
-      img: './demo/systemjs/app/assets/images/gallery/img2.jpg',
+      thumb: './app/assets/images/gallery/thumbs/img2.jpg',
+      img: './app/assets/images/gallery/img2.jpg',
       description: 'Image 2'
     },
     {
-      thumb: './demo/systemjs/app/assets/images/gallery/thumbs/img3.jpg',
-      img: './demo/systemjs/app/assets/images/gallery/img3.jpg',
+      thumb: './app/assets/images/gallery/thumbs/img3.jpg',
+      img: './app/assets/images/gallery/img3.jpg',
       description: 'Image 3'
     },
     {
-      thumb: './demo/systemjs/app/assets/images/gallery/thumbs/img4.jpg',
-      img: './demo/systemjs/app/assets/images/gallery/img4.jpg',
+      thumb: './app/assets/images/gallery/thumbs/img4.jpg',
+      img: './app/assets/images/gallery/img4.jpg',
       description: 'Image 4'
     },
     {
-      thumb: './demo/systemjs/app/assets/images/gallery/thumbs/img5.jpg',
-      img: './demo/systemjs/app/assets/images/gallery/img5.jpg',
+      thumb: './app/assets/images/gallery/thumbs/img5.jpg',
+      img: './app/assets/images/gallery/img5.jpg',
       description: 'Image 5'
     }
   ];
