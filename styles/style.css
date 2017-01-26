@@ -66,7 +66,7 @@ img.ng-thumb {
 .ng-gallery-content > a.close-popup {
   font-size: 42px;
   float: right;
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   margin: 0 30px 0 0;
   cursor: pointer;
@@ -78,7 +78,7 @@ img.ng-thumb {
 .ng-gallery-content > a.download-image {
   font-size: 42px;
   float: right;
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   margin: 0 30px 0 0;
   cursor: pointer;
@@ -88,7 +88,7 @@ img.ng-thumb {
 }
 
 .ng-gallery-content > a.nav-left, .ng-gallery-content > a.nav-right {
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   font-size: 60px;
   cursor: pointer;
