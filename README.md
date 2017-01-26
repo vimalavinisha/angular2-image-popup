@@ -59,7 +59,7 @@ To build as prod with aot
 - `npm run build:prod:aot`
 
 To deploy this application on github
-- `npm run build:aot:github` and push `docs` folder.
+- `npm run build:github:aot` and push `docs` folder.
 
 ### Systemjs
 

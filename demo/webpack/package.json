@@ -21,7 +21,7 @@
     "build:dev": "webpack --config config/webpack.dev.js --colors --progress --display-error-details --display-cached --profile",
     "build:prod": "webpack --config config/webpack.prod.js --colors --progress --display-error-details --display-cached --profile",
     "build:prod:aot": "webpack --config config/webpack.prod.js --colors --progress --display-error-details --display-cached --profile",
-    "build:aot:github": "npm run clean-github-live-demo && webpack --config config/webpack.prod.js --colors --progress --display-error-details --display-cached --profile",
+    "build:github:aot": "npm run clean-github-live-demo && webpack --config config/webpack.prod.js --colors --progress --display-error-details --display-cached --profile",
 
     "clean": "npm run clean-dist && npm run clean-aot && npm run clean-awcache && npm run clean-coverage",
     "clean-dist": "rimraf dist",
