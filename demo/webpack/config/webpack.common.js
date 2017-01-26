@@ -176,8 +176,7 @@ module.exports = {
 
     new ngcWebpack.NgcWebpackPlugin({
       disabled: !AOT,
-      tsConfig: helpers.root('tsconfig-aot.json'),
-      resourceOverride: helpers.root('config/resource-override.js')
+      tsConfig: helpers.root('tsconfig-aot.json')
     })
 
   ],

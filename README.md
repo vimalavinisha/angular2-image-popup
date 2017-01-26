@@ -39,20 +39,34 @@ COMING SOON
 
 check the official demo in `demo/webpack` and the live example [HERE](https://ks89.github.io/angular-modal-gallery/), compiled with `npm run build:aot:github`
 
-To be able to run it follow these steps:
+To be able to run it follow these steps
+
 1. `npm i` (from the root folder of this project)
 2. `npm run build`
 3. `sudo npm run link` (requires sudo)
-3. `cd demo/systemjs`
+3. `cd demo/webpack`
 4. `npm i`
 5. `npm run link` (sudo not required here)
 6. `npm start`
+
+To build as dev
+- `npm run build:dev`
+
+To build as prod without aot
+- `npm run build:prod`
+
+To build as prod with aot
+- `npm run build:prod:aot`
+
+To deploy this application on github
+- `npm run build:aot:github` and push `docs` folder.
 
 ### Systemjs
 
 check the official demo in `demo/systemjs` (not for production)
 
-To be able to run it follow these steps:
+To be able to run it follow these steps
+
 1. `npm i` (from the root folder of this project)
 2. `npm run build`
 3. `sudo npm run link` (requires sudo)

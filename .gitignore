@@ -57,5 +57,9 @@ dist
 aot
 .awcache
 
+*.metadata.json
 *.ngfactory.ts
 *.ngsummary.json
+index.js
+index.js.map
+bundles
