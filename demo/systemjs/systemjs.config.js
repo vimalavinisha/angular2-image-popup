@@ -33,7 +33,7 @@ System.config({
   map: {
     '@angular'                          : 'node_modules/@angular',
     'rxjs'                              : 'node_modules/rxjs',
-    'angular-modal-gallery'             : 'node_modules/angular-modal-gallery/dist/bundles',
+    'angular-modal-gallery'             : 'node_modules/angular-modal-gallery/bundles',
     'app'                               : 'app'
   },
   paths: {
