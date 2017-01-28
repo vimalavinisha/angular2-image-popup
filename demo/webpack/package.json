@@ -1,8 +1,8 @@
 {
-  "name": "Angular-webpack2-skeleton",
-  "version": "1.0.0-alpha.7",
+  "name": "angular-modal-gallery-webpack2-demo",
+  "version": "2.0.0",
   "author": "Stefano Cappa",
-  "description": "based on Angular-webpack2-skeleton",
+  "description": "based on https://github.com/Ks89/Angular2-webpack2-skeleton",
   "license": "Apache-v2",
   "main": "src/main.ts",
   "homepage": "https://www.stefanocappa.it",
@@ -146,17 +146,5 @@
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-md5-hash": "^0.0.5",
     "webpack-merge": "^2.4.0"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "typescript",
-      "codelyzer",
-      "@types/core-js",
-      "@types/jasmine",
-      "@types/jquery",
-      "@types/lodash",
-      "@types/node",
-      "@types/selenium-webdriver"
-    ]
   }
 }

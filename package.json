@@ -11,7 +11,6 @@
   },
   "homepage": "https://github.com/Ks89/angular-modal-gallery#readme",
   "scripts": {
-    "link": "npm link",
     "cleanup": "rimraf dist index.ngfactory.ts index.ngsummary.json src/angular-modal-gallery.ngfactory.ts src/angular-modal-gallery.ngsummary.json src/angular-modal-gallery_module.ngfactory.ts src/angular-modal-gallery_module.ngsummary.json",
     "bundling": "rollup -c",
     "minify": "uglifyjs dist/bundles/angular-modal-gallery.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/angular-modal-gallery.umd.min.js",

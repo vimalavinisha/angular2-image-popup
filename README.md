@@ -24,8 +24,7 @@ COMING SOON
 
 ## Installation
 
-- npm: `STILL NOT AVAILABLE`
-- bower `STILL NOT AVAILABLE`
+- `npm install --save angular-modal-gallery`
 
 
 ## Demo website
@@ -43,7 +42,7 @@ To be able to run it follow these steps
 
 1. `npm i` (from the root folder of this project)
 2. `npm run build`
-3. `sudo npm run link` (requires sudo)
+3. `sudo npm link` (requires sudo)
 3. `cd demo/webpack`
 4. `npm i`
 5. `npm run link` (sudo not required here)
@@ -55,11 +54,13 @@ To build as dev
 To build as prod without aot
 - `npm run build:prod`
 
-To build as prod with aot
+To build as prod with aot*
 - `npm run build:prod:aot`
 
-To deploy this application on github
+To deploy this application on github*
 - `npm run build:github:aot` and push `docs` folder.
+
+*before to run this command you need to know that AOT is not working with /node_modules folder, so remove it from the root of the project
 
 ### Systemjs
 
@@ -69,7 +70,7 @@ To be able to run it follow these steps
 
 1. `npm i` (from the root folder of this project)
 2. `npm run build`
-3. `sudo npm run link` (requires sudo)
+3. `sudo npm link` (requires sudo)
 3. `cd demo/systemjs`
 4. `npm i`
 5. `npm run link` (sudo not required here)

@@ -65,9 +65,9 @@ environment:
   CI: yes
   APPVEYOR: yes
   CODECLIMATE_REPO_TOKEN:
-    secure: Hyo87FXYunQqMYXKzfJ8AxvDlLcBuTr80oSEaHAhZ+Yf/uaMOIc63gXmEqjXavDZoH5qZzEPaxbMgH/DTrD4ZuGVXgf75lO/VwkOXcxFXAA=
+    secure: 599YTB1w26VDxTafTrBNso5CW8BnztpspX2ajIcowkhI249QaKE+nOjN7oQSN1MMm9k7ekutSCpU185qsG4yvVpg4prdOQUs+VkNtLQgz9s=
   COVERALLS_REPO_TOKEN:
-    secure: desVFXndwhyS8sCXOUeHfY9N0NgCFa7IDlSLRRcgK2FJAQdA7OZ99gNNDrJzMjmP
+    secure: Edx2E7hPwjoxiEWq2pHhd7iugZKunJrlX/OVlja2dOjGwXe6/QNgJ1lrEdeEFDwB
 
 # this is how to allow failing jobs in the matrix
 matrix:
@@ -92,15 +92,7 @@ install:
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g karma-cli
-  - npm install -g webpack@2.2.0-rc.4
   - npm install -g typescript@2.0.10
-  - npm install -g typings
-  - npm install -g remap-istanbul
-  - npm install -g webdriver-manager
-  - npm install -g protractor
-  - npm install -g codeclimate-test-reporter
-  - npm install -g istanbul
   - npm install
 
 
@@ -128,10 +120,23 @@ build_script:
   # Output useful info for debugging.
   - node --version && npm --version
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
-  # build debug
-  - npm run buildDev
-  # build production
+  # build
   - npm run build
+  - cd demo/systemjs
+  - npm install
+  - cd.. # ./demo folder
+  - cd webpack
+  - npm install
+  - npm link angular-modal-gallery
+  - cd node_modules/angular-modal-gallery
+  - rm -rf node_modules
+  - cd .. # ./demo/webpack/node_modules
+  - cd .. # ./demo/webpack
+  - npm run build:dev
+  - npm run build:prod
+  - npm run build:prod:aot
+  - npm run build:github:aot
+
 
 #---------------------------------#
 #       tests configuration       #
@@ -148,7 +153,7 @@ test_script:
   - node --version && npm --version
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
   # run tests
-  - npm test
+  #- npm test
 
 #---------------------------------#
 #      artifacts configuration    #
@@ -178,9 +183,9 @@ deploy_script:
 #---------------------------------#
 
 # on successful build
-on_success:
-  - codeclimate-test-reporter < coverage/lcov.info
-  - node .\node_modules\coveralls\bin\coveralls.js < .\coverage\lcov.info
+#on_success:
+  #- codeclimate-test-reporter < coverage/lcov.info
+  #- node .\node_modules\coveralls\bin\coveralls.js < .\coverage\lcov.info
 
 # on build failure
 #on_failure:
