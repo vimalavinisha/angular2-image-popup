@@ -9,7 +9,7 @@ sudo npm link
 cd demo/systemjs
 npm install
 
-cd.. # ./demo folder
+cd .. # ./demo folder
 
 cd webpack
 npm install

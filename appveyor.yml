@@ -124,7 +124,7 @@ build_script:
   - npm run build
   - cd demo/systemjs
   - npm install
-  - cd.. # ./demo folder
+  - cd .. # ./demo folder
   - cd webpack
   - npm install
   - npm link angular-modal-gallery
