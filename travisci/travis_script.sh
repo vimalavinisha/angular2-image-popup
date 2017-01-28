@@ -12,6 +12,7 @@ cp -r dist/. demo/systemjs/node_modules/angular-modal-gallery
 cd demo/webpack
 npm install
 cd ../..
+rm -rf demo/webpack/node_modules/angular-modal-gallery
 cp -r dist/. demo/webpack/node_modules/angular-modal-gallery
 cd demo/webpack
 npm run build:dev
