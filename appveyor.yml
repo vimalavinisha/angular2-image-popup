@@ -122,21 +122,22 @@ build_script:
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
   # build
   - npm run build
+
   - cd demo/systemjs
   - npm install
-  - cd .. # ./demo folder
-  - cd webpack
+  - cd ../..
+  - cp -r dist/. demo/systemjs/node_modules/angular-modal-gallery
+  -
+  - cd demo/webpack
   - npm install
-  - npm link angular-modal-gallery
-  - cd node_modules/angular-modal-gallery
-  - rm -rf node_modules
-  - cd .. # ./demo/webpack/node_modules
-  - cd .. # ./demo/webpack
+  - cd ../..
+  - rm -rf demo/webpack/node_modules/angular-modal-gallery
+  - cp -r dist/. demo/webpack/node_modules/angular-modal-gallery
+  - cd demo/webpack
   - npm run build:dev
   - npm run build:prod
   - npm run build:prod:aot
   - npm run build:github:aot
-
 
 #---------------------------------#
 #       tests configuration       #

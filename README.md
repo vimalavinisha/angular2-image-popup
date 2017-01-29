@@ -1,25 +1,17 @@
-# Angular modal gallery (--- work in progress ---)
+# Angular modal gallery
 
 An Angular library to create an image gallery of clickable thumbnails. After a click, it displays a modal window with the large image.
-It's also possible to navigate between these images with keyboard arrows and close it with esc.
+It's also possible to navigate between these images with keyboard arrows and close it pressing `esc`.
 More features coming soon!
 
 This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/angular2-image-popup).
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
-## Features
-- Angular module with a directive inside
-- AOT support
-- Angular >=2 (it's also working with Angular 4 beta)
-- Tested with Webpack2 + Treeshaking and inside a Lazy loaded module
-- and so on...
 
-## News
+## **Official live DEMO**
 
-COMING SOON
-
-- 01/??/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+[GO HERE FOR A DEMO](https://ks89.github.io/angular-modal-gallery/)
 
 
 ## Installation
@@ -27,9 +19,19 @@ COMING SOON
 - `npm install --save angular-modal-gallery`
 
 
-## Demo website
+## News
 
-[GO HERE FOR A DEMO](https://ks89.github.io/angular-modal-gallery/)
+- 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 01/28/2017 - 2.0.0-alpha.1 - angular-modal-gallery
+
+
+## Features
+- Angular module with a directive inside to display an image gallery
+- AOT support
+- Angular >=2 (it's also working with Angular 4 beta)
+- Tested with Webpack2 + Treeshaking and also inside a Lazy loaded module
+- and so on...
+
 
 
 ## Setup
@@ -40,13 +42,24 @@ check the official demo in `demo/webpack` and the live example [HERE](https://ks
 
 To be able to run it follow these steps
 
-1. `npm i` (from the root folder of this project)
+1. `npm install` (from the root folder of this project)
 2. `npm run build`
 3. `sudo npm link` (requires sudo)
 3. `cd demo/webpack`
-4. `npm i`
+4. `npm install`
 5. `npm run link` (sudo not required here)
 6. `npm start`
+
+or, only if you have problems with `npm link` use this procedure (linux/macOS)
+1. `npm install` (from the root folder of this project)
+2. `npm run build`
+3. `cd demo/webpack`
+4. `npm install`
+5. `cd ../..`
+6. `rm -rf demo/webpack/node_modules/angular-modal-gallery`
+7. `cp -r dist/. demo/webpack/node_modules/angular-modal-gallery`
+8. `cd demo/webpack`
+9. `npm start`
 
 To build as dev
 - `npm run build:dev`
@@ -54,25 +67,24 @@ To build as dev
 To build as prod without aot
 - `npm run build:prod`
 
-To build as prod with aot*
+To build as prod with aot
 - `npm run build:prod:aot`
 
-To deploy this application on github*
+To deploy this application on github
 - `npm run build:github:aot` and push `docs` folder.
 
-*before to run this command you need to know that AOT is not working with /node_modules folder, so remove it from the root of the project
 
-### Systemjs
+### Systemjs (not for production)
 
-check the official demo in `demo/systemjs` (not for production)
+check the official demo in `demo/systemjs`
 
 To be able to run it follow these steps
 
-1. `npm i` (from the root folder of this project)
+1. `npm install` (from the root folder of this project)
 2. `npm run build`
 3. `sudo npm link` (requires sudo)
 3. `cd demo/systemjs`
-4. `npm i`
+4. `npm install`
 5. `npm run link` (sudo not required here)
 6. `npm start`
 
@@ -83,19 +95,20 @@ TODO
 
 ## Contributing
 
-TODO
+I need help to develop and test this library.
+I'm interested to work on it, because I'm using this project in a personal website. However, I'm not a robot, so please open issue and create pull requests with new features and bugfixes.
 
 
 ## Developer informations
 
-TODO
+Sometimes, shy developers have really good ideas. So don't be shy and open an issue! :)
 
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2017 Stefano Cappa (Ks89)
+Copyright (c) 2017 Stefano Cappa (Ks89)<br>
 Copyright (c) 2016 vimalavinisha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
