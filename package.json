@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0",
   "description": "Image popup directive for angular >=2",
   "main": "angular-modal-gallery",
   "license": "MIT",
