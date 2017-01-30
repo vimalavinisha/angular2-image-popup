@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
-# run debug build
-echo "npm run build on $TRAVIS_OS_NAME"
-npm run build
+echo "preparing build on $TRAVIS_OS_NAME"
 
 cd demo/systemjs
 npm install
 cd ../..
-cp -r dist/. demo/systemjs/node_modules/angular-modal-gallery
-
 cd demo/webpack
 npm install
 cd ../..
-rm -rf demo/webpack/node_modules/angular-modal-gallery
-cp -r dist/. demo/webpack/node_modules/angular-modal-gallery
+
+echo "npm run build on $TRAVIS_OS_NAME"
+npm run build
+
+echo "building official webpack example on $TRAVIS_OS_NAME"
 cd demo/webpack
 npm run build:dev
 npm run build:prod

@@ -120,24 +120,22 @@ build_script:
   # Output useful info for debugging.
   - node --version && npm --version
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
-  # build
-  - npm run build
-
+  # prepare
   - cd demo/systemjs
   - npm install
   - cd ../..
-  - cp -r dist/. demo/systemjs/node_modules/angular-modal-gallery
-  -
   - cd demo/webpack
   - npm install
   - cd ../..
-  - rm -rf demo/webpack/node_modules/angular-modal-gallery
-  - cp -r dist/. demo/webpack/node_modules/angular-modal-gallery
+  # build library
+  - npm run build
+  # build official webpack example
   - cd demo/webpack
   - npm run build:dev
   - npm run build:prod
   - npm run build:prod:aot
   - npm run build:github:aot
+
 
 #---------------------------------#
 #       tests configuration       #
