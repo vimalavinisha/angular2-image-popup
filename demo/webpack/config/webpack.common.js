@@ -16,6 +16,7 @@ const InlineManifestWebpackPlugin  = require('inline-manifest-webpack-plugin');
 const autoprefixer                 = require('autoprefixer');
 const ChunkManifestPlugin          = require('chunk-manifest-webpack-plugin');
 const ngcWebpack                   = require('ngc-webpack');
+const CheckerPlugin                = require('awesome-typescript-loader').CheckerPlugin;
 
 const helpers                      = require('./helpers');
 const TITLE                        = 'My MEAN Website';
@@ -25,6 +26,7 @@ const TEMPLATE_HTML                = 'index.html';
 // GITHUB => use deploy config for github
 const GITHUB = helpers.hasNpmFlag('github');
 const AOT                          = helpers.hasNpmFlag('aot');
+const TS_CONFIG                    = AOT ? 'tsconfig-aot.json' : 'tsconfig.json';
 
 module.exports = {
   entry: {
@@ -57,7 +59,7 @@ module.exports = {
               aot: AOT
             }
           },
-          'awesome-typescript-loader?{configFileName: "tsconfig-aot.json"}',
+          `awesome-typescript-loader?{configFileName: "${TS_CONFIG}"}`,
           'angular2-template-loader'
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
@@ -100,6 +102,7 @@ module.exports = {
       /@angular\/\*\*\/bundles\//]
   },
   plugins: [
+    new CheckerPlugin(),
     new NamedModulesPlugin(),
     new ManifestPlugin(),
     new InlineManifestWebpackPlugin(), // TODO check if I can remove this
