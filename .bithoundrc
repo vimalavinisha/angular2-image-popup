@@ -1,0 +1,21 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    "**/**-min-**",
+    "**/**-min.**",
+    "**/**.min.**",
+    "bower_components/**",
+    "dist/**",
+    "docs/**"
+  ],
+  "test": [
+    "**/*.spec.ts",
+    "**/*.e2e.ts",
+    "**/spec/**",
+    "**/specs/**"
+  ],
+  "critics": {
+    "lint": {"engine": "tslint"}
+  },
+  "packageJsonLocation": "package.json"
+}
