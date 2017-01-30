@@ -21,7 +21,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 ## News
 
-- 01/??/2017 - 2.0.2 - angular-modal-gallery - COMING SOON
+- 01/??/2017 - 2.0.2 - angular-modal-gallery - COMING SOON - please be patient
 - 01/29/2017 - 2.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/28/2017 - 2.0.0-alpha.1 - angular-modal-gallery
@@ -292,39 +292,31 @@ However, I really recommend to try the official systemjs example available in `d
 
 ### Webpack (recommended)
 
-check the official demo in `demo/webpack` and the live example [HERE](https://ks89.github.io/angular-modal-gallery/), compiled with `npm run build:aot:github`
+check the official demo in `demo/webpack` and the live example [HERE](https://ks89.github.io/angular-modal-gallery/), compiled with `npm run build:github:aot`
 
 To be able to run it follow these steps
 
 1. `npm install` (from the root folder of this project)
-2. `npm run build`
-3. `sudo npm link` (requires sudo)
-3. `cd demo/webpack`
-4. `npm install`
-5. `npm run link` (sudo not required here)
-6. `npm start`
+2. `npm run cleanup`
+3. `npm run build`
+4. `cd demo/webpack`
+5. `npm install`
+6. `cd ../..`
+7. `rm -rf demo/webpack/node_modules/angular-modal-gallery`
+8. `cp -r dist/. demo/webpack/node_modules/angular-modal-gallery`
+9. `cd demo/webpack`
+10. `npm start`
 
-or, only if you have problems with `npm link` use this procedure (linux/macOS)
-1. `npm install` (from the root folder of this project)
-2. `npm run build`
-3. `cd demo/webpack`
-4. `npm install`
-5. `cd ../..`
-6. `rm -rf demo/webpack/node_modules/angular-modal-gallery`
-7. `cp -r dist/. demo/webpack/node_modules/angular-modal-gallery`
-8. `cd demo/webpack`
-9. `npm start`
-
-To build as dev
+To build as dev in `dist` folder
 - `npm run build:dev`
 
-To build as prod without aot
+To build as prod without aot in `dist` folder
 - `npm run build:prod`
 
-To build as prod with aot
+To build as prod with aot in `dist` folder
 - `npm run build:prod:aot`
 
-To deploy this application on github
+To deploy this application on github (only for the owner of this repo)
 - `npm run build:github:aot` and push `docs` folder.
 
 
@@ -335,12 +327,16 @@ check the official demo in `demo/systemjs`
 To be able to run it follow these steps
 
 1. `npm install` (from the root folder of this project)
-2. `npm run build`
-3. `sudo npm link` (requires sudo)
-3. `cd demo/systemjs`
-4. `npm install`
-5. `npm run link` (sudo not required here)
-6. `npm start`
+2. `npm run cleanup`
+3. `npm run build`
+4. `cd demo/systemjs`
+5. `npm install`
+6. `cd ../..`
+7. `rm -rf demo/systemjs/node_modules/angular-modal-gallery`
+8. `cp -r dist/. demo/systemjs/node_modules/angular-modal-gallery`
+9. `cd demo/systemjs`
+10. `npm start`
+
 
 ### Angular-cli (COMING SOON)
 
@@ -349,13 +345,12 @@ TODO
 
 ## Contributing
 
-I need help to develop and test this library.
-I'm interested to work on it, because I'm using this project in a personal website. However, I'm not a robot, so please open issue and create pull requests with new features and bugfixes.
+check `CONTRIBUTING.md` in this repository
 
 
 ## Developer informations
 
-Sometimes, shy developers have really good ideas. So don't be shy and open an issue! :)
+check `DEVELOPER.md` in this repository
 
 
 ## License
