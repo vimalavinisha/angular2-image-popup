@@ -42,7 +42,7 @@ If you want to help me, modify the source code, but before to create a pull requ
 -Only for the author-
 how to publish this on npm
 
-1. `npm version`
+1. `npm version patch` (x.x.2) or `npm version minor` (x.2.0) or `npm version major` (2.x.x)
 2. `npm run clean:all`
 3. `npm run build`
 4. `npm publish dist`
