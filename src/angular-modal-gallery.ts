@@ -31,7 +31,7 @@ import { OnInit, Input, Output, EventEmitter, HostListener, Component } from '@a
     template: `
    <div class="ng-gallery" *ngIf="showRepeat"> 
      <div *ngFor ="let i of modalImages; let index = index">
-       <img src="{{ i.thumb }}" class="ng-thumb" (click)="openGallery(index)" alt="Image {{ index + 1 }}" />
+       <img src="{{ i.thumb }}" class="ng-thumb" (click)="openGallery(index)" alt="{{ i.description }}" />
       </div>
    </div>
    <div class="ng-overlay" *ngIf="opened">
@@ -41,7 +41,7 @@ import { OnInit, Input, Output, EventEmitter, HostListener, Component } from '@a
      <a class="nav-left" *ngIf="modalImages.length >1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
      <img *ngIf="!loading" src="{{ imgSrc }}" (click)="nextImage()" class="effect" />
      <a class="nav-right" *ngIf="modalImages.length >1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
-     <span class="info-text">{{ currentImageIndex + 1 }}/{{ modalImages.length }} - Image {{ currentImageIndex+1 }}</span>
+     <span class="info-text">{{ currentImageIndex + 1 }}/{{ modalImages.length }} - {{ modalImages[currentImageIndex+1].description }}</span>
    </div>
    </div>
        `
