@@ -297,7 +297,7 @@ check the official demo in `demo/webpack` and the live example [HERE](https://ks
 To be able to run it follow these steps
 
 1. `npm install` (from the root folder of this project)
-2. `npm run cleanup`
+2. `npm run clean`
 3. `npm run build`
 4. `cd demo/webpack`
 5. `npm install`
@@ -327,7 +327,7 @@ check the official demo in `demo/systemjs`
 To be able to run it follow these steps
 
 1. `npm install` (from the root folder of this project)
-2. `npm run cleanup`
+2. `npm run clean`
 3. `npm run build`
 4. `cd demo/systemjs`
 5. `npm install`
