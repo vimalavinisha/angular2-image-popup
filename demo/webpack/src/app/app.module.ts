@@ -6,42 +6,37 @@ import { ROUTES }  from './app.routing';
 import 'bootstrap-loader';
 import 'font-awesome/css/font-awesome.css';
 import '../loading.css'; // css to show a centered spinner before angular's booting
-import 'hammerjs';
+
+
+// ********************** angular-modal-gallery *****************************
+import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs @types/hammerjs`)
+
+import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+// **************************************************************************
+
 
 import { ApplicationComponent } from './application/application.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './common/components/navbar/navbar.component';
 
-import { ModalGalleryModule } from 'angular-modal-gallery';
 import { removeNgStyles, createNewHosts, createInputTransfer } from "@angularclass/hmr";
 import { IdlePreloadModule } from "@angularclass/idle-preload";
 import { RouterModule, PreloadAllModules } from "@angular/router";
-
-import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-
-
-export class MyHammerConfig extends HammerGestureConfig  {
-  overrides = <any>{
-    'swipe': {velocity: 0.4, threshold: 20} // override default settings
-  }
-}
 
 @NgModule({
   imports: [
     IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
     BrowserModule,
     RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
-    ModalGalleryModule.forRoot(),
+
+    ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
 ],
   declarations: [
     ApplicationComponent,
     HomeComponent,
     NavbarComponent
   ],
-  providers: [{
-    provide: HAMMER_GESTURE_CONFIG,
-    useClass: MyHammerConfig
-  }],
+  providers: [],
   bootstrap: [ ApplicationComponent ]
 })
 

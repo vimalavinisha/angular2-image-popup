@@ -7,7 +7,7 @@
           <br>
           <p> you can directly access "ImageModal" directive for both listing thumbnails and popup images</p>
           <br>
-          <imageModal [modalImages]="images"></imageModal>
+          <imageModal [modalImages]="images" (cancelEvent)="cancelImageModal($event)"></imageModal>
         </section>
         <section id="Images2">
           <h3>Example in a LAZY LOADED MODULE with thumbnail pointers</h3>
@@ -21,7 +21,7 @@
             </div>
           </div>
           <div *ngIf="openModalWindow">
-            <imageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent) ="cancelImageModal()"></imageModal>
+            <imageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent)="cancelImageModal($event)"></imageModal>
           </div>
         </section>
       </div>

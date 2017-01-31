@@ -32,7 +32,7 @@ import {Component} from '@angular/core';
       <h2> Example - Default</h2>
       <p> you can directly access "ImageModal" directive for both listing thumbnails and popup images</p>
 
-      <imageModal [modalImages]="images"></imageModal>
+      <imageModal [modalImages]="images" (cancelEvent)="cancelImageModal($event)"></imageModal>
       <h2>  Example with thumbnail pointers </h2>
       <p> you can list images in your file and then calling "ImageModal" directive to show images on popup only</p>
       <div *ngFor="let img of images; let i= index"> 
@@ -42,7 +42,7 @@ import {Component} from '@angular/core';
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <imageModal [modalImages]="images" [imagePointer] = "imagePointer" (cancelEvent) ="cancelImageModal()"></imageModal>
+        <imageModal [modalImages]="images" [imagePointer]="imagePointer" (cancelEvent)="cancelImageModal($event)"></imageModal>
       </div>
 	`
 })
@@ -91,7 +91,8 @@ export class AppComponent {
     this.imagePointer = imageModalPointer;
   }
 
-  cancelImageModal() {
+  cancelImageModal(isCancelled: boolean) {
+    console.log(`isCancelled: ${isCancelled}`); // requires angular-modal-gallery 3.x.x or greater
     this.openModalWindow = false;
   }
 }

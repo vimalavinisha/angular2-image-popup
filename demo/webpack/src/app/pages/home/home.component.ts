@@ -7,9 +7,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  constructor() {
-
-  }
+  constructor() {}
 
   openModalWindow: boolean = false;
   imagePointer: number;
@@ -54,7 +52,8 @@ export class HomeComponent {
     this.imagePointer = imageModalPointer;
   }
 
-  cancelImageModal() {
+  cancelImageModal(isCancelled: boolean) {
+    console.log(`isCancelled: ${isCancelled}`); // requires angular-modal-gallery 3.x.x or greater
     this.openModalWindow = false;
   }
 }
