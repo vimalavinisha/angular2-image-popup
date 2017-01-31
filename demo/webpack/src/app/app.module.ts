@@ -6,6 +6,7 @@ import { ROUTES }  from './app.routing';
 import 'bootstrap-loader';
 import 'font-awesome/css/font-awesome.css';
 import '../loading.css'; // css to show a centered spinner before angular's booting
+import 'hammerjs';
 
 import { ApplicationComponent } from './application/application.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -15,6 +16,15 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
 import { removeNgStyles, createNewHosts, createInputTransfer } from "@angularclass/hmr";
 import { IdlePreloadModule } from "@angularclass/idle-preload";
 import { RouterModule, PreloadAllModules } from "@angular/router";
+
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+    'swipe': {velocity: 0.4, threshold: 20} // override default settings
+  }
+}
 
 @NgModule({
   imports: [
@@ -28,7 +38,10 @@ import { RouterModule, PreloadAllModules } from "@angular/router";
     HomeComponent,
     NavbarComponent
   ],
-  providers: [],
+  providers: [{
+    provide: HAMMER_GESTURE_CONFIG,
+    useClass: MyHammerConfig
+  }],
   bootstrap: [ ApplicationComponent ]
 })
 
