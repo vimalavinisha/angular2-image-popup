@@ -1,8 +1,8 @@
 {
   "name": "angular-modal-gallery",
   "version": "2.0.2",
-  "description": "Image popup directive for angular >=2",
-  "main": "angular-modal-gallery",
+  "description": "Modal image gallery for angular >=2",
+  "main": "index.ts",
   "license": "MIT",
   "author": "Stefano Cappa",
   "engines": {
@@ -25,16 +25,21 @@
     "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp dist demo/systemjs/node_modules/angular-modal-gallery",
     "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp dist demo/webpack/node_modules/angular-modal-gallery"
   },
+  "peerDependencies": {
+    "@angular/common": "~2.0.0",
+    "@angular/compiler": "~2.0.0",
+    "@angular/core": "~2.0.0",
+    "@angular/platform-browser": "~2.0.0",
+    "font-awesome": "^4.7.0"
+  },
   "dependencies": {
     "@angular/common": "^2.4.5",
     "@angular/compiler": "^2.4.5",
     "@angular/core": "^2.4.5",
     "@angular/platform-browser": "^2.4.5",
     "@angular/platform-browser-dynamic": "^2.4.5",
-    "@types/hammerjs": "^2.0.34",
     "core-js": "^2.4.1",
     "font-awesome": "^4.6.3",
-    "hammerjs": "^2.0.8",
     "reflect-metadata": "^0.1.3",
     "rxjs": "^5.0.3",
     "zone.js": "^0.7.6"
@@ -49,13 +54,12 @@
     "rimraf": "^2.5.4",
     "rollup": "^0.41.4",
     "rollup-plugin-postcss": "^0.2.0",
-    "rollup-plugin-sass": "^0.4.8",
     "typescript": "~2.0.10",
     "uglify-js": "^2.7.5"
   },
   "keywords": [
     "angular-modal-gallery",
-    "angular2-gsllery",
+    "angular2-gallery",
     "angular2-modal-gallery",
     "angular2-modal",
     "modal-gallery",
@@ -68,7 +72,11 @@
     "angular4-modal-popup",
     "angular2-modal",
     "angular4-modal",
-    "modal-popup"
+    "modal-popup",
+    "swipe",
+    "gesture",
+    "touch",
+    "mobile"
   ],
   "repository": {
     "type": "git",

@@ -17,6 +17,8 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 ## **Official live DEMO**
 
+*Image loading could be slow, because this demo is hosted on Github pages*
+
 [GO HERE FOR A DEMO](https://ks89.github.io/angular-modal-gallery/)
 
 

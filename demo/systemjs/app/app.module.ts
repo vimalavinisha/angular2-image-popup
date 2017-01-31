@@ -25,6 +25,9 @@
 
 import { NgModule }           from '@angular/core';
 import { BrowserModule }      from '@angular/platform-browser';
+
+import 'hammerjs';
+
 import { AppComponent }       from './app.component';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 
@@ -36,5 +39,4 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

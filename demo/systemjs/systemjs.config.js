@@ -34,7 +34,8 @@ System.config({
     '@angular'                          : 'node_modules/@angular',
     'rxjs'                              : 'node_modules/rxjs',
     'angular-modal-gallery'             : 'node_modules/angular-modal-gallery/bundles',
-    'app'                               : 'app'
+    'app'                               : 'app',
+    'hammerjs'                          : 'node_modules/hammerjs'
   },
   paths: {
     'node_modules/@angular/*'           : 'node_modules/@angular/*/bundles'
@@ -45,6 +46,7 @@ System.config({
   packages: {
     'app'                               : {main: 'main', defaultExtension: 'ts'},
     'rxjs'                              : {main: 'Rx'},
+    'hammerjs'                          : {main: 'hammer.js'},
     'angular-modal-gallery'             : {main: 'angular-modal-gallery.umd.js'},
     '@angular/core'                     : {main: 'core.umd.min.js'},
     '@angular/common'                   : {main: 'common.umd.min.js'},
