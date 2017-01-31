@@ -3,6 +3,7 @@
 [![bitHound Overall Score](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/score.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery)   [![bitHound Code](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/code.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery)   [![bitHound Dependencies](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/dependencies.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery/master/dependencies/npm)   [![bitHound Dev Dependencies](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/devDependencies.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery/master/dependencies/npm)
 
 <br>
+
 # Angular modal gallery
 
 An Angular library to create an image gallery of clickable thumbnails. After a click, it displays a modal window with the large image.
@@ -22,9 +23,13 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 ## Installation
 
 - `npm install --save angular-modal-gallery`
+- `npm install --save hammerjs @types/hammerjs` (not requested in version 2.x.x, but it will be mandatory with 3.x.x)
 
 
 ## News
+
+**Version 3.0.0 - work in progress** with some breaking changes [PREVIEW HERE](https://github.com/Ks89/angular-modal-gallery/tree/develop).<br>
+*I'll write a tutorial to migrate from 2.x.x to 3.x.x*
 
 - 01/30/2017 - 2.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/29/2017 - 2.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
