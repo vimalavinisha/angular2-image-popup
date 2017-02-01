@@ -68,7 +68,7 @@ export class Image {
         </div>
         <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
         <a class="nav-left" *ngIf="modalImages.length >1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
-        <img *ngIf="!loading" src="{{ imgSrc }}" (click)="nextImage(Action.CLICK)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
+        <img *ngIf="!loading" src="{{ imgSrc }}" (click)="nextImage(clickAction)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
         <a class="nav-right" *ngIf="modalImages.length >1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
         <span class="info-text">{{ currentImageIndex + 1 }}/{{ modalImages.length
           }} - {{ modalImages[currentImageIndex].description }}</span>
@@ -80,8 +80,14 @@ export class AngularModalGallery implements OnInit {
   opened: boolean = false;
   loading: boolean = false;
   showRepeat: boolean = false;
-  currentImageIndex: number = 0;
   imgSrc: string;
+
+  // enum action used to pass a click action
+  // when you clicks over the modal image.
+  // Declared here  to use it in the template.
+  clickAction: Action = Action.CLICK;
+
+  currentImageIndex: number = 0;
 
   private SWIPE_ACTION = {
     LEFT: 'swipeleft',
@@ -93,7 +99,9 @@ export class AngularModalGallery implements OnInit {
   private KEYBOARD = {
     ESC: 27,
     LEFT_ARROW: 37,
-    RIGHT_ARROW: 39
+    RIGHT_ARROW: 39,
+    UP_ARROW: 38,
+    DOWN_ARROW: 40
   };
 
   @Input() modalImages: Image[];
@@ -133,11 +141,17 @@ export class AngularModalGallery implements OnInit {
 
   // hammerjs touch gestures support
   swipe(index: number, action = this.SWIPE_ACTION.RIGHT) {
-    if (action === this.SWIPE_ACTION.RIGHT) {
-      this.nextImage(Action.SWIPE);
-    }
-    if (action === this.SWIPE_ACTION.LEFT) {
-      this.prevImage(Action.SWIPE);
+    switch(action) {
+      case this.SWIPE_ACTION.RIGHT:
+        this.nextImage(Action.SWIPE);
+        break;
+      case this.SWIPE_ACTION.LEFT:
+        this.prevImage(Action.SWIPE);
+        break;
+      // case this.SWIPE_ACTION.UP:
+      //   break;
+      // case this.SWIPE_ACTION.DOWN:
+      //   break;
     }
   }
 
@@ -165,47 +179,49 @@ export class AngularModalGallery implements OnInit {
     this.loading = false;
   }
 
-  private nextIndex(action: Action, index: number) {
-    //example with modalImages.length == 3 (3 images in your gallery)
-    //index index++ result
-    // -2     -1      -1
-    // -1     0       0
-    //  0     1       1
-    //  1     2       2
-    //  2     3       0
-    //  3     4       4
-    //  4     5       5
-    //  5     6       6
-    //  6     7       7
-    index++;
-    if (this.modalImages.length === index) {
-      // at the end of the gallery, so restart from the beginning (nextIndex => 0)
-      this.isLastImage.emit(new ImageModalEvent(action, true));
-      index = 0;
+  private nextIndex(action: Action, currentIndex: number) {
+    let nextIndex: number = 0;
+    if(currentIndex >= 0 && currentIndex < this.modalImages.length - 1) {
+      nextIndex = currentIndex + 1;
+    } else {
+      nextIndex = 0; // start from the first index
     }
-    this.visibleIndex.emit(new ImageModalEvent(action, index));
-    return index;
+
+    // emit first/last event based on nextIndex value
+    this.emitBoundaryEvent(action, nextIndex);
+
+    // emit current visibile image index
+    this.visibleIndex.emit(new ImageModalEvent(action, nextIndex));
+
+    return nextIndex;
   }
 
-  private prevIndex(action: Action, index: number) {
-    //example with modalImages.length == 3 (3 images in your gallery)
-    //index index-- result
-    // -2      -3     2
-    // -1      -2     2
-    //  0      -1     2
-    //  1      0      0
-    //  2      1      1
-    //  3      2      2
-    //  4      3      3
-    //  5      4      4
-    //  6      5      5
-    index--;
-    if(index === 0) {
-      this.isFirstImage.emit(new ImageModalEvent(action, true));
-    } else if (index < 0) {
-      index = this.modalImages.length - 1;
+  private prevIndex(action: Action, currentIndex: number) {
+    let nextIndex: number = 0;
+    if(currentIndex > 0 && currentIndex <= this.modalImages.length - 1) {
+      nextIndex = currentIndex - 1;
+    } else {
+      nextIndex = this.modalImages.length - 1; // start from the last index
     }
-    this.visibleIndex.emit(new ImageModalEvent(action, index));
-    return index;
+
+    // emit first/last event based on nextIndex value
+    this.emitBoundaryEvent(action, nextIndex);
+
+    // emit current visibile image index
+    this.visibleIndex.emit(new ImageModalEvent(action, nextIndex));
+
+    return nextIndex;
+  }
+
+  private emitBoundaryEvent(action: Action, indexToCheck: number) {
+    // to emit first/last event
+    switch(indexToCheck) {
+      case 0:
+        this.isFirstImage.emit(new ImageModalEvent(action, true));
+        break;
+      case this.modalImages.length - 1:
+        this.isLastImage.emit(new ImageModalEvent(action, true));
+        break;
+    }
   }
 }
