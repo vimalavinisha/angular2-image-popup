@@ -23,20 +23,24 @@
  SOFTWARE.
  */
 
-import { NgModule }           from '@angular/core';
-import { BrowserModule }      from '@angular/platform-browser';
+import {NgModule}           from '@angular/core';
+import {BrowserModule}      from '@angular/platform-browser';
 
-import 'hammerjs';
+// ********************** angular-modal-gallery *****************************
+import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs @types/hammerjs`)
 
-import { AppComponent }       from './app.component';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import {ModalGalleryModule} from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+// **************************************************************************
+
+import {AppComponent}       from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    ModalGalleryModule.forRoot()
+    ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

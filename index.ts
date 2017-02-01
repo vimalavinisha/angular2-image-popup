@@ -26,6 +26,10 @@ import {NgModule, ModuleWithProviders} from '@angular/core';
 import {AngularModalGalleryModule} from './src/angular-modal-gallery.module';
 export {AngularModalGalleryModule} from './src/angular-modal-gallery.module';
 
+export {Action} from './src/angular-modal-gallery.component';
+export {ImageModalEvent} from './src/angular-modal-gallery.component';
+export {Image} from './src/angular-modal-gallery.component';
+
 import './styles/style.css'
 
 @NgModule({
@@ -36,7 +40,8 @@ import './styles/style.css'
     AngularModalGalleryModule
   ]
 })
-export class AngulaRootModalGalleryModule {}
+export class AngulaRootModalGalleryModule {
+}
 
 
 @NgModule({

@@ -25,6 +25,32 @@
 
 import {OnInit, Input, Output, EventEmitter, HostListener, Component} from '@angular/core';
 
+export enum Action {
+  NORMAL, // default value
+  KEYBOARD,
+  SWIPE
+}
+
+export class ImageModalEvent {
+  action: Action;
+  result: number | boolean;
+  constructor(action: Action, result: number | boolean) {
+    this.action = action;
+    this.result = result;
+  }
+}
+
+export class Image {
+  thumb: string;
+  img: string;
+  description: string;
+  constructor(thumb: string, img: string, description: string) {
+    this.thumb = thumb;
+    this.img = img;
+    this.description = description;
+  }
+}
+
 @Component({
   selector: 'imageModal',
   exportAs: 'imageModal',
@@ -67,9 +93,13 @@ export class AngularModalGallery implements OnInit {
     RIGHT_ARROW: 39
   };
 
-  @Input() modalImages: any;
+  @Input() modalImages: Image[];
   @Input() imagePointer: number;
-  @Output() cancelEvent = new EventEmitter<boolean>();
+
+  @Output() isClosed = new EventEmitter<ImageModalEvent>();
+  @Output() visibleIndex = new EventEmitter<ImageModalEvent>();
+  @Output() isFirstImage = new EventEmitter<ImageModalEvent>();
+  @Output() isLastImage = new EventEmitter<ImageModalEvent>();
 
   @HostListener('window:keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
     if (!this.opened) {
@@ -77,13 +107,13 @@ export class AngularModalGallery implements OnInit {
     }
     switch (e.keyCode) {
       case this.KEYBOARD.ESC:
-        this.closeGallery();
+        this.closeGallery(Action.KEYBOARD);
         break;
       case this.KEYBOARD.RIGHT_ARROW:
-        this.nextImage();
+        this.nextImage(Action.KEYBOARD);
         break;
       case this.KEYBOARD.LEFT_ARROW:
-        this.prevImage();
+        this.prevImage(Action.KEYBOARD);
         break;
     }
   }
@@ -101,27 +131,27 @@ export class AngularModalGallery implements OnInit {
   // hammerjs touch gestures support
   swipe(index: number, action = this.SWIPE_ACTION.RIGHT) {
     if (action === this.SWIPE_ACTION.RIGHT) {
-      this.nextImage();
+      this.nextImage(Action.SWIPE);
     }
     if (action === this.SWIPE_ACTION.LEFT) {
-      this.prevImage();
+      this.prevImage(Action.SWIPE);
     }
   }
 
-  closeGallery() {
+  closeGallery(action: Action = Action.NORMAL) {
     this.opened = false;
-    this.cancelEvent.emit(true);
+    this.isClosed.emit(new ImageModalEvent(action, true));
   }
 
-  prevImage() {
+  prevImage(action: Action = Action.NORMAL) {
     this.loading = true;
-    this.currentImageIndex = this.prevIndex(this.currentImageIndex);
+    this.currentImageIndex = this.prevIndex(action, this.currentImageIndex);
     this.openGallery(this.currentImageIndex);
   }
 
-  nextImage() {
+  nextImage(action: Action = Action.NORMAL) {
     this.loading = true;
-    this.currentImageIndex = this.nextIndex(this.currentImageIndex);
+    this.currentImageIndex = this.nextIndex(action, this.currentImageIndex);
     this.openGallery(this.currentImageIndex);
   }
 
@@ -132,7 +162,7 @@ export class AngularModalGallery implements OnInit {
     this.loading = false;
   }
 
-  private nextIndex(index: number) {
+  private nextIndex(action: Action, index: number) {
     //example with modalImages.length == 3 (3 images in your gallery)
     //index index++ result
     // -2     -1      -1
@@ -147,12 +177,14 @@ export class AngularModalGallery implements OnInit {
     index++;
     if (this.modalImages.length === index) {
       // at the end of the gallery, so restart from the beginning (nextIndex => 0)
-      return 0;
+      this.isLastImage.emit(new ImageModalEvent(action, true));
+      index = 0;
     }
+    this.visibleIndex.emit(new ImageModalEvent(action, index));
     return index;
   }
 
-  private prevIndex(index: number) {
+  private prevIndex(action: Action, index: number) {
     //example with modalImages.length == 3 (3 images in your gallery)
     //index index-- result
     // -2      -3     2
@@ -165,9 +197,12 @@ export class AngularModalGallery implements OnInit {
     //  5      4      4
     //  6      5      5
     index--;
-    if (index < 0) {
+    if(index === 0) {
+      this.isFirstImage.emit(new ImageModalEvent(action, true));
+    } else if (index < 0) {
       index = this.modalImages.length - 1;
     }
+    this.visibleIndex.emit(new ImageModalEvent(action, index));
     return index;
   }
 }
