@@ -27,6 +27,7 @@ import {OnInit, Input, Output, EventEmitter, HostListener, Component} from '@ang
 
 export enum Action {
   NORMAL, // default value
+  CLICK, // mouse click
   KEYBOARD,
   SWIPE
 }
@@ -67,7 +68,7 @@ export class Image {
         </div>
         <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
         <a class="nav-left" *ngIf="modalImages.length >1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
-        <img *ngIf="!loading" src="{{ imgSrc }}" (click)="nextImage()" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
+        <img *ngIf="!loading" src="{{ imgSrc }}" (click)="nextImage(Action.CLICK)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
         <a class="nav-right" *ngIf="modalImages.length >1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
         <span class="info-text">{{ currentImageIndex + 1 }}/{{ modalImages.length
           }} - {{ modalImages[currentImageIndex].description }}</span>
@@ -84,7 +85,9 @@ export class AngularModalGallery implements OnInit {
 
   private SWIPE_ACTION = {
     LEFT: 'swipeleft',
-    RIGHT: 'swiperight'
+    RIGHT: 'swiperight',
+    UP: 'swipeup',
+    DOWN: 'swipedown'
   };
 
   private KEYBOARD = {
