@@ -25,15 +25,6 @@
     "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp dist demo/systemjs/node_modules/angular-modal-gallery",
     "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp dist demo/webpack/node_modules/angular-modal-gallery"
   },
-  "peerDependencies": {
-    "@angular/common": "~2.0.0",
-    "@angular/compiler": "~2.0.0",
-    "@angular/core": "~2.0.0",
-    "@angular/platform-browser": "~2.0.0",
-    "@types/hammerjs": "~2.0.0",
-    "hammerjs": "~2.0.0",
-    "font-awesome": "^4.7.0"
-  },
   "dependencies": {
     "@angular/common": "^2.4.5",
     "@angular/compiler": "^2.4.5",
@@ -41,7 +32,9 @@
     "@angular/platform-browser": "^2.4.5",
     "@angular/platform-browser-dynamic": "^2.4.5",
     "core-js": "^2.4.1",
-    "font-awesome": "^4.6.3",
+    "@types/hammerjs": "~2.0.0",
+    "hammerjs": "~2.0.0",
+    "font-awesome": "^4.7.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "^5.0.3",
     "zone.js": "^0.7.6"

@@ -9,7 +9,9 @@
     "module": "es2015",
     "moduleResolution": "node",
     "paths": {
-      "@angular/core": ["node_modules/@angular/core"]
+      "@angular/core": [
+        "node_modules/@angular/core"
+      ]
     },
     "rootDir": ".",
     "outDir": "dist",

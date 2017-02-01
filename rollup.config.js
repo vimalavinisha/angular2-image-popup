@@ -28,10 +28,10 @@ export default {
   entry     : 'dist/index.js',
   dest      : 'dist/bundles/angular-modal-gallery.umd.js',
   format    : 'umd',
-  sourceMap: false,
+  sourceMap : false,
   globals   : {
-    '@angular/core': 'ng.core',
-    '@angular/common': 'ng.common'
+    '@angular/core'   : 'ng.core',
+    '@angular/common' : 'ng.common'
   },
   // external: [
   //   '@angular/core',
