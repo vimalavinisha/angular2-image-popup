@@ -1,9 +1,9 @@
 {
-  "name": "angular-modal-gallery-webpack2-demo",
-  "version": "2.0.2",
+  "name": "angular-modal-gallery-webpack-demo",
+  "version": "3.0.0",
   "author": "Stefano Cappa",
   "description": "based on https://github.com/Ks89/Angular2-webpack2-skeleton",
-  "license": "Apache-v2",
+  "license": "MIT",
   "main": "src/main.ts",
   "homepage": "https://www.stefanocappa.it",
   "private": true,

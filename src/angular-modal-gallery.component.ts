@@ -53,8 +53,8 @@ export class Image {
 }
 
 @Component({
-  selector: 'imageModal',
-  exportAs: 'imageModal',
+  selector: 'image-modal',
+  exportAs: 'image-modal',
   template: `
     <div class="ng-gallery" *ngIf="showRepeat">
       <div *ngFor="let i of modalImages; let index = index">

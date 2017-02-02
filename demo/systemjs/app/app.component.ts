@@ -25,24 +25,27 @@
 
 import {Component} from '@angular/core';
 
-import {Action} from 'angular-modal-gallery';
-import {ImageModalEvent} from 'angular-modal-gallery';
-import {Image} from "angular-modal-gallery";
+import {Image, Action, ImageModalEvent} from 'angular-modal-gallery';
 
 @Component({
   selector: 'my-app',
   styleUrls: ['./app/main.css'],
   template: `
-    <h2> Example - Default</h2>
-    <p> you can directly access "ImageModal" directive for both listing thumbnails and popup images</p>
-
-    <imageModal [modalImages]="images"
+    <h3>Example</h3>
+    <br>
+    <p> You can directly access "ImageModal" directive with "image-modal" for both listing thumbnails and popup images</p>
+    <br>
+    <image-modal [modalImages]="images"
                 (isClosed)="onCloseImageModal($event)"
                 (visibleIndex)="onVisibleIndex($event)"
                 (isFirstImage)="onIsFirstImage($event)"
-                (isLastImage)="onIsLastImage($event)"></imageModal>
-    <h2> Example with thumbnail pointers </h2>
-    <p> you can list images in your file and then calling "ImageModal" directive to show images on popup only</p>
+                (isLastImage)="onIsLastImage($event)"></image-modal>
+
+    <br>
+    <h3>Example with thumbnail pointers</h3>
+    <br>
+    <p> You can list images and then calling "image-modal" directive to show images on popup only</p>
+    <br>
     <div *ngFor="let img of images; let i= index">
       <div class="float-left" *ngIf="i <= 2">
         <a class="more" *ngIf="i==2" (click)="openImageModal(img.img, images)"> +{{images.length - 3}} more </a>
@@ -50,11 +53,11 @@ import {Image} from "angular-modal-gallery";
       </div>
     </div>
     <div *ngIf="openModalWindow">
-      <imageModal [modalImages]="images" [imagePointer]="imagePointer"
+      <image-modal [modalImages]="images" [imagePointer]="imagePointer"
                   (isClosed)="onCloseImageModal($event)"
                   (visibleIndex)="onVisibleIndex($event)"
                   (isFirstImage)="onIsFirstImage($event)"
-                  (isLastImage)="onIsLastImage($event)"></imageModal>
+                  (isLastImage)="onIsLastImage($event)"></image-modal>
     </div>
   `
 })

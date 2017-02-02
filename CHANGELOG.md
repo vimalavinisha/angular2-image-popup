@@ -1,3 +1,8 @@
+# 3.0.0
+
+COMING SOON
+
+
 # 2.0.2
 ### Developers and users of this library
 - description is now displayed correctly (issue #21)

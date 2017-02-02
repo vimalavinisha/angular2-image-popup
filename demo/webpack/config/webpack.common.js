@@ -18,7 +18,7 @@ const ChunkManifestPlugin          = require('chunk-manifest-webpack-plugin');
 const ngcWebpack                   = require('ngc-webpack');
 
 const helpers                      = require('./helpers');
-const TITLE                        = 'My MEAN Website';
+const TITLE                        = 'angular-modal-gallery demo';
 const TEMPLATE_PATH                = './src/index.ejs';
 const TEMPLATE_HTML                = 'index.html';
 
