@@ -33,6 +33,18 @@
                         (isLastImage)="onIsLastImage($event)"></image-modal>
           </div>
         </section>
+        <section id="Images3">
+          <br>
+          <h3>Example with only one image</h3>
+          <br>
+          <p> You can show an image gallery with only a single image</p>
+          <br>
+          <image-modal [modalImages]="singleImage"
+                       (isClosed)="onCloseImageModal($event)"
+                       (visibleIndex)="onVisibleIndex($event)"
+                       (isFirstImage)="onIsFirstImage($event)"
+                       (isLastImage)="onIsLastImage($event)"></image-modal>
+        </section>
       </div>
     </div>
   </div>

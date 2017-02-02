@@ -63,6 +63,8 @@ export class HomeComponent {
     )
   ];
 
+  singleImage: Image[] = [ this.images[0] ]; // array with a single image inside (the first one)
+
   openImageModal(imageSrc: string, images: Image[]) {
     let imageModalPointer;
     for (let i = 0; i < images.length; i++) {
