@@ -40,7 +40,6 @@ import {Image, Action, ImageModalEvent} from 'angular-modal-gallery';
                 (visibleIndex)="onVisibleIndex($event)"
                 (isFirstImage)="onIsFirstImage($event)"
                 (isLastImage)="onIsLastImage($event)"></image-modal>
-
     <br>
     <h3>Example with thumbnail pointers</h3>
     <br>
@@ -59,6 +58,16 @@ import {Image, Action, ImageModalEvent} from 'angular-modal-gallery';
                   (isFirstImage)="onIsFirstImage($event)"
                   (isLastImage)="onIsLastImage($event)"></image-modal>
     </div>
+    <br>
+    <h3>Example with only one image</h3>
+    <br>
+    <p> You can show an image gallery with only a single image</p>
+    <br>
+    <image-modal [modalImages]="singleImage"
+                 (isClosed)="onCloseImageModal($event)"
+                 (visibleIndex)="onVisibleIndex($event)"
+                 (isFirstImage)="onIsFirstImage($event)"
+                 (isLastImage)="onIsLastImage($event)"></image-modal>
   `
 })
 export class AppComponent {
@@ -92,6 +101,8 @@ export class AppComponent {
       'Image 5'
     )
   ];
+
+  singleImage: Image[] = [ this.images[0] ]; // array with a single image inside (the first one)
 
   openImageModal(imageSrc: string, images: Image[]) {
     let imageModalPointer;
