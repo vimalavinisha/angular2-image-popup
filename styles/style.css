@@ -87,26 +87,30 @@ img.ng-thumb {
   right: 63px;
 }
 
-.ng-gallery-content > a.nav-left, .ng-gallery-content > a.nav-right {
-  color: #fff !important;
-  text-decoration: none;
-  font-size: 60px;
-  cursor: pointer;
-  outline: none;
-}
+@media only screen and (min-width: 768px) {
 
-.ng-gallery-content > a.nav-left {
-  position: fixed;
-  left: 30px;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  .ng-gallery-content > a.nav-left, .ng-gallery-content > a.nav-right {
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 60px;
+    cursor: pointer;
+    outline: none;
+  }
 
-.ng-gallery-content > a.nav-right {
-  position: fixed;
-  right: 30px;
-  top: 50%;
-  transform: translateY(-50%);
+  .ng-gallery-content > a.nav-left {
+    position: fixed;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .ng-gallery-content > a.nav-right {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
 }
 
 .ng-gallery-content > img {
