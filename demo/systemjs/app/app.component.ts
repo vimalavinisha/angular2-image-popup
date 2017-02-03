@@ -31,43 +31,50 @@ import {Image, Action, ImageModalEvent} from 'angular-modal-gallery';
   selector: 'my-app',
   styleUrls: ['./app/main.css'],
   template: `
-    <h3>Example</h3>
-    <br>
-    <p> You can directly access "ImageModal" directive with "image-modal" for both listing thumbnails and popup images</p>
-    <br>
-    <image-modal [modalImages]="images"
-                (isClosed)="onCloseImageModal($event)"
-                (visibleIndex)="onVisibleIndex($event)"
-                (isFirstImage)="onIsFirstImage($event)"
-                (isLastImage)="onIsLastImage($event)"></image-modal>
-    <br>
-    <h3>Example with thumbnail pointers</h3>
-    <br>
-    <p> You can list images and then calling "image-modal" directive to show images on popup only</p>
-    <br>
-    <div *ngFor="let img of images; let i= index">
-      <div class="float-left" *ngIf="i <= 2">
-        <a class="more" *ngIf="i==2" (click)="openImageModal(img.img, images)"> +{{images.length - 3}} more </a>
-        <img class="list-img" src="{{img.thumb}}" (click)="openImageModal(img.img, images)" alt='Image'/>
+    <section id="Images">
+      <h3>Example</h3>
+      <br>
+      <p> You can directly access "ImageModal" directive with "image-modal" for both listing thumbnails and popup images</p>
+      <br>
+      <image-modal [modalImages]="images"
+                   (isClosed)="onCloseImageModal($event)"
+                   (visibleIndex)="onVisibleIndex($event)"
+                   (isFirstImage)="onIsFirstImage($event)"
+                   (isLastImage)="onIsLastImage($event)"></image-modal>
+    </section>
+    <section id="Images2">
+      <br>
+      <h3>Example with only one image</h3>
+      <br>
+      <p> You can show an image gallery with only a single image</p>
+      <br>
+      <image-modal [modalImages]="singleImage"
+                   (isClosed)="onCloseImageModal($event)"
+                   (visibleIndex)="onVisibleIndex($event)"
+                   (isFirstImage)="onIsFirstImage($event)"
+                   (isLastImage)="onIsLastImage($event)"></image-modal>
+    </section>
+
+    <section id="Images3">
+      <br>
+      <h3>Example with thumbnail pointers</h3>
+      <br>
+      <p> You can list images and then calling "image-modal" directive to show images on popup only</p>
+      <br>
+      <div *ngFor="let img of images; let i= index">
+        <div class="float-left" *ngIf="i <= 2">
+          <a class="more" *ngIf="i==2" (click)="openImageModal(img.img, images)"> +{{images.length - 3}} more </a>
+          <img class="list-img" src="{{img.thumb}}" (click)="openImageModal(img.img, images)" alt='Image'/>
+        </div>
       </div>
-    </div>
-    <div *ngIf="openModalWindow">
-      <image-modal [modalImages]="images" [imagePointer]="imagePointer"
-                  (isClosed)="onCloseImageModal($event)"
-                  (visibleIndex)="onVisibleIndex($event)"
-                  (isFirstImage)="onIsFirstImage($event)"
-                  (isLastImage)="onIsLastImage($event)"></image-modal>
-    </div>
-    <br>
-    <h3>Example with only one image</h3>
-    <br>
-    <p> You can show an image gallery with only a single image</p>
-    <br>
-    <image-modal [modalImages]="singleImage"
-                 (isClosed)="onCloseImageModal($event)"
-                 (visibleIndex)="onVisibleIndex($event)"
-                 (isFirstImage)="onIsFirstImage($event)"
-                 (isLastImage)="onIsLastImage($event)"></image-modal>
+      <div *ngIf="openModalWindow">
+        <image-modal [modalImages]="images" [imagePointer]="imagePointer"
+                     (isClosed)="onCloseImageModal($event)"
+                     (visibleIndex)="onVisibleIndex($event)"
+                     (isFirstImage)="onIsFirstImage($event)"
+                     (isLastImage)="onIsLastImage($event)"></image-modal>
+      </div>
+    </section>
   `
 })
 export class AppComponent {
