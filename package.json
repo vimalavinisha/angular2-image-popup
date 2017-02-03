@@ -19,10 +19,11 @@
     "copy:styles": "ncp styles dist/styles",
     "prebuild": "npm run clean:all",
     "build": "npm run ngc && npm run copy:styles && npm run rollup && npm run minify",
-    "postbuild": "npm run copyfiles:dist:packagejson && npm run copyfiles:dist && npm run copy:demo:systemjs && npm run copy:demo:webpack",
+    "postbuild": "npm run copyfiles:dist:packagejson && npm run copyfiles:dist && npm run copy:demo:systemjs && npm run copy:demo:angularcli && npm run copy:demo:webpack",
     "copyfiles:dist:packagejson": "copyfiles package.json dist",
     "copyfiles:dist": "copyfiles LICENSE README.md dist",
     "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp dist demo/systemjs/node_modules/angular-modal-gallery",
+    "copy:demo:angularcli": "mkdirp demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery && ncp dist demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery",
     "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp dist demo/webpack/node_modules/angular-modal-gallery"
   },
   "dependencies": {
