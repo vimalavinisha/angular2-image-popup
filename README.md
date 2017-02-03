@@ -6,8 +6,8 @@
 
 # Angular modal gallery
 
-An Angular library to create an image gallery of clickable thumbnails. After a click, it displays a modal window with the large image.
-It's also possible to navigate between these images with keyboard arrows and close it pressing `esc`.
+An Angular library to create an image gallery of clickable thumbnails. After a click, it will display a modal window with full screen images.
+It's also possible to navigate between these images with both keyboard arrows, swipe gestures and mouse clicks and close it pressing `esc`.
 More features coming soon!
 
 This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/angular2-image-popup).
@@ -19,17 +19,24 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 *Image loading could be slow, because this demo is hosted on Github pages*
 
-[GO HERE FOR A DEMO](https://ks89.github.io/angular-modal-gallery/)
+[CLICK HERE FOR A DEMO](https://ks89.github.io/angular-modal-gallery/)
+
+
+## Requirements
+- [hammerjs](http://hammerjs.github.io/) => install it with `npm install --save hammerjs @types/hammerjs`
+- `npm install --save font-awesome`
 
 
 ## Installation
-
+- `npm install --save font-awesome`
+- `npm install --save hammerjs @types/hammerjs`
 - `npm install --save angular-modal-gallery`
 - `npm install --save hammerjs @types/hammerjs` (not requested in version 2.x.x, but it will be mandatory with 3.x.x)
 
 
 ## News
 
+<<<<<<< HEAD
 **Version 3.0.0 - work in progress** with some breaking changes [PREVIEW HERE](https://github.com/Ks89/angular-modal-gallery/tree/develop).<br>
 *I'll write a tutorial to migrate from 2.x.x to 3.x.x*
 
@@ -40,14 +47,15 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 
 ## Features
-- Angular module with a directive inside to display an image gallery
+- Angular module to import this library
+- Angular component to display the image gallery
 - AOT support
-- Angular >=2 (it's also working with Angular 4 beta)
-- Tested with Webpack2 + Treeshaking and also inside a Lazy loaded module
+- Angular >=2 (it's also working with Angular 4 beta, as you can see in `demo/webpack`)
+- Tested with Webpack2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - and so on...
 
 
-## How to use?
+## How to use it? (TODO update this chapter to 3.0.0)
 
 ### Webpack
 
