@@ -13,27 +13,34 @@ If you want to help me, modify the source code, but before to create a pull requ
 8. `cd demo/webpack`
 9. `npm install`
 10. `cd ../..`
-11. `npm run build`
-12. `cd demo/systemjs`
-13. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-14. `cd ../..`
-15. `cd demo/webpack`
+11. `cd demo/angular-cli/angular-modal-gallery-angularcli-demo`
+12. `npm install`
+13. `cd ../../..`
+14. `npm run build`
+15. `cd demo/systemjs`
 16. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-17. `npm run build:dev`
-18. `cd dist`
-19. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-20. `cd ..`
-21. `npm run build:prod`
-22. `cd dist`
-23. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-24. `cd ..`
-25. `npm run build:prod:aot` (if necessary re-follow these steps: 4,8,9,10,11,15,25)
-26. `cd dist`
-27. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-28. `cd ..`
-29. `npm run build:github:aot` => you can't try this, you only need to verify that the build process is ok
-30. `npm test` (not mandatory at the moment, because it's still not implemented)
-31. If it is ok, create your pull request.
+17. `cd ../..`
+18. `cd demo/webpack`
+19. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+20. `npm run build:dev`
+21. `cd dist`
+22. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+23. `cd ..`
+24. `npm run build:prod`
+25. `cd dist`
+26. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+27. `cd ..`
+28. `npm run build:prod:aot` (if necessary re-follow these steps: 4,8,9,10,11,15,25)
+29. `cd dist`
+30. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+31. `cd ..`
+32. `npm run build:github:aot` => you can't try this, you only need to verify that the build process is ok
+33. `npm test` (not mandatory at the moment, because it's still not implemented)
+34. `cd ../..`
+35. `cd demo/angular-cli/angular-modal-gallery-angularcli-demo`
+36. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+37. `npm test` (not mandatory at the moment)
+38. If it is ok, create your pull request.
 
 
 

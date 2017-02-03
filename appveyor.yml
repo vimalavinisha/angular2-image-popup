@@ -135,6 +135,10 @@ build_script:
   - npm run build:prod
   - npm run build:prod:aot
   - npm run build:github:aot
+  # run test with angular-cli (TODO add build)
+  - cd ../..
+  - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+  - npm test
 
 
 #---------------------------------#

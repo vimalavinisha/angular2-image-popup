@@ -19,4 +19,9 @@ npm run build:prod
 npm run build:prod:aot
 npm run build:github:aot
 
+echo "building official angular-cli example on $TRAVIS_OS_NAME"
+cd ../..
+cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+npm test # (TODO run build)
+
 #npm run test
