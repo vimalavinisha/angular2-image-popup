@@ -27,6 +27,7 @@ System.config({
   transpiler: 'typescript',
   typescriptOptions: {
     emitDecoratorMetadata: true,
+    "experimentalDecorators": true,
     target: "ES5",
     module: "commonjs"
   },
