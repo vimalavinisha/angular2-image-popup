@@ -52,6 +52,14 @@ export class Image {
   }
 }
 
+export enum KEYBOARD {
+  ESC = 27,
+  LEFT_ARROW = 37,
+  RIGHT_ARROW = 39,
+  UP_ARROW = 38,
+  DOWN_ARROW = 40
+};
+
 @Component({
   selector: 'image-modal',
   exportAs: 'image-modal',
@@ -96,14 +104,6 @@ export class AngularModalGallery implements OnInit {
     DOWN: 'swipedown'
   };
 
-  private KEYBOARD = {
-    ESC: 27,
-    LEFT_ARROW: 37,
-    RIGHT_ARROW: 39,
-    UP_ARROW: 38,
-    DOWN_ARROW: 40
-  };
-
   @Input() modalImages: Image[];
   @Input() imagePointer: number;
 
@@ -112,18 +112,19 @@ export class AngularModalGallery implements OnInit {
   @Output() isFirstImage = new EventEmitter<ImageModalEvent>();
   @Output() isLastImage = new EventEmitter<ImageModalEvent>();
 
-  @HostListener('window:keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(e: KeyboardEvent) {
     if (!this.opened) {
       return;
     }
     switch (e.keyCode) {
-      case this.KEYBOARD.ESC:
+      case KEYBOARD.ESC:
         this.closeGallery(Action.KEYBOARD);
         break;
-      case this.KEYBOARD.RIGHT_ARROW:
+      case KEYBOARD.RIGHT_ARROW:
         this.nextImage(Action.KEYBOARD);
         break;
-      case this.KEYBOARD.LEFT_ARROW:
+      case KEYBOARD.LEFT_ARROW:
         this.prevImage(Action.KEYBOARD);
         break;
     }
