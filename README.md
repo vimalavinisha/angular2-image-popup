@@ -65,20 +65,12 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
     import { ModalGalleryModule } from 'angular-modal-gallery';     <--- import this library
 
     @NgModule({
-      imports: [
-        ...
-        ModalGalleryModule.forRoot()    <--- add this in 'imports'
-    ],
-      declarations: [
-        ...
-      ],
-      providers: [],
+      imports: [ ModalGalleryModule.forRoot() ],   <--- add this in 'imports'
+      declarations: [ ... ],
+      providers: [ ... ],
       bootstrap: [ ... ]
     })
-
-    export class AppModule {
-    ...
-    }
+    export class AppModule {}
     ```
 
 2. In you component (file .ts)
@@ -92,7 +84,6 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
       templateUrl: 'home.html'
     })
     export class HomeComponent {
-
       openModalWindow: boolean = false;
       imagePointer: number;
       images = [                                <--- array with your images thumbs + img + description
@@ -108,7 +99,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
         }
       ];
 
-      openImageModal(imageSrc, images) {
+      openImageModal(imageSrc, images) {        <-- optional if you want to display you gallery with (+ button)
         let imageModalPointer;
         for (let i = 0; i < images.length; i++) {
           if (imageSrc === images[i].img) {
@@ -198,10 +189,7 @@ However, I really recommend to try the official webpack example available in `de
 
     ```
     <html>
-
       <head>
-        ...
-
         <!-- at the end, but before <script src="systemjs.config.js"></script> -->
         <!-- Required css to use this library -->
         <link rel="stylesheet" type="text/css" href="node_modules/angular-modal-gallery/styles/style.css">
@@ -213,7 +201,6 @@ However, I really recommend to try the official webpack example available in `de
           });
         </script>
       </head>
-
       <body>
         <my-app>Loading...</my-app>
       </body>
@@ -223,18 +210,13 @@ However, I really recommend to try the official webpack example available in `de
 3. In yout main module add:
 
     ```
-    import { ModalGalleryModule } from 'angular-modal-gallery';     <--- import this library
-
+    import { ModalGalleryModule } from 'angular-modal-gallery';    <--- import this library
     @NgModule({
-      declarations: [...],
-      imports: [
-        ...
-        ModalGalleryModule.forRoot()    <--- add this in 'imports'
-      ],
-      bootstrap: [...],
+      declarations: [ ... ],
+      imports: [ ModalGalleryModule.forRoot() ],                   <--- add this in 'imports'
+      bootstrap: [ ... ],
     })
-    export class AppModule {
-    }
+    export class AppModule {}
     ```
 
 
@@ -249,7 +231,6 @@ However, I really recommend to try the official webpack example available in `de
       templateUrl: 'app.html'
     })
     export class HomeComponent {
-
       openModalWindow: boolean = false;
       imagePointer: number;
       images = [                                <--- array with your images thumbs + img + description
@@ -320,7 +301,7 @@ To be able to run it follow these steps
 2. `npm run clean:all`
 3. `cd demo/webpack`
 4. `npm install`
-5. `cd ../..`
+5. `cd ../..` (go back to the root of this project)
 6. `npm run build`
 7. `cd demo/webpack`
 8. `npm start`
@@ -348,7 +329,7 @@ To be able to run it follow these steps
 2. `npm run clean:all`
 3. `cd demo/systemjs`
 4. `npm install`
-5. `cd ../..`
+5. `cd ../..` (go back to the root of this project)
 6. `npm run build`
 7. `cd demo/systemjs`
 8. `npm start`
