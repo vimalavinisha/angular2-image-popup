@@ -63,7 +63,7 @@ export class ImageModal implements OnInit {
     this.openGallery(this.currentImageIndex);
 
   }
-  openGallery(index) {
+  openGallery(index: number) {
     if(!index) {
     this.currentImageIndex = 1;
     }
