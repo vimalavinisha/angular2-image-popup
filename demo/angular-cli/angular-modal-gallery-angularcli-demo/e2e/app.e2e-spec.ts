@@ -7,8 +7,8 @@ describe('angular-modal-gallery-angularcli-demo App', function() {
     page = new AngularModalGalleryAngularcliDemoPage();
   });
 
-  it('should navigate', () => {
+  it('should display message saying app works', () => {
     page.navigateTo();
-    //expect(page.getParagraphText()).toEqual('app works!');
+    // expect(page.getParagraphText()).toEqual('app works!');
   });
 });
