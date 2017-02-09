@@ -29,72 +29,99 @@ import {Image, Action, ImageModalEvent} from 'angular-modal-gallery';
 import {Observable, Subscription} from "rxjs";
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/share';
 
 @Component({
   selector: 'my-app',
   styleUrls: ['./app/main.css'],
   template: `
     <section id="Images">
-      <h3>Example of an Observable of images with delay(300)</h3>
-      <p> You can directly access "ImageModal" directive with "image-modal" for both listing thumbnails and popup images</p>
+      <h3>1 - Example of an Observable of images with delay(300)</h3>
+      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup images</p>
       <br>
-      <image-modal [modalImages]="images"
+      <imageModal [modalImages]="images"
+                   (isImagesLoaded)="onImageLoaded($event)"
                    (isClosed)="onCloseImageModal($event)"
                    (visibleIndex)="onVisibleIndex($event)"
                    (isFirstImage)="onIsFirstImage($event)"
-                   (isLastImage)="onIsLastImage($event)"></image-modal>
+                   (isLastImage)="onIsLastImage($event)"></imageModal>
     </section>
-    <section id="Images">
-      <h3>Example of an array of images</h3>
-      <p> You can directly access "ImageModal" directive with "image-modal" for both listing thumbnails and popup images</p>
+    <section id="Images1">
+      <h3>2 - Example of an array of images</h3>
+      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup images</p>
       <br>
-      <image-modal [modalImages]="imagesArray"
+      <imageModal [modalImages]="imagesArray"
+                   (isImagesLoaded)="onImageLoaded($event)"
                    (isClosed)="onCloseImageModal($event)"
                    (visibleIndex)="onVisibleIndex($event)"
                    (isFirstImage)="onIsFirstImage($event)"
-                   (isLastImage)="onIsLastImage($event)"></image-modal>
+                   (isLastImage)="onIsLastImage($event)"></imageModal>
     </section>
     <section id="Images2">
       <br>
-      <h3>Example with only one image</h3>
+      <h3>3 - Example with only one image</h3>
       <p> You can show an image gallery with only a single image</p>
       <br>
-      <image-modal [modalImages]="singleImage"
+      <imageModal [modalImages]="singleImage"
+                   (isImagesLoaded)="onImageLoaded($event)"
                    (isClosed)="onCloseImageModal($event)"
                    (visibleIndex)="onVisibleIndex($event)"
                    (isFirstImage)="onIsFirstImage($event)"
-                   (isLastImage)="onIsLastImage($event)"></image-modal>
+                   (isLastImage)="onIsLastImage($event)"></imageModal>
     </section>
-
     <section id="Images3">
       <br>
-      <h3>Example with thumbnail pointers</h3>
-      <p> You can list images and then calling "image-modal" directive to show images on popup only</p>
+      <h3>4 - Example with thumbnail pointers</h3>
+      <p> You can list images and then calling "imageModal" directive to show images on popup only</p>
       <br>
-      <div *ngFor="let img of images | async; let i = index">
+      <div *ngFor="let img of imagesArray; let i = index">
         <div class="float-left" *ngIf="i <= 2">
-          <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 3}} more </a>
-          <img class="list-img" src="{{img.thumb}}" (click)="openImageModal(img.img)" alt='Image'/>
+          <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>
+          <img class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <image-modal [modalImages]="images" [imagePointer]="imagePointer"
+        <imageModal [modalImages]="imagesArray" [imagePointer]="imagePointer"
+                     (isImagesLoaded)="onImageLoaded($event)"
                      (isClosed)="onCloseImageModal($event)"
                      (visibleIndex)="onVisibleIndex($event)"
                      (isFirstImage)="onIsFirstImage($event)"
-                     (isLastImage)="onIsLastImage($event)"></image-modal>
+                     (isLastImage)="onIsLastImage($event)"></imageModal>
+      </div>
+    </section>
+    <br><br>
+    <section id="Images4">
+      <br>
+      <h3>5 - Example with thumbnail pointers and Observable</h3>
+      <p> You can list images and then calling "imageModal" directive to show images on popup only</p>
+      <br>
+      <div *ngFor="let img of images | async; let i = index">
+        <div class="float-left" *ngIf="i <= 2">
+          <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}} more </a>
+          <img class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+        </div>
+      </div>
+      <div *ngIf="openModalWindowObservable">
+        <imageModal [modalImages]="images" [imagePointer]="imagePointerObservable"
+                     (isImagesLoaded)="onImageLoaded($event)"
+                     (isClosed)="onCloseImageModal($event)"
+                     (visibleIndex)="onVisibleIndex($event)"
+                     (isFirstImage)="onIsFirstImage($event)"
+                     (isLastImage)="onIsLastImage($event)"></imageModal>
       </div>
     </section>
   `
 })
 export class AppComponent implements OnDestroy {
 
+  // used by example 4
   openModalWindow: boolean = false;
-  imagePointer: number;
+  imagePointer: number = 0;
 
-  private subscription: Subscription;
+  // used by example 5
+  openModalWindowObservable: boolean = false;
+  imagePointerObservable: number = 0;
 
+  // used by both examples 2 and 4
   imagesArray = [
     new Image(
       './app/assets/images/gallery/thumbs/img1.jpg',
@@ -122,40 +149,42 @@ export class AppComponent implements OnDestroy {
       'Image 5'
     )
   ];
-  images: Observable<Array<Image>> = Observable.of(this.imagesArray).delay(300).share();
 
+  // used by both examples 1 and 5
+  // observable of an array of images with a delay to simulate a network request
+  images: Observable<Array<Image>> = Observable.of(this.imagesArray).delay(300);
+
+  // used by example 3
+  // array with a single image inside (the first one)
   singleImage: Observable<Array<Image>> = Observable.of([
     new Image(
       './app/assets/images/gallery/thumbs/img1.jpg',
       './app/assets/images/gallery/img1.jpg',
       'Image 1'
-    )]); // array with a single image inside (the first one)
+    )]
+  );
 
+  // rxjs subscription for example 5
+  private subscription: Subscription;
+
+  // used by example 4
   openImageModal(image: Image) {
-   // let imageModalPointer: number = 1;
-    // for (let i = 0; i < images.length; i++) {
-    //   if (imageSrc === images[i].img) {
-    //     imageModalPointer = i;
-    //     break;
-    //   }
-    // }
-    console.log("openImageModal before imagepointer: " + this.imagePointer);
-    this.images.subscribe((val: Image[]) => {
-      for(let i=0; i<val.length; i++) {
-        if(val[i].img === image.img) {
-          this.imagePointer = i;
-          console.log("indice: " + i);
-          break;
-        }
-      }
-      this.openModalWindow = true;
-      console.log("openImageModal inside imagepointer: " + this.imagePointer);
-      //return val;
-    });
+    this.imagePointer = this.imagesArray.indexOf(image);
+    this.openModalWindow = true;
+  }
 
-    // console.log("openImageModal after imagepointer: " + this.imagePointer);
-    //this.images = images;
-    // this.imagePointer = imageModalPointer;
+  // used by example 5
+  openImageModalObservable(image: Image) {
+    this.images.subscribe((val: Image[]) => {
+      this.imagePointer = val.indexOf(image);
+      this.openModalWindow = true;
+    });
+  }
+
+  onImageLoaded(event: ImageModalEvent) {
+    // angular-modal-gallery will emit this event if it will load successfully input images
+    console.log("onImageLoaded action: " + Action[event.action]);
+    console.log("onImageLoaded result:" + event.result);
   }
 
   onVisibleIndex(event: ImageModalEvent) {
@@ -179,6 +208,7 @@ export class AppComponent implements OnDestroy {
     this.openModalWindow = false;
   }
 
+  // release resources for example 5
   ngOnDestroy() {
     if(this.subscription) {
       this.subscription.unsubscribe();

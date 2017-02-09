@@ -24,13 +24,8 @@
  */
 
 System.config({
+  warning: true,
   transpiler: 'typescript',
-  typescriptOptions: {
-    emitDecoratorMetadata: true,
-    "experimentalDecorators": true,
-    target: "ES5",
-    module: "commonjs"
-  },
   map: {
     '@angular'                          : 'node_modules/@angular',
     'rxjs'                              : 'node_modules/rxjs',

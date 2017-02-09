@@ -15,22 +15,22 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@angular/common": "^2.4.4",
-    "@angular/compiler": "^2.4.4",
-    "@angular/core": "^2.4.4",
-    "@angular/platform-browser": "^2.4.4",
-    "@angular/platform-browser-dynamic": "^2.4.4",
+    "@angular/common": "^2.4.6",
+    "@angular/compiler": "^2.4.6",
+    "@angular/core": "^2.4.6",
+    "@angular/platform-browser": "^2.4.6",
+    "@angular/platform-browser-dynamic": "^2.4.6",
     "@types/hammerjs": "^2.0.34",
     "core-js": "^2.4.1",
     "font-awesome": "^4.6.3",
     "hammerjs": "^2.0.8",
     "reflect-metadata": "^0.1.3",
-    "rxjs": "^5.0.3",
-    "systemjs": "^0.19.43",
+    "rxjs": "^5.1.0",
+    "systemjs": "0.19.43",
     "zone.js": "^0.7.6"
   },
   "devDependencies": {
     "concurrently": "^3.1.0",
-    "typescript": "2.0.10"
+    "typescript": "^2.1.5"
   }
 }

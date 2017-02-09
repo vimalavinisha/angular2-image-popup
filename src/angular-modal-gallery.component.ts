@@ -33,7 +33,8 @@ export enum Action {
   NORMAL, // default value
   CLICK, // mouse click
   KEYBOARD,
-  SWIPE
+  SWIPE,
+  LOAD
 }
 
 export class ImageModalEvent {
@@ -56,21 +57,21 @@ export class Image {
   }
 }
 
-export enum KEYBOARD {
+export enum Keyboard {
   ESC = 27,
   LEFT_ARROW = 37,
   RIGHT_ARROW = 39,
   UP_ARROW = 38,
   DOWN_ARROW = 40
-};
+}
 
 @Component({
-  selector: 'image-modal',
-  exportAs: 'image-modal',
+  selector: 'imageModal',
+  exportAs: 'imageModal',
   template: `
     <div class="ng-gallery" *ngIf="showGallery">
-      <div *ngFor="let i of modalImages | async; let index = index">
-        <img src="{{ i.thumb }}" class="ng-thumb" (click)="openGallery(index)" alt="{{ i.description }}"/>
+      <div *ngFor="let i of images; let index = index">
+        <img src="{{ i.thumb }}" class="ng-thumb" (click)="showModalGallery(index)" alt="{{ i.description }}"/>
       </div>
     </div>
     <div class="ng-overlay" *ngIf="opened">
@@ -79,10 +80,10 @@ export enum KEYBOARD {
           <div></div>
         </div>
         <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
-        <a class="nav-left" *ngIf="(modalImages | async)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
+        <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
         <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
-        <a class="nav-right" *ngIf="(modalImages | async)?.length > 1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
-        <span class="info-text">{{ currentImageIndex + 1 }}/{{ (modalImages | async)?.length }} - {{ currentImage.description }}</span>
+        <a class="nav-right" *ngIf="(images)?.length > 1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
+        <span class="info-text">{{ currentImageIndex + 1 }}/{{ images.length }} - {{ currentImage.description }}</span>
       </div>
     </div>
   `
@@ -91,21 +92,15 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   opened: boolean = false;
   loading: boolean = false;
   showGallery: boolean = false;
-  // imgSrc: string;
-
-  numberOfImages: number;
-  // currentImageDescription: string;
 
   images: Image[];
-
   currentImage: Image;
+  currentImageIndex: number = 0;
 
   // enum action used to pass a click action
   // when you clicks over the modal image.
   // Declared here  to use it in the template.
   clickAction: Action = Action.CLICK;
-
-  currentImageIndex: number = 0;
 
   private SWIPE_ACTION = {
     LEFT: 'swipeleft',
@@ -123,6 +118,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   @Output() visibleIndex = new EventEmitter<ImageModalEvent>();
   @Output() isFirstImage = new EventEmitter<ImageModalEvent>();
   @Output() isLastImage = new EventEmitter<ImageModalEvent>();
+  @Output() isImagesLoaded = new EventEmitter<ImageModalEvent>();
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -130,41 +126,41 @@ export class AngularModalGallery implements OnInit, OnDestroy {
       return;
     }
     switch(e.keyCode) {
-      case KEYBOARD.ESC:
+      case Keyboard.ESC:
         this.closeGallery(Action.KEYBOARD);
         break;
-      case KEYBOARD.RIGHT_ARROW:
+      case Keyboard.RIGHT_ARROW:
         this.nextImage(Action.KEYBOARD);
         break;
-      case KEYBOARD.LEFT_ARROW:
+      case Keyboard.LEFT_ARROW:
         this.prevImage(Action.KEYBOARD);
         break;
     }
   }
 
   ngOnInit() {
-    console.log("called onInit()");
+    // required before showModalGallery, otherwise this.images will be undefined
+    this.initImages();
+
     this.loading = true;
     if(this.imagePointer >= 0) {
       this.showGallery = false;
-      this.openGallery(this.imagePointer);
+      this.showModalGallery(this.imagePointer);
     } else {
       this.showGallery = true;
     }
+  }
 
+  private initImages() {
     if(this.modalImages instanceof Array) {
-      // this is useful only to provide legacy support
-      this.modalImages = Observable.of(this.modalImages);
-    }
-
-    this.modalImages
-      .subscribe((val: Array<Image>) => {
-        console.log(" ---------------- init subscribed");
-        //this.imgSrc = val[0].img;
-        this.numberOfImages = val.length;
+      this.images = this.modalImages;
+      this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
+    } else {
+      this.modalImages.subscribe((val: Array<Image>) => {
         this.images = val;
-        //this.currentImageDescription = val[0].description;
+        this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
       });
+    }
   }
 
   // hammerjs touch gestures support
@@ -190,70 +186,26 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   prevImage(action: Action = Action.NORMAL) {
     this.loading = true;
-    this.currentImageIndex = this.prevIndex(action, this.currentImageIndex);
-    this.openGallery(this.currentImageIndex);
+    this.currentImageIndex = this.getPrevIndex(action, this.currentImageIndex);
+    this.showModalGallery(this.currentImageIndex);
   }
 
   nextImage(action: Action = Action.NORMAL) {
     this.loading = true;
-    this.currentImageIndex = this.nextIndex(action, this.currentImageIndex);
-    this.openGallery(this.currentImageIndex);
+    this.currentImageIndex = this.getNextIndex(action, this.currentImageIndex);
+    this.showModalGallery(this.currentImageIndex);
   }
 
-  openGallery(index: number) {
+  showModalGallery(index: number) {
     this.currentImageIndex = index;
-    // this.opened = true;
-
-    if(this.modalImages instanceof Array) {
-      // this is useful only to provide legacy support
-      this.modalImages = Observable.of(this.modalImages);
-    }
-
-    this.modalImages
-      //.elementAt(this.currentImageIndex)
-      .subscribe((val: Image[]) => {
-        console.log("opengallery subscribed value at pos 0");
-        this.currentImage = val[this.currentImageIndex];
-        this.opened = true;
-        this.loading = false;
-      });
-
-    // this.currentImage = this.images[index];
-
-    // this.currentImageDescription =  this.currentImage.description;
-    // this.imgSrc = this.currentImage.img;
-    // this.currentImage = this.modalImages.elementAt(this.currentImageIndex)
-    //   .map((val: Image[]) => val[0])
-    //   .
-
-
-    // this.modalImages
-    //   .map(val => {
-    //     console.log(val);
-    //     return val;
-    //   })
-    //   .elementAt(this.currentImageIndex)
-    //   .subscribe((val: Array<Image>) => {
-    //     console.log(`index is: ${this.currentImageIndex}`);
-    //     console.log(val);
-    //     this.imgSrc = val[0].img;
-    //     this.numberOfImages = val.length;
-    //     this.currentImageDescription = val[0].description;
-    //   });
-        //
-        // .map((image: Image[]) => {
-        // return image[0].img;
-      // });
-    //}
-    // else {
-    //   this.imgSrc = this.modalImages[this.currentImageIndex].img;
-    // }
-    // this.loading = false;
+    this.opened = true;
+    this.currentImage = this.images[this.currentImageIndex];
+    this.loading = false;
   }
 
-  private nextIndex(action: Action, currentIndex: number): number {
+  private getNextIndex(action: Action, currentIndex: number): number {
     let newIndex: number = 0;
-    if(currentIndex >= 0 && currentIndex < this.numberOfImages - 1) {
+    if(currentIndex >= 0 && currentIndex < this.images.length - 1) {
       newIndex = currentIndex + 1;
     } else {
       newIndex = 0; // start from the first index
@@ -268,12 +220,12 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     return newIndex;
   }
 
-  private prevIndex(action: Action, currentIndex: number): number {
+  private getPrevIndex(action: Action, currentIndex: number): number {
     let newIndex: number = 0;
-    if(currentIndex > 0 && currentIndex <= this.numberOfImages - 1) {
+    if(currentIndex > 0 && currentIndex <= this.images.length - 1) {
       newIndex = currentIndex - 1;
     } else {
-      newIndex = this.numberOfImages - 1; // start from the last index
+      newIndex = this.images.length - 1; // start from the last index
     }
 
     // emit first/last event based on newIndex value
@@ -291,7 +243,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
       case 0:
         this.isFirstImage.emit(new ImageModalEvent(action, true));
         break;
-      case this.numberOfImages - 1:
+      case this.images.length - 1:
         this.isLastImage.emit(new ImageModalEvent(action, true));
         break;
     }

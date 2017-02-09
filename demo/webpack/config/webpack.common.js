@@ -25,6 +25,8 @@ const TEMPLATE_HTML                = 'index.html';
 // GITHUB => use deploy config for github
 const GITHUB = helpers.hasNpmFlag('github');
 const AOT                          = helpers.hasNpmFlag('aot');
+const PROD                         = helpers.hasNpmFlag('prod');
+const tsconfigPath                 = AOT ? 'tsconfig-aot.json' : 'tsconfig.json';
 
 module.exports = {
   entry: {
@@ -48,17 +50,30 @@ module.exports = {
       {
         test: /\.ts$/,
         use: [
-          '@angularclass/hmr-loader',
           {
+            loader: '@angularclass/hmr-loader',
+            options: {
+              pretty: !PROD,
+              prod: PROD
+            }
+          },
+          { // MAKE SURE TO CHAIN VANILLA JS CODE, I.E. TS COMPILATION OUTPUT.
             loader: 'ng-router-loader',
             options: {
-              loader: 'async-system',
+              loader: 'async-import',
               genDir: 'aot',
               aot: AOT
             }
           },
-          'awesome-typescript-loader?{configFileName: "tsconfig-aot.json"}',
-          'angular2-template-loader'
+          {
+            loader: 'awesome-typescript-loader',
+              options: {
+                configFileName: tsconfigPath
+              }
+          },
+          {
+            loader: 'angular2-template-loader'
+          }
         ],
         exclude: [/\.(spec|e2e)\.ts$/]
       },
