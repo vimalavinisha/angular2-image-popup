@@ -98,7 +98,7 @@ export class HomeComponent implements OnDestroy {
 
   // used by example 5
   openImageModalObservable(image: Image) {
-    this.images.subscribe((val: Image[]) => {
+    this.subscription = this.images.subscribe((val: Image[]) => {
       this.imagePointer = val.indexOf(image);
       this.openModalWindow = true;
     });

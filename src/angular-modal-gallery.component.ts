@@ -156,7 +156,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
       this.images = this.modalImages;
       this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
     } else {
-      this.modalImages.subscribe((val: Array<Image>) => {
+      this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
         this.images = val;
         this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
       });
