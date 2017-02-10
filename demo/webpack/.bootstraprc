@@ -78,7 +78,7 @@ styles:
   buttons: true
 
   # Components
-  animation: true
+  transitions: true  # mandatory for bootstrap alpha 6, otherwise you have to use 'animation: true'
   dropdown: true
   button-group: true
   input-group: true
@@ -95,7 +95,7 @@ styles:
   list-group: true
   responsive-embed: true
   close: true
-  tags: true
+  badge: true  # mandatory for bootstrap alpha 6, otherwise you have to use 'tags: true'
 
   # Components w/ JavaScript
   modal: true

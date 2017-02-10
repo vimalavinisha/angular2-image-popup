@@ -16,6 +16,8 @@ const InlineManifestWebpackPlugin  = require('inline-manifest-webpack-plugin');
 const autoprefixer                 = require('autoprefixer');
 const ChunkManifestPlugin          = require('chunk-manifest-webpack-plugin');
 const ngcWebpack                   = require('ngc-webpack');
+const ScriptExtHtmlWebpackPlugin   = require('script-ext-html-webpack-plugin');
+const OptimizeJsPlugin             = require('optimize-js-plugin');
 
 const helpers                      = require('./helpers');
 const TITLE                        = 'angular-modal-gallery demo';
@@ -26,7 +28,7 @@ const TEMPLATE_HTML                = 'index.html';
 const GITHUB = helpers.hasNpmFlag('github');
 const AOT                          = helpers.hasNpmFlag('aot');
 const PROD                         = helpers.hasNpmFlag('prod');
-const tsconfigPath                 = AOT ? 'tsconfig-aot.json' : 'tsconfig.json';
+const TS_CONFIG                    = AOT ? 'tsconfig-aot.json' : 'tsconfig.json';
 
 module.exports = {
   entry: {
@@ -68,7 +70,7 @@ module.exports = {
           {
             loader: 'awesome-typescript-loader',
               options: {
-                configFileName: tsconfigPath
+                configFileName: TS_CONFIG
               }
           },
           {
@@ -92,8 +94,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [helpers.root('src', 'app')],
-        loader: ['raw-loader', 'postcss-loader']
+        include: [helpers.root('src', 'app'), helpers.root('src', 'admin')],
+        use: [
+          { loader: 'raw-loader' },
+          { loader: 'postcss-loader' }
+        ]
       },
       {
         test: /\.scss$/,
@@ -115,6 +120,7 @@ module.exports = {
       /@angular\/\*\*\/bundles\//]
   },
   plugins: [
+    new ScriptExtHtmlWebpackPlugin(),
     new NamedModulesPlugin(),
     new ManifestPlugin(),
     new InlineManifestWebpackPlugin(), // TODO check if I can remove this
@@ -192,6 +198,10 @@ module.exports = {
     new ngcWebpack.NgcWebpackPlugin({
       disabled: !AOT,
       tsConfig: helpers.root('tsconfig-aot.json')
+    }),
+
+    new OptimizeJsPlugin({
+      sourceMap: false
     })
 
   ],
