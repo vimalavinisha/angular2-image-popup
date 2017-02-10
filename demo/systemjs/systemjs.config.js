@@ -2,7 +2,6 @@
  The MIT License (MIT)
 
  Copyright (c) 2017 Stefano Cappa (Ks89)
- Copyright (c) 2016 vimalavinisha
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +22,45 @@
  SOFTWARE.
  */
 
-System.config({
-  warning: true,
-  transpiler: 'typescript',
-  map: {
-    '@angular'                          : 'node_modules/@angular',
-    'rxjs'                              : 'node_modules/rxjs',
-    'angular-modal-gallery'             : 'node_modules/angular-modal-gallery/bundles',
-    'app'                               : 'app',
-    'hammerjs'                          : 'node_modules/hammerjs'
-  },
-  paths: {
-    'node_modules/@angular/*'           : 'node_modules/@angular/*/bundles'
-  },
-  meta: {
-    '@angular/*'                        : {'format': 'cjs'}
-  },
-  packages: {
-    'app'                               : {main: 'main', defaultExtension: 'ts'},
-    'rxjs'                              : {main: 'Rx'},
-    'hammerjs'                          : {main: 'hammer.js'},
-    'angular-modal-gallery'             : {main: 'angular-modal-gallery.umd.js'},
-    '@angular/core'                     : {main: 'core.umd.min.js'},
-    '@angular/common'                   : {main: 'common.umd.min.js'},
-    '@angular/compiler'                 : {main: 'compiler.umd.min.js'},
-    '@angular/platform-browser'         : {main: 'platform-browser.umd.min.js'},
-    '@angular/platform-browser-dynamic' : {main: 'platform-browser-dynamic.umd.min.js'}
+(function(global) {
+  // map tells the System loader where to look for things
+  let map = {
+    'app'                       : 'app',
+    '@angular'                  : 'node_modules/@angular',
+    'rxjs'                      : 'node_modules/rxjs',
+    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/bundles',
+    'hammerjs'                  : 'node_modules/hammerjs'
+  };
+  // packages tells the System loader how to load when no filename and/or no extension
+  let packages = {
+    'app'                       : { main: 'main' },
+    'rxjs'                      : { main: 'Rx' },
+    'hammerjs'                  : { main: 'hammer.js' },
+    'angular-modal-gallery'     : { main: 'angular-modal-gallery.umd.js' }
+  };
+  let ngPackageNames = [
+    'common',
+    'compiler',
+    'core',
+    'platform-browser',
+    'platform-browser-dynamic',
+  ];
+  // Individual files (~300 requests):
+  function packIndex(pkgName) {
+    packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
   }
-});
+  // Bundled (~40 requests):
+  function packUmd(pkgName) {
+    packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+  }
+  // Most environments should use UMD; some (Karma) need the individual index files
+  let setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
+  // Add package entries for angular packages
+  ngPackageNames.forEach(setPackageConfig);
+  let config = {
+    transpiler: 'ts',
+    map: map,
+    packages: packages
+  };
+  System.config(config);
+})(this);
