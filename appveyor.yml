@@ -93,6 +93,7 @@ install:
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - npm install -g typescript@2.0.10
+  - npm install -g @angular/cli
   - npm install
 
 

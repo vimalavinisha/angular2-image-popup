@@ -63,3 +63,6 @@ aot
 index.js
 index.js.map
 bundles
+
+demo/systemjs/**/*.js
+demo/systemjs/**/*.map
