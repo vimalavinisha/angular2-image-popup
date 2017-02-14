@@ -36,25 +36,40 @@ import 'rxjs/add/operator/delay';
   template: `
     <section id="Images">
       <h3>1 - Example of an Observable of images with delay(300)</h3>
-      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup images</p>
+      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup
+        images</p>
       <br>
       <imageModal [modalImages]="images"
-                   (isImagesLoaded)="onImageLoaded($event)"
-                   (isClosed)="onCloseImageModal($event)"
-                   (visibleIndex)="onVisibleIndex($event)"
-                   (isFirstImage)="onIsFirstImage($event)"
-                   (isLastImage)="onIsLastImage($event)"></imageModal>
+                  (isImagesLoaded)="onImageLoaded($event)"
+                  (isClosed)="onCloseImageModal($event)"
+                  (visibleIndex)="onVisibleIndex($event)"
+                  (isFirstImage)="onIsFirstImage($event)"
+                  (isLastImage)="onIsLastImage($event)"></imageModal>
+    </section>
+    <section id="Images">
+      <h3>1 - Example of an Observable of images with delay(300) + downlaod button</h3>
+      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup
+        images</p>
+      <br>
+      <imageModal [modalImages]="images"
+                  [showDownloadButton]="true"
+                  (isImagesLoaded)="onImageLoaded($event)"
+                  (isClosed)="onCloseImageModal($event)"
+                  (visibleIndex)="onVisibleIndex($event)"
+                  (isFirstImage)="onIsFirstImage($event)"
+                  (isLastImage)="onIsLastImage($event)"></imageModal>
     </section>
     <section id="Images1">
       <h3>2 - Example of an array of images</h3>
-      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup images</p>
+      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup
+        images</p>
       <br>
       <imageModal [modalImages]="imagesArray"
-                   (isImagesLoaded)="onImageLoaded($event)"
-                   (isClosed)="onCloseImageModal($event)"
-                   (visibleIndex)="onVisibleIndex($event)"
-                   (isFirstImage)="onIsFirstImage($event)"
-                   (isLastImage)="onIsLastImage($event)"></imageModal>
+                  (isImagesLoaded)="onImageLoaded($event)"
+                  (isClosed)="onCloseImageModal($event)"
+                  (visibleIndex)="onVisibleIndex($event)"
+                  (isFirstImage)="onIsFirstImage($event)"
+                  (isLastImage)="onIsLastImage($event)"></imageModal>
     </section>
     <section id="Images2">
       <br>
@@ -62,15 +77,15 @@ import 'rxjs/add/operator/delay';
       <p> You can show an image gallery with only a single image</p>
       <br>
       <imageModal [modalImages]="singleImage"
-                   (isImagesLoaded)="onImageLoaded($event)"
-                   (isClosed)="onCloseImageModal($event)"
-                   (visibleIndex)="onVisibleIndex($event)"
-                   (isFirstImage)="onIsFirstImage($event)"
-                   (isLastImage)="onIsLastImage($event)"></imageModal>
+                  (isImagesLoaded)="onImageLoaded($event)"
+                  (isClosed)="onCloseImageModal($event)"
+                  (visibleIndex)="onVisibleIndex($event)"
+                  (isFirstImage)="onIsFirstImage($event)"
+                  (isLastImage)="onIsLastImage($event)"></imageModal>
     </section>
     <section id="Images3">
       <br>
-      <h3>4 - Example with thumbnail pointers</h3>
+      <h3>4 - Example with thumbnail pointers + download button</h3>
       <p> You can list images and then calling "imageModal" directive to show images on popup only</p>
       <br>
       <div *ngFor="let img of imagesArray; let i = index">
@@ -80,33 +95,38 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <imageModal [modalImages]="imagesArray" [imagePointer]="imagePointer"
-                     (isImagesLoaded)="onImageLoaded($event)"
-                     (isClosed)="onCloseImageModal($event)"
-                     (visibleIndex)="onVisibleIndex($event)"
-                     (isFirstImage)="onIsFirstImage($event)"
-                     (isLastImage)="onIsLastImage($event)"></imageModal>
+        <imageModal [modalImages]="imagesArray"
+                    [imagePointer]="imagePointer"
+                    [showDownloadButton]="true"
+                    (isImagesLoaded)="onImageLoaded($event)"
+                    (isClosed)="onCloseImageModal($event)"
+                    (visibleIndex)="onVisibleIndex($event)"
+                    (isFirstImage)="onIsFirstImage($event)"
+                    (isLastImage)="onIsLastImage($event)"></imageModal>
       </div>
     </section>
     <br><br>
     <section id="Images4">
       <br>
-      <h3>5 - Example with thumbnail pointers and Observable</h3>
+      <h3>5 - Example with thumbnail pointers and Observable + download button</h3>
       <p> You can list images and then calling "imageModal" directive to show images on popup only</p>
       <br>
       <div *ngFor="let img of images | async; let i = index">
         <div class="float-left" *ngIf="i <= 2">
-          <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}} more </a>
+          <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}
+            more </a>
           <img class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
         </div>
       </div>
       <div *ngIf="openModalWindowObservable">
-        <imageModal [modalImages]="images" [imagePointer]="imagePointerObservable"
-                     (isImagesLoaded)="onImageLoaded($event)"
-                     (isClosed)="onCloseImageModal($event)"
-                     (visibleIndex)="onVisibleIndex($event)"
-                     (isFirstImage)="onIsFirstImage($event)"
-                     (isLastImage)="onIsLastImage($event)"></imageModal>
+        <imageModal [modalImages]="images"
+                    [imagePointer]="imagePointerObservable"
+                    [showDownloadButton]="true"
+                    (isImagesLoaded)="onImageLoaded($event)"
+                    (isClosed)="onCloseImageModal($event)"
+                    (visibleIndex)="onVisibleIndex($event)"
+                    (isFirstImage)="onIsFirstImage($event)"
+                    (isLastImage)="onIsLastImage($event)"></imageModal>
       </div>
     </section>
   `
@@ -210,7 +230,7 @@ export class AppComponent implements OnDestroy {
 
   // release resources for example 5
   ngOnDestroy() {
-    if(this.subscription) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }

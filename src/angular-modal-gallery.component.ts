@@ -28,6 +28,7 @@ import {Observable, Subscription} from "rxjs";
 import 'rxjs/add/operator/elementAt';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/share';
+import 'mousetrap';
 
 export enum Action {
   NORMAL, // default value
@@ -40,6 +41,7 @@ export enum Action {
 export class ImageModalEvent {
   action: Action;
   result: number | boolean;
+
   constructor(action: Action, result: number | boolean) {
     this.action = action;
     this.result = result;
@@ -50,6 +52,7 @@ export class Image {
   thumb: string;
   img: string;
   description: string;
+
   constructor(thumb: string, img: string, description: string) {
     this.thumb = thumb;
     this.img = img;
@@ -79,6 +82,7 @@ export enum Keyboard {
         <div class="uil-ring-css" *ngIf="loading">
           <div></div>
         </div>
+        <a class="download-image" *ngIf="showDownloadButton" (click)="downloadImage(currentImage)"><i class="fa fa-download"></i></a>
         <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
         <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
         <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
@@ -113,6 +117,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
+  @Input() showDownloadButton: boolean = false;
 
   @Output() isClosed = new EventEmitter<ImageModalEvent>();
   @Output() visibleIndex = new EventEmitter<ImageModalEvent>();
@@ -122,10 +127,10 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
-    if(!this.opened) {
+    if (!this.opened) {
       return;
     }
-    switch(e.keyCode) {
+    switch (e.keyCode) {
       case Keyboard.ESC:
         this.closeGallery(Action.KEYBOARD);
         break;
@@ -138,12 +143,27 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
+  constructor() {
+    Mousetrap.bind(['ctrl+s', 'meta+s'], function(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      } else {
+        // internet explorer
+        e.returnValue = false;
+      }
+      console.log("mousetrapped");
+      if(this.showDownloadButton) {
+        this.downloadImage(this.currentImage);
+      }
+    });
+  }
+
   ngOnInit() {
     // required before showModalGallery, otherwise this.images will be undefined
     this.initImages();
 
     this.loading = true;
-    if(this.imagePointer >= 0) {
+    if (this.imagePointer >= 0) {
       this.showGallery = false;
       this.showModalGallery(this.imagePointer);
     } else {
@@ -152,7 +172,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   }
 
   private initImages() {
-    if(this.modalImages instanceof Array) {
+    if (this.modalImages instanceof Array) {
       this.images = this.modalImages;
       this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
     } else {
@@ -165,7 +185,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   // hammerjs touch gestures support
   swipe(index: number, action = this.SWIPE_ACTION.RIGHT) {
-    switch(action) {
+    switch (action) {
       case this.SWIPE_ACTION.RIGHT:
         this.nextImage(Action.SWIPE);
         break;
@@ -203,9 +223,28 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  downloadImage(image: Image) {
+    if (!this.showDownloadButton) {
+      return;
+    }
+    if (navigator.msSaveBlob) {
+      // IE11 & Edge
+      // TODO FIXME implement this
+      // navigator.msSaveBlob(csvData, exportFilename);
+    } else {
+      // other browsers
+      let link = document.createElement('a');
+      link.href = image.img;
+      link.setAttribute('download', this.getFileName(image.img));
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
+
   private getNextIndex(action: Action, currentIndex: number): number {
     let newIndex: number = 0;
-    if(currentIndex >= 0 && currentIndex < this.images.length - 1) {
+    if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
       newIndex = currentIndex + 1;
     } else {
       newIndex = 0; // start from the first index
@@ -222,7 +261,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   private getPrevIndex(action: Action, currentIndex: number): number {
     let newIndex: number = 0;
-    if(currentIndex > 0 && currentIndex <= this.images.length - 1) {
+    if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
       newIndex = currentIndex - 1;
     } else {
       newIndex = this.images.length - 1; // start from the last index
@@ -239,7 +278,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   private emitBoundaryEvent(action: Action, indexToCheck: number) {
     // to emit first/last event
-    switch(indexToCheck) {
+    switch (indexToCheck) {
       case 0:
         this.isFirstImage.emit(new ImageModalEvent(action, true));
         break;
@@ -249,8 +288,12 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
+  private getFileName(path: string) {
+    return path.replace(/^.*[\\\/]/, '')
+  }
+
   ngOnDestroy() {
-    if(this.subscription) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }

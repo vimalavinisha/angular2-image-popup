@@ -31,7 +31,8 @@ export default {
   sourceMap : false,
   globals   : {
     '@angular/core'   : 'ng.core',
-    '@angular/common' : 'ng.common'
+    '@angular/common' : 'ng.common',
+    'mousetrap'       : 'mousetrap',
   },
   // external: [
   //   '@angular/core',

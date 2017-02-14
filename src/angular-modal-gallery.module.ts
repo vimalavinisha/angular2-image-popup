@@ -36,9 +36,9 @@ export class AngularModalGalleryModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AngularModalGalleryModule,
-      // providers: [
-      //   {provide: MyService, useClass: MyService}
-      // ]
+      providers: [
+        // ImageModalService
+      ]
     };
   }
 }
