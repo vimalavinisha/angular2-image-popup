@@ -55,6 +55,7 @@ Thumbs.db
 
 dist
 aot
+.compiled/
 .awcache
 
 *.metadata.json
@@ -66,3 +67,5 @@ bundles
 
 demo/systemjs/**/*.js
 demo/systemjs/**/*.map
+
+demo/webpack-experimental

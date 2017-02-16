@@ -68,6 +68,7 @@ export enum Keyboard {
 @Component({
   selector: 'imageModal',
   exportAs: 'imageModal',
+  styleUrls: ['./angular-modal-gallery.scss'],
   template: `
     <div class="ng-gallery" *ngIf="showGallery">
       <div *ngFor="let i of images; let index = index">

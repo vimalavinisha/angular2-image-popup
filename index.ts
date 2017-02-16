@@ -30,8 +30,6 @@ export {Action} from './src/angular-modal-gallery.component';
 export {ImageModalEvent} from './src/angular-modal-gallery.component';
 export {Image} from './src/angular-modal-gallery.component';
 
-import './styles/style.css'
-
 @NgModule({
   imports: [
     AngularModalGalleryModule.forRoot()
