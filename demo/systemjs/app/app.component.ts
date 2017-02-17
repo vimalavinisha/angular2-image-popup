@@ -34,59 +34,89 @@ import 'rxjs/add/operator/delay';
   selector: 'my-app',
   styleUrls: ['./app/main.css'],
   template: `
-    <section id="Images">
-      <h3>1 - Example of an Observable of images with delay(300)</h3>
-      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup
-        images</p>
+    <section id="Images1">
+      <h3>1 - Observable of images with delay(300)</h3>
+      <p>imageModal with</p>
+      <ul>
+        <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
+        <li>No downloadable images, because downloadable = false (showDownloadButton is false by default)</li>
+        <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
       <br>
       <imageModal [modalImages]="images"
-                  (isImagesLoaded)="onImageLoaded($event)"
-                  (isClosed)="onCloseImageModal($event)"
-                  (visibleIndex)="onVisibleIndex($event)"
-                  (isFirstImage)="onIsFirstImage($event)"
-                  (isLastImage)="onIsLastImage($event)"></imageModal>
+                  [downloadable]="false"
+                  (hasData)="onImageLoaded($event)"
+                  (close)="onCloseImageModal($event)"
+                  (show)="onVisibleIndex($event)"
+                  (firstImage)="onIsFirstImage($event)"
+                  (lastImage)="onIsLastImage($event)"></imageModal>
     </section>
-    <section id="Images">
-      <h3>1 - Example of an Observable of images with delay(300) + downlaod button</h3>
-      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup
-        images</p>
+    <section id="Images2">
+      <h3>2 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
+      <p>imageModal with</p>
+      <ul>
+        <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
+        <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
+        <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
+        <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
       <br>
       <imageModal [modalImages]="images"
                   [showDownloadButton]="true"
-                  (isImagesLoaded)="onImageLoaded($event)"
-                  (isClosed)="onCloseImageModal($event)"
-                  (visibleIndex)="onVisibleIndex($event)"
-                  (isFirstImage)="onIsFirstImage($event)"
-                  (isLastImage)="onIsLastImage($event)"></imageModal>
-    </section>
-    <section id="Images1">
-      <h3>2 - Example of an array of images</h3>
-      <p> You can directly access "ImageModal" directive with "imageModal" for both listing thumbnails and popup
-        images</p>
-      <br>
-      <imageModal [modalImages]="imagesArray"
-                  (isImagesLoaded)="onImageLoaded($event)"
-                  (isClosed)="onCloseImageModal($event)"
-                  (visibleIndex)="onVisibleIndex($event)"
-                  (isFirstImage)="onIsFirstImage($event)"
-                  (isLastImage)="onIsLastImage($event)"></imageModal>
-    </section>
-    <section id="Images2">
-      <br>
-      <h3>3 - Example with only one image</h3>
-      <p> You can show an image gallery with only a single image</p>
-      <br>
-      <imageModal [modalImages]="singleImage"
-                  (isImagesLoaded)="onImageLoaded($event)"
-                  (isClosed)="onCloseImageModal($event)"
-                  (visibleIndex)="onVisibleIndex($event)"
-                  (isFirstImage)="onIsFirstImage($event)"
-                  (isLastImage)="onIsLastImage($event)"></imageModal>
+                  [downloadable]="true"  
+                  (hasData)="onImageLoaded($event)"
+                  (close)="onCloseImageModal($event)"
+                  (show)="onVisibleIndex($event)"
+                  (firstImage)="onIsFirstImage($event)"
+                  (lastImage)="onIsLastImage($event)"></imageModal>
     </section>
     <section id="Images3">
+      <h3>3 - Array of images + download (both 'ctrl+s' and button)</h3>
+      <p>imageModal with</p>
+      <ul>
+        <li>modalImages is an Array&lt;Image&gt;</li>
+        <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
+        <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
+        <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
       <br>
-      <h3>4 - Example with thumbnail pointers + download button</h3>
-      <p> You can list images and then calling "imageModal" directive to show images on popup only</p>
+      <imageModal [modalImages]="imagesArray"
+                  [showDownloadButton]="true"
+                  [downloadable]="true"
+                  (hasData)="onImageLoaded($event)"
+                  (close)="onCloseImageModal($event)"
+                  (show)="onVisibleIndex($event)"
+                  (firstImage)="onIsFirstImage($event)"
+                  (lastImage)="onIsLastImage($event)"></imageModal>
+    </section>
+    <section id="Images4">
+      <br>
+      <h3>4 - Observable of images with a single element and without a delay</h3>
+      <p>imageModal with</p>
+      <ul>
+        <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; without delay</li>
+        <li>no downloadable, because both showDownloadButton and downloadable are false by default</li>
+        <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
+      <br>
+      <!-- both showDownloadButton and downloadable are false by default -->
+      <imageModal [modalImages]="singleImage"
+                  (hasData)="onImageLoaded($event)"
+                  (close)="onCloseImageModal($event)"
+                  (show)="onVisibleIndex($event)"
+                  (firstImage)="onIsFirstImage($event)"
+                  (lastImage)="onIsLastImage($event)"></imageModal>
+    </section>
+    <section id="Images5">
+      <br>
+      <h3>5 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
+      <p>imageModal with</p>
+      <ul>
+        <li>modalImages is an Array&lt;Image&gt;</li>
+        <li>imagePointer as input</li>
+        <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
+        <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
       <br>
       <div *ngFor="let img of imagesArray; let i = index">
         <div class="float-left" *ngIf="i <= 2">
@@ -97,19 +127,25 @@ import 'rxjs/add/operator/delay';
       <div *ngIf="openModalWindow">
         <imageModal [modalImages]="imagesArray"
                     [imagePointer]="imagePointer"
-                    [showDownloadButton]="true"
-                    (isImagesLoaded)="onImageLoaded($event)"
-                    (isClosed)="onCloseImageModal($event)"
-                    (visibleIndex)="onVisibleIndex($event)"
-                    (isFirstImage)="onIsFirstImage($event)"
-                    (isLastImage)="onIsLastImage($event)"></imageModal>
+                    [downloadable]="true"
+                    (hasData)="onImageLoaded($event)"
+                    (close)="onCloseImageModal($event)"
+                    (show)="onVisibleIndex($event)"
+                    (firstImage)="onIsFirstImage($event)"
+                    (lastImage)="onIsLastImage($event)"></imageModal>
       </div>
     </section>
     <br><br>
-    <section id="Images4">
+    <section id="Images6">
       <br>
-      <h3>5 - Example with thumbnail pointers and Observable + download button</h3>
-      <p> You can list images and then calling "imageModal" directive to show images on popup only</p>
+      <h3>6 - Observable with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
+      <p>imageModal with</p>
+      <ul>
+        <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
+        <li>imagePointer as input</li>
+        <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
+        <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
       <br>
       <div *ngFor="let img of images | async; let i = index">
         <div class="float-left" *ngIf="i <= 2">
@@ -121,27 +157,24 @@ import 'rxjs/add/operator/delay';
       <div *ngIf="openModalWindowObservable">
         <imageModal [modalImages]="images"
                     [imagePointer]="imagePointerObservable"
-                    [showDownloadButton]="true"
-                    (isImagesLoaded)="onImageLoaded($event)"
-                    (isClosed)="onCloseImageModal($event)"
-                    (visibleIndex)="onVisibleIndex($event)"
-                    (isFirstImage)="onIsFirstImage($event)"
-                    (isLastImage)="onIsLastImage($event)"></imageModal>
+                    [downloadable]="true"
+                    (hasData)="onImageLoaded($event)"
+                    (close)="onCloseImageModal($event)"
+                    (show)="onVisibleIndex($event)"
+                    (firstImage)="onIsFirstImage($event)"
+                    (lastImage)="onIsLastImage($event)"></imageModal>
       </div>
     </section>
   `
 })
 export class AppComponent implements OnDestroy {
 
-  // used by example 4
   openModalWindow: boolean = false;
   imagePointer: number = 0;
 
-  // used by example 5
   openModalWindowObservable: boolean = false;
   imagePointerObservable: number = 0;
 
-  // used by both examples 2 and 4
   imagesArray = [
     new Image(
       './app/assets/images/gallery/thumbs/img1.jpg',
@@ -170,11 +203,9 @@ export class AppComponent implements OnDestroy {
     )
   ];
 
-  // used by both examples 1 and 5
   // observable of an array of images with a delay to simulate a network request
   images: Observable<Array<Image>> = Observable.of(this.imagesArray).delay(300);
 
-  // used by example 3
   // array with a single image inside (the first one)
   singleImage: Observable<Array<Image>> = Observable.of([
     new Image(
@@ -187,13 +218,11 @@ export class AppComponent implements OnDestroy {
   // rxjs subscription for example 5
   private subscription: Subscription;
 
-  // used by example 4
   openImageModal(image: Image) {
     this.imagePointer = this.imagesArray.indexOf(image);
     this.openModalWindow = true;
   }
 
-  // used by example 5
   openImageModalObservable(image: Image) {
     this.subscription = this.images.subscribe((val: Image[]) => {
       this.imagePointer = val.indexOf(image);

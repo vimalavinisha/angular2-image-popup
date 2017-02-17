@@ -25,9 +25,6 @@
 
 import {OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
-import 'rxjs/add/operator/elementAt';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/share';
 import 'mousetrap';
 
 export enum Action {
@@ -82,7 +79,7 @@ export enum Keyboard {
         <div class="uil-ring-css" *ngIf="loading">
           <div></div>
         </div>
-        <a class="download-image" *ngIf="showDownloadButton" (click)="downloadImage(currentImage)"><i class="fa fa-download"></i></a>
+        <a class="download-image" *ngIf="showDownloadButton" (click)="downloadImage()"><i class="fa fa-download"></i></a>
         <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
         <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
         <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
@@ -118,12 +115,13 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
   @Input() showDownloadButton: boolean = false;
+  @Input() downloadable: boolean = false;
 
-  @Output() isClosed = new EventEmitter<ImageModalEvent>();
-  @Output() visibleIndex = new EventEmitter<ImageModalEvent>();
-  @Output() isFirstImage = new EventEmitter<ImageModalEvent>();
-  @Output() isLastImage = new EventEmitter<ImageModalEvent>();
-  @Output() isImagesLoaded = new EventEmitter<ImageModalEvent>();
+  @Output() close = new EventEmitter<ImageModalEvent>();
+  @Output() show = new EventEmitter<ImageModalEvent>();
+  @Output() firstImage = new EventEmitter<ImageModalEvent>();
+  @Output() lastImage = new EventEmitter<ImageModalEvent>();
+  @Output() hasData = new EventEmitter<ImageModalEvent>();
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -143,7 +141,9 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
-  constructor() {
+  ngOnInit() {
+    console.log("called oninit");
+    var thiz = this;
     Mousetrap.bind(['ctrl+s', 'meta+s'], function(e) {
       if (e.preventDefault) {
         e.preventDefault();
@@ -151,14 +151,10 @@ export class AngularModalGallery implements OnInit, OnDestroy {
         // internet explorer
         e.returnValue = false;
       }
-      console.log("mousetrapped");
-      if(this.showDownloadButton) {
-        this.downloadImage(this.currentImage);
-      }
+      console.log("thiz.downloadable " + thiz.downloadable);
+      thiz.downloadImage();
     });
-  }
 
-  ngOnInit() {
     // required before showModalGallery, otherwise this.images will be undefined
     this.initImages();
 
@@ -174,11 +170,11 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   private initImages() {
     if (this.modalImages instanceof Array) {
       this.images = this.modalImages;
-      this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
+      this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
     } else {
       this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
         this.images = val;
-        this.isImagesLoaded.emit(new ImageModalEvent(Action.LOAD, true));
+        this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
       });
     }
   }
@@ -201,7 +197,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   closeGallery(action: Action = Action.NORMAL) {
     this.opened = false;
-    this.isClosed.emit(new ImageModalEvent(action, true));
+    this.close.emit(new ImageModalEvent(action, true));
   }
 
   prevImage(action: Action = Action.NORMAL) {
@@ -223,19 +219,22 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  downloadImage(image: Image) {
-    if (!this.showDownloadButton) {
+  downloadImage() {
+    if (!this.downloadable) {
       return;
     }
+    console.log("downloading...");
     if (navigator.msSaveBlob) {
       // IE11 & Edge
       // TODO FIXME implement this
       // navigator.msSaveBlob(csvData, exportFilename);
     } else {
+      console.log("downloading in else (so not IE)");
+      console.log("getfilename is: " + this.getFileName(this.currentImage.img));
       // other browsers
       let link = document.createElement('a');
-      link.href = image.img;
-      link.setAttribute('download', this.getFileName(image.img));
+      link.href = this.currentImage.img;
+      link.setAttribute('download', this.getFileName(this.currentImage.img));
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -254,7 +253,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     this.emitBoundaryEvent(action, newIndex);
 
     // emit current visibile image index
-    this.visibleIndex.emit(new ImageModalEvent(action, newIndex));
+    this.show.emit(new ImageModalEvent(action, newIndex));
 
     return newIndex;
   }
@@ -271,7 +270,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     this.emitBoundaryEvent(action, newIndex);
 
     // emit current visibile image index
-    this.visibleIndex.emit(new ImageModalEvent(action, newIndex));
+    this.show.emit(new ImageModalEvent(action, newIndex));
 
     return newIndex;
   }
@@ -280,10 +279,10 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     // to emit first/last event
     switch (indexToCheck) {
       case 0:
-        this.isFirstImage.emit(new ImageModalEvent(action, true));
+        this.firstImage.emit(new ImageModalEvent(action, true));
         break;
       case this.images.length - 1:
-        this.isLastImage.emit(new ImageModalEvent(action, true));
+        this.lastImage.emit(new ImageModalEvent(action, true));
         break;
     }
   }
@@ -293,8 +292,10 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log("called ondestroy");
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    Mousetrap.unbind(['ctrl+s', 'meta+s']);
   }
 }
