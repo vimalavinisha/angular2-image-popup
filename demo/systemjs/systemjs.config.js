@@ -28,7 +28,7 @@
     'app'                       : 'app',
     '@angular'                  : 'node_modules/@angular',
     'rxjs'                      : 'node_modules/rxjs',
-    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/bundles',
+    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/dist/bundles',
     'hammerjs'                  : 'node_modules/hammerjs',
     'mousetrap'                 : 'node_modules/mousetrap'
   };

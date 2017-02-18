@@ -18,9 +18,7 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "../node_modules/angular-modal-gallery/styles/style.css",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "styles.css"
       ],
       "scripts": [],
       "environments": {

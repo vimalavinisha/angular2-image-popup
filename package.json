@@ -11,7 +11,7 @@
   },
   "homepage": "https://github.com/Ks89/angular-modal-gallery#readme",
   "scripts": {
-    "clean": "rimraf dist .compiled",
+    "clean": "rimraf dist .compiled bundle",
     "clean:all": "npm run clean && rimraf demo/systemjs/node_modules/angular-modal-gallery demo/webpack/node_modules/angular-modal-gallery",
     "copy": "copyfiles src/**/*.scss dist && copyfiles src/**/*.html dist",
     "ngc": "ngc",
@@ -19,12 +19,11 @@
     "minify": "uglifyjs dist/bundles/angular-modal-gallery.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/angular-modal-gallery.umd.min.js",
     "prebuild": "npm run clean:all",
     "build": "npm run ngc && npm run copy && npm run rollup && npm run minify",
-    "postbuild": "npm run copyfiles:dist:packagejson && npm run copyfiles:dist && npm run copy:demo:systemjs && npm run copy:demo:angularcli && npm run copy:demo:webpack",
-    "copyfiles:dist:packagejson": "copyfiles package.json dist",
-    "copyfiles:dist": "copyfiles LICENSE README.md dist",
-    "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp dist demo/systemjs/node_modules/angular-modal-gallery",
-    "copy:demo:angularcli": "mkdirp demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery && ncp dist demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery",
-    "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp dist demo/webpack/node_modules/angular-modal-gallery",
+    "postbuild": "npm run bundle && npm run copy:demo:systemjs && npm run copy:demo:angularcli && npm run copy:demo:webpack",
+    "bundle": "mkdirp bundle && ncp dist bundle/dist && ncp .compiled bundle/.compiled && ncp src bundle/src && copyfiles LICENSE README.md package.json index.ts index.d.ts bundle",
+    "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp bundle demo/systemjs/node_modules/angular-modal-gallery",
+    "copy:demo:angularcli": "mkdirp demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery && ncp bundle demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery",
+    "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp bundle demo/webpack/node_modules/angular-modal-gallery",
     "prepublish": "npm run build"
   },
   "dependencies": {
