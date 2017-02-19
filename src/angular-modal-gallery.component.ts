@@ -273,7 +273,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   }
 
   private getFileName(path: string) {
-    return path.replace(/^.*[\\\/]/, '')
+    return path.replace(/^.*[\\\/]/, '');
   }
 
   ngOnDestroy() {
