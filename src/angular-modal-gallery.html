@@ -8,10 +8,11 @@
     <div class="uil-ring-css" *ngIf="loading">
       <div></div>
     </div>
-    <a class="download-image" *ngIf="showDownloadButton" (click)="downloadImage(currentImage)"><i class="fa fa-download"></i></a>
+    <a class="download-image" *ngIf="showDownloadButton" (click)="downloadImage()"><i class="fa fa-download"></i></a>
     <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
     <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
-    <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
+    <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect"
+         (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
     <a class="nav-right" *ngIf="(images)?.length > 1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
     <span class="info-text">{{ currentImageIndex + 1 }}/{{ images.length }} - {{ currentImage.description }}</span>
   </div>

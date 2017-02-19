@@ -2,7 +2,7 @@
  The MIT License (MIT)
 
  Copyright (c) 2017 Stefano Cappa (Ks89)
- Copyright (c) 2016 vimalavinisha
+ Copyright (c) 2016 vimalavinisha (only for version 1)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 
 import {OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
+
 import 'mousetrap';
 
 export enum Action {
@@ -69,26 +70,7 @@ export enum Keyboard {
   selector: 'imageModal',
   exportAs: 'imageModal',
   styleUrls: ['./angular-modal-gallery.scss'],
-  template: `
-    <div class="ng-gallery" *ngIf="showGallery">
-      <div *ngFor="let i of images; let index = index">
-        <img src="{{ i.thumb }}" class="ng-thumb" (click)="showModalGallery(index)" alt="{{ i.description }}"/>
-      </div>
-    </div>
-    <div class="ng-overlay" *ngIf="opened">
-      <div class="ng-gallery-content">
-        <div class="uil-ring-css" *ngIf="loading">
-          <div></div>
-        </div>
-        <a class="download-image" *ngIf="showDownloadButton" (click)="downloadImage()"><i class="fa fa-download"></i></a>
-        <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
-        <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
-        <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect" (swipeleft)="swipe(currentImageIndex, $event.type)" (swiperight)="swipe(currentImageIndex, $event.type)"/>
-        <a class="nav-right" *ngIf="(images)?.length > 1" (click)="nextImage()"><i class="fa fa-angle-right"></i></a>
-        <span class="info-text">{{ currentImageIndex + 1 }}/{{ images.length }} - {{ currentImage.description }}</span>
-      </div>
-    </div>
-  `
+  templateUrl: './angular-modal-gallery.html'
 })
 export class AngularModalGallery implements OnInit, OnDestroy {
   opened: boolean = false;
@@ -142,20 +124,13 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    console.log("called oninit");
-    var thiz = this;
-    Mousetrap.bind(['ctrl+s', 'meta+s'], function(e) {
-      if (e.preventDefault) {
-        e.preventDefault();
-      } else {
-        // internet explorer
-        e.returnValue = false;
-      }
-      console.log("thiz.downloadable " + thiz.downloadable);
-      thiz.downloadImage();
-    });
+  mousetrap: MousetrapInstance;
 
+  constructor() {
+    this.mousetrap = new (<any>Mousetrap)();
+  }
+
+  ngOnInit() {
     // required before showModalGallery, otherwise this.images will be undefined
     this.initImages();
 
@@ -198,6 +173,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   closeGallery(action: Action = Action.NORMAL) {
     this.opened = false;
+    this.mousetrap.reset();
     this.close.emit(new ImageModalEvent(action, true));
   }
 
@@ -214,6 +190,16 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   }
 
   showModalGallery(index: number) {
+    this.mousetrap.bind(['ctrl+s', 'meta+s'], (event: KeyboardEvent, combo: string) => {
+      if (event.preventDefault) {
+        event.preventDefault();
+      } else {
+        // internet explorer
+        event.returnValue = false;
+      }
+      this.downloadImage();
+    });
+
     this.currentImageIndex = index;
     this.opened = true;
     this.currentImage = this.images[this.currentImageIndex];
@@ -228,10 +214,8 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     if (navigator.msSaveBlob) {
       // IE11 & Edge
       // TODO FIXME implement this
-      // navigator.msSaveBlob(csvData, exportFilename);
+      // navigator.msSaveBlob(csvData, this.getFileName(this.currentImage.img));
     } else {
-      console.log("downloading in else (so not IE)");
-      console.log("getfilename is: " + this.getFileName(this.currentImage.img));
       // other browsers
       let link = document.createElement('a');
       link.href = this.currentImage.img;
@@ -293,10 +277,9 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("called ondestroy");
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    Mousetrap.unbind(['ctrl+s', 'meta+s']);
+    this.mousetrap.reset();
   }
 }
