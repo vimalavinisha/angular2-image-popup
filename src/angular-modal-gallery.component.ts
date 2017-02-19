@@ -47,13 +47,13 @@ export class ImageModalEvent {
 }
 
 export class Image {
-  thumb: string;
   img: string;
-  description: string;
+  thumb?: string;
+  description?: string;
 
-  constructor(thumb: string, img: string, description: string) {
-    this.thumb = thumb;
+  constructor(img: string, description?: string, thumb?: string) {
     this.img = img;
+    this.thumb = thumb;
     this.description = description;
   }
 }
@@ -237,7 +237,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(action, newIndex);
 
-    // emit current visibile image index
+    // emit current visible image index
     this.show.emit(new ImageModalEvent(action, newIndex));
 
     return newIndex;
@@ -254,7 +254,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(action, newIndex);
 
-    // emit current visibile image index
+    // emit current visible image index
     this.show.emit(new ImageModalEvent(action, newIndex));
 
     return newIndex;

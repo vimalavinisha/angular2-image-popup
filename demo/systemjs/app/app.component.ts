@@ -121,7 +121,8 @@ import 'rxjs/add/operator/delay';
       <div *ngFor="let img of imagesArray; let i = index">
         <div class="float-left" *ngIf="i <= 2">
           <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>
-          <img class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
+          <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
+          <img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
         </div>
       </div>
       <div *ngIf="openModalWindow">
@@ -151,7 +152,8 @@ import 'rxjs/add/operator/delay';
         <div class="float-left" *ngIf="i <= 2">
           <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}
             more </a>
-          <img class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+          <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+          <img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
         </div>
       </div>
       <div *ngIf="openModalWindowObservable">
@@ -177,29 +179,25 @@ export class AppComponent implements OnDestroy {
 
   imagesArray = [
     new Image(
-      './app/assets/images/gallery/thumbs/img1.jpg',
-      './app/assets/images/gallery/img1.jpg',
-      'Image 1'
+      './app/assets/images/gallery/img1.jpg'
     ),
     new Image(
-      './app/assets/images/gallery/thumbs/img2.jpg',
       './app/assets/images/gallery/img2.jpg',
       'Image 2'
     ),
     new Image(
-      './app/assets/images/gallery/thumbs/img3.jpg',
       './app/assets/images/gallery/img3.jpg',
-      'Image 3'
+      'Image 3',
+      './app/assets/images/gallery/thumbs/img3.jpg'
     ),
     new Image(
-      './app/assets/images/gallery/thumbs/img4.jpg',
       './app/assets/images/gallery/img4.jpg',
       'Image 4'
     ),
     new Image(
-      './app/assets/images/gallery/thumbs/img5.jpg',
       './app/assets/images/gallery/img5.jpg',
-      'Image 5'
+      null,
+      './app/assets/images/gallery/thumbs/img5.jpg'
     )
   ];
 
@@ -209,9 +207,9 @@ export class AppComponent implements OnDestroy {
   // array with a single image inside (the first one)
   singleImage: Observable<Array<Image>> = Observable.of([
     new Image(
-      './app/assets/images/gallery/thumbs/img1.jpg',
       './app/assets/images/gallery/img1.jpg',
-      'Image 1'
+      'Image 1',
+      './app/assets/images/gallery/thumbs/img1.jpg'
     )]
   );
 
