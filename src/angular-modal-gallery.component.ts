@@ -50,11 +50,13 @@ export class Image {
   img: string;
   thumb?: string;
   description?: string;
+  extUrl?: string;
 
-  constructor(img: string, description?: string, thumb?: string) {
+  constructor(img: string, thumb?: string, description?: string, extUrl?: string) {
     this.img = img;
     this.thumb = thumb;
     this.description = description;
+    this.extUrl = extUrl;
   }
 }
 
@@ -106,6 +108,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
   @Input() showDownloadButton: boolean = false;
+  @Input() showExtUrlButton: boolean = false;
   @Input() downloadable: boolean = false;
   @Input() description: Description;
 
@@ -247,7 +250,6 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     if (!this.downloadable) {
       return;
     }
-    console.log("downloading...");
     if (navigator.msSaveBlob) {
       // IE11 & Edge
       // TODO FIXME implement this
@@ -260,6 +262,23 @@ export class AngularModalGallery implements OnInit, OnDestroy {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+  }
+
+  // apply [style.right]="" to external url <a></a>
+  getExtUrlRightPx() {
+    return this.showExtUrlButton ? '63px' : '0px';
+  }
+  // apply [style.right]="" to download url <a></a>
+  getDownloadRightPx() {
+    if(this.showDownloadButton) {
+      if (this.showExtUrlButton) {
+        return '126px';
+      } else {
+        return '63px';
+      }
+    } else {
+      return '0px';
     }
   }
 

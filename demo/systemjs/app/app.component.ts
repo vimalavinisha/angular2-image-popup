@@ -40,11 +40,13 @@ import 'rxjs/add/operator/delay';
       <ul>
         <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
         <li>No downloadable images, because downloadable = false (showDownloadButton is false by default)</li>
+        <li>external url button visible (because [showExtUrlButton]="true")</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
       <modalGallery [modalImages]="images"
                   [downloadable]="false"
+                  [showExtUrlButton]="true"
                   [description]="customDescription"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
@@ -59,12 +61,14 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
         <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
         <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
+        <li>external url button visible (because [showExtUrlButton]="true")</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
       <modalGallery [modalImages]="images"
                   [showDownloadButton]="true"
-                  [downloadable]="true"  
+                  [downloadable]="true"
+                  [showExtUrlButton]="true"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
@@ -78,12 +82,14 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an Array&lt;Image&gt;</li>
         <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
         <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
+        <li>external url button NOT visible (because [showExtUrlButton]="false")</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
       <modalGallery [modalImages]="imagesArray"
                   [showDownloadButton]="true"
-                  [downloadable]="true" 
+                  [downloadable]="true"
+                  [showExtUrlButton]="false"
                   [description]="customFullDescription"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
@@ -98,11 +104,12 @@ import 'rxjs/add/operator/delay';
       <ul>
         <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; without delay</li>
         <li>no downloadable, because both showDownloadButton and downloadable are false by default</li>
+        <li>external url button NOT visible (because [showExtUrlButton] is not defined, but is false by default)</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
       <!-- both showDownloadButton and downloadable are false by default -->
-      <modalGallery [modalImages]="singleImage"
+      <modalGallery [modalImages]="singleImage" 
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
@@ -117,6 +124,7 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an Array&lt;Image&gt;</li>
         <li>imagePointer as input</li>
         <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
+        <li>external url button visible (because [showExtUrlButton]="true")</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
@@ -130,7 +138,8 @@ import 'rxjs/add/operator/delay';
       <div *ngIf="openModalWindow">
         <modalGallery [modalImages]="imagesArray"
                     [imagePointer]="imagePointer"
-                    [downloadable]="true"
+                    [downloadable]="true" 
+                    [showExtUrlButton]="true"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
@@ -147,6 +156,7 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
         <li>imagePointer as input</li>
         <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
+        <li>external url button NOT visible (because [showExtUrlButton]="false")</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
@@ -161,7 +171,8 @@ import 'rxjs/add/operator/delay';
       <div *ngIf="openModalWindowObservable">
         <modalGallery [modalImages]="images"
                     [imagePointer]="imagePointerObservable"
-                    [downloadable]="true"
+                    [downloadable]="true" 
+                    [showExtUrlButton]="false"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
@@ -181,29 +192,34 @@ export class AppComponent implements OnDestroy {
 
   imagesArray = [
     new Image(
-      './app/assets/images/gallery/img1.jpg'
-      // no description
-      // no thumb
+      './app/assets/images/gallery/img1.jpg',
+      null, // no thumb
+      null, // no description
+      'http://www.google.com'
     ),
     new Image(
       './app/assets/images/gallery/img2.jpg',
-      'Description 2'
-      // no thumb
+      null, // no thumb
+      'Description 2',
+      'http://www.google.com'
     ),
     new Image(
       './app/assets/images/gallery/img3.jpg',
+      './app/assets/images/gallery/thumbs/img3.jpg',
       'Description 3',
-      './app/assets/images/gallery/thumbs/img3.jpg'
+      'http://www.google.com'
     ),
     new Image(
       './app/assets/images/gallery/img4.jpg',
-      'Description 4'
-      // no thumb
+      null, // no thumb
+      'Description 4',
+      'http://www.google.com'
     ),
     new Image(
       './app/assets/images/gallery/img5.jpg',
+      './app/assets/images/gallery/thumbs/img5.jpg',
       null, // no description
-      './app/assets/images/gallery/thumbs/img5.jpg'
+      'http://www.google.com'
     )
   ];
 
@@ -214,8 +230,9 @@ export class AppComponent implements OnDestroy {
   singleImage: Observable<Array<Image>> = Observable.of([
     new Image(
       './app/assets/images/gallery/img1.jpg',
+      './app/assets/images/gallery/thumbs/img1.jpg',
       'Description 1',
-      './app/assets/images/gallery/thumbs/img1.jpg'
+      'http://www.google.com'
     )]
   );
 
