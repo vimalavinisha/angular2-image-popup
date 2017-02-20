@@ -66,9 +66,16 @@ export enum Keyboard {
   DOWN_ARROW = 40
 }
 
+export interface Description {
+  customFullDescription?: string;
+  imageText?: string;
+  numberSeparator?: string;
+  beforeTextDescription?: string;
+}
+
 @Component({
-  selector: 'imageModal',
-  exportAs: 'imageModal',
+  selector: 'modalGallery',
+  exportAs: 'modalGallery',
   styleUrls: ['./angular-modal-gallery.scss'],
   templateUrl: './angular-modal-gallery.html'
 })
@@ -93,12 +100,14 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     DOWN: 'swipedown'
   };
 
+  private mousetrap: MousetrapInstance;
   private subscription: Subscription;
 
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
   @Input() showDownloadButton: boolean = false;
   @Input() downloadable: boolean = false;
+  @Input() description: Description;
 
   @Output() close = new EventEmitter<ImageModalEvent>();
   @Output() show = new EventEmitter<ImageModalEvent>();
@@ -124,10 +133,23 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
-  mousetrap: MousetrapInstance;
-
   constructor() {
+    // mousetrap is a library to catch keyboard's shortcuts
     this.mousetrap = new (<any>Mousetrap)();
+
+    // if description isn't provided initialize it with a default object
+    if(!this.description) {
+      this.description = {
+        imageText: 'Image ',
+        numberSeparator: '/',
+        beforeTextDescription: ' - '
+      }
+    }
+
+    // if one of the Description fields isn't initialized, provide a default value
+    this.description.imageText = this.description.imageText || 'Image ';
+    this.description.numberSeparator = this.description.numberSeparator || '/';
+    this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
   }
 
   ngOnInit() {
@@ -153,6 +175,18 @@ export class AngularModalGallery implements OnInit, OnDestroy {
         this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
       });
     }
+  }
+
+  getDescriptionToDisplay() {
+    if(this.description && this.description.customFullDescription) {
+      return this.description.customFullDescription;
+    }
+    // If the current image hasn't a description,
+    // prevent to write the ' - ' (or this.description.beforeTextDescription)
+    if(!this.currentImage.description || this.currentImage.description === '') {
+      return `${this.description.imageText}${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}`;
+    }
+    return `${this.description.imageText}${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}${this.description.beforeTextDescription}${this.currentImage.description}`;
   }
 
   // hammerjs touch gestures support
@@ -204,6 +238,9 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     this.opened = true;
     this.currentImage = this.images[this.currentImageIndex];
     this.loading = false;
+
+    // emit current visible image index
+    this.show.emit(new ImageModalEvent(Action.LOAD, this.currentImageIndex + 1));
   }
 
   downloadImage() {
