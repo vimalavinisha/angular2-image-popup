@@ -277,7 +277,6 @@ export class AppComponent implements OnDestroy {
     this.openModalWindow = false;
   }
 
-  // release resources for example 5
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
