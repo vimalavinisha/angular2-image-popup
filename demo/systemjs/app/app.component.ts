@@ -25,7 +25,7 @@
 
 import {Component, OnDestroy} from '@angular/core';
 
-import {Image, Action, ImageModalEvent} from 'angular-modal-gallery';
+import {Image, Action, ImageModalEvent, Description} from 'angular-modal-gallery';
 import {Observable, Subscription} from "rxjs";
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
@@ -43,13 +43,14 @@ import 'rxjs/add/operator/delay';
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <imageModal [modalImages]="images"
+      <modalGallery [modalImages]="images"
                   [downloadable]="false"
+                  [description]="customDescription"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></imageModal>
+                  (lastImage)="onIsLastImage($event)"></modalGallery>
     </section>
     <section id="Images2">
       <h3>2 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
@@ -61,14 +62,14 @@ import 'rxjs/add/operator/delay';
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <imageModal [modalImages]="images"
+      <modalGallery [modalImages]="images"
                   [showDownloadButton]="true"
                   [downloadable]="true"  
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></imageModal>
+                  (lastImage)="onIsLastImage($event)"></modalGallery>
     </section>
     <section id="Images3">
       <h3>3 - Array of images + download (both 'ctrl+s' and button)</h3>
@@ -80,14 +81,15 @@ import 'rxjs/add/operator/delay';
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <imageModal [modalImages]="imagesArray"
+      <modalGallery [modalImages]="imagesArray"
                   [showDownloadButton]="true"
-                  [downloadable]="true"
+                  [downloadable]="true" 
+                  [description]="customFullDescription"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></imageModal>
+                  (lastImage)="onIsLastImage($event)"></modalGallery>
     </section>
     <section id="Images4">
       <br>
@@ -100,12 +102,12 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <!-- both showDownloadButton and downloadable are false by default -->
-      <imageModal [modalImages]="singleImage"
+      <modalGallery [modalImages]="singleImage"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></imageModal>
+                  (lastImage)="onIsLastImage($event)"></modalGallery>
     </section>
     <section id="Images5">
       <br>
@@ -126,14 +128,14 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <imageModal [modalImages]="imagesArray"
+        <modalGallery [modalImages]="imagesArray"
                     [imagePointer]="imagePointer"
                     [downloadable]="true"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></imageModal>
+                    (lastImage)="onIsLastImage($event)"></modalGallery>
       </div>
     </section>
     <br><br>
@@ -157,14 +159,14 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindowObservable">
-        <imageModal [modalImages]="images"
+        <modalGallery [modalImages]="images"
                     [imagePointer]="imagePointerObservable"
                     [downloadable]="true"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></imageModal>
+                    (lastImage)="onIsLastImage($event)"></modalGallery>
       </div>
     </section>
   `
@@ -180,23 +182,27 @@ export class AppComponent implements OnDestroy {
   imagesArray = [
     new Image(
       './app/assets/images/gallery/img1.jpg'
+      // no description
+      // no thumb
     ),
     new Image(
       './app/assets/images/gallery/img2.jpg',
-      'Image 2'
+      'Description 2'
+      // no thumb
     ),
     new Image(
       './app/assets/images/gallery/img3.jpg',
-      'Image 3',
+      'Description 3',
       './app/assets/images/gallery/thumbs/img3.jpg'
     ),
     new Image(
       './app/assets/images/gallery/img4.jpg',
-      'Image 4'
+      'Description 4'
+      // no thumb
     ),
     new Image(
       './app/assets/images/gallery/img5.jpg',
-      null,
+      null, // no description
       './app/assets/images/gallery/thumbs/img5.jpg'
     )
   ];
@@ -208,10 +214,25 @@ export class AppComponent implements OnDestroy {
   singleImage: Observable<Array<Image>> = Observable.of([
     new Image(
       './app/assets/images/gallery/img1.jpg',
-      'Image 1',
+      'Description 1',
       './app/assets/images/gallery/thumbs/img1.jpg'
     )]
   );
+
+  customDescription: Description = {
+    imageText: 'Look this image ',
+    numberSeparator: ' of ',
+    beforeTextDescription: ' => '
+  };
+
+  customFullDescription: Description = {
+    // you should build this value programmaticaly with the result of (show)="..()" event
+    customFullDescription: 'Custom description of the current visible image',
+    // if customFullDescription !== undefined, all other fields will be ignored
+    // imageText: '',
+    // numberSeparator: '',
+    // beforeTextDescription: '',
+  };
 
   // rxjs subscription for example 5
   private subscription: Subscription;
@@ -235,6 +256,7 @@ export class AppComponent implements OnDestroy {
   }
 
   onVisibleIndex(event: ImageModalEvent) {
+    this.customFullDescription.customFullDescription = `Custom description of visible image with index= ${event.result}`;
     console.log("action: " + Action[event.action]);
     console.log("result:" + event.result);
   }
