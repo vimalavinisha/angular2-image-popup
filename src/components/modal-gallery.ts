@@ -265,23 +265,6 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
-  // apply [style.right]="" to external url <a></a>
-  getExtUrlRightPx() {
-    return this.showExtUrlButton ? '63px' : '0px';
-  }
-  // apply [style.right]="" to download url <a></a>
-  getDownloadRightPx(currentImageExtUrl: string) {
-    if(this.showDownloadButton) {
-      if (this.showExtUrlButton && currentImageExtUrl) {
-        return '126px';
-      } else {
-        return '63px';
-      }
-    } else {
-      return '0px';
-    }
-  }
-
   private getNextIndex(action: Action, currentIndex: number): number {
     let newIndex: number = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {

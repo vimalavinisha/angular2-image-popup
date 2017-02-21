@@ -6,8 +6,8 @@ import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
 export class DownloadButtonDirective implements OnChanges {
 
   @Input('downloadButton') downloadButton: boolean;
-  @Input('extUrlButton') extUrlButton: boolean;
-  @Input('imgExtUrl') imgExtUrl: string | null | undefined | void;
+  @Input() extUrlButton: boolean;
+  @Input() imgExtUrl: string | null | undefined;
 
   constructor(private el: ElementRef) {
   }
@@ -16,7 +16,7 @@ export class DownloadButtonDirective implements OnChanges {
     let style: string;
     // apply [style.right]="" to download url <a></a>
     if (this.downloadButton) {
-      if (this.extUrlButton === true && (this.imgExtUrl !== null && this.imgExtUrl !== undefined)) {
+      if (this.extUrlButton === true && this.imgExtUrl) {
         style = '126px';
       } else {
         style = '63px';
@@ -25,5 +25,8 @@ export class DownloadButtonDirective implements OnChanges {
       style = '0px';
     }
     this.el.nativeElement.style.right = style;
+
+    // hide downloadButton if the input property is false
+    this.el.nativeElement.hidden = !this.downloadButton;
   }
 }
