@@ -11,8 +11,10 @@
     <div class="uil-ring-css" *ngIf="loading">
       <div></div>
     </div>
-    <a class="external-url-image" [style.right]="getExtUrlRightPx()" *ngIf="showExtUrlButton && currentImage.extUrl" href="{{currentImage.extUrl}}"><i class="fa fa-external-link"></i></a>
-    <a class="download-image" [style.right]="getDownloadRightPx(currentImage.extUrl)" *ngIf="showDownloadButton" (click)="downloadImage()"><i class="fa fa-download"></i></a>
+    <a class="external-url-image" [style.right]="getExtUrlRightPx()" *ngIf="showExtUrlButton && currentImage.extUrl"
+       href="{{currentImage.extUrl}}"><i class="fa fa-external-link"></i></a>
+    <a class="download-image" [style.right]="getDownloadRightPx(currentImage.extUrl)" *ngIf="showDownloadButton"
+       (click)="downloadImage()"><i class="fa fa-download"></i></a>
     <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
     <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
     <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect"
