@@ -22,7 +22,7 @@
     "index.ts"
   ],
   "angularCompilerOptions": {
-    "genDir": ".compiled",
+    "genDir": "aot",
     "skipMetadataEmit" : true
   }
 }
