@@ -22,26 +22,34 @@
  SOFTWARE.
  */
 
-import {NgModule, ModuleWithProviders} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {Input, Output, EventEmitter, Component} from '@angular/core';
+import {Image} from "./modal-gallery";
 
-import {AngularModalGallery} from './components/modal-gallery';
-import {DIRECTIVES} from './directives/directives';
-import {UpperButtonsComponent} from "./components/upper-buttons.component";
-
-@NgModule({
-  imports: [CommonModule],
-  declarations: [AngularModalGallery, UpperButtonsComponent,  DIRECTIVES],
-  exports: [AngularModalGallery]
+@Component({
+  selector: 'upperButtons',
+  styleUrls: ['upper-buttons.scss'],
+  template: `
+    <a class="external-url-image" [externalUrlButton]="showExtUrl" [imgExtUrl]="image.extUrl"
+       href="{{image.extUrl}}"><i class="fa fa-external-link"></i></a>
+    <a class="download-image" [downloadButton]="showDownload" [extUrlButton]="showExtUrl"
+       [imgExtUrl]="image.extUrl" (click)="downloadImage()"><i class="fa fa-download"></i></a>
+    <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
+  `
 })
-export class AngularModalGalleryModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: AngularModalGalleryModule,
-      providers: [
-        // ImageModalService
-      ]
-    };
+export class UpperButtonsComponent {
+
+  @Input() image: Image;
+  @Input() showDownload: boolean = false;
+  @Input() showExtUrl: boolean = false;
+
+  @Output() close = new EventEmitter<boolean>();
+  @Output() download = new EventEmitter<boolean>();
+
+  downloadImage() {
+    this.download.emit(true);
+  }
+
+  closeGallery() {
+    this.close.emit(true);
   }
 }
-

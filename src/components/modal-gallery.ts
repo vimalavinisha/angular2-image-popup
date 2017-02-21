@@ -77,7 +77,6 @@ export interface Description {
 
 @Component({
   selector: 'modalGallery',
-  exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
@@ -107,10 +106,11 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
-  @Input() showDownloadButton: boolean = false;
-  @Input() showExtUrlButton: boolean = false;
   @Input() downloadable: boolean = false;
   @Input() description: Description;
+  // used only inside upper-button's component
+  @Input() showDownloadButton: boolean = false;
+  @Input() showExtUrlButton: boolean = false;
 
   @Output() close = new EventEmitter<ImageModalEvent>();
   @Output() show = new EventEmitter<ImageModalEvent>();
