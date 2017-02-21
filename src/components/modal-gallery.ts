@@ -25,8 +25,7 @@
 
 import {OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
-
-import 'mousetrap';
+import {MousetrapService} from './mousetrap.service';
 
 export enum Action {
   NORMAL, // default value
@@ -101,7 +100,6 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     DOWN: 'swipedown'
   };
 
-  private mousetrap: MousetrapInstance;
   private subscription: Subscription;
 
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
@@ -136,10 +134,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
-  constructor() {
-    // mousetrap is a library to catch keyboard's shortcuts
-    this.mousetrap = new (<any>Mousetrap)();
-
+  constructor(private mousetrapService: MousetrapService) {
     // if description isn't provided initialize it with a default object
     if(!this.description) {
       this.description = {
@@ -210,7 +205,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   closeGallery(action: Action = Action.NORMAL) {
     this.opened = false;
-    this.mousetrap.reset();
+    this.mousetrapService.reset();
     this.close.emit(new ImageModalEvent(action, true));
   }
 
@@ -227,7 +222,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   }
 
   showModalGallery(index: number) {
-    this.mousetrap.bind(['ctrl+s', 'meta+s'], (event: KeyboardEvent, combo: string) => {
+    this.mousetrapService.add((event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
         event.preventDefault();
       } else {
@@ -319,6 +314,6 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.mousetrap.reset();
+    this.mousetrapService.reset();
   }
 }

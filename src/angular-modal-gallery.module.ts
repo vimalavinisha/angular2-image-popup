@@ -27,7 +27,8 @@ import {CommonModule} from '@angular/common';
 
 import {AngularModalGallery} from './components/modal-gallery';
 import {DIRECTIVES} from './directives/directives';
-import {UpperButtonsComponent} from "./components/upper-buttons.component";
+import {UpperButtonsComponent} from './components/upper-buttons.component';
+import {MousetrapService} from './components/mousetrap.service';
 
 @NgModule({
   imports: [CommonModule],
@@ -39,6 +40,7 @@ export class AngularModalGalleryModule {
     return {
       ngModule: AngularModalGalleryModule,
       providers: [
+        MousetrapService
         // ImageModalService
       ]
     };
