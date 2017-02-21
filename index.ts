@@ -25,7 +25,7 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 import {AngularModalGalleryModule} from './src/angular-modal-gallery.module';
 
-export {Image, ImageModalEvent, Action, Description} from './src/angular-modal-gallery.component';
+export {Image, ImageModalEvent, Action, Description} from './src/components/modal-gallery';
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@ export {Image, ImageModalEvent, Action, Description} from './src/angular-modal-g
     AngularModalGalleryModule
   ]
 })
-export class AngulaRootModalGalleryModule {
+export class AngularRootModalGalleryModule {
 }
 
 
@@ -46,7 +46,7 @@ export class AngulaRootModalGalleryModule {
 export class ModalGalleryModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AngulaRootModalGalleryModule
+      ngModule: AngularRootModalGalleryModule
     };
   }
 }

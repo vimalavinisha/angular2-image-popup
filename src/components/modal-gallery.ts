@@ -78,8 +78,8 @@ export interface Description {
 @Component({
   selector: 'modalGallery',
   exportAs: 'modalGallery',
-  styleUrls: ['./angular-modal-gallery.scss'],
-  templateUrl: './angular-modal-gallery.html'
+  styleUrls: ['modal-gallery.scss'],
+  templateUrl: 'modal-gallery.html'
 })
 export class AngularModalGallery implements OnInit, OnDestroy {
   opened: boolean = false;

@@ -25,8 +25,8 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {AngularModalGallery} from './angular-modal-gallery.component';
-import {ClickOutsideDirective} from './angular-modal-gallery.directive';
+import {AngularModalGallery} from './components/modal-gallery';
+import {ClickOutsideDirective} from './directives/click-outside.directive';
 
 @NgModule({
   imports: [CommonModule],
