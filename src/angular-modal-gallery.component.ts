@@ -270,9 +270,9 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     return this.showExtUrlButton ? '63px' : '0px';
   }
   // apply [style.right]="" to download url <a></a>
-  getDownloadRightPx() {
+  getDownloadRightPx(currentImageExtUrl: string) {
     if(this.showDownloadButton) {
-      if (this.showExtUrlButton) {
+      if (this.showExtUrlButton && currentImageExtUrl) {
         return '126px';
       } else {
         return '63px';

@@ -40,7 +40,7 @@ import 'rxjs/add/operator/delay';
       <ul>
         <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
         <li>No downloadable images, because downloadable = false (showDownloadButton is false by default)</li>
-        <li>external url button visible (because [showExtUrlButton]="true")</li>
+        <li>external url button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
@@ -61,7 +61,7 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
         <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
         <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
-        <li>external url button visible (because [showExtUrlButton]="true")</li>
+        <li>external url button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
@@ -124,7 +124,7 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an Array&lt;Image&gt;</li>
         <li>imagePointer as input</li>
         <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
-        <li>external url button visible (because [showExtUrlButton]="true")</li>
+        <li>external url button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
         <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
@@ -201,7 +201,7 @@ export class AppComponent implements OnDestroy {
       './app/assets/images/gallery/img2.jpg',
       null, // no thumb
       'Description 2',
-      'http://www.google.com'
+      null // url
     ),
     new Image(
       './app/assets/images/gallery/img3.jpg',
@@ -219,7 +219,7 @@ export class AppComponent implements OnDestroy {
       './app/assets/images/gallery/img5.jpg',
       './app/assets/images/gallery/thumbs/img5.jpg',
       null, // no description
-      'http://www.google.com'
+      null // url
     )
   ];
 
