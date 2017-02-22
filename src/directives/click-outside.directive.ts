@@ -7,7 +7,7 @@ export class ClickOutsideDirective {
 
   constructor(private el: ElementRef) { }
 
-  @Output() clickOutside = new EventEmitter<any>();
+  @Output() clickOutside:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @HostListener('document:click', ['$event.target'])
   onClick(targetElement: any) {
@@ -22,7 +22,7 @@ export class ClickOutsideDirective {
     console.log(clickedInside);
 
     if (!clickedInside) {
-      this.clickOutside.emit(null);
+      this.clickOutside.emit(true);
     }
   }
 }

@@ -25,7 +25,7 @@
 
 import {OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
-import {MousetrapService} from './mousetrap.service';
+import {KeyboardService} from './keyboard.service';
 
 export enum Action {
   NORMAL, // default value
@@ -110,11 +110,11 @@ export class AngularModalGallery implements OnInit, OnDestroy {
   @Input() showDownloadButton: boolean = false;
   @Input() showExtUrlButton: boolean = false;
 
-  @Output() close = new EventEmitter<ImageModalEvent>();
-  @Output() show = new EventEmitter<ImageModalEvent>();
-  @Output() firstImage = new EventEmitter<ImageModalEvent>();
-  @Output() lastImage = new EventEmitter<ImageModalEvent>();
-  @Output() hasData = new EventEmitter<ImageModalEvent>();
+  @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -134,7 +134,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private mousetrapService: MousetrapService) {
+  constructor(private keyboardService: KeyboardService) {
     // if description isn't provided initialize it with a default object
     if(!this.description) {
       this.description = {
@@ -205,7 +205,7 @@ export class AngularModalGallery implements OnInit, OnDestroy {
 
   closeGallery(action: Action = Action.NORMAL) {
     this.opened = false;
-    this.mousetrapService.reset();
+    this.keyboardService.reset();
     this.close.emit(new ImageModalEvent(action, true));
   }
 
@@ -221,8 +221,12 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     this.showModalGallery(this.currentImageIndex);
   }
 
+  onShowModalGallery(index: number) {
+    this.showModalGallery(index);
+  }
+
   showModalGallery(index: number) {
-    this.mousetrapService.add((event: KeyboardEvent, combo: string) => {
+    this.keyboardService.add((event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
         event.preventDefault();
       } else {
@@ -314,6 +318,6 @@ export class AngularModalGallery implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.mousetrapService.reset();
+    this.keyboardService.reset();
   }
 }

@@ -22,34 +22,28 @@
  SOFTWARE.
  */
 
-import {Input, Output, EventEmitter, Component} from '@angular/core';
-import {Image} from "./modal-gallery";
+import {NgModule, ModuleWithProviders} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-@Component({
-  selector: 'upperButtons',
-  styleUrls: ['upper-buttons.scss'],
-  template: `
-    <a class="external-url-image" [externalUrlButton]="showExtUrl" [imgExtUrl]="image.extUrl"
-       href="{{image.extUrl}}"><i class="fa fa-external-link"></i></a>
-    <a class="download-image" [downloadButton]="showDownload" [extUrlButton]="showExtUrl"
-       [imgExtUrl]="image.extUrl" (click)="downloadImage()"><i class="fa fa-download"></i></a>
-    <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
-  `
+import {AngularModalGallery} from './components/modal-gallery';
+import {DIRECTIVES} from './directives/directives';
+import {UpperButtonsComponent} from './components/upper-buttons.component';
+import {KeyboardService} from './components/keyboard.service';
+import {Gallery} from './components/gallery.component';
+
+@NgModule({
+  imports: [CommonModule],
+  declarations: [AngularModalGallery, UpperButtonsComponent, Gallery, DIRECTIVES],
+  exports: [AngularModalGallery]
 })
-export class UpperButtonsComponent {
-
-  @Input() image: Image;
-  @Input() showDownload: boolean = false;
-  @Input() showExtUrl: boolean = false;
-
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  downloadImage() {
-    this.download.emit(true);
-  }
-
-  closeGallery() {
-    this.close.emit(true);
+export class AngularModalGalleryModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: AngularModalGalleryModule,
+      providers: [
+        KeyboardService
+      ]
+    };
   }
 }
+

@@ -1,11 +1,5 @@
-<div class="ng-gallery" *ngIf="showGallery">
-  <div *ngFor="let i of images; let index = index">
-    <img *ngIf="i.thumb" src="{{ i.thumb }}" class="ng-thumb" (click)="showModalGallery(index)"
-         alt="{{ i.description }}"/>
-    <img *ngIf="!i.thumb" src="{{ i.img }}" class="ng-thumb" (click)="showModalGallery(index)"
-         alt="{{ i.description }}"/>
-  </div>
-</div>
+<gallery [images]="images" [showGallery]="showGallery" (show)="onShowModalGallery($event)"></gallery>
+
 <div class="ng-overlay" *ngIf="opened">
   <div class="ng-gallery-content">
     <div class="uil-ring-css" *ngIf="loading">
@@ -13,8 +7,7 @@
     </div>
 
     <upperButtons [image]="currentImage" [showDownload]="showDownloadButton" [showExtUrl]="showExtUrlButton"
-                  (close)="closeGallery()" (download)="downloadImage()" >
-    </upperButtons>
+                  (close)="closeGallery()" (download)="downloadImage()"></upperButtons>
 
     <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
     <img *ngIf="!loading" src="{{ currentImage.img }}" (click)="nextImage(clickAction)" class="effect"

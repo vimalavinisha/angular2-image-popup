@@ -2,6 +2,7 @@
  The MIT License (MIT)
 
  Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2016 vimalavinisha (only for version 1)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +23,31 @@
  SOFTWARE.
  */
 
-import {NgModule, ModuleWithProviders} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {Input, Output, EventEmitter, Component} from '@angular/core';
+import {Image} from "./modal-gallery";
 
-import {AngularModalGallery} from './components/modal-gallery';
-import {DIRECTIVES} from './directives/directives';
-import {UpperButtonsComponent} from './components/upper-buttons.component';
-import {MousetrapService} from './components/mousetrap.service';
-
-@NgModule({
-  imports: [CommonModule],
-  declarations: [AngularModalGallery, UpperButtonsComponent,  DIRECTIVES],
-  exports: [AngularModalGallery]
+@Component({
+  selector: 'gallery',
+  styleUrls: ['gallery.scss'],
+  template: `
+    <div class="ng-gallery" *ngIf="showGallery">
+      <div *ngFor="let i of images; let index = index">
+        <img *ngIf="i.thumb" src="{{ i.thumb }}" class="ng-thumb" (click)="showModalGallery(index)"
+             alt="{{ i.description }}"/>
+        <img *ngIf="!i.thumb" src="{{ i.img }}" class="ng-thumb" (click)="showModalGallery(index)"
+             alt="{{ i.description }}"/>
+      </div>
+    </div>
+  `
 })
-export class AngularModalGalleryModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: AngularModalGalleryModule,
-      providers: [
-        MousetrapService
-        // ImageModalService
-      ]
-    };
+export class Gallery {
+
+  @Input() images: Image[];
+  @Input() showGallery: boolean;
+
+  @Output() show: EventEmitter<number> = new EventEmitter<number>();
+
+  showModalGallery(index: number) {
+    this.show.emit(index);
   }
 }
-

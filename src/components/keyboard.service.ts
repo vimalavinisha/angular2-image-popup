@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import 'mousetrap';
 
 @Injectable()
-export class MousetrapService {
+export class KeyboardService {
   private mousetrap: MousetrapInstance;
 
   constructor() {
