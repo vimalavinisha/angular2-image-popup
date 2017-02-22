@@ -4,11 +4,13 @@
   <ul>
     <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
     <li>No downloadable images, because downloadable = false (showDownloadButton is false by default)</li>
+    <li>external url button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
     <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
   </ul>
   <br>
   <modalGallery [modalImages]="images"
                 [downloadable]="false"
+                [showExtUrlButton]="true"
                 [description]="customDescription"
                 (hasData)="onImageLoaded($event)"
                 (close)="onCloseImageModal($event)"
@@ -23,12 +25,14 @@
     <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
     <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
     <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
+    <li>external url button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
     <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
   </ul>
   <br>
   <modalGallery [modalImages]="images"
                 [showDownloadButton]="true"
                 [downloadable]="true"
+                [showExtUrlButton]="true"
                 (hasData)="onImageLoaded($event)"
                 (close)="onCloseImageModal($event)"
                 (show)="onVisibleIndex($event)"
@@ -42,12 +46,14 @@
     <li>modalImages is an Array&lt;Image&gt;</li>
     <li>downloadable images, because downloadable = true. So you can use ctrl+s to save the displayed image</li>
     <li>download button displayed because, showDownloadButton = true and downloadable is also = true</li>
+    <li>external url button NOT visible (because [showExtUrlButton]="false")</li>
     <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
   </ul>
   <br>
   <modalGallery [modalImages]="imagesArray"
                 [showDownloadButton]="true"
                 [downloadable]="true"
+                [showExtUrlButton]="false"
                 [description]="customFullDescription"
                 (hasData)="onImageLoaded($event)"
                 (close)="onCloseImageModal($event)"
@@ -62,6 +68,7 @@
   <ul>
     <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; without delay</li>
     <li>no downloadable, because both showDownloadButton and downloadable are false by default</li>
+    <li>external url button NOT visible (because [showExtUrlButton] is not defined, but is false by default)</li>
     <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
   </ul>
   <br>
@@ -81,6 +88,7 @@
     <li>modalImages is an Array&lt;Image&gt;</li>
     <li>imagePointer as input</li>
     <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
+    <li>external url button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
     <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
   </ul>
   <br>
@@ -95,6 +103,7 @@
     <modalGallery [modalImages]="imagesArray"
                   [imagePointer]="imagePointer"
                   [downloadable]="true"
+                  [showExtUrlButton]="true"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
@@ -111,6 +120,7 @@
     <li>modalImages is an Observable&lt;Array&lt;Image&gt;&gt; with 300ms of delay (to simulate a network request)</li>
     <li>imagePointer as input</li>
     <li>downloadable images only using ctrl+s, because both downloadable = true, but showDownloadButton is false by default</li>
+    <li>external url button NOT visible (because [showExtUrlButton]="false")</li>
     <li>Subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
   </ul>
   <br>
@@ -126,6 +136,7 @@
     <modalGallery [modalImages]="images"
                   [imagePointer]="imagePointerObservable"
                   [downloadable]="true"
+                  [showExtUrlButton]="false"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"

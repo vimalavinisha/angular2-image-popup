@@ -34,7 +34,7 @@ import '../loading.css'; // css to show a centered spinner before angular's boot
 
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs @types/hammerjs`)
-
+import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap @types/mousetrap`)
 import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
@@ -43,9 +43,9 @@ import { ApplicationComponent } from './application/application.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './common/components/navbar/navbar.component';
 
-import { removeNgStyles, createNewHosts, createInputTransfer } from "@angularclass/hmr";
-import { IdlePreloadModule } from "@angularclass/idle-preload";
-import { RouterModule, PreloadAllModules } from "@angular/router";
+import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { IdlePreloadModule } from '@angularclass/idle-preload';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 
 @NgModule({
   imports: [
