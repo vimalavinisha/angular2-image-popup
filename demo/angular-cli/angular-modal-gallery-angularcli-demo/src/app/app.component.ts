@@ -24,8 +24,9 @@
 
 import {Component, OnDestroy} from '@angular/core';
 
-import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable, Subscription } from 'rxjs';
+import {Image, Action, ImageModalEvent, Description} from 'angular-modal-gallery';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
@@ -42,7 +43,7 @@ export class AppComponent implements OnDestroy {
   openModalWindowObservable: boolean = false;
   imagePointerObservable: number = 0;
 
-  imagesArray = [
+  imagesArray: Array<Image> = [
     new Image(
       '../assets/images/gallery/img1.jpg',
       null, // no thumb
@@ -50,14 +51,14 @@ export class AppComponent implements OnDestroy {
       'http://www.google.com'
     ),
     new Image(
-      '../assets/images/gallery/img2.jpg',
+      '../assets/images/gallery/img2.png', // example with a PNG image
       null, // no thumb
       'Description 2',
       null // url
     ),
     new Image(
       '../assets/images/gallery/img3.jpg',
-      '../assets/images/gallery/thumbs/img3.jpg',
+      '../assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
       'Description 3',
       'http://www.google.com'
     ),
@@ -88,6 +89,12 @@ export class AppComponent implements OnDestroy {
     )]
   );
 
+  // array of images initialized inside the onNgInit() of this component
+  // in an asynchronous way subscribing to an Observable with a delay.
+  // This is not a real use-case, but it's a way to simulate a scenario where
+  // you have to subscribe to an Observable to get data and to set public vars
+  imagesArraySubscribed: Array<Image>;
+
   customDescription: Description = {
     imageText: 'Look this image ',
     numberSeparator: ' of ',
@@ -103,8 +110,14 @@ export class AppComponent implements OnDestroy {
     // beforeTextDescription: '',
   };
 
-  // rxjs subscription for example 5
   private subscription: Subscription;
+  private imagesArraySubscription: Subscription;
+
+  ngOnInit() {
+    this.imagesArraySubscription = Observable.of(null).delay(500).subscribe(() => {
+      this.imagesArraySubscribed = this.imagesArray;
+    });
+  }
 
   openImageModal(image: Image) {
     this.imagePointer = this.imagesArray.indexOf(image);
@@ -146,9 +159,16 @@ export class AppComponent implements OnDestroy {
     this.openModalWindow = false;
   }
 
+  addRandomImage() {
+    this.imagesArray.push(this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)]);
+  }
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if(this.imagesArraySubscription) {
+      this.imagesArraySubscription.unsubscribe();
     }
   }
 }

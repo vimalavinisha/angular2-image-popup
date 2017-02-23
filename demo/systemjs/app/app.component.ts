@@ -26,7 +26,8 @@
 import {Component, OnDestroy} from '@angular/core';
 
 import {Image, Action, ImageModalEvent, Description} from 'angular-modal-gallery';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
