@@ -9,6 +9,10 @@
     "type": "git",
     "url": "git+https://github.com/Ks89/angular-modal-gallery.git"
   },
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=3.8.6"
+  },
   "scripts": {
     "link": "npm link angular-modal-gallery",
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\"",

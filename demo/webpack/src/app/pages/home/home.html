@@ -38,7 +38,7 @@
           <modalGallery [modalImages]="images"
                         [showDownloadButton]="true"
                         [downloadable]="true"
-                        [showExtUrlButton]="true"
+                        [showExtUrlButton]="false"
                         (hasData)="onImageLoaded($event)"
                         (close)="onCloseImageModal($event)"
                         (show)="onVisibleIndex($event)"
