@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Directive({
   selector: '[downloadButton]'
@@ -12,7 +12,7 @@ export class DownloadButtonDirective implements OnChanges {
   constructor(private el: ElementRef) {
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     let style: string;
     // apply [style.right]="" to download url <a></a>
     if (this.downloadButton) {
