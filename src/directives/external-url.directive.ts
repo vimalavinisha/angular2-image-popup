@@ -8,8 +8,7 @@ export class ExternalUrlButtonDirective implements OnChanges {
   @Input('externalUrlButton') showExtUrlButton: boolean;
   @Input() imgExtUrl: string | null | undefined;
 
-  constructor(private el: ElementRef) {
-  }
+  constructor(private el: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     // apply [style.right]="" to external url <a></a>

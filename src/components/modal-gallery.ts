@@ -139,7 +139,7 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
 
   constructor(private keyboardService: KeyboardService) {
     // if description isn't provided initialize it with a default object
-    if(!this.description) {
+    if (!this.description) {
       this.description = {
         imageText: 'Image ',
         numberSeparator: '/',
@@ -170,10 +170,9 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     // to prevent errors when you pass to this library
     // the array of images inside a subscribe block, in this way: `...subscribe(val => { this.images = arrayOfImages })`
     // As you can see, I'm providing examples in these situations in all official demos
-    if(this.modalImages) {
+    if (this.modalImages) {
       this.initImages();
     }
-
   }
 
   private initImages() {
@@ -191,12 +190,12 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   }
 
   getDescriptionToDisplay() {
-    if(this.description && this.description.customFullDescription) {
+    if (this.description && this.description.customFullDescription) {
       return this.description.customFullDescription;
     }
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
-    if(!this.currentImage.description || this.currentImage.description === '') {
+    if (!this.currentImage.description || this.currentImage.description === '') {
       return `${this.description.imageText}${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}`;
     }
     return `${this.description.imageText}${this.currentImageIndex + 1}${this.description.numberSeparator}${this.images.length}${this.description.beforeTextDescription}${this.currentImage.description}`;

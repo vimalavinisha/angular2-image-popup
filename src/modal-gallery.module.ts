@@ -31,7 +31,6 @@ import {UpperButtonsComponent} from './components/upper-buttons.component';
 import {KeyboardService} from './components/keyboard.service';
 import {Gallery} from './components/gallery.component';
 
-
 @NgModule({
   imports: [CommonModule],
   declarations: [AngularModalGallery, UpperButtonsComponent, Gallery, DIRECTIVES],
