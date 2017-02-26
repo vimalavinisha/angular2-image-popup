@@ -22,4 +22,6 @@
  * SOFTWARE.
  */
 
-module.exports = require('./config/webpack.dev.js');
+h1 {
+  color: #333333;
+}

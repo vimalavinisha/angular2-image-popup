@@ -22,34 +22,43 @@
  * SOFTWARE.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-import { routes } from './lazy.routes';
-
-import { SharedModule } from '../../shared/shared.module';
 import { LazyComponent } from './lazy.component';
+import { SharedModule } from '../../shared/shared.module';
 
-// ********************** angular-modal-gallery *****************************
 import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
-// **************************************************************************
 
-console.log('`Lazy` bundle loaded asynchronously');
+let comp: LazyComponent;
+let fixture: ComponentFixture<LazyComponent>;
 
-@NgModule({
-  declarations: [
-    LazyComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
+describe('LazyComponent', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ SharedModule, ModalGalleryModule.forRoot() ],
+      declarations: [ LazyComponent ]
+    }); // not necessary with webpack .compileComponents();
 
-    ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
-  ],
-  providers: []
-})
-export class LazyModule {
-  public static routes = routes;
-}
+    fixture = TestBed.createComponent(LazyComponent);
+    comp = fixture.componentInstance;
+
+    fixture.detectChanges();
+    return fixture.whenStable().then(() => fixture.detectChanges());
+  });
+
+  it('can instantiate it', () => expect(comp).not.toBeNull());
+
+  describe('---YES---', () => {
+    beforeEach(() => fixture.detectChanges());
+
+    it('should display the lazy page', () => {
+      const element: DebugElement = fixture.debugElement;
+
+      const title: DebugElement[] = element.queryAll(By.css('h1'));
+      expect(title.length).toBe(1);
+      expect(title[0].nativeElement.textContent.trim()).toBe('angular-modal-gallery official webpack demo lazy page');
+    });
+  });
+});

@@ -5,16 +5,16 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "pretty": false,
     "sourceMap": true,
-    "lib": ["es2015", "dom"],
     "strictNullChecks": false,
     "skipDefaultLibCheck": true,
     "outDir": "aot",
     "noImplicitAny": false,
     "noEmit": true,
     "suppressImplicitAnyIndexErrors": true,
-    "types": [
-      "node"
+    "typeRoots": [
+      "node_modules/@types"
     ]
   },
   "exclude": [
@@ -24,11 +24,14 @@
     "config",
     "aot",
     "**/*.spec.ts",
-    "**/*.e2e.ts"
+    "**/*.e2e.ts",
+    "docs",
+    "typedocs"
   ],
 
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true,
+    "forkChecker": true,
     "useCache": true
   },
   "angularCompilerOptions": {

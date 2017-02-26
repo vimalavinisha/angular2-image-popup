@@ -1,20 +1,41 @@
-// 'use strict';
+/*
+ * MIT License
+ *
+ * Copyright (c) 2017 Stefano Cappa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+// run:
+// 1. npm run webdriver:update
+// 2. npm run e2e
 
 require('ts-node/register');
-
-const helpers = require('./helpers');
-
-// to run this file with `protractor`:
-// 1. `npm run build`
-// 2. start server-side to serve client-side (this project)
-// 3. now you can run `protractor` on port 3001
+var helpers = require('./helpers');
 
 exports.config = {
   baseUrl: 'http://localhost:3000',
 
+  // use `npm run e2e`
   specs: [
-    helpers.root('e2e/**/*.e2e.ts'),
-    helpers.root('e2e/**/**.e2e.ts'),
+    helpers.root('src/**/**.e2e.ts'),
+    helpers.root('src/**/*.e2e.ts')
   ],
   exclude: [],
 
@@ -31,17 +52,12 @@ exports.config = {
   },
   directConnect: true,
 
-  multiCapabilities: [
-    // {
-    //   browserName: 'firefox'
-    // },
-    {
-      browserName: 'chrome',
-      chromeOptions: {
-        args: ['show-fps-counter=true']
-      }
+  capabilities: {
+    'browserName': 'chrome',
+    'chromeOptions': {
+      'args': ['show-fps-counter=true']
     }
-  ],
+  },
 
   onPrepare: function() {
     browser.ignoreSynchronization = true;

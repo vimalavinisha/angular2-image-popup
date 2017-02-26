@@ -22,4 +22,8 @@
  * SOFTWARE.
  */
 
-module.exports = require('./config/webpack.dev.js');
+import { NavbarComponent } from './navbar/navbar.component';
+
+export const SHARED_COMPONENTS = [
+  NavbarComponent
+];
