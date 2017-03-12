@@ -78,7 +78,8 @@ export interface Description {
 }
 
 @Component({
-  selector: 'modalGallery',
+  selector: 'modal-gallery',
+  exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
@@ -218,9 +219,9 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   }
 
   closeGallery(action: Action = Action.NORMAL) {
+    this.close.emit(new ImageModalEvent(action, true));
     this.opened = false;
     this.keyboardService.reset();
-    this.close.emit(new ImageModalEvent(action, true));
   }
 
   prevImage(action: Action = Action.NORMAL) {

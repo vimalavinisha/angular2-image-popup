@@ -51,7 +51,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modalGallery [modalImages]="images"
+      <modal-gallery [modalImages]="images"
                   [downloadable]="false"
                   [showExtUrlButton]="true"
                   [description]="customDescription"
@@ -59,7 +59,7 @@ import 'rxjs/add/operator/delay';
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modalGallery>
+                  (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images2">
       <h3>2 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
@@ -73,7 +73,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modalGallery [modalImages]="images"
+      <modal-gallery [modalImages]="images"
                   [showDownloadButton]="true"
                   [downloadable]="true"
                   [showExtUrlButton]="true"
@@ -81,7 +81,7 @@ import 'rxjs/add/operator/delay';
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modalGallery>
+                  (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images3">
       <h3>3 - Array of images + download (both 'ctrl+s' and button)</h3>
@@ -95,7 +95,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modalGallery [modalImages]="imagesArray"
+      <modal-gallery [modalImages]="imagesArray"
                   [showDownloadButton]="true"
                   [downloadable]="true"
                   [showExtUrlButton]="false"
@@ -104,7 +104,7 @@ import 'rxjs/add/operator/delay';
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modalGallery>
+                  (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images4">
       <br>
@@ -119,12 +119,12 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <!-- both showDownloadButton and downloadable are false by default -->
-      <modalGallery [modalImages]="singleImage" 
+      <modal-gallery [modalImages]="singleImage" 
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modalGallery>
+                  (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images5">
       <br>
@@ -147,7 +147,7 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <modalGallery [modalImages]="imagesArray"
+        <modal-gallery [modalImages]="imagesArray"
                     [imagePointer]="imagePointer"
                     [downloadable]="true" 
                     [showExtUrlButton]="true"
@@ -155,7 +155,7 @@ import 'rxjs/add/operator/delay';
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></modalGallery>
+                    (lastImage)="onIsLastImage($event)"></modal-gallery>
       </div>
     </section>
     <br><br>
@@ -180,7 +180,7 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindowObservable">
-        <modalGallery [modalImages]="images"
+        <modal-gallery [modalImages]="images"
                     [imagePointer]="imagePointerObservable"
                     [downloadable]="true" 
                     [showExtUrlButton]="false"
@@ -188,7 +188,7 @@ import 'rxjs/add/operator/delay';
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></modalGallery>
+                    (lastImage)="onIsLastImage($event)"></modal-gallery>
       </div>
     </section>
     <br><br>
@@ -204,12 +204,12 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modalGallery [modalImages]="imagesArraySubscribed"
+      <modal-gallery [modalImages]="imagesArraySubscribed"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></modalGallery>
+                    (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <br><br>
     <h4>Created by Stefano Cappa (Ks89)</h4>
@@ -347,7 +347,7 @@ export class AppComponent implements OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    if(this.imagesArraySubscription) {
+    if (this.imagesArraySubscription) {
       this.imagesArraySubscription.unsubscribe();
     }
   }
