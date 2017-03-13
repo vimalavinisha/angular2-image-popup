@@ -12,6 +12,10 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "noEmit": true,
+    "lib": [
+      "dom",
+      "es6"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ]

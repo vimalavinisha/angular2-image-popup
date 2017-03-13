@@ -13,6 +13,10 @@
     "noImplicitAny": false,
     "noEmit": true,
     "suppressImplicitAnyIndexErrors": true,
+    "lib": [
+      "dom",
+      "es6"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ]
