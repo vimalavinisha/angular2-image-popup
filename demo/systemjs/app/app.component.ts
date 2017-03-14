@@ -161,7 +161,7 @@ import 'rxjs/add/operator/delay';
     <br><br>
     <section id="Images6">
       <br>
-      <h3>6 - Observable with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
+      <h3>6 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> with 300ms of delay (to simulate a network request)</li>
