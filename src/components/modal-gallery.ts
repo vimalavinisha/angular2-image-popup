@@ -155,9 +155,25 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    // required before showModalGallery, otherwise this.images will be undefined
     this.initImages();
+  }
 
+  private initImages() {
+    if (this.modalImages instanceof Array) {
+      this.images = this.modalImages;
+      this.completeInitialization();
+    } else {
+      if (this.modalImages instanceof Observable) {
+        this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
+          this.images = val;
+          this.completeInitialization();
+        });
+      }
+    }
+  }
+
+  private completeInitialization() {
+    this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
     this.loading = true;
     if (this.imagePointer >= 0) {
       this.showGallery = false;
@@ -173,20 +189,6 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     // As you can see, I'm providing examples in these situations in all official demos
     if (this.modalImages) {
       this.initImages();
-    }
-  }
-
-  private initImages() {
-    if (this.modalImages instanceof Array) {
-      this.images = this.modalImages;
-      this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
-    } else {
-      if (this.modalImages instanceof Observable) {
-        this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
-          this.images = val;
-          this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
-        });
-      }
     }
   }
 
