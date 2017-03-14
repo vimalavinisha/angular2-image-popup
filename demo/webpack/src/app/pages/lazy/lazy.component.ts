@@ -127,8 +127,8 @@ export class LazyComponent {
 
   openImageModalObservable(image: Image) {
     this.subscription = this.images.subscribe((val: Image[]) => {
-      this.imagePointer = val.indexOf(image);
-      this.openModalWindow = true;
+      this.imagePointerObservable = val.indexOf(image);
+      this.openModalWindowObservable = true;
     });
   }
 
@@ -158,6 +158,7 @@ export class LazyComponent {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
     this.openModalWindow = false;
+    this.openModalWindowObservable = false;
   }
 
   addRandomImage() {
