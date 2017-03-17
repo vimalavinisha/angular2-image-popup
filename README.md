@@ -26,8 +26,8 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 ## Installation
 - `npm install --save font-awesome`
-- `npm install --save hammerjs @types/hammerjs`
-- `npm install --save mousetrap @types/mousetrap`
+- `npm install --save hammerjs mousetrap`
+- `npm install --save-dev @types/hammerjs @types/mousetrap`
 - `npm install --save angular-modal-gallery`
 - `npm install --save hammerjs @types/hammerjs` (not requested in version 2.x.x, but it will be mandatory with 3.x.x)
 
@@ -57,7 +57,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 Two different ways:
 - using my full and runnable examples (`SystemJs`, `Webpack2`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
-- checking small and minimal demos [HERE](https://ks89.github.io/angular-modal-gallery.github.io/demo)
+- checking small and minimal demos into official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/demo)
 
 
 ## Contributing
