@@ -98,6 +98,7 @@
   }
 
   > span {
+
     &.info-text {
       color: #fff;
       display: inline-block;
@@ -108,9 +109,32 @@
       position: fixed;
       left: 0;
       right: 0;
-      padding-top: 30px;
-      //bottom: 100px;
     }
+
+    @media (max-width: 676px) {
+      &.info-text {
+        bottom: 100px;
+      }
+    }
+
+    @media (min-width: 676px) and (max-width: 752px) {
+      &.info-text {
+        padding-top: 52px;
+      }
+    }
+
+    @media (min-width: 752px) and (max-width: 804px) {
+      &.info-text {
+        padding-top: 43px;
+      }
+    }
+
+    @media (min-width: 804px) {
+      &.info-text {
+        bottom: 100px;
+      }
+    }
+
   }
 
   > .ng-thumbnails-wrapper {
