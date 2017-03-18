@@ -266,19 +266,14 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     if (!this.downloadable) {
       return;
     }
-    if (navigator.msSaveBlob) {
-      // IE11 & Edge
-      // TODO FIXME implement this
-      // navigator.msSaveBlob(csvData, this.getFileName(this.currentImage.img));
-    } else {
-      // other browsers
-      let link = document.createElement('a');
-      link.href = this.currentImage.img;
-      link.setAttribute('download', this.getFileName(this.currentImage.img));
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+    // for all browsers
+    // Attention: with IE is not working, but it will navigate to the image
+    let link = document.createElement('a');
+    link.href = this.currentImage.img;
+    link.setAttribute('download', this.getFileName(this.currentImage.img));
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   private getNextIndex(action: Action, currentIndex: number): number {
