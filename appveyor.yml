@@ -129,7 +129,7 @@ build_script:
   - cd ../..
   - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
   - npm install
-  - cd ../..
+  - cd ../../..
   # build library
   - npm run build
   # - npm test # TODO
