@@ -16,7 +16,7 @@
 If you pass `customFullDescription`, all the others will be overwritten.
 - new output events available: `(hasData)="myfunction($event)"`, `(show)="myfunction($event)"`, `(firstImage)="myfunction($event)"`, `(lastImage)="myfunction($event)"`.
 - new classes/enums exported and available to all users: `Image`, `Action`, `ImageModalEvent`, `Description`.
-    - `Image` is the input class with the following string properties: `thumb`, `img`, `description` and `extUrl`.
+    - `Image` is the input class with the following (mandatory) string properties: `thumb`, `img`, `description` and `extUrl`.
     - `Action` is the enum that specify the origin of the action. It can be `NORMAL`, `CLICK`, `KEYBOARD`, `SWIPE`, `LOAD`.
     - `ImageModalEvent` is the output class emitted as payload of an event. It contains both an `Action` and a result (boolean or number).
     - `Description` is the description interface with `customFullDescription`, `imageText`, `numberSeparator`, `beforeTextDescription`.
@@ -29,6 +29,7 @@ If you pass `customFullDescription`, all the others will be overwritten.
 ### Demos
 - new angular-cli official demo inside `demo/angular-cli`
 - official systemjs demo updated to 0.20.x with some breaking changes.
+- official webpack demo updated to Angular 4 RC :)
 
 ### Internal library changes
 - big refactoring splitting the sourcecode and using directives, services, sub-components and so on.

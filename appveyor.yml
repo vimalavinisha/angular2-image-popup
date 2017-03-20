@@ -92,7 +92,6 @@ install:
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g typescript@2.0.10
   - npm install -g @angular/cli
   - npm install
 
@@ -128,18 +127,23 @@ build_script:
   - cd demo/webpack
   - npm install
   - cd ../..
+  - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+  - npm install
+  - cd ../..
   # build library
   - npm run build
+  # - npm test # TODO
   # build official webpack example
   - cd demo/webpack
   - npm run build:dev
   - npm run build:prod
   - npm run build:prod:aot
-  - npm run build:github:aot
-  # run test with angular-cli (TODO add build)
   - cd ../..
+  # - npm test # TODO
+  # build official angular-cli example
   - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
-  - npm test
+  - ng build
+  # - npm test # TODO
 
 
 #---------------------------------#

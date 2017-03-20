@@ -27,6 +27,9 @@ ratings:
 exclude_paths:
 - "demo/**/*.*"
 - "dist"
+- "bundle"
+- "aot"
+- ".awcache"
 - "docs"
 - "**/*.log"
 - "e2e/"

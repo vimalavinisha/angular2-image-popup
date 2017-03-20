@@ -8,9 +8,9 @@
 
 # Angular modal gallery
 
-An Angular library to create an image gallery of clickable thumbnails. After a click, it will display a modal window with full screen images.
-It's also possible to navigate between these images with both keyboard arrows, swipe gestures and mouse clicks and close it pressing `esc`.
-Starting from version 3, you can download images (with the button or with the keyboard shortcut ctrl+s / cmd+s) or navigate to an external url.
+An Angular library to create an image gallery of **clickable thumbnails**. After a click, it will display a **modal window with full screen images**.
+It's also possible to navigate between these images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
+Starting from version 3, you can **download images** (with the button or with the **keyboard shortcut ctrl+s / cmd+s**) or navigate to an **external url**.
 
 This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/angular2-image-popup).
 
@@ -34,10 +34,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 ## News
 
-**Version 3.0.0 - work in progress** with some breaking changes [PREVIEW HERE](https://github.com/Ks89/angular-modal-gallery/tree/develop).<br>
-*I'll write a tutorial to migrate from 2.x.x to 3.x.x*
-
-- 03/??/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 03/20/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/30/2017 - 2.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/29/2017 - 2.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -50,14 +47,15 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 - AOT support
 - Angular >=2 (it's also working with Angular 4, as you can see in `demo/webpack`)
 - Tested with Webpack 2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
+- Tested with SystemJs 0.20.x and Angular-cli 1.0.0 RC
 - and so on...
 
 
 ## How to use it?
 
-Two different ways:
+Two different ways (both of them are good):
 - using my full and runnable examples (`SystemJs`, `Webpack2`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
-- checking small and minimal demos into official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/demo)
+- checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/demo)
 
 
 ## Contributing
