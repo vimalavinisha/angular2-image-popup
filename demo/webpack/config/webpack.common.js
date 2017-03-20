@@ -36,7 +36,7 @@ const autoprefixer                 = require('autoprefixer');
 const ngcWebpack                   = require('ngc-webpack');
 const ScriptExtHtmlWebpackPlugin   = require('script-ext-html-webpack-plugin');
 
-const HtmlElementsPlugin           = require('./html-elements-plugin');
+const HtmlElementsPlugin           = require('./html-elements-plugin/index');
 
 const helpers                      = require('./helpers');
 const TITLE                        = 'My MEAN Website';

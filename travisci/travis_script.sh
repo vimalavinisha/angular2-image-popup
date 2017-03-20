@@ -25,5 +25,5 @@ npm run build:prod:aot
 
 echo "building official angular-cli example on $TRAVIS_OS_NAME"
 cd demo/angular-cli/angular-modal-gallery-angularcli-demo
-ng build
+npm run build
 # npm test # TODO
