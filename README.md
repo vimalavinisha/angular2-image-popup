@@ -61,7 +61,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 Two different ways (both of them are good):
 - using my full and runnable examples (`SystemJs`, `Webpack2`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
-- checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/demo)
+- checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 
 
 ## Contributing
