@@ -8,6 +8,10 @@
 
 # Angular modal gallery
 
+![angular-modal-gallery image](https://cloud.githubusercontent.com/assets/6057207/24118289/8ade6952-0dad-11e7-829f-416a24891ce0.png)
+
+<br>
+
 An Angular library to create an image gallery of **clickable thumbnails**. After a click, it will display a **modal window with full screen images**.
 It's also possible to navigate between these images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
 Starting from version 3, you can **download images** (with the button or with the **keyboard shortcut ctrl+s / cmd+s**) or navigate to an **external url**.
