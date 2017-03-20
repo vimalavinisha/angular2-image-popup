@@ -23,8 +23,7 @@
     "bundle": "mkdirp bundle && ncp dist bundle/dist && ncp aot bundle/aot && ncp src bundle/src && copyfiles LICENSE README.md package.json index.ts index.d.ts bundle",
     "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp bundle demo/systemjs/node_modules/angular-modal-gallery",
     "copy:demo:angularcli": "mkdirp demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery && ncp bundle demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery",
-    "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp bundle demo/webpack/node_modules/angular-modal-gallery",
-    "prepublish": "npm run build"
+    "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp bundle demo/webpack/node_modules/angular-modal-gallery"
   },
   "dependencies": {
     "@angular/common": ">=2.0.0",
