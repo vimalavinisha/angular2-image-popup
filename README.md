@@ -35,7 +35,6 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/hammerjs @types/mousetrap`
 - `npm install --save angular-modal-gallery`
-- `npm install --save hammerjs @types/hammerjs` (not requested in version 2.x.x, but it will be mandatory with 3.x.x)
 
 
 ## News
