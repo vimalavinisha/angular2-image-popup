@@ -38,7 +38,8 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 
 ## News
-
+- ??/??/2017 - 3.0.2 - WORK IN PROGRESS [HERE](https://github.com/Ks89/angular-modal-gallery/milestone/3)
+- 03/20/2017 - 3.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/20/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/30/2017 - 2.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/29/2017 - 2.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -50,9 +51,9 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 - Angular module to import this library
 - Angular component to display the image gallery
 - AOT support
-- Angular >=2 (it's also working with Angular 4, as you can see in `demo/webpack`)
+- Angular >=2 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
 - Tested with Webpack 2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
-- Tested with SystemJs 0.20.x and Angular-cli 1.0.0 RC
+- Tested with SystemJs 0.20.x and Angular-cli 1.0.0
 - and so on...
 
 
