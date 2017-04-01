@@ -134,11 +134,11 @@ build_script:
   - npm run build
   # - npm test # TODO
   # build official webpack example
-  - cd demo/webpack
-  - npm run build:dev
-  - npm run build:prod
-  - npm run build:prod:aot
-  - cd ../..
+#  - cd demo/webpack
+#  - npm run build:dev
+#  - npm run build:prod
+#  - npm run build:prod:aot
+#  - cd ../..
   # - npm test # TODO
   # build official angular-cli example
   - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
