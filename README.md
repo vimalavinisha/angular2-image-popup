@@ -6,16 +6,21 @@ The sources for this package are in (https://github.com/vimalavinisha/angular2-i
 ## Demo Output
   ![angular2-image-popup](https://cloud.githubusercontent.com/assets/11042288/16330239/78a57df6-3a05-11e6-98b9-7414c0eaf794.png)
   ![popup](https://cloud.githubusercontent.com/assets/11042288/16330244/861f3cc4-3a05-11e6-8757-7baf315eda8c.png)
-##Usage
-    node install
-      npm install angular2-image-popup
-    bower install
-      bower install image-popup
-###1.In index.html page include following css 
+## Usage
+node install
+	
+    `npm install angular2-image-popup`
+bower install
+
+	`bower install image-popup`
+### 1. In index.html page include following css
+```HTML
       <link rel="stylesheet" type="text/css" href="directives/angular2-image-popup/css/style.css">
       <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.css">
       <link rel="stylesheet" type="text/css" href="app/assets/css/main.css">
-###2.component file use like below
+```
+### 2. component file use like below
+```typescript
       import {Component} from '@angular/core';
       import {ImageModal} from '../directives/angular2-image-popup/image-modal-popup';
       @Component({
@@ -70,3 +75,4 @@ The sources for this package are in (https://github.com/vimalavinisha/angular2-i
          this.openModalWindow = false;
        }
       }
+```
