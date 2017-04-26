@@ -22,7 +22,7 @@ npm run build:dev
 npm run build:prod
 npm run build:prod:aot
 npm test
-cd cd ../..
+cd ../..
 
 echo "building official angular-cli example on $TRAVIS_OS_NAME"
 cd demo/angular-cli/angular-modal-gallery-angularcli-demo
