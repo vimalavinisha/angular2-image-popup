@@ -25,8 +25,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
@@ -37,12 +37,12 @@ console.log('`Lazy` component loaded asynchronously');
   templateUrl: 'lazy.html',
   styleUrls: ['lazy.scss']
 })
-export class LazyComponent {
-  openModalWindow: boolean = false;
-  imagePointer: number = 0;
+export class LazyComponent implements OnInit, OnDestroy {
+  openModalWindow = false;
+  imagePointer = 0;
 
-  openModalWindowObservable: boolean = false;
-  imagePointerObservable: number = 0;
+  openModalWindowObservable = false;
+  imagePointerObservable = 0;
 
   imagesArray: Array<Image> = [
     new Image(

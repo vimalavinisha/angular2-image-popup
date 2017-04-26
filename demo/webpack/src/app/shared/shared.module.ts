@@ -9,7 +9,7 @@ import { SHARED_COMPONENTS } from './components/components';
     CommonModule,
     RouterModule
   ],
-  exports:[
+  exports: [
     SHARED_COMPONENTS
   ],
   declarations: [

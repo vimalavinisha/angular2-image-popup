@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 @Component({
-  selector: 'mmw-application',
-  templateUrl: 'application.html',
-  encapsulation: ViewEncapsulation.None
+  selector: 'mmw-app',
+  templateUrl: 'app.html'
 })
-export class ApplicationComponent {}
+export class AppComponent {}

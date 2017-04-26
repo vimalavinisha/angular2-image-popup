@@ -41,7 +41,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------
 
 import { SharedModule } from './shared/shared.module';
 import { COMPONENTS } from './pages/components';
-import { ApplicationComponent } from './application/application.component';
+import { AppComponent } from './app.component';
 
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { IdlePreloadModule } from '@angularclass/idle-preload';
@@ -60,11 +60,11 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
     ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
   ],
   declarations: [
-    ApplicationComponent,
+    AppComponent,
     COMPONENTS
   ],
   providers: [],
-  bootstrap: [ ApplicationComponent ]
+  bootstrap: [ AppComponent ]
 })
 
 export class AppModule {

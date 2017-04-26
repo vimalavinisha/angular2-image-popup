@@ -1,0 +1,39 @@
+machine:
+  node:
+    version: 7
+
+dependencies:
+  pre:
+    - rm -rf ./node_modules
+  cache_directories:
+    - ~/.npm
+
+test:
+  post:
+    # run debug build
+    - echo "npm run debug build on circle ci"
+    - cd demo/systemjs
+    - npm install
+    - cd ../..
+    - cd demo/webpack
+    - npm install
+    - cd ../..
+    - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+    - npm install
+    - cd ../../..
+    - echo "npm run build on circle ci"
+    - npm run build
+    #- npm test # TODO
+
+    #- echo "building official webpack example on circle ci"
+    #- cd demo/webpack
+    #- npm run build:dev
+    #- npm run build:prod
+    #- npm run build:prod:aot
+    #- npm test # TODO
+
+
+    echo "building official angular-cli example on circle ci"
+    - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+    - npm run build
+    # - npm test # TODO

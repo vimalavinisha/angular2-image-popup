@@ -36,5 +36,5 @@ export class NavbarComponent {
 
   isNavItemActive(location: any) {
     return location === this.router.url ? 'active' : '';
-  };
+  }
 }
