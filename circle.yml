@@ -25,12 +25,12 @@ test:
     - npm run build
     # - npm test # TODO
 
-    # - echo "building official webpack example on circle ci"
-    # - cd demo/webpack
-    # - npm run build:dev
-    # - npm run build:prod
-    # - npm run build:prod:aot
-    # - npm test # TODO
+    - echo "building official webpack example on circle ci"
+    - cd demo/webpack
+    - npm run build:dev
+    - npm run build:prod
+    - npm run build:prod:aot
+    - npm test
 
 
     - echo "building official angular-cli example on circle ci"
