@@ -67,6 +67,6 @@ bundles
 demo/systemjs/**/*.js
 demo/systemjs/**/*.map
 
-demo/webpack-experimental
+demo/webpack/docs/
 
 bundle
