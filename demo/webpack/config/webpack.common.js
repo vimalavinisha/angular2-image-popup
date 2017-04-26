@@ -36,7 +36,9 @@ const autoprefixer                 = require('autoprefixer');
 const ngcWebpack                   = require('ngc-webpack');
 const ScriptExtHtmlWebpackPlugin   = require('script-ext-html-webpack-plugin');
 
-const HtmlElementsPlugin           = require('./html-elements-plugin/index');
+// I'm using a plugin from npmjs.com based on the original html-elements-plugin/index.js by AngularClass
+// to prevent an issue on travis-ci.
+const HtmlElementsPlugin           = require('html-elements-webpack-plugin');
 
 const helpers                      = require('./helpers');
 const TITLE                        = 'My MEAN Website';
