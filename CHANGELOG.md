@@ -1,3 +1,23 @@
+# 3.0.2
+### Chores
+- Angular 4.1.0 #50
+- dependencies updated
+
+### Docs
+- Improved official documentation website (scroll bug fixed #47 and improved responsiveness #38)
+- dependencies updated
+
+### Demos
+- tslint 5 in all demos #54
+- Official demos: IE performance issue with debug mode #51
+- dependencies updated
+
+# 3.0.1
+
+### Bug fixes
+- readme fix wrong link (exactly the same library of 3.0.0)
+
+
 # 3.0.0
 **THIS VERSION IS A VERY BIG RELEASE. IF YOU WANT TO MIGRATE FROM 2.x.x to 3.0.0 PLEASE CHECK THE OFFICIAL DOCUMENTATION [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)**
 
