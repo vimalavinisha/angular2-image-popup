@@ -57,5 +57,5 @@ how to publish this on npm
 2. `npm run clean:all`
 3. `npm run build`
 4. `npm publish bundle`
-5. `npm push origin master`
-6. `npm push origin vx.x.x`  <-- tag name created by npm version (for instance v3.0.1)
+5. `git push origin master`
+6. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v3.0.1)
