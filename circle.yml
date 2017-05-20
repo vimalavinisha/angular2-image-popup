@@ -35,10 +35,12 @@ test:
     - cd ../../..
     - echo "npm run build on circle ci"
     - npm run build
+    - ls
     # - npm test # TODO
 
     - echo "building official webpack example on circle ci"
     - cd demo/webpack
+    - ls
     - npm run build:dev
     - npm run build:prod
     - npm run clean
