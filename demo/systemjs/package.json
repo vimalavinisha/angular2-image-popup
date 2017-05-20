@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery-systemjs-demo",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Systemjs demo for Image popup directive for angular",
   "main": "app/main.ts",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Modal image gallery for angular >=2",
   "main": "dist/bundles/angular-modal-gallery.umd.js",
   "license": "MIT",
@@ -83,6 +83,7 @@
     "angular 4",
     "angular4-modal-gallery",
     "angular4-modal",
+    "ngx-modal-gallery",
     "popup",
     "gallery",
     "modal",
