@@ -39,7 +39,9 @@ test:
     # - npm test # TODO
 
     - echo "building official webpack example on circle ci"
-    - cd demo/webpack
+    - cd demo
+    - ls
+    - cd webpack
     - ls
     - npm run build:dev
     - npm run build:prod
