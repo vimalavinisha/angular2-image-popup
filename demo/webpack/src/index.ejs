@@ -12,7 +12,7 @@
     <%= webpackConfig.htmlElements.headTags %>
     <% } %>
 
-    <!-- Third-party css/scss imports are in src/app/application/application.scss -->
+    <!-- Third-party css/scss imports are both in src/app/app.module and src/styles/ -->
 
     <base href="/">
 </head>
@@ -20,7 +20,7 @@
 <br>
 <!-- Include application here -->
 <mmw-app>
-    <i class="center-fix main-spinner fa fa-spin fa-spinner"></i>
+    <img style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto;" src="/assets/ring.svg"/>
 </mmw-app>
 
 <!-- Libraries will be included here automatically by Webpack-->
