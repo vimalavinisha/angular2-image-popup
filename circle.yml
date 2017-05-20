@@ -1,20 +1,27 @@
-
-
-# Still unused
-# Please, fix this file to be able to build the official webpack example
-
+## Customize the test machine
 machine:
-  node:
-    version: 7
 
+  # Version of ruby to use
+  node:
+    version:
+      7.9.0
+
+  # Add some environment variables
+  environment:
+    NODE_ENV: test
+    CI: yes
+
+## Customize dependencies
 dependencies:
   pre:
-    - rm -rf ./node_modules
-  cache_directories:
-    - ~/.npm
+    - npm install -g codeclimate-test-reporter
 
+  override:
+    - npm install
+
+## Customize test commands
 test:
-  post:
+  override:
     # run debug build
     - echo "npm run debug build on circle ci"
     - cd demo/systemjs
@@ -34,11 +41,18 @@ test:
     - cd demo/webpack
     - npm run build:dev
     - npm run build:prod
+    - npm run clean
     - npm run build:prod:aot
-    - npm test
 
 
     - echo "building official angular-cli example on circle ci"
     - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
     - npm run build
-    # - npm test # TODO
+#      - echo "npm run test on CircleCI"
+#      - npm test
+  post:
+#    - echo "npm run codeclimate on CircleCI"
+#    - npm run codeclimate
+#    # send test coverage to coveralls.io
+#    - echo "npm run coveralls on CircleCI"
+#    - npm run coveralls
