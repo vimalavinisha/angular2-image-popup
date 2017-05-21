@@ -43,6 +43,7 @@ test:
 #      - echo "npm run test on CircleCI"
 #      - npm test
   post:
+# TODO
 #    - echo "npm run codeclimate on CircleCI"
 #    - npm run codeclimate
 #    # send test coverage to coveralls.io
