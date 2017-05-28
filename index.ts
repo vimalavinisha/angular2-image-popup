@@ -25,7 +25,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { AngularModalGalleryModule } from './src/modal-gallery.module';
 
-export { Image, ImageModalEvent, Action, Description, ButtonsConfig } from './src/components/modal-gallery';
+export { Image, ImageModalEvent, Action, Description, ButtonsConfig, KeyboardConfig } from './src/components/modal-gallery';
 
 @NgModule({
   imports: [

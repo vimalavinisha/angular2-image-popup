@@ -85,6 +85,12 @@ export interface ButtonsConfig {
   close?: boolean;
 }
 
+export interface KeyboardConfig {
+  esc?: number;
+  right?: number;
+  left?: number;
+}
+
 @Component({
   selector: 'modal-gallery',
   exportAs: 'modalGallery',
@@ -99,6 +105,8 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
 
   // used only inside ngInit to create configButtons used into upper-buttons
   @Input() buttonsConfig: ButtonsConfig;
+
+  @Input() keyboardConfig: KeyboardConfig;
 
   /*
    * deprecated both showDownloadButton and showExtUrlButton
@@ -117,14 +125,18 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     if (!this.opened) {
       return;
     }
+    const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
+    const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
+    const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
+
     switch (e.keyCode) {
-      case Keyboard.ESC:
+      case esc:
         this.closeGallery(Action.KEYBOARD);
         break;
-      case Keyboard.RIGHT_ARROW:
+      case right:
         this.nextImage(Action.KEYBOARD);
         break;
-      case Keyboard.LEFT_ARROW:
+      case left:
         this.prevImage(Action.KEYBOARD);
         break;
     }

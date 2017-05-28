@@ -49,12 +49,14 @@ import 'rxjs/add/operator/delay';
         <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
         <li><b>download button visible</b> because, <u class="red-text">buttonsConfig.download = true</u> and downloadable is also = true</li>
         <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+        <li><b>custom keyboard's config</b> because, <u class="red-text">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow up' (38)</u></li>
         <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
       <modal-gallery [modalImages]="images"
                      [buttonsConfig]="{download: true, extUrl: true, close: true}"
+                     [keyboardConfig]="{esc: 81, left: 40, right: 38}"
                      [downloadable]="true"
                      (hasData)="onImageLoaded($event)"
                      (close)="onCloseImageModal($event)"
@@ -70,6 +72,7 @@ import 'rxjs/add/operator/delay';
         <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
         <li><b>download button NOT visible</b> because, <u class="red-text">buttonsConfig.download = false</u></li>
         <li><b>external url button NOT visible</b> (because <u class="red-text">buttonsConfig.extUrl=false</u>)</li>
+        <li><b>default keyboard config</b> because, <u class="red-text">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>
         <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
