@@ -37,11 +37,59 @@ import 'rxjs/add/operator/delay';
   template: `
     <h1>angular-modal-gallery official systemjs demo</h1>
     <hr>
+    <p>If you want, you can <b>add a random image</b> to every example <button (click)="addRandomImage()">Add image</button></p>
     <br>
-    If you want, you can also <b>add a random image</b> to every example  <button (click)="addRandomImage()">Add image</button>
-    <br><br>
+    <hr>
+    <p class="red-text center-text"><b>--- Only from version 3.1.x or greater ---</b></p>
+    <section id="Images31-1">
+      <h3>1 - (NEW!!! FROM 3.1.x) - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with the new 'buttonsConfig'</span></h3>
+      <p>modalGallery with</p>
+      <ul>
+        <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+        <li><b>download button visible</b> because, <u class="red-text">buttonsConfig.download = true</u> and downloadable is also = true</li>
+        <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
+      <br>
+      <modal-gallery [modalImages]="images"
+                     [buttonsConfig]="{download: true, extUrl: true}"
+                     [downloadable]="true"
+                     (hasData)="onImageLoaded($event)"
+                     (close)="onCloseImageModal($event)"
+                     (show)="onVisibleIndex($event)"
+                     (firstImage)="onIsFirstImage($event)"
+                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+    </section>
+    <section id="Images31-2">
+      <h3>2 - (NEW!!! FROM 3.1.x) - Array of images + download (both 'ctrl+s' and button)</h3>
+      <p>modalGallery with</p>
+      <ul>
+        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+        <li><b>download button NOT visible</b> because, <u class="red-text">buttonsConfig.download = false</u></li>
+        <li><b>external url button NOT visible</b> (because <u class="red-text">buttonsConfig.extUrl=false</u>)</li>
+        <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
+        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
+      <br>
+      <modal-gallery [modalImages]="imagesArray"
+                     [buttonsConfig]="{download: false, extUrl: false}"
+                     [downloadable]="true"
+                     [description]="customFullDescription"
+                     (hasData)="onImageLoaded($event)"
+                     (close)="onCloseImageModal($event)"
+                     (show)="onVisibleIndex($event)"
+                     (firstImage)="onIsFirstImage($event)"
+                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+    </section>
+    <hr>
+    <br>
+    <br>
+    <p class="center-text"><b>--- For all 3.x.x versions ---</b></p>
     <section id="Images1">
-      <h3>1 - Observable of images with delay(300)</h3>
+      <h3>3 - Observable of images with delay(300)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
@@ -62,11 +110,11 @@ import 'rxjs/add/operator/delay';
                   (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images2">
-      <h3>2 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
+      <h3>4 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
-        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the displayed image</li>
+        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
         <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>
         <li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
         <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
@@ -84,11 +132,11 @@ import 'rxjs/add/operator/delay';
                   (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images3">
-      <h3>3 - Array of images + download (both 'ctrl+s' and button)</h3>
+      <h3>5 - Array of images + download (both 'ctrl+s' and button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
-        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the displayed image</li>
+        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
         <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>
         <li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>
         <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
@@ -108,7 +156,7 @@ import 'rxjs/add/operator/delay';
     </section>
     <section id="Images4">
       <br>
-      <h3>4 - Observable of images with a single element and without a delay</h3>
+      <h3>6 - Observable of images with a single element and without a delay</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> without delay</li>
@@ -128,7 +176,7 @@ import 'rxjs/add/operator/delay';
     </section>
     <section id="Images5">
       <br>
-      <h3>5 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
+      <h3>7 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
@@ -161,7 +209,7 @@ import 'rxjs/add/operator/delay';
     <br><br>
     <section id="Images6">
       <br>
-      <h3>6 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>
+      <h3>8 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> with 300ms of delay (to simulate a network request)</li>
@@ -194,7 +242,7 @@ import 'rxjs/add/operator/delay';
     <br><br>
     <section id="Images7">
       <br>
-      <h3>7 - Array of images initialized inside a .subscribe() of an Observable with delay(500)</h3>
+      <h3>9 - Array of images initialized inside a .subscribe() of an Observable with delay(500)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Array&lt;Image&gt;</b> initialized inside a subscribe to simulate a more realistic scenario</li>

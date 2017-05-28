@@ -54,3 +54,14 @@
   color: red;
   cursor: pointer;
 }
+
+
+
+/* Not required by angular-modal-gallery. Used only in this demo */
+.red-text {
+  color: red;
+}
+
+.center-text {
+  text-align: center;
+}

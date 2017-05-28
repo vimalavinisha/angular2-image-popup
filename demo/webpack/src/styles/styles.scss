@@ -26,3 +26,13 @@
 /* This file is for setting global styles  */
 @import 'variables';
 @import 'loading';
+
+
+/* Not required by angular-modal-gallery. Used only in this demo */
+.red-text {
+  color: red;
+}
+
+.center-text {
+  text-align: center;
+}

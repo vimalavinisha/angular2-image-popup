@@ -110,9 +110,15 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   @Input() imagePointer: number;
   @Input() downloadable: boolean = false;
   @Input() description: Description;
+
   // used only inside upper-button's component
-  @Input() showDownloadButton: boolean = false;
-  @Input() showExtUrlButton: boolean = false;
+  @Input() buttonsConfig: any;
+
+  /*
+   * deprecated both showDownloadButton and showExtUrlButton
+   */
+  @Input() showDownloadButton: boolean = false; // deprecated
+  @Input() showExtUrlButton: boolean = false; // deprecated
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();

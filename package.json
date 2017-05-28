@@ -1,7 +1,7 @@
 {
   "name": "angular-modal-gallery",
-  "version": "3.0.3",
-  "description": "Modal image gallery for angular >=2",
+  "version": "3.1.0",
+  "description": "Modal image gallery for Angular >=2",
   "main": "dist/bundles/angular-modal-gallery.umd.js",
   "license": "MIT",
   "author": "Stefano Cappa",
@@ -36,14 +36,12 @@
     "rxjs": ">=5.0.0"
   },
   "devDependencies": {
-    "@angular/cli": "^1.0.4",
     "@angular/common": "^4.1.3",
     "@angular/compiler": "^4.1.3",
     "@angular/compiler-cli": "^4.1.3",
     "@angular/core": "^4.1.3",
     "@angular/platform-browser": "^4.1.3",
     "@angular/platform-browser-dynamic": "^4.1.3",
-    "@angular/platform-server": "^4.1.3",
     "@types/chai": "^3.5.2",
     "@types/lodash": "^4.14.64",
     "@types/mocha": "^2.2.41",
