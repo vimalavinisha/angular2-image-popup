@@ -42,7 +42,7 @@ import 'rxjs/add/operator/delay';
     <hr>
     <p class="red-text center-text"><b>--- Only from version 3.1.x or greater ---</b></p>
     <section id="Images31-1">
-      <h3>1 - (NEW!!! FROM 3.1.x) - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with the new 'buttonsConfig'</span></h3>
+      <h3>1 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig'</span></h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
@@ -54,7 +54,7 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <modal-gallery [modalImages]="images"
-                     [buttonsConfig]="{download: true, extUrl: true}"
+                     [buttonsConfig]="{download: true, extUrl: true, close: true}"
                      [downloadable]="true"
                      (hasData)="onImageLoaded($event)"
                      (close)="onCloseImageModal($event)"
@@ -63,7 +63,7 @@ import 'rxjs/add/operator/delay';
                      (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images31-2">
-      <h3>2 - (NEW!!! FROM 3.1.x) - Array of images + download (both 'ctrl+s' and button)</h3>
+      <h3>2 - Array of images + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig'</span></h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
@@ -75,7 +75,7 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <modal-gallery [modalImages]="imagesArray"
-                     [buttonsConfig]="{download: false, extUrl: false}"
+                     [buttonsConfig]="{download: false, extUrl: false, close: true}"
                      [downloadable]="true"
                      [description]="customFullDescription"
                      (hasData)="onImageLoaded($event)"

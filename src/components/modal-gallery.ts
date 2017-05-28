@@ -24,11 +24,13 @@
  */
 
 import {
-  OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy, OnChanges,
-  SimpleChanges
+  OnInit, Input, Output, EventEmitter, HostListener,
+  Component, OnDestroy, OnChanges, SimpleChanges
 } from '@angular/core';
-import {Observable, Subscription} from "rxjs";
-import {KeyboardService} from './keyboard.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import { KeyboardService } from './keyboard.service';
 
 export enum Action {
   NORMAL, // default value
@@ -77,6 +79,12 @@ export interface Description {
   beforeTextDescription?: string;
 }
 
+export interface ButtonsConfig {
+  download?: boolean;
+  extUrl?: boolean;
+  close?: boolean;
+}
+
 @Component({
   selector: 'modal-gallery',
   exportAs: 'modalGallery',
@@ -84,35 +92,13 @@ export interface Description {
   templateUrl: 'modal-gallery.html'
 })
 export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
-  opened: boolean = false;
-  loading: boolean = false;
-  showGallery: boolean = false;
-
-  images: Image[];
-  currentImage: Image;
-  currentImageIndex: number = 0;
-
-  // enum action used to pass a click action
-  // when you clicks over the modal image.
-  // Declared here  to use it in the template.
-  clickAction: Action = Action.CLICK;
-
-  private SWIPE_ACTION = {
-    LEFT: 'swipeleft',
-    RIGHT: 'swiperight',
-    UP: 'swipeup',
-    DOWN: 'swipedown'
-  };
-
-  private subscription: Subscription;
-
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
   @Input() downloadable: boolean = false;
   @Input() description: Description;
 
-  // used only inside upper-button's component
-  @Input() buttonsConfig: any;
+  // used only inside ngInit to create configButtons used into upper-buttons
+  @Input() buttonsConfig: ButtonsConfig;
 
   /*
    * deprecated both showDownloadButton and showExtUrlButton
@@ -144,6 +130,31 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  opened: boolean = false;
+  loading: boolean = false;
+  showGallery: boolean = false;
+
+  images: Image[];
+  currentImage: Image;
+  currentImageIndex: number = 0;
+
+  configButtons: any;
+
+  // enum action used to pass a click action
+  // when you clicks over the modal image.
+  // Declared here  to use it in the template.
+  clickAction: Action = Action.CLICK;
+
+  private SWIPE_ACTION = {
+    LEFT: 'swipeleft',
+    RIGHT: 'swiperight',
+    UP: 'swipeup',
+    DOWN: 'swipedown'
+  };
+
+  private subscription: Subscription;
+
+
   constructor(private keyboardService: KeyboardService) {
     // if description isn't provided initialize it with a default object
     if (!this.description) {
@@ -161,6 +172,13 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    // build configButtons to use it inside upper-buttons
+    this.configButtons = {
+      download: this.showDownloadButton || (this.buttonsConfig && this.buttonsConfig.download),
+      extUrl: this.showExtUrlButton || (this.buttonsConfig && this.buttonsConfig.extUrl),
+      close: (this.buttonsConfig && this.buttonsConfig.close)
+    };
+
     this.initImages();
   }
 

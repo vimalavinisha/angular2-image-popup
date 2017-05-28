@@ -15,17 +15,17 @@
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
 
-import {NgModule, ModuleWithProviders} from '@angular/core';
-import {AngularModalGalleryModule} from './src/modal-gallery.module';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { AngularModalGalleryModule } from './src/modal-gallery.module';
 
-export {Image, ImageModalEvent, Action, Description} from './src/components/modal-gallery';
+export { Image, ImageModalEvent, Action, Description, ButtonsConfig } from './src/components/modal-gallery';
 
 @NgModule({
   imports: [
@@ -39,8 +39,12 @@ export class AngularRootModalGalleryModule {
 }
 
 @NgModule({
-  imports: [AngularModalGalleryModule],
-  exports: [AngularModalGalleryModule]
+  imports: [
+    AngularModalGalleryModule
+  ],
+  exports: [
+    AngularModalGalleryModule
+  ]
 })
 export class ModalGalleryModule {
   static forRoot(): ModuleWithProviders {

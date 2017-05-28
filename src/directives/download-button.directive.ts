@@ -1,32 +1,46 @@
-import {Directive, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ButtonsConfig } from '../components/modal-gallery';
 
 @Directive({
-  selector: '[downloadButton]'
+  selector: '[download-button]'
 })
 export class DownloadButtonDirective implements OnChanges {
 
-  @Input('downloadButton') downloadButton: boolean;
-  @Input() extUrlButton: boolean;
-  @Input() imgExtUrl: string | null | undefined;
+  @Input() configButtons: ButtonsConfig;
+  @Input() imgExtUrl: string | void;
 
-  constructor(private el: ElementRef) {
-  }
+  private RIGHT: number = 63;
+
+  constructor(private el: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    let style: string;
-    // apply [style.right]="" to download url <a></a>
-    if (this.downloadButton) {
-      if (this.extUrlButton === true && this.imgExtUrl) {
-        style = '126px';
-      } else {
-        style = '63px';
-      }
+    let right: number = 0;
+    if (this.configButtons && this.configButtons.download) {
+      right = this.getNumOfPrecedingButtons() * this.RIGHT;
     } else {
-      style = '0px';
+      right = 0;
     }
-    this.el.nativeElement.style.right = style;
+    // apply [style.right]="" to download url <a></a>
+    this.el.nativeElement.style.right = `${right}px`;
 
-    // hide downloadButton if the input property is false
-    this.el.nativeElement.hidden = !this.downloadButton;
+    // hide downloadButton if configButtons.download is false
+    this.el.nativeElement.hidden = this.configButtons && !this.configButtons.download;
+  }
+
+  private getNumOfPrecedingButtons() {
+    let num: number = 0;
+    if(!this.configButtons) {
+      return num;
+    }
+
+    if(this.configButtons.extUrl && this.imgExtUrl) {
+      num++;
+    }
+
+    if(this.configButtons.close) {
+      num++;
+    }
+
+    return num;
   }
 }

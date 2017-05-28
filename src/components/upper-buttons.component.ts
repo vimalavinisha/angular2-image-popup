@@ -15,32 +15,34 @@
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
 
-import {Input, Output, EventEmitter, Component} from '@angular/core';
-import {Image} from "./modal-gallery";
+import { Input, Output, EventEmitter, Component } from '@angular/core';
+import { Image, ButtonsConfig } from './modal-gallery';
 
 @Component({
   selector: 'upperButtons',
   styleUrls: ['upper-buttons.scss'],
   template: `
-    <a class="external-url-image" [externalUrlButton]="showExtUrl" [imgExtUrl]="image.extUrl"
-       href="{{image.extUrl}}"><i class="fa fa-external-link"></i></a>
-    <a class="download-image" [downloadButton]="showDownload" [extUrlButton]="showExtUrl"
-       [imgExtUrl]="image.extUrl" (click)="downloadImage()"><i class="fa fa-download"></i></a>
-    <a class="close-popup" (click)="closeGallery()"><i class="fa fa-close"></i></a>
+    <a class="external-url-image" href="{{image.extUrl}}"
+       exturl-button [configButtons]="configButtons" [imgExtUrl]="image.extUrl"><i class="fa fa-external-link"></i></a>
+    <a class="download-image"
+       download-button [configButtons]="configButtons" [imgExtUrl]="image.extUrl"
+       (click)="downloadImage()"><i class="fa fa-download"></i></a>
+    <a class="close-popup"
+       close-button [configButtons]="configButtons" 
+       (click)="closeGallery()"><i class="fa fa-close"></i></a>
   `
 })
 export class UpperButtonsComponent {
 
   @Input() image: Image;
-  @Input() showDownload: boolean = false;
-  @Input() showExtUrl: boolean = false;
+  @Input() configButtons: ButtonsConfig;
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -6,8 +6,7 @@
       <div></div>
     </div>
 
-    <upperButtons [image]="currentImage" [showDownload]="showDownloadButton || buttonsConfig?.download"
-                  [showExtUrl]="showExtUrlButton || buttonsConfig?.extUrl"
+    <upperButtons [image]="currentImage" [configButtons]="configButtons"
                   (close)="closeGallery()" (download)="downloadImage()"></upperButtons>
 
     <a class="nav-left" *ngIf="(images)?.length > 1" (click)="prevImage()"><i class="fa fa-angle-left"></i></a>
