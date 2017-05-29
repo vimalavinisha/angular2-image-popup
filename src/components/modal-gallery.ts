@@ -150,7 +150,7 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   currentImage: Image;
   currentImageIndex: number = 0;
 
-  configButtons: any;
+  configButtons: ButtonsConfig;
 
   // enum action used to pass a click action
   // when you clicks over the modal image.
@@ -310,6 +310,12 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  onClickOutside(event: boolean) {
+    if(event) {
+      this.closeGallery(Action.CLICK);
+    }
   }
 
   private getNextIndex(action: Action, currentIndex: number): number {
