@@ -1,9 +1,11 @@
-import { Directive, Output, EventEmitter, HostListener } from '@angular/core';
+import {Directive, Output, EventEmitter, HostListener, Input} from '@angular/core';
 
 @Directive({
   selector: '[click-outside]'
 })
 export class ClickOutsideDirective {
+
+  @Input() clickOutsideEnable: boolean;
 
   @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -11,7 +13,7 @@ export class ClickOutsideDirective {
   onClick(targetElement: Element) {
     let elementId: string = targetElement.id;
 
-    if(elementId === 'ng-gallery-content') {
+    if(elementId === 'ng-gallery-content' && this.clickOutsideEnable) {
       this.clickOutside.emit(true);
     }
   }

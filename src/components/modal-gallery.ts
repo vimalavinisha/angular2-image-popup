@@ -108,6 +108,13 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
 
   @Input() keyboardConfig: KeyboardConfig;
 
+
+  /**
+   * enableCloseOutside's input to enable modal-gallery close behaviour while clicking
+   *   on the semi-transparent background. Disabled by default.
+   */
+  @Input() enableCloseOutside: boolean = false;
+
   /*
    * deprecated both showDownloadButton and showExtUrlButton
    */
@@ -313,7 +320,7 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   }
 
   onClickOutside(event: boolean) {
-    if(event) {
+    if(event && this.enableCloseOutside) {
       this.closeGallery(Action.CLICK);
     }
   }
