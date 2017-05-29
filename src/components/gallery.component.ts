@@ -24,7 +24,7 @@
  */
 
 import {Input, Output, EventEmitter, Component} from '@angular/core';
-import {Image} from "./modal-gallery";
+import {Image} from "./modal-gallery.component";
 
 @Component({
   selector: 'gallery',

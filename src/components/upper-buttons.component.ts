@@ -23,7 +23,7 @@
  */
 
 import { Input, Output, EventEmitter, Component } from '@angular/core';
-import { Image, ButtonsConfig } from './modal-gallery';
+import { Image, ButtonsConfig } from './modal-gallery.component';
 
 @Component({
   selector: 'upperButtons',

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ButtonsConfig } from '../components/modal-gallery';
+import { ButtonsConfig } from '../components/modal-gallery.component';
 
 @Directive({
   selector: '[exturl-button]'
