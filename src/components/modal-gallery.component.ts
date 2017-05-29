@@ -32,6 +32,9 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { KeyboardService } from './keyboard.service';
 
+/**
+ * Enum `Action` with a list of possible actions.
+ */
 export enum Action {
   NORMAL, // default value
   CLICK, // mouse click
@@ -40,6 +43,9 @@ export enum Action {
   LOAD
 }
 
+/**
+ * Class `ImageModalEvent` that represents the Event after an action `action` and its result.
+ */
 export class ImageModalEvent {
   action: Action;
   result: number | boolean;
@@ -50,6 +56,10 @@ export class ImageModalEvent {
   }
 }
 
+/**
+ * Class `Image` that represents an Image with both image and thumb paths, also with a description and an external url.
+ * The only required value is the image path `img`.
+ */
 export class Image {
   img: string;
   thumb?: string;
@@ -64,6 +74,9 @@ export class Image {
   }
 }
 
+/**
+ * Enum `Keyboard` with keys and their relative key codes.
+ */
 export enum Keyboard {
   ESC = 27,
   LEFT_ARROW = 37,
@@ -72,6 +85,10 @@ export enum Keyboard {
   DOWN_ARROW = 40
 }
 
+/**
+ * Interface `Description` to change the description, either with a full custom
+ * description or with a small and simple customization.
+ */
 export interface Description {
   customFullDescription?: string;
   imageText?: string;
@@ -79,12 +96,18 @@ export interface Description {
   beforeTextDescription?: string;
 }
 
+/**
+ * Interface `ButtonsConfig` to show/hide buttons.
+ */
 export interface ButtonsConfig {
   download?: boolean;
   extUrl?: boolean;
   close?: boolean;
 }
 
+/**
+ * Interface `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
+ */
 export interface KeyboardConfig {
   esc?: number;
   right?: number;
@@ -98,27 +121,40 @@ export interface KeyboardConfig {
   templateUrl: 'modal-gallery.html'
 })
 export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
+  /**
+   * Array or Observable input that represets a list of Images use to show both the
+   * thumbs gallery and the modal gallery.
+   */
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   @Input() imagePointer: number;
   @Input() downloadable: boolean = false;
   @Input() description: Description;
 
-  // used only inside ngInit to create configButtons used into upper-buttons
+  /**
+   * Object of type `ButtonsConfig` to show/hide buttons.
+   * This is used only inside `ngOnInit()` to create `configButtons` used into upper-buttons
+   */
   @Input() buttonsConfig: ButtonsConfig;
 
+  /**
+   * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
+   */
   @Input() keyboardConfig: KeyboardConfig;
 
 
   /**
    * enableCloseOutside's input to enable modal-gallery close behaviour while clicking
-   *   on the semi-transparent background. Disabled by default.
+   * on the semi-transparent background. Disabled by default.
    */
   @Input() enableCloseOutside: boolean = false;
 
-  /*
+  /**
    * deprecated both showDownloadButton and showExtUrlButton
    */
   @Input() showDownloadButton: boolean = false; // deprecated
+  /**
+   * deprecated both showDownloadButton and showExtUrlButton
+   */
   @Input() showExtUrlButton: boolean = false; // deprecated
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
@@ -157,13 +193,21 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   currentImage: Image;
   currentImageIndex: number = 0;
 
+  /**
+   * Object of type `ButtonsConfig` used to configure buttons visibility. This is a temporary value
+   * initialized by the real `buttonsConfig`'s input
+   */
   configButtons: ButtonsConfig;
 
-  // enum action used to pass a click action
-  // when you clicks over the modal image.
-  // Declared here  to use it in the template.
+  /**
+   * Enum of type `Action` used to pass a click action when you click over the modal image.
+   * Declared here to be used inside the template.
+   */
   clickAction: Action = Action.CLICK;
 
+  /**
+   * Private SWIPE_ACTION to define all swipe actions used by hammerjs.
+   */
   private SWIPE_ACTION = {
     LEFT: 'swipeleft',
     RIGHT: 'swiperight',
@@ -171,9 +215,15 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     DOWN: 'swipedown'
   };
 
+  /**
+   * Private Subscription used to subscribe to input's `modalImages` is passed as Observable.
+   */
   private subscription: Subscription;
 
 
+  /**
+   * Constructor with the injection of ´KeyboardService´ that initialize some description fields based on default values.
+   */
   constructor(private keyboardService: KeyboardService) {
     // if description isn't provided initialize it with a default object
     if (!this.description) {
