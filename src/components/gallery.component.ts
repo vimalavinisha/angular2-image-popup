@@ -29,16 +29,7 @@ import {Image} from "./modal-gallery";
 @Component({
   selector: 'gallery',
   styleUrls: ['gallery.scss'],
-  template: `
-    <div class="ng-gallery" *ngIf="showGallery">
-      <div *ngFor="let i of images; let index = index">
-        <img *ngIf="i.thumb" src="{{ i.thumb }}" class="ng-thumb" (click)="showModalGallery(index)"
-             alt="{{ i.description }}"/>
-        <img *ngIf="!i.thumb" src="{{ i.img }}" class="ng-thumb" (click)="showModalGallery(index)"
-             alt="{{ i.description }}"/>
-      </div>
-    </div>
-  `
+  templateUrl: 'gallery.html'
 })
 export class Gallery {
 
