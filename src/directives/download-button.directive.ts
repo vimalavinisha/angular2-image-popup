@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, SimpleChanges, Renderer } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
 @Directive({
@@ -11,7 +11,7 @@ export class DownloadButtonDirective implements OnChanges {
 
   private RIGHT: number = 63;
 
-  constructor(private el: ElementRef) {}
+  constructor(private renderer: Renderer, private el: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
     let right: number = 0;
@@ -21,10 +21,11 @@ export class DownloadButtonDirective implements OnChanges {
       right = 0;
     }
     // apply [style.right]="" to download url <a></a>
-    this.el.nativeElement.style.right = `${right}px`;
+    this.renderer.setElementStyle(this.el.nativeElement, 'right', `${right}px`);
+
 
     // hide downloadButton if configButtons.download is false
-    this.el.nativeElement.hidden = this.configButtons && !this.configButtons.download;
+    this.renderer.setElementProperty(this.el.nativeElement, 'hidden', this.configButtons && !this.configButtons.download);
   }
 
   private getNumOfPrecedingButtons() {

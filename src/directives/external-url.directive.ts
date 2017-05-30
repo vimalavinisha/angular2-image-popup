@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges, Renderer, SimpleChanges} from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
 @Directive({
@@ -11,7 +11,7 @@ export class ExternalUrlButtonDirective implements OnChanges {
 
   private RIGHT: number = 63;
 
-  constructor(private el: ElementRef) { }
+  constructor(private renderer: Renderer, private el: ElementRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
     let right: number = 0;
@@ -22,11 +22,11 @@ export class ExternalUrlButtonDirective implements OnChanges {
     }
 
     // apply [style.right]="" to external url <a></a>
-    this.el.nativeElement.style.right = `${right}px`;
+    this.renderer.setElementStyle(this.el.nativeElement, 'right', `${right}px`);
 
     // hide externalUrlButton based on this condition
     // configButtons && !configButtons.extUrl OR imgExtUrl is not valid (for instance is null)
-    this.el.nativeElement.hidden = (this.configButtons && !this.configButtons.extUrl) || !this.imgExtUrl;
+    this.renderer.setElementProperty(this.el.nativeElement, 'hidden', (this.configButtons && !this.configButtons.extUrl) || !this.imgExtUrl);
   }
 
   private getNumOfPrecedingButtons() {
