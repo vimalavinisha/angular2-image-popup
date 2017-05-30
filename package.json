@@ -6,8 +6,8 @@
   "license": "MIT",
   "author": "Stefano Cappa",
   "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=3.8.6"
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
   },
   "homepage": "https://github.com/Ks89/angular-modal-gallery#readme",
   "scripts": {
