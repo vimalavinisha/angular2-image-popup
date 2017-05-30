@@ -31,15 +31,12 @@ export class ExternalUrlButtonDirective implements OnChanges {
 
   private getNumOfPrecedingButtons() {
     let num: number = 0;
-    if(!this.configButtons) {
+    if (!this.configButtons) {
       return num;
     }
-
-    if(this.configButtons.close) {
+    if (this.configButtons.close) {
       num++;
     }
-
     return num;
   }
-
 }

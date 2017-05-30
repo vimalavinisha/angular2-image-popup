@@ -25,16 +25,16 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AngularModalGallery } from './components/modal-gallery.component';
+import { AngularModalGalleryComponent } from './components/modal-gallery.component';
 import { DIRECTIVES } from './directives/directives';
 import { UpperButtonsComponent } from './components/upper-buttons.component';
 import { KeyboardService } from './components/keyboard.service';
-import { Gallery } from './components/gallery.component';
+import { GalleryComponent } from './components/gallery.component';
 
 @NgModule({
   imports: [ CommonModule ],
-  declarations: [ AngularModalGallery, UpperButtonsComponent, Gallery, DIRECTIVES ],
-  exports: [ AngularModalGallery ]
+  declarations: [ AngularModalGalleryComponent, UpperButtonsComponent, GalleryComponent, DIRECTIVES ],
+  exports: [ AngularModalGalleryComponent ]
 })
 export class AngularModalGalleryModule {
   static forRoot(): ModuleWithProviders {

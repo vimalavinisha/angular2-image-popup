@@ -13,7 +13,7 @@ export class ClickOutsideDirective {
   onClick(targetElement: Element) {
     let elementId: string = targetElement.id;
 
-    if(elementId === 'ng-gallery-content' && this.clickOutsideEnable) {
+    if (elementId === 'ng-gallery-content' && this.clickOutsideEnable) {
       this.clickOutside.emit(true);
     }
   }

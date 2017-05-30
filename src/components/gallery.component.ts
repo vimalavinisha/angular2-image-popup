@@ -31,7 +31,7 @@ import {Image} from "./modal-gallery.component";
   styleUrls: ['gallery.scss'],
   templateUrl: 'gallery.html'
 })
-export class Gallery {
+export class GalleryComponent {
 
   @Input() images: Image[];
   @Input() showGallery: boolean;

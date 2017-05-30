@@ -29,15 +29,15 @@ export class DownloadButtonDirective implements OnChanges {
 
   private getNumOfPrecedingButtons() {
     let num: number = 0;
-    if(!this.configButtons) {
+    if (!this.configButtons) {
       return num;
     }
 
-    if(this.configButtons.extUrl && this.imgExtUrl) {
+    if (this.configButtons.extUrl && this.imgExtUrl) {
       num++;
     }
 
-    if(this.configButtons.close) {
+    if (this.configButtons.close) {
       num++;
     }
 

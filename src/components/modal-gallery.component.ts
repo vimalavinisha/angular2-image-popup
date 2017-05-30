@@ -120,28 +120,34 @@ export interface KeyboardConfig {
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
-export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
+export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Array or Observable input that represets a list of Images use to show both the
+   * Array or Observable input that represents a list of Images use to show both the
    * thumbs gallery and the modal gallery.
    */
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
+  /**
+   * Number to open the modal gallery (passing a value >=0) showing the image with the imagePointer's index
+   */
   @Input() imagePointer: number;
+  /**
+   * Boolean required to enable image download with both ctrl+s and download button.
+   * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
+   */
   @Input() downloadable: boolean = false;
+  /**
+   * Description object with the configuration to show image descriptions.
+   */
   @Input() description: Description;
-
   /**
    * Object of type `ButtonsConfig` to show/hide buttons.
    * This is used only inside `ngOnInit()` to create `configButtons` used into upper-buttons
    */
   @Input() buttonsConfig: ButtonsConfig;
-
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
-
-
   /**
    * enableCloseOutside's input to enable modal-gallery close behaviour while clicking
    * on the semi-transparent background. Disabled by default.
@@ -149,11 +155,11 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   @Input() enableCloseOutside: boolean = false;
 
   /**
-   * deprecated both showDownloadButton and showExtUrlButton
+   * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
   @Input() showDownloadButton: boolean = false; // deprecated
   /**
-   * deprecated both showDownloadButton and showExtUrlButton
+   * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
   @Input() showExtUrlButton: boolean = false; // deprecated
 
@@ -163,42 +169,35 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
   @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(e: KeyboardEvent) {
-    if (!this.opened) {
-      return;
-    }
-    const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
-    const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
-    const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
-
-    switch (e.keyCode) {
-      case esc:
-        this.closeGallery(Action.KEYBOARD);
-        break;
-      case right:
-        this.nextImage(Action.KEYBOARD);
-        break;
-      case left:
-        this.prevImage(Action.KEYBOARD);
-        break;
-    }
-  }
-
+  /**
+   * Boolean that it is true if the modal gallery is visible
+   */
   opened: boolean = false;
+  /**
+   * Boolean that it is true if an image of the modal gallery is still loading
+   */
   loading: boolean = false;
+  /**
+   * Boolean to open the modal gallery. Closed by default.
+   */
   showGallery: boolean = false;
-
+  /**
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   */
   images: Image[];
+  /**
+   * `Image` currently visible.
+   */
   currentImage: Image;
+  /**
+   * Number that represents the index of the current image.
+   */
   currentImageIndex: number = 0;
-
   /**
    * Object of type `ButtonsConfig` used to configure buttons visibility. This is a temporary value
    * initialized by the real `buttonsConfig`'s input
    */
   configButtons: ButtonsConfig;
-
   /**
    * Enum of type `Action` used to pass a click action when you click over the modal image.
    * Declared here to be used inside the template.
@@ -222,6 +221,34 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
 
 
   /**
+   * Listener to catch keyboard's events and call the right method based on the key.
+   * For instance, pressing esc, this will call `closeGallery(Action.KEYBOARD)` and so on.
+   * If you passed a valid `keyboardConfig` esc, right and left buttons will be customized based on your data.
+   * @param e KeyboardEvent catched by the listener.
+   */
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(e: KeyboardEvent) {
+    if (!this.opened) {
+      return;
+    }
+    const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
+    const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
+    const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
+
+    switch (e.keyCode) {
+      case esc:
+        this.closeGallery(Action.KEYBOARD);
+        break;
+      case right:
+        this.nextImage(Action.KEYBOARD);
+        break;
+      case left:
+        this.prevImage(Action.KEYBOARD);
+        break;
+    }
+  }
+
+  /**
    * Constructor with the injection of ´KeyboardService´ that initialize some description fields based on default values.
    */
   constructor(private keyboardService: KeyboardService) {
@@ -231,7 +258,7 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
         imageText: 'Image ',
         numberSeparator: '/',
         beforeTextDescription: ' - '
-      }
+      };
     }
 
     // if one of the Description fields isn't initialized, provide a default value
@@ -252,39 +279,6 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     };
 
     this.initImages();
-  }
-
-  /**
-   * Private method ´initImages´ to initialize `images` as array of `Image` or as an Observable of `Array<Image>`.
-   * Also, it will call completeInitialization.
-   */
-  private initImages() {
-    if (this.modalImages instanceof Array) {
-      this.images = this.modalImages;
-      this.completeInitialization();
-    } else {
-      if (this.modalImages instanceof Observable) {
-        this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
-          this.images = val;
-          this.completeInitialization();
-        });
-      }
-    }
-  }
-
-  /**
-   * Private method ´completeInitialization´ to emit ImageModalEvent to say that images are loaded. If you are
-   * using imagePointer feature, it will also call showModalGallery with imagePointer as parameter.
-   */
-  private completeInitialization() {
-    this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
-    this.loading = true;
-    if (this.imagePointer >= 0) {
-      this.showGallery = false;
-      this.showModalGallery(this.imagePointer);
-    } else {
-      this.showGallery = true;
-    }
   }
 
   /**
@@ -430,9 +424,20 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
    * @param event Boolean that is true if user clicked on the semi-trasparent background, false otherwise.
    */
   onClickOutside(event: boolean) {
-    if(event && this.enableCloseOutside) {
+    if (event && this.enableCloseOutside) {
       this.closeGallery(Action.CLICK);
     }
+  }
+
+  /**
+   * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
+   * all subscriptions and it will reset keyboard's service.
+   */
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.keyboardService.reset();
   }
 
   /**
@@ -483,6 +488,40 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
     return newIndex;
   }
 
+
+  /**
+   * Private method ´initImages´ to initialize `images` as array of `Image` or as an Observable of `Array<Image>`.
+   * Also, it will call completeInitialization.
+   */
+  private initImages() {
+    if (this.modalImages instanceof Array) {
+      this.images = this.modalImages;
+      this.completeInitialization();
+    } else {
+      if (this.modalImages instanceof Observable) {
+        this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
+          this.images = val;
+          this.completeInitialization();
+        });
+      }
+    }
+  }
+
+  /**
+   * Private method ´completeInitialization´ to emit ImageModalEvent to say that images are loaded. If you are
+   * using imagePointer feature, it will also call showModalGallery with imagePointer as parameter.
+   */
+  private completeInitialization() {
+    this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
+    this.loading = true;
+    if (this.imagePointer >= 0) {
+      this.showGallery = false;
+      this.showModalGallery(this.imagePointer);
+    } else {
+      this.showGallery = true;
+    }
+  }
+
   /**
    * Private method `emitBoundaryEvent` to emit events when either the last or the first image are visible.
    * @param action Enum of type Action that represents the source of the event that changed the
@@ -509,16 +548,5 @@ export class AngularModalGallery implements OnInit, OnDestroy, OnChanges {
    */
   private getFileName(path: string) {
     return path.replace(/^.*[\\\/]/, '');
-  }
-
-  /**
-   * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
-   * all subscriptions and it will reset keyboard's service.
-   */
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    this.keyboardService.reset();
   }
 }
