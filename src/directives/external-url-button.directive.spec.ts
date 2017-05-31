@@ -54,13 +54,13 @@ let des: DebugElement[] = [];
 let bareElement: DebugElement;
 
 const expected: any = [
+  {right: '0px', hidden: true}, // 0px and 'true' because imgExtUrl is undefined
   {right: '0px', hidden: true},
-  {right: '0px', hidden: true}, // without imgExtUrl
   {right: '0px', hidden: true},
 
-  {right: '0px', hidden: false},
   {right: '63px', hidden: false},
-  {right: '63px', hidden: false}, // without imgExtUrl
+  {right: '63px', hidden: false},
+  {right: '0px', hidden: true}, // 0px and 'true' because imgExtUrl is undefined
   {right: '0px', hidden: false},
 
   {right: '0px', hidden: true},
@@ -100,10 +100,10 @@ describe('ExternalUrlButtonDirective', () => {
       expect(des.length).toBe(9);
     });
 
-    des.forEach((debugEl: DebugElement, index: number) => {
+    expected.forEach((val: any, index: number) => {
       it(`should check expected results for <a> at position ${index}`, () => {
-        expect(debugEl.nativeElement.style.right).toBe(expected[index].right);
-        expect(debugEl.nativeElement.hidden).toBe(expected[index].hidden);
+        expect(des[index].nativeElement.style.right).toBe(val.right);
+        expect(des[index].nativeElement.hidden).toBe(val.hidden);
       });
     });
 

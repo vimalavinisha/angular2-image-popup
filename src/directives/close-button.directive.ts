@@ -22,19 +22,27 @@
  SOFTWARE.
  */
 
-import {Directive, Input, OnChanges, Renderer, ElementRef, SimpleChanges} from '@angular/core';
+import { Directive, Input, OnChanges, Renderer, ElementRef, SimpleChanges, OnInit } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
 @Directive({
   selector: '[close-button]'
 })
-export class CloseButtonDirective implements OnChanges {
+export class CloseButtonDirective implements OnInit, OnChanges {
 
   @Input() configButtons: ButtonsConfig;
 
   constructor(private renderer: Renderer, private el: ElementRef) {}
 
+  ngOnInit() {
+    this.applyStyle();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
+    this.applyStyle();
+  }
+
+  private applyStyle() {
     // apply [style.right]="" to download url <a></a>
     this.renderer.setElementStyle(this.el.nativeElement, 'right', '0px');
 

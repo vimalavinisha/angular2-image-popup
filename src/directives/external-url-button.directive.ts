@@ -22,13 +22,13 @@
  SOFTWARE.
  */
 
-import { Directive, ElementRef, Input, OnChanges, Renderer, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, Renderer, SimpleChanges, OnInit } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
 @Directive({
   selector: '[exturl-button]'
 })
-export class ExternalUrlButtonDirective implements OnChanges {
+export class ExternalUrlButtonDirective implements OnInit, OnChanges {
 
   @Input() configButtons: ButtonsConfig;
   @Input() imgExtUrl: string | void;
@@ -37,7 +37,15 @@ export class ExternalUrlButtonDirective implements OnChanges {
 
   constructor(private renderer: Renderer, private el: ElementRef) { }
 
+  ngOnInit() {
+    this.applyStyle();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
+    this.applyStyle();
+  }
+
+  private applyStyle() {
     let right: number = 0;
     if (this.configButtons && this.configButtons.extUrl && this.imgExtUrl) {
       right = this.getNumOfPrecedingButtons() * this.RIGHT;
@@ -50,7 +58,8 @@ export class ExternalUrlButtonDirective implements OnChanges {
 
     // hide externalUrlButton based on this condition
     // configButtons && !configButtons.extUrl OR imgExtUrl is not valid (for instance is null)
-    this.renderer.setElementProperty(this.el.nativeElement, 'hidden', (this.configButtons && !this.configButtons.extUrl) || !this.imgExtUrl);
+    this.renderer.setElementProperty(this.el.nativeElement, 'hidden', !this.configButtons || (this.configButtons && !this.configButtons.extUrl) || !this.imgExtUrl);
+
   }
 
   private getNumOfPrecedingButtons() {
