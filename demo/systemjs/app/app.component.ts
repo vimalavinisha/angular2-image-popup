@@ -91,12 +91,36 @@ import 'rxjs/add/operator/delay';
                      (firstImage)="onIsFirstImage($event)"
                      (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
+    <section id="Images31-3">
+      <h3>3 - Array of images without close button thanks to <span class="red-text">'buttonsConfig'</span></h3>
+      <p>modalGallery with</p>
+      <ul>
+        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+        <li><b>download button NOT visible</b> because, <u class="red-text">buttonsConfig.download = false</u></li>
+        <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+        <li><b>close button NOT visible</b> because, <u class="red-text">buttonsConfig.close = false</u></li>
+        <li><b>default keyboard config</b> because, <u class="red-text">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>
+        <li><b>close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is true</li>
+        <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
+        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
+      <br>
+      <modal-gallery [modalImages]="imagesArray"
+                     [buttonsConfig]="{download: false, extUrl: true, close: false}"
+                     [enableCloseOutside]="true"
+                     [description]="customFullDescription"
+                     (hasData)="onImageLoaded($event)"
+                     (close)="onCloseImageModal($event)"
+                     (show)="onVisibleIndex($event)"
+                     (firstImage)="onIsFirstImage($event)"
+                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+    </section>
     <hr>
     <br>
     <br>
     <p class="center-text"><b>--- For all 3.x.x versions ---</b></p>
     <section id="Images1">
-      <h3>3 - Observable of images with delay(300)</h3>
+      <h3>4 - Observable of images with delay(300)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
@@ -117,7 +141,7 @@ import 'rxjs/add/operator/delay';
                   (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images2">
-      <h3>4 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
+      <h3>5 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
@@ -139,7 +163,7 @@ import 'rxjs/add/operator/delay';
                   (lastImage)="onIsLastImage($event)"></modal-gallery>
     </section>
     <section id="Images3">
-      <h3>5 - Array of images + download (both 'ctrl+s' and button)</h3>
+      <h3>6 - Array of images + download (both 'ctrl+s' and button)</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
@@ -163,7 +187,7 @@ import 'rxjs/add/operator/delay';
     </section>
     <section id="Images4">
       <br>
-      <h3>6 - Observable of images with a single element and without a delay</h3>
+      <h3>7 - Observable of images with a single element and without a delay</h3>
       <p>modalGallery with</p>
       <ul>
         <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> without delay</li>
@@ -174,7 +198,7 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <!-- both showDownloadButton and downloadable are false by default -->
-      <modal-gallery [modalImages]="singleImage" 
+      <modal-gallery [modalImages]="singleImage"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
@@ -204,7 +228,7 @@ import 'rxjs/add/operator/delay';
       <div *ngIf="openModalWindow">
         <modal-gallery [modalImages]="imagesArray"
                     [imagePointer]="imagePointer"
-                    [downloadable]="true" 
+                    [downloadable]="true"
                     [showExtUrlButton]="true"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
@@ -237,7 +261,7 @@ import 'rxjs/add/operator/delay';
       <div *ngIf="openModalWindowObservable">
         <modal-gallery [modalImages]="images"
                     [imagePointer]="imagePointerObservable"
-                    [downloadable]="true" 
+                    [downloadable]="true"
                     [showExtUrlButton]="false"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
