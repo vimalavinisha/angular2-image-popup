@@ -38,7 +38,7 @@ export class DownloadButtonDirective implements OnChanges {
       num++;
     }
 
-    if (this.configButtons.close) {
+    if (this.configButtons.close === undefined || this.configButtons.close === true) {
       num++;
     }
 
