@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Directive, Input, OnChanges, Renderer, ElementRef, SimpleChanges, OnInit } from '@angular/core';
+import { Directive, Input, OnChanges, Renderer2, ElementRef, SimpleChanges, OnInit } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
 @Directive({
@@ -32,7 +32,7 @@ export class CloseButtonDirective implements OnInit, OnChanges {
 
   @Input() configButtons: ButtonsConfig;
 
-  constructor(private renderer: Renderer, private el: ElementRef) {}
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   ngOnInit() {
     this.applyStyle();
@@ -43,10 +43,11 @@ export class CloseButtonDirective implements OnInit, OnChanges {
   }
 
   private applyStyle() {
-    // apply [style.right]="" to download url <a></a>
-    this.renderer.setElementStyle(this.el.nativeElement, 'right', '0px');
+    // apply [style.right]="" to close url <a></a>
+    this.renderer.setStyle(this.el.nativeElement, 'right', '0px');
 
+    const condition: boolean = this.configButtons === null || (this.configButtons && this.configButtons.close === false);
     // hide closeButton if configButtons.close is false
-    this.renderer.setElementProperty(this.el.nativeElement, 'hidden', this.configButtons && this.configButtons.close === false);
+    this.renderer.setProperty(this.el.nativeElement, 'hidden', condition);
   }
 }

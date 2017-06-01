@@ -24,65 +24,57 @@
 
 import { Component, DebugElement } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ExternalUrlButtonDirective } from './external-url-button.directive';
+import { CloseButtonDirective } from './close-button.directive';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture } from '@angular/core/testing';
 
 @Component({
-  selector: 'test-exturl-button',
+  selector: 'test-close-button',
   template: `
-    <a>Link</a>
+    <a>Something</a>
     <br>
-    <a exturl-button>Link</a>
-    <a exturl-button [imgExtUrl]="'exturl'">Link</a>
-    <a exturl-button [configButtons]="{extUrl: false}" [imgExtUrl]="'exturl'">Link</a>
-    <br>
-    <a exturl-button [configButtons]="{extUrl: true}" [imgExtUrl]="'exturl'">Link</a>
-    <a exturl-button [configButtons]="{extUrl: true, close: true}" [imgExtUrl]="'exturl'">Link</a>
-    <a exturl-button [configButtons]="{extUrl: true, close: true}">Link</a>
-    <a exturl-button [configButtons]="{extUrl: true, close: false}" [imgExtUrl]="'exturl'">Link</a>
-    <br>
-    <a exturl-button [configButtons]="{extUrl: false, close: false}" [imgExtUrl]="'exturl'">Link</a>
-    <a exturl-button [configButtons]="{extUrl: false, close: true}" [imgExtUrl]="'exturl'">Link</a>
+    <a close-button>Something</a>
+    <a close-button [configButtons]="null">Something</a>
+    <a close-button [configButtons]="undefined">Something</a>
+    <a close-button [configButtons]="{}">Something</a>
+    <a close-button [configButtons]="{dowload: false}">Something</a>
+    <a close-button [configButtons]="{close: false}">Something</a>
+    <a close-button [configButtons]="{close: true}">Something</a>
   `
 })
-class TestExtUrlButtonComponent {}
+class TestCloseButtonComponent {}
 
-let fixture: ComponentFixture<TestExtUrlButtonComponent>;
-let comp: TestExtUrlButtonComponent;
+let fixture: ComponentFixture<TestCloseButtonComponent>;
+let comp: TestCloseButtonComponent;
 let des: DebugElement[] = [];
 let bareElement: DebugElement;
 
 const expected: any = [
-  {right: '0px', hidden: true}, // 0px and 'true' because imgExtUrl is undefined
+  {right: '0px', hidden: false}, // because configButtons is not mandatory
   {right: '0px', hidden: true},
-  {right: '0px', hidden: true},
-
-  {right: '63px', hidden: false},
-  {right: '63px', hidden: false},
-  {right: '0px', hidden: true}, // 0px and 'true' because imgExtUrl is undefined
+  {right: '0px', hidden: false}, // because configButtons is not mandatory
+  {right: '0px', hidden: false}, // if configButtons, close will be true by default (i.e. not hidden)
   {right: '0px', hidden: false},
-
   {right: '0px', hidden: true},
-  {right: '0px', hidden: true}
+  {right: '0px', hidden: false}
 ];
 
-describe('ExternalUrlButtonDirective', () => {
+describe('CloseButtonDirective', () => {
 
   beforeEach(() => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      declarations: [TestExtUrlButtonComponent, ExternalUrlButtonDirective]
+      declarations: [TestCloseButtonComponent, CloseButtonDirective]
     }); // not necessary with webpack .compileComponents();
 
-    fixture = TestBed.createComponent(TestExtUrlButtonComponent);
+    fixture = TestBed.createComponent(TestCloseButtonComponent);
     comp = fixture.componentInstance;
 
     fixture.detectChanges();
     return fixture.whenStable().then(() => {
       fixture.detectChanges();
-      bareElement = fixture.debugElement.query(By.css('a:not(exturl-button)'));
-      des = fixture.debugElement.queryAll(By.directive(ExternalUrlButtonDirective));
+      bareElement = fixture.debugElement.query(By.css('a:not(close-button)'));
+      des = fixture.debugElement.queryAll(By.directive(CloseButtonDirective));
     });
   });
 
@@ -92,7 +84,7 @@ describe('ExternalUrlButtonDirective', () => {
 
     beforeEach(() => fixture.detectChanges());
 
-    it('should have ${expected.length} exturl-button elements', () => {
+    it('should have ${expected.length} close-button elements', () => {
       expect(des.length).toBe(expected.length);
     });
 
@@ -104,7 +96,7 @@ describe('ExternalUrlButtonDirective', () => {
     });
 
     it('should check expected results for bare <a> without this directive', () => {
-      expect(bareElement.properties['exturl-button']).toBeUndefined();
+      expect(bareElement.properties['close-button']).toBeUndefined();
     });
   });
 });

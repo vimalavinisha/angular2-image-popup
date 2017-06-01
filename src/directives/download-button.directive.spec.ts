@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Component, DebugElement, Renderer } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DownloadButtonDirective } from './download-button.directive';
 import { By } from '@angular/platform-browser';
@@ -31,46 +31,26 @@ import { ComponentFixture } from '@angular/core/testing';
 @Component({
   selector: 'test-download-button',
   template: `
-    <a>Link</a>
+    <a>Something</a>
     <br>
-    <a download-button [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: false}" [imgExtUrl]="'exturl'">Link</a>
+    <a download-button [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: false}" [imgExtUrl]="'exturl'">Something</a>
     <br>
-    <a download-button [configButtons]="{download: true}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: true, extUrl: true}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: true, extUrl: false}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: true, extUrl: true, close: true}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: true, extUrl: true, close: true}">Link</a>
-    <a download-button [configButtons]="{download: true, extUrl: true, close: false}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: true, extUrl: false, close: false}" [imgExtUrl]="'exturl'">Link</a>
+    <a download-button [configButtons]="{download: true}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: true, extUrl: true}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: true, extUrl: false}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: true, extUrl: true, close: true}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: true, extUrl: true, close: true}">Something</a>
+    <a download-button [configButtons]="{download: true, extUrl: true, close: false}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: true, extUrl: false, close: false}" [imgExtUrl]="'exturl'">Something</a>
     <br>
-    <a download-button [configButtons]="{download: false, extUrl: false, close: false}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: false, extUrl: true, close: false}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: false, extUrl: false, close: true}" [imgExtUrl]="'exturl'">Link</a>
-    <a download-button [configButtons]="{download: false, extUrl: true, close: true}" [imgExtUrl]="'exturl'">Link</a>
+    <a download-button [configButtons]="{download: false, extUrl: false, close: false}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: false, extUrl: true, close: false}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: false, extUrl: false, close: true}" [imgExtUrl]="'exturl'">Something</a>
+    <a download-button [configButtons]="{download: false, extUrl: true, close: true}" [imgExtUrl]="'exturl'">Something</a>
   `
 })
 class TestDownloadButtonComponent {}
-
-let fixture: ComponentFixture<TestDownloadButtonComponent>;
-let des: DebugElement[] = [];
-let bareElement: DebugElement;
-
-beforeEach(() => {
-  TestBed.resetTestingModule();
-  fixture = TestBed.configureTestingModule({
-    declarations: [TestDownloadButtonComponent, DownloadButtonDirective],
-    providers: [Renderer]
-  }).createComponent(TestDownloadButtonComponent);
-  fixture.detectChanges(); // initial binding
-  des = fixture.debugElement.queryAll(By.directive(DownloadButtonDirective));
-  // // the h2 without the DownloadButtonDirective
-  bareElement = fixture.debugElement.query(By.css('a:not(download-button)'));
-});
-
-it('should have 13 download-button elements', () => {
-  expect(des.length).toBe(13);
-});
 
 const expected: any = [
   { right: '0px', hidden: true },
@@ -90,13 +70,50 @@ const expected: any = [
   { right: '0px', hidden: true }
 ];
 
-expected.forEach((val: any, index: number) => {
-  it(`should check expected results for <a> at position ${index}`, () => {
-    expect(des[index].nativeElement.style.right).toBe(val.right);
-    expect(des[index].nativeElement.hidden).toBe(val.hidden);
-  });
-});
+let fixture: ComponentFixture<TestDownloadButtonComponent>;
+let comp: TestDownloadButtonComponent;
+let des: DebugElement[] = [];
+let bareElement: DebugElement;
 
-it('should check expected results for bare <a> without this directive', () => {
-  expect(bareElement.properties['download-button']).toBeUndefined();
+
+describe('DownloadButtonDirective', () => {
+
+  beforeEach(() => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      declarations: [TestDownloadButtonComponent, DownloadButtonDirective]
+    }); // not necessary with webpack .compileComponents();
+
+    fixture = TestBed.createComponent(TestDownloadButtonComponent);
+    comp = fixture.componentInstance;
+
+    fixture.detectChanges();
+    return fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      des = fixture.debugElement.queryAll(By.directive(DownloadButtonDirective));
+      bareElement = fixture.debugElement.query(By.css('a:not(download-button)'));
+    });
+  });
+
+  it('can instantiate it', () => expect(comp).not.toBeNull());
+
+  describe('---tests---', () => {
+
+    beforeEach(() => fixture.detectChanges());
+
+    it('should have ${expected.length} download-button elements', () => {
+      expect(des.length).toBe(expected.length);
+    });
+
+    expected.forEach((val: any, index: number) => {
+      it(`should check expected results for <a> at position ${index}`, () => {
+        expect(des[index].nativeElement.style.right).toBe(val.right);
+        expect(des[index].nativeElement.hidden).toBe(val.hidden);
+      });
+    });
+
+    it('should check expected results for bare <a> without this directive', () => {
+      expect(bareElement.properties['download-button']).toBeUndefined();
+    });
+  });
 });
