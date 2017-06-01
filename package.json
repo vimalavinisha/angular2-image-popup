@@ -27,6 +27,7 @@
     "clean-coverage": "rimraf coverage",
     "pretest": "npm run clean-coverage",
     "test": "karma start --single-run",
+    "test:watch": "karma start",
     "docs": "typedoc --out docs src"
   },
   "dependencies": {
