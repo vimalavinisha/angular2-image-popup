@@ -22,8 +22,8 @@
  SOFTWARE.
  */
 
-import {Input, Output, EventEmitter, Component} from '@angular/core';
-import {Image} from "./modal-gallery.component";
+import { Input, Output, EventEmitter, Component } from '@angular/core';
+import { Image } from './modal-gallery.component';
 
 @Component({
   selector: 'gallery',

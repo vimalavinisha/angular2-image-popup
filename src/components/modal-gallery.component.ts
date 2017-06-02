@@ -62,11 +62,12 @@ export class ImageModalEvent {
  */
 export class Image {
   img: string;
-  thumb?: string;
-  description?: string;
-  extUrl?: string;
+  thumb?: string | null | undefined;
+  description?: string | null | undefined;
+  extUrl?: string | null | undefined;
 
-  constructor(img: string, thumb?: string, description?: string, extUrl?: string) {
+  constructor(img: string, thumb?: string | null | undefined,
+              description?: string | null | undefined, extUrl?: string | null | undefined) {
     this.img = img;
     this.thumb = thumb;
     this.description = description;
