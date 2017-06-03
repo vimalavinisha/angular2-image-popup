@@ -88,7 +88,6 @@ const CLOSE_NO_CONFIGS: Array<any> = [
 ];
 
 const WRONG_CONFIG: Array<any> = [
-  // {},
   null,
   undefined
 ];
@@ -120,8 +119,8 @@ describe('UpperButtonsComponent', () => {
       fixture.detectChanges();
     });
 
-    DOWNLOAD_YES_CONFIGS.forEach((val: any) => {
-      it('should display the download button', () => {
+    DOWNLOAD_YES_CONFIGS.forEach((val: any, index: number) => {
+      it(`should display the download button. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const downloadBtnI: DebugElement = element.query(By.css('.download-image i'));
@@ -142,8 +141,8 @@ describe('UpperButtonsComponent', () => {
       });
     });
 
-    EXTURL_YES_CONFIGS.forEach((val: any) => {
-      it('should display the exturl button', () => {
+    EXTURL_YES_CONFIGS.forEach((val: any, index: number) => {
+      it(`should display the exturl button. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const extUrlBtnI: DebugElement = element.query(By.css('.external-url-image i'));
@@ -164,8 +163,8 @@ describe('UpperButtonsComponent', () => {
       });
     });
 
-    CLOSE_YES_CONFIGS.forEach((val: any) => {
-      it('should display the exturl button', () => {
+    CLOSE_YES_CONFIGS.forEach((val: any, index: number) => {
+      it(`should display the exturl button. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
@@ -193,8 +192,22 @@ describe('UpperButtonsComponent', () => {
       fixture.detectChanges();
     });
 
-    DOWNLOAD_NO_CONFIGS.forEach((val: any) => {
-      it('should not display the download button', () => {
+    DOWNLOAD_YES_CONFIGS.forEach((val: any, index: number) => {
+      it(`should display the download button, because extUrl is not valid, but there is a valid config. Test i=${index}`, () => {
+        updateInputs(IMAGE_NO_EXTURL, val);
+        const element: DebugElement = fixture.debugElement;
+        const downloadBtnI: DebugElement = element.query(By.css('.download-image i'));
+        expect(downloadBtnI.attributes.class).toBe('fa fa-download');
+        const downloadBtnDirective: DebugElement = element.query(By.directive(DownloadButtonDirective));
+        expect(downloadBtnDirective.name).toBe('a');
+        expect(downloadBtnDirective.properties.hidden).toBe(false);
+        expect(downloadBtnDirective.attributes.class).toBe('download-image');
+        expect(downloadBtnDirective.attributes['download-button']).toBe('');
+      });
+    });
+
+    DOWNLOAD_NO_CONFIGS.forEach((val: any, index: number) => {
+      it(`should NOT display the download button. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const downloadBtnI: DebugElement = element.query(By.css('.download-image i'));
@@ -207,8 +220,22 @@ describe('UpperButtonsComponent', () => {
       });
     });
 
-    EXTURL_NO_CONFIGS.forEach((val: any) => {
-      it('should not display the exturl button', () => {
+    EXTURL_YES_CONFIGS.forEach((val: any, index: number) => {
+      it(`should NOT display the exturl button, because extUrl is not valid, also with a valid config. Test i=${index}`, () => {
+        updateInputs(IMAGE_NO_EXTURL, val);
+        const element: DebugElement = fixture.debugElement;
+        const extUrlBtnI: DebugElement = element.query(By.css('.external-url-image i'));
+        expect(extUrlBtnI.attributes.class).toBe('fa fa-external-link');
+        const extUrlBtnDirective: DebugElement = element.query(By.directive(ExternalUrlButtonDirective));
+        expect(extUrlBtnDirective.name).toBe('a');
+        expect(extUrlBtnDirective.properties.hidden).toBe(true);
+        expect(extUrlBtnDirective.attributes.class).toBe('external-url-image');
+        expect(extUrlBtnDirective.attributes['exturl-button']).toBe('');
+      });
+    });
+
+    EXTURL_NO_CONFIGS.forEach((val: any, index: number) => {
+      it(`should NOT display the exturl button, because config is not valid. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const extUrlBtnI: DebugElement = element.query(By.css('.external-url-image i'));
@@ -221,8 +248,8 @@ describe('UpperButtonsComponent', () => {
       });
     });
 
-    CLOSE_NO_CONFIGS.forEach((val: any) => {
-      it('should not display the close button', () => {
+    CLOSE_NO_CONFIGS.forEach((val: any, index: number) => {
+      it(`should NOT display the close button. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
@@ -234,6 +261,20 @@ describe('UpperButtonsComponent', () => {
         expect(closeBtnDirective.attributes['close-button']).toBe('');
       });
     });
+
+    CLOSE_YES_CONFIGS.forEach((val: any, index: number) => {
+      it(`should display the close button, because extUrl is not valid, but there is a valid config. Test i=${index}`, () => {
+        updateInputs(IMAGE_NO_EXTURL, val);
+        const element: DebugElement = fixture.debugElement;
+        const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
+        expect(closeBtnI.attributes.class).toBe('fa fa-close');
+        const closeBtnDirective: DebugElement = element.query(By.directive(CloseButtonDirective));
+        expect(closeBtnDirective.name).toBe('a');
+        expect(closeBtnDirective.properties.hidden).toBe(false);
+        expect(closeBtnDirective.attributes.class).toBe('close-popup');
+        expect(closeBtnDirective.attributes['close-button']).toBe('');
+      });
+    });
   });
 
   describe('---ERROR---', () => {
@@ -241,8 +282,8 @@ describe('UpperButtonsComponent', () => {
       fixture.detectChanges();
     });
 
-    WRONG_CONFIG.forEach((val: any) => {
-      it('should manage wrong config objects', () => {
+    WRONG_CONFIG.forEach((val: any, index: number) => {
+      it(`should manage wrong config objects. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const downloadBtnDirective: DebugElement = element.query(By.directive(DownloadButtonDirective));
