@@ -1,7 +1,7 @@
-<a class="external-url-image" href="{{image.extUrl}}"
-   exturl-button [configButtons]="configButtons" [imgExtUrl]="image.extUrl"><i class="fa fa-external-link"></i></a>
+<a class="external-url-image" href="{{image?.extUrl}}"
+   exturl-button [configButtons]="configButtons" [imgExtUrl]="image?.extUrl"><i class="fa fa-external-link"></i></a>
 <a class="download-image"
-   download-button [configButtons]="configButtons" [imgExtUrl]="image.extUrl"
+   download-button [configButtons]="configButtons" [imgExtUrl]="image?.extUrl"
    (click)="downloadImage()"><i class="fa fa-download"></i></a>
 <a class="close-popup"
    close-button [configButtons]="configButtons"
