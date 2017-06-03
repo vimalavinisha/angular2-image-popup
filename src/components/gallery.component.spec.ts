@@ -114,22 +114,22 @@ describe('GalleryComponent', () => {
       expect(imgs[6].properties.src).toBe(IMAGES[6].img);
       expect(imgs[6].properties.alt).toBe('');
 
-      // comp.show.subscribe((out: number) => {
-      //   imgs[0].triggerEventHandler('click', null);
-      //   expect(out).toBe(1);
-      //   imgs[1].triggerEventHandler('click', null);
-      //   expect(out).toBe(2);
-      //   imgs[2].triggerEventHandler('click', null);
-      //   expect(out).toBe(2);
-      //   imgs[3].triggerEventHandler('click', null);
-      //   expect(out).toBe(4);
-      //   imgs[4].triggerEventHandler('click', null);
-      //   expect(out).toBe(4);
-      //   imgs[5].triggerEventHandler('click', null);
-      //   expect(out).toBe(5);
-      //   imgs[6].triggerEventHandler('click', null);
-      //   expect(out).toBe(6);
-      // });
+      comp.show.subscribe((out: number) => {
+        expect(out).toBe(0);
+      });
+      imgs[0].triggerEventHandler('click', null);
+    });
+
+    IMAGES.forEach((val: Image, index: number) => {
+      it(`should click on the ${index} thumb the gallery of thumbnails`, () => {
+        updateInputs(IMAGES, true);
+        const element: DebugElement = fixture.debugElement;
+        const imgs: DebugElement[] = element.queryAll(By.css('img'));
+        comp.show.subscribe((out: number) => {
+          expect(out).toBe(index);
+        });
+        imgs[index].triggerEventHandler('click', null);
+      });
     });
   });
 

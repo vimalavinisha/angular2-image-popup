@@ -131,13 +131,13 @@ describe('UpperButtonsComponent', () => {
         expect(downloadBtnDirective.attributes.class).toBe('download-image');
         expect(downloadBtnDirective.attributes['download-button']).toBe('');
 
-        // downloadBtnDirective.triggerEventHandler('click', null);
-        // comp.download.subscribe((res: boolean) => {
-        //   expect(res).toBe(true);
-        // });
-        // comp.close.subscribe((res: boolean) => {
-        //   expect(res).toBe(false);
-        // });
+        comp.download.subscribe((res: boolean) => {
+          expect(res).toBe(true);
+        });
+        comp.close.subscribe((res: boolean) => {
+          expect(res).toBe(false);
+        });
+        downloadBtnDirective.triggerEventHandler('click', null);
       });
     });
 
@@ -153,18 +153,18 @@ describe('UpperButtonsComponent', () => {
         expect(extUrlBtnDirective.attributes.class).toBe('external-url-image');
         expect(extUrlBtnDirective.attributes['exturl-button']).toBe('');
 
-        // extUrlBtnDirective.triggerEventHandler('click', null);
-        // comp.download.subscribe((res: boolean) => {
-        //   expect(res).toBe(true);
-        // });
-        // comp.close.subscribe((res: boolean) => {
-        //   expect(res).toBe(false);
-        // });
+        comp.download.subscribe((res: boolean) => {
+          expect(res).toBe(false);
+        });
+        comp.close.subscribe((res: boolean) => {
+          expect(res).toBe(false);
+        });
+        extUrlBtnDirective.triggerEventHandler('click', null);
       });
     });
 
     CLOSE_YES_CONFIGS.forEach((val: any, index: number) => {
-      it(`should display the exturl button. Test i=${index}`, () => {
+      it(`should display the close button. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
@@ -175,14 +175,10 @@ describe('UpperButtonsComponent', () => {
         expect(closeBtnDirective.attributes.class).toBe('close-popup');
         expect(closeBtnDirective.attributes['close-button']).toBe('');
 
-        // fixture.detectChanges();
-        // const closeBtn: DebugElement = element.query(By.css('a.close-popup'));
-        // closeBtn.nativeElement.click();//('click', null);
-        // fixture.detectChanges();
-        // // console.log('closeBtn', closeBtn);
-        // // comp.download.subscribe((res: boolean) => {
-        // //   expect(res).toBe(false);
-        // // });
+        comp.close.subscribe((res: boolean) => {
+          expect(res).toBe(true);
+        });
+        closeBtnDirective.triggerEventHandler('click', null);
       });
     });
   });
