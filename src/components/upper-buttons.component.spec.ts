@@ -112,7 +112,7 @@ function initTestBed() {
 describe('UpperButtonsComponent', () => {
   beforeEach(() => initTestBed());
 
-  it('can instantiate it', () => expect(comp).not.toBeNull());
+  it('should instantiate it', () => expect(comp).not.toBeNull());
 
   describe('---YES---', () => {
     beforeEach(() => {

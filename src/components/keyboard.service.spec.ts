@@ -10,7 +10,7 @@ describe('KeyboardService', () => {
     });
   }));
 
-  it('can instantiate service when inject service', inject([KeyboardService], (service: KeyboardService) => {
+  it('should instantiate service when inject service', inject([KeyboardService], (service: KeyboardService) => {
     expect(service instanceof KeyboardService).toEqual(true);
   }));
 
