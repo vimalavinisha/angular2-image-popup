@@ -99,21 +99,13 @@ describe('ClickOutsideDirective', () => {
       expect(clickOutsideDirective.attributes.class).toBe('ng-gallery-content');
       expect(clickOutsideDirective.attributes['click-outside']).toBe('');
 
-      // TODO not working, fid a way to test this directive
-      // let overlay: DebugElement = fixture.debugElement.query(By.css('.ng-overlay'));
-      //
-      // comp.clicked.subscribe((res: boolean) => {
-      //   console.log('--------------------');
-      //   expect(res).toBe(false);
-      // });
-      //
-      // directive.clickOutside.subscribe((res: boolean) => {
-      //   console.log('--------------------');
-      //   expect(res).toBe(false);
-      // });
-      //
-      // clickOutsideDirective.triggerEventHandler('click', null);
-      // overlay.triggerEventHandler('click', null);
+      fixture.detectChanges();
+
+      let overlay: DebugElement = fixture.debugElement.query(By.css('div#ng-gallery-content.ng-gallery-content'));
+      comp.clicked.subscribe((res: boolean) => {
+        expect(res).toBe(true);
+      });
+      overlay.nativeElement.click(); // for this scenario use the native click
     });
   });
 });

@@ -98,21 +98,21 @@ describe('GalleryComponent', () => {
       // because it will be added to the DOM only if image and image.img are valid
       expect(imgs.length).toBe(IMAGES.length);
 
-      expect(imgs[0].properties.src).toBe(IMAGES[0].img);
-      expect(imgs[0].properties.alt).toBe('');
-      expect(imgs[1].properties.src).toBe(IMAGES[1].img);
-      expect(imgs[1].properties.alt).toBe(IMAGES[1].description);
-      expect(imgs[2].properties.src).toBe(IMAGES[2].thumb);
-      expect(imgs[2].properties.alt).toBe(IMAGES[2].description);
-      expect(imgs[3].properties.src).toBe(IMAGES[3].img);
-      expect(imgs[3].properties.alt).toBe(IMAGES[3].description);
+      expect(imgs[0].properties['src']).toBe(IMAGES[0].img);
+      expect(imgs[0].properties['alt']).toBe('');
+      expect(imgs[1].properties['src']).toBe(IMAGES[1].img);
+      expect(imgs[1].properties['alt']).toBe(IMAGES[1].description);
+      expect(imgs[2].properties['src']).toBe(IMAGES[2].thumb);
+      expect(imgs[2].properties['alt']).toBe(IMAGES[2].description);
+      expect(imgs[3].properties['src']).toBe(IMAGES[3].img);
+      expect(imgs[3].properties['alt']).toBe(IMAGES[3].description);
 
-      expect(imgs[4].properties.src).toBe(IMAGES[4].thumb);
-      expect(imgs[4].properties.alt).toBe('');
-      expect(imgs[5].properties.src).toBe(IMAGES[5].img);
-      expect(imgs[5].properties.alt).toBe('');
-      expect(imgs[6].properties.src).toBe(IMAGES[6].img);
-      expect(imgs[6].properties.alt).toBe('');
+      expect(imgs[4].properties['src']).toBe(IMAGES[4].thumb);
+      expect(imgs[4].properties['alt']).toBe('');
+      expect(imgs[5].properties['src']).toBe(IMAGES[5].img);
+      expect(imgs[5].properties['alt']).toBe('');
+      expect(imgs[6].properties['src']).toBe(IMAGES[6].img);
+      expect(imgs[6].properties['alt']).toBe('');
 
       comp.show.subscribe((out: number) => {
         expect(out).toBe(0);
