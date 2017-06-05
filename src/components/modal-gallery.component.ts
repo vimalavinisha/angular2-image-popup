@@ -496,11 +496,11 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    */
   private initImages() {
     if (this.modalImages instanceof Array) {
-      this.images = this.modalImages;
+      this.images = <Array<Image>>this.modalImages;
       this.completeInitialization();
     } else {
       if (this.modalImages instanceof Observable) {
-        this.subscription = this.modalImages.subscribe((val: Array<Image>) => {
+        this.subscription = (<Observable<Array<Image>>>this.modalImages).subscribe((val: Array<Image>) => {
           this.images = val;
           this.completeInitialization();
         });
