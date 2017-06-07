@@ -58,7 +58,7 @@ describe('LazyComponent', () => {
 
       const title: DebugElement[] = element.queryAll(By.css('h1'));
       expect(title.length).toBe(1);
-      expect(title[0].nativeElement.textContent.trim()).toBe('angular-modal-gallery official webpack demo lazy page');
+      expect(title[0].nativeElement.textContent.trim()).toBe('angular-modal-gallery official webpack demo - lazy loaded page');
     });
   });
 });
