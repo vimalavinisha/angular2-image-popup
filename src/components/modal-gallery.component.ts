@@ -269,7 +269,9 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   }
 
   /**
-   * Method ´ngOnInit´ to build `configButtons` and to call `initImages()`
+   * Method ´ngOnInit´ to build `configButtons` and to call `initImages()`.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
    */
   ngOnInit() {
     // build configButtons to use it inside upper-buttons
@@ -279,18 +281,24 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
       close: (this.buttonsConfig && this.buttonsConfig.close)
     };
 
-    this.initImages();
+    // call initImages passing true as parameter, because I want to emit `hasData` event
+    this.initImages(true);
   }
 
   /**
    * Method ´ngOnChanges´ to init images preventing errors.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called before `ngOnInit()` and whenever one or more data-bound input properties change.
+   * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
    */
   ngOnChanges(changes: SimpleChanges) {
     // to prevent errors when you pass to this library
     // the array of images inside a subscribe block, in this way: `...subscribe(val => { this.images = arrayOfImages })`
     // As you can see, I'm providing examples in these situations in all official demos
     if (this.modalImages) {
-      this.initImages();
+      // I pass `false` as parameter, because I DON'T want to emit `hasData`
+      // event (preventing multiple hasData events while initializing)
+      this.initImages(false);
     }
   }
 
@@ -493,16 +501,18 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Private method ´initImages´ to initialize `images` as array of `Image` or as an Observable of `Array<Image>`.
    * Also, it will call completeInitialization.
+   * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
+   *  Use this parameter to prevent multiple `hasData` events.
    */
-  private initImages() {
+  private initImages(emitHasDataEvent: boolean = false) {
     if (this.modalImages instanceof Array) {
       this.images = <Array<Image>>this.modalImages;
-      this.completeInitialization();
+      this.completeInitialization(emitHasDataEvent);
     } else {
       if (this.modalImages instanceof Observable) {
         this.subscription = (<Observable<Array<Image>>>this.modalImages).subscribe((val: Array<Image>) => {
           this.images = val;
-          this.completeInitialization();
+          this.completeInitialization(emitHasDataEvent);
         });
       }
     }
@@ -511,9 +521,14 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Private method ´completeInitialization´ to emit ImageModalEvent to say that images are loaded. If you are
    * using imagePointer feature, it will also call showModalGallery with imagePointer as parameter.
+   * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
+   *  Use this parameter to prevent multiple `hasData` events.
    */
-  private completeInitialization() {
-    this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
+  private completeInitialization(emitHasDataEvent: boolean) {
+    if (emitHasDataEvent) {
+      // this will prevent multiple emissions if called from both ngOnInit and ngOnChanges
+      this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
+    }
     this.loading = true;
     if (this.imagePointer >= 0) {
       this.showGallery = false;
