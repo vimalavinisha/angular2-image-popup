@@ -20,9 +20,10 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/takeLast';
 
 import {
-  Action, AngularModalGalleryComponent, ButtonsConfig, Image, ImageModalEvent,
+  Action, AngularModalGalleryComponent, ButtonsConfig, Description, Image, ImageModalEvent,
   Keyboard
 } from './modal-gallery.component';
 
@@ -109,162 +110,174 @@ describe('AngularModalGalleryComponent', () => {
   it('should instantiate it', () => expect(comp).not.toBeNull());
 
   describe('---YES---', () => {
-    beforeEach(() => {
-      fixture.detectChanges();
-    });
+    beforeEach(() => fixture.detectChanges());
 
     it('should display the gallery of thumbs with a single element (Array)', () => {
       updateInputs([IMAGES[0]]);
-      comp.opened = false;
-      comp.showGallery = true;
       fixture.detectChanges();
       // gallery of thumbs is visible
       let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
       expect(imgs.length).toBe(1);
-      // modal gallery not visible
-      expect(comp.opened).toBeFalsy();
     });
 
     it('should display the gallery of thumbs with some elements (Array)', () => {
       updateInputs(IMAGES);
-      comp.opened = false;
-      comp.showGallery = true;
       fixture.detectChanges();
       // gallery of thumbs is visible
       let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
       expect(imgs.length).toBe(IMAGES.length);
-      // modal gallery not visible
-      expect(comp.opened).toBeFalsy();
     });
-
-    IMAGES.forEach((val: Image, index: number) => {
-      it(`should display the modal gallery after a click on the thumb with index=${index} (Array)`, () => {
-        updateInputs(IMAGES);
-        const element: DebugElement = fixture.debugElement;
-        comp.opened = false;
-        comp.showGallery = true;
-        fixture.detectChanges();
-        // gallery of thumbs is visible
-        let imgs: DebugElement[] = element.queryAll(By.css('img.ng-thumb'));
-        expect(imgs.length).toBe(IMAGES.length);
-        // modal gallery not visible
-        expect(comp.opened).toBeFalsy();
-        // click on a thumb to open the gallery
-        imgs[index].triggerEventHandler('click', null);
-        fixture.detectChanges();
-        // not, modal gallery should be opened
-        expect(comp.opened).toBeTruthy();
-        testArrowsVisibility();
-      });
-    });
-
 
     it('should display the gallery of thumbs with some elements (Observable)', () => {
       comp.hasData.subscribe((out: ImageModalEvent) => {
         expect(out.action).toBe(Action.LOAD);
         expect(out.result).toBeTruthy();
-        // sets modal gallery not visible
-        comp.opened = false;
-        // sets gallery of thumbs visible
-        comp.showGallery = true;
-        fixture.detectChanges();
-        expect(comp.showGallery).toBeTruthy();
-        expect(comp.opened).toBeFalsy();
-        // gallery of thumbs is visible
-        let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
-        expect(imgs.length).toBe(IMAGES.length);
       });
       updateInputs(Observable.of(IMAGES));
       fixture.detectChanges();
+      // gallery of thumbs is visible
+      let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
+      expect(imgs.length).toBe(IMAGES.length);
     });
 
+    IMAGES.forEach((val: Image, index: number) => {
+      it(`should display the modal gallery after a click on the thumb with index=${index} (Array)`, () => {
+        updateInputs(IMAGES);
+        openModalGalleryByThumbIndex(index);
+        testArrowsVisibility();
+      });
+    });
 
     it('should display the modal gallery and navigate to the first image', () => {
-      updateInputs(IMAGES);
-      const element: DebugElement = fixture.debugElement;
-      comp.opened = false;
-      comp.showGallery = true;
-      fixture.detectChanges();
-
-      comp.showModalGallery(1);
-
-      fixture.detectChanges();
-      testArrowsVisibility();
-
       // first image
       comp.firstImage.subscribe((out: ImageModalEvent) => {
         expect(out.action).toBe(Action.NORMAL);
         expect(out.result).toBeTruthy();
       });
 
-      let left: DebugElement = element.query(By.css('a.nav-left'));
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(1);
+      testArrowsVisibility();
+
+      let left: DebugElement = fixture.debugElement.query(By.css('a.nav-left'));
       left.triggerEventHandler('click', null);
       fixture.detectChanges();
     });
 
     it('should display the modal gallery and navigate to the first image from the end', () => {
-      updateInputs(IMAGES);
-      const element: DebugElement = fixture.debugElement;
-      comp.opened = false;
-      comp.showGallery = true;
-      fixture.detectChanges();
-
-      comp.showModalGallery(IMAGES.length - 1);
-
-      fixture.detectChanges();
-      testArrowsVisibility();
-
       // first image
       comp.firstImage.subscribe((out: ImageModalEvent) => {
         expect(out.action).toBe(Action.NORMAL);
         expect(out.result).toBeTruthy();
       });
 
-      let right: DebugElement = element.query(By.css('a.nav-right'));
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(IMAGES.length - 1);
+      testArrowsVisibility();
+
+      let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
       right.triggerEventHandler('click', null);
       fixture.detectChanges();
     });
 
     it('should display the modal gallery and navigate to the last image', () => {
-      updateInputs(IMAGES);
-      const element: DebugElement = fixture.debugElement;
-      comp.opened = false;
-      comp.showGallery = true;
-      fixture.detectChanges();
-
-      comp.showModalGallery(IMAGES.length - 2);
-
-      fixture.detectChanges();
-      testArrowsVisibility();
-
       // last image
       comp.lastImage.subscribe((out: ImageModalEvent) => {
         expect(out.action).toBe(Action.NORMAL);
         expect(out.result).toBeTruthy();
       });
+
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(IMAGES.length - 2);
+      testArrowsVisibility();
+
+      let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
+      right.triggerEventHandler('click', null);
+      fixture.detectChanges();
+    });
+
+    it('should display the modal gallery and navigate to the last image from the beginning', () => {
+      // last image
+      comp.lastImage.subscribe((out: ImageModalEvent) => {
+        expect(out.action).toBe(Action.NORMAL);
+        expect(out.result).toBeTruthy();
+      });
+
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(0);
+      testArrowsVisibility();
+
+      let left: DebugElement = fixture.debugElement.query(By.css('a.nav-left'));
+      left.triggerEventHandler('click', null);
+      fixture.detectChanges();
+    });
+
+
+    it('should display the modal gallery and navigate to the NEXT image (not the last one) clicking on the modal image itself', () => {
+      const element: DebugElement = fixture.debugElement;
+      const index: number = 0;
+
+      comp.hasData.subscribe((out: ImageModalEvent) => {
+        expect(out.action).toBe(Action.LOAD);
+        expect(out.result).toBeTruthy();
+      });
+
+      updateInputs(IMAGES);
+
+      // FIXME please improve this
+      comp.show.subscribe((out: ImageModalEvent) => {
+        expect((out.action === Action.LOAD) || (out.action === Action.CLICK)).toBeTruthy();
+        expect((out.result === (index + 1)) || (out.result === (index + 2))).toBeTruthy();
+      });
+
+      let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
+      expect(imgs.length).toBe(IMAGES.length);
+      imgs[index].triggerEventHandler('click', null);
+      fixture.detectChanges();
+
+      testArrowsVisibility();
+
+      let img: DebugElement = element.query(By.css('img.effect'));
+      expect(img).not.toBeUndefined();
+      img.triggerEventHandler('click', null);
+      fixture.detectChanges();
+    });
+
+    it('should display the modal gallery and navigate to the NEXT image (not the last one)', () => {
+      const element: DebugElement = fixture.debugElement;
+      let index: number = 1;
+
+      updateInputs(IMAGES);
+
+      // FIXME please improve this
+      comp.show.subscribe((out: ImageModalEvent) => {
+        expect((out.action === Action.NORMAL) || (out.action === Action.LOAD)).toBeTruthy();
+        expect((out.result === (index + 1)) || (out.result === (index + 2))).toBeTruthy();
+      });
+
+      openModalGalleryByThumbIndex(index);
+      testArrowsVisibility();
 
       let right: DebugElement = element.query(By.css('a.nav-right'));
       right.triggerEventHandler('click', null);
       fixture.detectChanges();
     });
 
-    it('should display the modal gallery and navigate to the last image from the beginning', () => {
-      updateInputs(IMAGES);
+    it('(FIXME) should display the modal gallery and navigate to the PREVIOUS image (not the first one)', () => {
       const element: DebugElement = fixture.debugElement;
-      comp.opened = false;
-      comp.showGallery = true;
-      fixture.detectChanges();
+      let index: number = 2;
 
-      comp.showModalGallery(0);
+      updateInputs(IMAGES);
 
-      fixture.detectChanges();
-      testArrowsVisibility();
-
-      // last image
-      comp.lastImage.subscribe((out: ImageModalEvent) => {
-        expect(out.action).toBe(Action.NORMAL);
-        expect(out.result).toBeTruthy();
+      comp.show.subscribe((out: ImageModalEvent) => {
+        console.log('----------', out);
+        expect((out.action === Action.NORMAL) || (out.action === Action.LOAD)).toBeTruthy();
+        // TODO FIXME - not working here. Why????
+        // expect((out.result === (3)) || (out.result === (2))).toBeTruthy();
       });
+
+      openModalGalleryByThumbIndex(index);
+      testArrowsVisibility();
 
       let left: DebugElement = element.query(By.css('a.nav-left'));
       left.triggerEventHandler('click', null);
@@ -274,42 +287,43 @@ describe('AngularModalGalleryComponent', () => {
 
     const BUTTONS: Array<ButtonsConfig> = [
       {download: false, extUrl: false, close: false},
-      // {download: false, extUrl: false, close: true},
-      // {download: false, extUrl: true, close: false},
-      // {download: false, extUrl: true, close: true},
-      // {download: true, extUrl: false, close: false},
-      // {download: true, extUrl: false, close: true},
-      // {download: true, extUrl: true, close: false},
-      // {download: true, extUrl: true, close: true},
-      // // {download: true, extUrl: true},
-      // // {download: true},
-      // // {extUrl: true},
-      // // {close: false}
+      {download: false, extUrl: false, close: true},
+      {download: false, extUrl: true, close: false},
+      {download: false, extUrl: true, close: false},
+      {download: true, extUrl: false, close: false},
+      {download: true, extUrl: false, close: true},
+      {download: true, extUrl: true, close: false},
+      {download: true, extUrl: true, close: true},
+      {download: true, extUrl: true},
+      {download: true},
+      {extUrl: true},
+      {close: false}
     ];
 
-    BUTTONS.forEach((val: ButtonsConfig, index: number) => {
-      it(`(FIXME) should display the modal gallery and check buttons visibility. Test i=${index}`, () => {
-        updateInputs(IMAGES);
-        comp.buttonsConfig = val;
-        fixture.detectChanges();
-        const element: DebugElement = fixture.debugElement;
-        comp.showModalGallery(0);
-        fixture.detectChanges();
-        testArrowsVisibility();
-        let downloadBtn: DebugElement = element.query(By.css('a.download-image'));
-        expect(downloadBtn).not.toBeUndefined();
-        expect(downloadBtn.properties.hidden).toBe(val.download === false);
-        let extUrlBtn: DebugElement = element.query(By.css('a.external-url-image'));
-        expect(extUrlBtn).not.toBeUndefined();
-        expect(extUrlBtn.properties.hidden).toBe(val.extUrl === false);
-        // let closeBtn: DebugElement = element.query(By.css('a.close-popup'));
-        // expect(closeBtn).not.toBeUndefined();
-        // expect(closeBtn.properties.hidden).toBe(val.close === false);
+    IMAGES.forEach((img: Image, imgIndex: number) => {
+      BUTTONS.forEach((btnConfig: ButtonsConfig, index: number) => {
+        it(`should display the modal gallery (image with index=${imgIndex}) and check buttons visibility. Test i=${index}`, () => {
+          const element: DebugElement = fixture.debugElement;
+          updateInputsWithButtons(IMAGES, btnConfig);
+
+          openModalGalleryByThumbIndex(imgIndex);
+          testArrowsVisibility();
+          // console.log(`Testing img`, img);
+          // console.log(`Testing btnConfig`, btnConfig);
+          let downloadBtn: DebugElement = element.query(By.css('a.download-image'));
+          expect(downloadBtn).not.toBeUndefined();
+          expect(downloadBtn.properties.hidden).toBe(btnConfig.download === false || !btnConfig.download);
+          let extUrlBtn: DebugElement = element.query(By.css('a.external-url-image'));
+          expect(extUrlBtn).not.toBeUndefined();
+          expect(extUrlBtn.properties.hidden).toBe(btnConfig.extUrl === false || !IMAGES[imgIndex].extUrl || !btnConfig.extUrl);
+          let closeBtn: DebugElement = element.query(By.css('a.close-popup'));
+          expect(closeBtn).not.toBeUndefined();
+          expect(closeBtn.properties.hidden).toBe(btnConfig.close === false);
+        });
       });
     });
 
-    it('should display the modal gallery and check for the output values', () => {
-      updateInputs(IMAGES);
+    it('should display the modal gallery and check for the loading output values', () => {
       const element: DebugElement = fixture.debugElement;
       let index: number = 0;
 
@@ -323,9 +337,8 @@ describe('AngularModalGalleryComponent', () => {
         expect(out.result).toBeTruthy();
       });
 
-      comp.showModalGallery(index);
-
-      fixture.detectChanges();
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
       testArrowsVisibility();
 
       const expectedDescription: string = `Image ${index + 1}/${IMAGES.length}` + (IMAGES[index].description ? ` - ${IMAGES[index].description}` : '');
@@ -338,47 +351,35 @@ describe('AngularModalGalleryComponent', () => {
       expect(img).not.toBeUndefined();
       expect(img.properties.src).toBe(IMAGES[index].img);
       expect(img.properties.alt).toBe(IMAGES[index].description ? IMAGES[index].description : '');
-
-      // next image, clicking on the image
-      // comp.show.subscribe((out: ImageModalEvent) => {
-      //   console.log('click out', out);
-      // //   expect(out.action).toBe(Action.CLICK);
-      // //   expect(out.result).toBe(index + 2);
-      // });
-
-      // img.triggerEventHandler('click', null);
-      // fixture.detectChanges();
-
-
-      // let loading: DebugElement = element.query(By.css('div.uil-ring-css'));
-      // expect(loading).not.toBeUndefined();
     });
 
     it('should display the modal gallery and close it with the close button', () => {
-      updateInputs(IMAGES);
-      const element: DebugElement = fixture.debugElement;
-      let index: number = 0;
-      comp.showModalGallery(index);
-      fixture.detectChanges();
-      let closeBtn: DebugElement = element.query(By.css('a.close-popup'));
-      expect(closeBtn).not.toBeUndefined();
       comp.close.subscribe((out: ImageModalEvent) => {
         expect(out.action).toBe(Action.NORMAL);
         expect(out.result).toBeTruthy();
       });
+
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(0);
+      testArrowsVisibility();
+
+      let closeBtn: DebugElement = fixture.debugElement.query(By.css('a.close-popup'));
+      expect(closeBtn).not.toBeUndefined();
       closeBtn.triggerEventHandler('click', null);
     });
 
     it('(TODO) should display the modal gallery and navigate to an external website with the extUrl button', () => {
       updateInputs(IMAGES);
       comp.buttonsConfig = {extUrl: true};
-      const element: DebugElement = fixture.debugElement;
-      let index: number = 0;
-      comp.showModalGallery(index);
       fixture.detectChanges();
-      let extUrlBtn: DebugElement = element.query(By.css('a.external-url-image'));
+      openModalGalleryByThumbIndex(0);
+      testArrowsVisibility();
+
+      let extUrlBtn: DebugElement = fixture.debugElement.query(By.css('a.external-url-image'));
       expect(extUrlBtn).not.toBeUndefined();
       // TODO find a way to test this scenario
+      // at the moment angular-modal-gallery isn't emitting a Download event,
+      // so I have to intercept the download operation performed by the browser (???)
       extUrlBtn.triggerEventHandler('click', null);
     });
 
@@ -386,27 +387,28 @@ describe('AngularModalGalleryComponent', () => {
       updateInputs(IMAGES);
       comp.downloadable = true;
       comp.buttonsConfig = {download: true};
-      const element: DebugElement = fixture.debugElement;
-      let index: number = 0;
-      comp.showModalGallery(index);
       fixture.detectChanges();
-      let downloadBtn: DebugElement = element.query(By.css('a.download-image'));
+      openModalGalleryByThumbIndex(0);
+      testArrowsVisibility();
+
+      let downloadBtn: DebugElement = fixture.debugElement.query(By.css('a.download-image'));
       expect(downloadBtn).not.toBeUndefined();
       // TODO find a way to test this scenario
+      // at the moment angular-modal-gallery isn't emitting a Download event,
+      // so I have to intercept the download operation performed by the browser (???)
       downloadBtn.triggerEventHandler('click', null);
     });
 
     IMAGES.forEach((val: Image, index: number) => {
       it(`should display the modal gallery and check for the DEFAULT description. Test i=${index}`, () => {
         updateInputs(IMAGES);
-        const element: DebugElement = fixture.debugElement;
-        comp.showModalGallery(index);
-        fixture.detectChanges();
+        openModalGalleryByThumbIndex(index);
         testArrowsVisibility();
+
         const expectedDescription: string = `Image ${index + 1}/${IMAGES.length}` + (IMAGES[index].description ? ` - ${IMAGES[index].description}` : '');
-        let infoText: DebugElement = element.query(By.css('span.info-text'));
+        let infoText: DebugElement = fixture.debugElement.query(By.css('span.info-text'));
         expect(infoText.nativeElement.textContent).toBe(expectedDescription);
-        let img: DebugElement = element.query(By.css('img.effect'));
+        let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
         expect(img.properties.src).toBe(IMAGES[index].img);
         expect(img.properties.alt).toBe(IMAGES[index].description ? IMAGES[index].description : '');
@@ -415,21 +417,23 @@ describe('AngularModalGalleryComponent', () => {
 
     IMAGES.forEach((val: Image, index: number) => {
       it(`should display the modal gallery and check for the CUSTOM description. Test i=${index}`, () => {
-        updateInputs(IMAGES);
         const customDesc =  {
           imageText: 'Look this image ',
           numberSeparator: ' of ',
           beforeTextDescription: ' => '
         };
         comp.description = customDesc;
-        const element: DebugElement = fixture.debugElement;
-        comp.showModalGallery(index);
-        fixture.detectChanges();
+
+        updateInputs(IMAGES);
+        openModalGalleryByThumbIndex(index);
         testArrowsVisibility();
-        const expectedDescription: string = `${customDesc.imageText}${index + 1}${customDesc.numberSeparator}${IMAGES.length}` + (IMAGES[index].description ? `${customDesc.beforeTextDescription}${IMAGES[index].description}` : '');
-        let infoText: DebugElement = element.query(By.css('span.info-text'));
+
+        const expectedDescription: string = `${customDesc.imageText}${index + 1}${customDesc.numberSeparator}${IMAGES.length}` +
+          (IMAGES[index].description ? `${customDesc.beforeTextDescription}${IMAGES[index].description}` : '');
+
+        let infoText: DebugElement = fixture.debugElement.query(By.css('span.info-text'));
         expect(infoText.nativeElement.textContent).toBe(expectedDescription);
-        let img: DebugElement = element.query(By.css('img.effect'));
+        let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
         expect(img.properties.src).toBe(IMAGES[index].img);
         expect(img.properties.alt).toBe(IMAGES[index].description ? IMAGES[index].description : '');
@@ -437,32 +441,30 @@ describe('AngularModalGalleryComponent', () => {
     });
 
     it(`should display the modal gallery and check for the FULL-CUSTOM description. It's the same for all input images`, () => {
-      updateInputs(IMAGES);
       const fullCustomDesc = 'Custom description of the current visible image';
       comp.description = {customFullDescription: fullCustomDesc};
-      const element: DebugElement = fixture.debugElement;
-      comp.showModalGallery(0);
-      fixture.detectChanges();
+
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(0);
       testArrowsVisibility();
-      let infoText: DebugElement = element.query(By.css('span.info-text'));
+
+      let infoText: DebugElement = fixture.debugElement.query(By.css('span.info-text'));
       expect(infoText.nativeElement.textContent).toBe(fullCustomDesc);
-      let img: DebugElement = element.query(By.css('img.effect'));
+      let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
       expect(img.properties.src).toBe(IMAGES[0].img);
       expect(img.properties.alt).toBe(IMAGES[0].description ? IMAGES[0].description : '');
     });
 
     it('should display the modal gallery and close it with the clickOutside feature', () => {
-      updateInputs(IMAGES);
       comp.enableCloseOutside = true;
-      fixture.detectChanges();
-      const element: DebugElement = fixture.debugElement;
-      comp.showModalGallery(0);
-      fixture.detectChanges();
+
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(0);
       testArrowsVisibility();
-      let galleryContent: DebugElement = element.query(By.css('#ng-gallery-content'));
+
+      let galleryContent: DebugElement = fixture.debugElement.query(By.css('#ng-gallery-content'));
       expect(galleryContent).not.toBeUndefined();
-      fixture.detectChanges();
 
       // clicks 'outside' to close modal gallery
       let overlay: DebugElement = fixture.debugElement.query(By.css('div#ng-gallery-content.ng-gallery-content'));
@@ -474,38 +476,40 @@ describe('AngularModalGalleryComponent', () => {
     });
 
 
-    it('(TODO - WIP) should display the modal gallery and navigate to the next image with keyboard', () => {
-      updateInputs(IMAGES);
-      const element: DebugElement = fixture.debugElement;
-      comp.showGallery = true;
-      fixture.detectChanges();
+  //   it('(TODO - WIP) should display the modal gallery and navigate to the next image with keyboard', () => {
+  //     updateInputs(IMAGES);
+  //     const element: DebugElement = fixture.debugElement;
+  //     comp.showGallery = true;
+  //     fixture.detectChanges();
+  //
+  //     comp.showModalGallery(0);
+  //
+  //     fixture.detectChanges();
+  //     testArrowsVisibility();
+  //
+  //     fixture.detectChanges();
+  //     comp.opened = true;
+  //
+  //
+  //     let img: DebugElement = element.query(By.css('img'));
+  //     // const event = new KeyboardEvent('keypress', {
+  //     //   code: Keyboard.RIGHT_ARROW + ''
+  //     // });
+  //     img.triggerEventHandler('keydown', {
+  //       code: Keyboard.RIGHT_ARROW + '',
+  //       keyCode: Keyboard.RIGHT_ARROW
+  //     });
+  //
+  //     // let left: DebugElement = element.query(By.css('a.nav-left'));
+  //     // left.triggerEventHandler('click', null);
+  //     // fixture.detectChanges();
+  //   });
+  //
 
-      comp.showModalGallery(0);
 
-      fixture.detectChanges();
-      testArrowsVisibility();
-
-      fixture.detectChanges();
-      comp.opened = true;
-
-
-      let img: DebugElement = element.query(By.css('img'));
-      // const event = new KeyboardEvent('keypress', {
-      //   code: Keyboard.RIGHT_ARROW + ''
-      // });
-      img.triggerEventHandler('keydown', {
-        code: Keyboard.RIGHT_ARROW + '',
-        keyCode: Keyboard.RIGHT_ARROW
-      });
-
-      // let left: DebugElement = element.query(By.css('a.nav-left'));
-      // left.triggerEventHandler('click', null);
-      // fixture.detectChanges();
-    });
-
-    // This feature will be deprecated, so don't loose your time with this test
+    // TODO This feature will be deprecated ad removed sooner or later, so don't loose your time with this test
     IMAGES.forEach((val: Image, index: number) => {
-      it(`should display the modal gallery after a click on the item with index=${index} of the thumbs gallery with IMAGE POINTER (Array)`, () => {
+      it(`(to deprecate) should display the modal gallery after a click on the item with index=${index} of the thumbs gallery with IMAGE POINTER (Array)`, () => {
         comp.show.subscribe((out: ImageModalEvent) => {
           console.log('show', out);
           expect(out.action).toBe(Action.LOAD);
@@ -517,9 +521,10 @@ describe('AngularModalGalleryComponent', () => {
 
           // FIXME these should be 0. It's correct to see all images instead of the '+' button
           // because I'm testing only this component, and the '+' button in defined by users outside (in their templates).
-          // So this library will add all elements, but their will be not visible
-          let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
-          expect(imgs.length).toBe(IMAGES.length);
+          // So this library will add all elements, but their will be not visible.
+          // To do this test, I should use a Test component to include the library, but it's not really important
+          // let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
+          // expect(imgs.length).toBe(IMAGES.length);
 
           fixture.detectChanges();
           testArrowsVisibility();
@@ -542,14 +547,9 @@ describe('AngularModalGalleryComponent', () => {
 
     it('should display the gallery without thumbs', () => {
       updateInputs([]);
-      comp.opened = false;
-      comp.showGallery = true;
-      fixture.detectChanges();
       // gallery of thumbs is visible
       let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
       expect(imgs.length).toBe(0);
-      // modal gallery not visible
-      expect(comp.opened).toBeFalsy();
     });
 
     it('(TODO) should display the modal gallery, but it CANNOT download the current image with the download button', () => {
@@ -557,9 +557,9 @@ describe('AngularModalGalleryComponent', () => {
       updateInputs(IMAGES);
       comp.downloadable = true;
       comp.buttonsConfig = {download: false};
-      let index: number = 0;
-      comp.showModalGallery(index);
       fixture.detectChanges();
+      openModalGalleryByThumbIndex(0);
+      testArrowsVisibility();
       // let downloadBtn: DebugElement = fixture.debugElement.query(By.css('a.download-image'));
       // expect(downloadBtn).not.toBeUndefined();
       // TODO find a way to test this scenario
@@ -570,21 +570,23 @@ describe('AngularModalGalleryComponent', () => {
       updateInputs(IMAGES);
       comp.downloadable = false;
       comp.buttonsConfig = {download: true};
-      const element: DebugElement = fixture.debugElement;
-      let index: number = 0;
-      comp.showModalGallery(index);
       fixture.detectChanges();
-      let downloadBtn: DebugElement = element.query(By.css('a.download-image'));
-      expect(downloadBtn).not.toBeUndefined();
-      // TODO find a way to test this scenario
-      downloadBtn.triggerEventHandler('click', null);
+      openModalGalleryByThumbIndex(0);
+      testArrowsVisibility();
+      // let downloadBtn: DebugElement = fixture.debugElement.query(By.css('a.download-image'));
+      // expect(downloadBtn).not.toBeUndefined();
+      // // TODO find a way to test this scenario
+      // downloadBtn.triggerEventHandler('click', null);
     });
-
-
   });
-
 });
 
+function openModalGalleryByThumbIndex(index: number = 0) {
+  let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
+  expect(imgs.length).toBe(IMAGES.length);
+  imgs[index].triggerEventHandler('click', null);
+  fixture.detectChanges();
+}
 
 function testArrowsVisibility() {
   let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
@@ -599,4 +601,13 @@ function updateInputs(images: Array<Image> | Observable<Array<Image>>) {
   fixture.detectChanges();
   comp.ngOnInit();
   fixture.detectChanges();
+}
+
+function updateInputsWithButtons(images: Array<Image> | Observable<Array<Image>>, buttonConfig: ButtonsConfig) {
+  // init these before updateInputs(IMAGES);
+  comp.downloadable = true;
+  comp.buttonsConfig = buttonConfig;
+  fixture.detectChanges();
+  // now call updateInputs (remember to init `buttonsConfig`)
+  updateInputs(images);
 }

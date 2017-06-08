@@ -398,8 +398,8 @@ export class AppComponent implements OnDestroy {
 
   onVisibleIndex(event: ImageModalEvent) {
     this.customFullDescription.customFullDescription = `Custom description of visible image with index= ${event.result}`;
-    console.log('action: ' + Action[event.action]);
-    console.log('result:' + event.result);
+    console.log('onVisibleIndex action: ' + Action[event.action]);
+    console.log('onVisibleIndex result:' + event.result);
   }
 
   onIsFirstImage(event: ImageModalEvent) {
