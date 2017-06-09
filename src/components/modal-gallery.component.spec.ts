@@ -213,7 +213,7 @@ describe('AngularModalGalleryComponent', () => {
     });
 
 
-    it('should display the modal gallery and navigate to the NEXT image (not the last one) clicking on the modal image itself', () => {
+    it('should display the modal gallery and navigate to the NEXT image (not the last one) clicking on the modal image', () => {
       const element: DebugElement = fixture.debugElement;
       const index: number = 0;
 
@@ -224,10 +224,15 @@ describe('AngularModalGalleryComponent', () => {
 
       updateInputs(IMAGES);
 
-      // FIXME please improve this
       comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
         expect((out.action === Action.LOAD) || (out.action === Action.CLICK)).toBeTruthy();
-        expect((out.result === (index + 1)) || (out.result === (index + 2))).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
       });
 
       let imgs: DebugElement[] = fixture.debugElement.queryAll(By.css('img.ng-thumb'));
@@ -249,13 +254,19 @@ describe('AngularModalGalleryComponent', () => {
 
       updateInputs(IMAGES);
 
-      // FIXME please improve this
       comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
         expect((out.action === Action.NORMAL) || (out.action === Action.LOAD)).toBeTruthy();
-        expect((out.result === (index + 1)) || (out.result === (index + 2))).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
       });
 
       openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
       testArrowsVisibility();
 
       let right: DebugElement = element.query(By.css('a.nav-right'));
@@ -263,27 +274,31 @@ describe('AngularModalGalleryComponent', () => {
       fixture.detectChanges();
     });
 
-    it('(FIXME) should display the modal gallery and navigate to the PREVIOUS image (not the first one)', () => {
+    it('(FIXME - brroken)should display the modal gallery and navigate to the PREVIOUS image (not the first one)', () => {
       const element: DebugElement = fixture.debugElement;
-      let index: number = 2;
+      let index: number = 1;
 
       updateInputs(IMAGES);
 
-      comp.show.subscribe((out: ImageModalEvent) => {
-        console.log('----------', out);
-        expect((out.action === Action.NORMAL) || (out.action === Action.LOAD)).toBeTruthy();
-        // TODO FIXME - not working here. Why????
-        // expect((out.result === (3)) || (out.result === (2))).toBeTruthy();
-      });
-
       openModalGalleryByThumbIndex(index);
       testArrowsVisibility();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        console.log('-----------------', out);
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber - 1 is the previous image index (because in this test I navigate to the previous image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.NORMAL) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        // expect((out.result === (imageNumber) || (out.result === (imageNumber - 1)))).toBeTruthy();
+      });
 
       let left: DebugElement = element.query(By.css('a.nav-left'));
       left.triggerEventHandler('click', null);
       fixture.detectChanges();
     });
-
 
     const BUTTONS: Array<ButtonsConfig> = [
       {download: false, extUrl: false, close: false},
@@ -511,7 +526,6 @@ describe('AngularModalGalleryComponent', () => {
     IMAGES.forEach((val: Image, index: number) => {
       it(`(to deprecate) should display the modal gallery after a click on the item with index=${index} of the thumbs gallery with IMAGE POINTER (Array)`, () => {
         comp.show.subscribe((out: ImageModalEvent) => {
-          console.log('show', out);
           expect(out.action).toBe(Action.LOAD);
           expect(out.result).toBe(comp.imagePointer + 1);
 
