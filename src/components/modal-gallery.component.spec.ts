@@ -284,7 +284,6 @@ describe('AngularModalGalleryComponent', () => {
       testArrowsVisibility();
 
       comp.show.subscribe((out: ImageModalEvent) => {
-        console.log('-----------------', out);
         // out contains the result, i.e. image number and not the image index.
         // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
         // imageNumber is the clicked image number (not index (0...), but number (1...)),
@@ -292,7 +291,7 @@ describe('AngularModalGalleryComponent', () => {
         const imageNumber: number = index + 1;
         expect((out.action === Action.NORMAL) || (out.action === Action.LOAD)).toBeTruthy();
         // FIXME please improve this
-        // expect((out.result === (imageNumber) || (out.result === (imageNumber - 1)))).toBeTruthy();
+        expect((out.result === (imageNumber) || (out.result === (imageNumber - 1)))).toBeTruthy();
       });
 
       let left: DebugElement = element.query(By.css('a.nav-left'));
@@ -491,35 +490,63 @@ describe('AngularModalGalleryComponent', () => {
     });
 
 
-  //   it('(TODO - WIP) should display the modal gallery and navigate to the next image with keyboard', () => {
-  //     updateInputs(IMAGES);
-  //     const element: DebugElement = fixture.debugElement;
-  //     comp.showGallery = true;
-  //     fixture.detectChanges();
-  //
-  //     comp.showModalGallery(0);
-  //
-  //     fixture.detectChanges();
-  //     testArrowsVisibility();
-  //
-  //     fixture.detectChanges();
-  //     comp.opened = true;
-  //
-  //
-  //     let img: DebugElement = element.query(By.css('img'));
-  //     // const event = new KeyboardEvent('keypress', {
-  //     //   code: Keyboard.RIGHT_ARROW + ''
-  //     // });
-  //     img.triggerEventHandler('keydown', {
-  //       code: Keyboard.RIGHT_ARROW + '',
-  //       keyCode: Keyboard.RIGHT_ARROW
-  //     });
-  //
-  //     // let left: DebugElement = element.query(By.css('a.nav-left'));
-  //     // left.triggerEventHandler('click', null);
-  //     // fixture.detectChanges();
-  //   });
-  //
+    it('should display the modal gallery and navigate to the next image with KEYBOARD', () => {
+      const element: DebugElement = fixture.debugElement;
+      let index: number = 0;
+
+      updateInputs(IMAGES);
+
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.KEYBOARD) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = Keyboard.RIGHT_ARROW;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
+    it('should display the modal gallery and navigate to the previous image with KEYBOARD', () => {
+      let index: number = 1;
+
+      updateInputs(IMAGES);
+
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.KEYBOARD) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber - 1)))).toBeTruthy();
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = Keyboard.LEFT_ARROW;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
 
 
     // TODO This feature will be deprecated ad removed sooner or later, so don't loose your time with this test
