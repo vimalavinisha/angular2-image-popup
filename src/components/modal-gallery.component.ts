@@ -464,12 +464,12 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
       newIndex = 0; // start from the first index
     }
 
+
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(action, newIndex);
 
     // emit current visible image index
-    this.show.emit(new ImageModalEvent(action, newIndex));
-
+    this.show.emit(new ImageModalEvent(action, currentIndex + 1));
     return newIndex;
   }
 
@@ -488,12 +488,12 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
       newIndex = this.images.length - 1; // start from the last index
     }
 
+
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(action, newIndex);
 
     // emit current visible image index
-    this.show.emit(new ImageModalEvent(action, newIndex));
-
+    this.show.emit(new ImageModalEvent(action, currentIndex + 1));
     return newIndex;
   }
 
