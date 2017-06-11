@@ -22,7 +22,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
-**It is require Internet Explorer 11 or greater**
+**angular-modal-gallery requires Internet Explorer 11 or greater**
 
 
 ## **Official live DEMO + DOCUMENTATION**
