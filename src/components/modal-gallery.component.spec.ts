@@ -326,13 +326,13 @@ describe('AngularModalGalleryComponent', () => {
           // console.log(`Testing btnConfig`, btnConfig);
           let downloadBtn: DebugElement = element.query(By.css('a.download-image'));
           expect(downloadBtn).not.toBeUndefined();
-          expect(downloadBtn.properties.hidden).toBe(btnConfig.download === false || !btnConfig.download);
+          expect(downloadBtn.properties['hidden']).toBe(btnConfig.download === false || !btnConfig.download);
           let extUrlBtn: DebugElement = element.query(By.css('a.external-url-image'));
           expect(extUrlBtn).not.toBeUndefined();
-          expect(extUrlBtn.properties.hidden).toBe(btnConfig.extUrl === false || !IMAGES[imgIndex].extUrl || !btnConfig.extUrl);
+          expect(extUrlBtn.properties['hidden']).toBe(btnConfig.extUrl === false || !IMAGES[imgIndex].extUrl || !btnConfig.extUrl);
           let closeBtn: DebugElement = element.query(By.css('a.close-popup'));
           expect(closeBtn).not.toBeUndefined();
-          expect(closeBtn.properties.hidden).toBe(btnConfig.close === false);
+          expect(closeBtn.properties['hidden']).toBe(btnConfig.close === false);
         });
       });
     });
@@ -363,8 +363,8 @@ describe('AngularModalGalleryComponent', () => {
       expect(galleryContent).not.toBeUndefined();
       let img: DebugElement = element.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
-      expect(img.properties.src).toBe(IMAGES[index].img);
-      expect(img.properties.alt).toBe(IMAGES[index].description ? IMAGES[index].description : '');
+      expect(img.properties['src']).toBe(IMAGES[index].img);
+      expect(img.properties['alt']).toBe(IMAGES[index].description ? IMAGES[index].description : '');
     });
 
     it('should display the modal gallery and close it with the close button', () => {
@@ -424,8 +424,8 @@ describe('AngularModalGalleryComponent', () => {
         expect(infoText.nativeElement.textContent).toBe(expectedDescription);
         let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
-        expect(img.properties.src).toBe(IMAGES[index].img);
-        expect(img.properties.alt).toBe(IMAGES[index].description ? IMAGES[index].description : '');
+        expect(img.properties['src']).toBe(IMAGES[index].img);
+        expect(img.properties['alt']).toBe(IMAGES[index].description ? IMAGES[index].description : '');
       });
     });
 
@@ -449,8 +449,8 @@ describe('AngularModalGalleryComponent', () => {
         expect(infoText.nativeElement.textContent).toBe(expectedDescription);
         let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
-        expect(img.properties.src).toBe(IMAGES[index].img);
-        expect(img.properties.alt).toBe(IMAGES[index].description ? IMAGES[index].description : '');
+        expect(img.properties['src']).toBe(IMAGES[index].img);
+        expect(img.properties['alt']).toBe(IMAGES[index].description ? IMAGES[index].description : '');
       });
     });
 
@@ -466,8 +466,8 @@ describe('AngularModalGalleryComponent', () => {
       expect(infoText.nativeElement.textContent).toBe(fullCustomDesc);
       let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
-      expect(img.properties.src).toBe(IMAGES[0].img);
-      expect(img.properties.alt).toBe(IMAGES[0].description ? IMAGES[0].description : '');
+      expect(img.properties['src']).toBe(IMAGES[0].img);
+      expect(img.properties['alt']).toBe(IMAGES[0].description ? IMAGES[0].description : '');
     });
 
     it('should display the modal gallery and close it with the clickOutside feature', () => {
@@ -509,8 +509,8 @@ describe('AngularModalGalleryComponent', () => {
         expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
       });
 
-      let event = document.createEvent('Event');
-      event.keyCode = Keyboard.RIGHT_ARROW;
+      let event: Event = document.createEvent('Event');
+      event['keyCode'] = Keyboard.RIGHT_ARROW;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -540,7 +540,7 @@ describe('AngularModalGalleryComponent', () => {
       });
 
       let event = document.createEvent('Event');
-      event.keyCode = rightArrowKey;
+      event['keyCode'] = rightArrowKey;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -566,7 +566,7 @@ describe('AngularModalGalleryComponent', () => {
       });
 
       let event = document.createEvent('Event');
-      event.keyCode = Keyboard.LEFT_ARROW;
+      event['keyCode'] = Keyboard.LEFT_ARROW;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -594,7 +594,7 @@ describe('AngularModalGalleryComponent', () => {
       });
 
       let event = document.createEvent('Event');
-      event.keyCode = leftArrowKey;
+      event['keyCode'] = leftArrowKey;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -614,7 +614,7 @@ describe('AngularModalGalleryComponent', () => {
       });
 
       let event = document.createEvent('Event');
-      event.keyCode = Keyboard.ESC;
+      event['keyCode'] = Keyboard.ESC;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -636,7 +636,7 @@ describe('AngularModalGalleryComponent', () => {
       });
 
       let event = document.createEvent('Event');
-      event.keyCode = qKey;
+      event['keyCode'] = qKey;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -706,7 +706,7 @@ describe('AngularModalGalleryComponent', () => {
       });
 
       let event = document.createEvent('Event');
-      event.keyCode = Keyboard.ESC;
+      event['keyCode'] = Keyboard.ESC;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -748,10 +748,10 @@ function openModalGalleryByThumbIndex(index: number = 0) {
 
 function testArrowsVisibility() {
   let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
-  expect(right.children[0].attributes.class).toBe('fa fa-angle-right');
+  expect(right.children[0].attributes['class']).toBe('fa fa-angle-right');
 
   let left: DebugElement = fixture.debugElement.query(By.css('a.nav-left'));
-  expect(left.children[0].attributes.class).toBe('fa fa-angle-left');
+  expect(left.children[0].attributes['class']).toBe('fa fa-angle-left');
 }
 
 function updateInputs(images: Array<Image> | Observable<Array<Image>>) {

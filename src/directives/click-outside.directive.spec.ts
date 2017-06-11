@@ -96,7 +96,7 @@ describe('ClickOutsideDirective', () => {
 
       let clickOutsideDirective: DebugElement = fixture.debugElement.query(By.directive(ClickOutsideDirective));
       expect(clickOutsideDirective.name).toBe('div');
-      expect(clickOutsideDirective.attributes.class).toBe('ng-gallery-content');
+      expect(clickOutsideDirective.attributes['class']).toBe('ng-gallery-content');
       expect(clickOutsideDirective.attributes['click-outside']).toBe('');
 
       fixture.detectChanges();

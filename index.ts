@@ -27,6 +27,9 @@ import { AngularModalGalleryModule } from './src/modal-gallery.module';
 
 export { Image, ImageModalEvent, Action, Description, ButtonsConfig, KeyboardConfig } from './src/components/modal-gallery.component';
 
+/**
+ * Exported Main Module without `forRoot`.
+ */
 @NgModule({
   imports: [
     AngularModalGalleryModule.forRoot()
@@ -38,6 +41,9 @@ export { Image, ImageModalEvent, Action, Description, ButtonsConfig, KeyboardCon
 export class AngularRootModalGalleryModule {
 }
 
+/**
+ * Exported Main Module with `forRoot`.
+ */
 @NgModule({
   imports: [
     AngularModalGalleryModule

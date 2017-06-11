@@ -124,11 +124,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const downloadBtnI: DebugElement = element.query(By.css('.download-image i'));
-        expect(downloadBtnI.attributes.class).toBe('fa fa-download');
+        expect(downloadBtnI.attributes['class']).toBe('fa fa-download');
         const downloadBtnDirective: DebugElement = element.query(By.directive(DownloadButtonDirective));
         expect(downloadBtnDirective.name).toBe('a');
-        expect(downloadBtnDirective.properties.hidden).toBe(false);
-        expect(downloadBtnDirective.attributes.class).toBe('download-image');
+        expect(downloadBtnDirective.properties['hidden']).toBe(false);
+        expect(downloadBtnDirective.attributes['class']).toBe('download-image');
         expect(downloadBtnDirective.attributes['download-button']).toBe('');
 
         comp.download.subscribe((res: boolean) => {
@@ -146,11 +146,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const extUrlBtnI: DebugElement = element.query(By.css('.external-url-image i'));
-        expect(extUrlBtnI.attributes.class).toBe('fa fa-external-link');
+        expect(extUrlBtnI.attributes['class']).toBe('fa fa-external-link');
         const extUrlBtnDirective: DebugElement = element.query(By.directive(ExternalUrlButtonDirective));
         expect(extUrlBtnDirective.name).toBe('a');
-        expect(extUrlBtnDirective.properties.hidden).toBe(false);
-        expect(extUrlBtnDirective.attributes.class).toBe('external-url-image');
+        expect(extUrlBtnDirective.properties['hidden']).toBe(false);
+        expect(extUrlBtnDirective.attributes['class']).toBe('external-url-image');
         expect(extUrlBtnDirective.attributes['exturl-button']).toBe('');
 
         comp.download.subscribe((res: boolean) => {
@@ -168,11 +168,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
-        expect(closeBtnI.attributes.class).toBe('fa fa-close');
+        expect(closeBtnI.attributes['class']).toBe('fa fa-close');
         const closeBtnDirective: DebugElement = element.query(By.directive(CloseButtonDirective));
         expect(closeBtnDirective.name).toBe('a');
-        expect(closeBtnDirective.properties.hidden).toBe(false);
-        expect(closeBtnDirective.attributes.class).toBe('close-popup');
+        expect(closeBtnDirective.properties['hidden']).toBe(false);
+        expect(closeBtnDirective.attributes['class']).toBe('close-popup');
         expect(closeBtnDirective.attributes['close-button']).toBe('');
 
         comp.close.subscribe((res: boolean) => {
@@ -193,11 +193,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_NO_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const downloadBtnI: DebugElement = element.query(By.css('.download-image i'));
-        expect(downloadBtnI.attributes.class).toBe('fa fa-download');
+        expect(downloadBtnI.attributes['class']).toBe('fa fa-download');
         const downloadBtnDirective: DebugElement = element.query(By.directive(DownloadButtonDirective));
         expect(downloadBtnDirective.name).toBe('a');
-        expect(downloadBtnDirective.properties.hidden).toBe(false);
-        expect(downloadBtnDirective.attributes.class).toBe('download-image');
+        expect(downloadBtnDirective.properties['hidden']).toBe(false);
+        expect(downloadBtnDirective.attributes['class']).toBe('download-image');
         expect(downloadBtnDirective.attributes['download-button']).toBe('');
       });
     });
@@ -207,11 +207,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const downloadBtnI: DebugElement = element.query(By.css('.download-image i'));
-        expect(downloadBtnI.attributes.class).toBe('fa fa-download');
+        expect(downloadBtnI.attributes['class']).toBe('fa fa-download');
         const downloadBtnDirective: DebugElement = element.query(By.directive(DownloadButtonDirective));
         expect(downloadBtnDirective.name).toBe('a');
-        expect(downloadBtnDirective.properties.hidden).toBe(true);
-        expect(downloadBtnDirective.attributes.class).toBe('download-image');
+        expect(downloadBtnDirective.properties['hidden']).toBe(true);
+        expect(downloadBtnDirective.attributes['class']).toBe('download-image');
         expect(downloadBtnDirective.attributes['download-button']).toBe('');
       });
     });
@@ -221,11 +221,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_NO_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const extUrlBtnI: DebugElement = element.query(By.css('.external-url-image i'));
-        expect(extUrlBtnI.attributes.class).toBe('fa fa-external-link');
+        expect(extUrlBtnI.attributes['class']).toBe('fa fa-external-link');
         const extUrlBtnDirective: DebugElement = element.query(By.directive(ExternalUrlButtonDirective));
         expect(extUrlBtnDirective.name).toBe('a');
-        expect(extUrlBtnDirective.properties.hidden).toBe(true);
-        expect(extUrlBtnDirective.attributes.class).toBe('external-url-image');
+        expect(extUrlBtnDirective.properties['hidden']).toBe(true);
+        expect(extUrlBtnDirective.attributes['class']).toBe('external-url-image');
         expect(extUrlBtnDirective.attributes['exturl-button']).toBe('');
       });
     });
@@ -235,11 +235,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const extUrlBtnI: DebugElement = element.query(By.css('.external-url-image i'));
-        expect(extUrlBtnI.attributes.class).toBe('fa fa-external-link');
+        expect(extUrlBtnI.attributes['class']).toBe('fa fa-external-link');
         const extUrlBtnDirective: DebugElement = element.query(By.directive(ExternalUrlButtonDirective));
         expect(extUrlBtnDirective.name).toBe('a');
-        expect(extUrlBtnDirective.properties.hidden).toBe(true);
-        expect(extUrlBtnDirective.attributes.class).toBe('external-url-image');
+        expect(extUrlBtnDirective.properties['hidden']).toBe(true);
+        expect(extUrlBtnDirective.attributes['class']).toBe('external-url-image');
         expect(extUrlBtnDirective.attributes['exturl-button']).toBe('');
       });
     });
@@ -249,11 +249,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
-        expect(closeBtnI.attributes.class).toBe('fa fa-close');
+        expect(closeBtnI.attributes['class']).toBe('fa fa-close');
         const closeBtnDirective: DebugElement = element.query(By.directive(CloseButtonDirective));
         expect(closeBtnDirective.name).toBe('a');
-        expect(closeBtnDirective.properties.hidden).toBe(true);
-        expect(closeBtnDirective.attributes.class).toBe('close-popup');
+        expect(closeBtnDirective.properties['hidden']).toBe(true);
+        expect(closeBtnDirective.attributes['class']).toBe('close-popup');
         expect(closeBtnDirective.attributes['close-button']).toBe('');
       });
     });
@@ -263,11 +263,11 @@ describe('UpperButtonsComponent', () => {
         updateInputs(IMAGE_NO_EXTURL, val);
         const element: DebugElement = fixture.debugElement;
         const closeBtnI: DebugElement = element.query(By.css('.close-popup i'));
-        expect(closeBtnI.attributes.class).toBe('fa fa-close');
+        expect(closeBtnI.attributes['class']).toBe('fa fa-close');
         const closeBtnDirective: DebugElement = element.query(By.directive(CloseButtonDirective));
         expect(closeBtnDirective.name).toBe('a');
-        expect(closeBtnDirective.properties.hidden).toBe(false);
-        expect(closeBtnDirective.attributes.class).toBe('close-popup');
+        expect(closeBtnDirective.properties['hidden']).toBe(false);
+        expect(closeBtnDirective.attributes['class']).toBe('close-popup');
         expect(closeBtnDirective.attributes['close-button']).toBe('');
       });
     });
@@ -286,11 +286,11 @@ describe('UpperButtonsComponent', () => {
         const exturlBtnDirective: DebugElement = element.query(By.directive(ExternalUrlButtonDirective));
         const closeBtnDirective: DebugElement = element.query(By.directive(CloseButtonDirective));
 
-        expect(downloadBtnDirective.properties.hidden).toBe(true);
-        expect(exturlBtnDirective.properties.hidden).toBe(true);
+        expect(downloadBtnDirective.properties['hidden']).toBe(true);
+        expect(exturlBtnDirective.properties['hidden']).toBe(true);
         // how to check for undefined?
-        // expect(closeBtnDirective.properties.hidden).toBe(undefined);
-        // expect(closeBtnDirective.properties.hidden).toBeUndefined();
+        // expect(closeBtnDirective.properties['hidden']).toBe(undefined);
+        // expect(closeBtnDirective.properties['hidden']).toBeUndefined();
       });
     });
 
@@ -301,9 +301,9 @@ describe('UpperButtonsComponent', () => {
       const exturlBtnDirective: DebugElement = element.query(By.directive(ExternalUrlButtonDirective));
       const closeBtnDirective: DebugElement = element.query(By.directive(CloseButtonDirective));
 
-      expect(downloadBtnDirective.properties.hidden).toBe(true);
-      expect(exturlBtnDirective.properties.hidden).toBe(true);
-      expect(closeBtnDirective.properties.hidden).toBe(false);
+      expect(downloadBtnDirective.properties['hidden']).toBe(true);
+      expect(exturlBtnDirective.properties['hidden']).toBe(true);
+      expect(closeBtnDirective.properties['hidden']).toBe(false);
     });
   });
 });
