@@ -144,6 +144,7 @@ build_script:
   - cd demo/angular-cli
   - npm run build
   # - npm test # TODO
+  - cd ../..
 
 
 #---------------------------------#
