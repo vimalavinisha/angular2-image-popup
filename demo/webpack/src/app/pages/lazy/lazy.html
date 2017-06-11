@@ -4,37 +4,14 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h1>angular-modal-gallery official webpack demo - lazy loaded page</h1>
         <hr>
-        <p>If you want, you can also <b>add a random image</b> to every example  <button class="btn btn-primary" (click)="addRandomImage()">Add image</button></p>
+        <p>If you want, you can also <b>add a random image</b> to every example
+          <button class="btn btn-primary" (click)="addRandomImage()">Add image</button>
+        </p>
         <br>
         <hr>
         <p class="red-text center-text"><b>--- Only from version 3.1.x or greater ---</b></p>
         <section id="Images31-1">
-          <h3>1 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig'</span></h3>
-          <p>modalGallery with</p>
-          <ul>
-            <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
-            <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
-            <li><b>download button visible</b> because, <u class="red-text">buttonsConfig.download = true</u> and downloadable is also = true</li>
-            <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
-            <li><b>custom keyboard's config</b> because, <u class="red-text">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow up' (38)</u></li>
-            <li><b>NO close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is false</li>
-            <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
-            <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
-          </ul>
-          <br>
-          <modal-gallery [modalImages]="images"
-                         [buttonsConfig]="{download: true, extUrl: true, close: true}"
-                         [keyboardConfig]="{esc: 81, left: 40, right: 38}"
-                         [downloadable]="true"
-                         [enableCloseOutside]="false"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></modal-gallery>
-        </section>
-        <section id="Images31-2">
-          <h3>2 - Array of images + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig'</span></h3>
+          <h3>1 - Array of images + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'clickOutside'</span></h3>
           <p>modalGallery with</p>
           <ul>
             <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
@@ -52,6 +29,31 @@
                          [downloadable]="true"
                          [enableCloseOutside]="true"
                          [description]="customFullDescription"
+                         (hasData)="onImageLoaded($event)"
+                         (close)="onCloseImageModal($event)"
+                         (show)="onVisibleIndex($event)"
+                         (firstImage)="onIsFirstImage($event)"
+                         (lastImage)="onIsLastImage($event)"></modal-gallery>
+        </section>
+        <section id="Images31-2">
+          <h3>2 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'keyboardConfig'</span></h3>
+          <p>modalGallery with</p>
+          <ul>
+            <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+            <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+            <li><b>download button visible</b> because, <u class="red-text">buttonsConfig.download = true</u> and downloadable is also = true</li>
+            <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+            <li><b>custom keyboard's config</b> because, <u class="red-text">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow up' (38)</u></li>
+            <li><b>NO close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is false</li>
+            <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+            <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+          </ul>
+          <br>
+          <modal-gallery [modalImages]="images"
+                         [buttonsConfig]="{download: true, extUrl: true, close: true}"
+                         [keyboardConfig]="{esc: 81, left: 40, right: 38}"
+                         [downloadable]="true"
+                         [enableCloseOutside]="false"
                          (hasData)="onImageLoaded($event)"
                          (close)="onCloseImageModal($event)"
                          (show)="onVisibleIndex($event)"
