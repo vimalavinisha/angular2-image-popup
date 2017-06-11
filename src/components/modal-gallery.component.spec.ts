@@ -493,9 +493,7 @@ describe('AngularModalGalleryComponent', () => {
     it('should display the modal gallery and navigate to the next image with KEYBOARD', () => {
       const element: DebugElement = fixture.debugElement;
       let index: number = 0;
-
       updateInputs(IMAGES);
-
       openModalGalleryByThumbIndex(index);
       fixture.detectChanges();
       testArrowsVisibility();
@@ -519,11 +517,39 @@ describe('AngularModalGalleryComponent', () => {
       fixture.detectChanges();
     });
 
+    it('should display the modal gallery and navigate to the next image with KEYBOARD', () => {
+      const element: DebugElement = fixture.debugElement;
+      let index: number = 0;
+      const rightArrowKey: number = 38;
+      comp.keyboardConfig = {right: rightArrowKey};
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        console.log('àààà', out);
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.KEYBOARD) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = rightArrowKey;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
     it('should display the modal gallery and navigate to the previous image with KEYBOARD', () => {
       let index: number = 1;
-
       updateInputs(IMAGES);
-
       openModalGalleryByThumbIndex(index);
       fixture.detectChanges();
       testArrowsVisibility();
@@ -547,7 +573,75 @@ describe('AngularModalGalleryComponent', () => {
       fixture.detectChanges();
     });
 
+    it('should display the modal gallery and navigate to the previous image with CUSTOM-KEYBOARD', () => {
+      let index: number = 1;
+      const leftArrowKey: number = 40;
+      comp.keyboardConfig = {left: leftArrowKey};
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
 
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.KEYBOARD) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber - 1)))).toBeTruthy();
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = leftArrowKey;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
+    it('should display the modal gallery and close it with KEYBOARD', () => {
+      let index: number = 0;
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.close.subscribe((out: ImageModalEvent) => {
+        expect(out.action).toBe(Action.KEYBOARD);
+        expect(out.result).toBeTruthy();
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = Keyboard.ESC;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
+    it('should display the modal gallery and close it with CUSTOM-KEYBOARD', () => {
+      let index: number = 0;
+      const qKey: number = 81;
+      comp.keyboardConfig = {esc: qKey};
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.close.subscribe((out: ImageModalEvent) => {
+        expect(out.action).toBe(Action.KEYBOARD);
+        expect(out.result).toBeTruthy();
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = qKey;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
 
     // TODO This feature will be deprecated ad removed sooner or later, so don't loose your time with this test
     IMAGES.forEach((val: Image, index: number) => {
@@ -593,6 +687,32 @@ describe('AngularModalGalleryComponent', () => {
       expect(imgs.length).toBe(0);
     });
 
+
+    const CUSTOM_DESC: Array<Description> = [
+      { imageText: 'Look here ', beforeTextDescription: ' => '},
+      // { imageText: 'Look here ', numberSeparator: ' of '},
+      // { numberSeparator: ' of ', beforeTextDescription: ' => '}
+    ];
+
+    it('should try to close modal gallery with KEYBOARD, but modal gallery is closed', () => {
+      // this will give me a test case with opeed = false
+      // at the beginning of onKeyDown(e: KeyboardEvent)
+
+      updateInputs(IMAGES);
+      fixture.detectChanges();
+
+      comp.close.subscribe((out: ImageModalEvent) => {
+        fail('modal gallery is already closed, so this event should not be emitted');
+      });
+
+      let event = document.createEvent('Event');
+      event.keyCode = Keyboard.ESC;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
     it('(TODO) should display the modal gallery, but it CANNOT download the current image with the download button', () => {
       // in this scenario you can use ctrl+s
       updateInputs(IMAGES);
@@ -607,17 +727,14 @@ describe('AngularModalGalleryComponent', () => {
       // downloadBtn.triggerEventHandler('click', null);
     });
 
-    it('(TODO) should display the modal gallery, but it CANNOT download any image', () => {
+    it('should display the modal gallery, but it CANNOT download any image', () => {
       updateInputs(IMAGES);
       comp.downloadable = false;
       comp.buttonsConfig = {download: true};
       fixture.detectChanges();
       openModalGalleryByThumbIndex(0);
       testArrowsVisibility();
-      // let downloadBtn: DebugElement = fixture.debugElement.query(By.css('a.download-image'));
-      // expect(downloadBtn).not.toBeUndefined();
-      // // TODO find a way to test this scenario
-      // downloadBtn.triggerEventHandler('click', null);
+      comp.downloadImage();
     });
   });
 });
