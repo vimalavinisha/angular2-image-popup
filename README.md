@@ -22,13 +22,14 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
+**It is require Internet Explorer 11 or greater**
+
 
 ## **Official live DEMO + DOCUMENTATION**
 
 *Image loading could be slow, because this demo is hosted on Github pages*
 
 [CLICK HERE FOR DEMO/DOCUMENTATION](https://ks89.github.io/angular-modal-gallery.github.io/)
-
 
 ## Installation
 - `npm install --save font-awesome`
@@ -38,7 +39,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 
 ## News
-- 05/?????/2017 - 3.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 05/12/2017 - 3.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/28/2017 - 3.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/20/2017 - 3.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/20/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
