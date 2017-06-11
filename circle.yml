@@ -26,7 +26,7 @@ test:
     - echo "npm run debug build on circle ci"
     - cd demo/systemjs && npm install
     - cd demo/webpack && npm install
-    - cd demo/angular-cli/angular-modal-gallery-angularcli-demo && npm install
+    - cd demo/angular-cli && npm install
     - echo "npm run build on circle ci"
     - npm run build
     - npm test
@@ -39,7 +39,7 @@ test:
     - cd demo/webpack && npm test
 
     - echo "building official angular-cli example on circle ci"
-    - cd demo/angular-cli/angular-modal-gallery-angularcli-demo && npm run build
+    - cd demo/angular-cli && npm run build
 #      - echo "npm run test on CircleCI"
 #      - npm test
   post:

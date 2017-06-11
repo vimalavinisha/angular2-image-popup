@@ -8,7 +8,7 @@ cd ../..
 cd demo/webpack
 npm install
 cd ../..
-cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+cd demo/angular-cli
 npm install
 cd ../../..
 
@@ -25,6 +25,6 @@ npm test
 cd ../..
 
 echo "building official angular-cli example on $TRAVIS_OS_NAME"
-cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+cd demo/angular-cli
 npm run build
 # npm test # TODO

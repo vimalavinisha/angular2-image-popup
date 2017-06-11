@@ -127,7 +127,7 @@ build_script:
   - cd demo/webpack
   - npm install
   - cd ../..
-  - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+  - cd demo/angular-cli
   - npm install
   - cd ../../..
   # build library
@@ -141,7 +141,7 @@ build_script:
 #  - cd ../..
   # - npm test # TODO
   # build official angular-cli example
-  - cd demo/angular-cli/angular-modal-gallery-angularcli-demo
+  - cd demo/angular-cli
   - npm run build
   # - npm test # TODO
 
