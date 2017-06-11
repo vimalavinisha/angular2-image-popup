@@ -30,8 +30,8 @@ script:
   - bash travisci/travis_script.sh
 after_success:
   - bash travisci/after_success.sh
-branches:
-  only: master
+#branches:
+#  only: master
 cache:
   apt: true
   bundler: true
