@@ -24,8 +24,10 @@ echo "Installing global dependencies"
 if [[ $TRAVIS_OS_NAME = 'osx' ]]; then
     echo "Installing $TRAVIS_OS_NAME global dependencies"
     sudo npm install -g @angular/cli
+    sudo npm install -g codeclimate-test-reporter
 else
     echo "Installing $TRAVIS_OS_NAME global dependencies"
     # to fix a problem with nodejs 6 on linux
     npm install -g @angular/cli
+    npm install -g codeclimate-test-reporter
 fi

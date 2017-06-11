@@ -28,7 +28,9 @@
     "pretest": "npm run clean-coverage",
     "test": "karma start --single-run",
     "test:watch": "karma start",
-    "docs": "typedoc --out docs src"
+    "docs": "typedoc --out docs src",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   },
   "dependencies": {
     "@angular/common": ">=2.0.0",
@@ -55,6 +57,7 @@
     "codelyzer": "^3.0.1",
     "copyfiles": "^1.0.0",
     "core-js": "^2.4.1",
+    "coveralls": "^2.13.1",
     "css-loader": "^0.28.4",
     "fs-extra": "^3.0.1",
     "html-minifier": "^3.5.0",
