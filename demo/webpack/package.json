@@ -7,10 +7,10 @@
   "main": "src/main.ts",
   "homepage": "https://www.stefanocappa.it",
   "private": true,
-  "repository": "https://github.com/Ks89/angular-webpack-skeleton",
+  "repository": "https://github.com/Ks89/angular-modal-gallery",
   "engines": {
-    "node": ">=7.0.0",
-    "npm": ">=4.0.0"
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
   },
   "scripts": {
     "start": "webpack-dev-server --progress --port 8080",

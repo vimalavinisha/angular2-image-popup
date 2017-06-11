@@ -12,7 +12,7 @@
   "homepage": "https://github.com/Ks89/angular-modal-gallery#readme",
   "scripts": {
     "clean": "rimraf dist aot bundle",
-    "clean:all": "npm run clean && rimraf demo/systemjs/node_modules/angular-modal-gallery demo/webpack/node_modules/angular-modal-gallery rimraf demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery",
+    "clean:all": "npm run clean && rimraf demo/systemjs/node_modules/angular-modal-gallery demo/webpack/node_modules/angular-modal-gallery rimraf demo/angular-cli/node_modules/angular-modal-gallery",
     "copy": "copyfiles src/**/*.scss dist && copyfiles src/**/*.html dist",
     "ngc": "ngc",
     "rollup": "rollup -c",
@@ -22,7 +22,7 @@
     "postbuild": "npm run bundle && npm run copy:demo:systemjs && npm run copy:demo:angularcli && npm run copy:demo:webpack",
     "bundle": "mkdirp bundle && ncp dist bundle/dist && ncp aot bundle/aot && ncp src bundle/src && copyfiles LICENSE README.md package.json index.ts index.d.ts bundle",
     "copy:demo:systemjs": "mkdirp demo/systemjs/node_modules/angular-modal-gallery && ncp bundle demo/systemjs/node_modules/angular-modal-gallery",
-    "copy:demo:angularcli": "mkdirp demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery && ncp bundle demo/angular-cli/angular-modal-gallery-angularcli-demo/node_modules/angular-modal-gallery",
+    "copy:demo:angularcli": "mkdirp demo/angular-cli/node_modules/angular-modal-gallery && ncp bundle demo/angular-cli/node_modules/angular-modal-gallery",
     "copy:demo:webpack": "mkdirp demo/webpack/node_modules/angular-modal-gallery && ncp bundle demo/webpack/node_modules/angular-modal-gallery",
     "clean-coverage": "rimraf coverage",
     "pretest": "npm run clean-coverage",
