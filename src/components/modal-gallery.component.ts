@@ -107,7 +107,7 @@ export interface ButtonsConfig {
 }
 
 /**
- * Interface `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
+ * Interface `KeyboardConfig` to assign custom keyCodes to ESC, RIGHT and LEFT keyboard's actions.
  */
 export interface KeyboardConfig {
   esc?: number;
@@ -123,12 +123,13 @@ export interface KeyboardConfig {
 })
 export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Array or Observable input that represents a list of Images use to show both the
-   * thumbs gallery and the modal gallery.
+   * Array or Observable input that represents a list of Images use to show both
+   * thumbs and the modal gallery.
    */
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   /**
-   * Number to open the modal gallery (passing a value >=0) showing the image with the imagePointer's index
+   * Number to open the modal gallery (passing a value >=0) showing the image with the
+   * imagePointer's index.
    */
   @Input() imagePointer: number;
   /**

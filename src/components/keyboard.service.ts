@@ -25,6 +25,9 @@
 import { Injectable } from '@angular/core';
 import 'mousetrap';
 
+/**
+ * Service to intercept ctrl+s (or cmd+s on macOS) using a third-party library, called Mousetrap.
+ */
 @Injectable()
 export class KeyboardService {
   private mousetrap: MousetrapInstance;
@@ -33,6 +36,10 @@ export class KeyboardService {
     this.mousetrap = new (<any>Mousetrap)();
   }
 
+  /**
+   * Method to add a lister for ctrl+s/cmd+s keyboard events.
+   * @param onBind Callback function
+   */
   add(onBind: (e: ExtendedKeyboardEvent, combo: string) => any) {
     this.mousetrap.bind(['ctrl+s', 'meta+s'], (event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
@@ -45,6 +52,10 @@ export class KeyboardService {
     });
   }
 
+  /**
+   * Useful function to reset all listeners. Please, call this function when needed
+   * to free resources ad prevent leaks.
+   */
   reset() {
     this.mousetrap.reset();
   }

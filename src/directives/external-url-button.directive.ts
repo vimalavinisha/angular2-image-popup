@@ -25,6 +25,13 @@
 import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, OnInit } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
+/**
+ * Directive to display the external url button.
+ * To show this button, you must provide a ButtonsConfig object with 'extUrl: true' as property.
+ * All other configurations will hide this button.
+ * Pay attention, because this directive is quite smart to choose button's order using the
+ * correct right margin in pixels. To do that, it uses also imgExtUrl and configButtons.
+ */
 @Directive({
   selector: '[exturl-button]'
 })

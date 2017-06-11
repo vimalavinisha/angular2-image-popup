@@ -25,6 +25,12 @@
 import { Input, Output, EventEmitter, Component } from '@angular/core';
 import { Image } from './modal-gallery.component';
 
+/**
+ * Component with the gallery of thumbs.
+ * In receives an array of Images and a boolean to show/hide
+ * the gallery (feature used by imagePointer).
+ * Also it emits click events as outputs.
+ */
 @Component({
   selector: 'gallery',
   styleUrls: ['gallery.scss'],

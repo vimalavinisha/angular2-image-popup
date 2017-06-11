@@ -1,6 +1,13 @@
 import { Directive, ElementRef, Input, OnChanges, SimpleChanges, OnInit, Renderer2 } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
+/**
+ * Directive to display the download button.
+ * To show this button, you must provide a ButtonsConfig object with 'download: true' as property.
+ * All other configurations will hide this button.
+ * Pay attention, because this directive is quite smart to choose button's order using the
+ * correct right margin in pixels. To do that, it uses also imgExtUrl and configButtons.
+ */
 @Directive({
   selector: '[download-button]'
 })

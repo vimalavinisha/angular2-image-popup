@@ -25,6 +25,11 @@
 import { Directive, Input, OnChanges, Renderer2, ElementRef, SimpleChanges, OnInit } from '@angular/core';
 import { ButtonsConfig } from '../components/modal-gallery.component';
 
+/**
+ * Directive to display the close button.
+ * To hide this button, you must provide a ButtonsConfig object with 'close: false' as property.
+ * All other configurations won't hide this button.
+ */
 @Directive({
   selector: '[close-button]'
 })

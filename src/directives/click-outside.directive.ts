@@ -24,6 +24,11 @@
 
 import { Directive, Output, EventEmitter, HostListener, Input } from '@angular/core';
 
+/**
+ * Directive to close the modal gallery clicking on the semi-transparent background.
+ * In fact, it listens for a click on the element with id="ng-gallery-content" and it emits
+ * an event using `@Output clickOutside`.
+ */
 @Directive({
   selector: '[click-outside]'
 })

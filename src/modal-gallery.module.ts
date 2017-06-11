@@ -31,6 +31,9 @@ import { UpperButtonsComponent } from './components/upper-buttons.component';
 import { KeyboardService } from './components/keyboard.service';
 import { GalleryComponent } from './components/gallery.component';
 
+/**
+ * Module with `forRoot` method to import it in the root module of your application.
+ */
 @NgModule({
   imports: [ CommonModule ],
   declarations: [ AngularModalGalleryComponent, UpperButtonsComponent, GalleryComponent, DIRECTIVES ],
