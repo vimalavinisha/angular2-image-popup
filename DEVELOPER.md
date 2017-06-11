@@ -21,31 +21,32 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 12. `npm install`
 13. `cd ../../..`
 14. `npm run build`
-15. `cd demo/systemjs`
-16. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-17. `cd ../..`
-18. `cd demo/webpack`
-19. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-20. `npm run build:dev`
-21. `cd dist`
-22. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-23. `cd ..`
-24. `npm run build:prod`
-25. `cd dist`
-26. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-27. `cd ..`
-28. `npm run build:prod:aot` (if necessary re-follow all the steps from the beginning)
-29. `cd dist`
-30. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-31. `cd ../../..`
-32. `cd demo/angular-cli/angular-modal-gallery-angularcli-demo`
-33. `ng serve` => if everything is ok (also in browser's console), kill the process and go to the next step
-34. `ng build`
-35. `cd dist`
-36. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
-37. `cd ..`
-38. `ng test` => if everything is ok, go to the next step
-39. If it is ok, create your pull request.
+15. `npm run test` => if everything is ok, go to the next step
+16. `cd demo/systemjs`
+17. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+18. `cd ../..`
+19. `cd demo/webpack`
+20. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+21. `npm run build:dev`
+22. `cd dist`
+23. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+24. `cd ..`
+25. `npm run build:prod`
+26. `cd dist`
+27. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+28. `cd ..`
+29. `npm run build:prod:aot` (if necessary re-follow all the steps from the beginning)
+30. `cd dist`
+31. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+32. `cd ../../..`
+33. `cd demo/angular-cli/angular-modal-gallery-angularcli-demo`
+34. `ng serve` => if everything is ok (also in browser's console), kill the process and go to the next step
+35. `ng build`
+36. `cd dist`
+37. `lite-server` => everything is ok (also in browser's console)? if yes go to the next step
+38. `cd ..`
+39. `ng test` => if everything is ok, go to the next step
+40. If it is ok, create your pull request.
 
 
 

@@ -59,8 +59,8 @@ clone_depth: 5                      # clone entire repository history if not def
 # environment variables
 environment:
   matrix:
+    - nodejs_version: "8"
     - nodejs_version: "7"
-    - nodejs_version: "6"
   NODE_ENV: test
   CI: yes
   APPVEYOR: yes
@@ -132,7 +132,7 @@ build_script:
   - cd ../../..
   # build library
   - npm run build
-  # - npm test # TODO
+  - npm test
   # build official webpack example
 #  - cd demo/webpack
 #  - npm run build:dev

@@ -14,7 +14,7 @@ cd ../../..
 
 echo "npm run build on $TRAVIS_OS_NAME"
 npm run build
-# npm test # TODO
+npm test
 
 echo "building official webpack example on $TRAVIS_OS_NAME"
 cd demo/webpack

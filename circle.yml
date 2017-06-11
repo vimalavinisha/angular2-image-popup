@@ -29,7 +29,7 @@ test:
     - cd demo/angular-cli/angular-modal-gallery-angularcli-demo && npm install
     - echo "npm run build on circle ci"
     - npm run build
-    # - npm test # TODO
+    - npm test
 
     - echo "building official webpack example on circle ci"
     - cd demo/webpack && npm run build:dev
