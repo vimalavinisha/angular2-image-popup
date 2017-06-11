@@ -48,7 +48,7 @@ function getBrowsers() {
         return ['Chrome', 'Firefox', 'IE'];
         break;
       case 'darwin': // macOS
-        return ['PhantomJS'];
+        return ['PhantomJS', 'Chrome', 'Firefox'];
         break;
       default: // other (linux, freebsd, openbsd, sunos, aix)
         return ['PhantomJS', 'Chrome', 'Firefox'];
