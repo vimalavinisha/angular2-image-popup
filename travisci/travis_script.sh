@@ -10,7 +10,7 @@ npm install
 cd ../..
 cd demo/angular-cli
 npm install
-cd ../../..
+cd ../..
 
 echo "npm run build on $TRAVIS_OS_NAME"
 npm run build
