@@ -528,7 +528,6 @@ describe('AngularModalGalleryComponent', () => {
       testArrowsVisibility();
 
       comp.show.subscribe((out: ImageModalEvent) => {
-        console.log('àààà', out);
         // out contains the result, i.e. image number and not the image index.
         // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
         // imageNumber is the clicked image number (not index (0...), but number (1...)),
