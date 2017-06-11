@@ -23,10 +23,7 @@
  SOFTWARE.
  */
 
-import {
-  OnInit, Input, Output, EventEmitter, HostListener,
-  Component, OnDestroy, OnChanges, SimpleChanges
-} from '@angular/core';
+import { OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -57,7 +54,8 @@ export class ImageModalEvent {
 }
 
 /**
- * Class `Image` that represents an Image with both image and thumb paths, also with a description and an external url.
+ * Class `Image` that represents an Image with both images and thumb paths,
+ * also with a description and an external url.
  * The only required value is the image path `img`.
  */
 export class Image {
@@ -115,6 +113,9 @@ export interface KeyboardConfig {
   left?: number;
 }
 
+/**
+ * Main Component of this library with the modal gallery.
+ */
 @Component({
   selector: 'modal-gallery',
   exportAs: 'modalGallery',
@@ -123,17 +124,19 @@ export interface KeyboardConfig {
 })
 export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Array or Observable input that represents a list of Images use to show both
+   * Array or Observable input that represents a list of Images used to show both
    * thumbs and the modal gallery.
    */
   @Input() modalImages: Observable<Array<Image>> | Array<Image>;
   /**
    * Number to open the modal gallery (passing a value >=0) showing the image with the
    * imagePointer's index.
+   *
+   * Be careful, because this feature will be probably deprecated/changed in version 4.0.0
    */
   @Input() imagePointer: number;
   /**
-   * Boolean required to enable image download with both ctrl+s and download button.
+   * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
    */
   @Input() downloadable: boolean = false;
@@ -143,7 +146,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   @Input() description: Description;
   /**
    * Object of type `ButtonsConfig` to show/hide buttons.
-   * This is used only inside `ngOnInit()` to create `configButtons` used into upper-buttons
+   * This is used only inside `ngOnInit()` to create `configButtons`
    */
   @Input() buttonsConfig: ButtonsConfig;
   /**
@@ -151,16 +154,18 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    */
   @Input() keyboardConfig: KeyboardConfig;
   /**
-   * enableCloseOutside's input to enable modal-gallery close behaviour while clicking
+   * enableCloseOutside's input to enable modal-gallery close's behaviour while clicking
    * on the semi-transparent background. Disabled by default.
    */
   @Input() enableCloseOutside: boolean = false;
 
   /**
+   * DEPRECATED
    * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
   @Input() showDownloadButton: boolean = false; // deprecated
   /**
+   * DEPRECATED
    * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
   @Input() showExtUrlButton: boolean = false; // deprecated
@@ -201,7 +206,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    */
   configButtons: ButtonsConfig;
   /**
-   * Enum of type `Action` used to pass a click action when you click over the modal image.
+   * Enum of type `Action` used to pass a click action when you click on the modal image.
    * Declared here to be used inside the template.
    */
   clickAction: Action = Action.CLICK;
@@ -217,7 +222,9 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   };
 
   /**
-   * Private Subscription used to subscribe to input's `modalImages` is passed as Observable.
+   * When you pass an Observable of `Image`s as `modalImages`, you have to subscribe to that
+   * Observable. So, to prevent memory leaks, you must store the subscription and call `unsubscribe` in
+   * OnDestroy.
    */
   private subscription: Subscription;
 
@@ -226,7 +233,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * Listener to catch keyboard's events and call the right method based on the key.
    * For instance, pressing esc, this will call `closeGallery(Action.KEYBOARD)` and so on.
    * If you passed a valid `keyboardConfig` esc, right and left buttons will be customized based on your data.
-   * @param e KeyboardEvent catched by the listener.
+   * @param e KeyboardEvent caught by the listener.
    */
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -251,7 +258,8 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   }
 
   /**
-   * Constructor with the injection of ´KeyboardService´ that initialize some description fields based on default values.
+   * Constructor with the injection of ´KeyboardService´ that initialize some description fields
+   * based on default values.
    */
   constructor(private keyboardService: KeyboardService) {
     // if description isn't provided initialize it with a default object
@@ -306,8 +314,8 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Method `getDescriptionToDisplay` to get the image description based on input params.
    * If you provide a full description this will be the visible description, otherwise,
-   *  it will be built using the `description` object, concatenating fields.
-   * @returns {string} the description to display
+   * it will be built using the `description` object, concatenating its fields.
+   * @returns String description to display.
    */
   getDescriptionToDisplay() {
     if (this.description && this.description.customFullDescription) {
@@ -322,7 +330,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   }
 
   /**
-   * Method `swipe` used by hammerjs to support touch gestures.
+   * Method `swipe` used by Hammerjs to support touch gestures.
    * @param index Number that represent the current visible index
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
@@ -377,7 +385,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Method `onShowModalGallery` called when you click on an image of your gallery.
    * The input index is the index of the clicked image thumb.
-   * @param index Number that represents the index of the image that you clicked.
+   * @param index Number that represents the index of the clicked image.
    */
   onShowModalGallery(index: number) {
     this.showModalGallery(index);
@@ -387,7 +395,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * Method `showModalGallery` to show the modal gallery displaying the image with
    * the index specified as input parameter.
    * It will also register a new `keyboardService` to catch keyboard's events to download the current
-   * image with keyboard's shortcuts. This service, will be removed when modal-gallery component will be destroyed.
+   * image with keyboard's shortcuts. This service, will be removed when modal gallery component will be destroyed.
    * @param index Number that represents the index of the image to show.
    */
   showModalGallery(index: number) {
@@ -412,7 +420,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
 
   /**
    * Method `downloadImage` to download the current visible image, only if `downloadable` is true.
-   * For IE, this will navigate to the image insted of a direct download as in all modern browsers.
+   * For IE, this will navigate to the image instead of a direct download as in all modern browsers.
    */
   downloadImage() {
     if (!this.downloadable) {
@@ -430,8 +438,8 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
 
   /**
    * Method `onClickOutside` to close modal gallery when both `enableCloseOutside` is true and user
-   *  clicked on the semi-transparent background around the image.
-   * @param event Boolean that is true if user clicked on the semi-trasparent background, false otherwise.
+   * clicked on the semi-transparent background around the image.
+   * @param event Boolean that is true if user clicked on the semi-transparent background, false otherwise.
    */
   onClickOutside(event: boolean) {
     if (event && this.enableCloseOutside) {
@@ -452,7 +460,8 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
 
   /**
    * Private method `getNextIndex` to get the next index, based on the action and the current index.
-   * This is necessary because at the end and calling prnextev again, you'll go to the first image, because they are shown like in a circle.
+   * This is necessary because at the end, when you call next again, you'll go to the first image.
+   * That happens because all modal images are shown like in a circle.
    * @param action Enum of type Action that represents the source of the event that changed the
    *  current image to the next one.
    * @param currentIndex Number that represents the current index of the visible image.
@@ -476,7 +485,8 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
 
   /**
    * Private method `getPrevIndex` to get the previous index, based on the action and the current index.
-   * This is necessary because at index 0 and calling prev again, you'll go to the last image, because they are shown like in a circle.
+   * This is necessary because at index 0, when you call prev again, you'll go to the last image.
+   * That happens because all modal images are shown like in a circle.
    * @param action Enum of type Action that represents the source of the event that changed the
    *  current image to the previous one.
    * @param currentIndex Number that represents the current index of the visible image.
@@ -500,8 +510,8 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
 
 
   /**
-   * Private method ´initImages´ to initialize `images` as array of `Image` or as an Observable of `Array<Image>`.
-   * Also, it will call completeInitialization.
+   * Private method ´initImages´ to initialize `images` as array of `Image` or as an
+   * Observable of `Array<Image>`. Also, it will call completeInitialization.
    * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
    *  Use this parameter to prevent multiple `hasData` events.
    */
