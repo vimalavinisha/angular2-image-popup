@@ -1,4 +1,29 @@
 # 3.1.0
+### New features
+- #43 `ButtonsConfig` object to configure button's visibility
+- #57 `KeyboardConfig` object to customize keyboard shortcuts (replacing esc, left arrow, right arrow, with other keys)
+- #40 new @Input to enable Click outside Directive to close modal-gallery clicking on the semi-transparent background
+- #59 basic tslint config for angular-modal-gallery lib
+- #41 unit testing
+
+### Docs
+- official documentation updated [HERE](https://ks89.github.io/angular-modal-gallery.github.io/).
+
+### Demos
+- #68 angular-cli demo updated to the latest release of angular-cli and with 3 new live examples for angular-modal-gallery 3.1.0
+- #68 webpack and systemjs demos updated with 3 new live examples for angular-modal-gallery 3.1.0
+
+### Bug fixes
+- #64 hasData event emitted multiple time while initializing the component
+- #65 wrong result into imagemodalevent when clicking left arrow button
+
+### Chores
+- #63 Add minimum IE version supported by this library (IE 11)
+
+### Internal library changes
+- #69 improve CIs config for unit testing (adding also coveralls ad codeclimate's reports)
+- #60 build env with npm>=5.0.0 and node>=8.0.0
+- #61 replace elementref with renderer to support angular-universal (still not supported, but this is the first step)
 
 
 # 3.0.2
@@ -14,6 +39,7 @@
 - tslint 5 in all demos #54
 - Official demos: IE performance issue with debug mode #51
 - dependencies updated
+
 
 # 3.0.1
 
