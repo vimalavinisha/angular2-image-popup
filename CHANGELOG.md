@@ -1,6 +1,6 @@
 # 3.1.0
 ### New features
-- **Support for Angular 2 deprecated**
+- #67 **Support for Angular 2 deprecated**
 - #43 `ButtonsConfig` object to configure button's visibility
 - #57 `KeyboardConfig` object to customize keyboard shortcuts (replacing esc, left arrow, right arrow, with other keys)
 - #40 new @Input to enable Click outside Directive to close modal-gallery clicking on the semi-transparent background
