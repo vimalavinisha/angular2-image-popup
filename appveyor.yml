@@ -193,8 +193,8 @@ deploy_script:
 
 # on successful build
 #on_success:
-  - npm run coveralls
-  - npm run codeclimate
+  - node .\node_modules\coveralls\bin\coveralls.js < .\coverage\lcov.info
+  - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info
 #  - codeclimate-test-reporter < coverage/lcov.info
 #  - node .\node_modules\coveralls\bin\coveralls.js < .\coverage\lcov.info
 
