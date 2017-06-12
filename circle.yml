@@ -1,7 +1,6 @@
 ## Customize the test machine
 machine:
 
-  # Version of ruby to use
   node:
     version:
       7.9.0
