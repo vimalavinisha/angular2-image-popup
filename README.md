@@ -24,6 +24,8 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 **angular-modal-gallery requires Internet Explorer 11 or greater**
 
+**Angular >=4 is really recommended (support for Angular 2 removed from version 3.1.0)**
+
 
 ## **Official live DEMO + DOCUMENTATION**
 
@@ -39,7 +41,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 
 ## News
-- 05/12/2017 - 3.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 05/14/2017 - 3.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/28/2017 - 3.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/20/2017 - 3.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/20/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -53,7 +55,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 - Angular module to import this library
 - Angular component to display the image gallery
 - AOT support
-- Angular >=2 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
+- Angular >= 4 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
 - Tested with Webpack 2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
 - and so on...
@@ -95,7 +97,7 @@ copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE

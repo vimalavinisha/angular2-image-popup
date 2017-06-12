@@ -1,7 +1,7 @@
 {
   "name": "angular-modal-gallery",
   "version": "3.1.0",
-  "description": "Modal image gallery for Angular >=2",
+  "description": "Modal image gallery for Angular >=4",
   "main": "dist/bundles/angular-modal-gallery.umd.js",
   "license": "MIT",
   "author": "Stefano Cappa",
@@ -33,8 +33,8 @@
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   },
   "dependencies": {
-    "@angular/common": ">=2.0.0",
-    "@angular/core": ">=2.0.0",
+    "@angular/common": ">=4.0.0",
+    "@angular/core": ">=4.0.0",
     "@types/hammerjs": ">=2.0.0",
     "@types/mousetrap": ">=1.5.33",
     "font-awesome": ">=4.0.0",
