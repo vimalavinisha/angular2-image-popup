@@ -22,9 +22,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
-**angular-modal-gallery requires Internet Explorer 11 or greater**
-
-**Angular >=4 is really recommended (support for Angular 2 removed from version 3.1.0)**
+**angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 2 (Angular 4 is really recommended)**
 
 
 ## **Official live DEMO + DOCUMENTATION**
@@ -36,8 +34,10 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 ## Installation
 - `npm install --save font-awesome`
 - `npm install --save hammerjs mousetrap`
-- `npm install --save-dev @types/hammerjs @types/mousetrap`
 - `npm install --save angular-modal-gallery`
+
+If you have issues, try to install also:
+- `npm install --save-dev @types/hammerjs @types/mousetrap`
 
 
 ## News
@@ -55,7 +55,7 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 - Angular module to import this library
 - Angular component to display the image gallery
 - AOT support
-- Angular >= 4 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
+- Angular >= 2 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
 - Tested with Webpack 2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
 - and so on...

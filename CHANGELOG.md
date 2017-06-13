@@ -1,11 +1,11 @@
 # 3.1.0
 ### New features
-- #67 **Support for Angular 2 deprecated**
 - #43 `ButtonsConfig` object to configure button's visibility
 - #57 `KeyboardConfig` object to customize keyboard shortcuts (replacing esc, left arrow, right arrow, with other keys)
 - #40 new @Input to enable Click outside Directive to close modal-gallery clicking on the semi-transparent background
 - #59 basic tslint config for angular-modal-gallery lib
 - #41 unit testing
+- #67 Angular 2 is still supported
 
 ### Docs
 - official documentation updated [HERE](https://ks89.github.io/angular-modal-gallery.github.io/).
