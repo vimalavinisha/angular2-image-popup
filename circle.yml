@@ -3,7 +3,7 @@ machine:
 
   node:
     version:
-      8.1.0
+      7.9.0
 
   # Add some environment variables
   environment:
