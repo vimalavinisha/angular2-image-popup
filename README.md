@@ -38,12 +38,14 @@ This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/
 - `npm install --save font-awesome`
 - `npm install --save hammerjs mousetrap`
 - `npm install --save angular-modal-gallery`
+- `npm install --save-dev @types/mousetrap`
 
 If you have issues, try to install also:
-- `npm install --save-dev @types/hammerjs @types/mousetrap`
+- `npm install --save-dev @types/hammerjs`
 
 
 ## News
+- 06/14/2017 - 3.1.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/14/2017 - 3.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/28/2017 - 3.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/20/2017 - 3.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
