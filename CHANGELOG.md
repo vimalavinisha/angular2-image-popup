@@ -1,10 +1,8 @@
 # 3.1.0
 ### New features
 - #43 `ButtonsConfig` object to configure button's visibility
-- #57 `KeyboardConfig` object to customize keyboard shortcuts (replacing esc, left arrow, right arrow, with other keys)
+- #57 `KeyboardConfig` object to customize keyboard's actions (replacing `esc`, `left arrow`, `right arrow`, with other keys)
 - #40 new @Input to enable Click outside Directive to close modal-gallery clicking on the semi-transparent background
-- #59 basic tslint config for angular-modal-gallery lib
-- #41 unit testing
 - #67 Angular 2 is still supported
 
 ### Docs
@@ -16,15 +14,17 @@
 
 ### Bug fixes
 - #64 hasData event emitted multiple time while initializing the component
-- #65 wrong result into imagemodalevent when clicking left arrow button
+- #65 wrong result into ImageModalEvent when clicking left arrow button
 
 ### Chores
 - #63 Add minimum IE version supported by this library (IE 11)
 
 ### Internal library changes
+- #41 unit testing
+- #59 basic tslint config for angular-modal-gallery lib
 - #69 improve CIs config for unit testing (adding also coveralls ad codeclimate's reports)
 - #60 build env with npm>=5.0.0 and node>=8.0.0
-- #61 replace elementref with renderer to support angular-universal (still not supported, but this is the first step)
+- #61 replace elementref with renderer to prepare this project to angular-universal (still not supported, but this is the first step)
 
 
 # 3.0.2

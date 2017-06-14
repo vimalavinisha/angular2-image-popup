@@ -14,9 +14,12 @@
 
 <br>
 
-An Angular library to create an image gallery of **clickable thumbnails**. After a click, it will display a **modal window with full screen images**.
+**angular-modal-gallery** is an Angular library to create image galleries of **clickable thumbnails**. After a click, it will display a **modal window with full screen images**.
 It's also possible to navigate between these images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
-Starting from version 3, you can **download images** (with the button or with the **keyboard shortcut ctrl+s / cmd+s**) or navigate to an **external url**.
+
+Starting from version 3, you can **download images** (with either the button or with **keyboard shortcut ctrl+s / cmd+s**) or navigate to an **external url**.
+
+Version 3.1.x includes other cool features, for instance **advanced configurations** and a **click outside** feature to close the modal gallery.
 
 This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/angular2-image-popup).
 
@@ -58,7 +61,7 @@ If you have issues, try to install also:
 - Angular >= 2 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
 - Tested with Webpack 2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
-- and so on...
+- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
 
 
 ## How to use it?
@@ -73,9 +76,11 @@ Two different ways (both of them are good):
 Check `CONTRIBUTING.md` in this repository
 
 
-## Developer informations
+## Developer information
 
-Check `DEVELOPER.md` in this repository
+Check `DEVELOPER.md` in this repository to build and test this library.
+
+Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/index.html`.
 
 
 ## License
