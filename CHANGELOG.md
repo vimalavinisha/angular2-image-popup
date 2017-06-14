@@ -1,3 +1,6 @@
+# 3.1.1
+- fix error in README.md
+
 # 3.1.0
 ### New features
 - #43 `ButtonsConfig` object to configure button's visibility
