@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery-angularcli-demo",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "author": "Stefano Cappa",
   "description": "angular-cli demo for angular-modal-gallery",
   "main": "src/main.ts",

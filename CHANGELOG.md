@@ -1,5 +1,10 @@
+# 3.2.0
+- ????????
+
+
 # 3.1.1
 - fix error in README.md
+
 
 # 3.1.0
 ### New features
@@ -23,7 +28,7 @@
 - #63 Add minimum IE version supported by this library (IE 11)
 
 ### Internal library changes
-- #41 unit testing
+- #14 unit testing
 - #59 basic tslint config for angular-modal-gallery lib
 - #69 improve CIs config for unit testing (adding also coveralls ad codeclimate's reports)
 - #60 build env with npm>=5.0.0 and node>=8.0.0
