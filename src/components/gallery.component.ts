@@ -46,4 +46,21 @@ export class GalleryComponent {
   showModalGallery(index: number) {
     this.show.emit(index);
   }
+
+  /**
+   * Method to get `alt attribute`.
+   * `alt` specifies an alternate text for an image, if the image cannot be displayed.
+   * There is a similar version of this method into `modal-gallery.component.ts` that
+   * receives an Image as input.
+   * @param index Number that represents the image index.
+   */
+  getAltDescriptionByIndex(index: number) {
+    if (!this.images) {
+      return '';
+    }
+    if (!this.images[index] || !this.images[index].description) {
+      return `Image ${index}`;
+    }
+    return this.images[index].description;
+  }
 }

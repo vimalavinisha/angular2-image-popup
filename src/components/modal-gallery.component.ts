@@ -448,6 +448,23 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   }
 
   /**
+   * Method to get `alt attribute`.
+   * `alt` specifies an alternate text for an image, if the image cannot be displayed.
+   * There is a similar version of this method into `gallery.component.ts` that
+   * receives the image index as input.
+   * @param currentImage Image that represents the current visible image.
+   */
+  getAltDescriptionByImage(currentImage: Image) {
+    if (!currentImage) {
+      return '';
+    }
+    if (!currentImage.description) {
+      return `Image ${this.images.indexOf(currentImage)}`;
+    }
+    return currentImage.description;
+  }
+
+  /**
    * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
    * all subscriptions and it will reset keyboard's service.
    */

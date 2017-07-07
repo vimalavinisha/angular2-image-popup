@@ -2,9 +2,9 @@
   <div *ngFor="let i of images; let index = index">
     <ng-container *ngIf="i && i.img">
       <img *ngIf="i.thumb" src="{{ i.thumb }}" class="ng-thumb" (click)="showModalGallery(index)"
-           alt="{{ i.description }}"/>
+           alt="{{getAltDescriptionByIndex(index)}}"/>
       <img *ngIf="!i.thumb" src="{{ i.img }}" class="ng-thumb" (click)="showModalGallery(index)"
-           alt="{{ i.description }}"/>
+           alt="{{getAltDescriptionByIndex(index)}}"/>
     </ng-container>
   </div>
 </div>
