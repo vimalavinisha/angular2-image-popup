@@ -364,7 +364,7 @@ describe('AngularModalGalleryComponent', () => {
       let img: DebugElement = element.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
       expect(img.properties['src']).toBe(IMAGES[index].img);
-      expect(img.properties['alt']).toBe(IMAGES[index].description ? IMAGES[index].description : '');
+      expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]);
     });
 
     it('should display the modal gallery and close it with the close button', () => {
@@ -425,7 +425,7 @@ describe('AngularModalGalleryComponent', () => {
         let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
         expect(img.properties['src']).toBe(IMAGES[index].img);
-        expect(img.properties['alt']).toBe(IMAGES[index].description ? IMAGES[index].description : '');
+        expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]));
       });
     });
 
@@ -450,7 +450,7 @@ describe('AngularModalGalleryComponent', () => {
         let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
         expect(img.properties['src']).toBe(IMAGES[index].img);
-        expect(img.properties['alt']).toBe(IMAGES[index].description ? IMAGES[index].description : '');
+        expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]);
       });
     });
 
@@ -467,7 +467,7 @@ describe('AngularModalGalleryComponent', () => {
       let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
       expect(img.properties['src']).toBe(IMAGES[0].img);
-      expect(img.properties['alt']).toBe(IMAGES[0].description ? IMAGES[0].description : '');
+      expect(img.properties['alt']).toBe(getAltDesc(IMAGES[0]);
     });
 
     it('should display the modal gallery and close it with the clickOutside feature', () => {
@@ -767,4 +767,14 @@ function updateInputsWithButtons(images: Array<Image> | Observable<Array<Image>>
   fixture.detectChanges();
   // now call updateInputs (remember to init `buttonsConfig`)
   updateInputs(images);
+}
+
+function getAltDesc(currentImage: Image) {
+  if (!currentImage) {
+    return '';
+  }
+  if (!currentImage.description) {
+    return `Image ${comp.images.indexOf(currentImage)}`;
+  }
+  return currentImage.description;
 }

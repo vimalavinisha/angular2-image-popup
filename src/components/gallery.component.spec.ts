@@ -99,20 +99,20 @@ describe('GalleryComponent', () => {
       expect(imgs.length).toBe(IMAGES.length);
 
       expect(imgs[0].properties['src']).toBe(IMAGES[0].img);
-      expect(imgs[0].properties['alt']).toBe('');
+      expect(imgs[0].properties['alt']).toBe(getAltDesc(IMAGES[0]));
       expect(imgs[1].properties['src']).toBe(IMAGES[1].img);
-      expect(imgs[1].properties['alt']).toBe(IMAGES[1].description);
+      expect(imgs[1].properties['alt']).toBe(getAltDesc(IMAGES[1]));
       expect(imgs[2].properties['src']).toBe(IMAGES[2].thumb);
-      expect(imgs[2].properties['alt']).toBe(IMAGES[2].description);
+      expect(imgs[2].properties['alt']).toBe(getAltDesc(IMAGES[2]));
       expect(imgs[3].properties['src']).toBe(IMAGES[3].img);
-      expect(imgs[3].properties['alt']).toBe(IMAGES[3].description);
+      expect(imgs[3].properties['alt']).toBe(getAltDesc(IMAGES[3]));
 
       expect(imgs[4].properties['src']).toBe(IMAGES[4].thumb);
-      expect(imgs[4].properties['alt']).toBe('');
+      expect(imgs[4].properties['alt']).toBe(getAltDesc(IMAGES[4]));
       expect(imgs[5].properties['src']).toBe(IMAGES[5].img);
-      expect(imgs[5].properties['alt']).toBe('');
+      expect(imgs[5].properties['alt']).toBe(getAltDesc(IMAGES[5]));
       expect(imgs[6].properties['src']).toBe(IMAGES[6].img);
-      expect(imgs[6].properties['alt']).toBe('');
+      expect(imgs[6].properties['alt']).toBe(getAltDesc(IMAGES[6]));
 
       comp.show.subscribe((out: number) => {
         expect(out).toBe(0);
@@ -163,4 +163,14 @@ function updateInputs(images: Array<Image>, showGallery: boolean) {
   comp.images = images;
   comp.showGallery = showGallery;
   fixture.detectChanges();
+}
+
+function getAltDesc(currentImage: Image) {
+  if (!currentImage) {
+    return '';
+  }
+  if (!currentImage.description) {
+    return `Image ${comp.images.indexOf(currentImage)}`;
+  }
+  return currentImage.description;
 }
