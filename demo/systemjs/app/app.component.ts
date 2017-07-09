@@ -23,11 +23,11 @@
  SOFTWARE.
  */
 
-import {Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
-import {Image, Action, ImageModalEvent, Description} from 'angular-modal-gallery';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
@@ -40,6 +40,30 @@ import 'rxjs/add/operator/delay';
     <p>If you want, you can <b>add a random image</b> to every example <button (click)="addRandomImage()">Add image</button></p>
     <br>
     <hr>
+    <p class="red-text center-text"><b>--- Only from version 3.2.x or greater ---</b></p>
+    <section id="Images32-1">
+      <h3>1 - Array of images + slideConfig (without infinite sliding)</h3>
+      <p>modalGallery with</p>
+      <ul>
+        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+        <li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>
+        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+        <li><b>infinite sliding disabled</b> because, <u class="red-text">slideConfig.infinite = false</u></li>
+        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+      </ul>
+      <br>
+      <modal-gallery [modalImages]="images"
+                     [downloadable]="false"
+                     [slideConfig]="{infinite: false}"
+                     (hasData)="onImageLoaded($event)"
+                     (close)="onCloseImageModal($event)"
+                     (show)="onVisibleIndex($event)"
+                     (firstImage)="onIsFirstImage($event)"
+                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+    </section>
+    <hr>
+    <br>
+    <br>
     <p class="red-text center-text"><b>--- Only from version 3.1.x or greater ---</b></p>
     <section id="Images31-1">
       <h3>1 - Array of images + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'clickOutside'</span></h3>

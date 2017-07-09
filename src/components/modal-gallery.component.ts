@@ -114,6 +114,13 @@ export interface KeyboardConfig {
 }
 
 /**
+ * Interface `SlideConfig` to configure sliding features of modal gallery.
+ */
+export interface SlideConfig {
+  infinite?: boolean;
+}
+
+/**
  * Main Component of this library with the modal gallery.
  */
 @Component({
@@ -158,6 +165,10 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * on the semi-transparent background. Disabled by default.
    */
   @Input() enableCloseOutside: boolean = false;
+  /**
+   * Object of type `SlideConfig` to configure sliding of modal gallery.
+   */
+  @Input() slideConfig: SlideConfig;
 
   /**
    * DEPRECATED
@@ -210,6 +221,14 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * Declared here to be used inside the template.
    */
   clickAction: Action = Action.CLICK;
+  /**
+   * Boolean that it's true when you are watching the first image (currently visible).
+   */
+  isFirstImage: boolean = false;
+  /**
+   * Boolean that it's true when you are watching the last image (currently visible).
+   */
+  isLastImage: boolean = false;
 
   /**
    * Private SWIPE_ACTION to define all swipe actions used by hammerjs.
@@ -366,17 +385,27 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    *  action that moved back to the previous image. NORMAL by default.
    */
   prevImage(action: Action = Action.NORMAL) {
+    // check if prevImage should be blocked
+    if (this.isPreventSliding(0)) {
+      return;
+    }
+
     this.loading = true;
     this.currentImageIndex = this.getPrevIndex(action, this.currentImageIndex);
     this.showModalGallery(this.currentImageIndex);
   }
 
   /**
-   * Method `prevImage` to go back to the previous image shown into the modal gallery.
+   * Method `nextImage` to go back to the previous image shown into the modal gallery.
    * @param action Enum of type `Action` that represents the source
    *  action that moved to the next image. NORMAL by default.
    */
   nextImage(action: Action = Action.NORMAL) {
+    // check if nextImage should be blocked
+    if (this.isPreventSliding(this.images.length - 1)) {
+      return;
+    }
+
     this.loading = true;
     this.currentImageIndex = this.getNextIndex(action, this.currentImageIndex);
     this.showModalGallery(this.currentImageIndex);
@@ -408,6 +437,9 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
       }
       this.downloadImage();
     });
+
+    // enable/disable 'infinite sliding' based on @Input() slideConfig
+    this.manageSlideConfig(index);
 
     this.currentImageIndex = index;
     this.opened = true;
@@ -490,7 +522,6 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
     } else {
       newIndex = 0; // start from the first index
     }
-
 
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(action, newIndex);
@@ -592,5 +623,34 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    */
   private getFileName(path: string) {
     return path.replace(/^.*[\\\/]/, '');
+  }
+
+  /**
+   * Method `manageSlideConfig` to manage boundary arrows and sliding.
+   * This is based on @Input() slideConfig to enable/disable 'infinite sliding'.
+   * @param {number} index Number of the current visile image
+   */
+  private manageSlideConfig(index: number) {
+    if (!this.slideConfig || this.slideConfig.infinite !== false) {
+      this.isFirstImage = false;
+      this.isLastImage = false;
+    } else {
+      this.isFirstImage = index === 0;
+      this.isLastImage = index === this.images.length - 1;
+    }
+  }
+
+  /**
+   * Method `isPreventSliding` to check if next/prev actions should be blocked.
+   * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
+   * If yes, it returns true to say that sliding should be blocked, otherwise not.
+   * @param {number} boundaryIndex Number that could be either the beginning index (0) or the last index
+   *  of images (this.images.length - 1).
+   * @returns {boolean} True if slideConfig.infinite === false and the current index is
+   *  either the first or the last one.
+   */
+  private isPreventSliding(boundaryIndex: number) {
+    return !!this.slideConfig && this.slideConfig.infinite === false &&
+      this.currentImageIndex === boundaryIndex;
   }
 }
