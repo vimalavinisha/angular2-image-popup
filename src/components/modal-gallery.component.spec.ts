@@ -364,7 +364,7 @@ describe('AngularModalGalleryComponent', () => {
       let img: DebugElement = element.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
       expect(img.properties['src']).toBe(IMAGES[index].img);
-      expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]);
+      expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]));
     });
 
     it('should display the modal gallery and close it with the close button', () => {
@@ -450,7 +450,7 @@ describe('AngularModalGalleryComponent', () => {
         let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
         expect(img).not.toBeUndefined();
         expect(img.properties['src']).toBe(IMAGES[index].img);
-        expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]);
+        expect(img.properties['alt']).toBe(getAltDesc(IMAGES[index]));
       });
     });
 
@@ -467,7 +467,7 @@ describe('AngularModalGalleryComponent', () => {
       let img: DebugElement = fixture.debugElement.query(By.css('img.effect'));
       expect(img).not.toBeUndefined();
       expect(img.properties['src']).toBe(IMAGES[0].img);
-      expect(img.properties['alt']).toBe(getAltDesc(IMAGES[0]);
+      expect(img.properties['alt']).toBe(getAltDesc(IMAGES[0]));
     });
 
     it('should display the modal gallery and close it with the clickOutside feature', () => {
@@ -620,22 +620,46 @@ describe('AngularModalGalleryComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should display the modal gallery and close it with CUSTOM-KEYBOARD', () => {
+    it('should display the first image of the modal gallery without infinite sliding, blocking navigation over boundaries', () => {
       let index: number = 0;
-      const qKey: number = 81;
-      comp.keyboardConfig = {esc: qKey};
+      const leftArrowKey: number = 40;
+      comp.keyboardConfig = {left: leftArrowKey};
+      comp.slideConfig = {infinite: false};
       updateInputs(IMAGES);
       openModalGalleryByThumbIndex(index);
       fixture.detectChanges();
-      testArrowsVisibility();
+      testArrowVisibilityNoInfiniteSlidingBegin();
 
-      comp.close.subscribe((out: ImageModalEvent) => {
-        expect(out.action).toBe(Action.KEYBOARD);
-        expect(out.result).toBeTruthy();
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // because navigation to the previous image is blocked by slideConfig = {infinite: false};
+        fail();
       });
 
       let event = document.createEvent('Event');
-      event['keyCode'] = qKey;
+      event['keyCode'] = leftArrowKey;
+      event.initEvent('keydown', true, false);
+      document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
+
+    it('should display the last image of the modal gallery without infinite sliding, blocking navigation over boundaries', () => {
+      let index: number = IMAGES.length - 1;
+      const rightArrowKey: number = 38;
+      comp.keyboardConfig = {right: rightArrowKey};
+      comp.slideConfig = {infinite: false};
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowVisibilityNoInfiniteSlidingEnd();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // because navigation to the next image is blocked by slideConfig = {infinite: false};
+        fail();
+      });
+
+      let event = document.createEvent('Event');
+      event['keyCode'] = rightArrowKey;
       event.initEvent('keydown', true, false);
       document.dispatchEvent(event);
 
@@ -749,6 +773,20 @@ function testArrowsVisibility() {
   let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
   expect(right.children[0].attributes['class']).toBe('fa fa-angle-right');
 
+  let left: DebugElement = fixture.debugElement.query(By.css('a.nav-left'));
+  expect(left.children[0].attributes['class']).toBe('fa fa-angle-left');
+}
+
+function testArrowVisibilityNoInfiniteSlidingBegin() {
+  let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
+  expect(right.children[0].attributes['class']).toBe('fa fa-angle-right');
+  let left: DebugElement = fixture.debugElement.query(By.css('a.nav-left'));
+  expect(left.properties['hidden']).toBe(true);
+}
+
+function testArrowVisibilityNoInfiniteSlidingEnd() {
+  let right: DebugElement = fixture.debugElement.query(By.css('a.nav-right'));
+  expect(right.properties['hidden']).toBe(true);
   let left: DebugElement = fixture.debugElement.query(By.css('a.nav-left'));
   expect(left.children[0].attributes['class']).toBe('fa fa-angle-left');
 }
