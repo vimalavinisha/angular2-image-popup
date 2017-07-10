@@ -24,8 +24,8 @@
 
 const webpack                 = require('webpack');
 const DefinePlugin            = require('webpack/lib/DefinePlugin');
-const UglifyJsPlugin          = require('webpack/lib/optimize/UglifyJsPlugin');
 
+const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
 const WebpackMd5HashPlugin    = require('webpack-md5-hash');
 const CompressionPlugin       = require('compression-webpack-plugin');
 const webpackMerge            = require('webpack-merge');

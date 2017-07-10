@@ -29,6 +29,7 @@ const CommonsChunkPlugin           = require('webpack/lib/optimize/CommonsChunkP
 const LoaderOptionsPlugin          = require('webpack/lib/LoaderOptionsPlugin');
 const ContextReplacementPlugin     = require('webpack/lib/ContextReplacementPlugin');
 const NamedModulesPlugin           = require('webpack/lib/NamedModulesPlugin');
+const ModuleConcatenationPlugin    = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 const CopyWebpackPlugin            = require('copy-webpack-plugin');
 const HtmlWebpackPlugin            = require('html-webpack-plugin');
@@ -48,6 +49,7 @@ const TEMPLATE_PATH                = './src/index.ejs';
 const TEMPLATE_HTML                = 'index.html';
 
 const AOT                          = helpers.hasNpmFlag('aot');
+const PROD                         = helpers.hasNpmFlag('prod');
 const TS_CONFIG                    = AOT ? 'tsconfig-aot.json' : 'tsconfig.json';
 
 module.exports = {
@@ -82,7 +84,8 @@ module.exports = {
           {
             loader: 'awesome-typescript-loader',
             options: {
-              configFileName: '${TS_CONFIG}'
+              configFileName: '${TS_CONFIG}',
+              useCache: !AOT && !PROD
             }
           },
           {
@@ -134,6 +137,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new ModuleConcatenationPlugin(),
     new NamedModulesPlugin(),
     new CommonsChunkPlugin({
       name: 'polyfills',
@@ -151,7 +155,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: TITLE,
       inject: true,
-      // chunksSortMode: 'auto', // auto is the default value
+      chunksSortMode: 'dependency',
       chunks: ['polyfills', 'vendor', 'app'],
       template: TEMPLATE_PATH,
       filename: TEMPLATE_HTML

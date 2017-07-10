@@ -25,14 +25,16 @@
 const webpack               = require('webpack');
 const DefinePlugin          = require('webpack/lib/DefinePlugin');
 
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-const BrowserSyncPlugin     = require('browser-sync-webpack-plugin');
-const webpackMerge          = require('webpack-merge');
-const ExtractTextPlugin     = require('extract-text-webpack-plugin');
-const LoaderOptionsPlugin   = require('webpack/lib/LoaderOptionsPlugin');
+const HotModuleReplacementPlugin  = require('webpack/lib/HotModuleReplacementPlugin');
+const BrowserSyncPlugin           = require('browser-sync-webpack-plugin');
+const webpackMerge                = require('webpack-merge');
+const webpackMergeDll             = webpackMerge.strategy({plugins: 'replace'});
+const ExtractTextPlugin           = require('extract-text-webpack-plugin');
+const LoaderOptionsPlugin         = require('webpack/lib/LoaderOptionsPlugin');
+const DllBundlesPlugin            = require('webpack-dll-bundles-plugin').DllBundlesPlugin;
 
-const commonConfig          = require('./webpack.common');
-const helpers               = require('./helpers');
+const commonConfig                = require('./webpack.common');
+const helpers                     = require('./helpers');
 
 const ENV  = process.env.NODE_ENV = 'dev';
 const HOST = process.env.HOST || 'localhost';
@@ -67,7 +69,8 @@ module.exports = webpackMerge(commonConfig, {
     historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
-      poll: 1000
+      poll: 1000,
+      ignored: /node_modules/
     },
     stats: { colors: true },
     proxy: {
@@ -121,6 +124,46 @@ module.exports = webpackMerge(commonConfig, {
       allChunks: true
     }),
     new DefinePlugin({'webpack': {'ENV': JSON.stringify(METADATA.env)}}),
+    new DllBundlesPlugin({
+      bundles: {
+        polyfills: [
+          '@angularclass/hmr',
+          'ts-helpers',
+          'zone.js',
+          'core-js',
+          'webpack-dev-server',
+          'webpack'
+        ],
+        vendor: [
+          '@angular/common',
+          '@angular/compiler',
+          '@angular/core',
+          '@angular/forms',
+          '@angular/http',
+          '@angular/platform-browser',
+          '@angular/platform-browser-dynamic',
+          '@angular/platform-server',
+          '@angular/router',
+          "@angularclass/idle-preload",
+          '@angularclass/hmr',
+          'rxjs',
+          'style-loader',
+          'jquery',
+          'bootstrap-loader',
+          'hammerjs',
+          'lodash',
+          'mousetrap',
+          'reflect-metadata',
+          'tether'
+        ]
+      },
+      context: __dirname,
+      dllDir: helpers.root('dll'),
+      webpackConfig: webpackMergeDll(commonConfig, {
+        devtool: 'cheap-module-source-map',
+        plugins: []
+      })
+    }),
     new BrowserSyncPlugin(
       // BrowserSync options
       {

@@ -274,7 +274,7 @@ describe('AngularModalGalleryComponent', () => {
       fixture.detectChanges();
     });
 
-    it('(FIXME - brroken)should display the modal gallery and navigate to the PREVIOUS image (not the first one)', () => {
+    it('(FIXME - broken? why?)should display the modal gallery and navigate to the PREVIOUS image (not the first one)', () => {
       const element: DebugElement = fixture.debugElement;
       let index: number = 1;
 
@@ -489,6 +489,36 @@ describe('AngularModalGalleryComponent', () => {
       overlay.nativeElement.click(); // for this scenario use the native click
     });
 
+    it('should display the modal gallery and navigate to the next image with a swipe action', () => {
+      const element: DebugElement = fixture.debugElement;
+      let index: number = 0;
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.KEYBOARD) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
+      });
+
+
+      let img: DebugElement = element.query(By.css('img.effect'));
+      // window.Simulator.gestures.swipe(img);
+
+      // let event: Event = document.createEvent('Event');
+      // event['keyCode'] = Keyboard.RIGHT_ARROW;
+      // event.initEvent('keydown', true, false);
+      // document.dispatchEvent(event);
+
+      fixture.detectChanges();
+    });
 
     it('should display the modal gallery and navigate to the next image with KEYBOARD', () => {
       const element: DebugElement = fixture.debugElement;
