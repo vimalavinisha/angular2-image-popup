@@ -42,8 +42,6 @@ require('zone.js/dist/fake-async-test');
 // RxJS
 require('rxjs/Rx');
 
-
-
 //https://github.com/qdouble/angular-webpack2-starter/blob/master/test-config/spec-bundle.js
 
 /*

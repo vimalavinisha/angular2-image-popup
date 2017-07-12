@@ -490,7 +490,6 @@ describe('AngularModalGalleryComponent', () => {
     });
 
     it('should display the modal gallery and navigate to the next image with a swipe action', () => {
-      const element: DebugElement = fixture.debugElement;
       let index: number = 0;
       updateInputs(IMAGES);
       openModalGalleryByThumbIndex(index);
@@ -503,19 +502,35 @@ describe('AngularModalGalleryComponent', () => {
         // imageNumber is the clicked image number (not index (0...), but number (1...)),
         // imageNumber + 1 is the next image index (because in this test I navigate to the next image
         const imageNumber: number = index + 1;
-        expect((out.action === Action.KEYBOARD) || (out.action === Action.LOAD)).toBeTruthy();
+        expect((out.action === Action.SWIPE) || (out.action === Action.LOAD)).toBeTruthy();
         // FIXME please improve this
         expect((out.result === (imageNumber) || (out.result === (imageNumber + 1)))).toBeTruthy();
       });
 
+      comp.swipe(index, 'swiperight');
 
-      let img: DebugElement = element.query(By.css('img.effect'));
-      // window.Simulator.gestures.swipe(img);
+      fixture.detectChanges();
+    });
 
-      // let event: Event = document.createEvent('Event');
-      // event['keyCode'] = Keyboard.RIGHT_ARROW;
-      // event.initEvent('keydown', true, false);
-      // document.dispatchEvent(event);
+    it('should display the modal gallery and navigate to the previous image with a swipe action', () => {
+      let index: number = 1;
+      updateInputs(IMAGES);
+      openModalGalleryByThumbIndex(index);
+      fixture.detectChanges();
+      testArrowsVisibility();
+
+      comp.show.subscribe((out: ImageModalEvent) => {
+        // out contains the result, i.e. image number and not the image index.
+        // this is important, because clicking on thumb `0`, I'll receive `1` as a response.
+        // imageNumber is the clicked image number (not index (0...), but number (1...)),
+        // imageNumber + 1 is the next image index (because in this test I navigate to the next image
+        const imageNumber: number = index + 1;
+        expect((out.action === Action.SWIPE) || (out.action === Action.LOAD)).toBeTruthy();
+        // FIXME please improve this
+        expect((out.result === (imageNumber) || (out.result === (imageNumber - 1)))).toBeTruthy();
+      });
+
+      comp.swipe(index, 'swipeleft');
 
       fixture.detectChanges();
     });
