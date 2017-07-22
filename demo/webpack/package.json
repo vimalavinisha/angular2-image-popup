@@ -55,7 +55,7 @@
     "@angular/platform-server": "^4.3.1",
     "@angular/router": "^4.3.1",
     "@angularclass/idle-preload": "^1.0.4",
-    "angular-modal-gallery": "^3.1.0",
+    "angular-modal-gallery": "^3.2.0",
     "bootstrap": "4.0.0-alpha.6",
     "bootstrap-loader": "^2.1.0",
     "classlist.js": "^1.1.20150312",
