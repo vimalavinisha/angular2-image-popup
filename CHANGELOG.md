@@ -2,7 +2,13 @@
 ### New features
 - #62 add 'alt' attribute to all img tags
 - #45 Both at the beginning and at the end, side arrows should be hidden
-- #44 Infinite scroll (configurable)
+- #44 Infinite sliding (configurable)
+
+### Docs
+- official documentation updated [HERE](https://ks89.github.io/angular-modal-gallery.github.io/).
+
+### Demos
+- all demos updated
 
 ### Internal library changes
 - #66 improve unit testing with swipe events
