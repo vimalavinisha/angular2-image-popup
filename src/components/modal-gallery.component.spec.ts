@@ -23,7 +23,7 @@ import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/takeLast';
 
 import {
-  Action, AngularModalGalleryComponent, ButtonsConfig, Description, Image, ImageModalEvent,
+  Action, AngularModalGalleryComponent, Description, Image, ImageModalEvent,
   Keyboard
 } from './modal-gallery.component';
 
@@ -34,6 +34,8 @@ import { CloseButtonDirective } from '../directives/close-button.directive';
 import { ExternalUrlButtonDirective } from '../directives/external-url-button.directive';
 import { DownloadButtonDirective } from '../directives/download-button.directive';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
+
+import { ButtonsConfig } from './buttonsconfig.interface';
 
 import 'hammerjs';
 import 'mousetrap';

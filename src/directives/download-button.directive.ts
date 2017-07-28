@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges, SimpleChanges, OnInit, Renderer } from '@angular/core';
-import { ButtonsConfig } from '../components/modal-gallery.component';
+
+import { ButtonsConfig } from '../components/buttonsconfig.interface';
 
 /**
  * Directive to display the download button.

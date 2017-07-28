@@ -1,3 +1,8 @@
+# 3.2.1
+- all dependencies updated
+- #71 'ButtonsConfig' was not found in './modal-gallery.component' (bug of angular-cli -> I used a temporary workaround)
+
+
 # 3.2.0
 ### New features
 - #62 add 'alt' attribute to all img tags

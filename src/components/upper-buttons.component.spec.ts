@@ -18,11 +18,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { ButtonsConfig, Image } from './modal-gallery.component';
+import { Image } from './modal-gallery.component';
 import { UpperButtonsComponent } from './upper-buttons.component';
 import { DownloadButtonDirective } from '../directives/download-button.directive';
 import { ExternalUrlButtonDirective } from '../directives/external-url-button.directive';
 import { CloseButtonDirective } from '../directives/close-button.directive';
+
+import { ButtonsConfig } from './buttonsconfig.interface';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;

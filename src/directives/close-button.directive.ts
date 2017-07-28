@@ -23,7 +23,8 @@
  */
 
 import { Directive, Input, OnChanges, Renderer, ElementRef, SimpleChanges, OnInit } from '@angular/core';
-import { ButtonsConfig } from '../components/modal-gallery.component';
+
+import { ButtonsConfig } from '../components/buttonsconfig.interface';
 
 /**
  * Directive to display the close button.

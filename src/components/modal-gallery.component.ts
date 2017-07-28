@@ -29,6 +29,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { KeyboardService } from './keyboard.service';
 
+import { ButtonsConfig } from './buttonsconfig.interface';
+
 /**
  * Enum `Action` with a list of possible actions.
  */
@@ -95,14 +97,14 @@ export interface Description {
   beforeTextDescription?: string;
 }
 
-/**
- * Interface `ButtonsConfig` to show/hide buttons.
- */
-export interface ButtonsConfig {
-  download?: boolean;
-  extUrl?: boolean;
-  close?: boolean;
-}
+// /**
+//  * Interface `ButtonsConfig` to show/hide buttons.
+//  */
+// export interface ButtonsConfig {
+//   download?: boolean;
+//   extUrl?: boolean;
+//   close?: boolean;
+// }
 
 /**
  * Interface `KeyboardConfig` to assign custom keyCodes to ESC, RIGHT and LEFT keyboard's actions.
