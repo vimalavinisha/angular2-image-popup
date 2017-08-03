@@ -1,3 +1,8 @@
+# 3.2.2
+### Bug fixes
+- #73 Fix: "ERROR in Error encountered resolving symbol values statically. Function calls are not supported. Consider replacing the function or lambda with a reference to an exported function ..."
+
+
 # 3.2.1
 - all dependencies updated
 - #71 'ButtonsConfig' was not found in './modal-gallery.component' (bug of angular-cli -> I used a temporary workaround)
