@@ -25,8 +25,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
@@ -167,7 +167,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    if(this.imagesArraySubscription) {
+    if (this.imagesArraySubscription) {
       this.imagesArraySubscription.unsubscribe();
     }
   }
