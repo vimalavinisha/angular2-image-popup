@@ -25,7 +25,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { AngularModalGalleryModule } from './src/modal-gallery.module';
 
-export { AngularModalGalleryModule } from './src/modal-gallery.module';
+// Is this needed?
+// export { AngularModalGalleryModule } from './src/modal-gallery.module';
 
 export { Image, ImageModalEvent, Action, Description, KeyboardConfig } from './src/components/modal-gallery.component';
 
