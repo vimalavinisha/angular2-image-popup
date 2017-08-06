@@ -1,13 +1,13 @@
 {
   "name": "angular-modal-gallery",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Modal image gallery for Angular >=2",
   "main": "index.ts",
   "license": "MIT",
   "author": "Stefano Cappa",
   "engines": {
-    "node": ">=8.0.0",
-    "npm": ">=5.0.0"
+    "node": ">=6.0.0",
+    "npm": ">=3.8.6"
   },
   "homepage": "https://github.com/Ks89/angular-modal-gallery#readme",
   "scripts": {
