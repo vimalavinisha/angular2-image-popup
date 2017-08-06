@@ -39,10 +39,10 @@ import { GalleryComponent } from './components/gallery.component';
   declarations: [ AngularModalGalleryComponent, UpperButtonsComponent, GalleryComponent, DIRECTIVES ],
   exports: [ AngularModalGalleryComponent ]
 })
-export class AngularModalGalleryModule {
+export class ModalGalleryModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AngularModalGalleryModule,
+      ngModule: ModalGalleryModule,
       providers: [
         KeyboardService
       ]

@@ -22,45 +22,45 @@
  SOFTWARE.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { AngularModalGalleryModule } from './src/modal-gallery.module';
+// import { NgModule, ModuleWithProviders } from '@angular/core';
 
-// Is this needed?
-// export { AngularModalGalleryModule } from './src/modal-gallery.module';
+import { ModalGalleryModule } from './src/modal-gallery.module';
+export { ModalGalleryModule } from './src/modal-gallery.module';
 
 export { Image, ImageModalEvent, Action, Description, KeyboardConfig } from './src/components/modal-gallery.component';
 
 export { ButtonsConfig } from './src/components/buttonsconfig.interface';
 
-/**
- * Exported Main Module without `forRoot`.
- */
-@NgModule({
-  imports: [
-    AngularModalGalleryModule.forRoot()
-  ],
-  exports: [
-    AngularModalGalleryModule
-  ]
-})
-export class AngularRootModalGalleryModule {
-}
 
-/**
- * Exported Main Module with `forRoot`.
- */
-@NgModule({
-  imports: [
-    AngularModalGalleryModule
-  ],
-  exports: [
-    AngularModalGalleryModule
-  ]
-})
-export class ModalGalleryModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: AngularRootModalGalleryModule
-    };
-  }
-}
+// /**
+//  * Exported Main Module without `forRoot`.
+//  */
+// @NgModule({
+//   imports: [
+//     AngularModalGalleryModule.forRoot()
+//   ],
+//   exports: [
+//     AngularModalGalleryModule
+//   ]
+// })
+// export class AngularRootModalGalleryModule {
+// }
+//
+// /**
+//  * Exported Main Module with `forRoot`.
+//  */
+// @NgModule({
+//   imports: [
+//     AngularModalGalleryModule
+//   ],
+//   exports: [
+//     AngularModalGalleryModule
+//   ]
+// })
+// export class ModalGalleryModule {
+//   static forRoot(): ModuleWithProviders {
+//     return {
+//       ngModule: AngularRootModalGalleryModule
+//     };
+//   }
+// }

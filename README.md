@@ -20,8 +20,7 @@ It's also possible to navigate between these images with both **keyboard arrows*
 Starting from version 3, you can **download images** (with either the button or with **keyboard shortcut ctrl+s / cmd+s**) or navigate to an **external url**.
 
 Version 3.1.x includes other cool features, for instance **advanced configurations** and a **click outside** feature to close the modal gallery.
-
-This project was born as a fork of [THIS REPO](https://github.com/vimalavinisha/angular2-image-popup).
+Also, version 3.2.x includes a new input to disable **infinite sliding**.
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
@@ -45,6 +44,7 @@ If you have issues, try to install also:
 
 
 ## News
+- 08/06/2017 - 3.2.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/03/2017 - 3.2.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 07/29/2017 - 3.2.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 07/23/2017 - 3.2.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
