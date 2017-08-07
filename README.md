@@ -21,6 +21,8 @@ Starting from version 3, you can **download images** (with either the button or 
 
 Version 3.1.x includes other cool features, for instance **advanced configurations** and a **click outside** feature to close the modal gallery.
 Also, version 3.2.x includes a new input to disable **infinite sliding**.
+With version 3.3.x, you can **change download keyboard's shortcuts from the RootModule** of your application.
+
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
@@ -44,6 +46,7 @@ If you have issues, try to install also:
 
 
 ## News
+- 08/08/2017 - 3.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/06/2017 - 3.2.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/03/2017 - 3.2.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 07/29/2017 - 3.2.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -74,7 +77,7 @@ If you have issues, try to install also:
 Two different ways (both of them are good):
 - using my full and runnable examples (`SystemJs`, `Webpack2`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
 - checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
-
+- sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 
 ## Contributing
 
