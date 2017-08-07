@@ -25,7 +25,7 @@
 import { Input, Output, EventEmitter, Component } from '@angular/core';
 import { Image } from './modal-gallery.component';
 
-import { ButtonsConfig } from './buttonsconfig.interface';
+import { ButtonsConfig } from '../interfaces/buttons-config.interface';
 
 /**
  * Component with all upper right buttons.

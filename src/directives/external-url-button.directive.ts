@@ -24,7 +24,7 @@
 
 import { Directive, ElementRef, Input, OnChanges, Renderer, SimpleChanges, OnInit } from '@angular/core';
 
-import { ButtonsConfig } from '../components/buttonsconfig.interface';
+import { ButtonsConfig } from '../interfaces/buttons-config.interface';
 
 /**
  * Directive to display the external url button.

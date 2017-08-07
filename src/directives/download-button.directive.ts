@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges, SimpleChanges, OnInit, Renderer } from '@angular/core';
 
-import { ButtonsConfig } from '../components/buttonsconfig.interface';
+import { ButtonsConfig } from '../interfaces/buttons-config.interface';
 
 /**
  * Directive to display the download button.

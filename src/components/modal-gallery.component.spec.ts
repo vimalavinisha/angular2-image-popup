@@ -15,7 +15,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { DebugElement, InjectionToken } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -27,7 +27,7 @@ import {
   Keyboard
 } from './modal-gallery.component';
 
-import { KeyboardService } from './keyboard.service';
+import { KeyboardService } from '../services/keyboard.service';
 import { UpperButtonsComponent } from './upper-buttons.component';
 import { GalleryComponent } from './gallery.component';
 import { CloseButtonDirective } from '../directives/close-button.directive';
@@ -35,7 +35,14 @@ import { ExternalUrlButtonDirective } from '../directives/external-url-button.di
 import { DownloadButtonDirective } from '../directives/download-button.directive';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
 
-import { ButtonsConfig } from './buttonsconfig.interface';
+import { ButtonsConfig } from '../interfaces/buttons-config.interface';
+import { KeyboardServiceConfig } from '../interfaces/keyboard-service-config.interface';
+
+const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
+
+function setupRouter(injector: KeyboardServiceConfig) {
+  return new KeyboardService(injector);
+}
 
 import 'hammerjs';
 import 'mousetrap';
@@ -92,7 +99,15 @@ function initTestBed() {
   }).overrideComponent(AngularModalGalleryComponent, {
     set: {
       providers: [
-        {provide: KeyboardService, useClass: KeyboardService}
+        {
+          provide: KeyboardService,
+          useFactory: setupRouter,
+          deps: [ KEYBOARD_CONFIGURATION ]
+        },
+        {
+          provide: KEYBOARD_CONFIGURATION,
+          useValue: {}
+        }
       ]
     }
   }); // not necessary with webpack .compileComponents();

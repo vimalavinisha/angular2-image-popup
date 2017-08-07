@@ -29,7 +29,7 @@ export { ModalGalleryModule } from './src/modal-gallery.module';
 
 export { Image, ImageModalEvent, Action, Description, KeyboardConfig } from './src/components/modal-gallery.component';
 
-export { ButtonsConfig } from './src/components/buttonsconfig.interface';
+export { ButtonsConfig } from './src/interfaces/buttons-config.interface';
 
 
 // /**

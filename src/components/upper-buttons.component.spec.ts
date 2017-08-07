@@ -24,7 +24,7 @@ import { DownloadButtonDirective } from '../directives/download-button.directive
 import { ExternalUrlButtonDirective } from '../directives/external-url-button.directive';
 import { CloseButtonDirective } from '../directives/close-button.directive';
 
-import { ButtonsConfig } from './buttonsconfig.interface';
+import { ButtonsConfig } from '../interfaces/buttons-config.interface';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;

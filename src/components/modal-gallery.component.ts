@@ -27,9 +27,9 @@ import { OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { KeyboardService } from './keyboard.service';
+import { KeyboardService } from '../services/keyboard.service';
 
-import { ButtonsConfig } from './buttonsconfig.interface';
+import { ButtonsConfig } from '../interfaces/buttons-config.interface';
 
 /**
  * Enum `Action` with a list of possible actions.

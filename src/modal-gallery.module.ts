@@ -22,18 +22,15 @@
  SOFTWARE.
  */
 
-import { NgModule, ModuleWithProviders, InjectionToken, Injector } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AngularModalGalleryComponent } from './components/modal-gallery.component';
 import { DIRECTIVES } from './directives/directives';
 import { UpperButtonsComponent } from './components/upper-buttons.component';
-import { KeyboardService, } from './components/keyboard.service';
+import { KeyboardService, } from './services/keyboard.service';
 import { GalleryComponent } from './components/gallery.component';
-
-export interface KeyboardServiceConfig {
-  shortcuts: Array<string> | string;
-}
+import { KeyboardServiceConfig } from './interfaces/keyboard-service-config.interface';
 
 export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 

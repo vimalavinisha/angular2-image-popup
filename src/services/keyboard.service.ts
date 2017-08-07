@@ -25,7 +25,8 @@
 import { Inject, Injectable } from '@angular/core';
 import 'mousetrap';
 
-import { KeyboardServiceConfig, KEYBOARD_CONFIGURATION } from '../modal-gallery.module';
+import { KEYBOARD_CONFIGURATION } from '../modal-gallery.module';
+import { KeyboardServiceConfig } from '../interfaces/keyboard-service-config.interface';
 
 /**
  * Service to intercept ctrl+s (or cmd+s on macOS) using a third-party library, called Mousetrap.
