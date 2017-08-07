@@ -22,8 +22,10 @@
  SOFTWARE.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import 'mousetrap';
+
+import { KeyboardServiceConfig, KEYBOARD_CONFIGURATION } from '../modal-gallery.module';
 
 /**
  * Service to intercept ctrl+s (or cmd+s on macOS) using a third-party library, called Mousetrap.
@@ -31,8 +33,10 @@ import 'mousetrap';
 @Injectable()
 export class KeyboardService {
   private mousetrap: MousetrapInstance;
+  private shortcuts: Array<string> | string;
 
-  constructor() {
+  constructor(@Inject(KEYBOARD_CONFIGURATION) private config: KeyboardServiceConfig) {
+    this.shortcuts = this.config && this.config.shortcuts ? this.config.shortcuts : ['ctrl+s', 'meta+s'];
     this.mousetrap = new (<any>Mousetrap)();
   }
 
@@ -41,7 +45,7 @@ export class KeyboardService {
    * @param onBind Callback function
    */
   add(onBind: (e: ExtendedKeyboardEvent, combo: string) => any) {
-    this.mousetrap.bind(['ctrl+s', 'meta+s'], (event: KeyboardEvent, combo: string) => {
+    this.mousetrap.bind(this.shortcuts, (event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
         event.preventDefault();
       } else {

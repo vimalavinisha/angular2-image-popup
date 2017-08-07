@@ -22,14 +22,20 @@
  SOFTWARE.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AngularModalGalleryComponent } from './components/modal-gallery.component';
 import { DIRECTIVES } from './directives/directives';
 import { UpperButtonsComponent } from './components/upper-buttons.component';
-import { KeyboardService } from './components/keyboard.service';
+import { KeyboardService, } from './components/keyboard.service';
 import { GalleryComponent } from './components/gallery.component';
+
+export interface KeyboardServiceConfig {
+  shortcuts: Array<string> | string;
+}
+
+export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 
 /**
  * Module with `forRoot` method to import it in the root module of your application.
@@ -40,13 +46,25 @@ import { GalleryComponent } from './components/gallery.component';
   exports: [ AngularModalGalleryComponent ]
 })
 export class ModalGalleryModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {
     return {
       ngModule: ModalGalleryModule,
       providers: [
-        KeyboardService
+        {
+          provide: KeyboardService,
+          useFactory: setupRouter,
+          deps: [ KEYBOARD_CONFIGURATION ]
+        },
+        {
+          provide: KEYBOARD_CONFIGURATION,
+          useValue: config ? config : {}
+        }
       ]
     };
   }
+}
+
+export function setupRouter(injector: KeyboardServiceConfig) {
+  return new KeyboardService(injector);
 }
 
