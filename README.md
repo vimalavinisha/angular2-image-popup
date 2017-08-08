@@ -21,7 +21,7 @@ Starting from version 3, you can **download images** (with either the button or 
 
 Version 3.1.x includes other cool features, for instance **advanced configurations** and a **click outside** feature to close the modal gallery.
 Also, version 3.2.x includes a new input to disable **infinite sliding**.
-With version 3.3.x, you can **change download keyboard's shortcuts from the RootModule** of your application.
+With version 3.3.x, you can **change download keyboard's shortcuts from the root module** of your application.
 
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
