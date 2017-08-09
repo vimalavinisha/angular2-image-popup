@@ -25,7 +25,7 @@
 import { Inject, Injectable } from '@angular/core';
 import 'mousetrap';
 
-import { KEYBOARD_CONFIGURATION } from '../modal-gallery.module';
+import { KEYBOARD_CONFIGURATION } from '../../index';
 import { KeyboardServiceConfig } from '../interfaces/keyboard-service-config.interface';
 
 /**

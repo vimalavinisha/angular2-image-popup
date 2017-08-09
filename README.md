@@ -46,6 +46,7 @@ If you have issues, try to install also:
 
 
 ## News
+- 08/09/2017 - 3.3.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/08/2017 - 3.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/06/2017 - 3.2.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/03/2017 - 3.2.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

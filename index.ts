@@ -24,12 +24,61 @@
 
 // import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { ModalGalleryModule } from './src/modal-gallery.module';
-export { ModalGalleryModule } from './src/modal-gallery.module';
+// import { ModalGalleryModule } from './src/modal-gallery.module';
+// export { ModalGalleryModule } from './src/modal-gallery.module';
 
 export { Image, ImageModalEvent, Action, Description, KeyboardConfig } from './src/components/modal-gallery.component';
 
 export { ButtonsConfig } from './src/interfaces/buttons-config.interface';
+
+import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { AngularModalGalleryComponent } from './src/components/modal-gallery.component';
+import { DIRECTIVES } from './src/directives/directives';
+import { UpperButtonsComponent } from './src/components/upper-buttons.component';
+import { KeyboardService, } from './src/services/keyboard.service';
+import { GalleryComponent } from './src/components/gallery.component';
+import { KeyboardServiceConfig } from './src/interfaces/keyboard-service-config.interface';
+
+export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
+
+/**
+ * Module with `forRoot` method to import it in the root module of your application.
+ */
+@NgModule({
+  imports: [ CommonModule ],
+  declarations: [ AngularModalGalleryComponent, UpperButtonsComponent, GalleryComponent, DIRECTIVES ],
+  exports: [ AngularModalGalleryComponent ]
+})
+export class ModalGalleryModule {
+  static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {
+    return {
+      ngModule: ModalGalleryModule,
+      providers: [
+        {
+          provide: KEYBOARD_CONFIGURATION,
+          useValue: config ? config : {}
+        },
+        {
+          provide: KeyboardService,
+          useFactory: setupKeyboardService,
+          deps: [ KEYBOARD_CONFIGURATION ]
+        }
+      ]
+    };
+  }
+}
+
+export function setupKeyboardService(injector: KeyboardServiceConfig) {
+  return new KeyboardService(injector);
+}
+
+
+
+
+
+
 
 
 // /**

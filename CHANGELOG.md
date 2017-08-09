@@ -1,3 +1,9 @@
+# 3.3.1
+### Internal library changes
+- Small refactoring
+- #73 Trying to fix again "ERROR in Error encountered resolving symbol values statically. Function calls are not supported. Consider replacing the function or lambda with a reference to an exported function ..."
+
+
 # 3.3.0
 ### New features
 - #41 KeyboardService should be capable to receive an object with an array of shortcuts from outside to configure Mousetrap. This is available as Global configuration of the Root Module.
