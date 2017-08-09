@@ -1,3 +1,8 @@
+# 3.3.3
+### Bug fixes
+- Fix for version 3.3.2 (broken)
+
+
 # 3.3.2
 ### Internal library changes
 - Revert refactoring of 3.3.1
