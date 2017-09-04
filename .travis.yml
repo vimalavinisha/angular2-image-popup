@@ -19,10 +19,7 @@ addons:
     packages:
       - g++-4.8
 before_script:
-  #- bash travisci/before_script.sh
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  - source travisci/before_script.sh # starts in the same shell
 script:
   - bash travisci/travis_script.sh
 after_success:
