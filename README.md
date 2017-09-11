@@ -29,6 +29,13 @@ With version 3.3.x, you can **change download keyboard's shortcuts from the root
 **angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 2 (Angular 4 is really recommended)**
 
 
+## angular-modal-gallery 4.0.0 (WORK IN PROGRESS)
+
+**angular-modal-gallery 4.0.0 features/roadmap [HERE](https://github.com/Ks89/angular-modal-gallery/issues/80).**
+
+**Please, add your ideas or help to implement some features.**
+
+
 ## **Official live DEMO + DOCUMENTATION**
 
 *Image loading could be slow, because this demo is hosted on Github pages*
