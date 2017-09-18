@@ -22,47 +22,4 @@
  * SOFTWARE.
  */
 
-import angular from 'rollup-plugin-angular-aot';
-import sass from 'node-sass';
-import CleanCSS from 'clean-css';
-import { minify as minifyHtml } from 'html-minifier';
-
-const cssmin = new CleanCSS();
-const htmlminOpts = {
-  caseSensitive: true,
-  collapseWhitespace: true,
-  removeComments: true,
-};
-
-export default {
-  entry: 'dist/index.js',
-  dest: 'dist/bundles/angular-modal-gallery.umd.js',
-  sourceMap: false,
-  format: 'umd',
-  moduleName: 'ng.angular.modal.gallery',
-  plugins: [
-    angular({
-      preprocessors: {
-        template: template => minifyHtml(template, htmlminOpts),
-        style: scss => {
-          const css = sass.renderSync({data: scss}).css;
-          return cssmin.minify(css).styles;
-        }
-      }
-    })
-  ],
-  external: [
-    'mousetrap',
-    'hammerjs',
-    'font-awesome',
-    '@angular/core',
-    '@angular/common',
-    'rxjs/Observable'
-  ],
-  globals: {
-    '@angular/core': 'ng.core',
-    '@angular/common': 'ng.common',
-    'rxjs/Observable': 'Rx',
-    'rxjs/Subscription': 'Rx'
-  }
-}
+module.exports = require('./config/webpack.test.js');

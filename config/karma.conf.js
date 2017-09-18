@@ -24,7 +24,7 @@
 
 'use strict';
 
-const webpackConfig = require('./config/webpack.test');
+const webpackConfig = require('./webpack.test');
 const os = require('os');
 
 console.log(`Starting Karma with isCI=${!!isCI()}`);
@@ -35,24 +35,22 @@ function isCI() {
 
 function getBrowsers() {
   if (process.env.CI) {
-    if(process.env.APPVEYOR) { // variable defined by APPVEYOR itself
+    if (process.env.APPVEYOR) { // variable defined by APPVEYOR itself
       // only for AppVeyor
-      return ['Chrome', 'Firefox']//, 'IE'];
-    } else {
-      return ['PhantomJS', 'Firefox'];  // Travis CI
+      return ['Chrome', 'Firefox' /*, 'IE'*/];
+    } else if (process.env.TRAVIS) { // variable defined by TRAVIS itself
+      return ['ChromeHeadless', 'Chrome', 'Firefox'];
+    } else if (process.env.CIRCLECI) { // variable defined by CIRCLECI itself
+      return ['ChromeHeadless', 'Chrome', 'Firefox'];
     }
   } else {
     switch(os.platform()) {
       case 'win32': // Windows
-        // TODO add 'PhantomJS' - at the moment isn't working on Windows10 (only for test in ProfileComponent, WTF!!!)
-        return ['Chrome', 'Firefox', 'IE'];
-        break;
+        return ['ChromeHeadless', 'Chrome', 'Firefox' /*'IE'*/];
       case 'darwin': // macOS
-        return ['PhantomJS', 'Chrome', 'Firefox'];
-        break;
+        return ['ChromeHeadless', 'Chrome', 'Firefox'/*, 'Safari'*/];
       default: // other (linux, freebsd, openbsd, sunos, aix)
-        return ['PhantomJS', 'Chrome', 'Firefox'];
-        break;
+        return ['ChromeHeadless', 'Chrome', 'Firefox'];
     }
   }
 }
@@ -62,14 +60,16 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      "./config/karma-test-runner.js"
+      { pattern: './config/karma-test-runner.js', watched: false }
     ],
-    // files: [
-    //   {
-    //     pattern: './config/karma-test-runner.js',
-    //     watched: false
-    //   }
-    // ],
+
+    // /**
+    //  * By default all assets are served at http://localhost:[PORT]/base/
+    //  */
+    // proxies: {
+    //   "/assets/": "/base/src/assets/"
+    // },
+
     exclude: [],
     preprocessors: {
       './config/karma-test-runner.js': ['coverage', 'webpack', 'sourcemap']
@@ -109,6 +109,20 @@ module.exports = function (config) {
     },
     jasmineDiffReporter: {
       multiline: true
+    },
+
+    customLaunchers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--no-sandbox',
+          // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+          '--headless',
+          '--disable-gpu',
+          // Without a remote debugging port, Google Chrome exits immediately.
+          ' --remote-debugging-port=9222',
+        ]
+      }
     },
 
     // For AppVeyor and TravisCI to prevent timeouts

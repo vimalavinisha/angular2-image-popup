@@ -2,6 +2,12 @@
 
 echo "Before install - OS is $TRAVIS_OS_NAME"
 
+# switch to npm 5
+npm install -g npm@5
+npm cache verify
+npm prune
+npm update
+
 echo "Exporting env variables dependencies"
 # export env variables, thanks to https://github.com/travis-ci/travis-ci/issues/7099
 if [[ $TRAVIS_OS_NAME = 'osx' ]]; then
