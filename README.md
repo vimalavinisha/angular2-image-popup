@@ -53,6 +53,7 @@ If you have issues, try to install also:
 
 
 ## News
+- ??/09/2017 - 3.3.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/09/2017 - 3.3.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/09/2017 - 3.3.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/09/2017 - 3.3.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -88,6 +89,13 @@ Two different ways (both of them are good):
 - using my full and runnable examples (`SystemJs`, `Webpack2`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
 - checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 - sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
+
+
+## FAQS
+
+1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
+   Answer: Simply run `npm i --save-dev @types/mousetrap`
+
 
 ## Contributing
 
