@@ -164,13 +164,14 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   @Input() keyboardConfig: KeyboardConfig;
   /**
    * enableCloseOutside's input to enable modal-gallery close's behaviour while clicking
-   * on the semi-transparent background. Disabled by default.
+   * on the semi-transparent background. Enabled by default.
    */
-  @Input() enableCloseOutside: boolean = false;
+  @Input() enableCloseOutside: boolean = true;
   /**
    * Object of type `SlideConfig` to configure sliding of modal gallery.
+   * Disabled by default.
    */
-  @Input() slideConfig: SlideConfig;
+  @Input() slideConfig: SlideConfig = { infinite: false };
 
   /**
    * DEPRECATED
@@ -630,7 +631,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Method `manageSlideConfig` to manage boundary arrows and sliding.
    * This is based on @Input() slideConfig to enable/disable 'infinite sliding'.
-   * @param {number} index Number of the current visile image
+   * @param {number} index Number of the current visible image
    */
   private manageSlideConfig(index: number) {
     if (!this.slideConfig || this.slideConfig.infinite !== false) {
