@@ -25,11 +25,10 @@
 Error.stackTraceLimit = Infinity;
 
 require('core-js/es6');
-require('reflect-metadata');
+require('core-js/es7/reflect');
 
 // Typescript emit helpers polyfill
 require('ts-helpers');
-require('./matchers');
 
 require('zone.js/dist/zone');
 require('zone.js/dist/long-stack-trace-zone');

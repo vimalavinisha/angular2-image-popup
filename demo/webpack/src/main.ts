@@ -22,17 +22,26 @@
  * SOFTWARE.
  */
 
+/**
+ * This is the main file for 'app entry-point'.
+ * It boots Angular with either `debug` or `prod` configuration.
+ * It's used by Angular JIT (Just-In-Time) compiler when building
+ * this application with all scripts, except for `npm run build:prod:aot`.
+ */
+
 import { enableProdMode } from '@angular/core';
 import { bootloader } from '@angularclass/hmr';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { decorateModuleRef } from './environment';
 
-if (webpack.ENV === 'prod') {
+if (webpack.ENV === 'production') {
   enableProdMode();
 }
 
-// to be able to use Hot Module Replacement by AngularClass
+/**
+ * main function to boot the application.
+ */
 export function main(): Promise<any> {
   return platformBrowserDynamic()
     .bootstrapModule(AppModule)
@@ -40,6 +49,4 @@ export function main(): Promise<any> {
     .catch((err: any) => console.error(err));
 }
 
-// boot on document ready
-// uses Hot Module Replacement by AngularClass
 bootloader(main);

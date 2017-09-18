@@ -89,26 +89,18 @@ module.exports = webpackMerge(commonConfig, {
     new WebpackMd5HashPlugin(),
     new CompressionPlugin({regExp: /\.css$|\.html$|\.js$|\.map$/}),
     new UglifyJsPlugin({
-      beautify: false,
-      mangle: {
-        screw_ie8 : true
+      parallel: true,
+      uglifyOptions: {
+        ie8: false,
+        ecma: 6,
+        warnings: true,
+        mangle: true, // debug false
+        output: {
+          comments: false,
+          beautify: false // debug true
+        }
       },
-      output: {
-        comments: false
-      },
-      compress: {
-        screw_ie8: true,
-        warnings: false,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
-        sequences: true,
-        dead_code: true,
-        evaluate: true,
-        if_return: true,
-        join_vars: true,
-        negate_iife: false // we need this for lazy v8
-      }
+      warnings: true
     }),
     new LoaderOptionsPlugin({
       minimize: true,

@@ -38,6 +38,7 @@ const ngcWebpack                   = require('ngc-webpack');
 const ScriptExtHtmlWebpackPlugin   = require('script-ext-html-webpack-plugin');
 const BundleAnalyzerPlugin         = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VisualizerPlugin             = require('webpack-visualizer-plugin');
+const InlineManifestWebpackPlugin   = require('inline-manifest-webpack-plugin');
 
 // I'm using a plugin from npmjs.com based on the original html-elements-plugin/index.js by AngularClass
 // to prevent an issue on travis-ci.
@@ -86,6 +87,13 @@ module.exports = {
             options: {
               configFileName: '${TS_CONFIG}',
               useCache: !AOT && !PROD
+            }
+          },
+          {
+            loader: 'ngc-webpack',
+            options: {
+              // to create smaller aot builds
+              disable: !AOT,
             }
           },
           {
@@ -152,6 +160,10 @@ module.exports = {
     new CommonsChunkPlugin({
       name: ['polyfills', 'vendor'].reverse()
     }),
+    new CommonsChunkPlugin({
+      name: ['manifest'],
+      minChunks: Infinity,
+    }),
     new HtmlWebpackPlugin({
       title: TITLE,
       inject: true,
@@ -203,9 +215,18 @@ module.exports = {
     ]),
     new ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
-      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      /angular(\\|\/)core(\\|\/)@angular/,
       helpers.root('./src') // location of your src
     ),
+
+    /**
+     * Plugin: InlineManifestWebpackPlugin
+     * Inline Webpack's manifest.js in index.html
+     *
+     * https://github.com/szrenwei/inline-manifest-webpack-plugin
+     */
+    new InlineManifestWebpackPlugin(),
+
     new ngcWebpack.NgcWebpackPlugin({
       disabled: !AOT,
       tsConfig: helpers.root('tsconfig-aot.json')
@@ -214,6 +235,7 @@ module.exports = {
       jQuery: 'jquery',
       jquery: 'jquery',
       $: 'jquery',
+      'Popper': 'popper.js',
       'Tether': 'tether',
       'window.Tether': 'tether',
       //---------------------------------------------------

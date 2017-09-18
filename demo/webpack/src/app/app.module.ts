@@ -26,7 +26,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { ROUTES }  from './app.routing';
+import { ROUTES } from './app.routing';
 
 // Third party opensource libraries (that are using scss/css)
 import 'bootstrap-loader';
@@ -44,17 +44,18 @@ import { COMPONENTS } from './pages/components';
 import { AppComponent } from './app.component';
 
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
-import { IdlePreloadModule } from '@angularclass/idle-preload';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 
 @NgModule({
   imports: [
-    IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
     BrowserModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(ROUTES, {
+      useHash: Boolean(history.pushState) === false,
+      preloadingStrategy: PreloadAllModules
+    }),
     SharedModule,
 
     ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
@@ -88,7 +89,7 @@ export class AppModule {
     delete store.restoreInputValues;
   }
   hmrOnDestroy(store: any): any {
-    let cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
+    const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
     // recreate elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // inject your AppStore and grab state then set it on store

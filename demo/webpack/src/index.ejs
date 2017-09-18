@@ -12,7 +12,8 @@
     <%= webpackConfig.htmlElements.headTags %>
     <% } %>
 
-    <!-- Third-party css/scss imports are both in src/app/app.module and src/styles/ -->
+    <!-- Third-party CSS/SCSS imports are both in src/app/app.module and src/styles/ -->
+    <!-- CSS/SCSS will be added here by Webpack -->
 
     <base href="/">
 </head>
@@ -23,7 +24,8 @@
     <img style="position: absolute; top: 0; bottom: 0; right: 0; left: 0; margin: auto;" src="/assets/ring.svg"/>
 </mmw-app>
 
-<!-- Libraries will be included here automatically by Webpack-->
+<!-- Scripts will be added here by Webpack-->
+<%= htmlWebpackPlugin.files.webpackManifest %>
 
 </body>
 </html>
