@@ -1,5 +1,14 @@
 # 3.3.4
-### COMING SOON
+### Chores
+- Update official webpack demo to bootstrap 4 beta #87
+- refactoring and cleanup + tslint improved + ci improved #88
+- Update docs + add faqs + create templates for github #75
+- update to circleci 2.0 and add circleci 2.0 also to the doc website #78
+- update all dependencies
+- fix config for all CIs
+
+### Docs
+- Fix documentation website to be able to navigate to inner routes directly #86
 
 
 # 3.3.3

@@ -78,7 +78,7 @@ If you have issues, try to install also:
 - Angular component to display the image gallery
 - AOT support
 - Angular >= 2 (Angular 4 officially supported from version 3.0.2, but also working with both 3.0.0 and 3.0.1)
-- Tested with Webpack 2 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
+- Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
 
