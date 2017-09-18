@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Directive, ElementRef, Input, OnChanges, Renderer, SimpleChanges, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, OnInit } from '@angular/core';
 
 import { ButtonsConfig } from '../interfaces/buttons-config.interface';
 
@@ -43,7 +43,7 @@ export class ExternalUrlButtonDirective implements OnInit, OnChanges {
 
   private RIGHT: number = 63;
 
-  constructor(private renderer: Renderer, private el: ElementRef) { }
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
 
   ngOnInit() {
     this.applyStyle();
@@ -62,11 +62,11 @@ export class ExternalUrlButtonDirective implements OnInit, OnChanges {
     }
 
     // apply [style.right]="" to external url <a></a>
-    this.renderer.setElementStyle(this.el.nativeElement, 'right', `${right}px`);
+    this.renderer.setStyle(this.el.nativeElement, 'right', `${right}px`);
 
     // hide externalUrlButton based on this condition
     // configButtons && !configButtons.extUrl OR imgExtUrl is not valid (for instance is null)
-    this.renderer.setElementProperty(this.el.nativeElement, 'hidden', !this.configButtons || (this.configButtons && !this.configButtons.extUrl) || !this.imgExtUrl);
+    this.renderer.setProperty(this.el.nativeElement, 'hidden', !this.configButtons || (this.configButtons && !this.configButtons.extUrl) || !this.imgExtUrl);
 
   }
 
