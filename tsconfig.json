@@ -21,6 +21,16 @@
     }
   },
   "exclude": [
-    ".ng_build"
-  ]
+    "./src/**/*.spec.ts",
+    "./src/**/*.e2e.ts",
+    "./demo/**/*.*",
+    "./config/**/*.*"
+  ],
+  "files": [
+    "index.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "aot",
+    "skipMetadataEmit" : true
+  }
 }

@@ -2,7 +2,7 @@
   "name": "angular-modal-gallery",
   "version": "4.0.0",
   "description": "Modal image gallery for Angular >=2",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "license": "MIT",
   "author": "Stefano Cappa",
   "engines": {
