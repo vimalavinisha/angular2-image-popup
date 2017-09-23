@@ -73,6 +73,9 @@ demo/webpack/dll/
 demo/webpack/.scannerwork/
 demo/webpack/reports/
 
+demo/universal-angular-cli/dist
+demo/universal-webpack/dist
+
 bundle
 
 docs
