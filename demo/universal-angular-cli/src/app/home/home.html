@@ -1,0 +1,281 @@
+<h1>angular-modal-gallery official angular-cli demo</h1>
+<hr>
+<p>If you want, you can <b>add a random image</b> to every example <button (click)="addRandomImage()">Add image</button></p>
+<br>
+<hr>
+<p class="red-text center-text"><b>--- Only from version 3.2.x or greater ---</b></p>
+<section id="Images32-1">
+  <h3>1 - Array of images + slideConfig (without infinite sliding)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li><b>infinite sliding disabled</b> because, <u class="red-text">slideConfig.infinite = false</u></li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="images"
+                 [downloadable]="false"
+                 [slideConfig]="{infinite: false}"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<hr>
+<br>
+<br>
+<p class="red-text center-text"><b>--- Only from version 3.1.x or greater ---</b></p>
+<section id="Images31-1">
+  <h3>2 - Array of images + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'clickOutside'</span></h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+    <li><b>download button NOT visible</b> because, <u class="red-text">buttonsConfig.download = false</u></li>
+    <li><b>external url button NOT visible</b> (because <u class="red-text">buttonsConfig.extUrl=false</u>)</li>
+    <li><b>default keyboard config</b> because, <u class="red-text">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>
+    <li><b>close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is true</li>
+    <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="imagesArray"
+                 [buttonsConfig]="{download: false, extUrl: false, close: true}"
+                 [downloadable]="true"
+                 [enableCloseOutside]="true"
+                 [description]="customFullDescription"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<section id="Images31-2">
+  <h3>3 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'keyboardConfig'</span></h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+    <li><b>download button visible</b> because, <u class="red-text">buttonsConfig.download = true</u> and downloadable is also = true</li>
+    <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>custom keyboard's config</b> because, <u class="red-text">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow up' (38)</u></li>
+    <li><b>NO close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is false</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="images"
+                 [buttonsConfig]="{download: true, extUrl: true, close: true}"
+                 [keyboardConfig]="{esc: 81, left: 40, right: 38}"
+                 [downloadable]="true"
+                 [enableCloseOutside]="false"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<section id="Images31-3">
+  <h3>4 - Array of images without close button thanks to <span class="red-text">'buttonsConfig'</span></h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>download button NOT visible</b> because, <u class="red-text">buttonsConfig.download = false</u></li>
+    <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>close button NOT visible</b> because, <u class="red-text">buttonsConfig.close = false</u></li>
+    <li><b>default keyboard config</b> because, <u class="red-text">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>
+    <li><b>close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is true</li>
+    <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="imagesArray"
+                 [buttonsConfig]="{download: false, extUrl: true, close: false}"
+                 [enableCloseOutside]="true"
+                 [description]="customFullDescription"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<hr>
+<br>
+<br>
+<p class="center-text"><b>--- For all 3.x.x versions ---</b></p>
+<section id="Images1">
+  <h3>5 - Observable of images with delay(300)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>
+    <li><b>external url</b> button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>custom description</b> object = <b>imageText:</b> 'Look this image ', <b>numberSeparator:</b>' of ', <b>beforeTextDescription:</b>' => '</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="images"
+                 [downloadable]="false"
+                 [showExtUrlButton]="true"
+                 [description]="customDescription"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<section id="Images2">
+  <h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+    <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>
+    <li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="images"
+                 [showDownloadButton]="true"
+                 [downloadable]="true"
+                 [showExtUrlButton]="true"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<section id="Images3">
+  <h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+    <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>
+    <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="imagesArray"
+                 [showDownloadButton]="true"
+                 [downloadable]="true"
+                 [showExtUrlButton]="false"
+                 [description]="customFullDescription"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<section id="Images4">
+  <br>
+  <h3>8 - Observable of images with a single element and without a delay</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> without delay</li>
+    <li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <!-- both showDownloadButton and downloadable are false by default -->
+  <modal-gallery [modalImages]="singleImage"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<section id="Images5">
+  <br>
+  <h3>9 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>imagePointer as input</b></li>
+    <li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>
+    <li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <div *ngFor="let img of imagesArray; let i = index">
+    <div class="float-left" *ngIf="i <= 2">
+      <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>
+      <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
+      <img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
+    </div>
+  </div>
+  <div *ngIf="openModalWindow">
+    <modal-gallery [modalImages]="imagesArray"
+                   [imagePointer]="imagePointer"
+                   [downloadable]="true"
+                   [showExtUrlButton]="true"
+                   (hasData)="onImageLoaded($event)"
+                   (close)="onCloseImageModal($event)"
+                   (show)="onVisibleIndex($event)"
+                   (firstImage)="onIsFirstImage($event)"
+                   (lastImage)="onIsLastImage($event)"></modal-gallery>
+  </div>
+</section>
+<br><br>
+<section id="Images6">
+  <br>
+  <h3>10 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>imagePointer as input</b></li>
+    <li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <div *ngFor="let img of images | async; let i = index">
+    <div class="float-left" *ngIf="i <= 2">
+      <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}
+        more </a>
+      <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+      <img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+    </div>
+  </div>
+  <div *ngIf="openModalWindowObservable">
+    <modal-gallery [modalImages]="images"
+                   [imagePointer]="imagePointerObservable"
+                   [downloadable]="true"
+                   [showExtUrlButton]="false"
+                   (hasData)="onImageLoaded($event)"
+                   (close)="onCloseImageModal($event)"
+                   (show)="onVisibleIndex($event)"
+                   (firstImage)="onIsFirstImage($event)"
+                   (lastImage)="onIsLastImage($event)"></modal-gallery>
+  </div>
+</section>
+<br><br>
+<section id="Images7">
+  <br>
+  <h3>11 - Array of images initialized inside a .subscribe() of an Observable with delay(500)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b> initialized inside a subscribe to simulate a more realistic scenario</li>
+    <li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <modal-gallery [modalImages]="imagesArraySubscribed"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></modal-gallery>
+</section>
+<br><br>
+<h4>Created by Stefano Cappa (Ks89)</h4>
