@@ -69,6 +69,9 @@ demo/systemjs/**/*.map
 
 demo/webpack/docs/
 demo/webpack/dll/
+# sonarqube
+demo/webpack/.scannerwork/
+demo/webpack/reports/
 
 bundle
 

@@ -28,13 +28,15 @@ With version 3.3.x, you can **change download keyboard's shortcuts from the root
 
 **angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 2 (Angular 4 is really recommended)**
 
+<br><br>
 
-## angular-modal-gallery 4.0.0 (WORK IN PROGRESS)
+# angular-modal-gallery 4.0.0 (WORK IN PROGRESS)
 
 **angular-modal-gallery 4.0.0 features/roadmap [HERE](https://github.com/Ks89/angular-modal-gallery/issues/80).**
 
 **Please, add your ideas or help to implement some features.**
 
+<br><br>
 
 ## **Official live DEMO + DOCUMENTATION**
 
@@ -53,6 +55,7 @@ If you have issues, try to install also:
 
 
 ## News
+- 11/10/2017 - 3.3.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 19/09/2017 - 3.3.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/09/2017 - 3.3.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/09/2017 - 3.3.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -94,8 +97,10 @@ Two different ways (both of them are good):
 ## FAQS
 
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
-   Answer: Simply run `npm i --save-dev @types/mousetrap`
-
+   **Answer**: Simply run `npm i --save-dev @types/mousetrap`
+2. Question: **I have this error: `Error: No provider for KeyboardService`. What can I do?**<br>
+   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery.github.io/gettingStarted).
+   This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
 
 ## Contributing
 

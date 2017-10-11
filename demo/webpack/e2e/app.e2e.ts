@@ -24,15 +24,14 @@
 
 import { browser } from 'protractor';
 
-describe('App', () => {
+describe('Application', () => {
 
   beforeEach(() => {
     browser.get('/');
   });
 
   it('should have a title', () => {
-    let subject = browser.getTitle();
-    let result = 'My MEAN Website';
-    expect(subject).toEqual(result);
+    const subject: any = browser.getTitle();
+    expect(subject).toEqual('My MEAN Website');
   });
 });

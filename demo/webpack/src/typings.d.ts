@@ -33,11 +33,6 @@ interface SystemJS {
   import: (path?: string) => Promise<any>;
 }
 
-// JQuery
-interface JQuery {
-  carousel(fn: string): any;
-}
-
 // webpack
 declare const webpack: {
   ENV: string

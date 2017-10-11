@@ -76,11 +76,6 @@ module.exports = {
         exclude: [/\.e2e\.ts$/]
       },
       {
-        test: /\.json$/,
-        loader: 'json-loader',
-        exclude: [helpers.root('src/index.html'), helpers.root('src/admin.html')]
-      },
-      {
         test: /\.css$/,
         loader: ['to-string-loader', 'css-loader'],
         exclude: [helpers.root('src/index.html'), helpers.root('src/admin.html')]

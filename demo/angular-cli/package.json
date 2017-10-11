@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery-angularcli-demo",
-  "version": "3.3.4",
+  "version": "3.3.5",
   "author": "Stefano Cappa",
   "description": "angular-cli demo for angular-modal-gallery",
   "main": "src/main.ts",
@@ -42,10 +42,10 @@
     "zone.js": "^0.8.17"
   },
   "devDependencies": {
-    "@angular/cli": "^1.4.2",
+    "@angular/cli": "^1.4.5",
     "@angular/compiler-cli": "^4.4.1",
     "@angular/language-service": "^4.4.1",
-    "@types/jasmine": "~2.5.53",
+    "@types/jasmine": "^2.6.0",
     "@types/jasminewd2": "^2.0.3",
     "@types/mousetrap": "^1.5.33",
     "@types/node": "^8.0.28",

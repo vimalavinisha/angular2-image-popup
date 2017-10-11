@@ -44,7 +44,8 @@
   },
   "angularCompilerOptions": {
     "genDir": "aot",
-    "skipMetadataEmit" : true
+    "skipMetadataEmit" : true,
+    "preserveWhitespaces": false // required for AOT to remove whitespaces, because I cannot provide this value to platformBrowser into main.aot.ts
   },
   "compileOnSave": false,
   "buildOnSave": false,

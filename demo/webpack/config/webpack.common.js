@@ -39,6 +39,7 @@ const ScriptExtHtmlWebpackPlugin   = require('script-ext-html-webpack-plugin');
 const BundleAnalyzerPlugin         = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VisualizerPlugin             = require('webpack-visualizer-plugin');
 const InlineManifestWebpackPlugin   = require('inline-manifest-webpack-plugin');
+const OfflinePlugin = require('offline-plugin');
 
 // I'm using a plugin from npmjs.com based on the original html-elements-plugin/index.js by AngularClass
 // to prevent an issue on travis-ci.
@@ -103,10 +104,6 @@ module.exports = {
         exclude: [/\.(spec|e2e)\.ts$/]
       },
       {
-        test: /\.json$/,
-        use: 'json-loader'
-      },
-      {
         test: /\.css$/,
         use: ['to-string-loader', 'css-loader'],
         exclude: [helpers.root('src', 'styles')]
@@ -145,6 +142,38 @@ module.exports = {
     ]
   },
   plugins: [
+    // new OfflinePlugin({
+    //   publicPath: '/',
+    //   caches: {
+    //     main: [
+    //       'app.*.css',
+    //       'vendor.*.js',
+    //       'app.*.js',
+    //     ],
+    //     additional: [
+    //       ':externals:'
+    //     ],
+    //     optional: [
+    //       ':rest:'
+    //     ]
+    //   },
+    //   externals: [
+    //     '/'
+    //   ],
+    //   excludes: ['**/.*', '**/*.map'],
+    //   responseStrategy: 'cache-first',
+    //   updateStrategy: 'changed',
+    //   autoUpdate: 1000 * 60 * 2,
+    //   ServiceWorker: {
+    //     events: true,
+    //     navigateFallbackURL: '/'
+    //   },
+    //   AppCache: {
+    //     FALLBACK: {
+    //       '/': '/offline-page.html'
+    //     }
+    //   }
+    // }),
     new ModuleConcatenationPlugin(),
     new NamedModulesPlugin(),
     new CommonsChunkPlugin({
@@ -166,7 +195,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: TITLE,
-      inject: true,
+      inject: 'body', //true or 'head'
+      //metadata: METADATA,
       chunksSortMode: 'dependency',
       chunks: ['polyfills', 'vendor', 'app'],
       template: TEMPLATE_PATH,

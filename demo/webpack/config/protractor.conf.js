@@ -45,8 +45,8 @@ exports.config = {
     /**
      * My e2e tests
      */
-    helpers.root('src/**/**.e2e.ts'),
-    helpers.root('src/**/*.e2e.ts')
+    helpers.root('e2e/**/**.e2e.ts'),
+    helpers.root('e2e/**/*.e2e.ts')
   ],
   exclude: [],
 

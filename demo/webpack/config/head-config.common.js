@@ -29,15 +29,18 @@ module.exports = {
     // { rel: 'apple-touch-icon', sizes: '180x180', href: '/assets/icon/apple-icon-180x180.png' },
     //
     // /** <link> tags for android web app icons **/
-    // { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/assets/icon/android-icon-192x192.png' },
+    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/assets/favicon.png' },
     //
     // /** <link> tags for favicons **/
     // { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/assets/icon/favicon-32x32.png' },
     // { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/assets/icon/favicon-96x96.png' },
     // { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/assets/icon/favicon-16x16.png' },
     //
-    // /** <link> tags for a Web App Manifest **/
-    // { rel: 'manifest', href: '/assets/manifest.json' },
+
+    /**
+     * <link> tags for a Web App Manifest
+     */
+    { rel: 'manifest', href: '/assets/manifest.json' },
 
     /** font-awesome css **/
     { rel: 'stylesheet', href: '/assets/font-awesome/css/font-awesome.min.css' }
