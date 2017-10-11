@@ -1,3 +1,12 @@
+# 3.3.5
+### Chores
+- #96 Update FAQ with question "Error: No provider for KeyboardService!"
+
+### Docs
+- #97 [DOC] fix wrong introduction in demo/no-infinite-sliding
+- #93 [DOC] fix wrong introduction in demo/keyboard-config
+
+
 # 3.3.4
 ### Chores
 - Update official webpack demo to bootstrap 4 beta #87
