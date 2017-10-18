@@ -10,6 +10,19 @@
 
 <br>
 
+# Experimental branch with ng-packagr
+
+To run:
+
+1. `npm i`, `cd examples/systemjs && npm i`, `cd examples/webpack && npm i` 
+2. `npm run build:lib`
+3. `npm run build:app`
+4. `cd dist/app && lite-server`
+5. `npm run build:examples`
+6. Now you can run all two official examples
+
+<br>
+
 ![angular-modal-gallery image](https://cloud.githubusercontent.com/assets/6057207/24118289/8ade6952-0dad-11e7-829f-416a24891ce0.png)
 
 <br>
