@@ -60,18 +60,14 @@ aot
 *.metadata.json
 *.ngfactory.ts
 *.ngsummary.json
-index.js
-index.js.map
+
 bundles
 
-examples/systemjs/**/*.js
-examples/systemjs/**/*.map
+examples/systemjs/app/*.js
+examples/systemjs/app/*.map
 
 examples/webpack/docs/
 examples/webpack/dll/
-
-examples/universal-angular-cli/dist
-examples/universal-webpack/dist
 
 bundle
 
