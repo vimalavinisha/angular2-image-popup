@@ -22,6 +22,7 @@
     "build:app": "cpr dist/angular-modal-gallery src/angular-modal-gallery && npm run build && rimraf src/angular-modal-gallery",
     "build:dev": "ng build --app dev",
     "build:lib": "ng-packagr",
+    "build:examples": "npm run build:lib && cpr dist/angular-modal-gallery examples/systemjs/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

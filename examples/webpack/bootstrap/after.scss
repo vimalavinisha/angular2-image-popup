@@ -1,0 +1,39 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2017 Stefano Cappa
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+// This gets loaded after bootstrap/variables is loaded and before bootstrap is loaded.
+// A good hello-hello-example.ts of this is when you want to override a bootstrap variable to be based
+// on the default value of bootstrap. This is pretty specialized case. Thus, you normally
+// just override bootrap variables in preBootstrapCustomizations so that derived
+// variables will use your definition.
+//
+// For hello-hello-example.ts, in _variables.scss:
+// $input-height: (($font-size-base * $line-height) + ($input-padding-y * 2) + ($border-width * 2)) !default;
+// This means that you could define this yourself in preBootstrapCustomizations. Or you can do
+// this in bootstrapCustomizations to make the input height 10% bigger than the default calculation.
+// Thus you can leverage the default calculations.
+// $input-height: $input-height * 1.10;
+
+
+// here you can customize fonts and so on... check the bootstrap-loader's documentation

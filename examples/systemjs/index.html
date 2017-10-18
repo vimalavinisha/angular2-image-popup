@@ -1,0 +1,29 @@
+<html>
+
+  <head>
+    <title>Systemjs demo for angular-modal-gallery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/typescript/lib/typescript.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <!-- Mandatory to be able to see both arrows and close icons -->
+    <!-- In this library, icons are implemented with font-awesome, so font-awesome.css is mandatory, obviously -->
+    <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.css">
+
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function (err) {
+        console.error(err);
+      });
+    </script>
+  </head>
+
+  <body>
+    <my-app>Loading...</my-app>
+  </body>
+</html>
+
