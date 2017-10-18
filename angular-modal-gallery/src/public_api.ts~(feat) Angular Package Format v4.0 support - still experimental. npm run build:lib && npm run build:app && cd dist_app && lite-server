@@ -22,24 +22,9 @@
  * SOFTWARE.
  */
 
-'use strict';
+import { ModalGalleryModule } from './modal-gallery.module';
+export { ModalGalleryModule } from './modal-gallery.module';
 
-const path = require('path');
-const _root = path.resolve(__dirname, '..');
-const root = (...args) => path.join.apply(path, [_root].concat(args));
+export { Image, ImageModalEvent, Action, Description, KeyboardConfig } from './components/modal-gallery.component';
 
-
-const EVENT = process.env.npm_lifecycle_event || '';
-
-function hasProcessFlag(flag) {
-  return process.argv.join('').indexOf(flag) > -1;
-}
-
-function hasNpmFlag(flag) {
-  return EVENT.includes(flag);
-}
-
-
-exports.hasProcessFlag = hasProcessFlag;
-exports.hasNpmFlag = hasNpmFlag;
-exports.root = root;
+export { ButtonsConfig } from './interfaces/buttons-config.interface';

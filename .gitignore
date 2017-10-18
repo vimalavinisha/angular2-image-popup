@@ -79,6 +79,4 @@ demo/universal-webpack/dist
 bundle
 
 docs
-documentation
-
-src/angular-modal-gallery/
+src/angular-modal-gallery

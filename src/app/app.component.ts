@@ -33,9 +33,9 @@ import 'rxjs/add/operator/delay';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 
   openModalWindow: boolean = false;
   imagePointer: number = 0;
