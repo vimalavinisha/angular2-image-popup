@@ -60,9 +60,8 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 [CLICK HERE FOR DEMO/DOCUMENTATION](https://ks89.github.io/angular-modal-gallery.github.io/)
 
 ## Installation
-- `npm install --save font-awesome`
-- `npm install --save hammerjs mousetrap`
 - `npm install --save angular-modal-gallery`
+- `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap`
 - `npm install --save-dev @types/hammerjs`
 
@@ -111,7 +110,7 @@ Two different ways (both of them are good):
 - sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 
 
-## FAQS
+## FAQs
 
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
@@ -121,13 +120,8 @@ Two different ways (both of them are good):
 
 ## Contributing
 
-Check `CONTRIBUTING.md` in this repository
-
-
-## Developer information
-
-Check `DEVELOPER.md` in this repository to build and test this library.
-
+Check both `CONTRIBUTING.md` and `DEVELOPER.md` in this repository to build and test this library.
+<br>
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/index.html`.
 
 
