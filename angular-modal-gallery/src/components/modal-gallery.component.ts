@@ -150,7 +150,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
    */
-  @Input() downloadable: boolean = false;
+  @Input() downloadable = false;
   /**
    * Description object with the configuration to show image descriptions.
    */
@@ -168,7 +168,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * enableCloseOutside's input to enable modal-gallery close's behaviour while clicking
    * on the semi-transparent background. Enabled by default.
    */
-  @Input() enableCloseOutside: boolean = true;
+  @Input() enableCloseOutside = true;
   /**
    * Object of type `SlideConfig` to configure sliding of modal gallery.
    * Disabled by default.
@@ -179,12 +179,12 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * DEPRECATED
    * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
-  @Input() showDownloadButton: boolean = false; // deprecated
+  @Input() showDownloadButton = false; // deprecated
   /**
    * DEPRECATED
    * -----REMOVE THIS IN 4.0.0----- deprecated both showDownloadButton and showExtUrlButton
    */
-  @Input() showExtUrlButton: boolean = false; // deprecated
+  @Input() showExtUrlButton = false; // deprecated
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
@@ -195,15 +195,15 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Boolean that it is true if the modal gallery is visible
    */
-  opened: boolean = false;
+  opened = false;
   /**
    * Boolean that it is true if an image of the modal gallery is still loading
    */
-  loading: boolean = false;
+  loading = false;
   /**
    * Boolean to open the modal gallery. Closed by default.
    */
-  showGallery: boolean = false;
+  showGallery = false;
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
@@ -215,7 +215,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Number that represents the index of the current image.
    */
-  currentImageIndex: number = 0;
+  currentImageIndex = 0;
   /**
    * Object of type `ButtonsConfig` used to configure buttons visibility. This is a temporary value
    * initialized by the real `buttonsConfig`'s input
@@ -229,11 +229,11 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
   /**
    * Boolean that it's true when you are watching the first image (currently visible).
    */
-  isFirstImage: boolean = false;
+  isFirstImage = false;
   /**
    * Boolean that it's true when you are watching the last image (currently visible).
    */
-  isLastImage: boolean = false;
+  isLastImage = false;
 
   /**
    * Private SWIPE_ACTION to define all swipe actions used by hammerjs.
@@ -457,20 +457,20 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
 
   /**
    * Method `downloadImage` to download the current visible image, only if `downloadable` is true.
-   * For IE, this will navigate to the image instead of a direct download as in all modern browsers.
    */
   downloadImage() {
     if (!this.downloadable) {
       return;
     }
-    // for all browsers
-    // Attention: with IE is not working, but it will navigate to the image
-    let link = document.createElement('a');
-    link.href = this.currentImage.img;
-    link.setAttribute('download', this.getFileName(this.currentImage.img));
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // If IE11 or Microsoft Edge use msSaveBlob(...)
+    if (this.isIEorEdge()) {
+      // I cannot use fetch API because IE11 doesn't support it,
+      // so I have to switch to XMLHttpRequest
+      this.downloadImageOnlyIEorEdge();
+    } else {
+      // for all other browsers
+      this.downloadImageAllBrowsers();
+    }
   }
 
   /**
@@ -521,7 +521,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * @param currentIndex Number that represents the current index of the visible image.
    */
   private getNextIndex(action: Action, currentIndex: number): number {
-    let newIndex: number = 0;
+    let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
       newIndex = currentIndex + 1;
     } else {
@@ -545,7 +545,7 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
    * @param currentIndex Number that represents the current index of the visible image.
    */
   private getPrevIndex(action: Action, currentIndex: number): number {
-    let newIndex: number = 0;
+    let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
       newIndex = currentIndex - 1;
     } else {
@@ -658,4 +658,31 @@ export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChange
     return !!this.slideConfig && this.slideConfig.infinite === false &&
       this.currentImageIndex === boundaryIndex;
   }
+
+  private downloadImageAllBrowsers() {
+    const link = document.createElement('a');
+    link.href = this.currentImage.img;
+    link.setAttribute('download', this.getFileName(this.currentImage.img));
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  private downloadImageOnlyIEorEdge() {
+    const req = new XMLHttpRequest();
+    req.open('GET', this.currentImage.img, true);
+    req.responseType = 'arraybuffer';
+    req.onload = event => {
+      const blob = new Blob([req.response], {type: 'image/png'});
+      window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
+    };
+    req.send();
+  }
+
+  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
+  private isIEorEdge() {
+    // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
+    return window.Blob && window.navigator.msSaveOrOpenBlob;
+  }
+
 }
