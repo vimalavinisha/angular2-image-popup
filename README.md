@@ -120,7 +120,7 @@ Two different ways (both of them are good):
 
 ## Contributing
 
-Check both `CONTRIBUTING.md` and `DEVELOPER.md` in this repository to build and test this library.
+Check `CONTRIBUTING.md` in this repository to build and test this library.
 <br>
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/index.html`.
 
