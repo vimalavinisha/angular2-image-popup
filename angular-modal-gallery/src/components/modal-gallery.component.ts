@@ -61,13 +61,15 @@ export class ImageModalEvent {
  * The only required value is the image path `img`.
  */
 export class Image {
+  id: number | string;
   img: string;
   thumb?: string | null | undefined;
   description?: string | null | undefined;
   extUrl?: string | null | undefined;
 
-  constructor(img: string, thumb?: string | null | undefined,
+  constructor(id: number | string, img: string, thumb?: string | null | undefined,
               description?: string | null | undefined, extUrl?: string | null | undefined) {
+    this.id = id;
     this.img = img;
     this.thumb = thumb;
     this.description = description;

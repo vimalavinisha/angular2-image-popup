@@ -242,7 +242,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <div *ngFor="let img of imagesArray; let i = index">
+      <div *ngFor="let img of imagesArray; trackBy: trackById; let i = index">
         <div class="float-left" *ngIf="i <= 2">
           <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>
           <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
@@ -274,7 +274,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <div *ngFor="let img of images | async; let i = index">
+      <div *ngFor="let img of images | async; trackBy: trackById; let i = index">
         <div class="float-left" *ngIf="i <= 2">
           <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}
             more </a>
@@ -328,30 +328,35 @@ export class AppComponent implements OnDestroy {
 
   imagesArray: Array<Image> = [
     new Image(
+      0,
       './app/assets/images/gallery/img1.jpg',
       null, // no thumb
       null, // no description
       'http://www.google.com'
     ),
     new Image(
+      1,
       './app/assets/images/gallery/img2.png', // example with a PNG image
       null, // no thumb
       'Description 2',
       null // url
     ),
     new Image(
+      2,
       './app/assets/images/gallery/img3.jpg',
       './app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
       'Description 3',
       'http://www.google.com'
     ),
     new Image(
+      3,
       './app/assets/images/gallery/img4.jpg',
       null, // no thumb
       'Description 4',
       'http://www.google.com'
     ),
     new Image(
+      4,
       './app/assets/images/gallery/img5.jpg',
       './app/assets/images/gallery/thumbs/img5.jpg',
       null, // no description
@@ -454,5 +459,9 @@ export class AppComponent implements OnDestroy {
     if (this.imagesArraySubscription) {
       this.imagesArraySubscription.unsubscribe();
     }
+  }
+
+  trackById(index: number, item: Image) {
+    return item.id;
   }
 }

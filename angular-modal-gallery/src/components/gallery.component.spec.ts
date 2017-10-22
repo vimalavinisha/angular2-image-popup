@@ -26,40 +26,47 @@ let fixture: ComponentFixture<GalleryComponent>;
 
 const IMAGES: Array<Image> = [
   new Image(
+    0,
     './app/assets/images/gallery/img1.jpg',
     null, // no thumb
     null, // no description
     'http://www.google.com'
   ),
   new Image(
+    1,
     './app/assets/images/gallery/img2.png', // example with a PNG image
     null, // no thumb
     'Description 2',
     null // url
   ),
   new Image(
+    2,
     './app/assets/images/gallery/img3.jpg',
     './app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
     'Description 3',
     'http://www.google.com'
   ),
   new Image(
+    3,
     './app/assets/images/gallery/img4.jpg',
     null, // no thumb
     'Description 4',
     'http://www.google.com'
   ),
   new Image(
+    4,
     './app/assets/images/gallery/img5.jpg',
     './app/assets/images/gallery/thumbs/img5.jpg',
     null, // no description
     null // url
   ),
   new Image(
+    5,
     './app/assets/images/gallery/img5.jpg',
     undefined, undefined, undefined
   ),
   new Image(
+    6,
     './app/assets/images/gallery/img5.jpg',
     null, null, null
   )

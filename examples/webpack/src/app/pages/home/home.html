@@ -211,7 +211,7 @@
             <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
           </ul>
           <br>
-          <div *ngFor="let img of imagesArray; let i = index">
+          <div *ngFor="let img of imagesArray; trackBy: trackById; let i = index">
             <div class="float-left" *ngIf="i <= 2">
               <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>
               <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
@@ -243,7 +243,7 @@
             <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
           </ul>
           <br>
-          <div *ngFor="let img of images | async; let i = index">
+          <div *ngFor="let img of images | async; trackBy: trackById; let i = index">
             <div class="float-left" *ngIf="i <= 2">
               <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}
                 more </a>

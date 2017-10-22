@@ -63,4 +63,8 @@ export class GalleryComponent {
     }
     return this.images[index].description;
   }
+
+  trackById(index: number, item: Image) {
+    return item.id;
+  }
 }
