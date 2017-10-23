@@ -20,7 +20,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:dev": "ng build --app dev",
-    "build:lib": "ng-packagr && cpr dist/angular-modal-gallery src/angular-modal-gallery && npm run build:examples",
+    "build:lib": "npm run clean:all && ng-packagr && cpr dist/angular-modal-gallery src/angular-modal-gallery && npm run build:examples",
     "build:examples": "cpr dist/angular-modal-gallery examples/systemjs/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery",
     "clean": "rimraf dist",
     "clean:all": "npm run clean && rimraf src/angular-modal-gallery && rimraf examples/systemjs/node_modules/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery",

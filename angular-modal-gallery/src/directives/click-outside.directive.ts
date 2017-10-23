@@ -38,13 +38,19 @@ export class ClickOutsideDirective {
 
   @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @HostListener('document:click', ['$event.target'])
+  @HostListener('click', ['$event.target'])
   onClick(targetElement: Element) {
-    console.log('this.clickOutsideEnable ' + this.clickOutsideEnable);
-    console.log('targetElement.id ' + targetElement.id);
-    const elementId: string = targetElement.id;
+    event.stopPropagation();
 
-    if (elementId === 'modal-gallery-wrapper' && this.clickOutsideEnable) {
+    if (!this.clickOutsideEnable || !targetElement) {
+      return false;
+    }
+
+    console.log('id ', targetElement.id);
+    console.log('className ', targetElement.className);
+
+    const isInside = targetElement.className && targetElement.className.startsWith('inside');
+    if (!isInside) {
       this.clickOutside.emit(true);
     }
   }

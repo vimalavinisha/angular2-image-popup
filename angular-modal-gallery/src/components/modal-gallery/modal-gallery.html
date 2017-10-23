@@ -24,7 +24,7 @@
       <div class="main-image-container">
         <a class="nav-left" aria-label="Previous image" *ngIf="images?.length > 1"
            (click)="prevImage()">
-          <div class="{{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
+          <div class="inside  {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
           <!--<i class="fa fa-angle-left" aria-hidden="true" title="Previous image"></i>-->
         </a>
 
@@ -35,6 +35,7 @@
 
         <figure id="current-figure">
           <img id="current-image"
+               class="inside"
                src="{{ currentImage.img }}"
                *ngIf="!loading"
                (click)="nextImage(clickAction)"
@@ -42,7 +43,7 @@
                (swiperight)="swipe(currentImageIndex, $event.type)"
                aria-label="Click to navigate to the next image"
                title="Current image" alt="Alt text for this image"/>
-          <figcaption class="description">{{getDescriptionToDisplay()}}</figcaption>
+          <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
         </figure>
 
 
@@ -51,7 +52,7 @@
 
         <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
            (click)="nextImage()">
-          <div class="{{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
+          <div class="inside  {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
           <!--<i class="fa fa-angle-right" aria-hidden="true" title="Next image"></i>-->
         </a>
       </div>
