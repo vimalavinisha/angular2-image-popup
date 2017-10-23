@@ -27,9 +27,9 @@ import { OnInit, Input, Output, EventEmitter, HostListener, Component, OnDestroy
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { KeyboardService } from '../services/keyboard.service';
+import { KeyboardService } from '../../services/keyboard.service';
 
-import { ButtonsConfig } from '../interfaces/buttons-config.interface';
+import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
 
 /**
  * Enum `Action` with a list of possible actions.
@@ -128,12 +128,12 @@ export interface SlideConfig {
  * Main Component of this library with the modal gallery.
  */
 @Component({
-  selector: 'modal-gallery',
+  selector: 'ks-modal-gallery',
   exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
-export class AngularModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
+export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Array or Observable input that represents a list of Images used to show both
    * thumbs and the modal gallery.

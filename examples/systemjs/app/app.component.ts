@@ -52,14 +52,14 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="images"
+      <ks-modal-gallery [modalImages]="images"
                      [downloadable]="false"
                      [slideConfig]="{infinite: false}"
                      (hasData)="onImageLoaded($event)"
                      (close)="onCloseImageModal($event)"
                      (show)="onVisibleIndex($event)"
                      (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <hr>
     <br>
@@ -79,7 +79,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="imagesArray"
+      <ks-modal-gallery [modalImages]="imagesArray"
                      [buttonsConfig]="{download: false, extUrl: false, close: true}"
                      [downloadable]="true"
                      [enableCloseOutside]="true"
@@ -88,7 +88,7 @@ import 'rxjs/add/operator/delay';
                      (close)="onCloseImageModal($event)"
                      (show)="onVisibleIndex($event)"
                      (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images31-2">
       <h3>3 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'keyboardConfig'</span></h3>
@@ -104,7 +104,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="images"
+      <ks-modal-gallery [modalImages]="images"
                      [buttonsConfig]="{download: true, extUrl: true, close: true}"
                      [keyboardConfig]="{esc: 81, left: 40, right: 38}"
                      [downloadable]="true"
@@ -113,7 +113,7 @@ import 'rxjs/add/operator/delay';
                      (close)="onCloseImageModal($event)"
                      (show)="onVisibleIndex($event)"
                      (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images31-3">
       <h3>4 - Array of images without close button thanks to <span class="red-text">'buttonsConfig'</span></h3>
@@ -129,7 +129,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="imagesArray"
+      <ks-modal-gallery [modalImages]="imagesArray"
                      [buttonsConfig]="{download: false, extUrl: true, close: false}"
                      [enableCloseOutside]="true"
                      [description]="customFullDescription"
@@ -137,7 +137,7 @@ import 'rxjs/add/operator/delay';
                      (close)="onCloseImageModal($event)"
                      (show)="onVisibleIndex($event)"
                      (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></modal-gallery>
+                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <hr>
     <br>
@@ -154,7 +154,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="images"
+      <ks-modal-gallery [modalImages]="images"
                   [downloadable]="false"
                   [showExtUrlButton]="true"
                   [description]="customDescription"
@@ -162,7 +162,7 @@ import 'rxjs/add/operator/delay';
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modal-gallery>
+                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images2">
       <h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
@@ -176,7 +176,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="images"
+      <ks-modal-gallery [modalImages]="images"
                   [showDownloadButton]="true"
                   [downloadable]="true"
                   [showExtUrlButton]="true"
@@ -184,7 +184,7 @@ import 'rxjs/add/operator/delay';
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modal-gallery>
+                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images3">
       <h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>
@@ -198,7 +198,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="imagesArray"
+      <ks-modal-gallery [modalImages]="imagesArray"
                   [showDownloadButton]="true"
                   [downloadable]="true"
                   [showExtUrlButton]="false"
@@ -207,7 +207,7 @@ import 'rxjs/add/operator/delay';
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modal-gallery>
+                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images4">
       <br>
@@ -222,12 +222,12 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <!-- both showDownloadButton and downloadable are false by default -->
-      <modal-gallery [modalImages]="singleImage"
+      <ks-modal-gallery [modalImages]="singleImage"
                   (hasData)="onImageLoaded($event)"
                   (close)="onCloseImageModal($event)"
                   (show)="onVisibleIndex($event)"
                   (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></modal-gallery>
+                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images5">
       <br>
@@ -250,7 +250,7 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindow">
-        <modal-gallery [modalImages]="imagesArray"
+        <ks-modal-gallery [modalImages]="imagesArray"
                     [imagePointer]="imagePointer"
                     [downloadable]="true"
                     [showExtUrlButton]="true"
@@ -258,7 +258,7 @@ import 'rxjs/add/operator/delay';
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></modal-gallery>
+                    (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
       </div>
     </section>
     <br><br>
@@ -283,7 +283,7 @@ import 'rxjs/add/operator/delay';
         </div>
       </div>
       <div *ngIf="openModalWindowObservable">
-        <modal-gallery [modalImages]="images"
+        <ks-modal-gallery [modalImages]="images"
                     [imagePointer]="imagePointerObservable"
                     [downloadable]="true"
                     [showExtUrlButton]="false"
@@ -291,7 +291,7 @@ import 'rxjs/add/operator/delay';
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></modal-gallery>
+                    (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
       </div>
     </section>
     <br><br>
@@ -307,12 +307,12 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <modal-gallery [modalImages]="imagesArraySubscribed"
+      <ks-modal-gallery [modalImages]="imagesArraySubscribed"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
                     (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></modal-gallery>
+                    (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <br><br>
     <h4>Created by Stefano Cappa (Ks89)</h4>

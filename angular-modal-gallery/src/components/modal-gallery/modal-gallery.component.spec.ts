@@ -27,16 +27,16 @@ import {
   Keyboard
 } from './modal-gallery.component';
 
-import { KeyboardService } from '../services/keyboard.service';
-import { UpperButtonsComponent } from './upper-buttons.component';
-import { GalleryComponent } from './gallery.component';
-import { CloseButtonDirective } from '../directives/close-button.directive';
-import { ExternalUrlButtonDirective } from '../directives/external-url-button.directive';
-import { DownloadButtonDirective } from '../directives/download-button.directive';
-import { ClickOutsideDirective } from '../directives/click-outside.directive';
+import { KeyboardService } from '../../services/keyboard.service';
+import { UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
+import { GalleryComponent } from '../gallery/gallery.component';
+import { CloseButtonDirective } from '../../directives/close-button.directive';
+import { ExternalUrlButtonDirective } from '../../directives/external-url-button.directive';
+import { DownloadButtonDirective } from '../../directives/download-button.directive';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
-import { ButtonsConfig } from '../interfaces/buttons-config.interface';
-import { KeyboardServiceConfig } from '../interfaces/keyboard-service-config.interface';
+import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
+import { KeyboardServiceConfig } from '../../interfaces/keyboard-service-config.interface';
 
 const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 

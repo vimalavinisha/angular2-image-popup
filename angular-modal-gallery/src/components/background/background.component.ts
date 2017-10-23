@@ -22,34 +22,16 @@
  SOFTWARE.
  */
 
-import { Input, Output, EventEmitter, Component } from '@angular/core';
-import { Image } from './modal-gallery.component';
-
-import { ButtonsConfig } from '../interfaces/buttons-config.interface';
+import { Component, Input } from '@angular/core';
 
 /**
- * Component with all upper right buttons.
- * In fact, it uses a template with extUrl, download and close buttons with the right directive.
- * Also it emits click events as outputs.
+ * Component with the transparent background.
  */
 @Component({
-  selector: 'upperButtons',
-  styleUrls: ['upper-buttons.scss'],
-  templateUrl: 'upper-buttons.html'
+  selector: 'ks-background',
+  styleUrls: ['background.scss'],
+  templateUrl: 'background.html'
 })
-export class UpperButtonsComponent {
-
-  @Input() image: Image;
-  @Input() configButtons: ButtonsConfig;
-
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  downloadImage() {
-    this.download.emit(true);
-  }
-
-  closeGallery() {
-    this.close.emit(true);
-  }
+export class BackgroundComponent {
+  @Input() isOpen: boolean;
 }

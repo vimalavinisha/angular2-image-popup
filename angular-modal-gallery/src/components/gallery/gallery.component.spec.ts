@@ -18,7 +18,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { Image } from './modal-gallery.component';
+import { Image } from '../modal-gallery/modal-gallery.component';
 import { GalleryComponent } from './gallery.component';
 
 let comp: GalleryComponent;

@@ -23,48 +23,33 @@
  */
 
 import { Input, Output, EventEmitter, Component } from '@angular/core';
-import { Image } from './modal-gallery.component';
+import { Image } from '../modal-gallery/modal-gallery.component';
+
+import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
 
 /**
- * Component with the gallery of thumbs.
- * In receives an array of Images and a boolean to show/hide
- * the gallery (feature used by imagePointer).
+ * Component with all upper right buttons.
+ * In fact, it uses a template with extUrl, download and close buttons with the right directive.
  * Also it emits click events as outputs.
  */
 @Component({
-  selector: 'gallery',
-  styleUrls: ['gallery.scss'],
-  templateUrl: 'gallery.html'
+  selector: 'ks-upper-buttons',
+  styleUrls: ['upper-buttons.scss'],
+  templateUrl: 'upper-buttons.html'
 })
-export class GalleryComponent {
+export class UpperButtonsComponent {
 
-  @Input() images: Image[];
-  @Input() showGallery: boolean;
+  @Input() image: Image;
+  @Input() configButtons: ButtonsConfig;
 
-  @Output() show: EventEmitter<number> = new EventEmitter<number>();
+  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  showModalGallery(index: number) {
-    this.show.emit(index);
+  downloadImage() {
+    this.download.emit(true);
   }
 
-  /**
-   * Method to get `alt attribute`.
-   * `alt` specifies an alternate text for an image, if the image cannot be displayed.
-   * There is a similar version of this method into `modal-gallery.component.ts` that
-   * receives an Image as input.
-   * @param index Number that represents the image index.
-   */
-  getAltDescriptionByIndex(index: number) {
-    if (!this.images) {
-      return '';
-    }
-    if (!this.images[index] || !this.images[index].description) {
-      return `Image ${index}`;
-    }
-    return this.images[index].description;
-  }
-
-  trackById(index: number, item: Image) {
-    return item.id;
+  closeGallery() {
+    this.close.emit(true);
   }
 }

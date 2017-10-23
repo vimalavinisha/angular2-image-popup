@@ -22,30 +22,16 @@
  SOFTWARE.
  */
 
-import { Directive, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
- * Directive to close the modal gallery clicking on the semi-transparent background.
- * In fact, it listens for a click on the element with id="ng-gallery-content" and it emits
- * an event using `@Output clickOutside`.
+ * Component with image previews
  */
-@Directive({
-  selector: '[click-outside]'
+@Component({
+  selector: 'ks-previews',
+  styleUrls: ['previews.scss'],
+  templateUrl: 'previews.html'
 })
-export class ClickOutsideDirective {
+export class PreviewsComponent {
 
-  @Input() clickOutsideEnable: boolean;
-
-  @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @HostListener('document:click', ['$event.target'])
-  onClick(targetElement: Element) {
-    console.log('this.clickOutsideEnable ' + this.clickOutsideEnable);
-    console.log('targetElement.id ' + targetElement.id);
-    const elementId: string = targetElement.id;
-
-    if (elementId === 'modal-gallery-wrapper' && this.clickOutsideEnable) {
-      this.clickOutside.emit(true);
-    }
-  }
 }

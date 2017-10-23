@@ -25,12 +25,12 @@
 import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AngularModalGalleryComponent } from './components/modal-gallery.component';
 import { DIRECTIVES } from './directives/directives';
-import { UpperButtonsComponent } from './components/upper-buttons.component';
 import { KeyboardService, } from './services/keyboard.service';
-import { GalleryComponent } from './components/gallery.component';
 import { KeyboardServiceConfig } from './interfaces/keyboard-service-config.interface';
+
+import { COMPONENTS } from './components/components';
+import { ModalGalleryComponent } from './components/modal-gallery/modal-gallery.component';
 
 export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 
@@ -39,8 +39,8 @@ export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>(
  */
 @NgModule({
   imports: [ CommonModule ],
-  declarations: [ AngularModalGalleryComponent, UpperButtonsComponent, GalleryComponent, DIRECTIVES ],
-  exports: [ AngularModalGalleryComponent ]
+  declarations: [ COMPONENTS, DIRECTIVES ],
+  exports: [ ModalGalleryComponent ]
 })
 export class ModalGalleryModule {
   static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {

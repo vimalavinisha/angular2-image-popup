@@ -22,30 +22,55 @@
  SOFTWARE.
  */
 
-import { Directive, Output, EventEmitter, HostListener, Input } from '@angular/core';
+.dots-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 30px;
+}
 
-/**
- * Directive to close the modal gallery clicking on the semi-transparent background.
- * In fact, it listens for a click on the element with id="ng-gallery-content" and it emits
- * an event using `@Output clickOutside`.
- */
-@Directive({
-  selector: '[click-outside]'
-})
-export class ClickOutsideDirective {
+.dots-container > .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  margin-left: 4px;
+  margin-right: 4px;
+  cursor: pointer;
+  animation: fadein-semi-visible05 0.8s;
+  opacity: 0.5;
+  background: rgb(255, 255, 255);
+}
 
-  @Input() clickOutsideEnable: boolean;
+.dots-container > .dot:hover {
+  opacity: 0.9;
+  transition-property: opacity;
+  transition: all 0.5s ease;
+}
 
-  @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
+.dots-container > .dot.active {
+  background: rgb(255, 255, 255);
+  margin-left: 4px;
+  margin-right: 4px;
+  opacity: 0.9;
+  animation: fadein-semi-visible09 0.8s;
+  cursor: pointer;
+}
 
-  @HostListener('document:click', ['$event.target'])
-  onClick(targetElement: Element) {
-    console.log('this.clickOutsideEnable ' + this.clickOutsideEnable);
-    console.log('targetElement.id ' + targetElement.id);
-    const elementId: string = targetElement.id;
 
-    if (elementId === 'modal-gallery-wrapper' && this.clickOutsideEnable) {
-      this.clickOutside.emit(true);
-    }
+@keyframes fadein-semi-visible05 {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 0.5
+  }
+}
+
+@keyframes fadein-semi-visible09 {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 0.9
   }
 }

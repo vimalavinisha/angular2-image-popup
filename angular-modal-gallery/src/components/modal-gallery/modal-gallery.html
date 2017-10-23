@@ -1,0 +1,67 @@
+<ks-gallery [images]="images" [showGallery]="showGallery" (show)="onShowModalGallery($event)"></ks-gallery>
+
+<ks-background [isOpen]="opened"></ks-background>
+
+<div id="modal-gallery-wrapper" *ngIf="opened"
+     click-outside [clickOutsideEnable]="enableCloseOutside"
+     (clickOutside)="onClickOutside($event)">
+
+  <div id="flex-min-height-ie-fix">
+    <div id="modal-gallery-container">
+
+      <!--<div id="loading-spinner">-->
+      <!--<div class="cssload-loader">-->
+      <!--<div class="cssload-inner cssload-one"></div>-->
+      <!--<div class="cssload-inner cssload-two"></div>-->
+      <!--<div class="cssload-inner cssload-three"></div>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <ks-upper-buttons [image]="currentImage" [configButtons]="configButtons"
+                    (close)="closeGallery()" (download)="downloadImage()"></ks-upper-buttons>
+
+
+      <div class="main-image-container">
+        <a class="nav-left" aria-label="Previous image" *ngIf="images?.length > 1"
+           (click)="prevImage()">
+          <div class="{{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
+          <!--<i class="fa fa-angle-left" aria-hidden="true" title="Previous image"></i>-->
+        </a>
+
+        <!--<img id="current-image-previous" src="http://via.placeholder.com/100x100"-->
+             <!--aria-label="Click to navigate to the previous image"-->
+             <!--title="Previous image preview" alt="Alt text for this image"/>-->
+
+
+        <figure id="current-figure">
+          <img id="current-image"
+               src="{{ currentImage.img }}"
+               *ngIf="!loading"
+               (click)="nextImage(clickAction)"
+               (swipeleft)="swipe(currentImageIndex, $event.type)"
+               (swiperight)="swipe(currentImageIndex, $event.type)"
+               aria-label="Click to navigate to the next image"
+               title="Current image" alt="Alt text for this image"/>
+          <figcaption class="description">{{getDescriptionToDisplay()}}</figcaption>
+        </figure>
+
+
+        <!--<img id="current-image-next" src="http://via.placeholder.com/100x100" aria-label="Click to navigate to the next image"-->
+             <!--title="Next image preview" alt="Alt text for this image"/>-->
+
+        <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
+           (click)="nextImage()">
+          <div class="{{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
+          <!--<i class="fa fa-angle-right" aria-hidden="true" title="Next image"></i>-->
+        </a>
+      </div>
+
+
+      <ks-dots></ks-dots>
+
+      <ks-previews></ks-previews>
+
+
+    </div>
+  </div>
+</div>
