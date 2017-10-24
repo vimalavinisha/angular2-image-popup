@@ -25,6 +25,9 @@
 import { ModalGalleryModule } from './modal-gallery.module';
 export { ModalGalleryModule } from './modal-gallery.module';
 
-export { Image, ImageModalEvent, Action, Description, KeyboardConfig } from './components/modal-gallery/modal-gallery.component';
+export { Action } from './interfaces/action.enum';
+export { Image, ImageModalEvent } from './interfaces/image.class';
+export { Description } from './interfaces/description.interface';
+export { KeyboardConfig } from './interfaces/keyboard-config.interface';
 
 export { ButtonsConfig } from './interfaces/buttons-config.interface';

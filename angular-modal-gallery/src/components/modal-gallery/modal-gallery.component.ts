@@ -30,52 +30,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { KeyboardService } from '../../services/keyboard.service';
 
 import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
-
-/**
- * Enum `Action` with a list of possible actions.
- */
-export enum Action {
-  NORMAL, // default value
-  CLICK, // mouse click
-  KEYBOARD,
-  SWIPE,
-  LOAD
-}
-
-/**
- * Class `ImageModalEvent` that represents the Event after an action `action` and its result.
- */
-export class ImageModalEvent {
-  action: Action;
-  result: number | boolean;
-
-  constructor(action: Action, result: number | boolean) {
-    this.action = action;
-    this.result = result;
-  }
-}
-
-/**
- * Class `Image` that represents an Image with both images and thumb paths,
- * also with a description and an external url.
- * The only required value is the image path `img`.
- */
-export class Image {
-  id: number | string;
-  img: string;
-  thumb?: string | null | undefined;
-  description?: string | null | undefined;
-  extUrl?: string | null | undefined;
-
-  constructor(id: number | string, img: string, thumb?: string | null | undefined,
-              description?: string | null | undefined, extUrl?: string | null | undefined) {
-    this.id = id;
-    this.img = img;
-    this.thumb = thumb;
-    this.description = description;
-    this.extUrl = extUrl;
-  }
-}
+import { Image, ImageModalEvent } from '../../interfaces/image.class';
+import { Description } from '../../interfaces/description.interface';
+import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
+import { Action } from '../../interfaces/action.enum';
 
 /**
  * Enum `Keyboard` with keys and their relative key codes.
@@ -88,17 +46,6 @@ export enum Keyboard {
   DOWN_ARROW = 40
 }
 
-/**
- * Interface `Description` to change the description, either with a full custom
- * description or with a small and simple customization.
- */
-export interface Description {
-  customFullDescription?: string;
-  imageText?: string;
-  numberSeparator?: string;
-  beforeTextDescription?: string;
-}
-
 // /**
 //  * Interface `ButtonsConfig` to show/hide buttons.
 //  */
@@ -107,15 +54,6 @@ export interface Description {
 //   extUrl?: boolean;
 //   close?: boolean;
 // }
-
-/**
- * Interface `KeyboardConfig` to assign custom keyCodes to ESC, RIGHT and LEFT keyboard's actions.
- */
-export interface KeyboardConfig {
-  esc?: number;
-  right?: number;
-  left?: number;
-}
 
 /**
  * Interface `SlideConfig` to configure sliding features of modal gallery.

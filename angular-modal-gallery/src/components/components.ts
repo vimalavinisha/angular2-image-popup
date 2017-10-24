@@ -28,6 +28,7 @@ import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 import { UpperButtonsComponent } from './upper-buttons/upper-buttons.component';
 import { DotsComponent } from './dots/dots.component';
 import { PreviewsComponent } from './previews/previews.component';
+import { CurrentImageComponent } from './current-image/current-image.component';
 
 export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 
@@ -35,5 +36,6 @@ export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
  * Array of all components.
  */
 export const COMPONENTS = [
-  BackgroundComponent, GalleryComponent, ModalGalleryComponent, UpperButtonsComponent, DotsComponent, PreviewsComponent
+  BackgroundComponent, GalleryComponent, ModalGalleryComponent, UpperButtonsComponent,
+  DotsComponent, PreviewsComponent, CurrentImageComponent
 ];

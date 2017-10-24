@@ -1,0 +1,235 @@
+/*
+ The MIT License (MIT)
+
+ Copyright (c) 2017 Stefano Cappa (Ks89)
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+
+#modal-gallery-container > .main-image-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@keyframes fadein-visible {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fadein-semi-visible05 {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 0.5
+  }
+}
+
+#current-image {
+  height: auto;
+  /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
+  max-height: 60vh;
+  max-width: 80vw;
+  cursor: pointer;
+}
+
+/* trick found here https://stackoverflow.com/a/37600130/3590376 */
+/* Using a media query I can set a max width */
+@media screen and (min-width: 700px) {
+  #current-image {
+    height: auto;
+    /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
+    max-height: 60vh;
+    max-width: 700px;
+    cursor: pointer;
+  }
+}
+
+#current-figure {
+  animation: fadein-visible 0.8s;
+  text-align: center;
+}
+
+#modal-gallery-container > .main-image-container > .nav-left {
+  margin-left: 15px;
+  cursor: pointer;
+  animation: animatezoom 1s;
+  transition: all 0.5s;
+}
+
+#modal-gallery-container > .main-image-container > .nav-right {
+  margin-right: 15px;
+  cursor: pointer;
+  animation: animatezoom 1s;
+  transition: all 0.5s;
+}
+
+.nav-left:hover {
+  transform: scale(1.1);
+}
+
+.nav-right:hover {
+  transform: scale(1.1);
+}
+
+/** Mobile **/
+@media only screen and (max-width: 767px), only screen and (max-device-width: 767px) {
+  #current-image-previous {
+    display: none;
+  }
+
+  #current-image-next {
+    display: none;
+  }
+}
+
+/** Tablet **/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  #current-image-previous {
+    display: none;
+  }
+
+  #current-image-next {
+    display: none;
+  }
+}
+
+/** Tablet (landscape) **/
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  #current-image-previous {
+    display: none;
+  }
+
+  #current-image-next {
+    display: none;
+  }
+}
+
+/** Desktops or greater **/
+@media only screen and (min-device-width: 1025px) {
+
+  #current-image-previous {
+    height: auto;
+    /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
+    /*max-height: calc(100vh - 110px);*/
+    /*max-width: calc(100vw - 100px);*/
+    cursor: pointer;
+    opacity: .5;
+    animation: fadein-semi-visible05 0.8s;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+  }
+
+  #current-image-previous:hover {
+    opacity: .8;
+    transition-property: opacity;
+    transition: all 0.5s ease;
+  }
+
+  #current-image-next {
+    height: auto;
+    /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
+    /*max-height: calc(100vh - 110px);*/
+    /*max-width: calc(100vw - 100px);*/
+    cursor: pointer;
+    opacity: .5;
+    animation: fadein-semi-visible05 0.8s;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+  }
+
+  #current-image-next:hover {
+    opacity: .8;
+    transition-property: opacity;
+    transition: all 0.5s ease;
+  }
+}
+
+.description {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+figure {
+  margin: 0; /* => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones*/
+  position: relative;
+}
+
+figure img {
+  /*display: block;*/ /* don't use this */
+
+  /* Bootstrap 4 img-fluid class uses max-width: 100% and height: auto*/
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption {
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFF;
+  padding: 10px;
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+}
+
+/* all svgs are converted to base 64 with this website http://b64.io/ */
+
+.left-arrow-image {
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ3Ny4xNzUgNDc3LjE3NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDc3LjE3NSA0NzcuMTc1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij48Zz48cGF0aCBkPSJNMTQ1LjE4OCwyMzguNTc1bDIxNS41LTIxNS41YzUuMy01LjMsNS4zLTEzLjgsMC0xOS4xcy0xMy44LTUuMy0xOS4xLDBsLTIyNS4xLDIyNS4xYy01LjMsNS4zLTUuMywxMy44LDAsMTkuMWwyMjUuMSwyMjUgICBjMi42LDIuNiw2LjEsNCw5LjUsNHM2LjktMS4zLDkuNS00YzUuMy01LjMsNS4zLTEzLjgsMC0xOS4xTDE0NS4xODgsMjM4LjU3NXoiIGZpbGw9IiNGRkZGRkYiLz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PC9zdmc+);
+  opacity: 0.8;
+  transition: all 0.5s;
+}
+
+.left-arrow-image:hover {
+  transform: scale(1.2);
+}
+
+.right-arrow-image {
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ3Ny4xNzUgNDc3LjE3NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDc3LjE3NSA0NzcuMTc1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij48Zz48cGF0aCBkPSJNMzYwLjczMSwyMjkuMDc1bC0yMjUuMS0yMjUuMWMtNS4zLTUuMy0xMy44LTUuMy0xOS4xLDBzLTUuMywxMy44LDAsMTkuMWwyMTUuNSwyMTUuNWwtMjE1LjUsMjE1LjUgICBjLTUuMyw1LjMtNS4zLDEzLjgsMCwxOS4xYzIuNiwyLjYsNi4xLDQsOS41LDRjMy40LDAsNi45LTEuMyw5LjUtNGwyMjUuMS0yMjUuMUMzNjUuOTMxLDI0Mi44NzUsMzY1LjkzMSwyMzQuMjc1LDM2MC43MzEsMjI5LjA3NXogICAiIGZpbGw9IiNGRkZGRkYiLz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PC9zdmc+);
+  opacity: 0.8;
+  transition: all 0.5s;
+}
+
+.right-arrow-image:hover {
+  transform: scale(1.2);
+}
+
+.empty-arrow-image {
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background: #000;
+  opacity: 0;
+}
+

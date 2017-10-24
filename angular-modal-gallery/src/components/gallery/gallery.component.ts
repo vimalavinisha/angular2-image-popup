@@ -23,7 +23,7 @@
  */
 
 import { Input, Output, EventEmitter, Component } from '@angular/core';
-import { Image } from '../modal-gallery/modal-gallery.component';
+import { Image } from '../../interfaces/image.class';
 
 /**
  * Component with the gallery of thumbs.

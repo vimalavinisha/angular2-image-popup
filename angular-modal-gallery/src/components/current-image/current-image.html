@@ -1,0 +1,35 @@
+<div class="main-image-container">
+  <a class="nav-left" aria-label="Previous image" *ngIf="images?.length > 1"
+     (click)="prevImage()">
+    <div class="inside  {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
+    <!--<i class="fa fa-angle-left" aria-hidden="true" title="Previous image"></i>-->
+  </a>
+
+  <!--<img id="current-image-previous" src="http://via.placeholder.com/100x100"-->
+  <!--aria-label="Click to navigate to the previous image"-->
+  <!--title="Previous image preview" alt="Alt text for this image"/>-->
+
+
+  <figure id="current-figure">
+    <img id="current-image"
+         class="inside"
+         src="{{ currentImage.img }}"
+         *ngIf="!loading"
+         (click)="nextImage(clickAction)"
+         (swipeleft)="swipe(currentImageIndex, $event.type)"
+         (swiperight)="swipe(currentImageIndex, $event.type)"
+         aria-label="Click to navigate to the next image"
+         title="Current image" alt="Alt text for this image"/>
+    <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
+  </figure>
+
+
+  <!--<img id="current-image-next" src="http://via.placeholder.com/100x100" aria-label="Click to navigate to the next image"-->
+  <!--title="Next image preview" alt="Alt text for this image"/>-->
+
+  <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
+     (click)="nextImage()">
+    <div class="inside  {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
+    <!--<i class="fa fa-angle-right" aria-hidden="true" title="Next image"></i>-->
+  </a>
+</div>

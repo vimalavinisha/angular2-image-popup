@@ -22,34 +22,19 @@
  SOFTWARE.
  */
 
-import { Input, Output, EventEmitter, Component } from '@angular/core';
-
-import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
-import { Image } from '../../interfaces/image.class';
+import { Component } from '@angular/core';
 
 /**
- * Component with all upper right buttons.
- * In fact, it uses a template with extUrl, download and close buttons with the right directive.
- * Also it emits click events as outputs.
+ * Component with the current image with
+ * some additional elements like arrows
  */
 @Component({
-  selector: 'ks-upper-buttons',
-  styleUrls: ['upper-buttons.scss'],
-  templateUrl: 'upper-buttons.html'
+  selector: 'ks-current-image',
+  styleUrls: ['current-image.scss'],
+  templateUrl: 'current-image.html'
 })
-export class UpperButtonsComponent {
+export class CurrentImageComponent {
 
-  @Input() image: Image;
-  @Input() configButtons: ButtonsConfig;
+  // TODO add logic here from modal-gallery.component
 
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  downloadImage() {
-    this.download.emit(true);
-  }
-
-  closeGallery() {
-    this.close.emit(true);
-  }
 }
