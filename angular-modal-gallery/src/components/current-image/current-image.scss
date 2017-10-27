@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-#modal-gallery-container > .main-image-container {
+.main-image-container {
   display: flex;
   flex-grow: 1;
   flex-direction: row;
@@ -47,6 +47,24 @@
   }
   to {
     opacity: 0.5
+  }
+}
+
+@keyframes fadein-semi-visible08 {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 0.8
+  }
+}
+
+@keyframes fadein-semi-visible09 {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 0.9
   }
 }
 
@@ -75,14 +93,14 @@
   text-align: center;
 }
 
-#modal-gallery-container > .main-image-container > .nav-left {
+.main-image-container > .nav-left {
   margin-left: 15px;
   cursor: pointer;
   animation: animatezoom 1s;
   transition: all 0.5s;
 }
 
-#modal-gallery-container > .main-image-container > .nav-right {
+.main-image-container > .nav-right {
   margin-right: 15px;
   cursor: pointer;
   animation: animatezoom 1s;
@@ -232,4 +250,3 @@ figcaption {
   background: #000;
   opacity: 0;
 }
-

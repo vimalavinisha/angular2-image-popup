@@ -56,16 +56,20 @@ also with live examples on codepen
   /* min-height: 100vh is a part of the workaround https://github.com/philipwalton/flexbugs#workaround-2*/
   min-height: 100vh;
 }
+//
+//#modal-gallery-container > .main-image-container {
+//  display: flex;
+//  flex-grow: 1;
+//  flex-direction: row;
+//  align-items: center;
+//  justify-content: space-between;
+//  margin-top: 20px;
+//  margin-bottom: 20px;
+//}
 
-#modal-gallery-container > .main-image-container {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+
+
+
 
 @keyframes fadein-visible {
   from {
@@ -128,14 +132,14 @@ also with live examples on codepen
   text-align: center;
 }
 
-#modal-gallery-container > .main-image-container > .nav-left {
+.nav-left {
   margin-left: 15px;
   cursor: pointer;
   animation: animatezoom 1s;
   transition: all 0.5s;
 }
 
-#modal-gallery-container > .main-image-container > .nav-right {
+.nav-right {
   margin-right: 15px;
   cursor: pointer;
   animation: animatezoom 1s;
