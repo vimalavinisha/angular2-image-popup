@@ -355,6 +355,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * all subscriptions and it will reset keyboard's service.
    */
   ngOnDestroy() {
+    console.log('CALLED ON DESTROY OF CURRENT_IMAGE_COMPONENT');
     this.keyboardService.reset();
   }
 

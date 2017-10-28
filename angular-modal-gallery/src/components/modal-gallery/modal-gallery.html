@@ -2,9 +2,11 @@
 
 <ks-background [isOpen]="opened"></ks-background>
 
-<div id="modal-gallery-wrapper" *ngIf="opened">
-  <!--click-outside [clickOutsideEnable]="enableCloseOutside"-->
-  <!--(clickOutside)="onClickOutside($event)">-->
+<div id="modal-gallery-wrapper" *ngIf="opened"
+  click-outside [clickOutsideEnable]="enableCloseOutside"
+  (clickOutside)="onClickOutside($event)">
+
+  <!-- TODO ADD LOADING -->
 
   <div id="flex-min-height-ie-fix">
     <div id="modal-gallery-container">

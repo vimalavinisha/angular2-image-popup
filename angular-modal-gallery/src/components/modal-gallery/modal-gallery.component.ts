@@ -181,6 +181,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    *  action that closed the modal gallery. NORMAL by default.
    */
   onCloseGallery(action: Action = Action.NORMAL) {
+    this.closeGallery(action);
+  }
+
+  closeGallery(action: Action = Action.NORMAL) {
     this.close.emit(new ImageModalEvent(action, true));
     this.opened = false;
   }
@@ -234,18 +238,18 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.emitBoundaryEvent(event.action, newIndex);
   }
 
-  //
-  // /**
-  //  * Method `onClickOutside` to close modal gallery when both `enableCloseOutside` is true and user
-  //  * clicked on the semi-transparent background around the image.
-  //  * @param event Boolean that is true if user clicked on the semi-transparent background, false otherwise.
-  //  */
-  // onClickOutside(event: boolean) {
-  //   if (event && this.enableCloseOutside) {
-  //     this.closeGallery(Action.CLICK);
-  //   }
-  // }
-  //
+
+  /**
+   * Method `onClickOutside` to close modal gallery when both `enableCloseOutside` is true and user
+   * clicked on the semi-transparent background around the image.
+   * @param event Boolean that is true if user clicked on the semi-transparent background, false otherwise.
+   */
+  onClickOutside(event: boolean) {
+    if (event && this.enableCloseOutside) {
+      this.closeGallery(Action.CLICK);
+    }
+  }
+
 
   /**
    * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
