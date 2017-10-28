@@ -224,10 +224,8 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     }
 
     // this.loading = true;
-    // this.currentImageIndex = this.getPrevImage(action);
     const prevImage: Image = this.getPrevImage(action);
     this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(prevImage)));
-    // this.showModalGallery(this.currentImageIndex);
   }
 
   /**
@@ -242,10 +240,8 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     }
 
     // this.loading = true;
-    // this.currentImage = this.getNextImage(action);
     const nextImage: Image = this.getNextImage(action);
     this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(nextImage)));
-    // this.showModalGallery(this.currentImageIndex);
   }
 
   /**
@@ -404,12 +400,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     } else {
       newIndex = 0; // start from the first index
     }
-
-    // emit first/last event based on newIndex value
-    // this.emitBoundaryEvent(action, newIndex);
-
-    // emit current visible image index
-    // this.show.emit(new ImageModalEvent(action, currentIndex + 1));
     return this.images[newIndex];
   }
 
@@ -428,12 +418,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     } else {
       newIndex = this.images.length - 1; // start from the last index
     }
-
-    // emit first/last event based on newIndex value
-    // this.emitBoundaryEvent(action, newIndex);
-
-    // emit current visible image index
-    // this.show.emit(new ImageModalEvent(action, currentIndex + 1));
     return this.images[newIndex];
   }
 }
