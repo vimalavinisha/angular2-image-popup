@@ -78,9 +78,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
-
-
-  // TODO FIXME
   /**
    * enableCloseOutside's input to enable modal-gallery close's behaviour while clicking
    * on the semi-transparent background. Enabled by default.
@@ -91,7 +88,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `SlideConfig` to configure sliding of modal gallery.
    * Disabled by default.
    */
-  @Input() slideConfig: SlideConfig = { infinite: false };
+  @Input() slideConfig: SlideConfig = {infinite: false};
 
   /**
    * Description object with the configuration to show image descriptions.
@@ -206,19 +203,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index Number that represents the index of the image to show.
    */
   showModalGallery(index: number) {
-    // this.keyboardService.add((event: KeyboardEvent, combo: string) => {
-    //   if (event.preventDefault) {
-    //     event.preventDefault();
-    //   } else {
-    //     // internet explorer
-    //     event.returnValue = false;
-    //   }
-    //   this.downloadImage();
-    // });
-    //
-    // // enable/disable 'infinite sliding' based on @Input() slideConfig
-    // this.manageSlideConfig(index);
-    //
     this.currentImageIndex = index;
     this.opened = true;
     this.currentImage = this.images[this.currentImageIndex];
@@ -297,7 +281,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     //   this.showGallery = false;
     //   this.showModalGallery(this.imagePointer);
     // } else {
-      this.showGallery = true;
+         this.showGallery = true;
     // }
   }
 
