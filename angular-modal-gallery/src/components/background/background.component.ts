@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /**
  * Component with the transparent background.
@@ -30,7 +30,8 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'ks-background',
   styleUrls: ['background.scss'],
-  templateUrl: 'background.html'
+  templateUrl: 'background.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BackgroundComponent {
   @Input() isOpen: boolean;

@@ -71,6 +71,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   @Input() keyboardConfig: KeyboardConfig;
 
   @Output() changeImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() loadImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
@@ -223,6 +224,9 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       return;
     }
 
+    console.log('current image - sending loading: ' + true);
+    this.loadImage.emit(true);
+
     // this.loading = true;
     const prevImage: Image = this.getPrevImage(action);
     this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(prevImage)));
@@ -239,9 +243,17 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       return;
     }
 
+    console.log('current image - sending loading: ' + true);
+    this.loadImage.emit(true);
+
     // this.loading = true;
     const nextImage: Image = this.getNextImage(action);
     this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(nextImage)));
+  }
+
+  onImageLoad(event: Event) {
+    console.log('current image - sending loading: ' + false);
+    this.loadImage.emit(false);
   }
 
   /**

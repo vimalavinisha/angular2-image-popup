@@ -3,8 +3,8 @@
 <ks-background [isOpen]="opened"></ks-background>
 
 <div id="modal-gallery-wrapper" *ngIf="opened"
-  click-outside [clickOutsideEnable]="enableCloseOutside"
-  (clickOutside)="onClickOutside($event)">
+     click-outside [clickOutsideEnable]="enableCloseOutside"
+     (clickOutside)="onClickOutside($event)">
 
   <!-- TODO ADD LOADING -->
 
@@ -15,17 +15,42 @@
                         [configButtons]="configButtons"
                         (close)="closeGallery()"
                         (download)="downloadImage()"></ks-upper-buttons>
+        <ks-current-image [images]="images"
+                          [currentImage]="currentImage"
+                          [isOpen]="opened"
+                          [slideConfig]="slideConfig"
+                          [descriptionConfig]="description"
+                          [keyboardConfig]="keyboardConfig"
+                          [downloadable]="downloadable"
+                          (loadImage)="onImageLoad($event)"
+                          (changeImage)="onChangeCurrentImage($event)"
+                          (close)="onCloseGallery($event)"
+                          [hidden]="loading"></ks-current-image>
+        <div id="loading-spinner" [hidden]="!loading">
+          <div class="cssload-loader">
+            <div class="cssload-inner cssload-one"></div>
+            <div class="cssload-inner cssload-two"></div>
+            <div class="cssload-inner cssload-three"></div>
+          </div>
+        </div>
 
-      <ks-current-image [images]="images"
-                        [currentImage]="currentImage"
-                        [isOpen]="opened"
-                        [slideConfig]="slideConfig"
-                        [descriptionConfig]="description"
-                        [keyboardConfig]="keyboardConfig"
-                        [downloadable]="downloadable"
-                        (changeImage)="onChangeCurrentImage($event)"
-                        (close)="onCloseGallery($event)"></ks-current-image>
+        <!--<div id="loading-spinner">-->
+        <!--<div class="loader">-->
+        <!--<div class="inner one"></div>-->
+        <!--<div class="inner two"></div>-->
+        <!--<div class="inner three"></div>-->
+        <!--<div class="inner four"></div>-->
+        <!--</div>-->
+        <!--</div>-->
 
+        <!--<div id="loading-spinner">-->
+        <!--<div class="loader">-->
+        <!--<div class="one"></div>-->
+        <!--<div class="two"></div>-->
+        <!--<div class="three"></div>-->
+        <!--<div class="four"></div>-->
+        <!--</div>-->
+        <!--</div>-->
 
       <ks-dots></ks-dots>
 

@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
  * Component with image previews
@@ -30,7 +30,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'ks-previews',
   styleUrls: ['previews.scss'],
-  templateUrl: 'previews.html'
+  templateUrl: 'previews.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewsComponent {
 

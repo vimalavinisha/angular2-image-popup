@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
  * Component with dots
@@ -30,7 +30,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'ks-dots',
   styleUrls: ['dots.scss'],
-  templateUrl: 'dots.html'
+  templateUrl: 'dots.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DotsComponent {
 

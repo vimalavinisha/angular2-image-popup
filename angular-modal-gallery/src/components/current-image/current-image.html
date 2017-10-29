@@ -1,11 +1,3 @@
-<!--&lt;!&ndash;<div id="loading-spinner">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="cssload-loader">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="cssload-inner cssload-one"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="cssload-inner cssload-two"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="cssload-inner cssload-three"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-
 <div class="main-image-container">
   <a class="nav-left" aria-label="Previous image" *ngIf="images?.length > 1"
      (click)="prevImage()">
@@ -20,7 +12,9 @@
   <figure id="current-figure">
     <img id="current-image"
          class="inside"
-         src="{{ currentImage.img }}"
+         [src]="currentImage.img"
+         (load)="onImageLoad($event)"
+         (loadeddata)="onImageLoad()"
          (click)="nextImage(clickAction)"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"

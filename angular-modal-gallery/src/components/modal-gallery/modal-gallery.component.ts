@@ -47,7 +47,7 @@ export interface SlideConfig {
 @Component({
   selector: 'ks-modal-gallery',
   exportAs: 'modalGallery',
-  styleUrls: ['modal-gallery.scss'],
+  styleUrls: ['modal-gallery.scss', 'style-loading-spinner-12.css'],
   templateUrl: 'modal-gallery.html'
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
@@ -106,7 +106,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   opened = false;
   /**
-   * Boolean that it is true if an image of the modal gallery is still loading
+   * Boolean that it is true if an image of the modal gallery is still loading.
+   * True by default
    */
   loading = false;
   /**
@@ -148,7 +149,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.configButtons = {
       download: this.buttonsConfig && this.buttonsConfig.download,
       extUrl: this.buttonsConfig && this.buttonsConfig.extUrl,
-      close: (this.buttonsConfig && this.buttonsConfig.close)
+      close: this.buttonsConfig && this.buttonsConfig.close
     };
 
     // call initImages passing true as parameter, because I want to emit `hasData` event
@@ -203,10 +204,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index Number that represents the index of the image to show.
    */
   showModalGallery(index: number) {
+    // this.loading = false;
     this.currentImageIndex = index;
     this.opened = true;
     this.currentImage = this.images[this.currentImageIndex];
-    this.loading = false;
 
     // emit current visible image index
     this.show.emit(new ImageModalEvent(Action.LOAD, this.currentImageIndex + 1));
@@ -222,6 +223,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.emitBoundaryEvent(event.action, newIndex);
   }
 
+  onImageLoad(showSpinner: boolean) {
+    console.log('main - received loading: ' + showSpinner);
+    this.loading = showSpinner;
+  }
 
   /**
    * Method `onClickOutside` to close modal gallery when both `enableCloseOutside` is true and user
@@ -276,7 +281,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       // this will prevent multiple emissions if called from both ngOnInit and ngOnChanges
       this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
     }
-    // this.loading = true;
+    // this.loading = false;
     // if (this.imagePointer >= 0) {
     //   this.showGallery = false;
     //   this.showModalGallery(this.imagePointer);
