@@ -41,13 +41,24 @@ export interface SlideConfig {
   infinite?: boolean;
 }
 
+export class InternalLibImage extends Image {
+  previouslyLoaded: boolean;
+
+  constructor(id: number | string, img: string, previouslyLoaded: boolean = false, thumb?: string | null | undefined,
+              description?: string | null | undefined, extUrl?: string | null | undefined) {
+    super(id, img, thumb, description, extUrl);
+    this.previouslyLoaded = previouslyLoaded;
+  }
+}
+
+
 /**
  * Main Component of this library with the modal gallery.
  */
 @Component({
   selector: 'ks-modal-gallery',
   exportAs: 'modalGallery',
-  styleUrls: ['modal-gallery.scss', 'style-loading-spinner-12.css'],
+  styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
@@ -106,22 +117,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   opened = false;
   /**
-   * Boolean that it is true if an image of the modal gallery is still loading.
-   * True by default
-   */
-  loading = false;
-  /**
    * Boolean to open the modal gallery. Closed by default.
    */
   showGallery = false;
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   * Array of `InternalLibImage` that represent the model of this library with all images, thumbs and so on.
    */
-  images: Image[];
+  images: InternalLibImage[];
   /**
    * `Image` currently visible.
    */
-  currentImage: Image;
+  currentImage: InternalLibImage;
   /**
    * Number that represents the index of the current image.
    */
@@ -204,7 +210,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index Number that represents the index of the image to show.
    */
   showModalGallery(index: number) {
-    // this.loading = false;
     this.currentImageIndex = index;
     this.opened = true;
     this.currentImage = this.images[this.currentImageIndex];
@@ -223,11 +228,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.emitBoundaryEvent(event.action, newIndex);
   }
 
-  onImageLoad(showSpinner: boolean) {
-    console.log('main - received loading: ' + showSpinner);
-    this.loading = showSpinner;
-  }
-
   /**
    * Method `onClickOutside` to close modal gallery when both `enableCloseOutside` is true and user
    * clicked on the semi-transparent background around the image.
@@ -237,6 +237,18 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     if (event && this.enableCloseOutside) {
       this.closeGallery(Action.CLICK);
     }
+  }
+
+  onImageLoad(result: any) {
+    // {
+    //   status: true,
+    //     index: this.getCurrentImageIndex(this.currentImage),
+    //   id: this.currentImage.id
+    // }
+    console.log(`1 modal-gallery component - image loaded index=${result.index}. result=`, result);
+    (this.images[result.index]).previouslyLoaded = result.status;
+    // this.currentImage.previouslyLoaded = result;
+    console.log('2 modal-gallery component - image loaded. this.images', this.images);
   }
 
 
@@ -258,12 +270,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   private initImages(emitHasDataEvent: boolean = false) {
     if (this.modalImages instanceof Array) {
-      this.images = <Array<Image>>this.modalImages;
+      this.images = <Array<InternalLibImage>>this.modalImages;
       this.completeInitialization(emitHasDataEvent);
     } else {
       if (this.modalImages instanceof Observable) {
         this.subscription = (<Observable<Array<Image>>>this.modalImages).subscribe((val: Array<Image>) => {
-          this.images = val;
+          this.images = <Array<InternalLibImage>>val;
           this.completeInitialization(emitHasDataEvent);
         });
       }
@@ -286,7 +298,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     //   this.showGallery = false;
     //   this.showModalGallery(this.imagePointer);
     // } else {
-         this.showGallery = true;
+    this.showGallery = true;
     // }
   }
 

@@ -93,14 +93,14 @@
   text-align: center;
 }
 
-.main-image-container > .nav-left {
+.main-image-container .nav-left {
   margin-left: 15px;
   cursor: pointer;
   animation: animatezoom 1s;
   transition: all 0.5s;
 }
 
-.main-image-container > .nav-right {
+.main-image-container .nav-right {
   margin-right: 15px;
   cursor: pointer;
   animation: animatezoom 1s;

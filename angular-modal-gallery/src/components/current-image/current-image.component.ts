@@ -26,7 +26,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, 
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
-import { SlideConfig } from '../modal-gallery/modal-gallery.component';
+import { InternalLibImage, SlideConfig } from '../modal-gallery/modal-gallery.component';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
@@ -37,20 +37,20 @@ import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
  */
 @Component({
   selector: 'ks-current-image',
-  styleUrls: ['current-image.scss'],
+  styleUrls: ['current-image.scss', 'style-loading-spinner-12.css'],
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentImageComponent implements OnChanges, OnDestroy {
 
-  @Input() currentImage: Image;
+  @Input() currentImage: InternalLibImage;
 
   @Input() slideConfig: SlideConfig;
 
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
-  @Input() images: Image[];
+  @Input() images: InternalLibImage[];
 
   @Input() isOpen: boolean;
 
@@ -69,9 +69,8 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
-
+  @Output() loadImage: EventEmitter<any> = new EventEmitter<any>();
   @Output() changeImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
-  @Output() loadImage: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
@@ -88,6 +87,11 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * Boolean that it's true when you are watching the last image (currently visible).
    */
   isLastImage = false;
+  /**
+   * Boolean that it is true if an image of the modal gallery is still loading.
+   * True by default
+   */
+  loading = true;
 
   /**
    * Private SWIPE_ACTION to define all swipe actions used by hammerjs.
@@ -100,6 +104,12 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   };
 
   private description: Description;
+
+  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
+  private static isIEorEdge() {
+    // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
+    return window.Blob && window.navigator.msSaveOrOpenBlob;
+  }
 
   /**
    * Constructor with the injection of ´KeyboardService´ that initialize some description fields
@@ -198,7 +208,8 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       return '';
     }
     if (!currentImage.description) {
-      return `Image ${this.images.indexOf(currentImage)}`;
+      const index: number = this.getCurrentImageIndex(currentImage);
+      return `Image ${index}`;
     }
     return currentImage.description;
   }
@@ -223,12 +234,18 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     if (this.isPreventSliding(0)) {
       return;
     }
+    const prevImage: InternalLibImage = this.getPrevImage(action);
 
-    console.log('current image - sending loading: ' + true);
-    this.loadImage.emit(true);
+    console.log('prevImage is', prevImage);
 
-    // this.loading = true;
-    const prevImage: Image = this.getPrevImage(action);
+    if (!prevImage.previouslyLoaded) {
+      console.log('--NOT previously loaded, so LOADING...--');
+      this.loading = true;
+    } else {
+      console.log('--already loaded--');
+      this.loading = false;
+    }
+
     this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(prevImage)));
   }
 
@@ -243,17 +260,32 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       return;
     }
 
-    console.log('current image - sending loading: ' + true);
-    this.loadImage.emit(true);
+    const nextImage: InternalLibImage = this.getNextImage(action);
 
-    // this.loading = true;
-    const nextImage: Image = this.getNextImage(action);
+    console.log('nextImage is', nextImage);
+
+    if (!nextImage.previouslyLoaded) {
+      console.log('--NOT previously loaded, so LOADING...--');
+      this.loading = true;
+    } else {
+      console.log('--already loaded--');
+      this.loading = false;
+    }
+
     this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(nextImage)));
   }
 
   onImageLoad(event: Event) {
-    console.log('current image - sending loading: ' + false);
-    this.loadImage.emit(false);
+    console.log('3 current image - sending loading: ' + true + ', index=' + this.getCurrentImageIndex(this.currentImage));
+
+    this.loadImage.emit({
+      status: true,
+      index: this.getCurrentImageIndex(this.currentImage),
+      id: this.currentImage.id
+    });
+
+    this.loading = false;
+    // console.warn('current-image component, emitting loadImage. Currentimage is', this.currentImage);
   }
 
   /**
@@ -313,7 +345,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       return;
     }
     // If IE11 or Microsoft Edge use msSaveBlob(...)
-    if (this.isIEorEdge()) {
+    if (CurrentImageComponent.isIEorEdge()) {
       // I cannot use fetch API because IE11 doesn't support it,
       // so I have to switch to XMLHttpRequest
       this.downloadImageOnlyIEorEdge();
@@ -350,12 +382,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
     };
     req.send();
-  }
-
-  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
-  private isIEorEdge() {
-    // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
-    return window.Blob && window.navigator.msSaveOrOpenBlob;
   }
 
   /**
@@ -404,7 +430,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * @param action Enum of type Action that represents the source of the event that changed the
    *  current image to the next one.
    */
-  private getNextImage(action: Action): Image {
+  private getNextImage(action: Action): InternalLibImage {
     const currentIndex: number = this.getCurrentImageIndex(this.currentImage);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
@@ -422,7 +448,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * @param action Enum of type Action that represents the source of the event that changed the
    *  current image to the previous one.
    */
-  private getPrevImage(action: Action): Image {
+  private getPrevImage(action: Action): InternalLibImage {
     const currentIndex: number = this.getCurrentImageIndex(this.currentImage);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
