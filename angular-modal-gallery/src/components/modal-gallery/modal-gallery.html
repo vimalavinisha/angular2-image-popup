@@ -25,7 +25,10 @@
                         (changeImage)="onChangeCurrentImage($event)"
                         (close)="onCloseGallery($event)"></ks-current-image>
 
-      <ks-dots></ks-dots>
+      <ks-dots [images]="images"
+               [currentImage]="currentImage"
+               [isOpen]="opened"
+               (clickDot)="onClickDot($event)"></ks-dots>
 
       <ks-previews></ks-previews>
 

@@ -22,7 +22,9 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
+import { Image } from '../../interfaces/image.class';
 
 /**
  * Component with dots
@@ -34,5 +36,37 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DotsComponent {
+
+  @Input() currentImage: InternalLibImage;
+
+  /**
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   */
+  @Input() images: InternalLibImage[];
+
+  @Input() isOpen: boolean;
+
+  @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
+
+  isActive(index: number) {
+    return index === this.getCurrentImageIndex(this.currentImage);
+  }
+
+  getCurrentImageIndex(image: Image) {
+    // id is mandatory. You can use either numbers or strings.
+    // If the id is 0, I shouldn't throw an error.
+    if (!image || (!image.id && image.id !== 0)) {
+      throw new Error(`Image 'id' is mandatory`);
+    }
+    return this.images.findIndex((val: Image) => val.id === image.id);
+  }
+
+  onClick(index: number) {
+    this.clickDot.emit(index);
+  }
+
+  trackById(index: number, item: Image) {
+    return item.id;
+  }
 
 }

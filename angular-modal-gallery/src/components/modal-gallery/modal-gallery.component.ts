@@ -45,8 +45,12 @@ export interface SlideConfig {
 export class InternalLibImage extends Image {
   previouslyLoaded: boolean;
 
-  constructor(id: number | string, img: string, previouslyLoaded: boolean = false, thumb?: string | null | undefined,
-              description?: string | null | undefined, extUrl?: string | null | undefined) {
+  constructor(id: number | string,
+              img: string,
+              previouslyLoaded: boolean = false,
+              thumb?: string | null | undefined,
+              description?: string | null | undefined,
+              extUrl?: string | null | undefined) {
     super(id, img, thumb, description, extUrl);
     this.previouslyLoaded = previouslyLoaded;
   }
@@ -58,7 +62,7 @@ export class InternalLibImage extends Image {
  */
 @Component({
   selector: 'ks-modal-gallery',
-  exportAs: 'modalGallery',
+  exportAs: 'ks-modal-gallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
@@ -245,6 +249,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   onImageLoad(result: any) {
     // sets as previously loaded the image with index specified by `result.index`
     (this.images[result.index]).previouslyLoaded = result.status;
+  }
+
+  onClickDot(index: number) {
+    this.currentImage = this.images[index];
   }
 
 

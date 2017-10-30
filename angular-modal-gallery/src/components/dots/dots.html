@@ -1,11 +1,6 @@
 <div class="dots-container" aria-label="Image dots" title="Image dots">
-  <div class="inside dot active">
-    <!--<i class="fa fa-circle" aria-hidden="true"></i>-->
-  </div>
-  <div class="inside dot"></div>
-  <div class="inside dot"></div>
-  <div class="inside dot"></div>
-  <div class="inside dot"></div>
-  <div class="inside dot"></div>
-  <div class="inside dot"></div>
+  <div class="inside dot"
+       *ngFor="let img of images; trackBy: trackById; let index = index"
+       [ngClass]="{'active': isActive(index)}"
+       (click)="onClick(index)"></div>
 </div>
