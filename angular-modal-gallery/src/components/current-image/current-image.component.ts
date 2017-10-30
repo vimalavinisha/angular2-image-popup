@@ -30,6 +30,7 @@ import { InternalLibImage, SlideConfig } from '../modal-gallery/modal-gallery.co
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
+import { LoadingConfig } from '../../interfaces/loading-config.interface';
 
 /**
  * Component with the current image with
@@ -37,7 +38,11 @@ import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
  */
 @Component({
   selector: 'ks-current-image',
-  styleUrls: ['current-image.scss', 'style-loading-spinner-12.css'],
+  styleUrls: ['current-image.scss',
+    'style-loading-spinner-8.css',
+    'style-loading-spinner-11.css',
+    'style-loading-spinner-12.css'
+  ],
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -64,6 +69,8 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * Description object with the configuration to show image descriptions.
    */
   @Input() descriptionConfig: Description;
+
+  @Input() loadingConfig: LoadingConfig;
 
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
@@ -261,9 +268,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     }
 
     const nextImage: InternalLibImage = this.getNextImage(action);
-
-    console.log('nextImage is', nextImage);
-
     if (!nextImage.previouslyLoaded) {
       console.log('--NOT previously loaded, so LOADING...--');
       this.loading = true;
@@ -276,8 +280,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   }
 
   onImageLoad(event: Event) {
-    console.log('3 current image - sending loading: ' + true + ', index=' + this.getCurrentImageIndex(this.currentImage));
-
     this.loadImage.emit({
       status: true,
       index: this.getCurrentImageIndex(this.currentImage),
@@ -285,7 +287,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     });
 
     this.loading = false;
-    // console.warn('current-image component, emitting loadImage. Currentimage is', this.currentImage);
   }
 
   /**

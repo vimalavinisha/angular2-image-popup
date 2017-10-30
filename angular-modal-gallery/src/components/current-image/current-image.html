@@ -4,54 +4,54 @@
     <div class="inside  {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
   </a>
 
-    <img id="current-image-previous" src="http://via.placeholder.com/100x100"
-         aria-label="Click to navigate to the previous image"
-         [hidden]="loading"
-         title="Previous image preview" alt="Alt text for this image"/>
+  <img id="current-image-previous" src="http://via.placeholder.com/100x100"
+       aria-label="Click to navigate to the previous image"
+       [hidden]="loading"
+       title="Previous image preview" alt="Alt text for this image"/>
 
-    <figure id="current-figure" [hidden]="loading">
-      <img id="current-image"
-           class="inside"
-           [src]="currentImage.img"
-           (load)="onImageLoad($event)"
-           (click)="nextImage(clickAction)"
-           (swipeleft)="swipe($event.type)"
-           (swiperight)="swipe($event.type)"
-           aria-label="Click to navigate to the next image"
-           title="Current image" alt="{{getAltDescriptionByImage(currentImage)}}"/>
-      <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
-    </figure>
-
-    <img id="current-image-next" src="http://via.placeholder.com/100x100"
+  <figure id="current-figure" [hidden]="loading">
+    <img id="current-image"
+         class="inside"
+         [src]="currentImage.img"
+         (load)="onImageLoad($event)"
+         (click)="nextImage(clickAction)"
+         (swipeleft)="swipe($event.type)"
+         (swiperight)="swipe($event.type)"
          aria-label="Click to navigate to the next image"
-         [hidden]="loading"
-         title="Next image preview" alt="Alt text for this image"/>
+         title="Current image" alt="{{getAltDescriptionByImage(currentImage)}}"/>
+    <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
+  </figure>
 
-    <div id="loading-spinner" [hidden]="!loading">
+  <img id="current-image-next" src="http://via.placeholder.com/100x100"
+       aria-label="Click to navigate to the next image"
+       [hidden]="loading"
+       title="Next image preview" alt="Alt text for this image"/>
+
+  <div id="loading-spinner" [hidden]="!loading || !loadingConfig.enable">
+    <ng-container *ngIf="loadingConfig.type === 0">
       <div class="cssload-loader">
         <div class="cssload-inner cssload-one"></div>
         <div class="cssload-inner cssload-two"></div>
         <div class="cssload-inner cssload-three"></div>
       </div>
-    </div>
-
-    <!--<div id="loading-spinner">-->
-    <!--<div class="loader">-->
-    <!--<div class="inner one"></div>-->
-    <!--<div class="inner two"></div>-->
-    <!--<div class="inner three"></div>-->
-    <!--<div class="inner four"></div>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--<div id="loading-spinner">-->
-    <!--<div class="loader">-->
-    <!--<div class="one"></div>-->
-    <!--<div class="two"></div>-->
-    <!--<div class="three"></div>-->
-    <!--<div class="four"></div>-->
-    <!--</div>-->
-    <!--</div>-->
+    </ng-container>
+    <ng-container *ngIf="loadingConfig.type === 1">
+      <div class="loader">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div class="four"></div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="loadingConfig.type === 2">
+      <div class="loader">
+        <div class="inner one"></div>
+        <div class="inner two"></div>
+        <div class="inner three"></div>
+        <div class="inner four"></div>
+      </div>
+    </ng-container>
+  </div>
 
   <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
      (click)="nextImage()">

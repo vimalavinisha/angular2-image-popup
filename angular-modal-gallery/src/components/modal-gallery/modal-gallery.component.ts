@@ -32,6 +32,7 @@ import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
+import { LoadingConfig, LoadingType } from "../../interfaces/loading-config.interface";
 
 
 /**
@@ -105,6 +106,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Description object with the configuration to show image descriptions.
    */
   @Input() description: Description;
+
+  @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.DOTS};
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
@@ -240,15 +243,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onImageLoad(result: any) {
-    // {
-    //   status: true,
-    //     index: this.getCurrentImageIndex(this.currentImage),
-    //   id: this.currentImage.id
-    // }
-    console.log(`1 modal-gallery component - image loaded index=${result.index}. result=`, result);
+    // sets as previously loaded the image with index specified by `result.index`
     (this.images[result.index]).previouslyLoaded = result.status;
-    // this.currentImage.previouslyLoaded = result;
-    console.log('2 modal-gallery component - image loaded. this.images', this.images);
   }
 
 

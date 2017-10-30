@@ -15,7 +15,7 @@
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  background-color: #D9CB9E;
+  background-color: #FFF; /* Color modified by Stefano Cappa (Ks89)*/
   border-radius: 50%;
 }
 
