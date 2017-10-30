@@ -28,8 +28,10 @@
        title="Next image preview" alt="Alt text for this image"/>
 
 
-  <ks-loading-spinner [loading]="loading"
-                      [loadingConfig]="loadingConfig"></ks-loading-spinner>
+  <ng-container *ngIf="loading && loadingConfig.enable">
+    <ks-loading-spinner [loading]="loading"
+                        [loadingConfig]="loadingConfig"></ks-loading-spinner>
+  </ng-container>
 
   <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
      (click)="nextImage()">
