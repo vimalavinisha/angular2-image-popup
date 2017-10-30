@@ -27,31 +27,35 @@
        [hidden]="loading"
        title="Next image preview" alt="Alt text for this image"/>
 
-  <div id="loading-spinner" [hidden]="!loading || !loadingConfig.enable">
-    <ng-container *ngIf="loadingConfig.type === 0">
-      <div class="cssload-loader">
-        <div class="cssload-inner cssload-one"></div>
-        <div class="cssload-inner cssload-two"></div>
-        <div class="cssload-inner cssload-three"></div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="loadingConfig.type === 1">
-      <div class="loader">
-        <div class="one"></div>
-        <div class="two"></div>
-        <div class="three"></div>
-        <div class="four"></div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="loadingConfig.type === 2">
-      <div class="loader">
-        <div class="inner one"></div>
-        <div class="inner two"></div>
-        <div class="inner three"></div>
-        <div class="inner four"></div>
-      </div>
-    </ng-container>
-  </div>
+
+  <ks-loading-spinner [loading]="loading"
+                      [loadingConfig]="loadingConfig"></ks-loading-spinner>
+  <!---->
+  <!--<div id="loading-spinner" [hidden]="!loading || !loadingConfig.enable">-->
+  <!--<ng-container *ngIf="loadingConfig.type === 0">-->
+  <!--<div class="cssload-loader">-->
+  <!--<div class="cssload-inner cssload-one"></div>-->
+  <!--<div class="cssload-inner cssload-two"></div>-->
+  <!--<div class="cssload-inner cssload-three"></div>-->
+  <!--</div>-->
+  <!--</ng-container>-->
+  <!--<ng-container *ngIf="loadingConfig.type === 1">-->
+  <!--<div class="loader">-->
+  <!--<div class="one"></div>-->
+  <!--<div class="two"></div>-->
+  <!--<div class="three"></div>-->
+  <!--<div class="four"></div>-->
+  <!--</div>-->
+  <!--</ng-container>-->
+  <!--<ng-container *ngIf="loadingConfig.type === 2">-->
+  <!--<div class="loader">-->
+  <!--<div class="inner one"></div>-->
+  <!--<div class="inner two"></div>-->
+  <!--<div class="inner three"></div>-->
+  <!--<div class="inner four"></div>-->
+  <!--</div>-->
+  <!--</ng-container>-->
+  <!--</div>-->
 
   <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
      (click)="nextImage()">

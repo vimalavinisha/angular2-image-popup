@@ -22,21 +22,25 @@
  SOFTWARE.
  */
 
-import { GalleryComponent } from './gallery/gallery.component';
-import { BackgroundComponent } from './background/background.component';
-import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
-import { UpperButtonsComponent } from './upper-buttons/upper-buttons.component';
-import { DotsComponent } from './dots/dots.component';
-import { PreviewsComponent } from './previews/previews.component';
-import { CurrentImageComponent } from './current-image/current-image.component';
-import { LoadingSpinnerComponent } from './current-image/loading-spinner/loading-spinner.component';
-
-export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { LoadingConfig } from '../../../interfaces/loading-config.interface';
 
 /**
- * Array of all components.
+ * Component with the loading spinner
  */
-export const COMPONENTS = [
-  BackgroundComponent, GalleryComponent, ModalGalleryComponent, UpperButtonsComponent,
-  DotsComponent, PreviewsComponent, CurrentImageComponent, LoadingSpinnerComponent
-];
+@Component({
+  selector: 'ks-loading-spinner',
+  styleUrls: [
+    'style-loading-spinner-8.css',
+    'style-loading-spinner-11.css',
+    'style-loading-spinner-12.css'
+  ],
+  templateUrl: 'loading-spinner.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class LoadingSpinnerComponent {
+
+  @Input() loading: boolean;
+
+  @Input() loadingConfig: LoadingConfig;
+}

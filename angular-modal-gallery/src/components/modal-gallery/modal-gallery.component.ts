@@ -107,7 +107,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() description: Description;
 
-  @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.DOTS};
+  @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
