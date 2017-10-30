@@ -40,7 +40,6 @@ import { LoadingConfig } from '../../../interfaces/loading-config.interface';
 })
 export class LoadingSpinnerComponent {
 
-  @Input() loading: boolean;
-
   @Input() loadingConfig: LoadingConfig;
+
 }

@@ -32,7 +32,7 @@ import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
-import { LoadingConfig, LoadingType } from "../../interfaces/loading-config.interface";
+import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
 
 
 /**
