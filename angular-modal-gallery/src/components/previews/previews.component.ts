@@ -69,7 +69,7 @@ export class PreviewsComponent implements OnInit, OnChanges {
       this.start = (this.images.length - 1) - (this.previewConfig.number - 1);
       this.end = this.images.length;
     } else {
-      this.start = this.getIndex(this.currentImage) - 1;
+      this.start = this.getIndex(this.currentImage) - Math.floor(this.previewConfig.number / 2);
       this.end = this.getIndex(this.currentImage) + Math.floor(this.previewConfig.number / 2) + 1;
     }
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
