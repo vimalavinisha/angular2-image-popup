@@ -37,11 +37,11 @@ import 'rxjs/add/operator/delay';
 })
 export class AppComponent {
 
-  openModalWindow: boolean = false;
-  imagePointer: number = 0;
+  openModalWindow = false;
+  imagePointer = 0;
 
-  openModalWindowObservable: boolean = false;
-  imagePointerObservable: number = 0;
+  openModalWindowObservable = false;
+  imagePointerObservable = 0;
 
   imagesArray: Array<Image> = [
     new Image(
@@ -166,7 +166,10 @@ export class AppComponent {
   }
 
   addRandomImage() {
-    this.imagesArray.push(this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)]);
+    let newImage: Image = Object.assign({},
+      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
+      {id: this.imagesArray.length - 1 + 1});
+    this.imagesArray.push(newImage);
   }
 
   ngOnDestroy() {

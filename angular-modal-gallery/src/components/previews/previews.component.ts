@@ -22,7 +22,10 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, EventEmitter, Input,
+  OnChanges, OnInit, Output, SimpleChange, SimpleChanges
+} from '@angular/core';
 import { InternalLibImage, SlideConfig } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
@@ -66,7 +69,7 @@ export class PreviewsComponent implements OnInit, OnChanges {
   }
 
   isActive(index: number) {
-    return index === this.getImageIndex(this.currentImage);
+    return index === this.getIndex(this.currentImage);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -78,20 +81,13 @@ export class PreviewsComponent implements OnInit, OnChanges {
     const current: InternalLibImage = simpleChange.currentValue;
 
     if (prev && current && prev.id !== current.id) {
-      console.log('current image index ' + this.getCurrentImageIndex(this.currentImage));
-      console.log('previews - new current image detected. Before was ' + prev.id + ', now is ' + current.id);
-      console.log('previews - pre index ' + this.getImageIndex(prev) + ', curr index ' + this.getImageIndex(current));
-      if (this.getImageIndex(prev) > this.getImageIndex(current)) {
-        // TODO write logic here
-        if (this.getCurrentImageIndex(this.currentImage) === this.images.length - 2) {
-          console.log('current index is the last one');
+      if (this.getIndex(prev, this.previews) > this.getIndex(current, this.previews)) {
+        if (this.getIndex(this.currentImage) === this.images.length - 2) {
           return;
         }
         this.previous();
-      } else if (this.getImageIndex(prev) < this.getImageIndex(current)) {
-        // TODO write logic here
-        if (this.getCurrentImageIndex(this.currentImage) === 1) {
-          console.log('current index is 0');
+      } else if (this.getIndex(prev, this.previews) < this.getIndex(current, this.previews)) {
+        if (this.getIndex(this.currentImage) === 1) {
           return;
         }
         this.next();
@@ -99,28 +95,17 @@ export class PreviewsComponent implements OnInit, OnChanges {
     }
   }
 
-  getImageIndex(image: Image) {
+  getIndex(image: Image, arrayOfImages: Image[] = this.images) {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
       throw new Error(`Image 'id' is mandatory`);
     }
-    return this.previews.findIndex((val: Image) => val.id === image.id);
-  }
-
-  getCurrentImageIndex(image: Image) {
-    // id is mandatory. You can use either numbers or strings.
-    // If the id is 0, I shouldn't throw an error.
-    if (!image || (!image.id && image.id !== 0)) {
-      throw new Error(`Image 'id' is mandatory`);
-    }
-    return this.images.findIndex((val: Image) => val.id === image.id);
+    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
   onClick(preview: InternalLibImage) {
-    console.log('preview clicked');
     if (!this.previewConfig || !this.previewConfig.clickable) {
-      console.log('preview click blocked');
       return;
     }
     this.clickPreview.emit(preview);
@@ -164,6 +149,6 @@ export class PreviewsComponent implements OnInit, OnChanges {
 
   private isPreventSliding(boundaryIndex: number) {
     return !!this.slideConfig && this.slideConfig.infinite === false &&
-      this.getImageIndex(this.currentImage) === boundaryIndex;
+      this.getIndex(this.currentImage, this.previews) === boundaryIndex;
   }
 }
