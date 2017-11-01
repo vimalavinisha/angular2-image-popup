@@ -33,15 +33,9 @@ import { Action } from '../../interfaces/action.enum';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
-import { PreviewConfig } from "../../interfaces/preview-config.interface";
+import { PreviewConfig } from '../../interfaces/preview-config.interface';
+import { SlideConfig } from '../../interfaces/slide-config.interface';
 
-
-/**
- * Interface `SlideConfig` to configure sliding features of modal gallery.
- */
-export interface SlideConfig {
-  infinite?: boolean;
-}
 
 export class InternalLibImage extends Image {
   previouslyLoaded: boolean;
@@ -63,7 +57,7 @@ export class InternalLibImage extends Image {
  */
 @Component({
   selector: 'ks-modal-gallery',
-  exportAs: 'ks-modal-gallery',
+  exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html'
 })
@@ -105,7 +99,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `SlideConfig` to configure sliding of modal gallery.
    * Disabled by default.
    */
-  @Input() slideConfig: SlideConfig = {infinite: false};
+  @Input() slideConfig: SlideConfig = {
+    infinite: false,
+    sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}
+  }; // TODO disable previews
 
   /**
    * Description object with the configuration to show image descriptions.
@@ -114,7 +111,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
 
-  @Input() previewConfig: PreviewConfig = {number: 3, arrows: true, clickable: true, alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}};
+  @Input() previewConfig: PreviewConfig = {
+    number: 3, arrows: true, clickable: true,
+    alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}
+  };
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
@@ -138,10 +138,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * `Image` currently visible.
    */
   currentImage: InternalLibImage;
-  /**
-   * Number that represents the index of the current image.
-   */
-  currentImageIndex = 0;
+
   /**
    * Object of type `ButtonsConfig` used to configure buttons visibility. This is a temporary value
    * initialized by the real `buttonsConfig`'s input
@@ -220,12 +217,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index Number that represents the index of the image to show.
    */
   showModalGallery(index: number) {
-    this.currentImageIndex = index;
     this.opened = true;
-    this.currentImage = this.images[this.currentImageIndex];
+    this.currentImage = this.images[index];
 
     // emit current visible image index
-    this.show.emit(new ImageModalEvent(Action.LOAD, this.currentImageIndex + 1));
+    this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
   }
 
 

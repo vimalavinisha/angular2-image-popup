@@ -1,13 +1,21 @@
 <div class="main-image-container">
   <a class="nav-left" aria-label="Previous image" *ngIf="images?.length > 1"
      (click)="prevImage()">
-    <div class="inside  {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
+    <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
   </a>
 
-  <img id="current-image-previous" src="http://via.placeholder.com/100x100"
+
+  <img *ngIf="!isFirstImage" class="inside current-image-previous" src="{{getLeftPreviewUrl()}}"
        aria-label="Click to navigate to the previous image"
-       [hidden]="loading"
+       [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
+       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
+       (click)="prevImage(clickAction)"
        title="Previous image preview" alt="Alt text for this image"/>
+  <div *ngIf="isFirstImage" class="current-image-previous hidden"
+       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"></div>
+
 
   <figure id="current-figure" [hidden]="loading">
     <img id="current-image"
@@ -22,10 +30,17 @@
     <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
   </figure>
 
-  <img id="current-image-next" src="http://via.placeholder.com/100x100"
+
+  <img *ngIf="!isLastImage" class="inside current-image-next" src="{{getRightPreviewUrl()}}"
        aria-label="Click to navigate to the next image"
-       [hidden]="loading"
+       [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
+       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
+       (click)="nextImage(clickAction)"
        title="Next image preview" alt="Alt text for this image"/>
+  <div *ngIf="isLastImage" class="current-image-next hidden"
+       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"></div>
 
 
   <ng-container *ngIf="loading && loadingConfig.enable">
@@ -34,6 +49,6 @@
 
   <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
      (click)="nextImage()">
-    <div class="inside  {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
+    <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
   </a>
 </div>

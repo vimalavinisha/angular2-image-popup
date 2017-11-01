@@ -117,33 +117,33 @@
 
 /** Mobile **/
 @media only screen and (max-width: 767px), only screen and (max-device-width: 767px) {
-  #current-image-previous {
+  .current-image-previous {
     display: none;
   }
 
-  #current-image-next {
+  .current-image-next {
     display: none;
   }
 }
 
 /** Tablet **/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-  #current-image-previous {
+  .current-image-previous {
     display: none;
   }
 
-  #current-image-next {
+  .current-image-next {
     display: none;
   }
 }
 
 /** Tablet (landscape) **/
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-  #current-image-previous {
+  .current-image-previous {
     display: none;
   }
 
-  #current-image-next {
+  .current-image-next {
     display: none;
   }
 }
@@ -151,7 +151,7 @@
 /** Desktops or greater **/
 @media only screen and (min-device-width: 1025px) {
 
-  #current-image-previous {
+  .current-image-previous {
     height: auto;
     /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
     /*max-height: calc(100vh - 110px);*/
@@ -162,13 +162,13 @@
     filter: alpha(opacity=50); /* For IE8 and earlier */
   }
 
-  #current-image-previous:hover {
+  .current-image-previous:hover {
     opacity: .8;
     transition-property: opacity;
     transition: all 0.5s ease;
   }
 
-  #current-image-next {
+  .current-image-next {
     height: auto;
     /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
     /*max-height: calc(100vh - 110px);*/
@@ -179,7 +179,7 @@
     filter: alpha(opacity=50); /* For IE8 and earlier */
   }
 
-  #current-image-next:hover {
+  .current-image-next:hover {
     opacity: .8;
     transition-property: opacity;
     transition: all 0.5s ease;

@@ -26,9 +26,10 @@ import {
   ChangeDetectionStrategy, Component, EventEmitter, Input,
   OnChanges, OnInit, Output, SimpleChange, SimpleChanges
 } from '@angular/core';
-import { InternalLibImage, SlideConfig } from '../modal-gallery/modal-gallery.component';
+import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
+import { SlideConfig } from '../../interfaces/slide-config.interface';
 
 /**
  * Component with image previews

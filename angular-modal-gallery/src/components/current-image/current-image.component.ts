@@ -26,11 +26,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, 
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
-import { InternalLibImage, SlideConfig } from '../modal-gallery/modal-gallery.component';
+import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig } from '../../interfaces/loading-config.interface';
+import { SlideConfig } from '../../interfaces/slide-config.interface';
 
 /**
  * Component with the current image with
@@ -150,7 +151,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
 
   ngOnChanges() {
     if (this.isOpen) {
-      this.manageSlideConfig(this.getCurrentImageIndex(this.currentImage));
+      this.manageSlideConfig(this.getIndex(this.currentImage));
     }
   }
 
@@ -194,7 +195,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     if (this.description && this.description.customFullDescription) {
       return this.description.customFullDescription;
     }
-    const currentIndex: number = this.getCurrentImageIndex(this.currentImage);
+    const currentIndex: number = this.getIndex(this.currentImage);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
     if (!this.currentImage.description || this.currentImage.description === '') {
@@ -215,21 +216,29 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       return '';
     }
     if (!currentImage.description) {
-      const index: number = this.getCurrentImageIndex(currentImage);
+      const index: number = this.getIndex(currentImage);
       return `Image ${index}`;
     }
     return currentImage.description;
   }
 
-  getCurrentImageIndex(image: Image) {
+  getIndex(image: Image, arrayOfImages: Image[] = this.images) {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
       throw new Error(`Image 'id' is mandatory`);
     }
-    return this.images.findIndex((val: Image) => val.id === image.id);
+    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
+  getLeftPreviewUrl() {
+    const img: Image = this.images[Math.max(this.getIndex(this.currentImage) - 1, 0)];
+    return img.thumb ? img.thumb : img.img;
+  }
+  getRightPreviewUrl() {
+    const img: Image = this.images[Math.min(this.getIndex(this.currentImage) + 1, this.images.length - 1)];
+    return img.thumb ? img.thumb : img.img;
+  }
 
   /**
    * Method `prevImage` to go back to the previous image shown into the modal gallery.
@@ -253,7 +262,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       this.loading = false;
     }
 
-    this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(prevImage)));
+    this.changeImage.emit(new ImageModalEvent(action, this.getIndex(prevImage)));
   }
 
   /**
@@ -276,13 +285,13 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       this.loading = false;
     }
 
-    this.changeImage.emit(new ImageModalEvent(action, this.getCurrentImageIndex(nextImage)));
+    this.changeImage.emit(new ImageModalEvent(action, this.getIndex(nextImage)));
   }
 
   onImageLoad(event: Event) {
     this.loadImage.emit({
       status: true,
-      index: this.getCurrentImageIndex(this.currentImage),
+      index: this.getIndex(this.currentImage),
       id: this.currentImage.id
     });
 
@@ -420,7 +429,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    */
   private isPreventSliding(boundaryIndex: number) {
     return !!this.slideConfig && this.slideConfig.infinite === false &&
-      this.getCurrentImageIndex(this.currentImage) === boundaryIndex;
+      this.getIndex(this.currentImage) === boundaryIndex;
   }
 
 
@@ -432,7 +441,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    *  current image to the next one.
    */
   private getNextImage(action: Action): InternalLibImage {
-    const currentIndex: number = this.getCurrentImageIndex(this.currentImage);
+    const currentIndex: number = this.getIndex(this.currentImage);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
       newIndex = currentIndex + 1;
@@ -450,7 +459,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    *  current image to the previous one.
    */
   private getPrevImage(action: Action): InternalLibImage {
-    const currentIndex: number = this.getCurrentImageIndex(this.currentImage);
+    const currentIndex: number = this.getIndex(this.currentImage);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
       newIndex = currentIndex - 1;

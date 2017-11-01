@@ -50,7 +50,19 @@ export class ClickOutsideDirective {
     console.log('className ', targetElement.className);
 
     const isInside = targetElement.className && targetElement.className.startsWith('inside');
-    if (!isInside) {
+    const isHidden = targetElement.className.includes('hidden');
+
+    // if inside => don't close modal gallery
+    // if hidden => close modal gallery
+    /*
+        i i' h | close
+        0 1  0 |   1 => close modal gallery
+        0 1  1 |   1 => close modal gallery
+        1 0  0 |   0
+        1 0  1 |   1 => close modal gallery
+     */
+    if (!isInside || isHidden) {
+      // close modal gallery
       this.clickOutside.emit(true);
     }
   }
