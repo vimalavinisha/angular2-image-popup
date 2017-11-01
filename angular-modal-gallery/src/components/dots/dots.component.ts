@@ -40,7 +40,7 @@ export class DotsComponent {
   @Input() currentImage: InternalLibImage;
 
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   * Array of `InternalLibImage` that represent the model of this library with all images, thumbs and so on.
    */
   @Input() images: InternalLibImage[];
 

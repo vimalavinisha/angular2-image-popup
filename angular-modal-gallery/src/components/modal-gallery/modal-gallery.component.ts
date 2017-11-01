@@ -33,6 +33,7 @@ import { Action } from '../../interfaces/action.enum';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
+import { PreviewConfig } from "../../interfaces/preview-config.interface";
 
 
 /**
@@ -112,6 +113,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() description: Description;
 
   @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
+
+  @Input() previewConfig: PreviewConfig = {number: 3, arrows: true, clickable: true, alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}};
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
@@ -253,6 +256,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   onClickDot(index: number) {
     this.currentImage = this.images[index];
+  }
+
+  onClickPreview(preview: Image) {
+    console.log('modalgallery click preview with id: ' + preview.id);
+    this.currentImage = this.images.find((img: InternalLibImage) => img.id === preview.id);
   }
 
 

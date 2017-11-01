@@ -30,7 +30,11 @@
                [isOpen]="opened"
                (clickDot)="onClickDot($event)"></ks-dots>
 
-      <ks-previews></ks-previews>
+      <ks-previews [images]="images"
+                   [currentImage]="currentImage"
+                   [isOpen]="opened"
+                   [previewConfig]="previewConfig"
+                   (clickPreview)="onClickPreview($event)"></ks-previews>
 
     </div>
   </div>

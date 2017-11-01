@@ -22,7 +22,10 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { InternalLibImage, SlideConfig } from '../modal-gallery/modal-gallery.component';
+import { Image, ImageModalEvent } from '../../interfaces/image.class';
+import { PreviewConfig } from '../../interfaces/preview-config.interface';
 
 /**
  * Component with image previews
@@ -33,6 +36,95 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: 'previews.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PreviewsComponent {
+export class PreviewsComponent implements OnInit {
 
+  @Input() currentImage: InternalLibImage;
+
+  /**
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   */
+  @Input() images: InternalLibImage[];
+
+  @Input() isOpen: boolean;
+
+  @Input() slideConfig: SlideConfig;
+
+  @Input() previewConfig: PreviewConfig;
+
+  @Output() clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
+
+  previews: InternalLibImage[] = [];
+
+  start: number;
+  end: number;
+
+  ngOnInit() {
+    this.previews = this.images.filter((img: InternalLibImage, i: number) => i < this.previewConfig.number);
+
+    this.start = 0;
+    this.end = Math.min(this.previewConfig.number, this.images.length);
+  }
+
+  isActive(index: number) {
+    return index === this.getCurrentImageIndex(this.currentImage);
+  }
+
+  getCurrentImageIndex(image: Image) {
+    // id is mandatory. You can use either numbers or strings.
+    // If the id is 0, I shouldn't throw an error.
+    if (!image || (!image.id && image.id !== 0)) {
+      throw new Error(`Image 'id' is mandatory`);
+    }
+    return this.previews.findIndex((val: Image) => val.id === image.id);
+  }
+
+  onClick(preview: InternalLibImage) {
+    console.log('preview clicked');
+    if (!this.previewConfig || !this.previewConfig.clickable) {
+      console.log('preview click blocked');
+      return;
+    }
+    this.clickPreview.emit(preview);
+  }
+
+  previous() {
+    // check if prevImage should be blocked
+    if (this.isPreventSliding(0)) {
+      return;
+    }
+
+    if (this.start === 0) {
+      return;
+    }
+
+    this.start = Math.max(this.start - 1, 0);
+    this.end = Math.min(this.end - 1, this.images.length);
+
+    this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+  }
+
+  next() {
+    // check if nextImage should be blocked
+    if (this.isPreventSliding(this.images.length - 1)) {
+      return;
+    }
+
+    if (this.end === this.images.length) {
+      return;
+    }
+
+    this.start++;
+    this.end = Math.min(this.end + 1, this.images.length);
+
+    this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+  }
+
+  trackById(index: number, item: Image) {
+    return item.id;
+  }
+
+  private isPreventSliding(boundaryIndex: number) {
+    return !!this.slideConfig && this.slideConfig.infinite === false &&
+      this.getCurrentImageIndex(this.currentImage) === boundaryIndex;
+  }
 }
