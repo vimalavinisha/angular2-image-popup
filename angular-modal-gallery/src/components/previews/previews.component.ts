@@ -62,10 +62,17 @@ export class PreviewsComponent implements OnInit, OnChanges {
   end: number;
 
   ngOnInit() {
-    this.previews = this.images.filter((img: InternalLibImage, i: number) => i < this.previewConfig.number);
-
-    this.start = 0;
-    this.end = Math.min(this.previewConfig.number, this.images.length);
+    if (this.getIndex(this.currentImage) === 0) {
+      this.start = 0;
+      this.end = Math.min(this.previewConfig.number, this.images.length);
+    } else if (this.getIndex(this.currentImage) === this.images.length - 1) {
+      this.start = (this.images.length - 1) - (this.previewConfig.number - 1);
+      this.end = this.images.length;
+    } else {
+      this.start = this.getIndex(this.currentImage) - 1;
+      this.end = this.getIndex(this.currentImage) + Math.floor(this.previewConfig.number / 2) + 1;
+    }
+    this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
   isActive(index: number) {
