@@ -2,10 +2,9 @@
   <a class="nav-left" aria-label="Previous preview" (click)="previous()">
     <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}" aria-hidden="true" title="Previous preview"></div>
   </a>
-  <!-- force preview size to 90x90 and to max 7 images -->
-
+  
   <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
-      <img *ngIf="preview && preview.img"
+      <img *ngIf="preview?.img"
            [style.width]="previewConfig.size.width+previewConfig.size.unit" [style.height]="previewConfig.size.height+previewConfig.size.unit"
            src="{{ preview.thumb ? preview.thumb : preview.img }}"
            class="inside preview-image" aria-label="Image preview" title="Image preview" alt="Alt text for this image preview"
