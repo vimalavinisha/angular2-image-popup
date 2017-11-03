@@ -23,6 +23,18 @@ jobs:
           paths:
             - ./node_modules
       - run:
+        name: Install Chromedriver latest version
+        command: |
+          sudo apt-get update
+          sudo apt-get install lsb-release
+          curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome.deb
+          sudo sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+          rm google-chrome.deb
+      - run:
+          name: run-clean-all
+          command: npm run clean:all
+      - run:
           name: run-install-demo-systemjs
           command: cd demo/systemjs && npm install
       - run:
@@ -32,11 +44,11 @@ jobs:
           name: run-install-demo-angular-cli
           command: cd demo/angular-cli && npm install
       - run:
-          name: run-build
-          command: npm run build
-      - run:
-          name: run-test
-          command: npm test
+          name: run-build-lib
+          command: npm run build:lib
+#      - run: FIXME
+#          name: run-test
+#          command: npm test
       - run:
           name: run-build-dev-demo-webpack
           command: cd demo/webpack && npm run build:dev
@@ -56,11 +68,17 @@ jobs:
           name: run-build-demo-angular-cli
           command: cd demo/angular-cli && npm run build
       - run:
-          name: run-docs
-          command: npm run docs
+          name: run-build-main-angular-cli
+          command: npm run build
+#      - run: FIXME
+#          name: run-docs
+#          command: npm run docs
       - run:
-          name: run-codeclimate
-          command: npm run codeclimate
-      - run:
-          name: run-coveralls
-          command: npm run coveralls
+          name: run-compodoc
+          command: npm run compodoc
+#      - run:
+#          name: run-codeclimate
+#          command: npm run codeclimate
+#      - run:
+#          name: run-coveralls
+#          command: npm run coveralls

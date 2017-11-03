@@ -21,36 +21,36 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 12. `npm install`
 13. `cd ../../..`
 14. `npm run build:lib`
-15. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`
-16. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
-17. `cd demo/systemjs`
-18. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-19. `cd ../..`
-20. `cd demo/webpack`
-21. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-22. `npm run build:dev`
-23. `cd dist`
-24. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-25. `cd ..`
-26. `npm run build:prod`
-27. `cd dist`
-28. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-29. `cd ..`
-30. `npm run build:prod:aot` (if necessary re-follow all the steps from the beginning)
-31. `cd dist`
-32. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-33. `cd ../../..`
-34. `cd demo/angular-cli`
-35. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-36. `npm run build`
-37. `cd dist`
-38. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-39. `cd ..`
-40. **If it is ok, create your pull request**
+17. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
+18. `cd demo/systemjs`
+19. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+20. `cd ../..`
+21. `cd demo/webpack`
+22. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+23. `npm run build:dev`
+24. `cd dist`
+25. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+26. `cd ..`
+27. `npm run build:prod`
+28. `cd dist`
+29. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+30. `cd ..`
+31. `npm run build:prod:aot` (if necessary re-follow all the steps from the beginning)
+32. `cd dist`
+33. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+34. `cd ../../..`
+35. `cd demo/angular-cli`
+36. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+37. `npm run build`
+38. `cd dist`
+39. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+40. `cd ..`
+41. **If it is ok, create your pull request**
 
-TODO RESTORE THIS STEP:
--15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-
-
+TODO RESTORE THESE STEPS IN 4.x.x VERSIONS:<br>
+-15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-<br>
+-16. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`-
+<br>
 
 -Only for the author-
 how to publish this on npm
