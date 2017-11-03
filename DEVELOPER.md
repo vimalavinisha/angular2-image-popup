@@ -21,8 +21,8 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 12. `npm install`
 13. `cd ../../..`
 14. `npm run build:lib`
--15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`
-16. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`
+15. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`
+16. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
 17. `cd demo/systemjs`
 18. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 19. `cd ../..`
@@ -48,6 +48,8 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 39. `cd ..`
 40. **If it is ok, create your pull request**
 
+TODO RESTORE THIS STEP:
+-15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-
 
 
 -Only for the author-
