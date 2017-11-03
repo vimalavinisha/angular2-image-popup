@@ -1571,7 +1571,7 @@ class AngularModalGalleryComponent {
      */
     initImages(emitHasDataEvent = false) {
         if (this.modalImages instanceof Array) {
-            this.images = /** @type {?} */ (this.modalImages);
+            this.images = (this.modalImages);
             this.completeInitialization(emitHasDataEvent);
         }
         else {

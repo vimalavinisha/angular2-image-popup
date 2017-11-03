@@ -946,7 +946,7 @@ var mousetrap = createCommonjsModule(function (module) {
 /**
  * Service to intercept ctrl+s (or cmd+s on macOS) using a third-party library, called Mousetrap.
  */
-var KeyboardService = /** @class */ (function () {
+var KeyboardService = (function () {
     /**
      * @param {?} config
      */
@@ -1029,7 +1029,7 @@ Action[Action.LOAD] = "LOAD";
 /**
  * Class `ImageModalEvent` that represents the Event after an action `action` and its result.
  */
-var ImageModalEvent = /** @class */ (function () {
+var ImageModalEvent = (function () {
     /**
      * @param {?} action
      * @param {?} result
@@ -1045,7 +1045,7 @@ var ImageModalEvent = /** @class */ (function () {
  * also with a description and an external url.
  * The only required value is the image path `img`.
  */
-var Image = /** @class */ (function () {
+var Image = (function () {
     /**
      * @param {?} img
      * @param {?=} thumb
@@ -1074,7 +1074,7 @@ Keyboard[Keyboard.DOWN_ARROW] = "DOWN_ARROW";
 /**
  * Main Component of this library with the modal gallery.
  */
-var AngularModalGalleryComponent = /** @class */ (function () {
+var AngularModalGalleryComponent = (function () {
     /**
      * Constructor with the injection of ´KeyboardService´ that initialize some description fields
      * based on default values.
@@ -1447,7 +1447,7 @@ var AngularModalGalleryComponent = /** @class */ (function () {
         var _this = this;
         if (emitHasDataEvent === void 0) { emitHasDataEvent = false; }
         if (this.modalImages instanceof Array) {
-            this.images = /** @type {?} */ (this.modalImages);
+            this.images = (this.modalImages);
             this.completeInitialization(emitHasDataEvent);
         }
         else {
@@ -1601,7 +1601,7 @@ AngularModalGalleryComponent.propDecorators = {
  * Pay attention, because this directive is quite smart to choose button's order using the
  * correct right margin in pixels. To do that, it uses also imgExtUrl and configButtons.
  */
-var ExternalUrlButtonDirective = /** @class */ (function () {
+var ExternalUrlButtonDirective = (function () {
     /**
      * @param {?} renderer
      * @param {?} el
@@ -1679,7 +1679,7 @@ ExternalUrlButtonDirective.propDecorators = {
  * Pay attention, because this directive is quite smart to choose button's order using the
  * correct right margin in pixels. To do that, it uses also imgExtUrl and configButtons.
  */
-var DownloadButtonDirective = /** @class */ (function () {
+var DownloadButtonDirective = (function () {
     /**
      * @param {?} renderer
      * @param {?} el
@@ -1780,7 +1780,7 @@ DownloadButtonDirective.propDecorators = {
  * To hide this button, you must provide a ButtonsConfig object with 'close: false' as property.
  * All other configurations won't hide this button.
  */
-var CloseButtonDirective = /** @class */ (function () {
+var CloseButtonDirective = (function () {
     /**
      * @param {?} renderer
      * @param {?} el
@@ -1857,7 +1857,7 @@ CloseButtonDirective.propDecorators = {
  * In fact, it listens for a click on the element with id="ng-gallery-content" and it emits
  * an event using `\@Output clickOutside`.
  */
-var ClickOutsideDirective = /** @class */ (function () {
+var ClickOutsideDirective = (function () {
     function ClickOutsideDirective() {
         this.clickOutside = new EventEmitter();
     }
@@ -1944,7 +1944,7 @@ var DIRECTIVES = [
  * In fact, it uses a template with extUrl, download and close buttons with the right directive.
  * Also it emits click events as outputs.
  */
-var UpperButtonsComponent = /** @class */ (function () {
+var UpperButtonsComponent = (function () {
     function UpperButtonsComponent() {
         this.close = new EventEmitter();
         this.download = new EventEmitter();
@@ -2009,7 +2009,7 @@ UpperButtonsComponent.propDecorators = {
  * the gallery (feature used by imagePointer).
  * Also it emits click events as outputs.
  */
-var GalleryComponent = /** @class */ (function () {
+var GalleryComponent = (function () {
     function GalleryComponent() {
         this.show = new EventEmitter();
     }
@@ -2082,7 +2082,7 @@ var KEYBOARD_CONFIGURATION = new InjectionToken('KEYBOARD_CONFIGURATION');
 /**
  * Module with `forRoot` method to import it in the root module of your application.
  */
-var ModalGalleryModule = /** @class */ (function () {
+var ModalGalleryModule = (function () {
     function ModalGalleryModule() {
     }
     /**
