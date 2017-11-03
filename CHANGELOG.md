@@ -1,7 +1,7 @@
 # 4.0.0
 ### Features
-- #101 Angular 5.x.x support
-- [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (it's a really important feature)
+- #83 #101 Angular 5.x.x support
+- #100 [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (it's a really important feature)
 
 ### BREAKING CHANGES
 - SystemJs users have to change their systemjs.config.js from
