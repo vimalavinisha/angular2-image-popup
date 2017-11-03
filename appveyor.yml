@@ -147,7 +147,6 @@ build_script:
   # build main angular-cli with ng-packagr
   - npm run build
 #  - npm test # TODO
-  - cd ../..
 
 
 #---------------------------------#
