@@ -1,3 +1,31 @@
+# 4.0.0
+### Features
+- #101 Angular 5.x.x support
+- [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (it's a really important feature)
+
+### BREAKING CHANGES
+- SystemJs users have to change their systemjs.config.js from
+```
+let map = {
+    ...
+    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/dist/bundles',
+    ...
+  };
+```
+
+to:
+```
+let map = {
+    ...
+    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/bundles',
+    ...
+  };
+```
+
+This is required by [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications.
+
+
+
 # 3.3.5
 ### Chores
 - #96 Update FAQ with question "Error: No provider for KeyboardService!"

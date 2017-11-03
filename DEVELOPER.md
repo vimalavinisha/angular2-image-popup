@@ -20,8 +20,8 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 11. `cd demo/angular-cli`
 12. `npm install`
 13. `cd ../../..`
-14. `npm run build`
-15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`
+14. `npm run build:lib`
+-15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`
 16. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`
 17. `cd demo/systemjs`
 18. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
@@ -55,7 +55,7 @@ how to publish this on npm
 
 1. `npm version patch` (x.x.3) or `npm version minor` (x.3.0) or `npm version major` (3.x.x)
 2. `npm run clean:all`
-3. `npm run build`
-4. `npm publish bundle`
+3. `npm run build:lib`
+4. `npm publish dist/angular-modal-gallery`
 5. `git push origin master`
 6. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v3.0.1)

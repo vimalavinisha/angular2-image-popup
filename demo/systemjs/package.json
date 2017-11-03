@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery-systemjs-demo",
-  "version": "3.3.5",
+  "version": "4.0.0",
   "description": "Systemjs demo for angular-modal-gallery",
   "main": "app/main.ts",
   "license": "MIT",

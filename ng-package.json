@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "src": "angular-modal-gallery",
+  "dest": "dist/angular-modal-gallery",
+  "workingDirectory": ".ng_build",
+  "lib": {
+    "entryFile": "src/public_api.ts"
+  }
+}

@@ -1,32 +1,26 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "declaration": true,
-    "stripInternal": true,
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictNullChecks": true,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "rootDir": ".",
-    "outDir": "dist",
-    "sourceMap": true,
-    "inlineSources": true,
     "target": "es5",
-    "skipLibCheck": true,
-
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
-      "es2015",
+      "es2016",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-modal-gallery": [ "dist/angular-modal-gallery" ]
+    }
   },
-  "files": [
-    "index.ts"
-  ],
-  "angularCompilerOptions": {
-    "genDir": "aot",
-    "skipMetadataEmit" : true
-  }
+  "exclude": [
+    ".ng_build"
+  ]
 }
