@@ -86,6 +86,7 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 - Angular >= 4 (Angular >=5 supported from version 4.0.0)
 - Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
+- Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
 
 
