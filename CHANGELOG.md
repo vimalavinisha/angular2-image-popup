@@ -28,6 +28,8 @@ let map = {
 
 This is required by [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications.
 
+A special thanks to [maxkorz](https://github.com/maxkorz) for the support.
+
 
 # 4.0.0-rc.2
 ### Bugfixes
