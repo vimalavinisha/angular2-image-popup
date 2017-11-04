@@ -4,6 +4,35 @@
 - #100 [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (very important feature)
 
 ### BREAKING CHANGES
+- **Angular 2 is no longer officially supported**, please upgrade to Angular >= 4
+- SystemJs users have to change their `systemjs.config.js` from
+```
+let map = {
+    ...
+    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/dist/bundles',
+    ...
+  };
+```
+
+to:
+```
+let map = {
+    ...
+    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/bundles',
+    ...
+  };
+```
+
+This is required by [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications.
+
+
+
+# 4.0.0-rc.1
+### Features
+- #83 #101 Angular 5.x.x support
+- #100 [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (very important feature)
+
+### BREAKING CHANGES
 - SystemJs users have to change their `systemjs.config.js` from
 ```
 let map = {
