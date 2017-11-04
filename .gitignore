@@ -72,4 +72,6 @@ examples/webpack/dll/
 bundle
 
 docs
-src/angular-modal-gallery
+documentation
+
+src/angular-modal-gallery/

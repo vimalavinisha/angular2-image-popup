@@ -1,0 +1,45 @@
+language: node_js
+node_js:
+  - "8"
+  - "7"
+
+os:
+  - linux
+#  - osx
+dist: trusty # to use Ubuntu 14.04
+#osx_image: xcode8.3 # to use macOS Sierra 10.12
+sudo: false
+
+env:
+  global:
+    - secure: GOoX1vNqT8dAl8W+3+21COisLgIDLMAPkc4v/nknxlw4rcJ7kp7o5GHuKW9N4BzvXNMFt403jhL8sUL5slnn0qs4K+6ldW/6YC6BvDPFKC4wpmCFylcbXPIJzJredA6lKF12kKZPE7dtORt0FOfsBlZKtJvqlF75M1cm3SzCzBVuP0/q94K7uFVdGTbvh67Z1uoUC5mlsz9Y6oCMkKMhfZM8abimY8t81nMAHEnjbIKmqkStOtpKrM5ZgHwKUI0j4fhGxSeaErZ2oOer8PztJj9XpAPn7yky/QxdVKqvWzrlishAsU8nEwNVpX0WJFw66m2TVuYGTHbRxcNx4MIQjGNDVlhHh6D3fN27lJtwdUQc6Bkm2R14T0gGKd3w+DbtMfnQPD4x9dTt/agL+C4Glq2WI3ZqM1YBnbfnjukzLBbrF8vqTy3VH6lI4JVxEQnHQ84mCe7lvDVWv/wO7zY63s6hZxXvl/r+Z7hZ1m+VRUjnips0Abri3AW2EP/fUkeiR163f7/xKj0oI65mCLPCm5ntAL1YxHItJtnfq+1PulGiFggrZt8HEAGDDS8gQit57AxV8TxJnsg++E0SdhVRRUCD5/lURLj/Uy+gVs+GHyVM5sGv2LDy57ddXv7vYQOxI7MoC/MiG3XX6irULCs+wykDTzLkENBCgmxALRsLKxI= # CODECLIMATE
+    - secure: VQffWPp3fa0UrshHHtspgvRj9WIaoOgkg0+5O5AFFPbwvEh/ACHeLZbxFzlMyuoahH9MZ4bYMVEnZvQjg9v86Z24+cH1bYZrCBbPqkKiM0Z3eUhTeZZlDBYbBmY1WtDZarMGHjznkz0kFXgHbggE1cqmDs/WDnvdZBhLTKOKKlZRM4iTPsmP/DWd0neQPDb7qStYx1Fp+lXvb+os3h09czDNY2jx+9LF3k3jxOWfPOEYdlKwp5dOUG8MTzMN2hhdy7XU9uLqMtiB/sS0DqafvgmlHvgnJmkx4Hdn1Ae3O0amVxJbx6e+J821AfrSCQqkLG9IX6mvplXZ8BRHn+9cgRXKJbyhFb2mIkJHwylatoPHagW9Nql62LcYTTsdnrgcYFpfciAEnIfNHwXm8IM3e80UPsvaZR2SpCmP7CdZJ8GFDdAzBtjgPyS311AKGMfergQbET8EZ34AVxfNjj0UTP7uJ9Mm35kd2zEK8bV1ZPbxP/EIKOn6IL6nqXoHhJphgKHbV/OdTUaHd7p5RUjSHGZdMM8DYqkSW7cMprc98//lUnA1O1HjnLbBBHOzK4XEKeEprM/9GCvOYLOTwABa6IgiltYf6JEEy/MHnBtYaBVk/bnj/LOV2OCANk9qBlmTLL+VRRmpnmQYV7WQIXhwP8GRZt04fXHgyJfCbWxXbKI= # COVERALLS
+
+addons:
+  firefox: latest
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - source travisci/before_install.sh
+install:
+  - bash travisci/install.sh
+after_install:
+  - npm rebuild node-sass
+before_script:
+  - source travisci/before_script.sh # starts in the same shell
+script:
+  - bash travisci/script.sh
+after_success:
+  - source travisci/after_success.sh
+cache:
+  apt: true
+  bundler: true
+  directories:
+    - node_modules

@@ -10,19 +10,6 @@
 
 <br>
 
-# Experimental branch with ng-packagr
-
-To run:
-
-1. `npm i`, `cd examples/systemjs && npm i`, `cd examples/webpack && npm i` 
-2. `npm run build:lib`
-3. `npm run build:app`
-4. `cd dist/app && lite-server`
-5. `npm run build:examples`
-6. Now you can run all two official examples
-
-<br>
-
 ![angular-modal-gallery image](https://cloud.githubusercontent.com/assets/6057207/24118289/8ade6952-0dad-11e7-829f-416a24891ce0.png)
 
 <br>
@@ -102,6 +89,16 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
 
 
+## Features
+- Angular module to import this library
+- Angular component to display the image gallery
+- AOT support
+- Angular >= 4 (Angular >=5 supported from version 4.0.0)
+- Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
+- Tested with SystemJs 0.20.x and Angular-cli 1.x.x
+- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
+
+
 ## How to use it?
 
 Two different ways (both of them are good):
@@ -110,7 +107,7 @@ Two different ways (both of them are good):
 - sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 
 
-## FAQs
+## FAQS
 
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
@@ -118,10 +115,11 @@ Two different ways (both of them are good):
    **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery.github.io/gettingStarted).
    This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
 
+
 ## Contributing
 
-Check `CONTRIBUTING.md` in this repository to build and test this library.
-<br>
+Check `CONTRIBUTING.md` in this repository
+
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/index.html`.
 
 
