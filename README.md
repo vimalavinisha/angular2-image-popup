@@ -28,7 +28,7 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
-**angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 2 (Angular 4 is really recommended)**
+**angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 4**
 
 <br><br>
 
@@ -58,6 +58,7 @@ If you have issues, try to install also:
 
 ## News
 - 11/05/2017 - 4.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 11/04/2017 - 4.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/11/2017 - 3.3.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/19/2017 - 3.3.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/09/2017 - 3.3.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -83,7 +84,7 @@ If you have issues, try to install also:
 - Angular module to import this library
 - Angular component to display the image gallery
 - AOT support
-- Angular >= 2 (Angular 4 officially supported from version 3.0.2, Angular 5 from version 4.0.0)
+- Angular >= 4 (Angular >=5 supported from version 4.0.0)
 - Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
@@ -92,7 +93,7 @@ If you have issues, try to install also:
 ## How to use it?
 
 Two different ways (both of them are good):
-- using my full and runnable examples (`SystemJs`, `Webpack2`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
+- using my full and runnable examples (`systemjs`, `webpack`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
 - checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 - sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
 
