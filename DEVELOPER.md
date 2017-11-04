@@ -8,7 +8,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 
 
 1. `npm install -g lite-server @angular/cli` (on macOS use `sudo npm install -g lite-server @angular/cli`)
-2. remove all `node_modules`, `.awt`, `aot` and `dist` folders in both `demo/systemjs`, `demo/webpack` and `demo/angular-cli` folders (if necessary)
+2. remove all `node_modules`, `.awt`, `aot` and `dist` folders everywhere, also in both `demo/systemjs`, `demo/webpack` and `demo/angular-cli` folders (if necessary)
 3. `npm install` (from the root of this project)
 4. `npm run clean:all`
 5. `cd demo/systemjs`
@@ -51,13 +51,37 @@ TODO RESTORE THESE STEPS IN 4.x.x VERSIONS:<br>
 -15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-<br>
 -16. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`-
 <br>
+<br>
+<br>
+<br>
 
--Only for the author-
-how to publish this on npm
+# Only for the author @Ks89 - How to publish this on npm?
 
-1. `npm version patch` (x.x.3) or `npm version minor` (x.3.0) or `npm version major` (3.x.x)
-2. `npm run clean:all`
-3. `npm run build:lib`
-4. `npm publish dist/angular-modal-gallery`
-5. `git push origin master`
-6. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v3.0.1)
+## Stable releases (@latest)
+1. `cd angular-modal-gallery`
+2. `npm version patch` (x.x.1) or `npm version minor` (x.1.0) or `npm version major` (4.x.x)
+3. `npm run clean:all`
+4. `npm run build:lib`
+5. `npm publish dist/angular-modal-gallery`
+6. `git push origin master`
+7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v4.0.1)
+
+## Beta releases (@beta)
+1. `cd angular-modal-gallery`
+2. Manually change the version of `./angular-modal-gallery/package.json` with this format `x.x.x-beta.x` (also respect semver!)
+3. `npm run clean:all`
+4. `npm run build:lib`
+5. `npm publish dist/angular-modal-gallery --tag beta`
+6. `git push origin master`
+7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v4.0.1)
+
+
+## Alpha releases (@next)
+1. `cd angular-modal-gallery`
+2. Manually change the version of `./angular-modal-gallery/package.json` with this format `x.x.x-alpha.x` (also respect semver!)
+3. `npm run clean:all`
+4. `npm run build:lib`
+5. `npm publish dist/angular-modal-gallery --tag next`
+6. `git push origin master`
+7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v4.0.1)
+
