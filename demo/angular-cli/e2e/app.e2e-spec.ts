@@ -1,14 +1,14 @@
-import { AngularModalGalleryAngularcliDemoPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('angular-modal-gallery-angularcli-demo App', function() {
-  let page: AngularModalGalleryAngularcliDemoPage;
+describe('angular-modal-gallery-angularcli-demo App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new AngularModalGalleryAngularcliDemoPage();
+    page = new AppPage();
   });
 
-  it('should display message saying app works', () => {
-    page.navigateTo();
-    // expect(page.getParagraphText()).toEqual('app works!');
-  });
+  // it('should display welcome message', () => {
+  //   page.navigateTo();
+  //   expect(page.getParagraphText()).toEqual('Welcome to app!');
+  // });
 });
