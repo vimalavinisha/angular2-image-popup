@@ -22,40 +22,49 @@
  SOFTWARE.
  */
 
+$container-margin-bottom: 30px;
+$dot-color: white;
+$dot-width: 10px;
+$dot-height: 10px;
+$dot-radius: 5px;
+$dot-side-margin: 4px;
+$fade-in-time: 0.8s;
+
+@mixin dot($color, $width, $height, $side-margin, $radius) {
+  background: $color;
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  margin-left: $side-margin;
+  margin-right: $side-margin;
+}
+
 .dots-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 30px;
-}
+  margin-bottom: $container-margin-bottom;
 
-.dots-container > .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  margin-left: 4px;
-  margin-right: 4px;
-  cursor: pointer;
-  animation: fadein-semi-visible05 0.8s;
-  opacity: 0.5;
-  background: rgb(255, 255, 255);
-}
+  > .dot {
+    @include dot($dot-color, $dot-width, $dot-height, $dot-side-margin, $dot-radius);
 
-.dots-container > .dot:hover {
-  opacity: 0.9;
-  transition-property: opacity;
-  transition: all 0.5s ease;
-}
+    opacity: 0.5;
+    animation: fadein-semi-visible05 $fade-in-time;
+    cursor: pointer;
 
-.dots-container > .dot.active {
-  background: rgb(255, 255, 255);
-  margin-left: 4px;
-  margin-right: 4px;
-  opacity: 0.9;
-  animation: fadein-semi-visible09 0.8s;
-  cursor: pointer;
-}
+    &:hover {
+      opacity: 0.9;
+      transition-property: opacity;
+      transition: all 0.5s ease;
+    }
 
+    &.active {
+      opacity: 0.9;
+      animation: fadein-semi-visible09 $fade-in-time;
+      cursor: pointer;
+    }
+  }
+}
 
 @keyframes fadein-semi-visible05 {
   from {
