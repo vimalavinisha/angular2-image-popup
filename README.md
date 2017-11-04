@@ -51,13 +51,12 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 - `npm install --save hammerjs mousetrap`
 - `npm install --save angular-modal-gallery`
 - `npm install --save-dev @types/mousetrap`
-
-If you have issues, try to install also:
 - `npm install --save-dev @types/hammerjs`
 
 
 ## News
 - 11/05/2017 - 4.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 11/04/2017 - 4.0.0-rc.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/04/2017 - 4.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/11/2017 - 3.3.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/19/2017 - 3.3.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
