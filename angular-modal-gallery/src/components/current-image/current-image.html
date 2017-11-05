@@ -5,7 +5,7 @@
   </a>
 
 
-  <img *ngIf="!isFirstImage" class="inside current-image-previous" src="{{getLeftPreviewUrl()}}"
+  <img *ngIf="!isFirstImage" class="inside current-image-previous" [src]="getLeftPreviewUrl()"
        aria-label="Click to navigate to the previous image"
        [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
        [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
@@ -31,7 +31,7 @@
   </figure>
 
 
-  <img *ngIf="!isLastImage" class="inside current-image-next" src="{{getRightPreviewUrl()}}"
+  <img *ngIf="!isLastImage" class="inside current-image-next" [src]="getRightPreviewUrl()"
        aria-label="Click to navigate to the next image"
        [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
        [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"

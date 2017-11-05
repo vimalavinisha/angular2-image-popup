@@ -1,6 +1,6 @@
 <div class="ng-gallery" *ngIf="showGallery">
   <div *ngFor="let i of images; trackBy: trackById; let index = index">
-    <img *ngIf="i && i.img" src="{{ i.thumb ? i.thumb : i.img }}" class="ng-thumb" (click)="showModalGallery(index)"
+    <img *ngIf="i && i.img" [src]="i.thumb ? i.thumb : i.img" class="ng-thumb" (click)="showModalGallery(index)"
          alt="{{getAltDescriptionByIndex(index)}}"/>
   </div>
 </div>
