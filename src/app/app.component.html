@@ -98,177 +98,168 @@
 <hr>
 <br>
 <br>
-<!--<p class="center-text"><b>-&#45;&#45; For all 3.x.x versions -&#45;&#45;</b></p>-->
-<!--<section id="Images1">-->
-  <!--<h3>5 - Observable of images with delay(300)</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>-->
-    <!--<li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>-->
-    <!--<li><b>external url</b> button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>-->
-    <!--<li><b>custom description</b> object = <b>imageText:</b> 'Look this image ', <b>numberSeparator:</b>' of ', <b>beforeTextDescription:</b>' => '</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--<ks-modal-gallery [modalImages]="images"-->
-                 <!--[downloadable]="false"-->
-                 <!--[showExtUrlButton]="true"-->
-                 <!--[description]="customDescription"-->
-                 <!--(hasData)="onImageLoaded($event)"-->
-                 <!--(close)="onCloseImageModal($event)"-->
-                 <!--(show)="onVisibleIndex($event)"-->
-                 <!--(firstImage)="onIsFirstImage($event)"-->
-                 <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section id="Images2">-->
-  <!--<h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>-->
-    <!--<li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>-->
-    <!--<li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>-->
-    <!--<li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>-->
-    <!--<li><b>default description</b>, for instance Image 2/5 - Description 1'</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--<ks-modal-gallery [modalImages]="images"-->
-                 <!--[showDownloadButton]="true"-->
-                 <!--[downloadable]="true"-->
-                 <!--[showExtUrlButton]="true"-->
-                 <!--(hasData)="onImageLoaded($event)"-->
-                 <!--(close)="onCloseImageModal($event)"-->
-                 <!--(show)="onVisibleIndex($event)"-->
-                 <!--(firstImage)="onIsFirstImage($event)"-->
-                 <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section id="Images3">-->
-  <!--<h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Array&lt;Image&gt;</b></li>-->
-    <!--<li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>-->
-    <!--<li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>-->
-    <!--<li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>-->
-    <!--<li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--<ks-modal-gallery [modalImages]="imagesArray"-->
-                 <!--[showDownloadButton]="true"-->
-                 <!--[downloadable]="true"-->
-                 <!--[showExtUrlButton]="false"-->
-                 <!--[description]="customFullDescription"-->
-                 <!--(hasData)="onImageLoaded($event)"-->
-                 <!--(close)="onCloseImageModal($event)"-->
-                 <!--(show)="onVisibleIndex($event)"-->
-                 <!--(firstImage)="onIsFirstImage($event)"-->
-                 <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section id="Images4">-->
-  <!--<br>-->
-  <!--<h3>8 - Observable of images with a single element and without a delay</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> without delay</li>-->
-    <!--<li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>-->
-    <!--<li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>-->
-    <!--<li><b>default description</b>, for instance Image 2/5 - Description 1'</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--&lt;!&ndash; both showDownloadButton and downloadable are false by default &ndash;&gt;-->
-  <!--<ks-modal-gallery [modalImages]="singleImage"-->
-                 <!--(hasData)="onImageLoaded($event)"-->
-                 <!--(close)="onCloseImageModal($event)"-->
-                 <!--(show)="onVisibleIndex($event)"-->
-                 <!--(firstImage)="onIsFirstImage($event)"-->
-                 <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section id="Images5">-->
-  <!--<br>-->
-  <!--<h3>9 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Array&lt;Image&gt;</b></li>-->
-    <!--<li><b>imagePointer as input</b></li>-->
-    <!--<li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>-->
-    <!--<li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>-->
-    <!--<li><b>default description</b>, for instance Image 2/5 - Description 1'</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--<div *ngFor="let img of imagesArray; trackBy: trackById; let i = index">-->
-    <!--<div class="float-left" *ngIf="i <= 2">-->
-      <!--<a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>-->
-      <!--<img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>-->
-      <!--<img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModal(img)" alt='{{img.description}}'/>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div *ngIf="openModalWindow">-->
-    <!--<ks-modal-gallery [modalImages]="imagesArray"-->
-                   <!--[imagePointer]="imagePointer"-->
-                   <!--[downloadable]="true"-->
-                   <!--[showExtUrlButton]="true"-->
-                   <!--(hasData)="onImageLoaded($event)"-->
-                   <!--(close)="onCloseImageModal($event)"-->
-                   <!--(show)="onVisibleIndex($event)"-->
-                   <!--(firstImage)="onIsFirstImage($event)"-->
-                   <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-  <!--</div>-->
-<!--</section>-->
-<!--<br><br>-->
-<!--<section id="Images6">-->
-  <!--<br>-->
-  <!--<h3>10 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> with 300ms of delay (to simulate a network request)</li>-->
-    <!--<li><b>imagePointer as input</b></li>-->
-    <!--<li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>-->
-    <!--<li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--<div *ngFor="let img of images | async; trackBy: trackById; let i = index">-->
-    <!--<div class="float-left" *ngIf="i <= 2">-->
-      <!--<a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}-->
-        <!--more </a>-->
-      <!--<img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>-->
-      <!--<img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div *ngIf="openModalWindowObservable">-->
-    <!--<ks-modal-gallery [modalImages]="images"-->
-                   <!--[imagePointer]="imagePointerObservable"-->
-                   <!--[downloadable]="true"-->
-                   <!--[showExtUrlButton]="false"-->
-                   <!--(hasData)="onImageLoaded($event)"-->
-                   <!--(close)="onCloseImageModal($event)"-->
-                   <!--(show)="onVisibleIndex($event)"-->
-                   <!--(firstImage)="onIsFirstImage($event)"-->
-                   <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-  <!--</div>-->
-<!--</section>-->
-<!--<br><br>-->
-<!--<section id="Images7">-->
-  <!--<br>-->
-  <!--<h3>11 - Array of images initialized inside a .subscribe() of an Observable with delay(500)</h3>-->
-  <!--<p>modalGallery with</p>-->
-  <!--<ul>-->
-    <!--<li>modalImages is an <b>Array&lt;Image&gt;</b> initialized inside a subscribe to simulate a more realistic scenario</li>-->
-    <!--<li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>-->
-    <!--<li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>-->
-    <!--<li><b>default description</b>, for instance Image 2/5 - Description 1'</li>-->
-    <!--<li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>-->
-  <!--</ul>-->
-  <!--<br>-->
-  <!--<ks-modal-gallery [modalImages]="imagesArraySubscribed"-->
-                 <!--(hasData)="onImageLoaded($event)"-->
-                 <!--(close)="onCloseImageModal($event)"-->
-                 <!--(show)="onVisibleIndex($event)"-->
-                 <!--(firstImage)="onIsFirstImage($event)"-->
-                 <!--(lastImage)="onIsLastImage($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<br><br>-->
-<!--<h4>Created by Stefano Cappa (Ks89)</h4>-->
+<p class="center-text"><b>--- For all 3.x.x versions ---</b></p>
+<section id="Images1">
+  <h3>5 - Observable of images with delay(300)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>
+    <li><b>external url</b> button visible (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>custom description</b> object = <b>imageText:</b> 'Look this image ', <b>numberSeparator:</b>' of ', <b>beforeTextDescription:</b>' => '</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <ks-modal-gallery [modalImages]="images"
+                 [downloadable]="false"
+                 [description]="customDescription"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+</section>
+<section id="Images2">
+  <h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+    <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>
+    <li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <ks-modal-gallery [modalImages]="images"
+                 [downloadable]="true"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+</section>
+<section id="Images3">
+  <h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
+    <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>
+    <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <ks-modal-gallery [modalImages]="imagesArray"
+                 [downloadable]="true"
+                 [description]="customFullDescription"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+</section>
+<section id="Images4">
+  <br>
+  <h3>8 - Observable of images with a single element and without a delay</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> without delay</li>
+    <li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <!-- both showDownloadButton and downloadable are false by default -->
+  <ks-modal-gallery [modalImages]="singleImage"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+</section>
+<section id="Images5">
+  <br>
+  <h3>9 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
+    <li><b>imagePointer as input</b></li>
+    <li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>
+    <li><b>external url button visible</b> (because [showExtUrlButton]="true"), only if you provide as url a valid value (null/undefined hide the button)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <div *ngFor="let img of imagesArray; trackBy: trackById; let i = index">
+    <div class="float-left" *ngIf="i <= 2">
+      <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{imagesArray.length - 3}} more </a>
+      <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
+      <img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModal(img)" alt='{{img.description}}'/>
+    </div>
+  </div>
+  <div *ngIf="openModalWindow">
+    <ks-modal-gallery [modalImages]="imagesArray"
+                   [downloadable]="true"
+                   (hasData)="onImageLoaded($event)"
+                   (close)="onCloseImageModal($event)"
+                   (show)="onVisibleIndex($event)"
+                   (firstImage)="onIsFirstImage($event)"
+                   (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+  </div>
+</section>
+<br><br>
+<section id="Images6">
+  <br>
+  <h3>10 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> with 300ms of delay (to simulate a network request)</li>
+    <li><b>imagePointer as input</b></li>
+    <li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton]="false")</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <div *ngFor="let img of images | async; trackBy: trackById; let i = index">
+    <div class="float-left" *ngIf="i <= 2">
+      <a class="more" *ngIf="i==2" (click)="openImageModalObservable(img)"> +{{(images | async)?.length - 3}}
+        more </a>
+      <img *ngIf="img.thumb" class="list-img" src="{{img.thumb}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+      <img *ngIf="!img.thumb" class="list-img" src="{{img.img}}" (click)="openImageModalObservable(img)" alt='{{img.description}}'/>
+    </div>
+  </div>
+  <div *ngIf="openModalWindowObservable">
+    <ks-modal-gallery [modalImages]="images"
+                   [downloadable]="true"
+                   (hasData)="onImageLoaded($event)"
+                   (close)="onCloseImageModal($event)"
+                   (show)="onVisibleIndex($event)"
+                   (firstImage)="onIsFirstImage($event)"
+                   (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+  </div>
+</section>
+<br><br>
+<section id="Images7">
+  <br>
+  <h3>11 - Array of images initialized inside a .subscribe() of an Observable with delay(500)</h3>
+  <p>modalGallery with</p>
+  <ul>
+    <li>modalImages is an <b>Array&lt;Image&gt;</b> initialized inside a subscribe to simulate a more realistic scenario</li>
+    <li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>
+    <li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>
+    <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
+    <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
+  </ul>
+  <br>
+  <ks-modal-gallery [modalImages]="imagesArraySubscribed"
+                 (hasData)="onImageLoaded($event)"
+                 (close)="onCloseImageModal($event)"
+                 (show)="onVisibleIndex($event)"
+                 (firstImage)="onIsFirstImage($event)"
+                 (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+</section>
+<br><br>
+<h4>Created by Stefano Cappa (Ks89)</h4>

@@ -22,47 +22,44 @@
  SOFTWARE.
  */
 
-$container-margin-bottom: 30px;
-$dot-color: white;
-$dot-width: 10px;
-$dot-height: 10px;
-$dot-radius: 5px;
-$dot-side-margin: 4px;
-$fade-in-time: .8s;
+$preview-img-normal-opacity: .5;
+$preview-img-hover-opacity: 1;
 
-@mixin dot($color, $width, $height, $side-margin, $radius) {
-  background: $color;
-  width: $width;
-  height: $height;
-  border-radius: $radius;
-  margin-left: $side-margin;
-  margin-right: $side-margin;
+/** Mobile **/
+/** Tablet **/
+@media only screen and (max-width: 1024px), only screen and (max-device-width: 1024px) {
+  .current-image-previous {
+    display: none;
+  }
+
+  .current-image-next {
+    display: none;
+  }
 }
 
-.dots-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: $container-margin-bottom;
+/** Desktops or greater **/
+@media only screen and (min-device-width: 1025px) {
 
-  > .dot {
-    @include dot($dot-color, $dot-width, $dot-height, $dot-side-margin, $dot-radius);
-
-    opacity: .5;
-    animation: fadein-semi-visible05 $fade-in-time;
+  .current-image-preview {
+    height: auto;
     cursor: pointer;
+    opacity: $preview-img-normal-opacity;
+    animation: fadein-semi-visible05 .8s;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
 
     &:hover {
-      opacity: .9;
+      opacity: $preview-img-hover-opacity;
       transition-property: opacity;
       transition: all .5s ease;
     }
+  }
 
-    &.active {
-      opacity: .9;
-      animation: fadein-semi-visible09 $fade-in-time;
-      cursor: pointer;
-    }
+  .current-image-previous {
+    @extend .current-image-preview;
+  }
+
+  .current-image-next {
+    @extend .current-image-preview;
   }
 }
 
@@ -77,8 +74,4 @@ $fade-in-time: .8s;
 
 @keyframes fadein-semi-visible05 {
   @include fadein(0, .5);
-}
-
-@keyframes fadein-semi-visible09 {
-  @include fadein(0, .9);
 }

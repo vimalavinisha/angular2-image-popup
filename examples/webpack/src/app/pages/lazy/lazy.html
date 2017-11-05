@@ -21,14 +21,7 @@
             <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
           </ul>
           <br>
-          <ks-modal-gallery [modalImages]="images"
-                         [downloadable]="false"
-                         [slideConfig]="{infinite: false}"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+          <ks-modal-gallery [modalImages]="images"></ks-modal-gallery>
         </section>
         <hr>
         <br>
@@ -49,15 +42,15 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="imagesArray"
-                         [buttonsConfig]="{download: false, extUrl: false, close: true}"
-                         [downloadable]="true"
-                         [enableCloseOutside]="true"
-                         [description]="customFullDescription"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            [buttonsConfig]="{download: false, extUrl: false, close: true}"
+                            [downloadable]="true"
+                            [enableCloseOutside]="true"
+                            [description]="customFullDescription"
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <section id="Images31-2">
           <h3>3 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'keyboardConfig'</span></h3>
@@ -74,15 +67,15 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="images"
-                         [buttonsConfig]="{download: true, extUrl: true, close: true}"
-                         [keyboardConfig]="{esc: 81, left: 40, right: 38}"
-                         [downloadable]="true"
-                         [enableCloseOutside]="false"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            [buttonsConfig]="{download: true, extUrl: true, close: true}"
+                            [keyboardConfig]="{esc: 81, left: 40, right: 38}"
+                            [downloadable]="true"
+                            [enableCloseOutside]="false"
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <section id="Images31-3">
           <h3>4 - Array of images without close button thanks to <span class="red-text">'buttonsConfig'</span></h3>
@@ -99,14 +92,14 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="imagesArray"
-                         [buttonsConfig]="{download: false, extUrl: true, close: false}"
-                         [enableCloseOutside]="true"
-                         [description]="customFullDescription"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            [buttonsConfig]="{download: false, extUrl: true, close: false}"
+                            [enableCloseOutside]="true"
+                            [description]="customFullDescription"
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <hr>
         <br>
@@ -124,14 +117,13 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="images"
-                         [downloadable]="false"
-                         [showExtUrlButton]="true"
-                         [description]="customDescription"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            [downloadable]="false"
+                            [description]="customDescription"
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <section id="Images2">
           <h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
@@ -146,14 +138,12 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="images"
-                         [showDownloadButton]="true"
-                         [downloadable]="true"
-                         [showExtUrlButton]="true"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            [downloadable]="true"
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <section id="Images3">
           <h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>
@@ -168,15 +158,13 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="imagesArray"
-                         [showDownloadButton]="true"
-                         [downloadable]="true"
-                         [showExtUrlButton]="false"
-                         [description]="customFullDescription"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            [downloadable]="true"
+                            [description]="customFullDescription"
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <section id="Images4">
           <br>
@@ -192,11 +180,11 @@
           <br>
           <!-- both showDownloadButton and downloadable are false by default -->
           <ks-modal-gallery [modalImages]="singleImage"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <section id="Images5">
           <br>
@@ -220,14 +208,12 @@
           </div>
           <div *ngIf="openModalWindow">
             <ks-modal-gallery [modalImages]="imagesArray"
-                           [imagePointer]="imagePointer"
-                           [downloadable]="true"
-                           [showExtUrlButton]="true"
-                           (hasData)="onImageLoaded($event)"
-                           (close)="onCloseImageModal($event)"
-                           (show)="onVisibleIndex($event)"
-                           (firstImage)="onIsFirstImage($event)"
-                           (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                              [downloadable]="true"
+                              (hasData)="onImageLoaded($event)"
+                              (close)="onCloseImageModal($event)"
+                              (show)="onVisibleIndex($event)"
+                              (firstImage)="onIsFirstImage($event)"
+                              (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
           </div>
         </section>
         <br><br>
@@ -253,14 +239,12 @@
           </div>
           <div *ngIf="openModalWindowObservable">
             <ks-modal-gallery [modalImages]="images"
-                           [imagePointer]="imagePointerObservable"
-                           [downloadable]="true"
-                           [showExtUrlButton]="false"
-                           (hasData)="onImageLoaded($event)"
-                           (close)="onCloseImageModal($event)"
-                           (show)="onVisibleIndex($event)"
-                           (firstImage)="onIsFirstImage($event)"
-                           (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                              [downloadable]="true"
+                              (hasData)="onImageLoaded($event)"
+                              (close)="onCloseImageModal($event)"
+                              (show)="onVisibleIndex($event)"
+                              (firstImage)="onIsFirstImage($event)"
+                              (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
           </div>
         </section>
         <br><br>
@@ -277,11 +261,11 @@
           </ul>
           <br>
           <ks-modal-gallery [modalImages]="imagesArraySubscribed"
-                         (hasData)="onImageLoaded($event)"
-                         (close)="onCloseImageModal($event)"
-                         (show)="onVisibleIndex($event)"
-                         (firstImage)="onIsFirstImage($event)"
-                         (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                            (hasData)="onImageLoaded($event)"
+                            (close)="onCloseImageModal($event)"
+                            (show)="onVisibleIndex($event)"
+                            (firstImage)="onIsFirstImage($event)"
+                            (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
         </section>
         <br><br>
         <h4>Created by Stefano Cappa (Ks89)</h4>

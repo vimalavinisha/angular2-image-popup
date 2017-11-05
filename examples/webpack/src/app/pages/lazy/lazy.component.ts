@@ -167,14 +167,17 @@ export class LazyComponent implements OnInit, OnDestroy {
   }
 
   addRandomImage() {
-    this.imagesArray.push(this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)]);
+    const newImage: Image = Object.assign({},
+      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
+      {id: this.imagesArray.length - 1 + 1});
+    this.imagesArray.push(newImage);
   }
 
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    if(this.imagesArraySubscription) {
+    if (this.imagesArraySubscription) {
       this.imagesArraySubscription.unsubscribe();
     }
   }

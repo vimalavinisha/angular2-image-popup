@@ -54,7 +54,7 @@
 
 @keyframes move-down {
   0% {
-    transform: translateY();
+    transform: translateY(0);
   }
   100% {
     transform: translateY(32px);

@@ -21,9 +21,9 @@
     "build": "ng build",
     "build:dev": "ng build --app dev",
     "build:lib": "npm run clean:all && ng-packagr && cpr dist/angular-modal-gallery src/angular-modal-gallery && npm run build:examples",
-    "build:examples": "cpr dist/angular-modal-gallery examples/systemjs/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery",
+    "build:examples": "cpr dist/angular-modal-gallery examples/systemjs/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/angular-cli/node_modules/angular-modal-gallery",
     "clean": "rimraf dist",
-    "clean:all": "npm run clean && rimraf src/angular-modal-gallery && rimraf examples/systemjs/node_modules/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery",
+    "clean:all": "npm run clean && rimraf src/angular-modal-gallery && rimraf examples/systemjs/node_modules/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery examples/angular-cli/node_modules/angular-modal-gallery",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

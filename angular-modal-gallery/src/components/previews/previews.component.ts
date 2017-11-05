@@ -36,7 +36,7 @@ import { SlideConfig } from '../../interfaces/slide-config.interface';
  */
 @Component({
   selector: 'ks-previews',
-  styleUrls: ['previews.scss'],
+  styleUrls: ['previews.scss', 'previews-arrows.scss'],
   templateUrl: 'previews.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

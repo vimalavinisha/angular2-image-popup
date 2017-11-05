@@ -39,10 +39,10 @@ import { SlideConfig } from '../../interfaces/slide-config.interface';
  */
 @Component({
   selector: 'ks-current-image',
-  styleUrls: ['current-image.scss',
-    'loading-spinner/style-loading-spinner-8.css',
-    'loading-spinner/style-loading-spinner-11.css',
-    'loading-spinner/style-loading-spinner-12.css'
+  styleUrls: [
+    'current-image.scss',
+    'current-image-arrows.scss',
+    'current-image-previews.scss'
   ],
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush

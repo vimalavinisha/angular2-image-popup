@@ -31,16 +31,16 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
 @Component({
-  selector: 'mmw-home-page',
+  selector: 'ks-home-page',
   styleUrls: ['home.scss'],
   templateUrl: 'home.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  openModalWindow: boolean = false;
-  imagePointer: number = 0;
+  openModalWindow = false;
+  imagePointer = 0;
 
-  openModalWindowObservable: boolean = false;
-  imagePointerObservable: number = 0;
+  openModalWindowObservable = false;
+  imagePointerObservable = 0;
 
   imagesArray: Array<Image> = [
     new Image(
@@ -165,7 +165,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   addRandomImage() {
-    this.imagesArray.push(this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)]);
+    const newImage: Image = Object.assign({},
+      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
+      {id: this.imagesArray.length - 1 + 1});
+    this.imagesArray.push(newImage);
   }
 
   ngOnDestroy() {

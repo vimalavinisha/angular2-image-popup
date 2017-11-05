@@ -35,40 +35,45 @@ import 'rxjs/add/operator/delay';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
-  openModalWindow: boolean = false;
-  imagePointer: number = 0;
+  openModalWindow = false;
+  imagePointer = 0;
 
-  openModalWindowObservable: boolean = false;
-  imagePointerObservable: number = 0;
+  openModalWindowObservable = false;
+  imagePointerObservable = 0;
 
   imagesArray: Array<Image> = [
     new Image(
+      0,
       '../assets/images/gallery/img1.jpg',
       null, // no thumb
       null, // no description
       'http://www.google.com'
     ),
     new Image(
+      1,
       '../assets/images/gallery/img2.png', // example with a PNG image
       null, // no thumb
       'Description 2',
       null // url
     ),
     new Image(
+      2,
       '../assets/images/gallery/img3.jpg',
       '../assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
       'Description 3',
       'http://www.google.com'
     ),
     new Image(
+      3,
       '../assets/images/gallery/img4.jpg',
       null, // no thumb
       'Description 4',
       'http://www.google.com'
     ),
     new Image(
+      4,
       '../assets/images/gallery/img5.jpg',
       '../assets/images/gallery/thumbs/img5.jpg',
       null, // no description
@@ -161,15 +166,22 @@ export class AppComponent {
   }
 
   addRandomImage() {
-    this.imagesArray.push(this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)]);
+    let newImage: Image = Object.assign({},
+      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
+      {id: this.imagesArray.length - 1 + 1});
+    this.imagesArray.push(newImage);
   }
 
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    if(this.imagesArraySubscription) {
+    if (this.imagesArraySubscription) {
       this.imagesArraySubscription.unsubscribe();
     }
+  }
+
+  trackById(index: number, item: Image) {
+    return item.id;
   }
 }

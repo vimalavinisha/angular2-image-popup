@@ -22,12 +22,17 @@
  SOFTWARE.
  */
 
+$bg-color: black;
+$bg-opacity: .8;
+$bg-zindex: 9999;
+
 .ng-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
+  background: $bg-color;
+  opacity: $bg-opacity;
+  z-index: $bg-zindex;
 }

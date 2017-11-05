@@ -23,7 +23,7 @@
  SOFTWARE.
  */
 
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
 import { Observable } from 'rxjs/Observable';
@@ -37,7 +37,9 @@ import 'rxjs/add/operator/delay';
   template: `
     <h1>angular-modal-gallery official systemjs demo</h1>
     <hr>
-    <p>If you want, you can <b>add a random image</b> to every example <button (click)="addRandomImage()">Add image</button></p>
+    <p>If you want, you can <b>add a random image</b> to every example
+      <button (click)="addRandomImage()">Add image</button>
+    </p>
     <br>
     <hr>
     <p class="red-text center-text"><b>--- Only from version 3.2.x or greater ---</b></p>
@@ -52,14 +54,7 @@ import 'rxjs/add/operator/delay';
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
-      <ks-modal-gallery [modalImages]="images"
-                     [downloadable]="false"
-                     [slideConfig]="{infinite: false}"
-                     (hasData)="onImageLoaded($event)"
-                     (close)="onCloseImageModal($event)"
-                     (show)="onVisibleIndex($event)"
-                     (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+      <ks-modal-gallery [modalImages]="images"></ks-modal-gallery>
     </section>
     <hr>
     <br>
@@ -80,15 +75,15 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="imagesArray"
-                     [buttonsConfig]="{download: false, extUrl: false, close: true}"
-                     [downloadable]="true"
-                     [enableCloseOutside]="true"
-                     [description]="customFullDescription"
-                     (hasData)="onImageLoaded($event)"
-                     (close)="onCloseImageModal($event)"
-                     (show)="onVisibleIndex($event)"
-                     (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        [buttonsConfig]="{download: false, extUrl: false, close: true}"
+                        [downloadable]="true"
+                        [enableCloseOutside]="true"
+                        [description]="customFullDescription"
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images31-2">
       <h3>3 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class="red-text">with 'buttonsConfig' and 'keyboardConfig'</span></h3>
@@ -97,23 +92,26 @@ import 'rxjs/add/operator/delay';
         <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>
         <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>
         <li><b>download button visible</b> because, <u class="red-text">buttonsConfig.download = true</u> and downloadable is also = true</li>
-        <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
-        <li><b>custom keyboard's config</b> because, <u class="red-text">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow up' (38)</u></li>
+        <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the
+          button)
+        </li>
+        <li><b>custom keyboard's config</b> because, <u class="red-text">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow
+          up' (38)</u></li>
         <li><b>NO close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is false</li>
         <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>
         <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="images"
-                     [buttonsConfig]="{download: true, extUrl: true, close: true}"
-                     [keyboardConfig]="{esc: 81, left: 40, right: 38}"
-                     [downloadable]="true"
-                     [enableCloseOutside]="false"
-                     (hasData)="onImageLoaded($event)"
-                     (close)="onCloseImageModal($event)"
-                     (show)="onVisibleIndex($event)"
-                     (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        [buttonsConfig]="{download: true, extUrl: true, close: true}"
+                        [keyboardConfig]="{esc: 81, left: 40, right: 38}"
+                        [downloadable]="true"
+                        [enableCloseOutside]="false"
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images31-3">
       <h3>4 - Array of images without close button thanks to <span class="red-text">'buttonsConfig'</span></h3>
@@ -121,7 +119,9 @@ import 'rxjs/add/operator/delay';
       <ul>
         <li>modalImages is an <b>Array&lt;Image&gt;</b></li>
         <li><b>download button NOT visible</b> because, <u class="red-text">buttonsConfig.download = false</u></li>
-        <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the button)</li>
+        <li><b>external url button visible</b> (because <u class="red-text">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the
+          button)
+        </li>
         <li><b>close button NOT visible</b> because, <u class="red-text">buttonsConfig.close = false</u></li>
         <li><b>default keyboard config</b> because, <u class="red-text">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>
         <li><b>close clicking on background</b> because, <u class="red-text">[enableCloseOutside]</u> is true</li>
@@ -130,14 +130,14 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="imagesArray"
-                     [buttonsConfig]="{download: false, extUrl: true, close: false}"
-                     [enableCloseOutside]="true"
-                     [description]="customFullDescription"
-                     (hasData)="onImageLoaded($event)"
-                     (close)="onCloseImageModal($event)"
-                     (show)="onVisibleIndex($event)"
-                     (firstImage)="onIsFirstImage($event)"
-                     (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        [buttonsConfig]="{download: false, extUrl: true, close: false}"
+                        [enableCloseOutside]="true"
+                        [description]="customFullDescription"
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <hr>
     <br>
@@ -155,14 +155,13 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="images"
-                  [downloadable]="false"
-                  [showExtUrlButton]="true"
-                  [description]="customDescription"
-                  (hasData)="onImageLoaded($event)"
-                  (close)="onCloseImageModal($event)"
-                  (show)="onVisibleIndex($event)"
-                  (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        [downloadable]="false"
+                        [description]="customDescription"
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images2">
       <h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>
@@ -177,14 +176,12 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="images"
-                  [showDownloadButton]="true"
-                  [downloadable]="true"
-                  [showExtUrlButton]="true"
-                  (hasData)="onImageLoaded($event)"
-                  (close)="onCloseImageModal($event)"
-                  (show)="onVisibleIndex($event)"
-                  (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        [downloadable]="true"
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images3">
       <h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>
@@ -199,15 +196,13 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="imagesArray"
-                  [showDownloadButton]="true"
-                  [downloadable]="true"
-                  [showExtUrlButton]="false"
-                  [description]="customFullDescription"
-                  (hasData)="onImageLoaded($event)"
-                  (close)="onCloseImageModal($event)"
-                  (show)="onVisibleIndex($event)"
-                  (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        [downloadable]="true"
+                        [description]="customFullDescription"
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images4">
       <br>
@@ -223,11 +218,11 @@ import 'rxjs/add/operator/delay';
       <br>
       <!-- both showDownloadButton and downloadable are false by default -->
       <ks-modal-gallery [modalImages]="singleImage"
-                  (hasData)="onImageLoaded($event)"
-                  (close)="onCloseImageModal($event)"
-                  (show)="onVisibleIndex($event)"
-                  (firstImage)="onIsFirstImage($event)"
-                  (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <section id="Images5">
       <br>
@@ -251,14 +246,12 @@ import 'rxjs/add/operator/delay';
       </div>
       <div *ngIf="openModalWindow">
         <ks-modal-gallery [modalImages]="imagesArray"
-                    [imagePointer]="imagePointer"
-                    [downloadable]="true"
-                    [showExtUrlButton]="true"
-                    (hasData)="onImageLoaded($event)"
-                    (close)="onCloseImageModal($event)"
-                    (show)="onVisibleIndex($event)"
-                    (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                          [downloadable]="true"
+                          (hasData)="onImageLoaded($event)"
+                          (close)="onCloseImageModal($event)"
+                          (show)="onVisibleIndex($event)"
+                          (firstImage)="onIsFirstImage($event)"
+                          (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
       </div>
     </section>
     <br><br>
@@ -284,14 +277,12 @@ import 'rxjs/add/operator/delay';
       </div>
       <div *ngIf="openModalWindowObservable">
         <ks-modal-gallery [modalImages]="images"
-                    [imagePointer]="imagePointerObservable"
-                    [downloadable]="true"
-                    [showExtUrlButton]="false"
-                    (hasData)="onImageLoaded($event)"
-                    (close)="onCloseImageModal($event)"
-                    (show)="onVisibleIndex($event)"
-                    (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                          [downloadable]="true"
+                          (hasData)="onImageLoaded($event)"
+                          (close)="onCloseImageModal($event)"
+                          (show)="onVisibleIndex($event)"
+                          (firstImage)="onIsFirstImage($event)"
+                          (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
       </div>
     </section>
     <br><br>
@@ -308,23 +299,23 @@ import 'rxjs/add/operator/delay';
       </ul>
       <br>
       <ks-modal-gallery [modalImages]="imagesArraySubscribed"
-                    (hasData)="onImageLoaded($event)"
-                    (close)="onCloseImageModal($event)"
-                    (show)="onVisibleIndex($event)"
-                    (firstImage)="onIsFirstImage($event)"
-                    (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
+                        (hasData)="onImageLoaded($event)"
+                        (close)="onCloseImageModal($event)"
+                        (show)="onVisibleIndex($event)"
+                        (firstImage)="onIsFirstImage($event)"
+                        (lastImage)="onIsLastImage($event)"></ks-modal-gallery>
     </section>
     <br><br>
     <h4>Created by Stefano Cappa (Ks89)</h4>
   `
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 
-  openModalWindow: boolean = false;
-  imagePointer: number = 0;
+  openModalWindow = false;
+  imagePointer = 0;
 
-  openModalWindowObservable: boolean = false;
-  imagePointerObservable: number = 0;
+  openModalWindowObservable = false;
+  imagePointerObservable = 0;
 
   imagesArray: Array<Image> = [
     new Image(
@@ -427,8 +418,8 @@ export class AppComponent implements OnDestroy {
 
   onVisibleIndex(event: ImageModalEvent) {
     this.customFullDescription.customFullDescription = `Custom description of visible image with index= ${event.result}`;
-    console.log('onVisibleIndex action: ' + Action[event.action]);
-    console.log('onVisibleIndex result:' + event.result);
+    console.log('action: ' + Action[event.action]);
+    console.log('result:' + event.result);
   }
 
   onIsFirstImage(event: ImageModalEvent) {
@@ -449,7 +440,10 @@ export class AppComponent implements OnDestroy {
   }
 
   addRandomImage() {
-    this.imagesArray.push(this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)]);
+    let newImage: Image = Object.assign({},
+      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
+      {id: this.imagesArray.length - 1 + 1});
+    this.imagesArray.push(newImage);
   }
 
   ngOnDestroy() {
