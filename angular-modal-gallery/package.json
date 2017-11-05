@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Modal image gallery for Angular >=4",
   "main": "src/public_api.ts",
   "license": "MIT",

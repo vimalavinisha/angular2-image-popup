@@ -1,3 +1,8 @@
+# 4.0.1
+### Chores
+- Add LICENSE and other .md files to the released bundle
+
+
 # 4.0.0
 ### Features
 - #83 #101 Angular 5.x.x support
