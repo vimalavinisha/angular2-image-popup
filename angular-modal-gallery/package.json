@@ -2,7 +2,7 @@
   "name": "angular-modal-gallery",
   "version": "5.0.0",
   "description": "Modal image gallery for Angular >=4",
-  "main": "index.ts",
+  "main": "src/public_api.ts",
   "license": "MIT",
   "author": "Stefano Cappa",
   "engines": {
@@ -55,10 +55,5 @@
   },
   "bugs": {
     "url": "https://github.com/Ks89/angular-modal-gallery/issues"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "typescript"
-    ]
   }
 }

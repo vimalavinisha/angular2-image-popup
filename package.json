@@ -1,8 +1,8 @@
 {
   "name": "angular-modal-gallery",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Modal image gallery for Angular >=4",
-  "main": "index.ts",
+  "main": "src/main.ts",
   "license": "MIT",
   "author": "Stefano Cappa",
   "homepage": "https://github.com/Ks89",
@@ -20,13 +20,19 @@
     "start": "ng serve",
     "build": "ng build",
     "build:dev": "ng build --app dev",
-    "build:lib": "npm run clean:all && ng-packagr && cpr dist/angular-modal-gallery src/angular-modal-gallery && npm run build:examples",
+    "build:lib": "npm run clean:all && ng-packagr && npm run copy:other && cpr dist/angular-modal-gallery src/angular-modal-gallery && npm run build:examples",
     "build:examples": "cpr dist/angular-modal-gallery examples/systemjs/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery && cpr dist/angular-modal-gallery examples/angular-cli/node_modules/angular-modal-gallery",
     "clean": "rimraf dist",
     "clean:all": "npm run clean && rimraf src/angular-modal-gallery && rimraf examples/systemjs/node_modules/angular-modal-gallery examples/webpack/node_modules/angular-modal-gallery examples/angular-cli/node_modules/angular-modal-gallery",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "clean-coverage": "rimraf coverage",
+    "copy:other": "cpr README.md dist/angular-modal-gallery/README.md && cpr LICENSE dist/angular-modal-gallery/LICENSE && cpr CHANGELOG.md dist/angular-modal-gallery/CHANGELOG.md && cpr CONTRIBUTING.md dist/angular-modal-gallery/CONTRIBUTING.md",
+    "pretest": "npm run clean-coverage",
+    "test": "karma start --single-run",
+    "test:watch": "karma start",
+    "docs": "typedoc --out docs angular-modal-gallery/src",
+    "compodoc": "compodoc -p ./tsconfig.compodoc.json",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   },
   "dependencies": {
     "@angular/animations": "^5.0.0",
@@ -46,13 +52,16 @@
     "zone.js": "^0.8.18"
   },
   "devDependencies": {
-    "@angular/cli": "^1.5.0-rc.8",
+    "@angular/cli": "^1.5.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
+    "@compodoc/compodoc": "^1.0.3",
     "@types/jasmine": "^2.6.2",
     "@types/mousetrap": "^1.5.33",
     "@types/node": "^8.0.47",
+    "codeclimate-test-reporter": "^0.5.0",
     "codelyzer": "^3.2.2",
+    "coveralls": "^3.0.0",
     "cpr": "^3.0.1",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.0",
@@ -67,6 +76,7 @@
     "rimraf": "^2.6.1",
     "ts-node": "~3.3.0",
     "tslint": "^5.8.0",
+    "typedoc": "^0.9.0",
     "typescript": "~2.5.2"
   }
 }
