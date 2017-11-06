@@ -1,4 +1,4 @@
-<div class="dots-container" aria-label="Image dots" title="Image dots">
+<div class="dots-container" [attr.aria-label]="'Image navigation dots'" title="Image navigation dots">
   <div class="inside dot"
        *ngFor="let img of images; trackBy: trackById; let index = index"
        [ngClass]="{'active': isActive(index)}"

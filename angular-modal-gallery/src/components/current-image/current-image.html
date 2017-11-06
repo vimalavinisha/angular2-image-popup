@@ -1,54 +1,73 @@
 <div class="main-image-container">
-  <a class="nav-left" aria-label="Previous image" *ngIf="images?.length > 1"
+  <a class="nav-left" *ngIf="images?.length > 1"
+     [attr.aria-label]="'Previous image'"
      (click)="prevImage()">
-    <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}" aria-hidden="true" title="Previous image"></div>
+    <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
+         aria-hidden="true"
+         title="Previous image"></div>
   </a>
 
-
-  <img *ngIf="!isFirstImage" class="inside current-image-previous" [src]="getLeftPreviewUrl()"
-       aria-label="Click to navigate to the previous image"
-       [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
-       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
-       (click)="prevImage(clickAction)"
-       title="Previous image preview" alt="Alt text for this image"/>
-  <div *ngIf="isFirstImage" class="current-image-previous hidden"
-       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"></div>
-
+  <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
+    <img *ngIf="!isFirstImage; else firstImage"
+         class="inside current-image-previous"
+         [src]="leftPreview.thumb ? leftPreview.thumb : leftPreview.img"
+         [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
+         [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+         [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
+         [attr.aria-label]="leftPreview.ariaLabel"
+         title="{{leftPreview.title ? leftPreview.title : getDescriptionToDisplay(leftPreview)}}"
+         alt="{{leftPreview.alt ? leftPreview.alt : getAltDescriptionByImage(leftPreview)}}"
+         (click)="prevImage(clickAction)"/>
+    <ng-template #firstImage>
+      <div class="current-image-previous hidden"
+           [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+           [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"></div>
+    </ng-template>
+  </ng-container>
 
   <figure id="current-figure" [hidden]="loading">
     <img id="current-image"
          class="inside"
          [src]="currentImage.img"
+         [attr.aria-label]="currentImage.ariaLabel"
+         title="{{currentImage.title ? currentImage.title : getDescriptionToDisplay()}}"
+         alt="{{currentImage.alt ? currentImage.alt : getAltDescriptionByImage()}}"
          (load)="onImageLoad($event)"
          (click)="nextImage(clickAction)"
          (swipeleft)="swipe($event.type)"
-         (swiperight)="swipe($event.type)"
-         aria-label="Click to navigate to the next image"
-         title="Current image" alt="{{getAltDescriptionByImage(currentImage)}}"/>
+         (swiperight)="swipe($event.type)"/>
     <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
   </figure>
 
 
-  <img *ngIf="!isLastImage" class="inside current-image-next" [src]="getRightPreviewUrl()"
-       aria-label="Click to navigate to the next image"
-       [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
-       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
-       (click)="nextImage(clickAction)"
-       title="Next image preview" alt="Alt text for this image"/>
-  <div *ngIf="isLastImage" class="current-image-next hidden"
-       [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-       [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"></div>
-
+  <ng-container *ngIf="getRightPreviewImage() as rightPreview">
+    <img *ngIf="!isLastImage; else lastImage"
+         class="inside current-image-next"
+         [src]="rightPreview.thumb ? rightPreview.thumb : rightPreview.img"
+         [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
+         [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+         [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
+         [attr.aria-label]="rightPreview.ariaLabel"
+         title="{{rightPreview.title ? rightPreview.title : getDescriptionToDisplay(rightPreview)}}"
+         alt="{{rightPreview.alt ? rightPreview.alt : getAltDescriptionByImage(rightPreview)}}"
+         (click)="nextImage(clickAction)"/>
+    <ng-template #lastImage>
+      <div class="current-image-next hidden"
+           [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
+           [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit">
+      </div>
+    </ng-template>
+  </ng-container>
 
   <ng-container *ngIf="loading && loadingConfig.enable">
     <ks-loading-spinner [loadingConfig]="loadingConfig"></ks-loading-spinner>
   </ng-container>
 
-  <a class="nav-right" aria-label="Next image" *ngIf="images?.length > 1"
+  <a class="nav-right" *ngIf="images?.length > 1"
+     [attr.aria-label]="'Next image'"
      (click)="nextImage()">
-    <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}" aria-hidden="true" title="Next image"></div>
+    <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
+         aria-hidden="true"
+         title="Next image"></div>
   </a>
 </div>

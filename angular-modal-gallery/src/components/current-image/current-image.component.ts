@@ -27,7 +27,7 @@ import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
-import { Description } from '../../interfaces/description.interface';
+import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig } from '../../interfaces/loading-config.interface';
@@ -69,7 +69,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   /**
    * Description object with the configuration to show image descriptions.
    */
-  @Input() descriptionConfig: Description;
+  @Input() descriptionConfig: Description = {strategy: DescriptionStrategy.ALWAYS_VISIBLE};
 
   @Input() loadingConfig: LoadingConfig;
 
@@ -114,7 +114,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   private description: Description;
 
   // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
-  private static isIEorEdge() {
+  private static isIEorEdge(): any {
     // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
     return window.Blob && window.navigator.msSaveOrOpenBlob;
   }
@@ -124,19 +124,24 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * based on default values.
    */
   constructor(private keyboardService: KeyboardService) {
-    // if description isn't provided initialize it with a default object
-    if (!this.description) {
-      this.description = {
-        imageText: 'Image ',
-        numberSeparator: '/',
-        beforeTextDescription: ' - '
-      };
-    }
+    // copy input Description to a local variable
+    this.description = Object.assign({}, this.descriptionConfig);
 
-    // if one of the Description fields isn't initialized, provide a default value
-    this.description.imageText = this.description.imageText || 'Image ';
-    this.description.numberSeparator = this.description.numberSeparator || '/';
-    this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
+    if (this.description.strategy === DescriptionStrategy.ALWAYS_VISIBLE) {
+      // if description isn't provided initialize it with a default object
+      if (!this.description) {
+        this.description = {
+          imageText: 'Image ',
+          numberSeparator: '/',
+          beforeTextDescription: ' - '
+        };
+      }
+
+      // if one of the Description fields isn't initialized, provide a default value
+      this.description.imageText = this.description.imageText || 'Image ';
+      this.description.numberSeparator = this.description.numberSeparator || '/';
+      this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
+    }
 
     this.keyboardService.add((event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
@@ -191,17 +196,17 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * it will be built using the `description` object, concatenating its fields.
    * @returns String description to display.
    */
-  getDescriptionToDisplay() {
+  getDescriptionToDisplay(image: Image = this.currentImage): string {
     if (this.description && this.description.customFullDescription) {
       return this.description.customFullDescription;
     }
-    const currentIndex: number = this.getIndex(this.currentImage);
+    const currentIndex: number = this.getIndex(image);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
-    if (!this.currentImage.description || this.currentImage.description === '') {
+    if (!image.description || image.description === '') {
       return `${this.description.imageText}${currentIndex + 1}${this.description.numberSeparator}${this.images.length}`;
     }
-    return `${this.description.imageText}${currentIndex + 1}${this.description.numberSeparator}${this.images.length}${this.description.beforeTextDescription}${this.currentImage.description}`;
+    return `${this.description.imageText}${currentIndex + 1}${this.description.numberSeparator}${this.images.length}${this.description.beforeTextDescription}${image.description}`;
   }
 
   /**
@@ -209,20 +214,20 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * `alt` specifies an alternate text for an image, if the image cannot be displayed.
    * There is a similar version of this method into `gallery.component.ts` that
    * receives the image index as input.
-   * @param currentImage Image that represents the current visible image.
+   * @param image Image that represents the current visible image.
    */
-  getAltDescriptionByImage(currentImage: Image) {
-    if (!currentImage) {
+  getAltDescriptionByImage(image: Image = this.currentImage): string {
+    if (!image) {
       return '';
     }
-    if (!currentImage.description) {
-      const index: number = this.getIndex(currentImage);
+    if (!image.description) {
+      const index: number = this.getIndex(image);
       return `Image ${index}`;
     }
-    return currentImage.description;
+    return image.description;
   }
 
-  getIndex(image: Image, arrayOfImages: Image[] = this.images) {
+  getIndex(image: Image, arrayOfImages: Image[] = this.images): number {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
@@ -231,13 +236,12 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
-  getLeftPreviewUrl() {
-    const img: Image = this.images[Math.max(this.getIndex(this.currentImage) - 1, 0)];
-    return img.thumb ? img.thumb : img.img;
+  getLeftPreviewImage(): Image {
+    return this.images[Math.max(this.getIndex(this.currentImage) - 1, 0)];
   }
-  getRightPreviewUrl() {
-    const img: Image = this.images[Math.min(this.getIndex(this.currentImage) + 1, this.images.length - 1)];
-    return img.thumb ? img.thumb : img.img;
+
+  getRightPreviewImage(): Image {
+    return this.images[Math.min(this.getIndex(this.currentImage) + 1, this.images.length - 1)];
   }
 
   /**
@@ -370,7 +374,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * This is used to get the image's name from its path.
    * @param path String that represents the path of the image.
    */
-  private getFileName(path: string) {
+  private getFileName(path: string): string {
     return path.replace(/^.*[\\\/]/, '');
   }
 
@@ -427,7 +431,7 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * @returns {boolean} True if slideConfig.infinite === false and the current index is
    *  either the first or the last one.
    */
-  private isPreventSliding(boundaryIndex: number) {
+  private isPreventSliding(boundaryIndex: number): boolean {
     return !!this.slideConfig && this.slideConfig.infinite === false &&
       this.getIndex(this.currentImage) === boundaryIndex;
   }

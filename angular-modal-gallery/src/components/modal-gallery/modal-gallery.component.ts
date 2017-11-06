@@ -42,11 +42,15 @@ export class InternalLibImage extends Image {
 
   constructor(id: number | string,
               img: string,
-              previouslyLoaded: boolean = false,
-              thumb?: string | null | undefined,
-              description?: string | null | undefined,
-              extUrl?: string | null | undefined) {
-    super(id, img, thumb, description, extUrl);
+              thumb?: string | void,
+              description?: string | void,
+              extUrl?: string | void,
+              title?: string | void,
+              alt?: string | void,
+              ariaLabel?: string | void,
+              previouslyLoaded: boolean = false) {
+    super(id, img, thumb, description, extUrl, title, alt, ariaLabel);
+
     this.previouslyLoaded = previouslyLoaded;
   }
 }

@@ -8,19 +8,35 @@ import { Action } from './action.enum';
 export class Image {
   id: number | string;
   img: string;
-  thumb?: string | null | undefined;
-  description?: string | null | undefined;
-  extUrl?: string | null | undefined;
+  thumb?: string | void;
+  description?: string | void;
+  extUrl?: string | void;
+  title?: string | void;
+  alt?: string | void;
+  ariaLabel?: string | void;
 
-  constructor(id: number | string, img: string, thumb?: string | null | undefined,
-              description?: string | null | undefined, extUrl?: string | null | undefined) {
+  constructor(id: number | string,
+              img: string,
+              thumb?: string | void,
+              description?: string | void,
+              extUrl?: string | void,
+              title?: string | void,
+              alt?: string | void,
+              ariaLabel?: string | void) {
     this.id = id;
     this.img = img;
     this.thumb = thumb;
     this.description = description;
     this.extUrl = extUrl;
+    this.title = title;
+    this.alt = alt;
+    this.ariaLabel = ariaLabel;
   }
 }
+
+
+// aria-label="Click to navigate to the next image"
+// title="Current image" alt="{{getAltDescriptionByImage(currentImage)}}"/>
 
 /**
  * Class `ImageModalEvent` that represents the Event after an action `action` and its result.

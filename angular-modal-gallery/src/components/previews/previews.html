@@ -1,19 +1,28 @@
 <div class="previews-container" aria-label="Image previews" title="Image previews">
-  <a class="nav-left" aria-label="Previous preview" (click)="previous()">
-    <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}" aria-hidden="true" title="Previous preview"></div>
+
+  <a class="nav-left" aria-label="Scroll previous previews" (click)="previous()">
+    <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
+         aria-hidden="true"
+         title="Scroll previous previews"></div>
   </a>
 
   <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
-      <img *ngIf="preview?.img"
-           [style.width]="previewConfig.size.width+previewConfig.size.unit" [style.height]="previewConfig.size.height+previewConfig.size.unit"
-           [src]="preview.thumb ? preview.thumb : preview.img"
-           class="inside preview-image" aria-label="Image preview" title="Image preview" alt="Alt text for this image preview"
-           [ngClass]="{'active': isActive(index)}"
-           (click)="onClick(preview)"/>
+    <img *ngIf="preview?.img"
+         class="inside preview-image"
+         [ngClass]="{'active': isActive(index)}"
+         [src]="preview.thumb ? preview.thumb : preview.img"
+         [style.width]="previewConfig.size.width+previewConfig.size.unit" [style.height]="previewConfig.size.height+previewConfig.size.unit"
+         [attr.aria-label]="preview.ariaLabel"
+         title="{{preview.title}}"
+         alt="{{preview.alt}}"
+         (click)="onClick(preview)"/>
   </ng-container>
 
 
-  <a class="nav-right" aria-label="Next preview" (click)="next()">
-    <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}" aria-hidden="true" title="Next preview"></div>
+  <a class="nav-right" aria-label="Scroll next previews" (click)="next()">
+    <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
+         aria-hidden="true"
+         title="Scroll next previews"></div>
   </a>
+
 </div>
