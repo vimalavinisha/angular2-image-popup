@@ -32,6 +32,7 @@ import { KeyboardService } from '../../services/keyboard.service';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig } from '../../interfaces/loading-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
+import { AccessabilityConfig } from '../../interfaces/accessability.interface';
 
 /**
  * Component with the current image with
@@ -77,6 +78,9 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
+
+  @Input() accessabilityConfig: AccessabilityConfig;
+
   @Output() loadImage: EventEmitter<any> = new EventEmitter<any>();
   @Output() changeImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();

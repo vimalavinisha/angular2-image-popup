@@ -35,6 +35,7 @@ import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
+import { AccessabilityConfig } from '../../interfaces/accessability.interface';
 
 
 export class InternalLibImage extends Image {
@@ -54,6 +55,28 @@ export class InternalLibImage extends Image {
     this.previouslyLoaded = previouslyLoaded;
   }
 }
+
+const defaultAccessabilityConfig: AccessabilityConfig = {
+  backgroundAriaLabel: 'Modal gallery openened',
+
+  loadingSpinnerAriaLabel: 'The current image is loading. Please be patient.',
+
+  mainPrevImageAriaLabel: 'Previous image',
+  mainPrevImageTitle: 'Previous image',
+  mainNextImageAriaLabel: 'Next image',
+  mainNextImageTitle: 'Next image',
+
+  dotsContainerAriaLabel: 'Image navigation dots',
+  dotsContainerTitle: 'Image navigation dots',
+  dotAriaLabel: 'Navigate to image number',
+
+  previewsContainerAriaLabel: 'Image previews',
+  previewsContainerTitle: 'Image previews',
+  previewScrollPrevAriaLabel: 'Scroll previous previews',
+  previewScrollPrevTitle: 'Scroll previous previews',
+  previewScrollNextAriaLabel: 'Scroll next previews',
+  previewScrollNextTitle: 'Scroll next previews'
+};
 
 
 /**
@@ -119,6 +142,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     number: 3, arrows: true, clickable: true,
     alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}
   };
+
+  @Input() accessabilityConfig: AccessabilityConfig = defaultAccessabilityConfig;
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();

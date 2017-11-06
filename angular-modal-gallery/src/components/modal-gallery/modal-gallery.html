@@ -1,6 +1,7 @@
 <ks-gallery [images]="images" [showGallery]="showGallery" (show)="onShowModalGallery($event)"></ks-gallery>
 
-<ks-background [isOpen]="opened"></ks-background>
+<ks-background [isOpen]="opened"
+               [accessabilityConfig]="accessabilityConfig"></ks-background>
 
 <div id="modal-gallery-wrapper" *ngIf="opened"
      click-outside [clickOutsideEnable]="enableCloseOutside"
@@ -21,6 +22,7 @@
                         [keyboardConfig]="keyboardConfig"
                         [downloadable]="downloadable"
                         [loadingConfig]="loadingConfig"
+                        [accessabilityConfig]="accessabilityConfig"
                         (loadImage)="onImageLoad($event)"
                         (changeImage)="onChangeCurrentImage($event)"
                         (close)="onCloseGallery($event)"></ks-current-image>
@@ -28,12 +30,14 @@
       <ks-dots [images]="images"
                [currentImage]="currentImage"
                [isOpen]="opened"
+               [accessabilityConfig]="accessabilityConfig"
                (clickDot)="onClickDot($event)"></ks-dots>
 
       <ks-previews [images]="images"
                    [currentImage]="currentImage"
                    [isOpen]="opened"
                    [previewConfig]="previewConfig"
+                   [accessabilityConfig]="accessabilityConfig"
                    (clickPreview)="onClickPreview($event)"></ks-previews>
 
     </div>

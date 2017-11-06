@@ -25,6 +25,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
+import { AccessabilityConfig } from '../../interfaces/accessability.interface';
 
 /**
  * Component with dots
@@ -45,6 +46,8 @@ export class DotsComponent {
   @Input() images: InternalLibImage[];
 
   @Input() isOpen: boolean;
+
+  @Input() accessabilityConfig: AccessabilityConfig;
 
   @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
 

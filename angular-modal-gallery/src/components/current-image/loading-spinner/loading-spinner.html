@@ -1,4 +1,4 @@
-<div id="loading-spinner" [attr.aria-label]="'The current image is loading. Please be patient.'">
+<div id="loading-spinner" [attr.aria-label]="accessabilityConfig.loadingSpinnerAriaLabel">
   <ng-container *ngIf="loadingConfig.type === 0">
     <div class="cssload-loader">
       <div class="cssload-inner cssload-one"></div>
