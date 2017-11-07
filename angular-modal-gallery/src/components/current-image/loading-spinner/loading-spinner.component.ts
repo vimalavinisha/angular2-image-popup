@@ -24,7 +24,7 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { LoadingConfig } from '../../../interfaces/loading-config.interface';
-import { AccessabilityConfig } from '../../../interfaces/accessability.interface';
+import { AccessibilityConfig } from '../../../interfaces/accessibility.interface';
 
 /**
  * Component with the loading spinner
@@ -43,6 +43,6 @@ export class LoadingSpinnerComponent {
 
   @Input() loadingConfig: LoadingConfig;
 
-  @Input() accessabilityConfig: AccessabilityConfig;
+  @Input() accessibilityConfig: AccessibilityConfig;
 
 }

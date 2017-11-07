@@ -1,10 +1,18 @@
 /**
  * Interface `Accessability`.
  */
-export interface AccessabilityConfig {
+export interface AccessibilityConfig {
   backgroundAriaLabel: string;
-  loadingSpinnerAriaLabel: string;
+  backgroundTitle: string;
 
+  modalGalleryContentAriaLabel: string;
+  modalGalleryContentTitle: string;
+
+  loadingSpinnerAriaLabel: string;
+  loadingSpinnerTitle: string;
+
+  mainContainerAriaLabel: string;
+  mainContainerTitle: string;
   mainPrevImageAriaLabel: string;
   mainPrevImageTitle: string;
   mainNextImageAriaLabel: string;

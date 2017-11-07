@@ -39,17 +39,41 @@ import { Image } from '../../interfaces/image.class';
 })
 export class UpperButtonsComponent {
 
+  private static SPACE_KEY = 32;
+  private static ENTER_KEY = 13;
+  private static MOUSE_MAIN_BUTTON_CLICK = 0;
+
   @Input() image: Image;
   @Input() configButtons: ButtonsConfig;
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  downloadImage() {
-    this.download.emit(true);
+  downloadImage(event: KeyboardEvent | MouseEvent) {
+    this.triggerOnMouseAndKeyboard(this.download, event, true);
   }
 
-  closeGallery() {
-    this.close.emit(true);
+  closeGallery(event: KeyboardEvent | MouseEvent) {
+    this.triggerOnMouseAndKeyboard(this.close, event, true);
+  }
+
+  private triggerOnMouseAndKeyboard <T>(emitter: EventEmitter<T>,
+                                        event: KeyboardEvent | MouseEvent, dataToEmit: T) {
+    if (event instanceof KeyboardEvent && event) {
+      const key: number = event.keyCode;
+
+      if (key === UpperButtonsComponent.SPACE_KEY || key === UpperButtonsComponent.ENTER_KEY) {
+        emitter.emit(dataToEmit);
+        return;
+      }
+    }
+
+    if (event instanceof MouseEvent && event) {
+      const mouseBtn: number = event.button;
+
+      if (mouseBtn === UpperButtonsComponent.MOUSE_MAIN_BUTTON_CLICK) {
+        emitter.emit(dataToEmit);
+      }
+    }
   }
 }

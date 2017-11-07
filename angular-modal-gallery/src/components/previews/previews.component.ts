@@ -30,7 +30,7 @@ import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
-import { AccessabilityConfig } from '../../interfaces/accessability.interface';
+import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 
 /**
  * Component with image previews
@@ -56,7 +56,7 @@ export class PreviewsComponent implements OnInit, OnChanges {
 
   @Input() previewConfig: PreviewConfig;
 
-  @Input() accessabilityConfig: AccessabilityConfig;
+  @Input() accessibilityConfig: AccessibilityConfig;
 
   @Output() clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
 

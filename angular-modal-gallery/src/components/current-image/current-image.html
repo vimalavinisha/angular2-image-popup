@@ -1,10 +1,10 @@
-<div class="main-image-container">
+<main class="main-image-container" [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel" [title]="accessibilityConfig.mainContainerTitle">>
   <a class="nav-left" *ngIf="images?.length > 1"
-     [attr.aria-label]="accessabilityConfig.mainPrevImageAriaLabel"
+     [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
      (click)="prevImage()">
     <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
          aria-hidden="true"
-         title="{{accessabilityConfig.mainPrevImageTitle}}"></div>
+         [title]="accessibilityConfig.mainPrevImageTitle"></div>
   </a>
 
   <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
@@ -15,7 +15,7 @@
          [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
          [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
          [attr.aria-label]="leftPreview.ariaLabel"
-         title="{{leftPreview.title ? leftPreview.title : getDescriptionToDisplay(leftPreview)}}"
+         [title]="leftPreview.title ? leftPreview.title : getDescriptionToDisplay(leftPreview)"
          alt="{{leftPreview.alt ? leftPreview.alt : getAltDescriptionByImage(leftPreview)}}"
          (click)="prevImage(clickAction)"/>
     <ng-template #firstImage>
@@ -30,7 +30,7 @@
          class="inside"
          [src]="currentImage.img"
          [attr.aria-label]="currentImage.ariaLabel"
-         title="{{currentImage.title ? currentImage.title : getDescriptionToDisplay()}}"
+         [title]="currentImage.title ? currentImage.title : getDescriptionToDisplay()"
          alt="{{currentImage.alt ? currentImage.alt : getAltDescriptionByImage()}}"
          (load)="onImageLoad($event)"
          (click)="nextImage(clickAction)"
@@ -48,7 +48,7 @@
          [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
          [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
          [attr.aria-label]="rightPreview.ariaLabel"
-         title="{{rightPreview.title ? rightPreview.title : getDescriptionToDisplay(rightPreview)}}"
+         [title]="rightPreview.title ? rightPreview.title : getDescriptionToDisplay(rightPreview)"
          alt="{{rightPreview.alt ? rightPreview.alt : getAltDescriptionByImage(rightPreview)}}"
          (click)="nextImage(clickAction)"/>
     <ng-template #lastImage>
@@ -61,14 +61,14 @@
 
   <ng-container *ngIf="loading && loadingConfig.enable">
     <ks-loading-spinner [loadingConfig]="loadingConfig"
-                        [accessabilityConfig]="accessabilityConfig"></ks-loading-spinner>
+                        [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
   </ng-container>
 
   <a class="nav-right" *ngIf="images?.length > 1"
-     [attr.aria-label]="accessabilityConfig.mainNextImageAriaLabel"
+     [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
      (click)="nextImage()">
     <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
          aria-hidden="true"
-         title="{{accessabilityConfig.mainNextImageTitle}}"></div>
+         [title]="accessibilityConfig.mainNextImageTitle"></div>
   </a>
-</div>
+</main>

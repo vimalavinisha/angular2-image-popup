@@ -1,7 +1,7 @@
-<div class="dots-container" [attr.aria-label]="accessabilityConfig.dotsContainerAriaLabel" title="{{accessabilityConfig.dotsContainerTitle}}">
+<nav class="dots-container" [attr.aria-label]="accessibilityConfig.dotsContainerAriaLabel" [title]="accessibilityConfig.dotsContainerTitle">
   <div class="inside dot"
        *ngFor="let img of images; trackBy: trackById; let index = index"
        [ngClass]="{'active': isActive(index)}"
-       [attr.aria-label]="accessabilityConfig.dotAriaLabel + ' ' + (index + 1)"
+       [attr.aria-label]="accessibilityConfig.dotAriaLabel + ' ' + (index + 1)"
        (click)="onClick(index)"></div>
-</div>
+</nav>

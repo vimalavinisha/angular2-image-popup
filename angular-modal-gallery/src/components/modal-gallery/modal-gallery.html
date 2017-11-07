@@ -1,9 +1,11 @@
 <ks-gallery [images]="images" [showGallery]="showGallery" (show)="onShowModalGallery($event)"></ks-gallery>
 
 <ks-background [isOpen]="opened"
-               [accessabilityConfig]="accessabilityConfig"></ks-background>
+               [accessibilityConfig]="accessibilityConfig"></ks-background>
 
 <div id="modal-gallery-wrapper" *ngIf="opened"
+     [attr.aria-label]="accessibilityConfig.modalGalleryContentAriaLabel"
+     [title]="accessibilityConfig.modalGalleryContentTitle"
      click-outside [clickOutsideEnable]="enableCloseOutside"
      (clickOutside)="onClickOutside($event)">
 
@@ -12,6 +14,7 @@
 
       <ks-upper-buttons [image]="currentImage"
                         [configButtons]="configButtons"
+                        (download)="onDownload($event)"
                         (close)="closeGallery()"></ks-upper-buttons>
 
       <ks-current-image [images]="images"
@@ -22,7 +25,7 @@
                         [keyboardConfig]="keyboardConfig"
                         [downloadable]="downloadable"
                         [loadingConfig]="loadingConfig"
-                        [accessabilityConfig]="accessabilityConfig"
+                        [accessibilityConfig]="accessibilityConfig"
                         (loadImage)="onImageLoad($event)"
                         (changeImage)="onChangeCurrentImage($event)"
                         (close)="onCloseGallery($event)"></ks-current-image>
@@ -30,14 +33,14 @@
       <ks-dots [images]="images"
                [currentImage]="currentImage"
                [isOpen]="opened"
-               [accessabilityConfig]="accessabilityConfig"
+               [accessibilityConfig]="accessibilityConfig"
                (clickDot)="onClickDot($event)"></ks-dots>
 
       <ks-previews [images]="images"
                    [currentImage]="currentImage"
                    [isOpen]="opened"
                    [previewConfig]="previewConfig"
-                   [accessabilityConfig]="accessabilityConfig"
+                   [accessibilityConfig]="accessibilityConfig"
                    (clickPreview)="onClickPreview($event)"></ks-previews>
 
     </div>

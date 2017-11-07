@@ -23,7 +23,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AccessabilityConfig } from '../../interfaces/accessability.interface';
+import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 
 /**
  * Component with the transparent background.
@@ -37,5 +37,5 @@ import { AccessabilityConfig } from '../../interfaces/accessability.interface';
 export class BackgroundComponent {
   @Input() isOpen: boolean;
 
-  @Input() accessabilityConfig: AccessabilityConfig;
+  @Input() accessibilityConfig: AccessibilityConfig;
 }

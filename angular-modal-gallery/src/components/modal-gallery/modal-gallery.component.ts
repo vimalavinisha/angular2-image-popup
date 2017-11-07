@@ -35,7 +35,7 @@ import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
-import { AccessabilityConfig } from '../../interfaces/accessability.interface';
+import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 
 
 export class InternalLibImage extends Image {
@@ -56,11 +56,18 @@ export class InternalLibImage extends Image {
   }
 }
 
-const defaultAccessabilityConfig: AccessabilityConfig = {
-  backgroundAriaLabel: 'Modal gallery openened',
+const defaultAccessibilityConfig: AccessibilityConfig = {
+  backgroundAriaLabel: 'Modal gallery full screen background',
+  backgroundTitle: 'Modal gallery full screen background',
+
+  modalGalleryContentAriaLabel: 'Modal gallery content',
+  modalGalleryContentTitle: 'Modal gallery content',
 
   loadingSpinnerAriaLabel: 'The current image is loading. Please be patient.',
+  loadingSpinnerTitle: 'The current image is loading. Please be patient.',
 
+  mainContainerAriaLabel: 'Current image and navigation',
+  mainContainerTitle: 'Current image and navigation',
   mainPrevImageAriaLabel: 'Previous image',
   mainPrevImageTitle: 'Previous image',
   mainNextImageAriaLabel: 'Next image',
@@ -143,7 +150,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}
   };
 
-  @Input() accessabilityConfig: AccessabilityConfig = defaultAccessabilityConfig;
+  @Input() accessibilityConfig: AccessibilityConfig = defaultAccessibilityConfig;
 
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
@@ -286,6 +293,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   onClickPreview(preview: Image) {
     console.log('modalgallery click preview with id: ' + preview.id);
     this.currentImage = this.images.find((img: InternalLibImage) => img.id === preview.id);
+  }
+
+  // FIXME experimental
+  onDownload(event: Event) {
+    console.log('onDownload triggered');
   }
 
 
