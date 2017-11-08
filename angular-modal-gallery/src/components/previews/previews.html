@@ -4,7 +4,7 @@
 
   <a class="nav-left"
      [attr.aria-label]="accessibilityConfig.previewScrollPrevAriaLabel"
-     [tabindex]="0" role="button"
+     [tabindex]="previewConfig.arrows && start > 0 ? 0 : -1" role="button"
      (click)="previous()">
     <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
@@ -28,7 +28,7 @@
 
   <a class="nav-right"
      [attr.aria-label]="accessibilityConfig.previewScrollNextAriaLabel"
-     [tabindex]="0" role="button"
+     [tabindex]="previewConfig.arrows && end < images.length ? 0 : -1" role="button"
      (click)="next()">
     <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
