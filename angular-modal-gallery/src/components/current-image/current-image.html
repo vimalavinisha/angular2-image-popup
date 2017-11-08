@@ -1,6 +1,7 @@
 <main class="main-image-container" [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel" [title]="accessibilityConfig.mainContainerTitle">
   <a class="nav-left" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
+     [tabindex]="isFirstImage ? -1 : 0" role="button"
      (click)="prevImage()">
     <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
          aria-hidden="true"
@@ -12,11 +13,12 @@
          class="inside current-image-previous"
          [src]="leftPreview.thumb ? leftPreview.thumb : leftPreview.img"
          [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
-         [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-         [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
+         ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height,
+         unitWidth: slideConfig.sidePreviews.unit, unitHeight: slideConfig.sidePreviews.unit}"
          [attr.aria-label]="leftPreview.ariaLabel"
          [title]="leftPreview.title ? leftPreview.title : getDescriptionToDisplay(leftPreview)"
          alt="{{leftPreview.alt ? leftPreview.alt : getAltDescriptionByImage(leftPreview)}}"
+         [tabindex]="0" role="img"
          (click)="prevImage(clickAction)"/>
     <ng-template #firstImage>
       <div class="current-image-previous hidden"
@@ -32,6 +34,7 @@
          [attr.aria-label]="currentImage.ariaLabel"
          [title]="currentImage.title ? currentImage.title : getDescriptionToDisplay()"
          alt="{{currentImage.alt ? currentImage.alt : getAltDescriptionByImage()}}"
+         [tabindex]="0" role="img"
          (load)="onImageLoad($event)"
          (click)="nextImage(clickAction)"
          (swipeleft)="swipe($event.type)"
@@ -45,11 +48,12 @@
          class="inside current-image-next"
          [src]="rightPreview.thumb ? rightPreview.thumb : rightPreview.img"
          [hidden]="loading || !slideConfig.sidePreviews || !slideConfig.sidePreviews.show"
-         [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-         [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"
+         ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height,
+         unitWidth: slideConfig.sidePreviews.unit, unitHeight: slideConfig.sidePreviews.unit}"
          [attr.aria-label]="rightPreview.ariaLabel"
          [title]="rightPreview.title ? rightPreview.title : getDescriptionToDisplay(rightPreview)"
          alt="{{rightPreview.alt ? rightPreview.alt : getAltDescriptionByImage(rightPreview)}}"
+         [tabindex]="0" role="img"
          (click)="nextImage(clickAction)"/>
     <ng-template #lastImage>
       <div class="current-image-next hidden"
@@ -66,6 +70,7 @@
 
   <a class="nav-right" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
+     [tabindex]="isLastImage ? -1 : 0" role="button"
      (click)="nextImage()">
     <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
          aria-hidden="true"

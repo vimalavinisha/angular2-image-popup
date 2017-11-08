@@ -26,10 +26,11 @@ import { ExternalUrlButtonDirective } from './external-url-button.directive';
 import { DownloadButtonDirective } from './download-button.directive';
 import { CloseButtonDirective } from './close-button.directive';
 import { ClickOutsideDirective } from './click-outside.directive';
+import { SizeDirective } from './size.directive';
 
 /**
  * Array of all directives.
  */
 export const DIRECTIVES = [
-  ExternalUrlButtonDirective, DownloadButtonDirective, CloseButtonDirective, ClickOutsideDirective
+  ExternalUrlButtonDirective, DownloadButtonDirective, CloseButtonDirective, ClickOutsideDirective, SizeDirective
 ];

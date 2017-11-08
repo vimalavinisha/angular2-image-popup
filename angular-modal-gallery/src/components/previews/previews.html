@@ -2,7 +2,10 @@
      [attr.aria-label]="accessibilityConfig.previewsContainerAriaLabel"
      [title]="accessibilityConfig.previewsContainerTitle">
 
-  <a class="nav-left" [attr.aria-label]="accessibilityConfig.previewScrollPrevAriaLabel" (click)="previous()">
+  <a class="nav-left"
+     [attr.aria-label]="accessibilityConfig.previewScrollPrevAriaLabel"
+     [tabindex]="0" role="button"
+     (click)="previous()">
     <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.previewScrollPrevTitle"></div>
@@ -13,15 +16,20 @@
          class="inside preview-image"
          [ngClass]="{'active': isActive(index)}"
          [src]="preview.thumb ? preview.thumb : preview.img"
-         [style.width]="previewConfig.size.width+previewConfig.size.unit" [style.height]="previewConfig.size.height+previewConfig.size.unit"
+         ksSize [sizeConfig]="{width: previewConfig.size.width, height: previewConfig.size.height,
+         unitWidth: previewConfig.size.unit, unitHeight: previewConfig.size.unit}"
          [attr.aria-label]="preview.ariaLabel"
          [title]="preview.title"
          alt="{{preview.alt}}"
+         [tabindex]="0" role="img"
          (click)="onClick(preview)"/>
   </ng-container>
 
 
-  <a class="nav-right" [attr.aria-label]="accessibilityConfig.previewScrollNextAriaLabel" (click)="next()">
+  <a class="nav-right"
+     [attr.aria-label]="accessibilityConfig.previewScrollNextAriaLabel"
+     [tabindex]="0" role="button"
+     (click)="next()">
     <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.previewScrollNextTitle"></div>

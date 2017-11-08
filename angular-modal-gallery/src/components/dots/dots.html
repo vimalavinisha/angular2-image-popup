@@ -3,5 +3,6 @@
        *ngFor="let img of images; trackBy: trackById; let index = index"
        [ngClass]="{'active': isActive(index)}"
        [attr.aria-label]="accessibilityConfig.dotAriaLabel + ' ' + (index + 1)"
+       [tabindex]="0" role="navigation"
        (click)="onClick(index)"></div>
 </nav>
