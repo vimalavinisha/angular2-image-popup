@@ -14,8 +14,11 @@
 
       <ks-upper-buttons [image]="currentImage"
                         [configButtons]="configButtons"
+                        (refresh)="onRefresh($event)"
+                        (delete)="onDelete($event)"
+                        (navigate)="onNavigate($event)"
                         (download)="onDownload($event)"
-                        (close)="closeGallery()"></ks-upper-buttons>
+                        (close)="onCloseGallery($event)"></ks-upper-buttons>
 
       <ks-current-image [images]="images"
                         [currentImage]="currentImage"

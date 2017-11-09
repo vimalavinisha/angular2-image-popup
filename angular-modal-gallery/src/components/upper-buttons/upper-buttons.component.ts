@@ -46,19 +46,37 @@ export class UpperButtonsComponent {
   @Input() image: Image;
   @Input() configButtons: ButtonsConfig;
 
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() delete: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() navigate: EventEmitter<string | void> = new EventEmitter<string | void>();
   @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  refreshImage(event: KeyboardEvent | MouseEvent) {
+    this.triggerOnMouseAndKeyboard(this.refresh, event, true);
+  }
+
+  deleteImage(event: KeyboardEvent | MouseEvent) {
+    this.triggerOnMouseAndKeyboard(this.delete, event, true);
+  }
+
+  navigateToExtUrl(event: KeyboardEvent | MouseEvent) {
+    if (!this.image || !this.image.extUrl) {
+      return;
+    }
+    this.triggerOnMouseAndKeyboard(this.navigate, event, this.image.extUrl);
+  }
 
   downloadImage(event: KeyboardEvent | MouseEvent) {
     this.triggerOnMouseAndKeyboard(this.download, event, true);
   }
 
-  closeGallery(event: KeyboardEvent | MouseEvent) {
+  closeModalGallery(event: KeyboardEvent | MouseEvent) {
     this.triggerOnMouseAndKeyboard(this.close, event, true);
   }
 
-  private triggerOnMouseAndKeyboard <T>(emitter: EventEmitter<T>,
-                                        event: KeyboardEvent | MouseEvent, dataToEmit: T) {
+  private triggerOnMouseAndKeyboard<T>(emitter: EventEmitter<T>,
+                                       event: KeyboardEvent | MouseEvent, dataToEmit: T) {
     if (event instanceof KeyboardEvent && event) {
       const key: number = event.keyCode;
 

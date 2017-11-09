@@ -222,12 +222,26 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  /**
-   * Method `closeGallery` to close the modal gallery.
-   * @param action Enum of type `Action` that represents the source
-   *  action that closed the modal gallery. NORMAL by default.
-   */
-  onCloseGallery(action: Action = Action.NORMAL) {
+
+  onRefresh(event: boolean, action: Action = Action.NORMAL) {
+    console.log('on refresh', action);
+  }
+
+  onDelete(event: boolean, action: Action = Action.NORMAL) {
+    console.log('on delete', action);
+  }
+
+  onNavigate(extUrl: string, action: Action = Action.NORMAL) {
+    console.log('on navigate', action);
+    window.location.href = extUrl;
+  }
+
+  // /**
+  //  * Method `closeGallery` to close the modal gallery.
+  //  * @param action Enum of type `Action` that represents the source
+  //  *  action that closed the modal gallery. NORMAL by default.
+  //  */
+  onCloseGallery(event: boolean, action: Action = Action.NORMAL) {
     this.closeGallery(action);
   }
 
