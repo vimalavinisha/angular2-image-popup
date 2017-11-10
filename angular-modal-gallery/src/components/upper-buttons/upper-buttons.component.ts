@@ -53,7 +53,7 @@ export class UpperButtonsComponent implements OnInit {
 
   @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() delete: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() navigate: EventEmitter<string | void> = new EventEmitter<string | void>();
+  @Output() navigate: EventEmitter<string | null | undefined> = new EventEmitter<string | null | undefined>();
   @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -43,12 +43,12 @@ export class InternalLibImage extends Image {
 
   constructor(id: number | string,
               img: string,
-              thumb?: string | void,
-              description?: string | void,
-              extUrl?: string | void,
-              title?: string | void,
-              alt?: string | void,
-              ariaLabel?: string | void,
+              thumb?: string | null | undefined,
+              description?: string | null | undefined,
+              extUrl?: string | null | undefined,
+              title?: string | null | undefined,
+              alt?: string | null | undefined,
+              ariaLabel?: string | null | undefined,
               previouslyLoaded: boolean = false) {
     super(id, img, thumb, description, extUrl, title, alt, ariaLabel);
 
