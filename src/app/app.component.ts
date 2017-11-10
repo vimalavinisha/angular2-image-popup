@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   openModalWindowObservable = false;
   imagePointerObservable = 0;
 
-  imagesArray: Array<Image> = [
+  imagesArray: Image[] = [
     new Image(
       0,
       '../assets/images/gallery/img1.jpg',
@@ -82,10 +82,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   // observable of an array of images with a delay to simulate a network request
-  images: Observable<Array<Image>> = Observable.of(this.imagesArray).delay(300);
+  images: Observable<Image[]> = Observable.of(this.imagesArray).delay(300);
 
   // array with a single image inside (the first one)
-  singleImage: Observable<Array<Image>> = Observable.of([
+  singleImage: Observable<Image[]> = Observable.of([
     new Image(
       '../assets/images/gallery/img1.jpg',
       '../assets/images/gallery/thumbs/img1.jpg',
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // in an asynchronous way subscribing to an Observable with a delay.
   // This is not a real use-case, but it's a way to simulate a scenario where
   // you have to subscribe to an Observable to get data and to set public vars
-  imagesArraySubscribed: Array<Image>;
+  imagesArraySubscribed: Image[];
 
   customDescription: Description = {
     imageText: 'Look this image ',
