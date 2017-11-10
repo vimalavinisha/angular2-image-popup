@@ -22,10 +22,14 @@
  SOFTWARE.
  */
 
-import { Input, Output, EventEmitter, Component } from '@angular/core';
+import { Input, Output, EventEmitter, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
+import { ButtonConfig, ButtonsConfig, ButtonSize, ButtonsStrategy, ButtonType } from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
+
+export interface InternalButtonConfig extends ButtonConfig {
+  id?: number; // useful only for trackById, not needed by users
+}
 
 /**
  * Component with all upper right buttons.
@@ -35,16 +39,17 @@ import { Image } from '../../interfaces/image.class';
 @Component({
   selector: 'ks-upper-buttons',
   styleUrls: ['upper-buttons.scss'],
-  templateUrl: 'upper-buttons.html'
+  templateUrl: 'upper-buttons.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UpperButtonsComponent {
+export class UpperButtonsComponent implements OnInit {
 
   private static SPACE_KEY = 32;
   private static ENTER_KEY = 13;
   private static MOUSE_MAIN_BUTTON_CLICK = 0;
 
   @Input() image: Image;
-  @Input() configButtons: ButtonsConfig;
+  @Input() buttonsConfig: ButtonsConfig;
 
   @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() delete: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -52,28 +57,147 @@ export class UpperButtonsComponent {
   @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  refreshImage(event: KeyboardEvent | MouseEvent) {
-    this.triggerOnMouseAndKeyboard(this.refresh, event, true);
-  }
+  buttons: InternalButtonConfig[];
 
-  deleteImage(event: KeyboardEvent | MouseEvent) {
-    this.triggerOnMouseAndKeyboard(this.delete, event, true);
-  }
+  private defaultSize: ButtonSize = {height: 30, width: 30, unit: 'px'};
 
-  navigateToExtUrl(event: KeyboardEvent | MouseEvent) {
-    if (!this.image || !this.image.extUrl) {
-      return;
+  private simpleButtonsDefault: ButtonConfig[] = [{
+    className: 'close-image',
+    size: this.defaultSize,
+    type: ButtonType.CLOSE,
+    title: 'Close this modal image gallery',
+    ariaLabel: 'Close this modal image gallery'
+  }];
+
+  private advancedButtonsDefault: ButtonConfig[] = [
+    {
+      className: 'ext-url-image',
+      size: this.defaultSize,
+      type: ButtonType.EXTURL,
+      title: 'Navigate the current image',
+      ariaLabel: 'Navigate the current image'
+    },
+    {
+      className: 'download-image',
+      size: this.defaultSize,
+      type: ButtonType.DOWNLOAD,
+      title: 'Download the current image',
+      ariaLabel: 'Download the current image'
+    },
+    ...this.simpleButtonsDefault
+  ];
+
+  private fullButtonsDefault: ButtonConfig[] = [
+    {
+      className: 'refresh-image',
+      size: this.defaultSize,
+      type: ButtonType.REFRESH,
+      title: 'Refresh all images',
+      ariaLabel: 'Refresh all images'
+    },
+    {
+      className: 'delete-image',
+      size: this.defaultSize,
+      type: ButtonType.DELETE,
+      title: 'Delete the current image',
+      ariaLabel: 'Delete the current image'
+    },
+    ...this.advancedButtonsDefault
+  ];
+
+  ngOnInit() {
+    if (!this.buttonsConfig || !this.buttonsConfig.strategy) {
+      throw new Error(`ButtonsConfig's strategy is a mandatory field`);
     }
-    this.triggerOnMouseAndKeyboard(this.navigate, event, this.image.extUrl);
+
+    switch (this.buttonsConfig.strategy) {
+      case ButtonsStrategy.SIMPLE:
+        this.buttons = this.addButtonIds(this.simpleButtonsDefault);
+        break;
+      case ButtonsStrategy.ADVANCED:
+        this.buttons = this.addButtonIds(this.advancedButtonsDefault);
+        break;
+      case ButtonsStrategy.FULL:
+        this.buttons = this.addButtonIds(this.fullButtonsDefault);
+        break;
+      case ButtonsStrategy.CUSTOM:
+        this.buttons = this.addButtonIds(this.initCustomButtons());
+        break;
+      case ButtonsStrategy.DEFAULT:
+      default:
+        this.buttons = this.addButtonIds(this.simpleButtonsDefault);
+        break;
+    }
   }
 
-  downloadImage(event: KeyboardEvent | MouseEvent) {
-    this.triggerOnMouseAndKeyboard(this.download, event, true);
+  onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent) {
+    switch (button.type) {
+      case ButtonType.REFRESH:
+        this.triggerOnMouseAndKeyboard(this.refresh, event, true);
+        break;
+      case ButtonType.DELETE:
+        this.triggerOnMouseAndKeyboard(this.delete, event, true);
+        break;
+      case ButtonType.EXTURL:
+        if (!this.image || !this.image.extUrl) {
+          return;
+        }
+        this.triggerOnMouseAndKeyboard(this.navigate, event, this.image.extUrl);
+        break;
+      case ButtonType.DOWNLOAD:
+        this.triggerOnMouseAndKeyboard(this.download, event, true);
+        break;
+      case ButtonType.CLOSE:
+        this.triggerOnMouseAndKeyboard(this.close, event, true);
+        break;
+    }
   }
 
-  closeModalGallery(event: KeyboardEvent | MouseEvent) {
-    this.triggerOnMouseAndKeyboard(this.close, event, true);
+  trackById(index: number, item: InternalButtonConfig) {
+    return item.id;
   }
+
+  private addButtonIds(buttons: ButtonConfig[]) {
+    return buttons.map((val: ButtonConfig, i: number) => {
+      const btn: InternalButtonConfig = Object.assign({}, val);
+      btn.id = i;
+      return btn;
+    });
+  }
+
+  private initCustomButtons(): ButtonConfig[] {
+    // this.buttons = this.buttonsConfig.buttons.map((btn: ButtonConfig) => {
+    //   const button: ButtonConfig = Object.assign({}, btn);
+    //   button.size.height = 30;
+    //   button.size.width = 30;
+    //   button.size.unit = 'px';
+    //
+    //   switch (button.type) {
+    //     case ButtonType.REFRESH:
+    //       button.className = 'refresh-image';
+    //       break;
+    //     case ButtonType.DELETE:
+    //       button.className = 'delete-image';
+    //       break;
+    //     case ButtonType.EXTURL:
+    //       button.className = 'ext-url-image';
+    //       break;
+    //     case ButtonType.DOWNLOAD:
+    //       button.className = 'download-image';
+    //       break;
+    //     case ButtonType.CLOSE:
+    //       button.className = 'close-image';
+    //       break;
+    //     default:
+    //       button.className = 'unknown-image'; // TODO add this class to scss
+    //       break;
+    //   }
+    //
+    //   return button;
+    // });
+    return [];
+  }
+
 
   private triggerOnMouseAndKeyboard<T>(emitter: EventEmitter<T>,
                                        event: KeyboardEvent | MouseEvent, dataToEmit: T) {

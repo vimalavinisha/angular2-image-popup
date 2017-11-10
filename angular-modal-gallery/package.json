@@ -9,7 +9,7 @@
     "node": ">=8.0.0",
     "npm": ">=5.0.0"
   },
-  "homepage": "https://github.com/Ks89/angular-modal-gallery#readme",
+  "homepage": "https://ks89.github.io/angular-modal-gallery.github.io",
   "peerDependencies": {
     "@angular/common": ">=4.0.0",
     "@angular/core": ">=4.0.0",

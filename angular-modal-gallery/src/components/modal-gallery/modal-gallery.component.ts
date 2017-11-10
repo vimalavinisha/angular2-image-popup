@@ -27,7 +27,7 @@ import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, S
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
+import { ButtonsConfig, ButtonsStrategy } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { Description } from '../../interfaces/description.interface';
@@ -118,7 +118,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `ButtonsConfig` to show/hide buttons.
    * This is used only inside `ngOnInit()` to create `configButtons`
    */
-  @Input() buttonsConfig: ButtonsConfig;
+  @Input() buttonsConfig: ButtonsConfig = {strategy: ButtonsStrategy.DEFAULT};
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
@@ -179,7 +179,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `ButtonsConfig` used to configure buttons visibility. This is a temporary value
    * initialized by the real `buttonsConfig`'s input
    */
-  configButtons: ButtonsConfig;
+  // configButtons: ButtonsConfig;
 
   /**
    * When you pass an Observable of `Image`s as `modalImages`, you have to subscribe to that
@@ -195,11 +195,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   ngOnInit() {
     // build configButtons to use it inside upper-buttons
-    this.configButtons = {
-      download: this.buttonsConfig && this.buttonsConfig.download,
-      extUrl: this.buttonsConfig && this.buttonsConfig.extUrl,
-      close: this.buttonsConfig && this.buttonsConfig.close
-    };
+    // this.configButtons = {
+    //   download: this.buttonsConfig && this.buttonsConfig.download,
+    //   extUrl: this.buttonsConfig && this.buttonsConfig.extUrl,
+    //   close: this.buttonsConfig && this.buttonsConfig.close
+    // };
 
     // call initImages passing true as parameter, because I want to emit `hasData` event
     this.initImages(true);

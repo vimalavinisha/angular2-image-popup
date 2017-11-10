@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   addRandomImage() {
-    let newImage: Image = Object.assign({},
+    const newImage: Image = Object.assign({},
       this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
       {id: this.imagesArray.length - 1 + 1});
     this.imagesArray.push(newImage);
