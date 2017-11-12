@@ -11,9 +11,12 @@
 
   <a *ngFor="let btn of buttons; trackBy: trackById; let index = index"
      class="upper-button"
+     ksSize [sizeConfig]="{width: btn.size?.width, height: btn.size?.height,
+     unitWidth: btn.size?.unit, unitHeight: btn.size?.unit}"
+     [ngStyle]="{'font-size': btn.fontSize}"
      [attr.aria-label]="btn.ariaLabel"
      [tabindex]="0" role="button"
-     (click)="onEvent(btn, $event)" (keyup)="onEvent(btn, $event)">
+     (click)="onEvent(btn, index, $event)" (keyup)="onEvent(btn, index, $event)">
     <div class="inside {{btn.className}}" aria-hidden="true" title="{{btn.title}}"></div>
   </a>
 

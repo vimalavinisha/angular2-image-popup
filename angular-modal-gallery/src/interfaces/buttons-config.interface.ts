@@ -9,6 +9,7 @@ export interface ButtonsConfig {
 export interface ButtonConfig {
   className?: string;
   size?: ButtonSize;
+  fontSize?: string;
   type: ButtonType;
   title?: string;
   ariaLabel?: string;
@@ -20,7 +21,11 @@ export interface ButtonSize {
   unit: string;
 }
 
-
+export interface ButtonEvent {
+  index: number;
+  button: ButtonConfig;
+  payload: any;
+}
 /**
  * Enum `ButtonsStrategy`.
  */
@@ -44,6 +49,7 @@ export enum ButtonType {
   DELETE,
   EXTURL,
   DOWNLOAD,
-  CLOSE
+  CLOSE,
+  CUSTOM
 }
 

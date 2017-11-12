@@ -1,14 +1,10 @@
 .more {
   position: absolute;
-  /* margin: 0px; */
-  /* top: 0px; */
   margin-top: 2px;
-  /* word-break: break-word; */
   background: rgba(0, 0, 0, 0.7);
   height: 50px;
   width: 50px;
-  padding-left: 0px;
-  padding-top: 2px;
+  padding-left: 0;
   padding-top: 2px;
   text-align: center;
 }
@@ -28,4 +24,8 @@
 .float-left a:hover {
   color: red;
   cursor: pointer;
+}
+
+.white {
+  color: white;
 }

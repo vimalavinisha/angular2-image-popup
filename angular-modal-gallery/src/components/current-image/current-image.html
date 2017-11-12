@@ -22,8 +22,8 @@
          (click)="prevImage(clickAction)"/>
     <ng-template #firstImage>
       <div class="current-image-previous hidden"
-           [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-           [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit"></div>
+           [style.width]="slideConfig.sidePreviews?.width+slideConfig.sidePreviews?.unit"
+           [style.height]="slideConfig.sidePreviews?.height+slideConfig.sidePreviews?.unit"></div>
     </ng-template>
   </ng-container>
 
@@ -57,8 +57,8 @@
          (click)="nextImage(clickAction)"/>
     <ng-template #lastImage>
       <div class="current-image-next hidden"
-           [style.width]="slideConfig.sidePreviews.width+slideConfig.sidePreviews.unit"
-           [style.height]="slideConfig.sidePreviews.height+slideConfig.sidePreviews.unit">
+           [style.width]="slideConfig.sidePreviews?.width+slideConfig.sidePreviews?.unit"
+           [style.height]="slideConfig.sidePreviews?.height+slideConfig.sidePreviews?.unit">
       </div>
     </ng-template>
   </ng-container>

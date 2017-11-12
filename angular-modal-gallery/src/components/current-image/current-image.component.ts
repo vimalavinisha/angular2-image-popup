@@ -28,7 +28,6 @@ import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
-import { KeyboardService } from '../../services/keyboard.service';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig } from '../../interfaces/loading-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
@@ -60,12 +59,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   @Input() images: InternalLibImage[];
 
   @Input() isOpen: boolean;
-
-  /**
-   * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
-   * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
-   */
-  @Input() downloadable = false;
 
   /**
    * Description object with the configuration to show image descriptions.
@@ -117,17 +110,11 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
 
   private description: Description;
 
-  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
-  private static isIEorEdge(): any {
-    // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
-    return window.Blob && window.navigator.msSaveOrOpenBlob;
-  }
-
   /**
-   * Constructor with the injection of ´KeyboardService´ that initialize some description fields
+   * Constructor that initialize some description fields
    * based on default values.
    */
-  constructor(private keyboardService: KeyboardService) {
+  constructor() {
     // copy input Description to a local variable
     this.description = Object.assign({}, this.descriptionConfig);
 
@@ -146,16 +133,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       this.description.numberSeparator = this.description.numberSeparator || '/';
       this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
     }
-
-    this.keyboardService.add((event: KeyboardEvent, combo: string) => {
-      if (event.preventDefault) {
-        event.preventDefault();
-      } else {
-        // internet explorer
-        event.returnValue = false;
-      }
-      this.downloadImage();
-    });
   }
 
   ngOnChanges() {
@@ -182,7 +159,6 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
     switch (e.keyCode) {
       case esc:
         this.close.emit(new ImageModalEvent(Action.KEYBOARD, true));
-        this.keyboardService.reset();
         break;
       case right:
         this.nextImage(Action.KEYBOARD);
@@ -356,59 +332,10 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * Method `downloadImage` to download the current visible image, only if `downloadable` is true.
-   */
-  downloadImage() {
-    if (!this.downloadable) {
-      return;
-    }
-    // If IE11 or Microsoft Edge use msSaveBlob(...)
-    if (CurrentImageComponent.isIEorEdge()) {
-      // I cannot use fetch API because IE11 doesn't support it,
-      // so I have to switch to XMLHttpRequest
-      this.downloadImageOnlyIEorEdge();
-    } else {
-      // for all other browsers
-      this.downloadImageAllBrowsers();
-    }
-  }
-
-  /**
-   * Method `getFileName` to get the filename from an input path.
-   * This is used to get the image's name from its path.
-   * @param path String that represents the path of the image.
-   */
-  private getFileName(path: string): string {
-    return path.replace(/^.*[\\\/]/, '');
-  }
-
-  private downloadImageAllBrowsers() {
-    const link = document.createElement('a');
-    link.href = this.currentImage.img;
-    link.setAttribute('download', this.getFileName(this.currentImage.img));
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  private downloadImageOnlyIEorEdge() {
-    const req = new XMLHttpRequest();
-    req.open('GET', this.currentImage.img, true);
-    req.responseType = 'arraybuffer';
-    req.onload = event => {
-      const blob = new Blob([req.response], {type: 'image/png'});
-      window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
-    };
-    req.send();
-  }
-
-  /**
-   * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
-   * all subscriptions and it will reset keyboard's service.
+   * Method `ngOnDestroy` to cleanup resources.
    */
   ngOnDestroy() {
     console.log('CALLED ON DESTROY OF CURRENT_IMAGE_COMPONENT');
-    this.keyboardService.reset();
   }
 
   /**

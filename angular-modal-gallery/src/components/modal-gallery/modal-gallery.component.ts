@@ -27,15 +27,16 @@ import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, S
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ButtonsConfig, ButtonsStrategy } from '../../interfaces/buttons-config.interface';
+import { ButtonEvent, ButtonsConfig, ButtonsStrategy } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
-import { Description } from '../../interfaces/description.interface';
+import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { KeyboardService } from "../../services/keyboard.service";
 
 
 export class InternalLibImage extends Image {
@@ -58,27 +59,27 @@ export class InternalLibImage extends Image {
 
 const defaultAccessibilityConfig: AccessibilityConfig = {
   backgroundAriaLabel: 'Modal gallery full screen background',
-  backgroundTitle: 'Modal gallery full screen background',
+  backgroundTitle: '',
 
   modalGalleryContentAriaLabel: 'Modal gallery content',
-  modalGalleryContentTitle: 'Modal gallery content',
+  modalGalleryContentTitle: '',
 
   loadingSpinnerAriaLabel: 'The current image is loading. Please be patient.',
   loadingSpinnerTitle: 'The current image is loading. Please be patient.',
 
   mainContainerAriaLabel: 'Current image and navigation',
-  mainContainerTitle: 'Current image and navigation',
+  mainContainerTitle: '',
   mainPrevImageAriaLabel: 'Previous image',
   mainPrevImageTitle: 'Previous image',
   mainNextImageAriaLabel: 'Next image',
   mainNextImageTitle: 'Next image',
 
   dotsContainerAriaLabel: 'Image navigation dots',
-  dotsContainerTitle: 'Image navigation dots',
+  dotsContainerTitle: '',
   dotAriaLabel: 'Navigate to image number',
 
   previewsContainerAriaLabel: 'Image previews',
-  previewsContainerTitle: 'Image previews',
+  previewsContainerTitle: '',
   previewScrollPrevAriaLabel: 'Scroll previous previews',
   previewScrollPrevTitle: 'Scroll previous previews',
   previewScrollNextAriaLabel: 'Scroll next previews',
@@ -188,6 +189,28 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   private subscription: Subscription;
 
+  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
+  private static isIEorEdge(): any {
+    // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
+    return window.Blob && window.navigator.msSaveOrOpenBlob;
+  }
+
+  /**
+   * Constructor with the injection of ´KeyboardService´
+   */
+  constructor(private keyboardService: KeyboardService) {
+    this.keyboardService.add((event: KeyboardEvent, combo: string) => {
+      console.log('keyboard service');
+      if (event.preventDefault) {
+        event.preventDefault();
+      } else {
+        // internet explorer
+        event.returnValue = false;
+      }
+      this.downloadImage();
+    });
+  }
+
   /**
    * Method ´ngOnInit´ to build `configButtons` and to call `initImages()`.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
@@ -222,18 +245,26 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-
-  onRefresh(event: boolean, action: Action = Action.NORMAL) {
-    console.log('on refresh', action);
+  onCustomOutput(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on customOutput', event);
   }
 
-  onDelete(event: boolean, action: Action = Action.NORMAL) {
-    console.log('on delete', action);
+  onRefresh(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on refresh', event);
   }
 
-  onNavigate(extUrl: string, action: Action = Action.NORMAL) {
-    console.log('on navigate', action);
-    window.location.href = extUrl;
+  onDelete(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on delete', event);
+  }
+
+  onNavigate(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on navigate', event);
+    window.location.href = <string>event.payload;
+  }
+
+  onDownload(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on download', event);
+    this.downloadImage();
   }
 
   // /**
@@ -241,13 +272,15 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   //  * @param action Enum of type `Action` that represents the source
   //  *  action that closed the modal gallery. NORMAL by default.
   //  */
-  onCloseGallery(event: boolean, action: Action = Action.NORMAL) {
+  onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on close', event);
     this.closeGallery(action);
   }
 
   closeGallery(action: Action = Action.NORMAL) {
     this.close.emit(new ImageModalEvent(action, true));
     this.opened = false;
+    this.keyboardService.reset();
   }
 
   /**
@@ -309,11 +342,44 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.currentImage = this.images.find((img: InternalLibImage) => img.id === preview.id);
   }
 
-  // FIXME experimental
-  onDownload(event: Event) {
-    console.log('onDownload triggered');
+  /**
+   * Method `downloadImage` to download the current visible image, only if `downloadable` is true.
+   */
+  downloadImage() {
+    console.log('downloadImage called with downloadImage: ' + this.downloadable);
+    if (!this.downloadable) {
+      return;
+    }
+    // If IE11 or Microsoft Edge use msSaveBlob(...)
+    if (ModalGalleryComponent.isIEorEdge()) {
+      // I cannot use fetch API because IE11 doesn't support it,
+      // so I have to switch to XMLHttpRequest
+      this.downloadImageOnlyIEorEdge();
+    } else {
+      // for all other browsers
+      this.downloadImageAllBrowsers();
+    }
   }
 
+  private downloadImageAllBrowsers() {
+    const link = document.createElement('a');
+    link.href = this.currentImage.img;
+    link.setAttribute('download', this.getFileName(this.currentImage.img));
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  private downloadImageOnlyIEorEdge() {
+    const req = new XMLHttpRequest();
+    req.open('GET', this.currentImage.img, true);
+    req.responseType = 'arraybuffer';
+    req.onload = event => {
+      const blob = new Blob([req.response], {type: 'image/png'});
+      window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
+    };
+    req.send();
+  }
 
   /**
    * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
@@ -323,6 +389,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    this.keyboardService.reset();
+  }
+
+  /**
+   * Method `getFileName` to get the filename from an input path.
+   * This is used to get the image's name from its path.
+   * @param path String that represents the path of the image.
+   */
+  private getFileName(path: string): string {
+    return path.replace(/^.*[\\\/]/, '');
   }
 
   /**

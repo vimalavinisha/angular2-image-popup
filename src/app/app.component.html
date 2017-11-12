@@ -86,8 +86,9 @@
   </ul>
   <br>
   <ks-modal-gallery [modalImages]="imagesArray"
-                 [buttonsConfig]="{strategy: 5}"
+                 [buttonsConfig]="customButtonsConfig"
                  [enableCloseOutside]="true"
+                 [downloadable]="true"
                  [description]="customFullDescription"
                  (hasData)="onImageLoaded($event)"
                  (close)="onCloseImageModal($event)"

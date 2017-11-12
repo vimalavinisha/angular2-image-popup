@@ -18,7 +18,8 @@
                         (delete)="onDelete($event)"
                         (navigate)="onNavigate($event)"
                         (download)="onDownload($event)"
-                        (close)="onCloseGallery($event)"></ks-upper-buttons>
+                        (close)="onCloseGallery($event)"
+                        (customOutput)="onCustomOutput($event)"></ks-upper-buttons>
 
       <ks-current-image [images]="images"
                         [currentImage]="currentImage"
@@ -26,7 +27,6 @@
                         [slideConfig]="slideConfig"
                         [descriptionConfig]="description"
                         [keyboardConfig]="keyboardConfig"
-                        [downloadable]="downloadable"
                         [loadingConfig]="loadingConfig"
                         [accessibilityConfig]="accessibilityConfig"
                         (loadImage)="onImageLoad($event)"

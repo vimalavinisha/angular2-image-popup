@@ -29,6 +29,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from '../../angular-modal-gallery/src/interfaces/buttons-config.interface';
 
 @Component({
   selector: 'app-root',
@@ -113,6 +114,53 @@ export class AppComponent implements OnInit, OnDestroy {
     // imageText: '',
     // numberSeparator: '',
     // beforeTextDescription: '',
+  };
+
+  // customButtonsSize: ButtonSize = {
+  //   width: 10,
+  //   height: 10,
+  //   unit: 'px'
+  // };
+
+  customButtonsConfig: ButtonsConfig = {
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'fa fa-plus white',
+        type: ButtonType.CUSTOM,
+        ariaLabel: 'custom plus aria label',
+        title: 'custom plus title',
+        fontSize: '20px'
+      },
+      {
+        className: 'fa fa-close white',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'custom close title',
+        fontSize: '20px'
+      },
+      {
+        className: 'fa fa-refresh white',
+        type: ButtonType.REFRESH,
+        ariaLabel: 'custom refresh aria label',
+        title: 'custom refresh title',
+        fontSize: '20px'
+      },
+      {
+        className: 'fa fa-download white',
+        type: ButtonType.DOWNLOAD,
+        ariaLabel: 'custom download aria label',
+        title: 'custom download title',
+        fontSize: '20px'
+      },
+      {
+        className: 'fa fa-external-link white',
+        type: ButtonType.EXTURL,
+        ariaLabel: 'custom exturl aria label',
+        title: 'custom exturl title',
+        fontSize: '20px'
+      }
+    ]
   };
 
   private subscription: Subscription;

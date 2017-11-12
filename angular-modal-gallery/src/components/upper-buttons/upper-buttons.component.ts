@@ -24,7 +24,10 @@
 
 import { Input, Output, EventEmitter, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import { ButtonConfig, ButtonsConfig, ButtonSize, ButtonsStrategy, ButtonType } from '../../interfaces/buttons-config.interface';
+import {
+  ButtonConfig, ButtonEvent, ButtonsConfig, ButtonSize,
+  ButtonsStrategy, ButtonType
+} from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
 
 export interface InternalButtonConfig extends ButtonConfig {
@@ -51,11 +54,12 @@ export class UpperButtonsComponent implements OnInit {
   @Input() image: Image;
   @Input() buttonsConfig: ButtonsConfig;
 
-  @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() delete: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() navigate: EventEmitter<string | null | undefined> = new EventEmitter<string | null | undefined>();
-  @Output() download: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() refresh: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() delete: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() navigate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() download: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() customOutput: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   buttons: InternalButtonConfig[];
 
@@ -130,25 +134,30 @@ export class UpperButtonsComponent implements OnInit {
     }
   }
 
-  onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent) {
+  onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent) {
+    console.log('onEvent index: ' + index + ', button:', button);
+    console.log('onEvent event:', event);
     switch (button.type) {
       case ButtonType.REFRESH:
-        this.triggerOnMouseAndKeyboard(this.refresh, event, true);
+        this.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
         break;
       case ButtonType.DELETE:
-        this.triggerOnMouseAndKeyboard(this.delete, event, true);
+        this.triggerOnMouseAndKeyboard(this.delete, event, button, index, true);
         break;
       case ButtonType.EXTURL:
         if (!this.image || !this.image.extUrl) {
           return;
         }
-        this.triggerOnMouseAndKeyboard(this.navigate, event, this.image.extUrl);
+        this.triggerOnMouseAndKeyboard(this.navigate, event, button, index, this.image.extUrl);
         break;
       case ButtonType.DOWNLOAD:
-        this.triggerOnMouseAndKeyboard(this.download, event, true);
+        this.triggerOnMouseAndKeyboard(this.download, event, button, index, true);
         break;
       case ButtonType.CLOSE:
-        this.triggerOnMouseAndKeyboard(this.close, event, true);
+        this.triggerOnMouseAndKeyboard(this.close, event, button, index, true);
+        break;
+      case ButtonType.CUSTOM:
+        this.triggerOnMouseAndKeyboard(this.customOutput, event, button, index, true);
         break;
     }
   }
@@ -166,41 +175,59 @@ export class UpperButtonsComponent implements OnInit {
   }
 
   private initCustomButtons(): ButtonConfig[] {
-    // this.buttons = this.buttonsConfig.buttons.map((btn: ButtonConfig) => {
-    //   const button: ButtonConfig = Object.assign({}, btn);
-    //   button.size.height = 30;
-    //   button.size.width = 30;
-    //   button.size.unit = 'px';
-    //
-    //   switch (button.type) {
-    //     case ButtonType.REFRESH:
-    //       button.className = 'refresh-image';
-    //       break;
-    //     case ButtonType.DELETE:
-    //       button.className = 'delete-image';
-    //       break;
-    //     case ButtonType.EXTURL:
-    //       button.className = 'ext-url-image';
-    //       break;
-    //     case ButtonType.DOWNLOAD:
-    //       button.className = 'download-image';
-    //       break;
-    //     case ButtonType.CLOSE:
-    //       button.className = 'close-image';
-    //       break;
-    //     default:
-    //       button.className = 'unknown-image'; // TODO add this class to scss
-    //       break;
-    //   }
-    //
-    //   return button;
-    // });
-    return [];
+    const buttonsConfig: ButtonsConfig = Object.assign({}, this.buttonsConfig);
+    buttonsConfig.buttons = buttonsConfig.buttons || [];
+
+    console.log('init custom: ', buttonsConfig);
+
+    this.buttons = buttonsConfig.buttons.map((btn: ButtonConfig) => {
+      const button: ButtonConfig = Object.assign({}, btn);
+      console.log('mapping button: ', button);
+
+      // switch (button.type) {
+      //   case ButtonType.REFRESH:
+      //     // button.className = 'refresh-image';
+      //     break;
+      //   case ButtonType.DELETE:
+      //     // button.className = 'delete-image';
+      //     break;
+      //   case ButtonType.EXTURL:
+      //     // button.className = 'ext-url-image';
+      //     break;
+      //   case ButtonType.DOWNLOAD:
+      //     // button.className = 'download-image';
+      //     break;
+      //   case ButtonType.CLOSE:
+      //     // button.className = 'close-image';
+      //     break;
+      //   case ButtonType.CUSTOM:
+      //     // button.className = 'close-image';
+      //     break;
+      //   default:
+      //     button.className = 'unknown-image'; // TODO add this class to scss
+      //     break;
+      // }
+      console.log('mapped button: ', button);
+      return button;
+    });
+    console.log('returning this.buttons: ', this.buttons);
+    return this.buttons;
   }
 
 
-  private triggerOnMouseAndKeyboard<T>(emitter: EventEmitter<T>,
-                                       event: KeyboardEvent | MouseEvent, dataToEmit: T) {
+  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
+                                    event: KeyboardEvent | MouseEvent,
+                                    btnSource: ButtonConfig,
+                                    btnIndex: number,
+                                    data: any) {
+    const dataToEmit: ButtonEvent = {
+      index: btnIndex,
+      button: btnSource,
+      payload: data
+    };
+
+    console.log('triggerOnMouseAndKeyboard dataToEmit', dataToEmit);
+
     if (event instanceof KeyboardEvent && event) {
       const key: number = event.keyCode;
 
