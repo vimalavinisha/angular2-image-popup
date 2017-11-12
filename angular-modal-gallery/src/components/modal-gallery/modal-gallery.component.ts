@@ -198,18 +198,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Constructor with the injection of ´KeyboardService´
    */
-  constructor(private keyboardService: KeyboardService) {
-    this.keyboardService.add((event: KeyboardEvent, combo: string) => {
-      console.log('keyboard service');
-      if (event.preventDefault) {
-        event.preventDefault();
-      } else {
-        // internet explorer
-        event.returnValue = false;
-      }
-      this.downloadImage();
-    });
-  }
+  constructor(private keyboardService: KeyboardService) {}
 
   /**
    * Method ´ngOnInit´ to build `configButtons` and to call `initImages()`.
@@ -300,6 +289,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index Number that represents the index of the image to show.
    */
   showModalGallery(index: number) {
+    this.keyboardService.add((event: KeyboardEvent, combo: string) => {
+      if (event.preventDefault) {
+        event.preventDefault();
+      } else {
+        // internet explorer
+        event.returnValue = false;
+      }
+      this.downloadImage();
+    });
+
     this.opened = true;
     this.currentImage = this.images[index];
 
@@ -356,12 +355,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       // so I have to switch to XMLHttpRequest
       this.downloadImageOnlyIEorEdge();
     } else {
+      console.log('downloadImageAllBrowsers');
       // for all other browsers
       this.downloadImageAllBrowsers();
     }
   }
 
   private downloadImageAllBrowsers() {
+    console.log('downloading...');
     const link = document.createElement('a');
     link.href = this.currentImage.img;
     link.setAttribute('download', this.getFileName(this.currentImage.img));
