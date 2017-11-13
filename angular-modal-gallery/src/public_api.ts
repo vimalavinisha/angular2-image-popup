@@ -30,4 +30,4 @@ export { Image, ImageModalEvent } from './interfaces/image.class';
 export { Description } from './interfaces/description.interface';
 export { KeyboardConfig } from './interfaces/keyboard-config.interface';
 
-export { ButtonsConfig } from './interfaces/buttons-config.interface';
+export { ButtonsConfig, ButtonsStrategy, ButtonType } from './interfaces/buttons-config.interface';

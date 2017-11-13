@@ -23,10 +23,10 @@
  SOFTWARE.
  */
 
-import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, SimpleChanges, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-
 import { ButtonEvent, ButtonsConfig, ButtonsStrategy } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
@@ -36,7 +36,7 @@ import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.inte
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
-import { KeyboardService } from "../../services/keyboard.service";
+import { KeyboardService } from '../../services/keyboard.service';
 
 
 export class InternalLibImage extends Image {
@@ -189,16 +189,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   private subscription: Subscription;
 
-  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
-  private static isIEorEdge(): any {
-    // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
-    return window.Blob && window.navigator.msSaveOrOpenBlob;
-  }
-
   /**
    * Constructor with the injection of ´KeyboardService´
    */
-  constructor(private keyboardService: KeyboardService) {}
+  constructor(private keyboardService: KeyboardService, @Inject(PLATFORM_ID) private platformId: Object) {
+  }
 
   /**
    * Method ´ngOnInit´ to build `configButtons` and to call `initImages()`.
@@ -248,7 +243,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   onNavigate(event: ButtonEvent, action: Action = Action.NORMAL) {
     console.log('on navigate', event);
-    window.location.href = <string>event.payload;
+    if (isPlatformBrowser(this.platformId)) {
+      // Client only code.
+      window.location.href = <string>event.payload;
+    }
   }
 
   onDownload(event: ButtonEvent, action: Action = Action.NORMAL) {
@@ -350,7 +348,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
     // If IE11 or Microsoft Edge use msSaveBlob(...)
-    if (ModalGalleryComponent.isIEorEdge()) {
+    if (this.isIEorEdge()) {
       // I cannot use fetch API because IE11 doesn't support it,
       // so I have to switch to XMLHttpRequest
       this.downloadImageOnlyIEorEdge();
@@ -372,14 +370,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private downloadImageOnlyIEorEdge() {
-    const req = new XMLHttpRequest();
-    req.open('GET', this.currentImage.img, true);
-    req.responseType = 'arraybuffer';
-    req.onload = event => {
-      const blob = new Blob([req.response], {type: 'image/png'});
-      window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
-    };
-    req.send();
+    if (isPlatformBrowser(this.platformId)) {
+      const req = new XMLHttpRequest();
+      req.open('GET', this.currentImage.img, true);
+      req.responseType = 'arraybuffer';
+      req.onload = event => {
+        const blob = new Blob([req.response], {type: 'image/png'});
+        window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
+      };
+      req.send();
+    }
   }
 
   /**
@@ -462,4 +462,15 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
+  private isIEorEdge(): any {
+    if (isPlatformBrowser(this.platformId)) {
+      // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
+      return window.Blob && window.navigator.msSaveOrOpenBlob;
+    }
+    if (isPlatformServer(this.platformId)) {
+      // server only
+      return true;
+    }
+  }
 }
