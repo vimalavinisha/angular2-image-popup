@@ -69,6 +69,8 @@ examples/systemjs/app/*.map
 examples/webpack/docs/
 examples/webpack/dll/
 
+examples/universal-starter/dist/
+
 bundle
 
 docs
