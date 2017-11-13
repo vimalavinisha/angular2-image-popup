@@ -5,7 +5,7 @@
   <a class="nav-left"
      [attr.aria-label]="accessibilityConfig.previewScrollPrevAriaLabel"
      [tabindex]="previewConfig.arrows && start > 0 ? 0 : -1" role="button"
-     (click)="previous()">
+     (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
     <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.previewScrollPrevTitle"></div>
@@ -22,14 +22,14 @@
          [title]="preview.title"
          alt="{{preview.alt}}"
          [tabindex]="0" role="img"
-         (click)="onClick(preview)"/>
+         (click)="onImageEvent(preview, $event)" (keyup)="onImageEvent(preview, $event)"/>
   </ng-container>
 
 
   <a class="nav-right"
      [attr.aria-label]="accessibilityConfig.previewScrollNextAriaLabel"
      [tabindex]="previewConfig.arrows && end < images.length ? 0 : -1" role="button"
-     (click)="next()">
+     (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
     <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.previewScrollNextTitle"></div>

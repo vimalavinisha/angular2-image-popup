@@ -31,6 +31,7 @@ import { Image } from '../../interfaces/image.class';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { ButtonConfig, ButtonEvent, ButtonType } from "../../interfaces/buttons-config.interface";
 
 /**
  * Component with image previews
@@ -42,6 +43,10 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewsComponent implements OnInit, OnChanges {
+
+  private static SPACE_KEY = 32;
+  private static ENTER_KEY = 13;
+  private static MOUSE_MAIN_BUTTON_CLICK = 0;
 
   @Input() currentImage: InternalLibImage;
 
@@ -115,30 +120,65 @@ export class PreviewsComponent implements OnInit, OnChanges {
     return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
-  onClick(preview: InternalLibImage) {
+  onImageEvent(preview: InternalLibImage) {
     if (!this.previewConfig || !this.previewConfig.clickable) {
       return;
     }
-    this.clickPreview.emit(preview);
-  }
 
-  previous() {
-    // check if prevImage should be blocked
-    if (this.isPreventSliding(0)) {
-      return;
+    if (event instanceof KeyboardEvent && event) {
+      const key: number = event.keyCode;
+
+      if (key === PreviewsComponent.SPACE_KEY || key === PreviewsComponent.ENTER_KEY) {
+        this.clickPreview.emit(preview);
+        return;
+      }
     }
 
-    if (this.start === 0) {
-      return;
+    if (event instanceof MouseEvent && event) {
+      const mouseBtn: number = event.button;
+
+      if (mouseBtn === PreviewsComponent.MOUSE_MAIN_BUTTON_CLICK) {
+        this.clickPreview.emit(preview);
+      }
     }
-
-    this.start = Math.max(this.start - 1, 0);
-    this.end = Math.min(this.end - 1, this.images.length);
-
-    this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
-  next() {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
+    console.log('onEvent direction: ' + direction);
+    console.log('onEvent event:', event);
+
+    if (event instanceof KeyboardEvent && event) {
+      const key: number = event.keyCode;
+
+      if (key === PreviewsComponent.SPACE_KEY || key === PreviewsComponent.ENTER_KEY) {
+        if (direction === 'right') {
+          this.next();
+        } else {
+          this.previous();
+        }
+        return;
+      }
+    }
+
+    if (event instanceof MouseEvent && event) {
+      const mouseBtn: number = event.button;
+
+      if (mouseBtn === PreviewsComponent.MOUSE_MAIN_BUTTON_CLICK) {
+        if (direction === 'right') {
+          this.next();
+        } else {
+          this.previous();
+        }
+      }
+    }
+
+  }
+
+  trackById(index: number, item: Image) {
+    return item.id;
+  }
+
+  private next() {
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
@@ -154,8 +194,20 @@ export class PreviewsComponent implements OnInit, OnChanges {
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
-  trackById(index: number, item: Image) {
-    return item.id;
+  private previous() {
+    // check if prevImage should be blocked
+    if (this.isPreventSliding(0)) {
+      return;
+    }
+
+    if (this.start === 0) {
+      return;
+    }
+
+    this.start = Math.max(this.start - 1, 0);
+    this.end = Math.min(this.end - 1, this.images.length);
+
+    this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
   private isPreventSliding(boundaryIndex: number) {
