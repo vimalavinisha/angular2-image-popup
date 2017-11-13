@@ -49,6 +49,10 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 })
 export class CurrentImageComponent implements OnChanges, OnDestroy {
 
+  private static SPACE_KEY = 32;
+  private static ENTER_KEY = 13;
+  private static MOUSE_MAIN_BUTTON_CLICK = 0;
+
   @Input() currentImage: InternalLibImage;
 
   @Input() slideConfig: SlideConfig;
@@ -222,6 +226,55 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
 
   getRightPreviewImage(): Image {
     return this.images[Math.min(this.getIndex(this.currentImage) + 1, this.images.length - 1)];
+  }
+
+  onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+    if (event instanceof KeyboardEvent && event) {
+      const key: number = event.keyCode;
+
+      if (key === CurrentImageComponent.SPACE_KEY || key === CurrentImageComponent.ENTER_KEY) {
+        this.nextImage(action);
+        return;
+      }
+    }
+
+    if (event instanceof MouseEvent && event) {
+      const mouseBtn: number = event.button;
+
+      if (mouseBtn === CurrentImageComponent.MOUSE_MAIN_BUTTON_CLICK) {
+        this.nextImage(action);
+      }
+    }
+  }
+
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+    console.log('onEvent direction: ' + direction);
+    console.log('onEvent event:', event);
+
+    if (event instanceof KeyboardEvent && event) {
+      const key: number = event.keyCode;
+
+      if (key === CurrentImageComponent.SPACE_KEY || key === CurrentImageComponent.ENTER_KEY) {
+        if (direction === 'right') {
+          this.nextImage(action);
+        } else {
+          this.prevImage(action);
+        }
+        return;
+      }
+    }
+
+    if (event instanceof MouseEvent && event) {
+      const mouseBtn: number = event.button;
+
+      if (mouseBtn === CurrentImageComponent.MOUSE_MAIN_BUTTON_CLICK) {
+        if (direction === 'right') {
+          this.nextImage(action);
+        } else {
+          this.prevImage(action);
+        }
+      }
+    }
   }
 
   /**

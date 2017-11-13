@@ -2,7 +2,7 @@
   <a class="nav-left" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
      [tabindex]="isFirstImage ? -1 : 0" role="button"
-     (click)="prevImage()">
+     (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
     <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.mainPrevImageTitle"></div>
@@ -19,7 +19,7 @@
          [title]="leftPreview.title ? leftPreview.title : getDescriptionToDisplay(leftPreview)"
          alt="{{leftPreview.alt ? leftPreview.alt : getAltDescriptionByImage(leftPreview)}}"
          [tabindex]="0" role="img"
-         (click)="prevImage(clickAction)"/>
+         (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, clickAction)"/>
     <ng-template #firstImage>
       <div class="current-image-previous hidden"
            [style.width]="slideConfig.sidePreviews?.width+slideConfig.sidePreviews?.unit"
@@ -36,7 +36,7 @@
          alt="{{currentImage.alt ? currentImage.alt : getAltDescriptionByImage()}}"
          [tabindex]="0" role="img"
          (load)="onImageLoad($event)"
-         (click)="nextImage(clickAction)"
+         (click)="onImageEvent($event, clickAction)" (keyup)="onImageEvent($event, clickAction)"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
     <figcaption class="inside description">{{getDescriptionToDisplay()}}</figcaption>
@@ -54,7 +54,7 @@
          [title]="rightPreview.title ? rightPreview.title : getDescriptionToDisplay(rightPreview)"
          alt="{{rightPreview.alt ? rightPreview.alt : getAltDescriptionByImage(rightPreview)}}"
          [tabindex]="0" role="img"
-         (click)="nextImage(clickAction)"/>
+         (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, clickAction)"/>
     <ng-template #lastImage>
       <div class="current-image-next hidden"
            [style.width]="slideConfig.sidePreviews?.width+slideConfig.sidePreviews?.unit"
@@ -71,7 +71,7 @@
   <a class="nav-right" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
      [tabindex]="isLastImage ? -1 : 0" role="button"
-     (click)="nextImage()">
+     (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
     <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.mainNextImageTitle"></div>

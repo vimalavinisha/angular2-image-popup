@@ -38,6 +38,10 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 })
 export class DotsComponent {
 
+  private static SPACE_KEY = 32;
+  private static ENTER_KEY = 13;
+  private static MOUSE_MAIN_BUTTON_CLICK = 0;
+
   @Input() currentImage: InternalLibImage;
 
   /**
@@ -64,8 +68,26 @@ export class DotsComponent {
     return this.images.findIndex((val: Image) => val.id === image.id);
   }
 
-  onClick(index: number) {
-    this.clickDot.emit(index);
+  onDotEvent(index: number, event: KeyboardEvent | MouseEvent) {
+    console.log('onEvent index: ' + index);
+    console.log('onEvent event:', event);
+
+    if (event instanceof KeyboardEvent && event) {
+      const key: number = event.keyCode;
+
+      if (key === DotsComponent.SPACE_KEY || key === DotsComponent.ENTER_KEY) {
+        this.clickDot.emit(index);
+        return;
+      }
+    }
+
+    if (event instanceof MouseEvent && event) {
+      const mouseBtn: number = event.button;
+
+      if (mouseBtn === DotsComponent.MOUSE_MAIN_BUTTON_CLICK) {
+        this.clickDot.emit(index);
+      }
+    }
   }
 
   trackById(index: number, item: Image) {

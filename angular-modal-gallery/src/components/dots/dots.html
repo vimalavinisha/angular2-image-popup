@@ -4,5 +4,5 @@
        [ngClass]="{'active': isActive(index)}"
        [attr.aria-label]="accessibilityConfig.dotAriaLabel + ' ' + (index + 1)"
        [tabindex]="0" role="navigation"
-       (click)="onClick(index)"></div>
+       (click)="onDotEvent(index, $event)" (keyup)="onDotEvent(index, $event)"></div>
 </nav>
