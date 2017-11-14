@@ -2,6 +2,7 @@
  * Interface `ButtonsConfig` to show/hide buttons.
  */
 export interface ButtonsConfig {
+  visible: boolean;
   strategy: ButtonsStrategy;
   buttons?: ButtonConfig[];
 }

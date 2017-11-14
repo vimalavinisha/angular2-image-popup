@@ -1,44 +1,15 @@
-<!--<a class="external-url-image" href="{{image?.extUrl}}"-->
-<!--exturl-button [configButtons]="configButtons" [imgExtUrl]="image?.extUrl"><i class="fa fa-external-link"></i></a>-->
-<!--<a class="download-image"-->
-<!--download-button [configButtons]="configButtons" [imgExtUrl]="image?.extUrl"-->
-<!--(click)="downloadImage()"><i class="fa fa-download"></i></a>-->
-<!--<a class="close-popup"-->
-<!--close-button [configButtons]="configButtons"-->
-<!--(click)="closeGallery()"><i class="fa fa-close"></i></a>-->
-
 <header class="buttons-container">
 
-  <a *ngFor="let btn of buttons; trackBy: trackById; let index = index"
-     class="upper-button"
-     ksSize [sizeConfig]="{width: btn.size?.width, height: btn.size?.height,
+  <ng-container *ngIf="!buttonsConfig || buttonsConfig?.visible">
+    <a *ngFor="let btn of buttons; trackBy: trackById; let index = index"
+       class="upper-button"
+       ksSize [sizeConfig]="{width: btn.size?.width, height: btn.size?.height,
      unitWidth: btn.size?.unit, unitHeight: btn.size?.unit}"
-     [ngStyle]="{'font-size': btn.fontSize}"
-     [attr.aria-label]="btn.ariaLabel"
-     [tabindex]="0" role="button"
-     (click)="onEvent(btn, index, $event)" (keyup)="onEvent(btn, index, $event)">
-    <div class="inside {{btn.className}}" aria-hidden="true" title="{{btn.title}}"></div>
-  </a>
-
-  <!--<a class="upper-button" aria-label="Refresh all images" (click)="refreshImage($event)" (keyup)="refreshImage($event)" [tabindex]="0" role="button">-->
-    <!--<div class="inside refresh-image" aria-hidden="true" title="Refresh all images"></div>-->
-    <!--&lt;!&ndash;<i class="fa fa-external-link fa-fw" aria-hidden="true" title="Navigate to another url"></i>&ndash;&gt;-->
-  <!--</a>-->
-
-  <!--<a class="upper-button" aria-label="Delete the current image" (click)="deleteImage($event)" (keyup)="deleteImage($event)" [tabindex]="0" role="button">-->
-    <!--<div class="inside delete-image" aria-hidden="true" title="Delete the current image"></div>-->
-    <!--&lt;!&ndash;<i class="fa fa-trash fa-fw" aria-hidden="true" title="Delete the current image"></i>&ndash;&gt;-->
-  <!--</a>-->
-  <!--<a class="upper-button" aria-label="Navigate to another url" (click)="navigateToExtUrl($event)" (keyup)="navigateToExtUrl($event)" [tabindex]="0" role="button">-->
-    <!--<div class="inside ext-url-image" aria-hidden="true" title="Navigate the current image"></div>-->
-    <!--&lt;!&ndash;<i class="fa fa-external-link fa-fw" aria-hidden="true" title="Navigate to another url"></i>&ndash;&gt;-->
-  <!--</a>-->
-  <!--<a class="upper-button" aria-label="Download this image" (click)="downloadImage($event)" (keyup)="downloadImage($event)" [tabindex]="0" role="button">-->
-    <!--<div class="inside download-image" aria-hidden="true" title="Download the current image"></div>-->
-    <!--&lt;!&ndash;<i class="fa fa-download fa-fw" aria-hidden="true" title="Download this image"></i>&ndash;&gt;-->
-  <!--</a>-->
-  <!--<a class="upper-button" aria-label="Close this modal image gallery" (click)="closeModalGallery($event)" (keyup)="closeModalGallery($event)" [tabindex]="0" role="button">-->
-    <!--<div class="inside close-image" aria-hidden="true" title="Close this modal image gallery"></div>-->
-    <!--&lt;!&ndash;<i class="fa fa-close fa-fw" aria-hidden="true" title="Close this modal image gallery"></i>&ndash;&gt;-->
-  <!--</a>-->
+       [ngStyle]="{'font-size': btn.fontSize}"
+       [attr.aria-label]="btn.ariaLabel"
+       [tabindex]="0" role="button"
+       (click)="onEvent(btn, index, $event)" (keyup)="onEvent(btn, index, $event)">
+      <div class="inside {{btn.className}}" aria-hidden="true" title="{{btn.title}}"></div>
+    </a>
+  </ng-container>
 </header>

@@ -26,6 +26,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { DotsConfig } from '../../interfaces/dots-config.interface';
 
 /**
  * Component with dots
@@ -50,6 +51,8 @@ export class DotsComponent {
   @Input() images: InternalLibImage[];
 
   @Input() isOpen: boolean;
+
+  @Input() dotsConfig: DotsConfig;
 
   @Input() accessibilityConfig: AccessibilityConfig;
 

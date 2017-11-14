@@ -37,6 +37,7 @@ import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
+import { DotsConfig } from "../../interfaces/dots-config.interface";
 
 
 export class InternalLibImage extends Image {
@@ -119,7 +120,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `ButtonsConfig` to show/hide buttons.
    * This is used only inside `ngOnInit()` to create `configButtons`
    */
-  @Input() buttonsConfig: ButtonsConfig = {strategy: ButtonsStrategy.DEFAULT};
+  @Input() buttonsConfig: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.DEFAULT};
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
@@ -146,7 +147,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
 
+  @Input() dotsConfig: DotsConfig = { visible: true };
+
   @Input() previewConfig: PreviewConfig = {
+    visible: true,
     number: 3, arrows: true, clickable: true,
     alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}
   };

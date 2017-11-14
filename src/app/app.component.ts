@@ -32,6 +32,8 @@ import { delay } from 'rxjs/operators';
 
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { DescriptionStrategy } from 'angular-modal-gallery';
+import { PreviewConfig } from "../../angular-modal-gallery/src/interfaces/preview-config.interface";
+import { DotsConfig } from "../../angular-modal-gallery/src/interfaces/dots-config.interface";
 
 @Component({
   selector: 'app-root',
@@ -90,6 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // array with a single image inside (the first one)
   singleImage: Observable<Image[]> = of([
     new Image(
+      1,
       '../assets/images/gallery/img1.jpg',
       '../assets/images/gallery/thumbs/img1.jpg',
       'Description 1',
@@ -102,6 +105,23 @@ export class AppComponent implements OnInit, OnDestroy {
   // This is not a real use-case, but it's a way to simulate a scenario where
   // you have to subscribe to an Observable to get data and to set public vars
   imagesArraySubscribed: Image[];
+
+  dotsConfig: DotsConfig = {
+    visible: false
+  };
+
+  previewConfig: PreviewConfig = {
+    visible: false,
+    number: 3,
+    arrows: true,
+    clickable: true,
+    alwaysCenter: false,
+    size: {
+      width: 70,
+      height: 70,
+      unit: 'px'
+    }
+  };
 
   customDescription: Description = {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -144,6 +164,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // };
 
   customButtonsConfig: ButtonsConfig = {
+    visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {

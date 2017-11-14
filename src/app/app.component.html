@@ -36,7 +36,7 @@
   </ul>
   <br>
   <ks-modal-gallery [modalImages]="imagesArray"
-                 [buttonsConfig]="{strategy: 1}"
+                 [buttonsConfig]="{visible: true, strategy: 1}"
                  [downloadable]="true"
                  [enableCloseOutside]="true"
                  [description]="customFullDescriptionHidden"
@@ -61,7 +61,7 @@
   </ul>
   <br>
   <ks-modal-gallery [modalImages]="images"
-                 [buttonsConfig]="{strategy: 4}"
+                 [buttonsConfig]="{visible: true, strategy: 4}"
                  [keyboardConfig]="{esc: 81, left: 40, right: 38}"
                  [downloadable]="true"
                  [enableCloseOutside]="false"
@@ -87,6 +87,8 @@
   <br>
   <ks-modal-gallery [modalImages]="imagesArray"
                  [buttonsConfig]="customButtonsConfig"
+                 [previewConfig]="previewConfig"
+                 [dotsConfig]="dotsConfig"
                  [enableCloseOutside]="true"
                  [downloadable]="true"
                  [description]="customFullDescription"
@@ -112,6 +114,7 @@
   </ul>
   <br>
   <ks-modal-gallery [modalImages]="images"
+                 [buttonsConfig]="{visible: false, strategy: 1}"
                  [downloadable]="false"
                  [description]="customDescription"
                  (hasData)="onImageLoaded($event)"
