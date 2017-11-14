@@ -29,7 +29,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from '../../angular-modal-gallery/src/interfaces/buttons-config.interface';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
+import { DescriptionStrategy } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-root',
@@ -102,12 +103,31 @@ export class AppComponent implements OnInit, OnDestroy {
   imagesArraySubscribed: Image[];
 
   customDescription: Description = {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    imageText: 'Look this image ',
+    numberSeparator: ' of ',
+    beforeTextDescription: ' => '
+  };
+
+  customDescriptionHideIfEmpty: Description = {
+    strategy: DescriptionStrategy.HIDE_IF_EMPTY,
     imageText: 'Look this image ',
     numberSeparator: ' of ',
     beforeTextDescription: ' => '
   };
 
   customFullDescription: Description = {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    // you should build this value programmaticaly with the result of (show)="..()" event
+    customFullDescription: 'Custom description of the current visible image',
+    // if customFullDescription !== undefined, all other fields will be ignored
+    // imageText: '',
+    // numberSeparator: '',
+    // beforeTextDescription: '',
+  };
+
+  customFullDescriptionHidden: Description = {
+    strategy: DescriptionStrategy.ALWAYS_HIDDEN,
     // you should build this value programmaticaly with the result of (show)="..()" event
     customFullDescription: 'Custom description of the current visible image',
     // if customFullDescription !== undefined, all other fields will be ignored

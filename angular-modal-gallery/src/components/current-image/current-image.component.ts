@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
@@ -47,7 +47,7 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentImageComponent implements OnChanges, OnDestroy {
+export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
 
   private static SPACE_KEY = 32;
   private static ENTER_KEY = 13;
@@ -114,15 +114,18 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
 
   private description: Description;
 
-  /**
-   * Constructor that initialize some description fields
-   * based on default values.
-   */
-  constructor() {
+  ngOnInit() {
     // copy input Description to a local variable
     this.description = Object.assign({}, this.descriptionConfig);
 
+    // by default use DescriptionStrategy.ALWAYS_VISIBLE
+    this.description.strategy = this.description.strategy || DescriptionStrategy.ALWAYS_VISIBLE;
+
+    console.log('oninit description', this.description);
+
     if (this.description.strategy === DescriptionStrategy.ALWAYS_VISIBLE) {
+      console.log('oninit description always visible', this.description);
+
       // if description isn't provided initialize it with a default object
       if (!this.description) {
         this.description = {
@@ -136,6 +139,31 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
       this.description.imageText = this.description.imageText || 'Image ';
       this.description.numberSeparator = this.description.numberSeparator || '/';
       this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
+    } else if (this.description.strategy === DescriptionStrategy.ALWAYS_HIDDEN) {
+      console.log('oninit description always hidden', this.description);
+      this.description.customFullDescription = '';
+    } else if (this.description.strategy === DescriptionStrategy.HIDE_IF_EMPTY) {
+      console.log('oninit description hide if empty image description', this.description, this.currentImage);
+      if (this.currentImage.description && this.currentImage.description !== '') {
+        console.log('oninit description should be visible');
+
+        // if description isn't provided initialize it with a default object
+        if (!this.description) {
+          this.description = {
+            imageText: 'Image ',
+            numberSeparator: '/',
+            beforeTextDescription: ' - '
+          };
+        }
+
+        // if one of the Description fields isn't initialized, provide a default value
+        this.description.imageText = this.description.imageText || 'Image ';
+        this.description.numberSeparator = this.description.numberSeparator || '/';
+        this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
+      } else {
+        console.log('oninit description should be hidden');
+        this.description.customFullDescription = '';
+      }
     }
   }
 
@@ -181,6 +209,11 @@ export class CurrentImageComponent implements OnChanges, OnDestroy {
    * @returns String description to display.
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
+    if (this.description.strategy === DescriptionStrategy.HIDE_IF_EMPTY) {
+      return image.description && image.description !== '' ? image.description + '' : '';
+    } else if (this.description.strategy === DescriptionStrategy.ALWAYS_HIDDEN) {
+      return '';
+    }
     if (this.description && this.description.customFullDescription) {
       return this.description.customFullDescription;
     }

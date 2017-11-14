@@ -39,7 +39,7 @@
                  [buttonsConfig]="{strategy: 1}"
                  [downloadable]="true"
                  [enableCloseOutside]="true"
-                 [description]="customFullDescription"
+                 [description]="customFullDescriptionHidden"
                  (hasData)="onImageLoaded($event)"
                  (close)="onCloseImageModal($event)"
                  (show)="onVisibleIndex($event)"
@@ -134,6 +134,7 @@
   <br>
   <ks-modal-gallery [modalImages]="images"
                  [downloadable]="true"
+                 [description]="customDescriptionHideIfEmpty"
                  (hasData)="onImageLoaded($event)"
                  (close)="onCloseImageModal($event)"
                  (show)="onVisibleIndex($event)"

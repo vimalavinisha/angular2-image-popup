@@ -14,7 +14,7 @@ export interface Description {
  * Enum `DescriptionStrategy` with keys and their relative key codes.
  */
 export enum DescriptionStrategy {
-  ALWAYS_HIDDEN,
+  ALWAYS_HIDDEN = 1,
   ALWAYS_VISIBLE,
   HIDE_IF_EMPTY
 }
