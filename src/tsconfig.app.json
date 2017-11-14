@@ -3,8 +3,7 @@
   "angularCompilerOptions": {
     "paths": {
       "angular-modal-gallery": [ "../dist/angular-modal-gallery" ]
-    },
-    "preserveWhitespaces": false
+    }
   },
   "compilerOptions": {
     "outDir": "../out-tsc/app",

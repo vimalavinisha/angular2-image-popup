@@ -17,6 +17,10 @@
     "mousetrap": ">=1.6.1",
     "rxjs": ">=5.0.0"
   },
+  "devDependencies": {
+    "@angular/compiler": "^5.0.1",
+    "@angular/compiler-cli": "^5.0.1"
+  },
   "keywords": [
     "angular-modal-gallery",
     "angular2-gallery",
