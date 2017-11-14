@@ -10,7 +10,7 @@
       "node"
     ],
     "paths": {
-      "@my/lib": [ "../dist/angular-modal-gallery" ]
+      "angular-modal-gallery": [ "../dist/angular-modal-gallery" ]
     }
   },
   "files": [

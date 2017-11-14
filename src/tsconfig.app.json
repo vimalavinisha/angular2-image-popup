@@ -2,8 +2,9 @@
   "extends": "../tsconfig.json",
   "angularCompilerOptions": {
     "paths": {
-      "@my/lib": [ "../dist/angular-modal-gallery" ]
-    }
+      "angular-modal-gallery": [ "../dist/angular-modal-gallery" ]
+    },
+    "preserveWhitespaces": false
   },
   "compilerOptions": {
     "outDir": "../out-tsc/app",
@@ -11,7 +12,7 @@
     "baseUrl": "",
     "types": [],
     "paths": {
-      "@my/lib": [ "../dist/angular-modal-gallery" ]
+      "angular-modal-gallery": [ "../dist/angular-modal-gallery" ]
     }
   },
   "exclude": [

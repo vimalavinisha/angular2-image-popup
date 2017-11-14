@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "angularCompilerOptions": {
     "paths": {
-      "@my/lib": [ "../angular-modal-gallery/src/public_api.ts" ]
+      "angular-modal-gallery": [ "../angular-modal-gallery/src/public_api.ts" ]
     }
   },
   "compilerOptions": {
@@ -11,7 +11,7 @@
     "baseUrl": "",
     "types": [],
     "paths": {
-      "@my/lib": [ "../angular-modal-gallery/src/public_api.ts" ]
+      "angular-modal-gallery": [ "../angular-modal-gallery/src/public_api.ts" ]
     }
   },
   "exclude": [

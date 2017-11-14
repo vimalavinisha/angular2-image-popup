@@ -27,8 +27,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/delay';
+import { of } from 'rxjs/observable/of';
+import { delay } from 'rxjs/operators';
+
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { DescriptionStrategy } from 'angular-modal-gallery';
 
@@ -84,10 +85,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   // observable of an array of images with a delay to simulate a network request
-  images: Observable<Image[]> = Observable.of(this.imagesArray).delay(300);
+  images: Observable<Image[]> = of(this.imagesArray).pipe(delay(300));
 
   // array with a single image inside (the first one)
-  singleImage: Observable<Image[]> = Observable.of([
+  singleImage: Observable<Image[]> = of([
     new Image(
       '../assets/images/gallery/img1.jpg',
       '../assets/images/gallery/thumbs/img1.jpg',
@@ -187,7 +188,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private imagesArraySubscription: Subscription;
 
   ngOnInit() {
-    this.imagesArraySubscription = Observable.of(null).delay(500).subscribe(() => {
+    this.imagesArraySubscription = of(null).pipe(delay(500)).subscribe(() => {
       this.imagesArraySubscribed = this.imagesArray;
     });
   }
