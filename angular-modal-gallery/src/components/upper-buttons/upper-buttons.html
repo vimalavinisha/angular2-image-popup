@@ -4,7 +4,7 @@
     <a *ngFor="let btn of buttons; trackBy: trackById; let index = index"
        class="upper-button"
        ksSize [sizeConfig]="{width: btn.size?.width, height: btn.size?.height,
-     unitWidth: btn.size?.unit, unitHeight: btn.size?.unit}"
+        unitWidth: btn.size?.unit, unitHeight: btn.size?.unit}"
        [ngStyle]="{'font-size': btn.fontSize}"
        [attr.aria-label]="btn.ariaLabel"
        [tabindex]="0" role="button"

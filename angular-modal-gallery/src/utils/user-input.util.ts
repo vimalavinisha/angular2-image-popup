@@ -22,12 +22,6 @@
  SOFTWARE.
  */
 
-import { ClickOutsideDirective } from './click-outside.directive';
-import { SizeDirective } from './size.directive';
-
-/**
- * Array of all directives.
- */
-export const DIRECTIVES = [
-  ClickOutsideDirective, SizeDirective
-];
+export const SPACE_KEY = 32;
+export const ENTER_KEY = 13;
+export const MOUSE_MAIN_BUTTON_CLICK = 0;

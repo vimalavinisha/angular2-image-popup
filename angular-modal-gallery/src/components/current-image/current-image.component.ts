@@ -32,6 +32,7 @@ import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig } from '../../interfaces/loading-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-input.util';
 
 /**
  * Component with the current image with
@@ -48,10 +49,6 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
-
-  private static SPACE_KEY = 32;
-  private static ENTER_KEY = 13;
-  private static MOUSE_MAIN_BUTTON_CLICK = 0;
 
   @Input() currentImage: InternalLibImage;
 
@@ -121,31 +118,10 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
     // by default use DescriptionStrategy.ALWAYS_VISIBLE
     this.description.strategy = this.description.strategy || DescriptionStrategy.ALWAYS_VISIBLE;
 
-    console.log('oninit description', this.description);
-
-    if (this.description.strategy === DescriptionStrategy.ALWAYS_VISIBLE) {
-      console.log('oninit description always visible', this.description);
-
-      // if description isn't provided initialize it with a default object
-      if (!this.description) {
-        this.description = {
-          imageText: 'Image ',
-          numberSeparator: '/',
-          beforeTextDescription: ' - '
-        };
-      }
-
-      // if one of the Description fields isn't initialized, provide a default value
-      this.description.imageText = this.description.imageText || 'Image ';
-      this.description.numberSeparator = this.description.numberSeparator || '/';
-      this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
-    } else if (this.description.strategy === DescriptionStrategy.ALWAYS_HIDDEN) {
-      console.log('oninit description always hidden', this.description);
-      this.description.customFullDescription = '';
-    } else if (this.description.strategy === DescriptionStrategy.HIDE_IF_EMPTY) {
-      console.log('oninit description hide if empty image description', this.description, this.currentImage);
-      if (this.currentImage.description && this.currentImage.description !== '') {
-        console.log('oninit description should be visible');
+    // TODO improve this code to remove duplications
+    switch (this.description.strategy) {
+      case DescriptionStrategy.ALWAYS_VISIBLE:
+        console.log('oninit description always visible', this.description);
 
         // if description isn't provided initialize it with a default object
         if (!this.description) {
@@ -160,10 +136,35 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
         this.description.imageText = this.description.imageText || 'Image ';
         this.description.numberSeparator = this.description.numberSeparator || '/';
         this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
-      } else {
+        break;
+      case DescriptionStrategy.ALWAYS_HIDDEN:
+        console.log('oninit description always hidden', this.description);
+        this.description.customFullDescription = '';
+        break;
+      case DescriptionStrategy.HIDE_IF_EMPTY:
+        console.log('oninit description hide if empty image description', this.description, this.currentImage);
+        if (this.currentImage.description && this.currentImage.description !== '') {
+          console.log('oninit description should be visible');
+
+          // if description isn't provided initialize it with a default object
+          if (!this.description) {
+            this.description = {
+              imageText: 'Image ',
+              numberSeparator: '/',
+              beforeTextDescription: ' - '
+            };
+          }
+
+          // if one of the Description fields isn't initialized, provide a default value
+          this.description.imageText = this.description.imageText || 'Image ';
+          this.description.numberSeparator = this.description.numberSeparator || '/';
+          this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
+        }
+        break;
+      default:
         console.log('oninit description should be hidden');
         this.description.customFullDescription = '';
-      }
+        break;
     }
   }
 
@@ -209,6 +210,7 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
    * @returns String description to display.
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
+    // TODO improve source code of this method
     if (this.description.strategy === DescriptionStrategy.HIDE_IF_EMPTY) {
       return image.description && image.description !== '' ? image.description + '' : '';
     } else if (this.description.strategy === DescriptionStrategy.ALWAYS_HIDDEN) {
@@ -262,19 +264,18 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
-    if (event instanceof KeyboardEvent && event) {
-      const key: number = event.keyCode;
-
-      if (key === CurrentImageComponent.SPACE_KEY || key === CurrentImageComponent.ENTER_KEY) {
-        this.nextImage(action);
-        return;
-      }
+    if (!event) {
+      return;
     }
 
-    if (event instanceof MouseEvent && event) {
+    if (event instanceof KeyboardEvent) {
+      const key: number = event.keyCode;
+      if (key === SPACE_KEY || key === ENTER_KEY) {
+        this.nextImage(action);
+      }
+    } else if (event instanceof MouseEvent) {
       const mouseBtn: number = event.button;
-
-      if (mouseBtn === CurrentImageComponent.MOUSE_MAIN_BUTTON_CLICK) {
+      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
         this.nextImage(action);
       }
     }
@@ -284,23 +285,22 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
     console.log('onEvent direction: ' + direction);
     console.log('onEvent event:', event);
 
-    if (event instanceof KeyboardEvent && event) {
-      const key: number = event.keyCode;
+    if (!event) {
+      return;
+    }
 
-      if (key === CurrentImageComponent.SPACE_KEY || key === CurrentImageComponent.ENTER_KEY) {
+    if (event instanceof KeyboardEvent) {
+      const key: number = event.keyCode;
+      if (key === SPACE_KEY || key === ENTER_KEY) {
         if (direction === 'right') {
           this.nextImage(action);
         } else {
           this.prevImage(action);
         }
-        return;
       }
-    }
-
-    if (event instanceof MouseEvent && event) {
+    } else if (event instanceof MouseEvent) {
       const mouseBtn: number = event.button;
-
-      if (mouseBtn === CurrentImageComponent.MOUSE_MAIN_BUTTON_CLICK) {
+      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
         if (direction === 'right') {
           this.nextImage(action);
         } else {

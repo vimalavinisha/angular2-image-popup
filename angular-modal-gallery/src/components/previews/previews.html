@@ -2,12 +2,12 @@
      [attr.aria-label]="accessibilityConfig.previewsContainerAriaLabel"
      [title]="accessibilityConfig.previewsContainerTitle">
 
-  <ng-container *ngIf="!previewConfig || previewConfig?.visible">
+  <ng-container *ngIf="!configPreview || configPreview?.visible">
     <a class="nav-left"
        [attr.aria-label]="accessibilityConfig.previewScrollPrevAriaLabel"
-       [tabindex]="previewConfig.arrows && start > 0 ? 0 : -1" role="button"
+       [tabindex]="configPreview.arrows && start > 0 ? 0 : -1" role="button"
        (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
-      <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
+      <div class="inside {{configPreview.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
            aria-hidden="true"
            [title]="accessibilityConfig.previewScrollPrevTitle"></div>
     </a>
@@ -17,8 +17,8 @@
            class="inside preview-image"
            [ngClass]="{'active': isActive(index)}"
            [src]="preview.thumb ? preview.thumb : preview.img"
-           ksSize [sizeConfig]="{width: previewConfig.size.width, height: previewConfig.size.height,
-         unitWidth: previewConfig.size.unit, unitHeight: previewConfig.size.unit}"
+           ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height,
+         unitWidth: configPreview.size.unit, unitHeight: configPreview.size.unit}"
            [attr.aria-label]="preview.ariaLabel"
            [title]="preview.title"
            alt="{{preview.alt}}"
@@ -29,9 +29,9 @@
 
     <a class="nav-right"
        [attr.aria-label]="accessibilityConfig.previewScrollNextAriaLabel"
-       [tabindex]="previewConfig.arrows && end < images.length ? 0 : -1" role="button"
+       [tabindex]="configPreview.arrows && end < images.length ? 0 : -1" role="button"
        (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
-      <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
+      <div class="inside {{configPreview.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
            aria-hidden="true"
            [title]="accessibilityConfig.previewScrollNextTitle"></div>
     </a>

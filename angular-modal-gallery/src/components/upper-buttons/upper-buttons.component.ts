@@ -29,6 +29,7 @@ import {
   ButtonsStrategy, ButtonType
 } from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
+import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-input.util';
 
 export interface InternalButtonConfig extends ButtonConfig {
   id?: number; // useful only for trackById, not needed by users
@@ -47,10 +48,6 @@ export interface InternalButtonConfig extends ButtonConfig {
 })
 export class UpperButtonsComponent implements OnInit {
 
-  private static SPACE_KEY = 32;
-  private static ENTER_KEY = 13;
-  private static MOUSE_MAIN_BUTTON_CLICK = 0;
-
   @Input() image: Image;
   @Input() buttonsConfig: ButtonsConfig;
 
@@ -59,19 +56,30 @@ export class UpperButtonsComponent implements OnInit {
   @Output() navigate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   @Output() download: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   @Output() close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
-  @Output() customOutput: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   buttons: InternalButtonConfig[];
 
   private defaultSize: ButtonSize = {height: 30, width: 30, unit: 'px'};
 
-  private simpleButtonsDefault: ButtonConfig[] = [{
+  private defaultButtonsDefault: ButtonConfig[] = [{
     className: 'close-image',
     size: this.defaultSize,
     type: ButtonType.CLOSE,
     title: 'Close this modal image gallery',
     ariaLabel: 'Close this modal image gallery'
   }];
+
+  private simpleButtonsDefault: ButtonConfig[] = [
+    {
+      className: 'download-image',
+      size: this.defaultSize,
+      type: ButtonType.DOWNLOAD,
+      title: 'Download the current image',
+      ariaLabel: 'Download the current image'
+    },
+    ...this.defaultButtonsDefault
+  ];
 
   private advancedButtonsDefault: ButtonConfig[] = [
     {
@@ -80,13 +88,6 @@ export class UpperButtonsComponent implements OnInit {
       type: ButtonType.EXTURL,
       title: 'Navigate the current image',
       ariaLabel: 'Navigate the current image'
-    },
-    {
-      className: 'download-image',
-      size: this.defaultSize,
-      type: ButtonType.DOWNLOAD,
-      title: 'Download the current image',
-      ariaLabel: 'Download the current image'
     },
     ...this.simpleButtonsDefault
   ];
@@ -109,6 +110,36 @@ export class UpperButtonsComponent implements OnInit {
     ...this.advancedButtonsDefault
   ];
 
+  private static triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
+                                           event: KeyboardEvent | MouseEvent,
+                                           btnSource: ButtonConfig,
+                                           btnIndex: number,
+                                           data: any) {
+
+    if (!event || !emitter) {
+      return;
+    }
+
+    const dataToEmit: ButtonEvent = Object.freeze({
+      index: btnIndex,
+      button: btnSource,
+      payload: data
+    });
+
+    if (event instanceof KeyboardEvent) {
+      const key: number = event.keyCode;
+      if (key === SPACE_KEY || key === ENTER_KEY) {
+        emitter.emit(dataToEmit);
+      }
+    } else if (event instanceof MouseEvent) {
+      const mouseBtn: number = event.button;
+      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
+        emitter.emit(dataToEmit);
+
+      }
+    }
+  }
+
   ngOnInit() {
     if (!this.buttonsConfig || !this.buttonsConfig.strategy) {
       throw new Error(`ButtonsConfig's strategy is a mandatory field`);
@@ -129,7 +160,7 @@ export class UpperButtonsComponent implements OnInit {
         break;
       case ButtonsStrategy.DEFAULT:
       default:
-        this.buttons = this.addButtonIds(this.simpleButtonsDefault);
+        this.buttons = this.addButtonIds(this.defaultButtonsDefault);
         break;
     }
   }
@@ -139,26 +170,28 @@ export class UpperButtonsComponent implements OnInit {
     console.log('onEvent event:', event);
     switch (button.type) {
       case ButtonType.REFRESH:
-        this.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
+        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
         break;
       case ButtonType.DELETE:
-        this.triggerOnMouseAndKeyboard(this.delete, event, button, index, true);
+        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.delete, event, button, index, true);
         break;
       case ButtonType.EXTURL:
         if (!this.image || !this.image.extUrl) {
           return;
         }
-        this.triggerOnMouseAndKeyboard(this.navigate, event, button, index, this.image.extUrl);
+        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.navigate, event, button, index, this.image.extUrl);
         break;
       case ButtonType.DOWNLOAD:
-        this.triggerOnMouseAndKeyboard(this.download, event, button, index, true);
+        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.download, event, button, index, true);
         break;
       case ButtonType.CLOSE:
-        this.triggerOnMouseAndKeyboard(this.close, event, button, index, true);
+        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.close, event, button, index, true);
         break;
       case ButtonType.CUSTOM:
-        this.triggerOnMouseAndKeyboard(this.customOutput, event, button, index, true);
+        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.customEmit, event, button, index, true);
         break;
+      default:
+        throw new Error(`Unknown button's type into ButtonConfig`);
     }
   }
 
@@ -175,11 +208,13 @@ export class UpperButtonsComponent implements OnInit {
   }
 
   private initCustomButtons(): ButtonConfig[] {
+    // init with default values
     const buttonsConfig: ButtonsConfig = Object.assign({}, this.buttonsConfig);
     buttonsConfig.buttons = buttonsConfig.buttons || [];
 
     console.log('init custom: ', buttonsConfig);
 
+    // TODO implement this
     this.buttons = buttonsConfig.buttons.map((btn: ButtonConfig) => {
       const button: ButtonConfig = Object.assign({}, btn);
       console.log('mapping button: ', button);
@@ -212,37 +247,5 @@ export class UpperButtonsComponent implements OnInit {
     });
     console.log('returning this.buttons: ', this.buttons);
     return this.buttons;
-  }
-
-
-  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
-                                    event: KeyboardEvent | MouseEvent,
-                                    btnSource: ButtonConfig,
-                                    btnIndex: number,
-                                    data: any) {
-    const dataToEmit: ButtonEvent = {
-      index: btnIndex,
-      button: btnSource,
-      payload: data
-    };
-
-    console.log('triggerOnMouseAndKeyboard dataToEmit', dataToEmit);
-
-    if (event instanceof KeyboardEvent && event) {
-      const key: number = event.keyCode;
-
-      if (key === UpperButtonsComponent.SPACE_KEY || key === UpperButtonsComponent.ENTER_KEY) {
-        emitter.emit(dataToEmit);
-        return;
-      }
-    }
-
-    if (event instanceof MouseEvent && event) {
-      const mouseBtn: number = event.button;
-
-      if (mouseBtn === UpperButtonsComponent.MOUSE_MAIN_BUTTON_CLICK) {
-        emitter.emit(dataToEmit);
-      }
-    }
   }
 }

@@ -36,6 +36,5 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 })
 export class BackgroundComponent {
   @Input() isOpen: boolean;
-
   @Input() accessibilityConfig: AccessibilityConfig;
 }

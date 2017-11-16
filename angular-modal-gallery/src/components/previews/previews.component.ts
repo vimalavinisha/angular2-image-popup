@@ -31,7 +31,7 @@ import { Image } from '../../interfaces/image.class';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
-import { ButtonConfig, ButtonEvent, ButtonType } from "../../interfaces/buttons-config.interface";
+import { ImageSize } from '../../interfaces/image-size.interface';
 
 /**
  * Component with image previews
@@ -67,19 +67,38 @@ export class PreviewsComponent implements OnInit, OnChanges {
 
   previews: InternalLibImage[] = [];
 
+  configPreview: PreviewConfig;
+
   start: number;
   end: number;
 
+  private defaultPreviewSize: ImageSize = {height: 30, width: 30, unit: 'px'};
+
+  private defaultPreviewConfig: PreviewConfig = {
+    visible: true,
+    number: 3,
+    arrows: true,
+    clickable: true,
+    alwaysCenter: false,
+    size: this.defaultPreviewSize
+  };
+
   ngOnInit() {
+    console.log('+++++++++++++++1 ', this.previewConfig);
+
+    this.configPreview = Object.assign(this.defaultPreviewConfig, this.previewConfig);
+
+    console.log('+++++++++++++++2 ', this.configPreview);
+
     if (this.getIndex(this.currentImage) === 0) {
       this.start = 0;
-      this.end = Math.min(this.previewConfig.number, this.images.length);
+      this.end = Math.min(this.configPreview.number, this.images.length);
     } else if (this.getIndex(this.currentImage) === this.images.length - 1) {
-      this.start = (this.images.length - 1) - (this.previewConfig.number - 1);
+      this.start = (this.images.length - 1) - (this.configPreview.number - 1);
       this.end = this.images.length;
     } else {
-      this.start = this.getIndex(this.currentImage) - Math.floor(this.previewConfig.number / 2);
-      this.end = this.getIndex(this.currentImage) + Math.floor(this.previewConfig.number / 2) + 1;
+      this.start = this.getIndex(this.currentImage) - Math.floor(this.configPreview.number / 2);
+      this.end = this.getIndex(this.currentImage) + Math.floor(this.configPreview.number / 2) + 1;
     }
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
@@ -121,7 +140,7 @@ export class PreviewsComponent implements OnInit, OnChanges {
   }
 
   onImageEvent(preview: InternalLibImage) {
-    if (!this.previewConfig || !this.previewConfig.clickable) {
+    if (!this.configPreview || !this.configPreview.clickable) {
       return;
     }
 

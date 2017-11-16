@@ -233,8 +233,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onCustomOutput(event: ButtonEvent, action: Action = Action.NORMAL) {
-    console.log('on customOutput', event);
+  onCustomEmit(event: ButtonEvent, action: Action = Action.NORMAL) {
+    console.log('on onCustomEmit', event);
   }
 
   onRefresh(event: ButtonEvent, action: Action = Action.NORMAL) {
