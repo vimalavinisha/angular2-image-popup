@@ -72,7 +72,7 @@ export class PreviewsComponent implements OnInit, OnChanges {
   start: number;
   end: number;
 
-  private defaultPreviewSize: ImageSize = {height: 30, width: 30, unit: 'px'};
+  private defaultPreviewSize: ImageSize = {height: 90, width: 90, unit: 'px'};
 
   private defaultPreviewConfig: PreviewConfig = {
     visible: true,
@@ -84,21 +84,21 @@ export class PreviewsComponent implements OnInit, OnChanges {
   };
 
   ngOnInit() {
-    console.log('+++++++++++++++1 ', this.previewConfig);
-
     this.configPreview = Object.assign(this.defaultPreviewConfig, this.previewConfig);
 
-    console.log('+++++++++++++++2 ', this.configPreview);
+    // I use <number> in front of this.configPreview.number below, because I know that
+    // this.configPreview.number will be always defined thanks to the line above  Object.assign(...),
+    // however I'm getting an error in my IDE so I decided to add this useless cast.
 
     if (this.getIndex(this.currentImage) === 0) {
       this.start = 0;
-      this.end = Math.min(this.configPreview.number, this.images.length);
+      this.end = Math.min(<number>this.configPreview.number, this.images.length);
     } else if (this.getIndex(this.currentImage) === this.images.length - 1) {
-      this.start = (this.images.length - 1) - (this.configPreview.number - 1);
+      this.start = (this.images.length - 1) - (<number>this.configPreview.number - 1);
       this.end = this.images.length;
     } else {
-      this.start = this.getIndex(this.currentImage) - Math.floor(this.configPreview.number / 2);
-      this.end = this.getIndex(this.currentImage) + Math.floor(this.configPreview.number / 2) + 1;
+      this.start = this.getIndex(this.currentImage) - Math.floor(<number>this.configPreview.number / 2);
+      this.end = this.getIndex(this.currentImage) + Math.floor(<number>this.configPreview.number / 2) + 1;
     }
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }

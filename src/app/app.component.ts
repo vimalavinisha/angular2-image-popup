@@ -226,42 +226,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   previewConfigFiveImages: PreviewConfig = {
     visible: true,
-    number: 1,
-    // arrows: true, // TODO remove size, because it should be a default value
-    // clickable: true, // TODO remove size, because it should be a default value
-    size: {width: 90, height: 90, unit: 'px'} // TODO remove size, because it should be a default value
+    number: 1
   };
 
   previewConfigNoArrows: PreviewConfig = {
     visible: true,
-    // number: 3, // TODO remove size, because it should be a default value
-    arrows: false,
-    // clickable: true, // TODO remove size, because it should be a default value
-    size: {width: 90, height: 90, unit: 'px'}  // TODO remove size, because it should be a default value
+    arrows: false
   };
 
   previewConfigNoClickable: PreviewConfig = {
     visible: true,
-    // number: 3, // TODO remove size, because it should be a default value
-    // arrows: true, // TODO remove size, because it should be a default value
-    clickable: false,
-    size: {width: 90, height: 90, unit: 'px'}  // TODO remove size, because it should be a default value
+    clickable: false
   };
 
   previewConfigAlwaysCenter: PreviewConfig = {
     visible: true,
-    // number: 3, // TODO remove size, because it should be a default value
-    // arrows: true, // TODO remove size, because it should be a default value
-    // clickable: true, // TODO remove size, because it should be a default value
-    alwaysCenter: true,
-    size: {width: 90, height: 90, unit: 'px'}  // TODO remove size, because it should be a default value
+    alwaysCenter: true
   };
 
   previewConfigCustomSize: PreviewConfig = {
     visible: true,
-    // number: 3, // TODO remove size, because it should be a default value
-    // arrows: true, // TODO remove size, because it should be a default value
-    // clickable: true, // TODO remove size, because it should be a default value
     size: {width: 30, height: 30, unit: 'px'}
   };
 
