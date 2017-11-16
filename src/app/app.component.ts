@@ -32,8 +32,9 @@ import { delay } from 'rxjs/operators';
 
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { DescriptionStrategy } from 'angular-modal-gallery';
-import { PreviewConfig } from "../../angular-modal-gallery/src/interfaces/preview-config.interface";
-import { DotsConfig } from "../../angular-modal-gallery/src/interfaces/dots-config.interface";
+import { PreviewConfig } from 'angular-modal-gallery';
+import { DotsConfig } from 'angular-modal-gallery';
+import { AccessibilityConfig } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-root',
@@ -163,6 +164,23 @@ export class AppComponent implements OnInit, OnDestroy {
   //   unit: 'px'
   // };
 
+  buttonsConfigDefault: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.DEFAULT
+  };
+  buttonsConfigSimple: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.SIMPLE
+  };
+  buttonsConfigAdvanced: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.ADVANCED
+  };
+  buttonsConfigFull: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.FULL
+  };
+
   customButtonsConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
@@ -203,6 +221,78 @@ export class AppComponent implements OnInit, OnDestroy {
         fontSize: '20px'
       }
     ]
+  };
+
+
+  previewConfigFiveImages: PreviewConfig = {
+    visible: true,
+    number: 1,
+    arrows: true, // TODO remove size, because it should be a default value
+    clickable: true, // TODO remove size, because it should be a default value
+    size: {width: 90, height: 90, unit: 'px'} // TODO remove size, because it should be a default value
+  };
+
+  previewConfigNoArrows: PreviewConfig = {
+    visible: true,
+    number: 3, // TODO remove size, because it should be a default value
+    arrows: false,
+    clickable: true, // TODO remove size, because it should be a default value
+    size: {width: 90, height: 90, unit: 'px'}  // TODO remove size, because it should be a default value
+  };
+
+  previewConfigNoClickable: PreviewConfig = {
+    visible: true,
+    number: 3, // TODO remove size, because it should be a default value
+    arrows: true, // TODO remove size, because it should be a default value
+    clickable: false,
+    size: {width: 90, height: 90, unit: 'px'}  // TODO remove size, because it should be a default value
+  };
+
+  previewConfigAlwaysCenter: PreviewConfig = {
+    visible: true,
+    number: 3, // TODO remove size, because it should be a default value
+    arrows: true, // TODO remove size, because it should be a default value
+    clickable: true, // TODO remove size, because it should be a default value
+    alwaysCenter: true,
+    size: {width: 90, height: 90, unit: 'px'}  // TODO remove size, because it should be a default value
+  };
+
+  previewConfigCustomSize: PreviewConfig = {
+    visible: true, // TODO remove size, because it should be a default value
+    number: 3, // TODO remove size, because it should be a default value
+    arrows: true, // TODO remove size, because it should be a default value
+    clickable: true, // TODO remove size, because it should be a default value
+    size: {width: 30, height: 30, unit: 'px'}
+  };
+
+
+  accessibilityConfig: AccessibilityConfig = {
+    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
+    backgroundTitle: 'CUSTOM background title',
+
+    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
+    modalGalleryContentTitle: 'CUSTOM gallery content title',
+
+    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
+    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
+
+    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
+    mainContainerTitle: 'CUSTOM main container title',
+    mainPrevImageAriaLabel: 'CUSTOM Previous image',
+    mainPrevImageTitle: 'CUSTOM Previous image',
+    mainNextImageAriaLabel: 'CUSTOM Next image',
+    mainNextImageTitle: 'CUSTOM Next image',
+
+    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
+    dotsContainerTitle: 'CUSTOM dots container title',
+    dotAriaLabel: 'CUSTOM Navigate to image number',
+
+    previewsContainerAriaLabel: 'CUSTOM Image previews',
+    previewsContainerTitle: 'CUSTOM previews title',
+    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
+    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
+    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
+    previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
   private subscription: Subscription;
