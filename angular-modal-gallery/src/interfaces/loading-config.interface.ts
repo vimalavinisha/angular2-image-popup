@@ -10,7 +10,7 @@ export interface LoadingConfig {
  * Enum `LoadingType` with a list of possible types.
  */
 export enum LoadingType {
-  STANDARD,
+  STANDARD = 1,
   CIRCULAR,
   DOTS
 }

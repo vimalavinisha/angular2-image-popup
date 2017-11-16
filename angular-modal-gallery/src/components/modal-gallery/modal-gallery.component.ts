@@ -23,7 +23,7 @@
  SOFTWARE.
  */
 
-import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, SimpleChanges, PLATFORM_ID, Inject } from '@angular/core';
+import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, SimpleChanges, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -37,7 +37,7 @@ import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
-import { DotsConfig } from "../../interfaces/dots-config.interface";
+import { DotsConfig } from '../../interfaces/dots-config.interface';
 
 
 export class InternalLibImage extends Image {
@@ -138,7 +138,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() slideConfig: SlideConfig = {
     infinite: false,
     sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}
-  }; // TODO disable previews
+  };
 
   /**
    * Description object with the configuration to show image descriptions.

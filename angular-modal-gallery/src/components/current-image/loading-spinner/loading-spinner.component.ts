@@ -25,6 +25,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { LoadingConfig } from '../../../interfaces/loading-config.interface';
 import { AccessibilityConfig } from '../../../interfaces/accessibility.interface';
+import { LoadingType } from '../../../interfaces/loading-config.interface';
 
 /**
  * Component with the loading spinner
@@ -40,6 +41,10 @@ import { AccessibilityConfig } from '../../../interfaces/accessibility.interface
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingSpinnerComponent {
+
+  loadingStandard: LoadingType = LoadingType.STANDARD;
+  loadingCircular: LoadingType = LoadingType.CIRCULAR;
+  loadingDots: LoadingType = LoadingType.DOTS;
 
   @Input() loadingConfig: LoadingConfig;
 

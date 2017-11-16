@@ -29,5 +29,8 @@ export { Action } from './interfaces/action.enum';
 export { Image, ImageModalEvent } from './interfaces/image.class';
 export { Description, DescriptionStrategy } from './interfaces/description.interface';
 export { KeyboardConfig } from './interfaces/keyboard-config.interface';
+export { DotsConfig } from './interfaces/dots-config.interface';
+export { PreviewConfig } from './interfaces/preview-config.interface';
+export { AccessibilityConfig } from './interfaces/accessibility.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType } from './interfaces/buttons-config.interface';

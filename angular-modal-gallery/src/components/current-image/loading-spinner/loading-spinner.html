@@ -1,12 +1,12 @@
 <div id="loading-spinner" [attr.aria-label]="accessibilityConfig.loadingSpinnerAriaLabel" [title]="accessibilityConfig.loadingSpinnerTitle">
-  <ng-container *ngIf="loadingConfig.type === 0">
+  <ng-container *ngIf="loadingConfig.type === loadingStandard">
     <div class="cssload-loader">
       <div class="cssload-inner cssload-one"></div>
       <div class="cssload-inner cssload-two"></div>
       <div class="cssload-inner cssload-three"></div>
     </div>
   </ng-container>
-  <ng-container *ngIf="loadingConfig.type === 1">
+  <ng-container *ngIf="loadingConfig.type === loadingCircular">
     <div class="loader">
       <div class="one"></div>
       <div class="two"></div>
@@ -14,7 +14,7 @@
       <div class="four"></div>
     </div>
   </ng-container>
-  <ng-container *ngIf="loadingConfig.type === 2">
+  <ng-container *ngIf="loadingConfig.type === loadingDots">
     <div class="loader">
       <div class="inner one"></div>
       <div class="inner two"></div>
