@@ -64,7 +64,7 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Description object with the configuration to show image descriptions.
    */
-  @Input() descriptionConfig: Description = {strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+  @Input() descriptionConfig: Description;
 
   @Input() loadingConfig: LoadingConfig;
 
@@ -111,61 +111,16 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
 
   private description: Description;
 
+  private defaultDescription: Description = {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    imageText: 'Image ',
+    numberSeparator: '/',
+    beforeTextDescription: ' - '
+  };
+
   ngOnInit() {
-    // copy input Description to a local variable
-    this.description = Object.assign({}, this.descriptionConfig);
-
-    // by default use DescriptionStrategy.ALWAYS_VISIBLE
-    this.description.strategy = this.description.strategy || DescriptionStrategy.ALWAYS_VISIBLE;
-
-    // TODO improve this code to remove duplications
-    switch (this.description.strategy) {
-      case DescriptionStrategy.ALWAYS_VISIBLE:
-        console.log('oninit description always visible', this.description);
-
-        // if description isn't provided initialize it with a default object
-        if (!this.description) {
-          this.description = {
-            imageText: 'Image ',
-            numberSeparator: '/',
-            beforeTextDescription: ' - '
-          };
-        }
-
-        // if one of the Description fields isn't initialized, provide a default value
-        this.description.imageText = this.description.imageText || 'Image ';
-        this.description.numberSeparator = this.description.numberSeparator || '/';
-        this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
-        break;
-      case DescriptionStrategy.ALWAYS_HIDDEN:
-        console.log('oninit description always hidden', this.description);
-        this.description.customFullDescription = '';
-        break;
-      case DescriptionStrategy.HIDE_IF_EMPTY:
-        console.log('oninit description hide if empty image description', this.description, this.currentImage);
-        if (this.currentImage.description && this.currentImage.description !== '') {
-          console.log('oninit description should be visible');
-
-          // if description isn't provided initialize it with a default object
-          if (!this.description) {
-            this.description = {
-              imageText: 'Image ',
-              numberSeparator: '/',
-              beforeTextDescription: ' - '
-            };
-          }
-
-          // if one of the Description fields isn't initialized, provide a default value
-          this.description.imageText = this.description.imageText || 'Image ';
-          this.description.numberSeparator = this.description.numberSeparator || '/';
-          this.description.beforeTextDescription = this.description.beforeTextDescription || ' - ';
-        }
-        break;
-      default:
-        console.log('oninit description should be hidden');
-        this.description.customFullDescription = '';
-        break;
-    }
+    this.description = Object.freeze(Object.assign(this.defaultDescription, this.descriptionConfig));
+    this.description.strategy = 1;
   }
 
   ngOnChanges() {
@@ -210,22 +165,34 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
    * @returns String description to display.
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    // TODO improve source code of this method
-    if (this.description.strategy === DescriptionStrategy.HIDE_IF_EMPTY) {
-      return image.description && image.description !== '' ? image.description + '' : '';
-    } else if (this.description.strategy === DescriptionStrategy.ALWAYS_HIDDEN) {
-      return '';
+    if (!this.description) {
+      throw new Error('Description input must be a valid object implementing the Description interface');
     }
-    if (this.description && this.description.customFullDescription) {
-      return this.description.customFullDescription;
+
+    const imageWithoutDescription: boolean = !image.description || image.description === '';
+
+    switch (this.description.strategy) {
+      case DescriptionStrategy.HIDE_IF_EMPTY:
+        return imageWithoutDescription ? '' : image.description + '';
+      case DescriptionStrategy.ALWAYS_HIDDEN:
+        return '';
     }
+
     const currentIndex: number = this.getIndex(image);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
-    if (!image.description || image.description === '') {
-      return `${this.description.imageText}${currentIndex + 1}${this.description.numberSeparator}${this.images.length}`;
+
+    const prevDescription: string = this.description.imageText ? this.description.imageText : '';
+    const midSeparator: string = this.description.numberSeparator ? this.description.numberSeparator : '';
+    const middleDescription: string = (currentIndex + 1) + midSeparator + this.images.length;
+
+    if (imageWithoutDescription) {
+      return prevDescription + middleDescription;
     }
-    return `${this.description.imageText}${currentIndex + 1}${this.description.numberSeparator}${this.images.length}${this.description.beforeTextDescription}${image.description}`;
+
+    const currImgDescription: string = image.description ? image.description : '';
+    const endDescription: string = this.description.beforeTextDescription + currImgDescription;
+    return prevDescription + middleDescription + endDescription;
   }
 
   /**
@@ -239,11 +206,7 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
     if (!image) {
       return '';
     }
-    if (!image.description) {
-      const index: number = this.getIndex(image);
-      return `Image ${index}`;
-    }
-    return image.description;
+    return !image.description ? `Image ${this.getIndex(image)}` : image.description;
   }
 
   getIndex(image: Image, arrayOfImages: Image[] = this.images): number {
@@ -321,17 +284,7 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     const prevImage: InternalLibImage = this.getPrevImage(action);
-
-    console.log('prevImage is', prevImage);
-
-    if (!prevImage.previouslyLoaded) {
-      console.log('--NOT previously loaded, so LOADING...--');
-      this.loading = true;
-    } else {
-      console.log('--already loaded--');
-      this.loading = false;
-    }
-
+    this.loading = !prevImage.previouslyLoaded;
     this.changeImage.emit(new ImageModalEvent(action, this.getIndex(prevImage)));
   }
 
@@ -345,16 +298,8 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
     }
-
     const nextImage: InternalLibImage = this.getNextImage(action);
-    if (!nextImage.previouslyLoaded) {
-      console.log('--NOT previously loaded, so LOADING...--');
-      this.loading = true;
-    } else {
-      console.log('--already loaded--');
-      this.loading = false;
-    }
-
+    this.loading = !nextImage.previouslyLoaded;
     this.changeImage.emit(new ImageModalEvent(action, this.getIndex(nextImage)));
   }
 
@@ -367,36 +312,6 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
 
     this.loading = false;
   }
-
-  /**
-   * Method `showModalGallery` to show the modal gallery displaying the image with
-   * the index specified as input parameter.
-   * It will also register a new `keyboardService` to catch keyboard's events to download the current
-   * image with keyboard's shortcuts. This service, will be removed when modal gallery component will be destroyed.
-   * @param index Number that represents the index of the image to show.
-   */
-  // showModalGallery(index: number) {
-  // this.keyboardService.add((event: KeyboardEvent, combo: string) => {
-  //   if (event.preventDefault) {
-  //     event.preventDefault();
-  //   } else {
-  //     // internet explorer
-  //     event.returnValue = false;
-  //   }
-  //   this.downloadImage();
-  // });
-  //
-  // // enable/disable 'infinite sliding' based on @Input() slideConfig
-  // this.manageSlideConfig(index);
-  //
-  // this.currentImageIndex = index;
-  // this.opened = true;
-  // this.currentImage = this.images[this.currentImageIndex];
-  // this.loading = false;
-  //
-  // emit current visible image index
-  // this.show.emit(new ImageModalEvent(Action.LOAD, this.currentImageIndex + 1));
-  // }
 
   /**
    * Method `swipe` used by Hammerjs to support touch gestures.

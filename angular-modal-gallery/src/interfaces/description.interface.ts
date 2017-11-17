@@ -3,7 +3,7 @@
  * description or with a small and simple customization.
  */
 export interface Description {
-  strategy?: DescriptionStrategy;
+  strategy: DescriptionStrategy;
   customFullDescription?: string;
   imageText?: string;
   numberSeparator?: string;
