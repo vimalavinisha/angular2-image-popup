@@ -22,8 +22,8 @@
  SOFTWARE.
  */
 
-import { Input, Output, EventEmitter, Component } from '@angular/core';
-import { Image } from "../../interfaces/image.class";
+import { Input, Output, EventEmitter, Component, ChangeDetectionStrategy } from '@angular/core';
+import { Image } from '../../interfaces/image.class';
 
 /**
  * Component with the gallery of thumbs.
@@ -34,7 +34,8 @@ import { Image } from "../../interfaces/image.class";
 @Component({
   selector: 'ks-gallery',
   styleUrls: ['gallery.scss'],
-  templateUrl: 'gallery.html'
+  templateUrl: 'gallery.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryComponent {
 

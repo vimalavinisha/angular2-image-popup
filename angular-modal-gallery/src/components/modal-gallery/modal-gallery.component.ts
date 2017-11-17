@@ -23,14 +23,15 @@
  SOFTWARE.
  */
 
-import { OnInit, Input, Output, EventEmitter, Component, OnDestroy, OnChanges, SimpleChanges, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { OnInit, Input, Output, EventEmitter, Component, OnDestroy,
+  OnChanges, SimpleChanges, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ButtonEvent, ButtonsConfig, ButtonsStrategy } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
-import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
+import { Description } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
@@ -95,7 +96,8 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
   selector: 'ks-modal-gallery',
   exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
-  templateUrl: 'modal-gallery.html'
+  templateUrl: 'modal-gallery.html',
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
