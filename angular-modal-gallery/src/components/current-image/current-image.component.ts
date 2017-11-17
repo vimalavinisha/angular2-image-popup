@@ -111,15 +111,14 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
 
   private description: Description;
 
-  private defaultDescription: Description = {
-    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    imageText: 'Image ',
-    numberSeparator: '/',
-    beforeTextDescription: ' - '
-  };
-
   ngOnInit() {
-    this.description = Object.freeze(Object.assign(this.defaultDescription, this.descriptionConfig));
+    const defaultDescription: Description = {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      imageText: 'Image ',
+      numberSeparator: '/',
+      beforeTextDescription: ' - '
+    };
+    this.description = Object.freeze(Object.assign(defaultDescription, this.descriptionConfig));
     this.description.strategy = 1;
   }
 
