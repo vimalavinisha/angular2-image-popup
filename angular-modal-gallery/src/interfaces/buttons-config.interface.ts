@@ -54,3 +54,11 @@ export enum ButtonType {
   CUSTOM
 }
 
+export const WHITELIST_BUTTON_TYPES: ButtonType[] = [
+  ButtonType.REFRESH,
+  ButtonType.DELETE,
+  ButtonType.EXTURL,
+  ButtonType.DOWNLOAD,
+  ButtonType.CLOSE,
+  ButtonType.CUSTOM
+];

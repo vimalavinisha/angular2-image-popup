@@ -26,7 +26,7 @@ import { Input, Output, EventEmitter, Component, OnInit, ChangeDetectionStrategy
 
 import {
   ButtonConfig, ButtonEvent, ButtonsConfig, ButtonSize,
-  ButtonsStrategy, ButtonType
+  ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES
 } from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
 import { AccessibleComponent } from '../accessible.component';
@@ -137,8 +137,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   }
 
   onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent) {
-    console.log('onEvent index: ' + index + ', button:', button);
-    console.log('onEvent event:', event);
+    if (!event) {
+      return;
+    }
     switch (button.type) {
       case ButtonType.REFRESH:
         this.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
@@ -175,8 +176,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
                                     btnSource: ButtonConfig,
                                     btnIndex: number,
                                     data: any) {
-    if (!event || !emitter) {
-      return;
+    if (!emitter) {
+      console.error('UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard');
     }
 
     const dataToEmit: ButtonEvent = {
@@ -204,40 +205,14 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     const buttonsConfig: ButtonsConfig = Object.assign({}, this.buttonsConfig);
     buttonsConfig.buttons = buttonsConfig.buttons || [];
 
-    console.log('init custom: ', buttonsConfig);
+    buttonsConfig.buttons.forEach((val: ButtonConfig) => {
+      const isValidBtnType: ButtonType | void = WHITELIST_BUTTON_TYPES
+        .find((btnType: ButtonType) => btnType === val.type);
 
-    // TODO implement this
-    this.buttons = buttonsConfig.buttons.map((btn: ButtonConfig) => {
-      const button: ButtonConfig = Object.assign({}, btn);
-      console.log('mapping button: ', button);
-
-      // switch (button.type) {
-      //   case ButtonType.REFRESH:
-      //     // button.className = 'refresh-image';
-      //     break;
-      //   case ButtonType.DELETE:
-      //     // button.className = 'delete-image';
-      //     break;
-      //   case ButtonType.EXTURL:
-      //     // button.className = 'ext-url-image';
-      //     break;
-      //   case ButtonType.DOWNLOAD:
-      //     // button.className = 'download-image';
-      //     break;
-      //   case ButtonType.CLOSE:
-      //     // button.className = 'close-image';
-      //     break;
-      //   case ButtonType.CUSTOM:
-      //     // button.className = 'close-image';
-      //     break;
-      //   default:
-      //     button.className = 'unknown-image'; // TODO add this class to scss
-      //     break;
-      // }
-      console.log('mapped button: ', button);
-      return button;
+      if (!isValidBtnType) {
+        throw new Error(`Unknown ButtonType. For custom types use ButtonType.CUSTOM`);
+      }
     });
-    console.log('returning this.buttons: ', this.buttons);
-    return this.buttons;
+    return buttonsConfig.buttons;
   }
 }
