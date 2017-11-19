@@ -213,10 +213,24 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   getLeftPreviewImage(): Image {
+    const currentIndex: number = this.getIndex(this.currentImage);
+    if (this.slideConfig.infinite && currentIndex === 0) {
+      // the current image is the first one,
+      // so the previous one is the last image
+      // because infinite is true
+      return this.images[this.images.length - 1];
+    }
     return this.images[Math.max(this.getIndex(this.currentImage) - 1, 0)];
   }
 
   getRightPreviewImage(): Image {
+    const currentIndex: number = this.getIndex(this.currentImage);
+    if (this.slideConfig.infinite && currentIndex === this.images.length - 1) {
+      // the current image is the last one,
+      // so the next one is the first image
+      // because infinite is true
+      return this.images[0];
+    }
     return this.images[Math.min(this.getIndex(this.currentImage) + 1, this.images.length - 1)];
   }
 
