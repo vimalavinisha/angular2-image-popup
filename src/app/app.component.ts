@@ -300,6 +300,14 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  onBtnBeforeAction(event: ButtonType) {
+    console.log('onBtnBeforeAction ', event);
+  }
+
+  onBtnAfterAction(event: ButtonType) {
+    console.log('onBtnAfterAction ', event);
+  }
+
   onImageLoaded(event: ImageModalEvent) {
     // angular-modal-gallery will emit this event if it will load successfully input images
     console.log('onImageLoaded action: ' + Action[event.action]);

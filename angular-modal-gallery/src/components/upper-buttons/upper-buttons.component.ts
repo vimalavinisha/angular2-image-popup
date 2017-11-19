@@ -31,6 +31,7 @@ import {
 import { Image } from '../../interfaces/image.class';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
+import { Action } from '../../interfaces/action.enum';
 
 export interface InternalButtonConfig extends ButtonConfig {
   id?: number; // useful only for trackById, not needed by users
@@ -58,6 +59,14 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   @Output() download: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   @Output() close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+
+  /**
+   * Enum of type `Action` used to pass a click action when you click on the modal image.
+   * Declared here to be used inside the template.
+   */
+  clickAction: Action = Action.CLICK;
+
+  keyboardAction: Action = Action.KEYBOARD;
 
   buttons: InternalButtonConfig[];
 
@@ -136,31 +145,43 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     }
   }
 
-  onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent) {
+  onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
     if (!event) {
       return;
     }
+    const dataToEmit: ButtonEvent = {
+      index: index,
+      button: button,
+      payload: null, // init as null
+      action: action
+    };
     switch (button.type) {
       case ButtonType.REFRESH:
-        this.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
+        dataToEmit.payload = true;
+        this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
         break;
       case ButtonType.DELETE:
-        this.triggerOnMouseAndKeyboard(this.delete, event, button, index, true);
+        dataToEmit.payload = true;
+        this.triggerOnMouseAndKeyboard(this.delete, event, dataToEmit);
         break;
       case ButtonType.EXTURL:
         if (!this.image || !this.image.extUrl) {
           return;
         }
-        this.triggerOnMouseAndKeyboard(this.navigate, event, button, index, this.image.extUrl);
+        dataToEmit.payload = this.image.extUrl;
+        this.triggerOnMouseAndKeyboard(this.navigate, event, dataToEmit);
         break;
       case ButtonType.DOWNLOAD:
-        this.triggerOnMouseAndKeyboard(this.download, event, button, index, true);
+        dataToEmit.payload = true;
+        this.triggerOnMouseAndKeyboard(this.download, event, dataToEmit);
         break;
       case ButtonType.CLOSE:
-        this.triggerOnMouseAndKeyboard(this.close, event, button, index, true);
+        dataToEmit.payload = true;
+        this.triggerOnMouseAndKeyboard(this.close, event, dataToEmit);
         break;
       case ButtonType.CUSTOM:
-        this.triggerOnMouseAndKeyboard(this.customEmit, event, button, index, true);
+        dataToEmit.payload = true;
+        this.triggerOnMouseAndKeyboard(this.customEmit, event, dataToEmit);
         break;
       default:
         throw new Error(`Unknown button's type into ButtonConfig`);
@@ -173,18 +194,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
                                     event: KeyboardEvent | MouseEvent,
-                                    btnSource: ButtonConfig,
-                                    btnIndex: number,
-                                    data: any) {
+                                    dataToEmit: ButtonEvent) {
     if (!emitter) {
       console.error('UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard');
     }
-
-    const dataToEmit: ButtonEvent = {
-      index: btnIndex,
-      button: btnSource,
-      payload: data
-    };
 
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {

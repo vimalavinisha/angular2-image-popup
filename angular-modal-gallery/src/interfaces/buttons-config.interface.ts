@@ -1,6 +1,8 @@
 /**
  * Interface `ButtonsConfig` to show/hide buttons.
  */
+import { Action } from './action.enum';
+
 export interface ButtonsConfig {
   visible: boolean;
   strategy: ButtonsStrategy;
@@ -26,6 +28,7 @@ export interface ButtonEvent {
   index: number;
   button: ButtonConfig;
   payload: any;
+  action: Action;
 }
 /**
  * Enum `ButtonsStrategy`.

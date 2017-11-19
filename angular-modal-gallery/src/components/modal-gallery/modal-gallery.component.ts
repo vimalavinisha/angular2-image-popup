@@ -164,6 +164,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Output() firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output() btnBeforeAction: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() btnAfterAction: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
    * Boolean that it is true if the modal gallery is visible
@@ -235,29 +237,40 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onCustomEmit(event: ButtonEvent, action: Action = Action.NORMAL) {
+  onCustomEmit(event: ButtonEvent) {
+    this.btnBeforeAction.emit(event);
     console.log('on onCustomEmit', event);
+    this.btnAfterAction.emit(event);
   }
 
-  onRefresh(event: ButtonEvent, action: Action = Action.NORMAL) {
+  onRefresh(event: ButtonEvent) {
+    this.btnBeforeAction.emit(event);
     console.log('on refresh', event);
+    this.btnAfterAction.emit(event);
   }
 
-  onDelete(event: ButtonEvent, action: Action = Action.NORMAL) {
+  onDelete(event: ButtonEvent) {
+    this.btnBeforeAction.emit(event);
     console.log('on delete', event);
+    this.btnAfterAction.emit(event);
   }
 
-  onNavigate(event: ButtonEvent, action: Action = Action.NORMAL) {
+  onNavigate(event: ButtonEvent) {
+    this.btnBeforeAction.emit(event);
     console.log('on navigate', event);
+    // To support SSR
     if (isPlatformBrowser(this.platformId)) {
-      // Client only code.
+      // Client only code
       window.location.href = <string>event.payload;
     }
+    this.btnAfterAction.emit(event);
   }
 
-  onDownload(event: ButtonEvent, action: Action = Action.NORMAL) {
+  onDownload(event: ButtonEvent) {
+    this.btnBeforeAction.emit(event);
     console.log('on download', event);
     this.downloadImage();
+    this.btnAfterAction.emit(event);
   }
 
   // /**
@@ -266,8 +279,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   //  *  action that closed the modal gallery. NORMAL by default.
   //  */
   onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
+    this.btnBeforeAction.emit(event);
     console.log('on close', event);
     this.closeGallery(action);
+    this.btnAfterAction.emit(event);
   }
 
   closeGallery(action: Action = Action.NORMAL) {
