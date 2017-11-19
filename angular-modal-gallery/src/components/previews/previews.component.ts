@@ -32,6 +32,8 @@ import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { ImageSize } from '../../interfaces/image-size.interface';
+import { AccessibleComponent } from '../accessible.component';
+import { PREV, NEXT } from '../../utils/user-input.util';
 
 /**
  * Component with image previews
@@ -42,11 +44,7 @@ import { ImageSize } from '../../interfaces/image-size.interface';
   templateUrl: 'previews.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PreviewsComponent implements OnInit, OnChanges {
-
-  private static SPACE_KEY = 32;
-  private static ENTER_KEY = 13;
-  private static MOUSE_MAIN_BUTTON_CLICK = 0;
+export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
 
   @Input() currentImage: InternalLibImage;
 
@@ -139,26 +137,16 @@ export class PreviewsComponent implements OnInit, OnChanges {
     return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
-  onImageEvent(preview: InternalLibImage) {
+  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent) {
     if (!this.configPreview || !this.configPreview.clickable) {
       return;
     }
 
-    if (event instanceof KeyboardEvent && event) {
-      const key: number = event.keyCode;
-
-      if (key === PreviewsComponent.SPACE_KEY || key === PreviewsComponent.ENTER_KEY) {
-        this.clickPreview.emit(preview);
-        return;
-      }
-    }
-
-    if (event instanceof MouseEvent && event) {
-      const mouseBtn: number = event.button;
-
-      if (mouseBtn === PreviewsComponent.MOUSE_MAIN_BUTTON_CLICK) {
-        this.clickPreview.emit(preview);
-      }
+    const result: number = super.handleImageEvent(event);
+    if (result === NEXT) {
+      this.clickPreview.emit(preview);
+    } else if (result === PREV) {
+      this.clickPreview.emit(preview);
     }
   }
 
@@ -166,31 +154,12 @@ export class PreviewsComponent implements OnInit, OnChanges {
     console.log('onEvent direction: ' + direction);
     console.log('onEvent event:', event);
 
-    if (event instanceof KeyboardEvent && event) {
-      const key: number = event.keyCode;
-
-      if (key === PreviewsComponent.SPACE_KEY || key === PreviewsComponent.ENTER_KEY) {
-        if (direction === 'right') {
-          this.next();
-        } else {
-          this.previous();
-        }
-        return;
-      }
+    const result: number = super.handleNavigationEvent(direction, event);
+    if (result === NEXT) {
+      this.next();
+    } else if (result === PREV) {
+      this.previous();
     }
-
-    if (event instanceof MouseEvent && event) {
-      const mouseBtn: number = event.button;
-
-      if (mouseBtn === PreviewsComponent.MOUSE_MAIN_BUTTON_CLICK) {
-        if (direction === 'right') {
-          this.next();
-        } else {
-          this.previous();
-        }
-      }
-    }
-
   }
 
   trackById(index: number, item: Image) {

@@ -25,3 +25,10 @@
 export const SPACE_KEY = 32;
 export const ENTER_KEY = 13;
 export const MOUSE_MAIN_BUTTON_CLICK = 0;
+
+export const NEXT = 1;
+export const PREV = -1;
+export const NOTHING = 0;
+
+export const DIRECTION_RIGHT = 'right';
+export const DIRECTION_LEFT = 'left';

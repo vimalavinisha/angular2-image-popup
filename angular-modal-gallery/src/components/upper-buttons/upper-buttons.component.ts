@@ -29,7 +29,8 @@ import {
   ButtonsStrategy, ButtonType
 } from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
-import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-input.util';
+import { AccessibleComponent } from '../accessible.component';
+import { NEXT } from '../../utils/user-input.util';
 
 export interface InternalButtonConfig extends ButtonConfig {
   id?: number; // useful only for trackById, not needed by users
@@ -46,7 +47,7 @@ export interface InternalButtonConfig extends ButtonConfig {
   templateUrl: 'upper-buttons.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UpperButtonsComponent implements OnInit {
+export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
 
   @Input() image: Image;
   @Input() buttonsConfig: ButtonsConfig;
@@ -110,36 +111,6 @@ export class UpperButtonsComponent implements OnInit {
     ...this.advancedButtonsDefault
   ];
 
-  private static triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
-                                           event: KeyboardEvent | MouseEvent,
-                                           btnSource: ButtonConfig,
-                                           btnIndex: number,
-                                           data: any) {
-
-    if (!event || !emitter) {
-      return;
-    }
-
-    const dataToEmit: ButtonEvent = Object.freeze({
-      index: btnIndex,
-      button: btnSource,
-      payload: data
-    });
-
-    if (event instanceof KeyboardEvent) {
-      const key: number = event.keyCode;
-      if (key === SPACE_KEY || key === ENTER_KEY) {
-        emitter.emit(dataToEmit);
-      }
-    } else if (event instanceof MouseEvent) {
-      const mouseBtn: number = event.button;
-      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
-        emitter.emit(dataToEmit);
-
-      }
-    }
-  }
-
   ngOnInit() {
     if (!this.buttonsConfig || !this.buttonsConfig.strategy) {
       throw new Error(`ButtonsConfig's strategy is a mandatory field`);
@@ -170,25 +141,25 @@ export class UpperButtonsComponent implements OnInit {
     console.log('onEvent event:', event);
     switch (button.type) {
       case ButtonType.REFRESH:
-        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
+        this.triggerOnMouseAndKeyboard(this.refresh, event, button, index, true);
         break;
       case ButtonType.DELETE:
-        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.delete, event, button, index, true);
+        this.triggerOnMouseAndKeyboard(this.delete, event, button, index, true);
         break;
       case ButtonType.EXTURL:
         if (!this.image || !this.image.extUrl) {
           return;
         }
-        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.navigate, event, button, index, this.image.extUrl);
+        this.triggerOnMouseAndKeyboard(this.navigate, event, button, index, this.image.extUrl);
         break;
       case ButtonType.DOWNLOAD:
-        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.download, event, button, index, true);
+        this.triggerOnMouseAndKeyboard(this.download, event, button, index, true);
         break;
       case ButtonType.CLOSE:
-        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.close, event, button, index, true);
+        this.triggerOnMouseAndKeyboard(this.close, event, button, index, true);
         break;
       case ButtonType.CUSTOM:
-        UpperButtonsComponent.triggerOnMouseAndKeyboard(this.customEmit, event, button, index, true);
+        this.triggerOnMouseAndKeyboard(this.customEmit, event, button, index, true);
         break;
       default:
         throw new Error(`Unknown button's type into ButtonConfig`);
@@ -197,6 +168,27 @@ export class UpperButtonsComponent implements OnInit {
 
   trackById(index: number, item: InternalButtonConfig) {
     return item.id;
+  }
+
+  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
+                                    event: KeyboardEvent | MouseEvent,
+                                    btnSource: ButtonConfig,
+                                    btnIndex: number,
+                                    data: any) {
+    if (!event || !emitter) {
+      return;
+    }
+
+    const dataToEmit: ButtonEvent = {
+      index: btnIndex,
+      button: btnSource,
+      payload: data
+    };
+
+    const result: number = super.handleImageEvent(event);
+    if (result === NEXT) {
+      emitter.emit(dataToEmit);
+    }
   }
 
   private addButtonIds(buttons: ButtonConfig[]) {

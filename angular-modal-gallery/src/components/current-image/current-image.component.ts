@@ -32,7 +32,8 @@ import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig } from '../../interfaces/loading-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
-import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-input.util';
+import { AccessibleComponent } from '../accessible.component';
+import { PREV, NEXT } from '../../utils/user-input.util';
 
 /**
  * Component with the current image with
@@ -48,7 +49,7 @@ import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
+export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() currentImage: InternalLibImage;
 
@@ -119,7 +120,6 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
       beforeTextDescription: ' - '
     };
     this.description = Object.freeze(Object.assign(defaultDescription, this.descriptionConfig));
-    this.description.strategy = 1;
   }
 
   ngOnChanges() {
@@ -226,49 +226,18 @@ export class CurrentImageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
-    if (!event) {
-      return;
-    }
-
-    if (event instanceof KeyboardEvent) {
-      const key: number = event.keyCode;
-      if (key === SPACE_KEY || key === ENTER_KEY) {
-        this.nextImage(action);
-      }
-    } else if (event instanceof MouseEvent) {
-      const mouseBtn: number = event.button;
-      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
-        this.nextImage(action);
-      }
+    const result: number = super.handleImageEvent(event);
+    if (result === NEXT) {
+      this.nextImage(action);
     }
   }
 
-  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
-    console.log('onEvent direction: ' + direction);
-    console.log('onEvent event:', event);
-
-    if (!event) {
-      return;
-    }
-
-    if (event instanceof KeyboardEvent) {
-      const key: number = event.keyCode;
-      if (key === SPACE_KEY || key === ENTER_KEY) {
-        if (direction === 'right') {
-          this.nextImage(action);
-        } else {
-          this.prevImage(action);
-        }
-      }
-    } else if (event instanceof MouseEvent) {
-      const mouseBtn: number = event.button;
-      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
-        if (direction === 'right') {
-          this.nextImage(action);
-        } else {
-          this.prevImage(action);
-        }
-      }
+  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL) {
+    const result: number = super.handleNavigationEvent(direction, event);
+    if (result === NEXT) {
+      this.nextImage(action);
+    } else if (result === PREV) {
+      this.prevImage(action);
     }
   }
 

@@ -27,7 +27,8 @@ import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { DotsConfig } from '../../interfaces/dots-config.interface';
-import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-input.util';
+import { AccessibleComponent } from '../accessible.component';
+import { NEXT } from '../../utils/user-input.util';
 
 /**
  * Component with dots
@@ -38,7 +39,7 @@ import { ENTER_KEY, SPACE_KEY, MOUSE_MAIN_BUTTON_CLICK } from '../../utils/user-
   templateUrl: 'dots.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DotsComponent {
+export class DotsComponent extends AccessibleComponent {
 
   @Input() currentImage: InternalLibImage;
 
@@ -69,20 +70,9 @@ export class DotsComponent {
   }
 
   onDotEvent(index: number, event: KeyboardEvent | MouseEvent) {
-    if (!event) {
-      return;
-    }
-
-    if (event instanceof KeyboardEvent) {
-      const key: number = event.keyCode;
-      if (key === SPACE_KEY || key === ENTER_KEY) {
-        this.clickDot.emit(index);
-      }
-    } else if (event instanceof MouseEvent) {
-      const mouseBtn: number = event.button;
-      if (mouseBtn === MOUSE_MAIN_BUTTON_CLICK) {
-        this.clickDot.emit(index);
-      }
+    const result: number = super.handleImageEvent(event);
+    if (result === NEXT) {
+      this.clickDot.emit(index);
     }
   }
 
