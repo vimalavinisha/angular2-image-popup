@@ -22,14 +22,14 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
-import { LoadingConfig } from '../../interfaces/loading-config.interface';
+import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { AccessibleComponent } from '../accessible.component';
@@ -67,7 +67,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input() descriptionConfig: Description;
 
-  @Input() loadingConfig: LoadingConfig;
+  @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
 
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
@@ -128,22 +128,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
   }
 
-  /**
-   * Listener to catch keyboard's events and call the right method based on the key.
-   * For instance, pressing esc, this will call `closeGallery(Action.KEYBOARD)` and so on.
-   * If you passed a valid `keyboardConfig` esc, right and left buttons will be customized based on your data.
-   * @param e KeyboardEvent caught by the listener.
-   */
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(e: KeyboardEvent) {
-    if (!this.isOpen) {
-      return;
-    }
+  onKeyPress(keyCode: number) {
     const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
     const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
     const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
 
-    switch (e.keyCode) {
+    switch (keyCode) {
       case esc:
         this.close.emit(new ImageModalEvent(Action.KEYBOARD, true));
         break;

@@ -1,4 +1,7 @@
-<main class="main-image-container" [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel" [title]="accessibilityConfig.mainContainerTitle">
+<main class="main-image-container"
+      keyboard-navigation [isOpen]="isOpen" (keyPress)="onKeyPress($event)"
+      [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel" [title]="accessibilityConfig.mainContainerTitle">
+
   <a class="nav-left" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
      [tabindex]="isFirstImage ? -1 : 0" role="button"

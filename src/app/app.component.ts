@@ -300,12 +300,29 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  onBtnBeforeAction(event: ButtonType) {
-    console.log('onBtnBeforeAction ', event);
+  onButtonBeforeHook(event: ButtonType) {
+    console.log('onButtonBeforeHook ', event);
+    // Invoked after a click on a button, but before that the related
+    // action is applied.
+    // For instance: this method will be invoked after a click
+    // of 'close' button, but before that the modal gallery
+    // will be really closed.
+
+    // You can check for button type to identify the clicked button
+    // for instance
+    // if (event === ButtonType.CLOSE) { // do something }
   }
 
-  onBtnAfterAction(event: ButtonType) {
-    console.log('onBtnAfterAction ', event);
+  onButtonAfterHook(event: ButtonType) {
+    console.log('onButtonAfterHook ', event);
+
+    // Invoked after both a click on a button and its related action.
+    // For instance: this method will be invoked after a click
+    // of 'close' button and modal gallery is closed.
+
+    // You can check for button type to identify the clicked button
+    // for instance
+    // if (event === ButtonType.CLOSE) { // do something }
   }
 
   onImageLoaded(event: ImageModalEvent) {

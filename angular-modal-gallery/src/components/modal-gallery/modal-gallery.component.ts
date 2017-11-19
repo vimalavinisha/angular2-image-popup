@@ -23,8 +23,10 @@
  SOFTWARE.
  */
 
-import { OnInit, Input, Output, EventEmitter, Component, OnDestroy,
-  OnChanges, SimpleChanges, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  OnInit, Input, Output, EventEmitter, Component, OnDestroy,
+  OnChanges, SimpleChanges, PLATFORM_ID, Inject, ChangeDetectionStrategy
+} from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -104,7 +106,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Array or Observable input that represents a list of Images used to show both
    * thumbs and the modal gallery.
    */
-  @Input() modalImages: Observable<Array<Image>> | Array<Image>;
+  @Input() modalImages: Observable<Image[]> | Image[];
   // /**
   //  * Number to open the modal gallery (passing a value >=0) showing the image with the
   //  * imagePointer's index.
@@ -149,7 +151,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
 
-  @Input() dotsConfig: DotsConfig = { visible: true };
+  @Input() dotsConfig: DotsConfig = {visible: true};
 
   @Input() previewConfig: PreviewConfig = {
     visible: true,
@@ -164,8 +166,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Output() firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
-  @Output() btnBeforeAction: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
-  @Output() btnAfterAction: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() buttonBeforeHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output() buttonAfterHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
    * Boolean that it is true if the modal gallery is visible
@@ -185,12 +187,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   currentImage: InternalLibImage;
 
   /**
-   * Object of type `ButtonsConfig` used to configure buttons visibility. This is a temporary value
-   * initialized by the real `buttonsConfig`'s input
-   */
-  // configButtons: ButtonsConfig;
-
-  /**
    * When you pass an Observable of `Image`s as `modalImages`, you have to subscribe to that
    * Observable. So, to prevent memory leaks, you must store the subscription and call `unsubscribe` in
    * OnDestroy.
@@ -200,7 +196,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Constructor with the injection of ´KeyboardService´
    */
-  constructor(private keyboardService: KeyboardService, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private keyboardService: KeyboardService,
+              @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   /**
@@ -209,13 +206,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    // build configButtons to use it inside upper-buttons
-    // this.configButtons = {
-    //   download: this.buttonsConfig && this.buttonsConfig.download,
-    //   extUrl: this.buttonsConfig && this.buttonsConfig.extUrl,
-    //   close: this.buttonsConfig && this.buttonsConfig.close
-    // };
-
     // call initImages passing true as parameter, because I want to emit `hasData` event
     this.initImages(true);
   }
@@ -238,39 +228,39 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onCustomEmit(event: ButtonEvent) {
-    this.btnBeforeAction.emit(event);
+    this.buttonBeforeHook.emit(event);
     console.log('on onCustomEmit', event);
-    this.btnAfterAction.emit(event);
+    this.buttonAfterHook.emit(event);
   }
 
   onRefresh(event: ButtonEvent) {
-    this.btnBeforeAction.emit(event);
+    this.buttonBeforeHook.emit(event);
     console.log('on refresh', event);
-    this.btnAfterAction.emit(event);
+    this.buttonAfterHook.emit(event);
   }
 
   onDelete(event: ButtonEvent) {
-    this.btnBeforeAction.emit(event);
+    this.buttonBeforeHook.emit(event);
     console.log('on delete', event);
-    this.btnAfterAction.emit(event);
+    this.buttonAfterHook.emit(event);
   }
 
   onNavigate(event: ButtonEvent) {
-    this.btnBeforeAction.emit(event);
+    this.buttonBeforeHook.emit(event);
     console.log('on navigate', event);
     // To support SSR
     if (isPlatformBrowser(this.platformId)) {
       // Client only code
       window.location.href = <string>event.payload;
     }
-    this.btnAfterAction.emit(event);
+    this.buttonAfterHook.emit(event);
   }
 
   onDownload(event: ButtonEvent) {
-    this.btnBeforeAction.emit(event);
+    this.buttonBeforeHook.emit(event);
     console.log('on download', event);
     this.downloadImage();
-    this.btnAfterAction.emit(event);
+    this.buttonAfterHook.emit(event);
   }
 
   // /**
@@ -279,10 +269,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   //  *  action that closed the modal gallery. NORMAL by default.
   //  */
   onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
-    this.btnBeforeAction.emit(event);
+    this.buttonBeforeHook.emit(event);
     console.log('on close', event);
     this.closeGallery(action);
-    this.btnAfterAction.emit(event);
+    this.buttonAfterHook.emit(event);
   }
 
   closeGallery(action: Action = Action.NORMAL) {
@@ -426,18 +416,18 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Private method ´initImages´ to initialize `images` as array of `Image` or as an
-   * Observable of `Array<Image>`. Also, it will call completeInitialization.
+   * Observable of `Image[]`. Also, it will call completeInitialization.
    * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
    *  Use this parameter to prevent multiple `hasData` events.
    */
   private initImages(emitHasDataEvent: boolean = false) {
     if (this.modalImages instanceof Array) {
-      this.images = <Array<InternalLibImage>>this.modalImages;
+      this.images = <InternalLibImage[]>this.modalImages;
       this.completeInitialization(emitHasDataEvent);
     } else {
       if (this.modalImages instanceof Observable) {
-        this.subscription = (<Observable<Array<Image>>>this.modalImages).subscribe((val: Array<Image>) => {
-          this.images = <Array<InternalLibImage>>val;
+        this.subscription = (<Observable<Image[]>>this.modalImages).subscribe((val: Image[]) => {
+          this.images = <InternalLibImage[]>val;
           this.completeInitialization(emitHasDataEvent);
         });
       }

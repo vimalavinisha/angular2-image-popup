@@ -46,7 +46,7 @@ export class LoadingSpinnerComponent {
   loadingCircular: LoadingType = LoadingType.CIRCULAR;
   loadingDots: LoadingType = LoadingType.DOTS;
 
-  @Input() loadingConfig: LoadingConfig = {enable: true, type: this.loadingStandard};
+  @Input() loadingConfig: LoadingConfig;
 
   @Input() accessibilityConfig: AccessibilityConfig;
 
