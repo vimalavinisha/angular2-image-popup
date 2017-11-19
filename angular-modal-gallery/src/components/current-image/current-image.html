@@ -66,8 +66,8 @@
     </ng-template>
   </ng-container>
 
-  <ng-container *ngIf="loading && loadingConfig.enable">
-    <ks-loading-spinner [loadingConfig]="loadingConfig"
+  <ng-container *ngIf="loading && configLoading.enable">
+    <ks-loading-spinner [loadingConfig]="configLoading"
                         [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
   </ng-container>
 

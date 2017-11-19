@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
@@ -39,7 +39,7 @@ import { NEXT } from '../../utils/user-input.util';
   templateUrl: 'dots.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DotsComponent extends AccessibleComponent {
+export class DotsComponent extends AccessibleComponent implements OnInit {
 
   @Input() currentImage: InternalLibImage;
 
@@ -50,11 +50,19 @@ export class DotsComponent extends AccessibleComponent {
 
   @Input() isOpen: boolean;
 
-  @Input() dotsConfig: DotsConfig;
+  @Input() dotsConfig: DotsConfig = {visible: true};
 
   @Input() accessibilityConfig: AccessibilityConfig;
 
   @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
+
+  configDots: DotsConfig;
+
+  ngOnInit() {
+    const defaultConfig: DotsConfig = {visible: true};
+
+    this.configDots = Object.assign(defaultConfig, this.dotsConfig);
+  }
 
   isActive(index: number) {
     return index === this.getCurrentImageIndex(this.currentImage);

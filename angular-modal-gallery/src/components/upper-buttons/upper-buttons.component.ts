@@ -68,6 +68,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   keyboardAction: Action = Action.KEYBOARD;
 
+  configButtons: ButtonsConfig;
   buttons: InternalButtonConfig[];
 
   private defaultSize: ButtonSize = {height: 30, width: 30, unit: 'px'};
@@ -121,11 +122,11 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   ];
 
   ngOnInit() {
-    if (!this.buttonsConfig || !this.buttonsConfig.strategy) {
-      throw new Error(`ButtonsConfig's strategy is a mandatory field`);
-    }
+    const defaultConfig: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.DEFAULT};
 
-    switch (this.buttonsConfig.strategy) {
+    this.configButtons = Object.assign(defaultConfig, this.buttonsConfig);
+
+    switch (this.configButtons.strategy) {
       case ButtonsStrategy.SIMPLE:
         this.buttons = this.addButtonIds(this.simpleButtonsDefault);
         break;
@@ -136,7 +137,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         this.buttons = this.addButtonIds(this.fullButtonsDefault);
         break;
       case ButtonsStrategy.CUSTOM:
-        this.buttons = this.addButtonIds(this.initCustomButtons());
+        this.buttons = this.addButtonIds(this.validateCustomButtons(this.configButtons.buttons));
         break;
       case ButtonsStrategy.DEFAULT:
       default:
@@ -213,12 +214,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     });
   }
 
-  private initCustomButtons(): ButtonConfig[] {
-    // init with default values
-    const buttonsConfig: ButtonsConfig = Object.assign({}, this.buttonsConfig);
-    buttonsConfig.buttons = buttonsConfig.buttons || [];
-
-    buttonsConfig.buttons.forEach((val: ButtonConfig) => {
+  private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {
+    buttons.forEach((val: ButtonConfig) => {
       const isValidBtnType: ButtonType | void = WHITELIST_BUTTON_TYPES
         .find((btnType: ButtonType) => btnType === val.type);
 
@@ -226,6 +223,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         throw new Error(`Unknown ButtonType. For custom types use ButtonType.CUSTOM`);
       }
     });
-    return buttonsConfig.buttons;
+    return buttons;
   }
 }

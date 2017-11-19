@@ -124,7 +124,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `ButtonsConfig` to show/hide buttons.
    * This is used only inside `ngOnInit()` to create `configButtons`
    */
-  @Input() buttonsConfig: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.DEFAULT};
+  @Input() buttonsConfig: ButtonsConfig;
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
@@ -138,6 +138,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Object of type `SlideConfig` to configure sliding of modal gallery.
    * Disabled by default.
+   * Leave here the default values because it's used by two sibling components.
    */
   @Input() slideConfig: SlideConfig = {
     infinite: false,
@@ -149,15 +150,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() description: Description;
 
-  @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
+  @Input() loadingConfig: LoadingConfig;
 
-  @Input() dotsConfig: DotsConfig = {visible: true};
+  @Input() dotsConfig: DotsConfig;
 
-  @Input() previewConfig: PreviewConfig = {
-    visible: true,
-    number: 3, arrows: true, clickable: true,
-    alwaysCenter: false, size: {width: 90, height: 90, unit: 'px'}
-  };
+  @Input() previewConfig: PreviewConfig;
 
   @Input() accessibilityConfig: AccessibilityConfig = defaultAccessibilityConfig;
 

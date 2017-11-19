@@ -1,6 +1,6 @@
 <header class="buttons-container">
 
-  <ng-container *ngIf="!buttonsConfig || buttonsConfig?.visible">
+  <ng-container *ngIf="!configButtons || configButtons?.visible">
     <a *ngFor="let btn of buttons; trackBy: trackById; let index = index"
        class="upper-button"
        ksSize [sizeConfig]="{width: btn.size?.width, height: btn.size?.height,

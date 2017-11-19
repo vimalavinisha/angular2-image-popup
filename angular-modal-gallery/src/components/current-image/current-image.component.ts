@@ -67,7 +67,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input() descriptionConfig: Description;
 
-  @Input() loadingConfig: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
+  @Input() loadingConfig: LoadingConfig;
 
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
@@ -100,6 +100,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   loading = true;
 
+  configLoading: LoadingConfig;
+
   /**
    * Private SWIPE_ACTION to define all swipe actions used by hammerjs.
    */
@@ -113,12 +115,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   private description: Description;
 
   ngOnInit() {
+    const defaultLoading: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
     const defaultDescription: Description = {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       imageText: 'Image ',
       numberSeparator: '/',
       beforeTextDescription: ' - '
     };
+
+    this.configLoading = Object.assign(defaultLoading, this.loadingConfig);
     this.description = Object.freeze(Object.assign(defaultDescription, this.descriptionConfig));
   }
 
