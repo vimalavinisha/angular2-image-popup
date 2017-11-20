@@ -41,7 +41,7 @@
     'compiler',
     'core',
     'platform-browser',
-    'platform-browser-dynamic',
+    'platform-browser-dynamic'
   ];
   // Individual files (~300 requests):
   function packIndex(pkgName) {

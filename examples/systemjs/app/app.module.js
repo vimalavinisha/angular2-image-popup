@@ -30,11 +30,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
+var core_1 = require("@angular/core");
 // ********************** angular-modal-gallery *****************************
-require("hammerjs"); // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs)
-require("mousetrap"); // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap)
+require("hammerjs"); // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
+require("mousetrap"); // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap`)
 var angular_modal_gallery_1 = require("angular-modal-gallery"); // <----------------- angular-modal-gallery library import
 // **************************************************************************
 var app_component_1 = require("./app.component");
@@ -43,12 +43,15 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            declarations: [app_component_1.AppComponent],
+            declarations: [
+                app_component_1.AppComponent
+            ],
             imports: [
                 platform_browser_1.BrowserModule,
                 angular_modal_gallery_1.ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
             ],
-            bootstrap: [app_component_1.AppComponent],
+            providers: [],
+            bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
     return AppModule;

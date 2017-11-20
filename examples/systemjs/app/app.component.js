@@ -32,9 +32,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var angular_modal_gallery_1 = require("angular-modal-gallery");
-var Observable_1 = require("rxjs/Observable");
-require("rxjs/add/observable/of");
-require("rxjs/add/operator/delay");
+var of_1 = require("rxjs/observable/of");
+var delay_1 = require("rxjs/operators/delay");
+var angular_modal_gallery_2 = require("angular-modal-gallery");
+var angular_modal_gallery_3 = require("angular-modal-gallery");
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
         this.openModalWindow = false;
@@ -42,40 +43,173 @@ var AppComponent = /** @class */ (function () {
         this.openModalWindowObservable = false;
         this.imagePointerObservable = 0;
         this.imagesArray = [
-            new angular_modal_gallery_1.Image(0, './app/assets/images/gallery/img1.jpg', null, // no thumb
+            new angular_modal_gallery_1.Image(0, '../app/assets/images/gallery/img1.jpg', null, // no thumb
             null, // no description
             'http://www.google.com'),
-            new angular_modal_gallery_1.Image(1, './app/assets/images/gallery/img2.png', // example with a PNG image
+            new angular_modal_gallery_1.Image(1, '../app/assets/images/gallery/img2.png', // example with a PNG image
             null, // no thumb
             'Description 2', null // url
             ),
-            new angular_modal_gallery_1.Image(2, './app/assets/images/gallery/img3.jpg', './app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
+            new angular_modal_gallery_1.Image(2, '../app/assets/images/gallery/img3.jpg', '../app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
             'Description 3', 'http://www.google.com'),
-            new angular_modal_gallery_1.Image(3, './app/assets/images/gallery/img4.jpg', null, // no thumb
+            new angular_modal_gallery_1.Image(3, '../app/assets/images/gallery/img4.jpg', null, // no thumb
             'Description 4', 'http://www.google.com'),
-            new angular_modal_gallery_1.Image(4, './app/assets/images/gallery/img5.jpg', './app/assets/images/gallery/thumbs/img5.jpg', null, // no description
+            new angular_modal_gallery_1.Image(4, '../app/assets/images/gallery/img5.jpg', '../app/assets/images/gallery/thumbs/img5.jpg', null, // no description
             null // url
             )
         ];
         // observable of an array of images with a delay to simulate a network request
-        this.images = Observable_1.Observable.of(this.imagesArray).delay(300);
+        this.images = of_1.of(this.imagesArray).pipe(delay_1.delay(300));
         // array with a single image inside (the first one)
-        this.singleImage = Observable_1.Observable.of([
-            new angular_modal_gallery_1.Image('./app/assets/images/gallery/img1.jpg', './app/assets/images/gallery/thumbs/img1.jpg', 'Description 1', 'http://www.google.com')
+        this.singleImage = of_1.of([
+            new angular_modal_gallery_1.Image(1, '../app/assets/images/gallery/img1.jpg', '../app/assets/images/gallery/thumbs/img1.jpg', 'Description 1', 'http://www.google.com')
         ]);
+        this.dotsConfig = {
+            visible: false
+        };
+        this.previewConfig = {
+            visible: false,
+            number: 3,
+            arrows: true,
+            clickable: true,
+            alwaysCenter: false,
+            size: {
+                width: 70,
+                height: 70,
+                unit: 'px'
+            }
+        };
         this.customDescription = {
+            strategy: angular_modal_gallery_3.DescriptionStrategy.ALWAYS_VISIBLE,
+            imageText: 'Look this image ',
+            numberSeparator: ' of ',
+            beforeTextDescription: ' => '
+        };
+        this.customDescriptionHideIfEmpty = {
+            strategy: angular_modal_gallery_3.DescriptionStrategy.HIDE_IF_EMPTY,
             imageText: 'Look this image ',
             numberSeparator: ' of ',
             beforeTextDescription: ' => '
         };
         this.customFullDescription = {
+            strategy: angular_modal_gallery_3.DescriptionStrategy.ALWAYS_VISIBLE,
             // you should build this value programmaticaly with the result of (show)="..()" event
             customFullDescription: 'Custom description of the current visible image',
+        };
+        this.customFullDescriptionHidden = {
+            strategy: angular_modal_gallery_3.DescriptionStrategy.ALWAYS_HIDDEN,
+            // you should build this value programmaticaly with the result of (show)="..()" event
+            customFullDescription: 'Custom description of the current visible image',
+        };
+        // customButtonsSize: ButtonSize = {
+        //   width: 10,
+        //   height: 10,
+        //   unit: 'px'
+        // };
+        this.buttonsConfigDefault = {
+            visible: true,
+            strategy: angular_modal_gallery_2.ButtonsStrategy.DEFAULT
+        };
+        this.buttonsConfigSimple = {
+            visible: true,
+            strategy: angular_modal_gallery_2.ButtonsStrategy.SIMPLE
+        };
+        this.buttonsConfigAdvanced = {
+            visible: true,
+            strategy: angular_modal_gallery_2.ButtonsStrategy.ADVANCED
+        };
+        this.buttonsConfigFull = {
+            visible: true,
+            strategy: angular_modal_gallery_2.ButtonsStrategy.FULL
+        };
+        this.customButtonsConfig = {
+            visible: true,
+            strategy: angular_modal_gallery_2.ButtonsStrategy.CUSTOM,
+            buttons: [
+                {
+                    className: 'fa fa-plus white',
+                    type: angular_modal_gallery_2.ButtonType.CUSTOM,
+                    ariaLabel: 'custom plus aria label',
+                    title: 'custom plus title',
+                    fontSize: '20px'
+                },
+                {
+                    className: 'fa fa-close white',
+                    type: angular_modal_gallery_2.ButtonType.CLOSE,
+                    ariaLabel: 'custom close aria label',
+                    title: 'custom close title',
+                    fontSize: '20px'
+                },
+                {
+                    className: 'fa fa-refresh white',
+                    type: angular_modal_gallery_2.ButtonType.REFRESH,
+                    ariaLabel: 'custom refresh aria label',
+                    title: 'custom refresh title',
+                    fontSize: '20px'
+                },
+                {
+                    className: 'fa fa-download white',
+                    type: angular_modal_gallery_2.ButtonType.DOWNLOAD,
+                    ariaLabel: 'custom download aria label',
+                    title: 'custom download title',
+                    fontSize: '20px'
+                },
+                {
+                    className: 'fa fa-external-link white',
+                    type: angular_modal_gallery_2.ButtonType.EXTURL,
+                    ariaLabel: 'custom exturl aria label',
+                    title: 'custom exturl title',
+                    fontSize: '20px'
+                }
+            ]
+        };
+        this.previewConfigFiveImages = {
+            visible: true,
+            number: 1
+        };
+        this.previewConfigNoArrows = {
+            visible: true,
+            arrows: false
+        };
+        this.previewConfigNoClickable = {
+            visible: true,
+            clickable: false
+        };
+        this.previewConfigAlwaysCenter = {
+            visible: true,
+            alwaysCenter: true
+        };
+        this.previewConfigCustomSize = {
+            visible: true,
+            size: { width: 30, height: 30, unit: 'px' }
+        };
+        this.accessibilityConfig = {
+            backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
+            backgroundTitle: 'CUSTOM background title',
+            modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
+            modalGalleryContentTitle: 'CUSTOM gallery content title',
+            loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
+            loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
+            mainContainerAriaLabel: 'CUSTOM Current image and navigation',
+            mainContainerTitle: 'CUSTOM main container title',
+            mainPrevImageAriaLabel: 'CUSTOM Previous image',
+            mainPrevImageTitle: 'CUSTOM Previous image',
+            mainNextImageAriaLabel: 'CUSTOM Next image',
+            mainNextImageTitle: 'CUSTOM Next image',
+            dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
+            dotsContainerTitle: 'CUSTOM dots container title',
+            dotAriaLabel: 'CUSTOM Navigate to image number',
+            previewsContainerAriaLabel: 'CUSTOM Image previews',
+            previewsContainerTitle: 'CUSTOM previews title',
+            previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
+            previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
+            previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
+            previewScrollNextTitle: 'CUSTOM Scroll next previews'
         };
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.imagesArraySubscription = Observable_1.Observable.of(null).delay(500).subscribe(function () {
+        this.imagesArraySubscription = of_1.of(null).pipe(delay_1.delay(500)).subscribe(function () {
             _this.imagesArraySubscribed = _this.imagesArray;
         });
     };
@@ -89,6 +223,26 @@ var AppComponent = /** @class */ (function () {
             _this.imagePointerObservable = val.indexOf(image);
             _this.openModalWindowObservable = true;
         });
+    };
+    AppComponent.prototype.onButtonBeforeHook = function (event) {
+        console.log('onButtonBeforeHook ', event);
+        // Invoked after a click on a button, but before that the related
+        // action is applied.
+        // For instance: this method will be invoked after a click
+        // of 'close' button, but before that the modal gallery
+        // will be really closed.
+        // You can check for button type to identify the clicked button
+        // for instance
+        // if (event === ButtonType.CLOSE) { // do something }
+    };
+    AppComponent.prototype.onButtonAfterHook = function (event) {
+        console.log('onButtonAfterHook ', event);
+        // Invoked after both a click on a button and its related action.
+        // For instance: this method will be invoked after a click
+        // of 'close' button and modal gallery is closed.
+        // You can check for button type to identify the clicked button
+        // for instance
+        // if (event === ButtonType.CLOSE) { // do something }
     };
     AppComponent.prototype.onImageLoaded = function (event) {
         // angular-modal-gallery will emit this event if it will load successfully input images
@@ -133,7 +287,7 @@ var AppComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'my-app',
             styleUrls: ['./app/main.css'],
-            template: "\n    <h1>angular-modal-gallery official systemjs demo</h1>\n    <hr>\n    <p>If you want, you can <b>add a random image</b> to every example\n      <button (click)=\"addRandomImage()\">Add image</button>\n    </p>\n    <br>\n    <hr>\n    <p class=\"red-text center-text\"><b>--- Only from version 3.2.x or greater ---</b></p>\n    <section id=\"Images32-1\">\n      <h3>1 - Array of images + slideConfig (without infinite sliding)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>\n        <li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>\n        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>\n        <li><b>infinite sliding disabled</b> because, <u class=\"red-text\">slideConfig.infinite = false</u></li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"></ks-modal-gallery>\n    </section>\n    <hr>\n    <br>\n    <br>\n    <p class=\"red-text center-text\"><b>--- Only from version 3.1.x or greater ---</b></p>\n    <section id=\"Images31-1\">\n      <h3>2 - Array of images + download (both 'ctrl+s' and button) <span class=\"red-text\">with 'buttonsConfig' and 'clickOutside'</span></h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>\n        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>\n        <li><b>download button NOT visible</b> because, <u class=\"red-text\">buttonsConfig.download = false</u></li>\n        <li><b>external url button NOT visible</b> (because <u class=\"red-text\">buttonsConfig.extUrl=false</u>)</li>\n        <li><b>default keyboard config</b> because, <u class=\"red-text\">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>\n        <li><b>close clicking on background</b> because, <u class=\"red-text\">[enableCloseOutside]</u> is true</li>\n        <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"imagesArray\"\n                        [buttonsConfig]=\"{download: false, extUrl: false, close: true}\"\n                        [downloadable]=\"true\"\n                        [enableCloseOutside]=\"true\"\n                        [description]=\"customFullDescription\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <section id=\"Images31-2\">\n      <h3>3 - Observable of images with delay(300) + download (both 'ctrl+s' and button) <span class=\"red-text\">with 'buttonsConfig' and 'keyboardConfig'</span></h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>\n        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>\n        <li><b>download button visible</b> because, <u class=\"red-text\">buttonsConfig.download = true</u> and downloadable is also = true</li>\n        <li><b>external url button visible</b> (because <u class=\"red-text\">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the\n          button)\n        </li>\n        <li><b>custom keyboard's config</b> because, <u class=\"red-text\">[keyboardConfig] is passed, so esc is remapped to 'q' (81), left to 'arrow down' (40), and right to 'arrow\n          up' (38)</u></li>\n        <li><b>NO close clicking on background</b> because, <u class=\"red-text\">[enableCloseOutside]</u> is false</li>\n        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [buttonsConfig]=\"{download: true, extUrl: true, close: true}\"\n                        [keyboardConfig]=\"{esc: 81, left: 40, right: 38}\"\n                        [downloadable]=\"true\"\n                        [enableCloseOutside]=\"false\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <section id=\"Images31-3\">\n      <h3>4 - Array of images without close button thanks to <span class=\"red-text\">'buttonsConfig'</span></h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>\n        <li><b>download button NOT visible</b> because, <u class=\"red-text\">buttonsConfig.download = false</u></li>\n        <li><b>external url button visible</b> (because <u class=\"red-text\">buttonsConfig.extUrl=true</u>), only if you provide as url a valid value (null/undefined hide the\n          button)\n        </li>\n        <li><b>close button NOT visible</b> because, <u class=\"red-text\">buttonsConfig.close = false</u></li>\n        <li><b>default keyboard config</b> because, <u class=\"red-text\">[keyboardConfig] is not defined</u>, so it will use default values (esc, left and right arrows)</li>\n        <li><b>close clicking on background</b> because, <u class=\"red-text\">[enableCloseOutside]</u> is true</li>\n        <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"imagesArray\"\n                        [buttonsConfig]=\"{download: false, extUrl: true, close: false}\"\n                        [enableCloseOutside]=\"true\"\n                        [description]=\"customFullDescription\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <hr>\n    <br>\n    <br>\n    <p class=\"center-text\"><b>--- For all 3.x.x versions ---</b></p>\n    <section id=\"Images1\">\n      <h3>5 - Observable of images with delay(300)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>\n        <li><b>no downloadable</b> images, because downloadable = false (showDownloadButton is false by default)</li>\n        <li><b>external url</b> button visible (because [showExtUrlButton]=\"true\"), only if you provide as url a valid value (null/undefined hide the button)</li>\n        <li><b>custom description</b> object = <b>imageText:</b> 'Look this image ', <b>numberSeparator:</b>' of ', <b>beforeTextDescription:</b>' => '</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [downloadable]=\"false\"\n                        [description]=\"customDescription\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <section id=\"Images2\">\n      <h3>6 - Observable of images with delay(300) + download (both 'ctrl+s' and button)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Observable&lt;<b>Array&lt;Image&gt;</b>&gt;</b> with 300ms of delay (to simulate a network request)</li>\n        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>\n        <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>\n        <li><b>external url button visible</b> (because [showExtUrlButton]=\"true\"), only if you provide as url a valid value (null/undefined hide the button)</li>\n        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [downloadable]=\"true\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <section id=\"Images3\">\n      <h3>7 - Array of images + download (both 'ctrl+s' and button)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>\n        <li><b>downloadable</b> images, because downloadable = true. So you can use <b>ctrl+s</b> to download the current image</li>\n        <li><b>download button displayed</b> because, showDownloadButton = true and downloadable is also = true</li>\n        <li><b>external url button NOT visible</b> (because [showExtUrlButton]=\"false\")</li>\n        <li><b>custom full description</b>, passing and object with <b>customFullDescription:</b> 'Custom full string description, Image=2'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"imagesArray\"\n                        [downloadable]=\"true\"\n                        [description]=\"customFullDescription\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <section id=\"Images4\">\n      <br>\n      <h3>8 - Observable of images with a single element and without a delay</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> without delay</li>\n        <li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>\n        <li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>\n        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <!-- both showDownloadButton and downloadable are false by default -->\n      <ks-modal-gallery [modalImages]=\"singleImage\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <section id=\"Images5\">\n      <br>\n      <h3>9 - Array with thumbnail pointers + download (only 'ctrl+s', without button)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Array&lt;Image&gt;</b></li>\n        <li><b>imagePointer as input</b></li>\n        <li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>\n        <li><b>external url button visible</b> (because [showExtUrlButton]=\"true\"), only if you provide as url a valid value (null/undefined hide the button)</li>\n        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <div *ngFor=\"let img of imagesArray; trackBy: trackById; let i = index\">\n        <div class=\"float-left\" *ngIf=\"i <= 2\">\n          <a class=\"more\" *ngIf=\"i==2\" (click)=\"openImageModal(img)\"> +{{imagesArray.length - 3}} more </a>\n          <img *ngIf=\"img.thumb\" class=\"list-img\" src=\"{{img.thumb}}\" (click)=\"openImageModal(img)\" alt='{{img.description}}'/>\n          <img *ngIf=\"!img.thumb\" class=\"list-img\" src=\"{{img.img}}\" (click)=\"openImageModal(img)\" alt='{{img.description}}'/>\n        </div>\n      </div>\n      <div *ngIf=\"openModalWindow\">\n        <ks-modal-gallery [modalImages]=\"imagesArray\"\n                          [downloadable]=\"true\"\n                          (hasData)=\"onImageLoaded($event)\"\n                          (close)=\"onCloseImageModal($event)\"\n                          (show)=\"onVisibleIndex($event)\"\n                          (firstImage)=\"onIsFirstImage($event)\"\n                          (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n      </div>\n    </section>\n    <br><br>\n    <section id=\"Images6\">\n      <br>\n      <h3>10 - Observable with thumbnail pointers and delay(300) + download (only 'ctrl+s', without button)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Observable&lt;Array&lt;Image&gt;&gt;</b> with 300ms of delay (to simulate a network request)</li>\n        <li><b>imagePointer as input</b></li>\n        <li><b>downloadable images only using ctrl+s</b>, because both downloadable = true, but showDownloadButton is false by default</li>\n        <li><b>external url button NOT visible</b> (because [showExtUrlButton]=\"false\")</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <div *ngFor=\"let img of images | async; trackBy: trackById; let i = index\">\n        <div class=\"float-left\" *ngIf=\"i <= 2\">\n          <a class=\"more\" *ngIf=\"i==2\" (click)=\"openImageModalObservable(img)\"> +{{(images | async)?.length - 3}}\n            more </a>\n          <img *ngIf=\"img.thumb\" class=\"list-img\" src=\"{{img.thumb}}\" (click)=\"openImageModalObservable(img)\" alt='{{img.description}}'/>\n          <img *ngIf=\"!img.thumb\" class=\"list-img\" src=\"{{img.img}}\" (click)=\"openImageModalObservable(img)\" alt='{{img.description}}'/>\n        </div>\n      </div>\n      <div *ngIf=\"openModalWindowObservable\">\n        <ks-modal-gallery [modalImages]=\"images\"\n                          [downloadable]=\"true\"\n                          (hasData)=\"onImageLoaded($event)\"\n                          (close)=\"onCloseImageModal($event)\"\n                          (show)=\"onVisibleIndex($event)\"\n                          (firstImage)=\"onIsFirstImage($event)\"\n                          (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n      </div>\n    </section>\n    <br><br>\n    <section id=\"Images7\">\n      <br>\n      <h3>11 - Array of images initialized inside a .subscribe() of an Observable with delay(500)</h3>\n      <p>modalGallery with</p>\n      <ul>\n        <li>modalImages is an <b>Array&lt;Image&gt;</b> initialized inside a subscribe to simulate a more realistic scenario</li>\n        <li><b>no downloadable</b>, because both showDownloadButton and downloadable are false by default</li>\n        <li><b>external url button NOT visible</b> (because [showExtUrlButton] is not defined, but is false by default)</li>\n        <li><b>default description</b>, for instance Image 2/5 - Description 1'</li>\n        <li>subscribed to all outputs (hasData, close, show, firstImage, lastImage)</li>\n      </ul>\n      <br>\n      <ks-modal-gallery [modalImages]=\"imagesArraySubscribed\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"></ks-modal-gallery>\n    </section>\n    <br><br>\n    <h4>Created by Stefano Cappa (Ks89)</h4>\n  "
+            template: "\n    <h1>angular-modal-gallery official angular-cli demo</h1>\n    <hr>\n    <p>If you want, you can <b>add a random image</b> to every example\n      <button (click)=\"addRandomImage()\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i>&nbsp;&nbsp;Add image</button>\n    </p>\n    <br>\n    <hr>\n\n    <h2>Minimal examples</h2>\n    <section>\n      <h3>A1 - Minimal demo - all defaults</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>A2 - Minimal demo - listen for events</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        (hasData)=\"onImageLoaded($event)\"\n                        (close)=\"onCloseImageModal($event)\"\n                        (show)=\"onVisibleIndex($event)\"\n                        (firstImage)=\"onIsFirstImage($event)\"\n                        (lastImage)=\"onIsLastImage($event)\"\n                        (buttonBeforeHook)=\"onButtonBeforeHook($event)\"\n                        (buttonAfterHook)=\"onButtonAfterHook($event)\"></ks-modal-gallery>\n    </section>\n    <br>\n    <hr>\n    <br>\n    <h2>Simple examples</h2>\n    <section>\n      <h3>B1 - Simple demo - only current image and buttons (previews and dots are hidden)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [previewConfig]=\"{visible: false}\"\n                        [dotsConfig]=\"{visible: false}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B2 - Simple demo - only current image (buttuns, previews and dots are hidden)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [buttonsConfig]=\"{visible: false, strategy: 1}\"\n                        [previewConfig]=\"{visible: false}\"\n                        [dotsConfig]=\"{visible: false}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B3 - Simple demo - disable closeOutside</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [enableCloseOutside]=\"false\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B4 - Simple demo - no downloadable at all</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [downloadable]=\"false\"\n                        [buttonsConfig]=\"{visible: true, strategy: 3}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B5 - Simple demo - no download button (only with keyboard)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [downloadable]=\"true\"\n                        [buttonsConfig]=\"{visible: true, strategy: 2}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B6 - Simple demo - download with both button and keyboard</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [downloadable]=\"true\"\n                        [buttonsConfig]=\"{visible: true, strategy: 3}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B7 - Simple demo - infinite sliding but NO previews</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [slideConfig]=\"{infinite: true, sidePreviews: {show: false}}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B8 - Simple demo - infinite sliding and previews</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [slideConfig]=\"{infinite: true, sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B9 - Simple demo - disable loading spinner</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [loadingConfig]=\"{enable: false, type: 1}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B10 - Simple demo - loading spinner of type Standard</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [loadingConfig]=\"{enable: true, type: 1}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B11 - Simple demo - loading spinner of type Circular <span style=\"color:blue;\">find a better spinner</span></h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [loadingConfig]=\"{enable: true, type: 2}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B12 - Simple demo - loading spinner of type Dots <span style=\"color:blue;\">find a better spinner</span></h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [loadingConfig]=\"{enable: true, type: 3}\"></ks-modal-gallery>\n    </section>\n\n\n    <section>\n      <h3>B13 - Simple demo - buttons config DEFAULT strategy (only close)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [buttonsConfig]=\"buttonsConfigDefault\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B14 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [buttonsConfig]=\"buttonsConfigSimple\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B15 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [buttonsConfig]=\"buttonsConfigAdvanced\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B16 - Simple demo - buttons config FULL strategy (all buttons)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [buttonsConfig]=\"buttonsConfigFull\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>B17 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [downloadable]=\"true\"\n                        [buttonsConfig]=\"customButtonsConfig\"></ks-modal-gallery>\n    </section>\n    <br>\n    <hr>\n    <br>\n    <h2>Advanced examples</h2>\n    <section>\n      <h3>C1 - Advanced demo - custom keyboard</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [keyboardConfig]=\"{esc: 81, left: 40, right: 38}\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C2 - Advanced demo - custom description always visible</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [description]=\"customDescription\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C3 - Advanced demo - custom description hide if empty</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [description]=\"customDescriptionHideIfEmpty\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C4 - Advanced demo - custom description always hidden</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [description]=\"customFullDescriptionHidden\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C5 - Advanced demo - custom FULL description always visible</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [description]=\"customFullDescription\"></ks-modal-gallery>\n    </section>\n\n\n    <section>\n      <h3>C6 - Advanced demo - preview custom configuration with 1 image (clickable)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [previewConfig]=\"previewConfigFiveImages\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C7 - Advanced demo - preview custom configuration without arrows (clickable)</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [previewConfig]=\"previewConfigNoArrows\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C8 - Advanced demo - preview custom configuration not clickable</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [previewConfig]=\"previewConfigNoClickable\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C9 - Advanced demo - preview custom configuration always center <span style=\"color:red;\">STILL NOT IMPLEMENTED</span> </h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [previewConfig]=\"previewConfigAlwaysCenter\"></ks-modal-gallery>\n    </section>\n    <section>\n      <h3>C10 - Advanced demo - preview custom configuration with custom size</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [previewConfig]=\"previewConfigCustomSize\"></ks-modal-gallery>\n    </section>\n\n\n    <section>\n      <h3>C11 - Advanced demo - accessibility config</h3>\n      <br>\n      <ks-modal-gallery [modalImages]=\"images\"\n                        [accessibilityConfig]=\"accessibilityConfig\"></ks-modal-gallery>\n    </section>\n\n\n    <br><br>\n    <h4>Created by Stefano Cappa (Ks89)</h4>\n\n  "
         })
     ], AppComponent);
     return AppComponent;

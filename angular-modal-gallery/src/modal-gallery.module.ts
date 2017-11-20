@@ -31,7 +31,6 @@ import { KeyboardServiceConfig } from './interfaces/keyboard-service-config.inte
 
 import { COMPONENTS } from './components/components';
 import { ModalGalleryComponent } from './components/modal-gallery/modal-gallery.component';
-import { RouterModule } from '@angular/router';
 
 export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 
@@ -39,7 +38,7 @@ export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>(
  * Module with `forRoot` method to import it in the root module of your application.
  */
 @NgModule({
-  imports: [ CommonModule, RouterModule ],
+  imports: [ CommonModule ],
   declarations: [ COMPONENTS, DIRECTIVES ],
   exports: [ ModalGalleryComponent ]
 })
