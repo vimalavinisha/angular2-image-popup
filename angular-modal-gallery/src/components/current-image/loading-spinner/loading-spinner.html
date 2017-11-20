@@ -6,20 +6,16 @@
       <div class="cssload-inner cssload-three"></div>
     </div>
   </ng-container>
+  <ng-container *ngIf="loadingConfig.type === loadingBars">
+    <div class="loader-bars">
+    </div>
+  </ng-container>
   <ng-container *ngIf="loadingConfig.type === loadingCircular">
-    <div class="loader">
-      <div class="one"></div>
-      <div class="two"></div>
-      <div class="three"></div>
-      <div class="four"></div>
+    <div class="loader-circular">
     </div>
   </ng-container>
   <ng-container *ngIf="loadingConfig.type === loadingDots">
-    <div class="loader">
-      <div class="inner one"></div>
-      <div class="inner two"></div>
-      <div class="inner three"></div>
-      <div class="inner four"></div>
+    <div class="loader-dots">
     </div>
   </ng-container>
 </div>

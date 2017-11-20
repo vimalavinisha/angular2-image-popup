@@ -33,9 +33,10 @@ import { LoadingType } from '../../../interfaces/loading-config.interface';
 @Component({
   selector: 'ks-loading-spinner',
   styleUrls: [
-    'style-loading-spinner-8.css',
-    'style-loading-spinner-11.css',
-    'style-loading-spinner-12.css'
+    'style-loading-spinner-standard.css',
+    'style-loading-spinner-dots.css',
+    'style-loading-spinner-bars.css',
+    'style-loading-spinner-circular.css'
   ],
   templateUrl: 'loading-spinner.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,6 +44,7 @@ import { LoadingType } from '../../../interfaces/loading-config.interface';
 export class LoadingSpinnerComponent {
 
   loadingStandard: LoadingType = LoadingType.STANDARD;
+  loadingBars: LoadingType = LoadingType.BARS;
   loadingCircular: LoadingType = LoadingType.CIRCULAR;
   loadingDots: LoadingType = LoadingType.DOTS;
 

@@ -12,5 +12,6 @@ export interface LoadingConfig {
 export enum LoadingType {
   STANDARD = 1,
   CIRCULAR,
+  BARS,
   DOTS
 }
