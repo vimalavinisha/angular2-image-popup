@@ -82,19 +82,22 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   };
 
   ngOnInit() {
-    this.configPreview = Object.assign(this.defaultPreviewConfig, this.previewConfig);
+    this.configPreview = Object.freeze(Object.assign(this.defaultPreviewConfig, this.previewConfig));
 
     // I use <number> in front of this.configPreview.number below, because I know that
     // this.configPreview.number will be always defined thanks to the line above  Object.assign(...),
     // however I'm getting an error in my IDE so I decided to add this useless cast.
 
     if (this.getIndex(this.currentImage) === 0) {
+      // first image
       this.start = 0;
       this.end = Math.min(<number>this.configPreview.number, this.images.length);
     } else if (this.getIndex(this.currentImage) === this.images.length - 1) {
+      // last image
       this.start = (this.images.length - 1) - (<number>this.configPreview.number - 1);
       this.end = this.images.length;
     } else {
+      // other images
       this.start = this.getIndex(this.currentImage) - Math.floor(<number>this.configPreview.number / 2);
       this.end = this.getIndex(this.currentImage) + Math.floor(<number>this.configPreview.number / 2) + 1;
     }
@@ -102,6 +105,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
   isActive(index: number) {
+    // FIXME active only if it is visible in previews
     return index === this.getIndex(this.currentImage);
   }
 
@@ -114,15 +118,23 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     const current: InternalLibImage = simpleChange.currentValue;
 
     if (prev && current && prev.id !== current.id) {
-      if (this.getIndex(prev, this.previews) > this.getIndex(current, this.previews)) {
-        if (this.getIndex(this.currentImage) === this.images.length - 2) {
-          return;
-        }
+
+      console.log('-prev ' + this.getIndex(prev));
+      console.log('-current ' + this.getIndex(current));
+
+      if (this.getIndex(prev) > this.getIndex(current)) {
+        // called previous
+        // if (this.getIndex(this.currentImage) === this.images.length - 1) {
+        //   console.warn('ngChanges PREVENTING PREVIOUS');
+        //   return;
+        // }
         this.previous();
       } else if (this.getIndex(prev, this.previews) < this.getIndex(current, this.previews)) {
-        if (this.getIndex(this.currentImage) === 1) {
-          return;
-        }
+        // called next
+        // if (this.getIndex(this.currentImage) === 0) {
+        //   console.warn('ngChanges PREVENTING NEXT');
+        //   return;
+        // }
         this.next();
       }
     }
@@ -167,35 +179,68 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
   private next() {
+    console.log('N next');
+
+    console.log('N prevent? ' + this.isPreventSliding(this.images.length - 1));
+
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
+      console.log('N prevent sliding - returning');
       return;
     }
 
+    console.log('N end ' + this.end + ' === length ' + this.images.length);
+
     if (this.end === this.images.length) {
+      console.log('N end - returning');
       return;
     }
+
+    console.log('N old start' + this.start);
+    console.log('N old end' + this.end);
 
     this.start++;
     this.end = Math.min(this.end + 1, this.images.length);
 
+    console.log('N new start' + this.start);
+    console.log('N new end' + this.end);
+
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+
+    console.log('N previews', this.previews);
   }
 
   private previous() {
+
+    console.log('P previous');
+
+    console.log('P prevent? ' + this.isPreventSliding(0));
+
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
+      console.log('P prevent sliding - returning');
       return;
     }
 
+    console.log('P start ' + this.start + ' === 0');
+
     if (this.start === 0) {
+      console.log('P start - returning');
       return;
     }
+
+    console.log('P old start' + this.start);
+    console.log('P old end' + this.end);
 
     this.start = Math.max(this.start - 1, 0);
     this.end = Math.min(this.end - 1, this.images.length);
 
+    console.log('P new start' + this.start);
+    console.log('P new end' + this.end);
+
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+
+    console.log('P previews', this.previews);
   }
 
   private isPreventSliding(boundaryIndex: number) {

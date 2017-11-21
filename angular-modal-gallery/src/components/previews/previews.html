@@ -14,11 +14,10 @@
 
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
       <img *ngIf="preview?.img"
-           class="inside preview-image"
-           [ngClass]="{'active': isActive(index)}"
+           class="inside preview-image {{isActive(index) ? 'active' : ''}}"
            [src]="preview.thumb ? preview.thumb : preview.img"
            ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height,
-         unitWidth: configPreview.size.unit, unitHeight: configPreview.size.unit}"
+             unitWidth: configPreview.size.unit, unitHeight: configPreview.size.unit}"
            [attr.aria-label]="preview.ariaLabel"
            [title]="preview.title"
            alt="{{preview.alt}}"
