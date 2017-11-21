@@ -104,9 +104,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
-  isActive(index: number) {
-    // FIXME active only if it is visible in previews
-    return index === this.getIndex(this.currentImage);
+  isActive(preview: InternalLibImage) {
+    // FIXME add null checks
+    return preview.id === this.currentImage.id;
   }
 
   ngOnChanges(changes: SimpleChanges) {

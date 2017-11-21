@@ -14,7 +14,7 @@
 
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
       <img *ngIf="preview?.img"
-           class="inside preview-image {{isActive(index) ? 'active' : ''}}"
+           class="inside preview-image {{isActive(preview) ? 'active' : ''}}"
            [src]="preview.thumb ? preview.thumb : preview.img"
            ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height,
              unitWidth: configPreview.size.unit, unitHeight: configPreview.size.unit}"
