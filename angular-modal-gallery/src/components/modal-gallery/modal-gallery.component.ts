@@ -230,15 +230,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonAfterHook.emit(event);
   }
 
+  // TODO implement on refresh
   onRefresh(event: ButtonEvent) {
     this.buttonBeforeHook.emit(event);
-    console.log('on refresh', event);
+    console.log('TODO implement on refresh inside the library', event);
     this.buttonAfterHook.emit(event);
   }
 
+  // TODO add demo to catch this event and remove the current image from the input array
   onDelete(event: ButtonEvent) {
     this.buttonBeforeHook.emit(event);
-    console.log('on delete', event);
+    console.log('TODO implement on delete in this example outside of this library', event);
     this.buttonAfterHook.emit(event);
   }
 
