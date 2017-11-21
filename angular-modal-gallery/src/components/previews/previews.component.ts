@@ -129,7 +129,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
         //   return;
         // }
         this.previous();
-      } else if (this.getIndex(prev, this.previews) < this.getIndex(current, this.previews)) {
+      } else if (this.getIndex(prev) < this.getIndex(current)) {
         // called next
         // if (this.getIndex(this.currentImage) === 0) {
         //   console.warn('ngChanges PREVENTING NEXT');

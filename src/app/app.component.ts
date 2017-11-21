@@ -310,7 +310,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // You can check for button type to identify the clicked button
     // for instance
-    // if (event === ButtonType.CLOSE) { // do something }
+    // if (event === ButtonType.DELETE) { // do something }
   }
 
   onButtonAfterHook(event: ButtonType) {
@@ -318,11 +318,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Invoked after both a click on a button and its related action.
     // For instance: this method will be invoked after a click
-    // of 'close' button and modal gallery is closed.
+    // of 'close' button, but before that the modal gallery
+    // will be really closed.
 
     // You can check for button type to identify the clicked button
     // for instance
-    // if (event === ButtonType.CLOSE) { // do something }
+    // if (event === ButtonType.DELETE) { // do something }
   }
 
   onImageLoaded(event: ImageModalEvent) {
