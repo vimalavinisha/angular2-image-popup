@@ -25,17 +25,17 @@
 
 import {
   OnInit, Input, Output, EventEmitter, Component, OnDestroy,
-  OnChanges, SimpleChanges, PLATFORM_ID, Inject, ChangeDetectionStrategy
+  OnChanges, SimpleChanges, PLATFORM_ID, Inject
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { ButtonEvent, ButtonsConfig, ButtonsStrategy } from '../../interfaces/buttons-config.interface';
+import { ButtonEvent, ButtonsConfig } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
 import { Description } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
-import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
+import { LoadingConfig } from '../../interfaces/loading-config.interface';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
@@ -107,13 +107,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * thumbs and the modal gallery.
    */
   @Input() modalImages: Observable<Image[]> | Image[];
-  // /**
-  //  * Number to open the modal gallery (passing a value >=0) showing the image with the
-  //  * imagePointer's index.
-  //  *
-  //  * Be careful, because this feature will be probably deprecated/changed in version 4.0.0
-  //  */
-  // @Input() imagePointer: number;
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
@@ -225,41 +218,62 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onCustomEmit(event: ButtonEvent) {
-    this.buttonBeforeHook.emit(event);
-    console.log('on onCustomEmit', event);
-    this.buttonAfterHook.emit(event);
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+    this.buttonBeforeHook.emit(eventToEmit);
+    console.log('on onCustomEmit', eventToEmit);
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   // TODO implement on refresh
   onRefresh(event: ButtonEvent) {
-    this.buttonBeforeHook.emit(event);
-    console.log('TODO implement on refresh inside the library', event);
-    this.buttonAfterHook.emit(event);
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+
+    this.buttonBeforeHook.emit(eventToEmit);
+    console.log('TODO implement on refresh inside the library', eventToEmit);
+
+    this.currentImage = Object.assign({}, this.currentImage, {previouslyLoaded: false});
+
+    // TODO add logic to hide and show the current image
+
+
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   // TODO add demo to catch this event and remove the current image from the input array
   onDelete(event: ButtonEvent) {
-    this.buttonBeforeHook.emit(event);
-    console.log('TODO implement on delete in this example outside of this library', event);
-    this.buttonAfterHook.emit(event);
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+
+    this.buttonBeforeHook.emit(eventToEmit);
+    console.log('TODO implement on delete in this example outside of this library', eventToEmit);
+
+    // TODO add login to change the current image calling next
+    // probqbly I have to move upper-buttons as children of current-image
+
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   onNavigate(event: ButtonEvent) {
-    this.buttonBeforeHook.emit(event);
-    console.log('on navigate', event);
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+
+    this.buttonBeforeHook.emit(eventToEmit);
+    console.log('on navigate', eventToEmit);
     // To support SSR
     if (isPlatformBrowser(this.platformId)) {
       // Client only code
-      window.location.href = <string>event.payload;
+      if (eventToEmit.image) {
+        window.location.href = eventToEmit.image.extUrl;
+      }
     }
-    this.buttonAfterHook.emit(event);
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   onDownload(event: ButtonEvent) {
-    this.buttonBeforeHook.emit(event);
-    console.log('on download', event);
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+
+    this.buttonBeforeHook.emit(eventToEmit);
+    console.log('on download', eventToEmit);
     this.downloadImage();
-    this.buttonAfterHook.emit(event);
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   // /**
@@ -268,10 +282,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   //  *  action that closed the modal gallery. NORMAL by default.
   //  */
   onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
-    this.buttonBeforeHook.emit(event);
-    console.log('on close', event);
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+
+    this.buttonBeforeHook.emit(eventToEmit);
+    console.log('on close', eventToEmit);
     this.closeGallery(action);
-    this.buttonAfterHook.emit(event);
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   closeGallery(action: Action = Action.NORMAL) {
@@ -402,6 +418,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this.keyboardService.reset();
+  }
+
+  // add other info to ButtonImage, for instance the current image as payload
+  private getButtonEventToEmit(event: ButtonEvent) {
+    return Object.assign(event, {image: this.currentImage});
   }
 
   /**

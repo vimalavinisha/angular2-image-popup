@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
@@ -127,7 +127,25 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     this.description = Object.freeze(Object.assign(defaultDescription, this.descriptionConfig));
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
+    const simpleChange: SimpleChange = changes.currentImage;
+    if (!simpleChange) {
+      return;
+    }
+    const prev: InternalLibImage = simpleChange.previousValue;
+    const current: InternalLibImage = simpleChange.currentValue;
+
+    console.log('ngOnChanges - prev ', prev);
+    console.log('ngOnChanges - current ', current);
+
+    // if before was loaded, but not not
+    if (prev && current && prev.previouslyLoaded && !current.previouslyLoaded) {
+      this.loading = !current.previouslyLoaded;
+      console.log('Refreshing with loading: ' + this.loading);
+      this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
+      this.loading = false;
+    }
+
     if (this.isOpen) {
       this.manageSlideConfig(this.getIndex(this.currentImage));
     }

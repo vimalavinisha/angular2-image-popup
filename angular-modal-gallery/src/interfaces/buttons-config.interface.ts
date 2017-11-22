@@ -2,6 +2,7 @@
  * Interface `ButtonsConfig` to show/hide buttons.
  */
 import { Action } from './action.enum';
+import { Image } from "./image.class";
 
 export interface ButtonsConfig {
   visible: boolean;
@@ -25,11 +26,12 @@ export interface ButtonSize {
 }
 
 export interface ButtonEvent {
-  index: number;
+  buttonIndex: number;
   button: ButtonConfig;
-  payload: any;
+  image: Image | void;
   action: Action;
 }
+
 /**
  * Enum `ButtonsStrategy`.
  */

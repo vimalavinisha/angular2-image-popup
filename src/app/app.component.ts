@@ -28,13 +28,14 @@ import { Image, Action, ImageModalEvent, Description } from 'angular-modal-galle
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
-import { delay } from 'rxjs/operators';
+import { delay, filter } from 'rxjs/operators';
 
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { DescriptionStrategy } from 'angular-modal-gallery';
 import { PreviewConfig } from 'angular-modal-gallery';
 import { DotsConfig } from 'angular-modal-gallery';
 import { AccessibilityConfig } from 'angular-modal-gallery';
+import { ButtonEvent } from "../../angular-modal-gallery/src/interfaces/buttons-config.interface";
 
 @Component({
   selector: 'app-root',
@@ -300,7 +301,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  onButtonBeforeHook(event: ButtonType) {
+  onButtonBeforeHook(event: ButtonEvent) {
     console.log('onButtonBeforeHook ', event);
     // Invoked after a click on a button, but before that the related
     // action is applied.
@@ -308,22 +309,19 @@ export class AppComponent implements OnInit, OnDestroy {
     // of 'close' button, but before that the modal gallery
     // will be really closed.
 
-    // You can check for button type to identify the clicked button
-    // for instance
-    // if (event === ButtonType.DELETE) { // do something }
+    if (event.button.type === ButtonType.DELETE) {
+      this.imagesArray = this.imagesArray.filter((val: Image) => event.image && val.id !== event.image.id );
+      this.images = of(this.imagesArray).pipe(delay(300));
+    }
   }
 
-  onButtonAfterHook(event: ButtonType) {
+  onButtonAfterHook(event: ButtonEvent) {
     console.log('onButtonAfterHook ', event);
 
     // Invoked after both a click on a button and its related action.
     // For instance: this method will be invoked after a click
     // of 'close' button, but before that the modal gallery
     // will be really closed.
-
-    // You can check for button type to identify the clicked button
-    // for instance
-    // if (event === ButtonType.DELETE) { // do something }
   }
 
   onImageLoaded(event: ImageModalEvent) {

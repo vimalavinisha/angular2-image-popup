@@ -151,37 +151,32 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
       return;
     }
     const dataToEmit: ButtonEvent = {
-      index: index,
+      buttonIndex: index,
       button: button,
-      payload: null, // init as null
+      // current image init as null (I'll fill this value into the father of this component
+      image: null,
       action: action
     };
     switch (button.type) {
       case ButtonType.REFRESH:
-        dataToEmit.payload = true;
         this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
         break;
       case ButtonType.DELETE:
-        dataToEmit.payload = true;
         this.triggerOnMouseAndKeyboard(this.delete, event, dataToEmit);
         break;
       case ButtonType.EXTURL:
         if (!this.image || !this.image.extUrl) {
           return;
         }
-        dataToEmit.payload = this.image.extUrl;
         this.triggerOnMouseAndKeyboard(this.navigate, event, dataToEmit);
         break;
       case ButtonType.DOWNLOAD:
-        dataToEmit.payload = true;
         this.triggerOnMouseAndKeyboard(this.download, event, dataToEmit);
         break;
       case ButtonType.CLOSE:
-        dataToEmit.payload = true;
         this.triggerOnMouseAndKeyboard(this.close, event, dataToEmit);
         break;
       case ButtonType.CUSTOM:
-        dataToEmit.payload = true;
         this.triggerOnMouseAndKeyboard(this.customEmit, event, dataToEmit);
         break;
       default:
@@ -207,11 +202,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   }
 
   private addButtonIds(buttons: ButtonConfig[]) {
-    return buttons.map((val: ButtonConfig, i: number) => {
-      const btn: InternalButtonConfig = Object.assign({}, val);
-      btn.id = i;
-      return btn;
-    });
+    return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, {id: i}));
   }
 
   private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {
