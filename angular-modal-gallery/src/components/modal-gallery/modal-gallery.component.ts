@@ -25,7 +25,7 @@
 
 import {
   OnInit, Input, Output, EventEmitter, Component, OnDestroy,
-  OnChanges, SimpleChanges, PLATFORM_ID, Inject
+  OnChanges, SimpleChanges, PLATFORM_ID, Inject, ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
@@ -41,6 +41,7 @@ import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { DotsConfig } from '../../interfaces/dots-config.interface';
+import { CurrentImageComponent } from '../current-image/current-image.component';
 
 
 export class InternalLibImage extends Image {
@@ -159,6 +160,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Output() buttonBeforeHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   @Output() buttonAfterHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
+
+  @ViewChild(CurrentImageComponent) currentImageComponent;
+
   /**
    * Boolean that it is true if the modal gallery is visible
    */
@@ -235,7 +239,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
     // TODO add logic to hide and show the current image
 
-
     this.buttonAfterHook.emit(eventToEmit);
   }
 
@@ -243,11 +246,22 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   onDelete(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
 
+    const imageIndexToDelete: number = this.currentImageComponent.getIndex(event.image);
+
+    console.log('ondelete - imageIndexToDelete: ' + imageIndexToDelete);
+
     this.buttonBeforeHook.emit(eventToEmit);
     console.log('TODO implement on delete in this example outside of this library', eventToEmit);
 
     // TODO add login to change the current image calling next
-    // probqbly I have to move upper-buttons as children of current-image
+    // probably I have to move upper-buttons as children of current-image
+
+    if (imageIndexToDelete === this.images.length - 1) {
+      // last image
+      this.currentImageComponent.prevImage();
+    } else {
+      this.currentImageComponent.nextImage();
+    }
 
     this.buttonAfterHook.emit(eventToEmit);
   }
@@ -332,6 +346,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
 
   onChangeCurrentImage(event: ImageModalEvent) {
+    console.log('modal-gallery.component onChangeCurrentImage');
     const newIndex: number = <number>event.result;
 
     // TODO add validation

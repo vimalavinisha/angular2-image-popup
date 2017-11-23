@@ -35,7 +35,7 @@ import { DescriptionStrategy } from 'angular-modal-gallery';
 import { PreviewConfig } from 'angular-modal-gallery';
 import { DotsConfig } from 'angular-modal-gallery';
 import { AccessibilityConfig } from 'angular-modal-gallery';
-import { ButtonEvent } from "../../angular-modal-gallery/src/interfaces/buttons-config.interface";
+import { ButtonEvent } from '../../angular-modal-gallery/src/interfaces/buttons-config.interface';
 
 @Component({
   selector: 'app-root',
@@ -303,6 +303,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onButtonBeforeHook(event: ButtonEvent) {
     console.log('onButtonBeforeHook ', event);
+
+    if (!event || !event.button) {
+      return;
+    }
+
     // Invoked after a click on a button, but before that the related
     // action is applied.
     // For instance: this method will be invoked after a click
@@ -310,13 +315,17 @@ export class AppComponent implements OnInit, OnDestroy {
     // will be really closed.
 
     if (event.button.type === ButtonType.DELETE) {
-      this.imagesArray = this.imagesArray.filter((val: Image) => event.image && val.id !== event.image.id );
+      this.imagesArray = this.imagesArray.filter((val: Image) => event.image && val.id !== event.image.id);
       this.images = of(this.imagesArray).pipe(delay(300));
     }
   }
 
   onButtonAfterHook(event: ButtonEvent) {
     console.log('onButtonAfterHook ', event);
+
+    if (!event || !event.button) {
+      return;
+    }
 
     // Invoked after both a click on a button and its related action.
     // For instance: this method will be invoked after a click

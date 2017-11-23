@@ -289,6 +289,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    *  action that moved to the next image. NORMAL by default.
    */
   nextImage(action: Action = Action.NORMAL) {
+    console.log('called nextImage with action', action);
+
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
