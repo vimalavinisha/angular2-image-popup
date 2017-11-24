@@ -22,7 +22,10 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, OnDestroy, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, EventEmitter, Input,
+  OnChanges, OnInit, OnDestroy, Output, SimpleChange, SimpleChanges
+} from '@angular/core';
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
@@ -237,19 +240,26 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       // so the previous one is the last image
       // because infinite is true
       return this.images[this.images.length - 1];
+    } else if (currentIndex === 0) {
+      this.isFirstImage = true;
+      this.isLastImage = false;
     }
-    return this.images[Math.max(this.getIndex(this.currentImage) - 1, 0)];
+    return this.images[Math.max(currentIndex - 1, 0)];
   }
 
   getRightPreviewImage(): Image {
     const currentIndex: number = this.getIndex(this.currentImage);
+    // console.log('called getRightPreviewImage with currentIndex: ' + currentIndex + ' and currentImage', this.currentImage);
     if (this.slideConfig.infinite && currentIndex === this.images.length - 1) {
       // the current image is the last one,
       // so the next one is the first image
       // because infinite is true
       return this.images[0];
+    } else if (currentIndex === this.images.length - 1) {
+      this.isFirstImage = false;
+      this.isLastImage = true;
     }
-    return this.images[Math.min(this.getIndex(this.currentImage) + 1, this.images.length - 1)];
+    return this.images[Math.min(currentIndex + 1, this.images.length - 1)];
   }
 
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
@@ -289,8 +299,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    *  action that moved to the next image. NORMAL by default.
    */
   nextImage(action: Action = Action.NORMAL) {
-    console.log('called nextImage with action', action);
-
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;

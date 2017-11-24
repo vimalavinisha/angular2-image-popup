@@ -30,6 +30,11 @@ import {
   DIRECTION_RIGHT
 } from '../utils/user-input.util';
 
+/**
+ * Provides some useful methods to add accessibility to subclasses.
+ * In particular, it exposes a method to handle navigation event with both Keyboard and Mouse
+ * and another with also the direction (right or left).
+ */
 @Component({
   selector: 'ks-accessible',
   changeDetection: ChangeDetectionStrategy.OnPush
