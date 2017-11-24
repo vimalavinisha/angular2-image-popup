@@ -28,8 +28,6 @@ import {
   OnChanges, SimpleChanges, PLATFORM_ID, Inject, ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { ButtonEvent, ButtonsConfig } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
@@ -104,10 +102,10 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Array or Observable input that represents a list of Images used to show both
+   * Array input that represents a list of Images used to show both
    * thumbs and the modal gallery.
    */
-  @Input() modalImages: Observable<Image[]> | Image[];
+  @Input() modalImages: Image[];
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
@@ -179,13 +177,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * `Image` currently visible.
    */
   currentImage: InternalLibImage;
-
-  /**
-   * When you pass an Observable of `Image`s as `modalImages`, you have to subscribe to that
-   * Observable. So, to prevent memory leaks, you must store the subscription and call `unsubscribe` in
-   * OnDestroy.
-   */
-  private subscription: Subscription;
 
   /**
    * Constructor with the injection of ´KeyboardService´
@@ -424,14 +415,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Method `ngOnDestroy` to cleanup resources. In fact, this will unsubscribe
-   * all subscriptions and it will reset keyboard's service.
+   * Method `ngOnDestroy` to cleanup resources. In fact, this will reset keyboard's service.
    */
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
     this.keyboardService.reset();
   }
 
@@ -456,17 +442,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    *  Use this parameter to prevent multiple `hasData` events.
    */
   private initImages(emitHasDataEvent: boolean = false) {
-    if (this.modalImages instanceof Array) {
-      this.images = <InternalLibImage[]>this.modalImages;
-      this.completeInitialization(emitHasDataEvent);
-    } else {
-      if (this.modalImages instanceof Observable) {
-        this.subscription = (<Observable<Image[]>>this.modalImages).subscribe((val: Image[]) => {
-          this.images = <InternalLibImage[]>val;
-          this.completeInitialization(emitHasDataEvent);
-        });
-      }
-    }
+    // if (this.modalImages instanceof Array) {
+    this.images = <InternalLibImage[]>this.modalImages;
+    this.completeInitialization(emitHasDataEvent);
+    // } else {
+    //   if (this.modalImages instanceof Observable) {
+    //     this.subscription = (<Observable<Image[]>>this.modalImages).subscribe((val: Image[]) => {
+    //       this.images = <InternalLibImage[]>val;
+    //       this.completeInitialization(emitHasDataEvent);
+    //     });
+    //   }
+    // }
   }
 
   /**

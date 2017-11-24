@@ -22,13 +22,9 @@
  SOFTWARE.
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { of } from 'rxjs/observable/of';
-import { delay, filter } from 'rxjs/operators';
 
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { DescriptionStrategy } from 'angular-modal-gallery';
@@ -42,15 +38,12 @@ import { ButtonEvent } from '../../angular-modal-gallery/src/interfaces/buttons-
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 
   openModalWindow = false;
   imagePointer = 0;
 
-  openModalWindowObservable = false;
-  imagePointerObservable = 0;
-
-  imagesArray: Image[] = [
+  images: Image[] = [
     new Image(
       0,
       '../assets/images/gallery/img1.jpg',
@@ -88,25 +81,8 @@ export class AppComponent implements OnInit, OnDestroy {
     )
   ];
 
-  // observable of an array of images with a delay to simulate a network request
-  images: Observable<Image[]> = of(this.imagesArray).pipe(delay(300));
-
   // array with a single image inside (the first one)
-  singleImage: Observable<Image[]> = of([
-    new Image(
-      1,
-      '../assets/images/gallery/img1.jpg',
-      '../assets/images/gallery/thumbs/img1.jpg',
-      'Description 1',
-      'http://www.google.com'
-    )]
-  );
-
-  // array of images initialized inside the onNgInit() of this component
-  // in an asynchronous way subscribing to an Observable with a delay.
-  // This is not a real use-case, but it's a way to simulate a scenario where
-  // you have to subscribe to an Observable to get data and to set public vars
-  imagesArraySubscribed: Image[];
+  singleImage: Image[] = [this.images[0]];
 
   dotsConfig: DotsConfig = {
     visible: false
@@ -280,25 +256,9 @@ export class AppComponent implements OnInit, OnDestroy {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
-  private subscription: Subscription;
-  private imagesArraySubscription: Subscription;
-
-  ngOnInit() {
-    this.imagesArraySubscription = of(null).pipe(delay(500)).subscribe(() => {
-      this.imagesArraySubscribed = this.imagesArray;
-    });
-  }
-
   openImageModal(image: Image) {
-    this.imagePointer = this.imagesArray.indexOf(image);
+    this.imagePointer = this.images.indexOf(image);
     this.openModalWindow = true;
-  }
-
-  openImageModalObservable(image: Image) {
-    this.subscription = this.images.subscribe((val: Image[]) => {
-      this.imagePointerObservable = val.indexOf(image);
-      this.openModalWindowObservable = true;
-    });
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -315,8 +275,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // will be really closed.
 
     if (event.button.type === ButtonType.DELETE) {
-      this.imagesArray = this.imagesArray.filter((val: Image) => event.image && val.id !== event.image.id);
-      this.images = of(this.imagesArray).pipe(delay(300));
+      this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
     }
   }
 
@@ -359,23 +318,13 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
     this.openModalWindow = false;
-    this.openModalWindowObservable = false;
   }
 
   addRandomImage() {
     const newImage: Image = Object.assign({},
-      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
-      {id: this.imagesArray.length - 1 + 1});
-    this.imagesArray.push(newImage);
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if (this.imagesArraySubscription) {
-      this.imagesArraySubscription.unsubscribe();
-    }
+      this.images[Math.floor(Math.random() * this.images.length)],
+      {id: this.images.length - 1 + 1});
+    this.images.push(newImage);
   }
 
   trackById(index: number, item: Image) {
