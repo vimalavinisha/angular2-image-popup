@@ -275,7 +275,12 @@ export class AppComponent {
     // will be really closed.
 
     if (event.button.type === ButtonType.DELETE) {
+      // remove the current image and reassign all other to the array of images
+
+      console.log('delete in app with images count ' + this.images.length);
+
       this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+
     }
   }
 

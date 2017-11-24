@@ -24,6 +24,11 @@
                     (buttonBeforeHook)="onButtonBeforeHook($event)"
                     (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
 </section>
+<section>
+  <h3>A3 - Minimal demo - single image</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="singleImage"></ks-modal-gallery>
+</section>
 <br>
 <hr>
 <br>
@@ -36,7 +41,15 @@
                     [dotsConfig]="{visible: false}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B2 - Simple demo - only current image (buttuns, previews and dots are hidden)</h3>
+  <h3>B2 - Simple demo - only current image (buttons, previews and dots are hidden)</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="images"
+                    [buttonsConfig]="{visible: false, strategy: 1}"
+                    [previewConfig]="{visible: false}"
+                    [dotsConfig]="{visible: false}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>B2bis - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="{visible: false, strategy: 1}"
@@ -199,7 +212,7 @@
                     [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span> </h3>
+  <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span></h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>

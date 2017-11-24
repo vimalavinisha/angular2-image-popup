@@ -202,6 +202,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
    */
   ngOnChanges(changes: SimpleChanges) {
+    // TODO probably I should check changes.something
     // to prevent errors when you pass to this library
     // the array of images inside a subscribe block, in this way: `...subscribe(val => { this.images = arrayOfImages })`
     // As you can see, I'm providing examples in these situations in all official demos
@@ -233,7 +234,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonAfterHook.emit(eventToEmit);
   }
 
-  // TODO add demo to catch this event and remove the current image from the input array
   onDelete(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
 
@@ -244,8 +244,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonBeforeHook.emit(eventToEmit);
     console.log('TODO implement on delete in this example outside of this library', eventToEmit);
 
-    // TODO add login to change the current image calling next
-    // probably I have to move upper-buttons as children of current-image
+    console.log('----------- this.images.length ' + this.images.length);
+    if (this.images.length === 1) {
+      this.closeGallery();
+    }
 
     if (imageIndexToDelete === this.images.length - 1) {
       // last image
@@ -471,7 +473,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     //   this.showGallery = false;
     //   this.showModalGallery(this.imagePointer);
     // } else {
-    this.showGallery = true;
+
+    this.showGallery = this.images.length > 0;
     // }
   }
 
