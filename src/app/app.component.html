@@ -49,109 +49,110 @@
                     [dotsConfig]="{visible: false}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B2bis - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
+  <h3>B3 - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
+                    [slideConfig]="{infinite: false, sidePreviews: {show: false}}"
                     [buttonsConfig]="{visible: false, strategy: 1}"
                     [previewConfig]="{visible: false}"
                     [dotsConfig]="{visible: false}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B3 - Simple demo - disable closeOutside</h3>
+  <h3>B4 - Simple demo - disable closeOutside</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [enableCloseOutside]="false"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B4 - Simple demo - no downloadable at all</h3>
+  <h3>B5 - Simple demo - no downloadable at all</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="false"
                     [buttonsConfig]="{visible: true, strategy: 3}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B5 - Simple demo - no download button (only with keyboard)</h3>
+  <h3>B6 - Simple demo - no download button (only with keyboard)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="{visible: true, strategy: 2}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B6 - Simple demo - download with both button and keyboard</h3>
+  <h3>B7 - Simple demo - download with both button and keyboard</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="{visible: true, strategy: 3}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B7 - Simple demo - infinite sliding but NO previews</h3>
+  <h3>B8 - Simple demo - infinite sliding but NO previews</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B8 - Simple demo - infinite sliding and previews</h3>
+  <h3>B9 - Simple demo - infinite sliding and previews</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [slideConfig]="{infinite: true, sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B9 - Simple demo - disable loading spinner</h3>
+  <h3>B10 - Simple demo - disable loading spinner</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [loadingConfig]="{enable: false, type: 1}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B10 - Simple demo - loading spinner of type Standard</h3>
+  <h3>B11 - Simple demo - loading spinner of type Standard</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [loadingConfig]="{enable: true, type: 1}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B11 - Simple demo - loading spinner of type Circular</h3>
+  <h3>B12 - Simple demo - loading spinner of type Circular</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [loadingConfig]="{enable: true, type: 2}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B12 - Simple demo - loading spinner of type Bars</h3>
+  <h3>B13 - Simple demo - loading spinner of type Bars</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [loadingConfig]="{enable: true, type: 3}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B13 - Simple demo - loading spinner of type Dots</h3>
+  <h3>B14 - Simple demo - loading spinner of type Dots</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [loadingConfig]="{enable: true, type: 4}"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>B14 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
+  <h3>B15 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B15 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
+  <h3>B16 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B16 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>
+  <h3>B17 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B17 - Simple demo - buttons config FULL strategy (all buttons)</h3>
+  <h3>B18 - Simple demo - buttons config FULL strategy (all buttons)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigFull"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B18 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
+  <h3>B19 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
