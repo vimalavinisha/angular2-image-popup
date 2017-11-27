@@ -70,7 +70,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   start: number;
   end: number;
 
-  private defaultPreviewSize: ImageSize = {height: 90, width: 90, unit: 'px'};
+  private defaultPreviewSize: ImageSize = {height: 50, width: 50, unit: 'px'};
 
   private defaultPreviewConfig: PreviewConfig = {
     visible: true,
