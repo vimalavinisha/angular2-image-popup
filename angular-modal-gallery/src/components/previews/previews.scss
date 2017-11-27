@@ -22,18 +22,19 @@
  SOFTWARE.
  */
 
-/* all svgs are converted to base 64 with this website http://b64.io/ */
+// all svgs are converted to base 64 with this website http://b64.io/
 
 $container-margin-bottom: 15px;
 $preview-image-fade-in-time: .8s;
 $preview-image-side-margin: 2px;
+$preview-container-fade-in-time: .8s;
 
 $nav-color: #919191;
 $nav-animation-time: 1s;
 $nav-transition-time: .5s;
 $nav-side-margin: 10px;
 
-/** Mobile **/
+// Mobile
 @media only screen and (max-width: 767px), only screen and (max-device-width: 767px) {
   .previews-container {
     display: none;
@@ -52,37 +53,38 @@ $nav-side-margin: 10px;
   }
 }
 
-/** Others except for Modile **/
+// Others except for Modile
 @media only screen and (min-device-width: 768px) {
   .previews-container {
+    align-items: center;
+    animation: fadein-semi-visible08 $preview-container-fade-in-time;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
     margin-bottom: $container-margin-bottom;
 
     > .preview-image {
+      cursor: pointer;
       margin-left: $preview-image-side-margin;
       margin-right: $preview-image-side-margin;
       opacity: .7;
-      animation: fadein-semi-visible08 $preview-image-fade-in-time;
-      cursor: pointer;
+      //animation: fadein-semi-visible08 $preview-image-fade-in-time;
 
       &.active {
         opacity: 1;
-        animation: fadein-visible $preview-image-fade-in-time;
+        //animation: fadein-visible $preview-image-fade-in-time;
       }
 
       &:hover {
         opacity: 1;
-        transition-property: opacity;
         transition: all .5s ease;
+        transition-property: opacity;
       }
     }
 
     .nav {
       color: $nav-color;
-      animation: animatezoom $nav-animation-time;
+      //animation: animatezoom $nav-animation-time;
       cursor: pointer;
       transition: all $nav-transition-time;
 
@@ -113,10 +115,10 @@ $nav-side-margin: 10px;
 
 @mixin fadein($opacity-from, $opacity-to) {
   from {
-    opacity: $opacity-from
+    opacity: $opacity-from;
   }
   to {
-    opacity: $opacity-to
+    opacity: $opacity-to;
   }
 }
 

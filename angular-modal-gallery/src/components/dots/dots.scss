@@ -23,7 +23,7 @@
  */
 
 $container-margin-bottom: 30px;
-$dot-color: white;
+$dot-color: #fff;
 $dot-width: 10px;
 $dot-height: 10px;
 $dot-radius: 5px;
@@ -32,11 +32,11 @@ $fade-in-time: .8s;
 
 @mixin dot($color, $width, $height, $side-margin, $radius) {
   background: $color;
-  width: $width;
-  height: $height;
   border-radius: $radius;
+  height: $height;
   margin-left: $side-margin;
   margin-right: $side-margin;
+  width: $width;
 }
 
 .dots-container {
@@ -48,30 +48,30 @@ $fade-in-time: .8s;
   > .dot {
     @include dot($dot-color, $dot-width, $dot-height, $dot-side-margin, $dot-radius);
 
-    opacity: .5;
-    animation: fadein-semi-visible05 $fade-in-time;
+    //animation: fadein-semi-visible05 $fade-in-time;
     cursor: pointer;
+    opacity: .5;
 
     &:hover {
       opacity: .9;
-      transition-property: opacity;
       transition: all .5s ease;
+      transition-property: opacity;
     }
 
     &.active {
-      opacity: .9;
-      animation: fadein-semi-visible09 $fade-in-time;
+      //animation: fadein-semi-visible09 $fade-in-time;
       cursor: pointer;
+      opacity: .9;
     }
   }
 }
 
 @mixin fadein($opacity-from, $opacity-to) {
   from {
-    opacity: $opacity-from
+    opacity: $opacity-from;
   }
   to {
-    opacity: $opacity-to
+    opacity: $opacity-to;
   }
 }
 
