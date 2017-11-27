@@ -88,7 +88,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Declared here to be used inside the template.
    */
   clickAction: Action = Action.CLICK;
- 
+
   /**
    * Boolean that it's true when you are watching the first image (currently visible).
    */
