@@ -26,14 +26,14 @@ import {
   ChangeDetectionStrategy, Component, EventEmitter, Input,
   OnChanges, OnInit, Output, SimpleChange, SimpleChanges
 } from '@angular/core';
-import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
-import { Image } from '../../interfaces/image.class';
-import { PreviewConfig } from '../../interfaces/preview-config.interface';
-import { SlideConfig } from '../../interfaces/slide-config.interface';
-import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
-import { ImageSize } from '../../interfaces/image-size.interface';
-import { AccessibleComponent } from '../accessible.component';
-import { PREV, NEXT } from '../../utils/user-input.util';
+import {InternalLibImage} from '../modal-gallery/modal-gallery.component';
+import {Image} from '../../interfaces/image.class';
+import {PreviewConfig} from '../../interfaces/preview-config.interface';
+import {SlideConfig} from '../../interfaces/slide-config.interface';
+import {AccessibilityConfig} from '../../interfaces/accessibility.interface';
+import {ImageSize} from '../../interfaces/image-size.interface';
+import {AccessibleComponent} from '../accessible.component';
+import {PREV, NEXT} from '../../utils/user-input.util';
 
 /**
  * Component with image previews
@@ -88,18 +88,19 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     // this.configPreview.number will be always defined thanks to the line above  Object.assign(...),
     // however I'm getting an error in my IDE so I decided to add this useless cast.
 
-    if (this.getIndex(this.currentImage) === 0) {
-      // first image
-      this.start = 0;
-      this.end = Math.min(<number>this.configPreview.number, this.images.length);
-    } else if (this.getIndex(this.currentImage) === this.images.length - 1) {
-      // last image
-      this.start = (this.images.length - 1) - (<number>this.configPreview.number - 1);
-      this.end = this.images.length;
-    } else {
-      // other images
-      this.start = this.getIndex(this.currentImage) - Math.floor(<number>this.configPreview.number / 2);
-      this.end = this.getIndex(this.currentImage) + Math.floor(<number>this.configPreview.number / 2) + 1;
+    switch (this.getIndex(this.currentImage)) {
+      case 0:
+        // first image
+        this.setBeginningIndexesPreviews();
+        break;
+      case this.images.length - 1:
+        // first image
+        this.setEndIndexesPreviews();
+        break;
+      default:
+        // other images
+        this.setIndexesPreviews();
+        break;
     }
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
@@ -109,6 +110,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     return preview.id === this.currentImage.id;
   }
 
+
+  // TODO improve this method to simplify the sourcecode + remove duplicated codlines
   ngOnChanges(changes: SimpleChanges) {
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
@@ -122,19 +125,27 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       console.log('-prev ' + this.getIndex(prev));
       console.log('-current ' + this.getIndex(current));
 
+      // to manage infinite sliding I have to reset both `start` and `end` at the beginning
+      // to show again previews from the first image.
+      // This happens when you navigate over the last image to return to the first one
+      if ((this.getIndex(prev) === this.images.length - 1 && this.getIndex(current) === 0)) {
+        // first image
+        this.setBeginningIndexesPreviews();
+        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+        return;
+      }
+      // the same for the opposite case, when you navigate back from the fist image to go to the last one.
+      if ((this.getIndex(prev) === 0 && this.getIndex(current) === this.images.length - 1)) {
+        // last image
+        this.setEndIndexesPreviews();
+        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+        return;
+      }
+
+      // otherwise manage standard scenarios
       if (this.getIndex(prev) > this.getIndex(current)) {
-        // called previous
-        // if (this.getIndex(this.currentImage) === this.images.length - 1) {
-        //   console.warn('ngChanges PREVENTING PREVIOUS');
-        //   return;
-        // }
         this.previous();
       } else if (this.getIndex(prev) < this.getIndex(current)) {
-        // called next
-        // if (this.getIndex(this.currentImage) === 0) {
-        //   console.warn('ngChanges PREVENTING NEXT');
-        //   return;
-        // }
         this.next();
       }
     }
@@ -176,6 +187,21 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   trackById(index: number, item: Image) {
     return item.id;
+  }
+
+  private setBeginningIndexesPreviews() {
+    this.start = 0;
+    this.end = Math.min(<number>this.configPreview.number, this.images.length);
+  }
+
+  private setEndIndexesPreviews() {
+    this.start = (this.images.length - 1) - (<number>this.configPreview.number - 1);
+    this.end = this.images.length;
+  }
+
+  private setIndexesPreviews() {
+    this.start = this.getIndex(this.currentImage) - Math.floor(<number>this.configPreview.number / 2);
+    this.end = this.getIndex(this.currentImage) + Math.floor(<number>this.configPreview.number / 2) + 1;
   }
 
   private next() {
