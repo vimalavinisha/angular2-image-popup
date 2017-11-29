@@ -25,10 +25,11 @@
 import { ClickOutsideDirective } from './click-outside.directive';
 import { SizeDirective } from './size.directive';
 import { KeyboardNavigationDirective } from './keyboard-navigation.directive';
+import { ScrollStopDirective } from './scroll-stop.directive';
 
 /**
  * Array of all directives.
  */
 export const DIRECTIVES = [
-  ClickOutsideDirective, SizeDirective, KeyboardNavigationDirective
+  ClickOutsideDirective, SizeDirective, KeyboardNavigationDirective, ScrollStopDirective
 ];

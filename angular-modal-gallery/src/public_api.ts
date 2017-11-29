@@ -33,4 +33,4 @@ export { DotsConfig } from './interfaces/dots-config.interface';
 export { PreviewConfig } from './interfaces/preview-config.interface';
 export { AccessibilityConfig } from './interfaces/accessibility.interface';
 
-export { ButtonsConfig, ButtonsStrategy, ButtonType } from './interfaces/buttons-config.interface';
+export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './interfaces/buttons-config.interface';

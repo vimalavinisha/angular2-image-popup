@@ -111,7 +111,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
 
-  // TODO improve this method to simplify the sourcecode + remove duplicated codlines
+  // TODO improve this method to simplify the sourcecode + remove duplicated codelines
   ngOnChanges(changes: SimpleChanges) {
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
