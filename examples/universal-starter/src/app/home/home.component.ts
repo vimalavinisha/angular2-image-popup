@@ -1,25 +1,47 @@
+/*
+ The MIT License (MIT)
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+ Copyright (c) 2017 Stefano Cappa (Ks89)
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+
+import { Component } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/delay';
+
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
+import { DescriptionStrategy } from 'angular-modal-gallery';
+import { PreviewConfig } from 'angular-modal-gallery';
+import { DotsConfig } from 'angular-modal-gallery';
+import { AccessibilityConfig } from 'angular-modal-gallery';
+import { ButtonEvent } from 'angular-modal-gallery';
 
 @Component({
   selector: 'home',
   templateUrl: 'home.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   openModalWindow = false;
   imagePointer = 0;
 
-  openModalWindowObservable = false;
-  imagePointerObservable = 0;
-
-  imagesArray: Image[] = [
+  images: Image[] = [
     new Image(
       0,
       '../assets/images/gallery/img1.jpg',
@@ -57,32 +79,52 @@ export class HomeComponent implements OnInit {
     )
   ];
 
-  // observable of an array of images with a delay to simulate a network request
-  images: Observable<Image[]> = Observable.of(this.imagesArray).delay(300);
-
   // array with a single image inside (the first one)
-  singleImage: Observable<Image[]> = Observable.of([
-    new Image(
-      '../assets/images/gallery/img1.jpg',
-      '../assets/images/gallery/thumbs/img1.jpg',
-      'Description 1',
-      'http://www.google.com'
-    )]
-  );
+  singleImage: Image[] = [this.images[0]];
 
-  // array of images initialized inside the onNgInit() of this component
-  // in an asynchronous way subscribing to an Observable with a delay.
-  // This is not a real use-case, but it's a way to simulate a scenario where
-  // you have to subscribe to an Observable to get data and to set public vars
-  imagesArraySubscribed: Image[];
+  dotsConfig: DotsConfig = {
+    visible: false
+  };
+
+  previewConfig: PreviewConfig = {
+    visible: false,
+    number: 3,
+    arrows: true,
+    clickable: true,
+    alwaysCenter: false,
+    size: {
+      width: 70,
+      height: 70,
+      unit: 'px'
+    }
+  };
 
   customDescription: Description = {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    imageText: 'Look this image ',
+    numberSeparator: ' of ',
+    beforeTextDescription: ' => '
+  };
+
+  customDescriptionHideIfEmpty: Description = {
+    strategy: DescriptionStrategy.HIDE_IF_EMPTY,
     imageText: 'Look this image ',
     numberSeparator: ' of ',
     beforeTextDescription: ' => '
   };
 
   customFullDescription: Description = {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    // you should build this value programmaticaly with the result of (show)="..()" event
+    customFullDescription: 'Custom description of the current visible image',
+    // if customFullDescription !== undefined, all other fields will be ignored
+    // imageText: '',
+    // numberSeparator: '',
+    // beforeTextDescription: '',
+  };
+
+  customFullDescriptionHidden: Description = {
+    strategy: DescriptionStrategy.ALWAYS_HIDDEN,
     // you should build this value programmaticaly with the result of (show)="..()" event
     customFullDescription: 'Custom description of the current visible image',
     // if customFullDescription !== undefined, all other fields will be ignored
@@ -97,7 +139,25 @@ export class HomeComponent implements OnInit {
   //   unit: 'px'
   // };
 
+  buttonsConfigDefault: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.DEFAULT
+  };
+  buttonsConfigSimple: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.SIMPLE
+  };
+  buttonsConfigAdvanced: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.ADVANCED
+  };
+  buttonsConfigFull: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.FULL
+  };
+
   customButtonsConfig: ButtonsConfig = {
+    visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {
@@ -138,25 +198,101 @@ export class HomeComponent implements OnInit {
     ]
   };
 
-  private subscription: Subscription;
-  private imagesArraySubscription: Subscription;
 
-  ngOnInit() {
-    this.imagesArraySubscription = Observable.of(null).delay(500).subscribe(() => {
-      this.imagesArraySubscribed = this.imagesArray;
-    });
-  }
+  previewConfigFiveImages: PreviewConfig = {
+    visible: true,
+    number: 1
+  };
+
+  previewConfigNoArrows: PreviewConfig = {
+    visible: true,
+    arrows: false
+  };
+
+  previewConfigNoClickable: PreviewConfig = {
+    visible: true,
+    clickable: false
+  };
+
+  previewConfigAlwaysCenter: PreviewConfig = {
+    visible: true,
+    alwaysCenter: true
+  };
+
+  previewConfigCustomSize: PreviewConfig = {
+    visible: true,
+    size: {width: 30, height: 30, unit: 'px'}
+  };
+
+
+  accessibilityConfig: AccessibilityConfig = {
+    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
+    backgroundTitle: 'CUSTOM background title',
+
+    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
+    modalGalleryContentTitle: 'CUSTOM gallery content title',
+
+    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
+    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
+
+    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
+    mainContainerTitle: 'CUSTOM main container title',
+    mainPrevImageAriaLabel: 'CUSTOM Previous image',
+    mainPrevImageTitle: 'CUSTOM Previous image',
+    mainNextImageAriaLabel: 'CUSTOM Next image',
+    mainNextImageTitle: 'CUSTOM Next image',
+
+    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
+    dotsContainerTitle: 'CUSTOM dots container title',
+    dotAriaLabel: 'CUSTOM Navigate to image number',
+
+    previewsContainerAriaLabel: 'CUSTOM Image previews',
+    previewsContainerTitle: 'CUSTOM previews title',
+    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
+    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
+    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
+    previewScrollNextTitle: 'CUSTOM Scroll next previews'
+  };
 
   openImageModal(image: Image) {
-    this.imagePointer = this.imagesArray.indexOf(image);
+    this.imagePointer = this.images.indexOf(image);
     this.openModalWindow = true;
   }
 
-  openImageModalObservable(image: Image) {
-    this.subscription = this.images.subscribe((val: Image[]) => {
-      this.imagePointerObservable = val.indexOf(image);
-      this.openModalWindowObservable = true;
-    });
+  onButtonBeforeHook(event: ButtonEvent) {
+    console.log('onButtonBeforeHook ', event);
+
+    if (!event || !event.button) {
+      return;
+    }
+
+    // Invoked after a click on a button, but before that the related
+    // action is applied.
+    // For instance: this method will be invoked after a click
+    // of 'close' button, but before that the modal gallery
+    // will be really closed.
+
+    if (event.button.type === ButtonType.DELETE) {
+      // remove the current image and reassign all other to the array of images
+
+      console.log('delete in app with images count ' + this.images.length);
+
+      this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+
+    }
+  }
+
+  onButtonAfterHook(event: ButtonEvent) {
+    console.log('onButtonAfterHook ', event);
+
+    if (!event || !event.button) {
+      return;
+    }
+
+    // Invoked after both a click on a button and its related action.
+    // For instance: this method will be invoked after a click
+    // of 'close' button, but before that the modal gallery
+    // will be really closed.
   }
 
   onImageLoaded(event: ImageModalEvent) {
@@ -185,23 +321,13 @@ export class HomeComponent implements OnInit {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
     this.openModalWindow = false;
-    this.openModalWindowObservable = false;
   }
 
   addRandomImage() {
     const newImage: Image = Object.assign({},
-      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
-      {id: this.imagesArray.length - 1 + 1});
-    this.imagesArray.push(newImage);
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if (this.imagesArraySubscription) {
-      this.imagesArraySubscription.unsubscribe();
-    }
+      this.images[Math.floor(Math.random() * this.images.length)],
+      {id: this.images.length - 1 + 1});
+    this.images.push(newImage);
   }
 
   trackById(index: number, item: Image) {

@@ -40,6 +40,7 @@ import { ButtonEvent } from 'angular-modal-gallery';
   styleUrls: ['./app/main.css'],
   template: `
     <h1>angular-modal-gallery official angular-cli demo</h1>
+    <hr>
     <p>If you want, you can <b>add a random image</b> to every example
       <button (click)="addRandomImage()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
     </p>
