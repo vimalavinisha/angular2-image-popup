@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Directive, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import {Directive, Output, EventEmitter, HostListener, Input} from '@angular/core';
 
 /**
  * Directive to close the modal gallery clicking on the semi-transparent background.
@@ -38,11 +38,11 @@ export class ClickOutsideDirective {
 
   @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @HostListener('click', ['$event.target'])
-  onClick(targetElement: Element) {
-
-    // TODO find a way to add stop Propagation
-    // event.stopPropagation();
+  @HostListener('click', ['$event'])
+  onClick(event: MouseEvent) {
+    event.stopPropagation();
+    
+    const targetElement: Element = event.toElement;
 
     if (!this.clickOutsideEnable || !targetElement) {
       return false;
