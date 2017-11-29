@@ -231,6 +231,22 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
     // TODO add logic to hide and show the current image
 
+    console.log('onRefresh', this.currentImage);
+
+    // const indexNum: number = this.currentImageComponent.getIndex();
+
+    // this.images = this.images.map((val: InternalLibImage, index: number) => {
+    //   if (index !== 2) {
+    //     return val;
+    //   } else {
+    //     const img: InternalLibImage = Object.assign({}, val, {previouslyLoaded: false});
+    //     return img;
+    //   }
+    // });
+    //
+    // this.closeGallery();
+    // this.showModalGallery(2);
+
     this.buttonAfterHook.emit(eventToEmit);
   }
 
@@ -267,7 +283,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     // To support SSR
     if (isPlatformBrowser(this.platformId)) {
       // Client only code
-      if (eventToEmit.image) {
+      if (eventToEmit.image && eventToEmit.image.extUrl) {
         window.location.href = eventToEmit.image.extUrl;
       }
     }
@@ -370,7 +386,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   onClickPreview(preview: Image) {
     console.log('modalgallery click preview with id: ' + preview.id);
-    this.currentImage = this.images.find((img: InternalLibImage) => img.id === preview.id);
+    const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
+    if (!!imageFound) {
+      this.currentImage = <InternalLibImage>imageFound;
+    }
   }
 
   /**

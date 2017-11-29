@@ -2,7 +2,7 @@
  * Interface `ButtonsConfig` to show/hide buttons.
  */
 import { Action } from './action.enum';
-import { Image } from "./image.class";
+import { InternalLibImage } from '../components/modal-gallery/modal-gallery.component';
 
 export interface ButtonsConfig {
   visible: boolean;
@@ -28,7 +28,7 @@ export interface ButtonSize {
 export interface ButtonEvent {
   buttonIndex: number;
   button: ButtonConfig;
-  image: Image | void;
+  image: InternalLibImage | null;
   action: Action;
 }
 

@@ -40,7 +40,9 @@ export class ClickOutsideDirective {
 
   @HostListener('click', ['$event.target'])
   onClick(targetElement: Element) {
-    event.stopPropagation();
+
+    // TODO find a way to add stop Propagation
+    // event.stopPropagation();
 
     if (!this.clickOutsideEnable || !targetElement) {
       return false;
