@@ -24,7 +24,7 @@
 
 import {
   ChangeDetectionStrategy, Component, EventEmitter, Input,
-  OnChanges, OnInit, OnDestroy, Output, SimpleChange, SimpleChanges
+  OnChanges, OnInit, Output, SimpleChange, SimpleChanges
 } from '@angular/core';
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
@@ -52,7 +52,7 @@ import { PREV, NEXT } from '../../utils/user-input.util';
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges, OnDestroy {
+export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges {
 
   @Input() currentImage: InternalLibImage;
 
@@ -138,13 +138,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const prev: InternalLibImage = simpleChange.previousValue;
     const current: InternalLibImage = simpleChange.currentValue;
 
-    console.log('ngOnChanges - prev ', prev);
-    console.log('ngOnChanges - current ', current);
+    // console.log('ngOnChanges - prev ', prev);
+    // console.log('ngOnChanges - current ', current);
 
     // if before was loaded, but not not
     if (prev && current && prev.previouslyLoaded && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
-      console.log('Refreshing with loading: ' + this.loading);
+      // console.log('Refreshing with loading: ' + this.loading);
       this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
       this.loading = false;
     }
@@ -329,13 +329,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       // case this.SWIPE_ACTION.DOWN:
       //   break;
     }
-  }
-
-  /**
-   * Method `ngOnDestroy` to cleanup resources.
-   */
-  ngOnDestroy() {
-    console.log('CALLED ON DESTROY OF CURRENT_IMAGE_COMPONENT');
   }
 
   private handleBoundaries(currentIndex: number) {

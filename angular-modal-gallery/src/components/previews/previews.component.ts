@@ -122,8 +122,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
     if (prev && current && prev.id !== current.id) {
 
-      console.log('-prev ' + this.getIndex(prev));
-      console.log('-current ' + this.getIndex(current));
+      // console.log('-prev ' + this.getIndex(prev));
+      // console.log('-current ' + this.getIndex(current));
 
       // to manage infinite sliding I have to reset both `start` and `end` at the beginning
       // to show again previews from the first image.
@@ -174,8 +174,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
-    console.log('onEvent direction: ' + direction);
-    console.log('onEvent event:', event);
+    // console.log('onEvent direction: ' + direction);
+    // console.log('onEvent event:', event);
 
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
@@ -205,68 +205,68 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
   private next() {
-    console.log('N next');
+    // console.log('N next');
 
-    console.log('N prevent? ' + this.isPreventSliding(this.images.length - 1));
+    // console.log('N prevent? ' + this.isPreventSliding(this.images.length - 1));
 
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
-      console.log('N prevent sliding - returning');
+      // console.log('N prevent sliding - returning');
       return;
     }
 
-    console.log('N end ' + this.end + ' === length ' + this.images.length);
+    // console.log('N end ' + this.end + ' === length ' + this.images.length);
 
     if (this.end === this.images.length) {
-      console.log('N end - returning');
+      // console.log('N end - returning');
       return;
     }
 
-    console.log('N old start' + this.start);
-    console.log('N old end' + this.end);
+    // console.log('N old start' + this.start);
+    // console.log('N old end' + this.end);
 
     this.start++;
     this.end = Math.min(this.end + 1, this.images.length);
 
-    console.log('N new start' + this.start);
-    console.log('N new end' + this.end);
+    // console.log('N new start' + this.start);
+    // console.log('N new end' + this.end);
 
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
 
-    console.log('N previews', this.previews);
+    // console.log('N previews', this.previews);
   }
 
   private previous() {
 
-    console.log('P previous');
+    // console.log('P previous');
 
-    console.log('P prevent? ' + this.isPreventSliding(0));
+    // console.log('P prevent? ' + this.isPreventSliding(0));
 
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
-      console.log('P prevent sliding - returning');
+      // console.log('P prevent sliding - returning');
       return;
     }
 
-    console.log('P start ' + this.start + ' === 0');
+    // console.log('P start ' + this.start + ' === 0');
 
     if (this.start === 0) {
-      console.log('P start - returning');
+      // console.log('P start - returning');
       return;
     }
 
-    console.log('P old start' + this.start);
-    console.log('P old end' + this.end);
+    // console.log('P old start' + this.start);
+    // console.log('P old end' + this.end);
 
     this.start = Math.max(this.start - 1, 0);
     this.end = Math.min(this.end - 1, this.images.length);
 
-    console.log('P new start' + this.start);
-    console.log('P new end' + this.end);
+    // console.log('P new start' + this.start);
+    // console.log('P new end' + this.end);
 
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
 
-    console.log('P previews', this.previews);
+    // console.log('P previews', this.previews);
   }
 
   private isPreventSliding(boundaryIndex: number) {

@@ -48,8 +48,8 @@ export class ClickOutsideDirective {
       return false;
     }
 
-    console.log('id ', targetElement.id);
-    console.log('className ', targetElement.className);
+    // console.log('id ', targetElement.id);
+    // console.log('className ', targetElement.className);
 
     const isInside = targetElement.className && targetElement.className.startsWith('inside');
     const isHidden = targetElement.className.includes('hidden');

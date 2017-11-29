@@ -258,9 +258,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     console.log('ondelete - imageIndexToDelete: ' + imageIndexToDelete);
 
     this.buttonBeforeHook.emit(eventToEmit);
-    console.log('TODO implement on delete in this example outside of this library', eventToEmit);
 
-    console.log('----------- this.images.length ' + this.images.length);
     if (this.images.length === 1) {
       this.closeGallery();
     }
@@ -355,7 +353,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
 
   onChangeCurrentImage(event: ImageModalEvent) {
-    console.log('modal-gallery.component onChangeCurrentImage');
     const newIndex: number = <number>event.result;
 
     // TODO add validation
@@ -385,7 +382,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onClickPreview(preview: Image) {
-    console.log('modalgallery click preview with id: ' + preview.id);
     const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
     if (!!imageFound) {
       this.currentImage = <InternalLibImage>imageFound;
@@ -396,7 +392,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Method `downloadImage` to download the current visible image, only if `downloadable` is true.
    */
   downloadImage() {
-    console.log('downloadImage called with downloadImage: ' + this.downloadable);
     if (!this.downloadable) {
       return;
     }
@@ -406,14 +401,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       // so I have to switch to XMLHttpRequest
       this.downloadImageOnlyIEorEdge();
     } else {
-      console.log('downloadImageAllBrowsers');
       // for all other browsers
       this.downloadImageAllBrowsers();
     }
   }
 
   private downloadImageAllBrowsers() {
-    console.log('downloading...');
     const link = document.createElement('a');
     link.href = this.currentImage.img;
     link.setAttribute('download', this.getFileName(this.currentImage.img));
