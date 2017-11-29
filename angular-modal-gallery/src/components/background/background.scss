@@ -24,7 +24,9 @@
 
 $bg-color: black;
 $bg-opacity: .8;
-$bg-zindex: 30;
+// $bg-zindex is so high to be sure that modal gallery will be always on the top
+// for instance, bootstrap 4 navbar uses about 1000 as zindex.
+$bg-zindex: 9999;
 
 .ng-overlay {
   position: fixed;
