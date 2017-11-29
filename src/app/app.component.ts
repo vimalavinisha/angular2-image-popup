@@ -31,7 +31,7 @@ import { DescriptionStrategy } from 'angular-modal-gallery';
 import { PreviewConfig } from 'angular-modal-gallery';
 import { DotsConfig } from 'angular-modal-gallery';
 import { AccessibilityConfig } from 'angular-modal-gallery';
-import { ButtonEvent } from '../../angular-modal-gallery/src/interfaces/buttons-config.interface';
+import { ButtonEvent } from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-root',

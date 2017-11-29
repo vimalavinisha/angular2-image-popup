@@ -27,23 +27,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { of } from 'rxjs/observable/of';
-import { delay } from 'rxjs/operators/delay';
 
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { DescriptionStrategy } from 'angular-modal-gallery';
 import { PreviewConfig } from 'angular-modal-gallery';
 import { DotsConfig } from 'angular-modal-gallery';
 import { AccessibilityConfig } from 'angular-modal-gallery';
+import { ButtonEvent } from 'angular-modal-gallery';
 
 @Component({
   selector: 'my-app',
   styleUrls: ['./app/main.css'],
   template: `
     <h1>angular-modal-gallery official angular-cli demo</h1>
-    <hr>
     <p>If you want, you can <b>add a random image</b> to every example
       <button (click)="addRandomImage()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
     </p>
@@ -68,6 +64,11 @@ import { AccessibilityConfig } from 'angular-modal-gallery';
                         (buttonBeforeHook)="onButtonBeforeHook($event)"
                         (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
     </section>
+    <section>
+      <h3>A3 - Minimal demo - single image</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="singleImage"></ks-modal-gallery>
+    </section>
     <br>
     <hr>
     <br>
@@ -80,7 +81,7 @@ import { AccessibilityConfig } from 'angular-modal-gallery';
                         [dotsConfig]="{visible: false}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B2 - Simple demo - only current image (buttuns, previews and dots are hidden)</h3>
+      <h3>B2 - Simple demo - only current image (buttons, previews and dots are hidden)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [buttonsConfig]="{visible: false, strategy: 1}"
@@ -88,96 +89,116 @@ import { AccessibilityConfig } from 'angular-modal-gallery';
                         [dotsConfig]="{visible: false}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B3 - Simple demo - disable closeOutside</h3>
+      <h3>B3 - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [slideConfig]="{infinite: false, sidePreviews: {show: false}}"
+                        [buttonsConfig]="{visible: false, strategy: 1}"
+                        [previewConfig]="{visible: false}"
+                        [dotsConfig]="{visible: false}"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>B3bis - Simple demo - custom preview size</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [previewConfig]="{visible: true, size: {width: 90, height: 90, unit: 'px'}}"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>B4 - Simple demo - disable closeOutside</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [enableCloseOutside]="false"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B4 - Simple demo - no downloadable at all</h3>
+      <h3>B5 - Simple demo - no downloadable at all</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="false"
                         [buttonsConfig]="{visible: true, strategy: 3}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B5 - Simple demo - no download button (only with keyboard)</h3>
+      <h3>B6 - Simple demo - no download button (only with keyboard)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="true"
                         [buttonsConfig]="{visible: true, strategy: 2}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B6 - Simple demo - download with both button and keyboard</h3>
+      <h3>B7 - Simple demo - download with both button and keyboard</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="true"
                         [buttonsConfig]="{visible: true, strategy: 3}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B7 - Simple demo - infinite sliding but NO previews</h3>
+      <h3>B8 - Simple demo - infinite sliding but NO previews</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B8 - Simple demo - infinite sliding and previews</h3>
+      <h3>B9 - Simple demo - infinite sliding and previews</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [slideConfig]="{infinite: true, sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B9 - Simple demo - disable loading spinner</h3>
+      <h3>B10 - Simple demo - disable loading spinner</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [loadingConfig]="{enable: false, type: 1}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B10 - Simple demo - loading spinner of type Standard</h3>
+      <h3>B11 - Simple demo - loading spinner of type Standard</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [loadingConfig]="{enable: true, type: 1}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B11 - Simple demo - loading spinner of type Circular <span style="color:blue;">find a better spinner</span></h3>
+      <h3>B12 - Simple demo - loading spinner of type Circular</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [loadingConfig]="{enable: true, type: 2}"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B12 - Simple demo - loading spinner of type Dots <span style="color:blue;">find a better spinner</span></h3>
+      <h3>B13 - Simple demo - loading spinner of type Bars</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [loadingConfig]="{enable: true, type: 3}"></ks-modal-gallery>
     </section>
-
+    <section>
+      <h3>B14 - Simple demo - loading spinner of type Dots</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [loadingConfig]="{enable: true, type: 4}"></ks-modal-gallery>
+    </section>
 
     <section>
-      <h3>B13 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
+      <h3>B15 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B14 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
+      <h3>B16 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B15 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>
+      <h3>B17 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B16 - Simple demo - buttons config FULL strategy (all buttons)</h3>
+      <h3>B18 - Simple demo - buttons config FULL strategy (all buttons)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [buttonsConfig]="buttonsConfigFull"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B17 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
+      <h3>B19 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="true"
@@ -238,7 +259,7 @@ import { AccessibilityConfig } from 'angular-modal-gallery';
                         [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
     </section>
     <section>
-      <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span> </h3>
+      <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span></h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>
@@ -258,77 +279,65 @@ import { AccessibilityConfig } from 'angular-modal-gallery';
                         [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
     </section>
 
+    <section>
+      <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and buttonAfterHook</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [buttonsConfig]="buttonsConfigFull"
+                        (buttonBeforeHook)="onButtonBeforeHook($event)"
+                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+    </section>
 
     <br><br>
     <h4>Created by Stefano Cappa (Ks89)</h4>
 
   `
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 
   openModalWindow = false;
   imagePointer = 0;
 
-  openModalWindowObservable = false;
-  imagePointerObservable = 0;
-
-  imagesArray: Image[] = [
+  images: Image[] = [
     new Image(
       0,
-      '../app/assets/images/gallery/img1.jpg',
+      './app/assets/images/gallery/img1.jpg',
       null, // no thumb
       null, // no description
       'http://www.google.com'
     ),
     new Image(
       1,
-      '../app/assets/images/gallery/img2.png', // example with a PNG image
+      './app/assets/images/gallery/img2.png', // example with a PNG image
       null, // no thumb
       'Description 2',
       null // url
     ),
     new Image(
       2,
-      '../app/assets/images/gallery/img3.jpg',
-      '../app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
+      './app/assets/images/gallery/img3.jpg',
+      './app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
       'Description 3',
       'http://www.google.com'
     ),
     new Image(
       3,
-      '../app/assets/images/gallery/img4.jpg',
+      './app/assets/images/gallery/img4.jpg',
       null, // no thumb
       'Description 4',
       'http://www.google.com'
     ),
     new Image(
       4,
-      '../app/assets/images/gallery/img5.jpg',
-      '../app/assets/images/gallery/thumbs/img5.jpg',
+      './app/assets/images/gallery/img5.jpg',
+      './app/assets/images/gallery/thumbs/img5.jpg',
       null, // no description
       null // url
     )
   ];
 
-  // observable of an array of images with a delay to simulate a network request
-  images: Observable<Image[]> = of(this.imagesArray).pipe(delay(300));
-
   // array with a single image inside (the first one)
-  singleImage: Observable<Image[]> = of([
-    new Image(
-      1,
-      '../app/assets/images/gallery/img1.jpg',
-      '../app/assets/images/gallery/thumbs/img1.jpg',
-      'Description 1',
-      'http://www.google.com'
-    )]
-  );
-
-  // array of images initialized inside the onNgInit() of this component
-  // in an asynchronous way subscribing to an Observable with a delay.
-  // This is not a real use-case, but it's a way to simulate a scenario where
-  // you have to subscribe to an Observable to get data and to set public vars
-  imagesArraySubscribed: Image[];
+  singleImage: Image[] = [this.images[0]];
 
   dotsConfig: DotsConfig = {
     visible: false
@@ -502,50 +511,45 @@ export class AppComponent implements OnInit, OnDestroy {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
-  private subscription: Subscription;
-  private imagesArraySubscription: Subscription;
-
-  ngOnInit() {
-    this.imagesArraySubscription = of(null).pipe(delay(500)).subscribe(() => {
-      this.imagesArraySubscribed = this.imagesArray;
-    });
-  }
-
   openImageModal(image: Image) {
-    this.imagePointer = this.imagesArray.indexOf(image);
+    this.imagePointer = this.images.indexOf(image);
     this.openModalWindow = true;
   }
 
-  openImageModalObservable(image: Image) {
-    this.subscription = this.images.subscribe((val: Image[]) => {
-      this.imagePointerObservable = val.indexOf(image);
-      this.openModalWindowObservable = true;
-    });
-  }
-
-  onButtonBeforeHook(event: ButtonType) {
+  onButtonBeforeHook(event: ButtonEvent) {
     console.log('onButtonBeforeHook ', event);
+
+    if (!event || !event.button) {
+      return;
+    }
+
     // Invoked after a click on a button, but before that the related
     // action is applied.
     // For instance: this method will be invoked after a click
     // of 'close' button, but before that the modal gallery
     // will be really closed.
 
-    // You can check for button type to identify the clicked button
-    // for instance
-    // if (event === ButtonType.CLOSE) { // do something }
+    if (event.button.type === ButtonType.DELETE) {
+      // remove the current image and reassign all other to the array of images
+
+      console.log('delete in app with images count ' + this.images.length);
+
+      this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+
+    }
   }
 
-  onButtonAfterHook(event: ButtonType) {
+  onButtonAfterHook(event: ButtonEvent) {
     console.log('onButtonAfterHook ', event);
+
+    if (!event || !event.button) {
+      return;
+    }
 
     // Invoked after both a click on a button and its related action.
     // For instance: this method will be invoked after a click
-    // of 'close' button and modal gallery is closed.
-
-    // You can check for button type to identify the clicked button
-    // for instance
-    // if (event === ButtonType.CLOSE) { // do something }
+    // of 'close' button, but before that the modal gallery
+    // will be really closed.
   }
 
   onImageLoaded(event: ImageModalEvent) {
@@ -574,23 +578,13 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
     this.openModalWindow = false;
-    this.openModalWindowObservable = false;
   }
 
   addRandomImage() {
     const newImage: Image = Object.assign({},
-      this.imagesArray[Math.floor(Math.random() * this.imagesArray.length)],
-      {id: this.imagesArray.length - 1 + 1});
-    this.imagesArray.push(newImage);
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if (this.imagesArraySubscription) {
-      this.imagesArraySubscription.unsubscribe();
-    }
+      this.images[Math.floor(Math.random() * this.images.length)],
+      {id: this.images.length - 1 + 1});
+    this.images.push(newImage);
   }
 
   trackById(index: number, item: Image) {
