@@ -37,6 +37,7 @@ import {
  */
 @Component({
   selector: 'ks-accessible',
+  template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccessibleComponent {

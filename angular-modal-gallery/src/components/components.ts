@@ -30,7 +30,7 @@ import { DotsComponent } from './dots/dots.component';
 import { PreviewsComponent } from './previews/previews.component';
 import { CurrentImageComponent } from './current-image/current-image.component';
 import { LoadingSpinnerComponent } from './current-image/loading-spinner/loading-spinner.component';
-
+import { AccessibleComponent } from './accessible.component';
 export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 
 /**
@@ -38,5 +38,5 @@ export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
  */
 export const COMPONENTS = [
   BackgroundComponent, GalleryComponent, ModalGalleryComponent, UpperButtonsComponent,
-  DotsComponent, PreviewsComponent, CurrentImageComponent, LoadingSpinnerComponent
+  DotsComponent, PreviewsComponent, CurrentImageComponent, LoadingSpinnerComponent, AccessibleComponent
 ];
