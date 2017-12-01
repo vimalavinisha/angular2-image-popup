@@ -22,6 +22,7 @@
     "build:dev": "ng build --app dev",
     "build:prod": "ng build --prod",
     "build:aot": "ng build --aot",
+    "build:app": "npm run build:lib && ng build --app packages",
     "build:lib": "npm run clean && ng-packagr && npm run copy:other && npm run copy:dist",
     "build:examples": "npm run clean:examples && npm run copy:dist:examples",
     "build:all": "npm run build:lib && npm run build:examples",

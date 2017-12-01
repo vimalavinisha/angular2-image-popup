@@ -2,16 +2,20 @@
   "extends": "../tsconfig.json",
   "angularCompilerOptions": {
     "paths": {
-      "angular-modal-gallery": [ "../angular-modal-gallery/src/public_api.ts" ]
+      "angular-modal-gallery": [ "../dist/angular-modal-gallery" ]
     }
   },
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "module": "es2015",
+    "module": "commonjs",
+    "target": "es5",
     "baseUrl": "",
-    "types": [],
+    "types": [
+      "jasmine",
+      "node"
+    ],
     "paths": {
-      "angular-modal-gallery": [ "../angular-modal-gallery/src/public_api.ts" ]
+      "angular-modal-gallery": [ "../dist/angular-modal-gallery" ]
     }
   },
   "exclude": [
