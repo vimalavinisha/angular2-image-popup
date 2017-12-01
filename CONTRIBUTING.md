@@ -1,14 +1,13 @@
 Sometimes, shy developers have really good ideas. So don't be shy and open an issue! :)
 
-
 If you want to help me, modify the source code, but **before to create a pull request, follow these steps**
 
 **Attention! This is really important**
-Every time you'll run `npm install` inside a demo's folder, you must rebuild the library with `npm run build`
+Every time you'll run `npm install` inside a demo's folder, you must rebuild the library with `npm run build:lib`
 
 
 1. `npm install -g lite-server @angular/cli` (on macOS use `sudo npm install -g lite-server @angular/cli`)
-2. remove all `node_modules`, `.awt`, `aot` and `dist` folders everywhere, also in both `demo/systemjs`, `demo/webpack` and `demo/angular-cli` folders (if necessary)
+2. remove all `node_modules` and temp folders with compiled files (if necessary)
 3. `npm install` (from the root of this project)
 4. `npm run clean:all`
 5. `cd demo/systemjs`
