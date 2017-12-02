@@ -1,4 +1,5 @@
-<nav class="dots-container" [attr.aria-label]="accessibilityConfig.dotsContainerAriaLabel" [title]="accessibilityConfig.dotsContainerTitle">
+<nav class="dots-container" [attr.aria-label]="accessibilityConfig.dotsContainerAriaLabel"
+     [title]="accessibilityConfig.dotsContainerTitle">
   <ng-container *ngIf="!configDots || configDots?.visible">
     <div class="inside dot"
          *ngFor="let img of images; trackBy: trackById; let index = index"

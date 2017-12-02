@@ -31,7 +31,7 @@ import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
 
 /**
- * Component with dots
+ * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
  */
 @Component({
   selector: 'ks-dots',
@@ -40,35 +40,66 @@ import { NEXT } from '../../utils/user-input.util';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DotsComponent extends AccessibleComponent implements OnInit {
-
-  @Input() currentImage: InternalLibImage;
-
   /**
-   * Array of `InternalLibImage` that represent the model of this library with all images, thumbs and so on.
+   * Input of type `InternalLibImage` that represent the currently visible image.
+   */
+  @Input() currentImage: InternalLibImage;
+  /**
+   * Input of type Array of `InternalLibImage` that represent the model of this library with all images,
+   * thumbs and so on.
    */
   @Input() images: InternalLibImage[];
-
+  /**
+   * Input of type boolean that it is true if the modal gallery is visible.
+   * If yes, also this component should be visible.
+   */
   @Input() isOpen: boolean;
-
+  /**
+   * Input of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide DotsComponent.
+   */
   @Input() dotsConfig: DotsConfig = {visible: true};
-
+  /**
+   * Input of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
   @Input() accessibilityConfig: AccessibilityConfig;
-
+  /**
+   * Output to emit clicks over dots. The payload contains a number that represent
+   * the index of the clicked dot.
+   */
   @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
-
+  /**
+   * Object of type `DotsConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
   configDots: DotsConfig;
 
+  /**
+   * Method ´ngOnInit´ to build `defaultConfig` applying a default value.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself
+   * In particular, it's called only one time!!!
+   */
   ngOnInit() {
     const defaultConfig: DotsConfig = {visible: true};
-
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
   }
 
-  isActive(index: number) {
-    return index === this.getCurrentImageIndex(this.currentImage);
+  /**
+   * Method to check if an image is active (i.e. the current image).
+   * @param {number} index of the image to check if it's active or not
+   * @returns {boolean} true if is active, false otherwise
+   */
+  isActive(index: number): boolean {
+    return index === this.getImageIndex();
   }
 
-  getCurrentImageIndex(image: Image) {
+  /**
+   * Method to get the index of an image.
+   * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @returns {number} the index of the image
+   */
+  getImageIndex(image: Image = this.currentImage): number {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
@@ -77,6 +108,11 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
     return this.images.findIndex((val: Image) => val.id === image.id);
   }
 
+  /**
+   * Method called by events from keyboard and mouse.
+   * @param {number} index of the dot
+   * @param {KeyboardEvent | MouseEvent} event payload
+   */
   onDotEvent(index: number, event: KeyboardEvent | MouseEvent) {
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
@@ -84,7 +120,13 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
     }
   }
 
-  trackById(index: number, item: Image) {
+  /**
+   * Method used in the template to track ids in ngFor.
+   * @param {number} index of the array
+   * @param {Image} item of the array
+   * @returns {number} the id of the item
+   */
+  trackById(index: number, item: Image): number {
     return item.id;
   }
 

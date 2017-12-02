@@ -26,7 +26,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 
 /**
- * Component with the transparent background.
+ * Component with the semi-transparent background.
  */
 @Component({
   selector: 'ks-background',
@@ -35,6 +35,14 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BackgroundComponent {
+  /**
+   * Boolean that it is true if the modal gallery is visible.
+   * If yes, also this component should be visible.
+   */
   @Input() isOpen: boolean;
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
   @Input() accessibilityConfig: AccessibilityConfig;
 }
