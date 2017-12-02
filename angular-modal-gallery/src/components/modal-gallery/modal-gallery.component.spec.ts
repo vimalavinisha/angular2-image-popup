@@ -22,10 +22,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/takeLast';
 
-import {
-  Action, AngularModalGalleryComponent, Description, Image, ImageModalEvent,
-  Keyboard
-} from './modal-gallery.component';
+import { Action, AngularModalGalleryComponent, Description, Image, ImageModalEvent, Keyboard } from './modal-gallery.component';
 
 import { KeyboardService } from '../../services/keyboard.service';
 import { UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
@@ -37,15 +34,14 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 
 import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
 import { KeyboardServiceConfig } from '../../interfaces/keyboard-service-config.interface';
+import 'hammerjs';
+import 'mousetrap';
 
 const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 
 function setupRouter(injector: KeyboardServiceConfig) {
   return new KeyboardService(injector);
 }
-
-import 'hammerjs';
-import 'mousetrap';
 
 let comp: AngularModalGalleryComponent;
 let fixture: ComponentFixture<AngularModalGalleryComponent>;
@@ -102,14 +98,14 @@ function initTestBed() {
   TestBed.configureTestingModule({
     declarations: [AngularModalGalleryComponent, UpperButtonsComponent,
       GalleryComponent, CloseButtonDirective, ExternalUrlButtonDirective,
-      DownloadButtonDirective, ClickOutsideDirective],
+      DownloadButtonDirective, ClickOutsideDirective]
   }).overrideComponent(AngularModalGalleryComponent, {
     set: {
       providers: [
         {
           provide: KeyboardService,
           useFactory: setupRouter,
-          deps: [ KEYBOARD_CONFIGURATION ]
+          deps: [KEYBOARD_CONFIGURATION]
         },
         {
           provide: KEYBOARD_CONFIGURATION,
@@ -455,7 +451,7 @@ describe('AngularModalGalleryComponent', () => {
 
     IMAGES.forEach((val: Image, index: number) => {
       it(`should display the modal gallery and check for the CUSTOM description. Test i=${index}`, () => {
-        const customDesc =  {
+        const customDesc = {
           imageText: 'Look this image ',
           numberSeparator: ' of ',
           beforeTextDescription: ' => '
@@ -781,7 +777,7 @@ describe('AngularModalGalleryComponent', () => {
 
 
     const CUSTOM_DESC: Array<Description> = [
-      { imageText: 'Look here ', beforeTextDescription: ' => '},
+      {imageText: 'Look here ', beforeTextDescription: ' => '}
       // { imageText: 'Look here ', numberSeparator: ' of '},
       // { numberSeparator: ' of ', beforeTextDescription: ' => '}
     ];

@@ -22,11 +22,11 @@
  SOFTWARE.
  */
 
-import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DIRECTIVES } from './directives/directives';
-import { KeyboardService, } from './services/keyboard.service';
+import { KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './interfaces/keyboard-service-config.interface';
 
 import { COMPONENTS } from './components/components';
@@ -38,9 +38,9 @@ export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>(
  * Module with `forRoot` method to import it in the root module of your application.
  */
 @NgModule({
-  imports: [ CommonModule ],
-  declarations: [ COMPONENTS, DIRECTIVES ],
-  exports: [ ModalGalleryComponent ]
+  imports: [CommonModule],
+  declarations: [COMPONENTS, DIRECTIVES],
+  exports: [ModalGalleryComponent]
 })
 export class ModalGalleryModule {
   static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {
@@ -54,7 +54,7 @@ export class ModalGalleryModule {
         {
           provide: KeyboardService,
           useFactory: setupRouter,
-          deps: [ KEYBOARD_CONFIGURATION ]
+          deps: [KEYBOARD_CONFIGURATION]
         }
       ]
     };

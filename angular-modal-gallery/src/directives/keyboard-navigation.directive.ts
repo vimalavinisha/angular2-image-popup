@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Directive, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Directive({
   selector: '[keyboard-navigation]'

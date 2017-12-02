@@ -23,10 +23,9 @@
  */
 
 import { Component, DebugElement, EventEmitter, Output } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture } from '@angular/core/testing';
 
 @Component({
   selector: 'test-click-outside',
@@ -51,6 +50,7 @@ import { ComponentFixture } from '@angular/core/testing';
 })
 class TestClickOutsideComponent {
   @Output() clicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   onClickOutside(event: boolean) {
     console.log('clicked outside in comp');
     this.clicked.emit(event);

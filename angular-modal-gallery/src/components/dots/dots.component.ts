@@ -56,7 +56,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
   @Input() isOpen: boolean;
   /**
    * Input of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide DotsComponent.
+   * For instance, it contains a param to show/hide this component.
    */
   @Input() dotsConfig: DotsConfig = {visible: true};
   /**
@@ -69,6 +69,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * the index of the clicked dot.
    */
   @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
+
   /**
    * Object of type `DotsConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
@@ -76,8 +77,8 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
   configDots: DotsConfig;
 
   /**
-   * Method ´ngOnInit´ to build `defaultConfig` applying a default value.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself
+   * Method ´ngOnInit´ to build `configDots` applying a default value.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
@@ -97,15 +98,16 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
   /**
    * Method to get the index of an image.
    * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @param {Image[]} arrayOfImages to search the image within it
    * @returns {number} the index of the image
    */
-  getImageIndex(image: Image = this.currentImage): number {
+  getIndex(image: Image = this.currentImage, arrayOfImages: Image[] = this.images): number {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
       throw new Error(`Image 'id' is mandatory`);
     }
-    return this.images.findIndex((val: Image) => val.id === image.id);
+    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
   /**

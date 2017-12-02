@@ -22,13 +22,8 @@
  SOFTWARE.
  */
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import {
-  ENTER_KEY, SPACE_KEY,
-  MOUSE_MAIN_BUTTON_CLICK,
-  PREV, NEXT, NOTHING,
-  DIRECTION_RIGHT
-} from '../utils/user-input.util';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DIRECTION_RIGHT, ENTER_KEY, MOUSE_MAIN_BUTTON_CLICK, NEXT, NOTHING, PREV, SPACE_KEY } from '../utils/user-input.util';
 
 /**
  * Provides some useful methods to add accessibility to subclasses.

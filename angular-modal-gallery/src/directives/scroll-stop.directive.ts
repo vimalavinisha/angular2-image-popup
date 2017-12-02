@@ -1,5 +1,4 @@
-import { Directive, ElementRef, Input,
-  Renderer2, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[ksScrollStop]'

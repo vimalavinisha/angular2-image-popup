@@ -23,6 +23,7 @@
  */
 
 import { ModalGalleryModule } from './modal-gallery.module';
+
 export { ModalGalleryModule } from './modal-gallery.module';
 
 export { Action } from './interfaces/action.enum';

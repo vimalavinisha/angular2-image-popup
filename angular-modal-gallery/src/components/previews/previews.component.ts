@@ -22,18 +22,15 @@
  SOFTWARE.
  */
 
-import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input,
-  OnChanges, OnInit, Output, SimpleChange, SimpleChanges
-} from '@angular/core';
-import {InternalLibImage} from '../modal-gallery/modal-gallery.component';
-import {Image} from '../../interfaces/image.class';
-import {PreviewConfig} from '../../interfaces/preview-config.interface';
-import {SlideConfig} from '../../interfaces/slide-config.interface';
-import {AccessibilityConfig} from '../../interfaces/accessibility.interface';
-import {ImageSize} from '../../interfaces/image-size.interface';
-import {AccessibleComponent} from '../accessible.component';
-import {PREV, NEXT} from '../../utils/user-input.util';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
+import { Image } from '../../interfaces/image.class';
+import { PreviewConfig } from '../../interfaces/preview-config.interface';
+import { SlideConfig } from '../../interfaces/slide-config.interface';
+import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { ImageSize } from '../../interfaces/image-size.interface';
+import { AccessibleComponent } from '../accessible.component';
+import { NEXT, PREV } from '../../utils/user-input.util';
 
 /**
  * Component with image previews
@@ -45,33 +42,67 @@ import {PREV, NEXT} from '../../utils/user-input.util';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
-
-  @Input() currentImage: InternalLibImage;
-
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   * Input of type `InternalLibImage` that represent the currently visible image.
+   */
+  @Input() currentImage: InternalLibImage;
+  /**
+   * Input of type Array of `InternalLibImage` that represent the model of this library with all images,
+   * thumbs and so on.
    */
   @Input() images: InternalLibImage[];
-
+  /**
+   * Input of type boolean that it is true if the modal gallery is visible.
+   * If yes, also this component should be visible.
+   */
   @Input() isOpen: boolean;
-
+  /**
+   * Input of type `SlideConfig` to get `infinite sliding`.
+   */
   @Input() slideConfig: SlideConfig;
-
+  /**
+   * Input of type `PreviewConfig` to init PreviewsComponent's features.
+   * For instance, it contains a param to show/hide this component, sizes, and so on.
+   */
   @Input() previewConfig: PreviewConfig;
-
+  /**
+   * Input of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
   @Input() accessibilityConfig: AccessibilityConfig;
-
+  /**
+   * Output to emit the clicked preview. The payload contains the `InternalLibImage` associated to the clicked preview.
+   */
   @Output() clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
-
+  /**
+   * Input of type Array of `InternalLibImage` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
   previews: InternalLibImage[] = [];
-
+  /**
+   * Object of type `PreviewConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
   configPreview: PreviewConfig;
 
+  /**
+   * Start index of the images Input used to display previews.
+   */
   start: number;
+  /**
+   * End index of the images Input used to display previews.
+   */
   end: number;
 
+  /**
+   * Default preview size object
+   * @type ImageSize
+   */
   private defaultPreviewSize: ImageSize = {height: 50, width: 50, unit: 'px'};
-
+  /**
+   * Default preview config object
+   * @type PreviewConfig
+   */
   private defaultPreviewConfig: PreviewConfig = {
     visible: true,
     number: 3,
@@ -81,20 +112,21 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     size: this.defaultPreviewSize
   };
 
+  /**
+   * Method ´ngOnInit´ to build `configPreview` applying a default value and also to
+   * init the `previews` array.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
+   */
   ngOnInit() {
     this.configPreview = Object.freeze(Object.assign(this.defaultPreviewConfig, this.previewConfig));
-
-    // I use <number> in front of this.configPreview.number below, because I know that
-    // this.configPreview.number will be always defined thanks to the line above  Object.assign(...),
-    // however I'm getting an error in my IDE so I decided to add this useless cast.
-
     switch (this.getIndex(this.currentImage)) {
       case 0:
         // first image
         this.setBeginningIndexesPreviews();
         break;
       case this.images.length - 1:
-        // first image
+        // last image
         this.setEndIndexesPreviews();
         break;
       default:
@@ -105,13 +137,26 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
-  isActive(preview: InternalLibImage) {
-    // FIXME add null checks
+  /**
+   * Method to check if an image is active (i.e. a preview image).
+   * @param {InternalLibImage} preview an image to check if it's active or not
+   * @returns {boolean} true if is active, false otherwise
+   */
+  isActive(preview: InternalLibImage): boolean {
+    if (!preview || !this.currentImage) {
+      return false;
+    }
     return preview.id === this.currentImage.id;
   }
 
 
   // TODO improve this method to simplify the sourcecode + remove duplicated codelines
+  /**
+   * Method ´ngOnChanges´ to update `previews` array.
+   * Also, both `start` and `end` local variables will be updated accordingly.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called when any data-bound property of a directive changes!!!
+   */
   ngOnChanges(changes: SimpleChanges) {
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
@@ -121,10 +166,6 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     const current: InternalLibImage = simpleChange.currentValue;
 
     if (prev && current && prev.id !== current.id) {
-
-      // console.log('-prev ' + this.getIndex(prev));
-      // console.log('-current ' + this.getIndex(current));
-
       // to manage infinite sliding I have to reset both `start` and `end` at the beginning
       // to show again previews from the first image.
       // This happens when you navigate over the last image to return to the first one
@@ -151,7 +192,13 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     }
   }
 
-  getIndex(image: Image, arrayOfImages: Image[] = this.images) {
+  /**
+   * Method to get the index of an image.
+   * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @param {Image[]} arrayOfImages to search the image within it
+   * @returns {number} the index of the image
+   */
+  getIndex(image: Image = this.currentImage, arrayOfImages: Image[] = this.images): number {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
@@ -160,11 +207,16 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
+  /**
+   * Method called by events from both keyboard and mouse over a preview.
+   * This will trigger the clickpreview output with the input preview as payload.
+   * @param {InternalLibImage} preview that triggered this method
+   * @param {KeyboardEvent | MouseEvent} event payload
+   */
   onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent) {
     if (!this.configPreview || !this.configPreview.clickable) {
       return;
     }
-
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
       this.clickPreview.emit(preview);
@@ -173,10 +225,12 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     }
   }
 
+  /**
+   * Method called by events from both keyboard and mouse over a navigation arrow.
+   * @param {string} direction of the navigation that can be either 'next' or 'prev'
+   * @param {KeyboardEvent | MouseEvent} event payload
+   */
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
-    // console.log('onEvent direction: ' + direction);
-    // console.log('onEvent event:', event);
-
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
       this.next();
@@ -185,91 +239,84 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     }
   }
 
-  trackById(index: number, item: Image) {
+  /**
+   * Method used in the template to track ids in ngFor.
+   * @param {number} index of the array
+   * @param {Image} item of the array
+   * @returns {number} the id of the item
+   */
+  trackById(index: number, item: Image): number {
     return item.id;
   }
 
+  /**
+   * Private method to init both `start` and `end` to the beginning.
+   */
   private setBeginningIndexesPreviews() {
     this.start = 0;
     this.end = Math.min(<number>this.configPreview.number, this.images.length);
   }
 
+  /**
+   * Private method to init both `start` and `end` to the end.
+   */
   private setEndIndexesPreviews() {
     this.start = (this.images.length - 1) - (<number>this.configPreview.number - 1);
     this.end = this.images.length;
   }
 
+  /**
+   * Private method to update both `start` and `end` based on the currentImage.
+   */
   private setIndexesPreviews() {
     this.start = this.getIndex(this.currentImage) - Math.floor(<number>this.configPreview.number / 2);
     this.end = this.getIndex(this.currentImage) + Math.floor(<number>this.configPreview.number / 2) + 1;
   }
 
+  /**
+   * Private method to update the visible previews navigating to the right (next).
+   */
   private next() {
-    // console.log('N next');
-
-    // console.log('N prevent? ' + this.isPreventSliding(this.images.length - 1));
-
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
-      // console.log('N prevent sliding - returning');
       return;
     }
-
-    // console.log('N end ' + this.end + ' === length ' + this.images.length);
 
     if (this.end === this.images.length) {
-      // console.log('N end - returning');
       return;
     }
-
-    // console.log('N old start' + this.start);
-    // console.log('N old end' + this.end);
 
     this.start++;
     this.end = Math.min(this.end + 1, this.images.length);
 
-    // console.log('N new start' + this.start);
-    // console.log('N new end' + this.end);
-
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-
-    // console.log('N previews', this.previews);
   }
 
+  /**
+   * Private method to update the visible previews navigating to the left (previous).
+   */
   private previous() {
-
-    // console.log('P previous');
-
-    // console.log('P prevent? ' + this.isPreventSliding(0));
-
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
-      // console.log('P prevent sliding - returning');
       return;
     }
-
-    // console.log('P start ' + this.start + ' === 0');
 
     if (this.start === 0) {
-      // console.log('P start - returning');
       return;
     }
-
-    // console.log('P old start' + this.start);
-    // console.log('P old end' + this.end);
 
     this.start = Math.max(this.start - 1, 0);
     this.end = Math.min(this.end - 1, this.images.length);
 
-    // console.log('P new start' + this.start);
-    // console.log('P new end' + this.end);
-
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-
-    // console.log('P previews', this.previews);
   }
 
-  private isPreventSliding(boundaryIndex: number) {
+  /**
+   * Private method to block/permit sliding between previews.
+   * @param {number} boundaryIndex is the first or the last index of `images` input array
+   * @returns {boolean} if true block sliding, otherwise not
+   */
+  private isPreventSliding(boundaryIndex: number): boolean {
     return !!this.slideConfig && this.slideConfig.infinite === false &&
       this.getIndex(this.currentImage, this.previews) === boundaryIndex;
   }

@@ -22,10 +22,7 @@
  SOFTWARE.
  */
 
-import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input,
-  OnChanges, OnInit, Output, SimpleChange, SimpleChanges
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
@@ -36,7 +33,7 @@ import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.inte
 import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { AccessibleComponent } from '../accessible.component';
-import { PREV, NEXT } from '../../utils/user-input.util';
+import { NEXT, PREV } from '../../utils/user-input.util';
 
 /**
  * Component with the current image with

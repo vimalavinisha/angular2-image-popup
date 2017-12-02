@@ -59,7 +59,7 @@ const DOWNLOAD_NO_CONFIGS: Array<any> = [
   {download: false, extUrl: true, close: false},
   {download: false, extUrl: true, close: true},
   {extUrl: true},
-  {close: false},
+  {close: false}
 ];
 
 const EXTURL_YES_CONFIGS: Array<any> = [

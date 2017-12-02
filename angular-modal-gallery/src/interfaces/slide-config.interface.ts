@@ -6,7 +6,7 @@ export interface SlideConfig {
   sidePreviews?: SidePreviewsConfig;
 }
 
-export interface SidePreviewsConfig {
+export interface SidePreviewsConfig {
   show: boolean;
   width: number;
   height: number;

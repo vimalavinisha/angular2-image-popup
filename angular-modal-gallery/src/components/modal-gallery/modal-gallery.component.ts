@@ -23,10 +23,7 @@
  SOFTWARE.
  */
 
-import {
-  OnInit, Input, Output, EventEmitter, Component, OnDestroy,
-  OnChanges, SimpleChanges, PLATFORM_ID, Inject, ViewChild
-} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ButtonEvent, ButtonsConfig } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
@@ -97,7 +94,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
   selector: 'ks-modal-gallery',
   exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
-  templateUrl: 'modal-gallery.html',
+  templateUrl: 'modal-gallery.html'
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {

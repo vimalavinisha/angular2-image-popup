@@ -19,7 +19,7 @@ describe('KeyboardService', () => {
         {
           provide: KeyboardService,
           useFactory: setupRouter,
-          deps: [ KEYBOARD_CONFIGURATION ]
+          deps: [KEYBOARD_CONFIGURATION]
         },
         {
           provide: KEYBOARD_CONFIGURATION,

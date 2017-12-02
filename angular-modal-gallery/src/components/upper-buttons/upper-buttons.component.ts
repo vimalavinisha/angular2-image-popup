@@ -22,12 +22,9 @@
  SOFTWARE.
  */
 
-import { Input, Output, EventEmitter, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import {
-  ButtonConfig, ButtonEvent, ButtonsConfig, ButtonSize,
-  ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES
-} from '../../interfaces/buttons-config.interface';
+import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonSize, ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES } from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';

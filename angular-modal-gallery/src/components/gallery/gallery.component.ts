@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Input, Output, EventEmitter, Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Image } from '../../interfaces/image.class';
 
 /**
