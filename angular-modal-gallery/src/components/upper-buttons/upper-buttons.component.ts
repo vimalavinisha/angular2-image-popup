@@ -82,16 +82,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
-   * Enum of type `Action` that represents a mouse click on a button.
-   * Declared here to be used inside the template.
-   */
-  clickAction: Action = Action.CLICK;
-  /**
-   * Enum of type `Action` that represents a keyup (`space`, `enter`) when a button is focused.
-   * Declared here to be used inside the template.
-   */
-  keyboardAction: Action = Action.KEYBOARD;
-  /**
    * Input of type Array of `InternalButtonConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */

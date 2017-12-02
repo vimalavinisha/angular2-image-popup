@@ -36,8 +36,7 @@ import { AccessibleComponent } from '../accessible.component';
 import { NEXT, PREV } from '../../utils/user-input.util';
 
 /**
- * Component with the current image with
- * some additional elements like arrows
+ * Component with the current image with some additional elements like arrows and side previews.
  */
 @Component({
   selector: 'ks-current-image',
@@ -50,60 +49,85 @@ import { NEXT, PREV } from '../../utils/user-input.util';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges {
-
-  @Input() currentImage: InternalLibImage;
-
-  @Input() slideConfig: SlideConfig;
-
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   * Input of type `InternalLibImage` that represent the currently visible image.
+   */
+  @Input() currentImage: InternalLibImage;
+  /**
+   * Input of type Array of `InternalLibImage` that represent the model of this library with all images,
+   * thumbs and so on.
    */
   @Input() images: InternalLibImage[];
-
-  @Input() isOpen: boolean;
-
   /**
-   * Description object with the configuration to show image descriptions.
+   * Input of type boolean that it is true if the modal gallery is visible.
+   * If yes, also this component should be visible.
+   */
+  @Input() isOpen: boolean;
+  /**
+   * Object of type `LoadingConfig` that contains fields like enable/disable
+   * and a way to choose a loading spinner.
+   */
+  @Input() loadingConfig: LoadingConfig;
+  /**
+   * Input of type `SlideConfig` to get `infinite sliding`.
+   */
+  @Input() slideConfig: SlideConfig;
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  @Input() accessibilityConfig: AccessibilityConfig;
+  /**
+   * Object of type `Description` to configure and show image descriptions.
    */
   @Input() descriptionConfig: Description;
-
-  @Input() loadingConfig: LoadingConfig;
-
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
 
-  @Input() accessibilityConfig: AccessibilityConfig;
-
+  /**
+   * TODO is still useful?
+   * Output to emit an event when images are loaded.
+   */
   @Output() loadImage: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Output to emit any changes of the current image. The payload contains an `ImageModalEvent`.
+   */
   @Output() changeImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when the modal gallery is closed. The payload contains an `ImageModalEvent`.
+   */
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
-   * Enum of type `Action` used to pass a click action when you click on the modal image.
+   * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
    */
   clickAction: Action = Action.CLICK;
-
   /**
    * Boolean that it's true when you are watching the first image (currently visible).
+   * False by default
    */
   isFirstImage = false;
   /**
    * Boolean that it's true when you are watching the last image (currently visible).
+   * False by default
    */
   isLastImage = false;
   /**
-   * Boolean that it is true if an image of the modal gallery is still loading.
+   * Boolean that it's true if an image of the modal gallery is still loading.
    * True by default
    */
   loading = true;
-
+  /**
+   * Object of type `LoadingConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
   configLoading: LoadingConfig;
 
   /**
-   * Private SWIPE_ACTION to define all swipe actions used by hammerjs.
+   * Private object without type to define all swipe actions used by hammerjs.
    */
   private SWIPE_ACTION = {
     LEFT: 'swipeleft',
@@ -111,9 +135,17 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     UP: 'swipeup',
     DOWN: 'swipedown'
   };
-
+  /**
+   * Private `Description` object initialized applying transformations, default values
+   * and so on to the input of the same type.
+   */
   private description: Description;
 
+  /**
+   * Method ´ngOnInit´ to build both `defaultLoading` and `defaultDescription` applying default values.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
+   */
   ngOnInit() {
     const defaultLoading: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
     const defaultDescription: Description = {
@@ -122,11 +154,16 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       numberSeparator: '/',
       beforeTextDescription: ' - '
     };
-
     this.configLoading = Object.assign(defaultLoading, this.loadingConfig);
     this.description = Object.freeze(Object.assign(defaultDescription, this.descriptionConfig));
   }
 
+  /**
+   * Method ´ngOnChanges´ to update `loading` status and emit events.
+   * If the gallery is open, then it will also manage boundary arrows and sliding.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called when any data-bound property of a directive changes!!!
+   */
   ngOnChanges(changes: SimpleChanges) {
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
@@ -135,13 +172,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const prev: InternalLibImage = simpleChange.previousValue;
     const current: InternalLibImage = simpleChange.currentValue;
 
-    // console.log('ngOnChanges - prev ', prev);
-    // console.log('ngOnChanges - current ', current);
-
-    // if before was loaded, but not not
+    // if was loaded before, but not now
     if (prev && current && prev.previouslyLoaded && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
-      // console.log('Refreshing with loading: ' + this.loading);
       this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
       this.loading = false;
     }
@@ -151,6 +184,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
   }
 
+  /**
+   * Method to handle keypress based on the `keyboardConfig` input. It gets the keyCode of
+   * the key that triggered the keypress event to navigate between images or to close the modal gallery.
+   * @param {number} keyCode of the key that triggered the keypress event
+   */
   onKeyPress(keyCode: number) {
     const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
     const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
@@ -170,10 +208,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method `getDescriptionToDisplay` to get the image description based on input params.
+   * Method to get the image description based on input params.
    * If you provide a full description this will be the visible description, otherwise,
-   * it will be built using the `description` object, concatenating its fields.
-   * @returns String description to display.
+   * it will be built using the `Description` object, concatenating its fields.
+   * @param {Image} image to get its description. If not provided it will be the current image
+   * @returns String description of the image (or the current image if not provided)
+   * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
     if (!this.description) {
@@ -211,7 +251,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * `alt` specifies an alternate text for an image, if the image cannot be displayed.
    * There is a similar version of this method into `gallery.component.ts` that
    * receives the image index as input.
-   * @param image Image that represents the current visible image.
+   * @param {Image} image to get its alt description. If not provided it will be the current image
+   * @returns String alt description of the image (or the current image if not provided)
    */
   getAltDescriptionByImage(image: Image = this.currentImage): string {
     if (!image) {
@@ -220,7 +261,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     return !image.description ? `Image ${this.getIndex(image)}` : image.description;
   }
 
-  getIndex(image: Image, arrayOfImages: Image[] = this.images): number {
+  /**
+   * Method to get the index of an image.
+   * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @param {Image[]} arrayOfImages to search the image within it
+   * @returns {number} the index of the image
+   */
+  getIndex(image: Image = this.currentImage, arrayOfImages: Image[] = this.images): number {
     // id is mandatory. You can use either numbers or strings.
     // If the id is 0, I shouldn't throw an error.
     if (!image || (!image.id && image.id !== 0)) {
@@ -228,6 +275,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
+
 
   getLeftPreviewImage(): Image {
     const currentIndex: number = this.getIndex(this.currentImage);
