@@ -65,7 +65,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    */
   @Input() accessibilityConfig: AccessibilityConfig;
   /**
-   * Output to emit clicks over dots. The payload contains a number that represent
+   * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
    */
   @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
@@ -92,7 +92,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * @returns {boolean} true if is active, false otherwise
    */
   isActive(index: number): boolean {
-    return index === this.getImageIndex();
+    return index === this.getIndex();
   }
 
   /**

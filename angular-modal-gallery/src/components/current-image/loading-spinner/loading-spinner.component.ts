@@ -41,14 +41,35 @@ import { AccessibilityConfig } from '../../../interfaces/accessibility.interface
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingSpinnerComponent {
-
-  loadingStandard: LoadingType = LoadingType.STANDARD;
-  loadingBars: LoadingType = LoadingType.BARS;
-  loadingCircular: LoadingType = LoadingType.CIRCULAR;
-  loadingDots: LoadingType = LoadingType.DOTS;
-
+  /**
+   * Object of type `LoadingConfig` exposed to the template.
+   * It contains fields like enable/disable and a way to choose a loading spinner.
+   */
   @Input() loadingConfig: LoadingConfig;
-
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
   @Input() accessibilityConfig: AccessibilityConfig;
 
+  /**
+   * Enum of type `LoadingType` to choose the standard loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingStandard: LoadingType = LoadingType.STANDARD;
+  /**
+   * Enum of type `LoadingType` to choose the bars loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingBars: LoadingType = LoadingType.BARS;
+  /**
+   * Enum of type `LoadingType` to choose the circular loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingCircular: LoadingType = LoadingType.CIRCULAR;
+  /**
+   * Enum of type `LoadingType` to choose the dots loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingDots: LoadingType = LoadingType.DOTS;
 }

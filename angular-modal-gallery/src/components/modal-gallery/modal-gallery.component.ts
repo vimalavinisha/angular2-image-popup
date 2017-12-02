@@ -42,7 +42,7 @@ import { CurrentImageComponent } from '../current-image/current-image.component'
 export class InternalLibImage extends Image {
   previouslyLoaded: boolean;
 
-  constructor(id: number | string,
+  constructor(id: number,
               img: string,
               thumb?: string | null | undefined,
               description?: string | null | undefined,

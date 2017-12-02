@@ -35,8 +35,7 @@ export interface InternalButtonConfig extends ButtonConfig {
 }
 
 /**
- * Component with all upper right buttons.
- * In fact, it uses a template with extUrl, download and close buttons with the right directive.
+ * Component with all upper buttons.
  * Also it emits click events as outputs.
  */
 @Component({
@@ -47,29 +46,72 @@ export interface InternalButtonConfig extends ButtonConfig {
 })
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
 
-  @Input() image: Image;
+  /**
+   * Input of type `InternalLibImage` that represent the currently visible image.
+   */
+  @Input() currentImage: Image;
+  /**
+   * Input of type `ButtonsConfig` to init UpperButtonsComponent's features.
+   * For instance, it contains an array of buttons.
+   */
   @Input() buttonsConfig: ButtonsConfig;
 
+  /**
+   * Output to emit clicks on refresh button. The payload contains a `ButtonEvent`.
+   */
   @Output() refresh: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit clicks on delete button. The payload contains a `ButtonEvent`.
+   */
   @Output() delete: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit clicks on navigate button. The payload contains a `ButtonEvent`.
+   */
   @Output() navigate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit clicks on download button. The payload contains a `ButtonEvent`.
+   */
   @Output() download: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit clicks on close button. The payload contains a `ButtonEvent`.
+   */
   @Output() close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit clicks on all custom buttons. The payload contains a `ButtonEvent`.
+   */
   @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
-   * Enum of type `Action` used to pass a click action when you click on the modal image.
+   * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
    */
   clickAction: Action = Action.CLICK;
-
+  /**
+   * Enum of type `Action` that represents a keyup (`space`, `enter`) when a button is focused.
+   * Declared here to be used inside the template.
+   */
   keyboardAction: Action = Action.KEYBOARD;
-
-  configButtons: ButtonsConfig;
+  /**
+   * Input of type Array of `InternalButtonConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
   buttons: InternalButtonConfig[];
+  /**
+   * Object of type `ButtonsConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configButtons: ButtonsConfig;
 
+  /**
+   * Default button size object
+   * @type ButtonSize
+   */
   private defaultSize: ButtonSize = {height: 30, width: 30, unit: 'px'};
 
+  /**
+   * Default buttons array for standard configuration
+   * @type ButtonConfig[]
+   */
   private defaultButtonsDefault: ButtonConfig[] = [{
     className: 'close-image',
     size: this.defaultSize,
@@ -78,6 +120,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     ariaLabel: 'Close this modal image gallery'
   }];
 
+  /**
+   * Default buttons array for simple configuration
+   * @type ButtonConfig[]
+   */
   private simpleButtonsDefault: ButtonConfig[] = [
     {
       className: 'download-image',
@@ -89,6 +135,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     ...this.defaultButtonsDefault
   ];
 
+  /**
+   * Default buttons array for advanced configuration
+   * @type ButtonConfig[]
+   */
   private advancedButtonsDefault: ButtonConfig[] = [
     {
       className: 'ext-url-image',
@@ -100,6 +150,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     ...this.simpleButtonsDefault
   ];
 
+  /**
+   * Default buttons array for full configuration
+   * @type ButtonConfig[]
+   */
   private fullButtonsDefault: ButtonConfig[] = [
     {
       className: 'refresh-image',
@@ -118,9 +172,14 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     ...this.advancedButtonsDefault
   ];
 
+  /**
+   * Method ´ngOnInit´ to build `configButtons` applying a default value and also to
+   * init the `buttons` array.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
+   */
   ngOnInit() {
     const defaultConfig: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.DEFAULT};
-
     this.configButtons = Object.assign(defaultConfig, this.buttonsConfig);
 
     switch (this.configButtons.strategy) {
@@ -143,6 +202,14 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     }
   }
 
+  /**
+   * Method called by events from both keyboard and mouse on a button.
+   * This will call a private method to trigger an output with the right payload.
+   * @param {InternalButtonConfig} button that called this method
+   * @param {number} index of the button that called this method
+   * @param {KeyboardEvent | MouseEvent} event payload
+   * @param {Action} action that triggered the source event or `Action.CLICK` if not specified
+   */
   onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
     if (!event) {
       return;
@@ -150,7 +217,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     const dataToEmit: ButtonEvent = {
       buttonIndex: index,
       button: button,
-      // current image init as null (I'll fill this value into the father of this component
+      // current image initialized as null
+      // (I'll fill this value inside the parent of this component
       image: null,
       action: action
     };
@@ -162,7 +230,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         this.triggerOnMouseAndKeyboard(this.delete, event, dataToEmit);
         break;
       case ButtonType.EXTURL:
-        if (!this.image || !this.image.extUrl) {
+        if (!this.currentImage || !this.currentImage.extUrl) {
           return;
         }
         this.triggerOnMouseAndKeyboard(this.navigate, event, dataToEmit);
@@ -181,10 +249,22 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     }
   }
 
+  /**
+   * Method used in the template to track ids in ngFor.
+   * @param {number} index of the array
+   * @param {Image} item of the array
+   * @returns {number} the id of the item
+   */
   trackById(index: number, item: InternalButtonConfig) {
     return item.id;
   }
 
+  /**
+   * Private method to emit an event using the specified output as an `EventEmitter`.
+   * @param {EventEmitter<ButtonEvent>} emitter is the output to emit the `ButtonEvent`
+   * @param {KeyboardEvent | MouseEvent} event is the source that triggered this method
+   * @param {ButtonEvent} dataToEmit payload to emit
+   */
   private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
                                     event: KeyboardEvent | MouseEvent,
                                     dataToEmit: ButtonEvent) {
@@ -198,10 +278,21 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     }
   }
 
-  private addButtonIds(buttons: ButtonConfig[]) {
+  /**
+   * Private method to add ids to the array of buttons.
+   * @param {ButtonConfig[]} buttons config array
+   * @returns {ButtonConfig[]} the input array with incremental numeric ids
+   */
+  private addButtonIds(buttons: ButtonConfig[]): ButtonConfig[] {
     return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, {id: i}));
   }
 
+  /**
+   * Private method to valid custom buttons received as input.
+   * @param {ButtonConfig[]} buttons config array
+   * @returns {ButtonConfig[]} the same input buttons config array
+   * @throws an error is exists a button with an unknown type
+   */
   private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {
     buttons.forEach((val: ButtonConfig) => {
       const isValidBtnType: ButtonType | void = WHITELIST_BUTTON_TYPES

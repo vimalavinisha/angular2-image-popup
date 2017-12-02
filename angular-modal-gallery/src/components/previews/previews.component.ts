@@ -208,7 +208,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
   /**
-   * Method called by events from both keyboard and mouse over a preview.
+   * Method called by events from both keyboard and mouse on a preview.
    * This will trigger the clickpreview output with the input preview as payload.
    * @param {InternalLibImage} preview that triggered this method
    * @param {KeyboardEvent | MouseEvent} event payload
@@ -226,7 +226,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   }
 
   /**
-   * Method called by events from both keyboard and mouse over a navigation arrow.
+   * Method called by events from both keyboard and mouse on a navigation arrow.
    * @param {string} direction of the navigation that can be either 'next' or 'prev'
    * @param {KeyboardEvent | MouseEvent} event payload
    */

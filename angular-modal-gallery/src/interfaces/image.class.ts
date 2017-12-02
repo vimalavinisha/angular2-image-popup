@@ -6,7 +6,7 @@
 import { Action } from './action.enum';
 
 export class Image {
-  id: number | string;
+  id: number;
   img: string;
   thumb?: string | null | undefined;
   description?: string | null | undefined;
@@ -15,7 +15,7 @@ export class Image {
   alt?: string | null | undefined;
   ariaLabel?: string | null | undefined;
 
-  constructor(id: number | string,
+  constructor(id: number,
               img: string,
               thumb?: string | null | undefined,
               description?: string | null | undefined,
@@ -33,10 +33,6 @@ export class Image {
     this.ariaLabel = ariaLabel;
   }
 }
-
-
-// aria-label="Click to navigate to the next image"
-// title="Current image" alt="{{getAltDescriptionByImage(currentImage)}}"/>
 
 /**
  * Class `ImageModalEvent` that represents the Event after an action `action` and its result.
