@@ -30,6 +30,7 @@
 - Update systemjs example to 5.0.0
 - Update webpack example to 5.0.0
 - Update angular-cli example to 5.0.0
+- Add new plunkr examples for both 4.x.x and 5.x.x
 - Add new universal example to experiment Server-Side Rendering with Angular Universal
 
 ### Docs
