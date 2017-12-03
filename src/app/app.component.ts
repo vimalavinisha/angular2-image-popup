@@ -24,14 +24,20 @@
 
 import { Component } from '@angular/core';
 
-import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
-import { DescriptionStrategy } from 'angular-modal-gallery';
-import { PreviewConfig } from 'angular-modal-gallery';
-import { DotsConfig } from 'angular-modal-gallery';
-import { AccessibilityConfig } from 'angular-modal-gallery';
-import { ButtonEvent } from 'angular-modal-gallery';
+import {
+  AccessibilityConfig,
+  Action,
+  ButtonEvent,
+  ButtonsConfig,
+  ButtonsStrategy,
+  ButtonType,
+  Description,
+  DescriptionStrategy,
+  DotsConfig,
+  Image,
+  ImageModalEvent,
+  PreviewConfig
+} from 'angular-modal-gallery';
 
 @Component({
   selector: 'app-root',
@@ -118,7 +124,7 @@ export class AppComponent {
   customFullDescription: Description = {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
     // you should build this value programmaticaly with the result of (show)="..()" event
-    customFullDescription: 'Custom description of the current visible image',
+    customFullDescription: 'Custom description of the current visible image'
     // if customFullDescription !== undefined, all other fields will be ignored
     // imageText: '',
     // numberSeparator: '',
@@ -128,7 +134,7 @@ export class AppComponent {
   customFullDescriptionHidden: Description = {
     strategy: DescriptionStrategy.ALWAYS_HIDDEN,
     // you should build this value programmaticaly with the result of (show)="..()" event
-    customFullDescription: 'Custom description of the current visible image',
+    customFullDescription: 'Custom description of the current visible image'
     // if customFullDescription !== undefined, all other fields will be ignored
     // imageText: '',
     // numberSeparator: '',
@@ -329,7 +335,7 @@ export class AppComponent {
     const newImage: Image = Object.assign({},
       this.images[Math.floor(Math.random() * this.images.length)],
       {id: this.images.length - 1 + 1});
-    this.images.push(newImage);
+    this.images = [...this.images, newImage];
   }
 
   trackById(index: number, item: Image) {

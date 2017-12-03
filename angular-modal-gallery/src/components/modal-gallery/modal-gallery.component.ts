@@ -424,7 +424,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.emitBoundaryEvent(event.action, newIndex);
 
     // emit current visible image index
-    this.show.emit(new ImageModalEvent(event.action, currentIndex + 1));
+    this.show.emit(new ImageModalEvent(event.action, newIndex + 1));
   }
 
   /**
