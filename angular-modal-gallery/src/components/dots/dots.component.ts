@@ -41,7 +41,7 @@ import { NEXT } from '../../utils/user-input.util';
 })
 export class DotsComponent extends AccessibleComponent implements OnInit {
   /**
-   * Input of type `InternalLibImage` that represent the currently visible image.
+   * Input of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: InternalLibImage;
   /**
@@ -97,7 +97,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
 
   /**
    * Method to get the index of an image.
-   * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @param {Image} image to get the index, or the visible image, if not passed
    * @param {Image[]} arrayOfImages to search the image within it
    * @returns {number} the index of the image
    */

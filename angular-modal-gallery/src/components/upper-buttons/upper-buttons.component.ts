@@ -47,7 +47,7 @@ export interface InternalButtonConfig extends ButtonConfig {
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
 
   /**
-   * Input of type `InternalLibImage` that represent the currently visible image.
+   * Input of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: Image;
   /**

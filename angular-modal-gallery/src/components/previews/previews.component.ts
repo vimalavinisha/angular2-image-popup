@@ -43,7 +43,7 @@ import { NEXT, PREV } from '../../utils/user-input.util';
 })
 export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
   /**
-   * Input of type `InternalLibImage` that represent the currently visible image.
+   * Input of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: InternalLibImage;
   /**
@@ -194,7 +194,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method to get the index of an image.
-   * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @param {Image} image to get the index, or the visible image, if not passed
    * @param {Image[]} arrayOfImages to search the image within it
    * @returns {number} the index of the image
    */

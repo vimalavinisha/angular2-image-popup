@@ -50,7 +50,7 @@ import { NEXT, PREV } from '../../utils/user-input.util';
 })
 export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges {
   /**
-   * Input of type `InternalLibImage` that represent the currently visible image.
+   * Input of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: InternalLibImage;
   /**
@@ -87,7 +87,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   @Input() keyboardConfig: KeyboardConfig;
 
   /**
-   * TODO is still useful?
    * Output to emit an event when images are loaded.
    */
   @Output() loadImage: EventEmitter<any> = new EventEmitter<any>();
@@ -263,7 +262,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method to get the index of an image.
-   * @param {Image} image to get the index, or the currently visible image, if not passed
+   * @param {Image} image to get the index, or the visible image, if not passed
    * @param {Image[]} arrayOfImages to search the image within it
    * @returns {number} the index of the image
    */
@@ -276,7 +275,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
-
+  /**
+   * Method to get the left side preview image.
+   * @returns {Image} the image to show as size preview on the left
+   */
   getLeftPreviewImage(): Image {
     const currentIndex: number = this.getIndex(this.currentImage);
     if (currentIndex === 0 && this.slideConfig.infinite) {
@@ -289,6 +291,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     return this.images[Math.max(currentIndex - 1, 0)];
   }
 
+  /**
+   * Method to get the right side preview image.
+   * @returns {Image} the image to show as size preview on the right
+   */
   getRightPreviewImage(): Image {
     const currentIndex: number = this.getIndex(this.currentImage);
     if (currentIndex === this.images.length - 1 && this.slideConfig.infinite) {
@@ -301,6 +307,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     return this.images[Math.min(currentIndex + 1, this.images.length - 1)];
   }
 
+  /**
+   * Method called by events from both keyboard and mouse on an image.
+   * This will invoke the nextImage method.
+   * @param {KeyboardEvent | MouseEvent} event payload
+   * @param {Action} action that triggered the event or `Action.NORMAL` if not provided
+   */
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
@@ -308,6 +320,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
   }
 
+  /**
+   * Method called by events from both keyboard and mouse on a navigation arrow.
+   * @param {string} direction of the navigation that can be either 'next' or 'prev'
+   * @param {KeyboardEvent | MouseEvent} event payload
+   * @param {Action} action that triggered the event or `Action.NORMAL` if not provided
+   */
   onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL) {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
@@ -318,35 +336,40 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method `prevImage` to go back to the previous image shown into the modal gallery.
+   * Method to go back to the previous image.
    * @param action Enum of type `Action` that represents the source
-   *  action that moved back to the previous image. NORMAL by default.
+   *  action that moved back to the previous image. `Action.NORMAL` by default.
    */
   prevImage(action: Action = Action.NORMAL) {
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
       return;
     }
-    const prevImage: InternalLibImage = this.getPrevImage(action);
+    const prevImage: InternalLibImage = this.getPrevImage();
     this.loading = !prevImage.previouslyLoaded;
     this.changeImage.emit(new ImageModalEvent(action, this.getIndex(prevImage)));
   }
 
   /**
-   * Method `nextImage` to go back to the previous image shown into the modal gallery.
+   * Method to go back to the previous image.
    * @param action Enum of type `Action` that represents the source
-   *  action that moved to the next image. NORMAL by default.
+   *  action that moved to the next image. `Action.NORMAL` by default.
    */
   nextImage(action: Action = Action.NORMAL) {
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
     }
-    const nextImage: InternalLibImage = this.getNextImage(action);
+    const nextImage: InternalLibImage = this.getNextImage();
     this.loading = !nextImage.previouslyLoaded;
     this.changeImage.emit(new ImageModalEvent(action, this.getIndex(nextImage)));
   }
 
+  /**
+   * Method to emit an event as loadImage output to say that the requested image if loaded.
+   * This method is invoked by the javascript's 'load' event on an img tag.
+   * @param {Event} event that triggered the load
+   */
   onImageLoad(event: Event) {
     this.loadImage.emit({
       status: true,
@@ -358,7 +381,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method `swipe` used by Hammerjs to support touch gestures.
+   * Method used by Hammerjs to support touch gestures.
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
   swipe(action = this.SWIPE_ACTION.RIGHT) {
@@ -376,13 +399,18 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
   }
 
+
+  /**
+   * Private method to update both `isFirstImage` and `isLastImage` based on
+   * the index of the current image.
+   * @param {number} currentIndex is the index of the current image
+   */
   private handleBoundaries(currentIndex: number) {
     if (this.images.length === 1) {
       this.isFirstImage = true;
       this.isLastImage = true;
       return;
     }
-
     switch (currentIndex) {
       case 0:
         // execute this only if infinite sliding is disabled
@@ -398,9 +426,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method `manageSlideConfig` to manage boundary arrows and sliding.
-   * This is based on @Input() slideConfig to enable/disable 'infinite sliding'.
-   * @param {number} index Number of the current visible image
+   * Private method to manage boundary arrows and sliding.
+   * This is based on the slideConfig input to enable/disable 'infinite sliding'.
+   * @param {number} index of the visible image
    */
   private manageSlideConfig(index: number) {
     if (!this.slideConfig || this.slideConfig.infinite !== false) {
@@ -412,12 +440,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method `isPreventSliding` to check if next/prev actions should be blocked.
+   * Private method to check if next/prev actions should be blocked.
    * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
    * If yes, it returns true to say that sliding should be blocked, otherwise not.
-   * @param {number} boundaryIndex Number that could be either the beginning index (0) or the last index
+   * @param {number} boundaryIndex that could be either the beginning index (0) or the last index
    *  of images (this.images.length - 1).
-   * @returns {boolean} True if slideConfig.infinite === false and the current index is
+   * @returns {boolean} true if slideConfig.infinite === false and the current index is
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
@@ -425,15 +453,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this.getIndex(this.currentImage) === boundaryIndex;
   }
 
-
   /**
-   * Private method `getNextIndex` to get the next index, based on the action and the current index.
+   * Private method to get the next index.
    * This is necessary because at the end, when you call next again, you'll go to the first image.
    * That happens because all modal images are shown like in a circle.
-   * @param action Enum of type Action that represents the source of the event that changed the
-   *  current image to the next one.
    */
-  private getNextImage(action: Action): InternalLibImage {
+  private getNextImage(): InternalLibImage {
     const currentIndex: number = this.getIndex(this.currentImage);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
@@ -445,13 +470,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Private method `getPrevIndex` to get the previous index, based on the action and the current index.
+   * Private method to get the previous index.
    * This is necessary because at index 0, when you call prev again, you'll go to the last image.
    * That happens because all modal images are shown like in a circle.
-   * @param action Enum of type Action that represents the source of the event that changed the
-   *  current image to the previous one.
    */
-  private getPrevImage(action: Action): InternalLibImage {
+  private getPrevImage(): InternalLibImage {
     const currentIndex: number = this.getIndex(this.currentImage);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {

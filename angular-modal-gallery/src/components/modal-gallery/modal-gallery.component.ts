@@ -171,7 +171,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   images: InternalLibImage[];
   /**
-   * `Image` currently visible.
+   * `Image` that is visible right now.
    */
   currentImage: InternalLibImage;
 
