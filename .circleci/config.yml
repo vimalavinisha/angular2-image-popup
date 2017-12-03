@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/project # this entire string is the value of the env var $CIRCLE_WORKING_DIRECTORY
     docker:
-      - image: circleci/node:8.8.1-browsers
+      - image: circleci/node:7.1.0-browsers
       # Environment variable for all commands executed in the primary container
         environment:
           NODE_ENV: test
@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: npm-install-global
-          command: sudo npm install -g @angular/cli codeclimate-test-reporter
+          command: npm install -g @angular/cli codeclimate-test-reporter
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -37,16 +37,16 @@ jobs:
           command: npm run clean:all
       - run:
           name: run-install-demo-systemjs
-          command: cd examples/systemjs && npm install
+          command: cd demo/systemjs && npm install
       - run:
           name: run-install-demo-webpack
-          command: cd examples/webpack && npm install
+          command: cd demo/webpack && npm install
       - run:
           name: run-install-demo-angular-cli
-          command: cd examples/angular-cli && npm install
+          command: cd demo/angular-cli && npm install
       - run:
           name: run-install-demo-universal
-          command: cd examples/universal && npm install
+          command: cd demo/universal && npm install
       - run:
           name: run-build-all
           command: npm run build:all
@@ -69,45 +69,48 @@ jobs:
       # webpack
       - run:
           name: run-build-dev-demo-webpack
-          command: cd examples/webpack && npm run build:dev
+          command: cd demo/webpack && npm run build:dev
       - run:
           name: run-build-prod-demo-webpack
-          command: cd examples/webpack && npm run build:prod
+          command: cd demo/webpack && npm run build:prod
       - run:
           name: run-build-prod-aot-demo-webpack
-          command: cd examples/webpack && npm run clean && npm run build:prod:aot
+          command: cd demo/webpack && npm run clean && npm run build:prod:aot
       - run:
           name: run-test-demo-webpack
-          command: cd examples/webpack && npm test
+          command: cd demo/webpack && npm test
       # angular-cli
       - run:
           name: run-build-dev-demo-angular-cli
-          command: cd examples/angular-cli && ng build
+          command: cd demo/angular-cli && ng build
       - run:
           name: run-build-aot-demo-angular-cli
-          command: cd examples/angular-cli && ng build --aot
+          command: cd demo/angular-cli && ng build --aot
       - run:
           name: run-build-prod-demo-angular-cli
-          command: cd examples/angular-cli && ng build --prod
+          command: cd demo/angular-cli && ng build --prod
       - run:
           name: run-test-demo-angular-cli
-          command: cd examples/angular-cli && ng test --single-run
+          command: cd demo/angular-cli && ng test --single-run
       # universal
       - run:
           name: run-build-dev-demo-universal
-          command: cd examples/universal && ng build
+          command: cd demo/universal && ng build
       - run:
           name: run-build-aot-demo-universal
-          command: cd examples/universal && ng build --aot
+          command: cd demo/universal && ng build --aot
       - run:
           name: run-build-prod-demo-universal
-          command: cd examples/universal && ng build --prod
+          command: cd demo/universal && ng build --prod
+      - run:
+          name: run-test-demo-universal
+          command: cd demo/universal && ng test --single-run
       - run:
           name: run-build-ssr-demo-universal
-          command: cd examples/universal && npm run build:ssr
+          command: cd demo/universal && npm run build:ssr
       - run:
           name: run-build-prerender-demo-universal
-          command: cd examples/universal && npm run build:prerender
+          command: cd demo/universal && npm run build:prerender
       # docs
 #      - run: FIXME
 #          name: run-docs
