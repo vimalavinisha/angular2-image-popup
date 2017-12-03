@@ -418,9 +418,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     const newIndex: number = <number>event.result;
 
     // TODO add validation
-
     this.currentImage = this.images[newIndex];
+
+    // emit first/last event based on newIndex value
     this.emitBoundaryEvent(event.action, newIndex);
+
+    // emit current visible image index
+    this.show.emit(new ImageModalEvent(event.action, currentIndex + 1));
   }
 
   /**
@@ -493,6 +497,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     link.click();
     document.body.removeChild(link);
   }
+
   /**
    * Private method to download the current image only for IE11 using
    * custom javascript's methods available only on IE.
