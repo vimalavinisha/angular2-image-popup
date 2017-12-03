@@ -38,7 +38,10 @@ import { KeyboardService } from '../../services/keyboard.service';
 import { DotsConfig } from '../../interfaces/dots-config.interface';
 import { CurrentImageComponent } from '../current-image/current-image.component';
 
-
+/**
+ * Internal representation of an Image adding other fields
+ * to the public `Image` class.
+ */
 export class InternalLibImage extends Image {
   previouslyLoaded: boolean;
 
@@ -57,6 +60,10 @@ export class InternalLibImage extends Image {
   }
 }
 
+/**
+ * Default accessibility configuration.
+ * @type AccessibilityConfig
+ */
 const defaultAccessibilityConfig: AccessibilityConfig = {
   backgroundAriaLabel: 'Modal gallery full screen background',
   backgroundTitle: '',
@@ -88,7 +95,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 
 
 /**
- * Main Component of this library with the modal gallery.
+ * Main Component of this library with both the plain and modal galleries.
  */
 @Component({
   selector: 'ks-modal-gallery',

@@ -46,7 +46,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild the
 40. `cd ..`
 41. **If it is ok, create your pull request**
 
-TODO RESTORE THESE STEPS IN 4.x.x VERSIONS:<br>
+TODO RESTORE THESE STEPS IN 5.x.x VERSIONS:<br>
 -15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-<br>
 -16. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`-
 <br>
@@ -58,12 +58,12 @@ TODO RESTORE THESE STEPS IN 4.x.x VERSIONS:<br>
 
 ## Stable releases (@latest)
 1. `cd angular-modal-gallery`
-2. `npm version patch` (x.x.1) or `npm version minor` (x.1.0) or `npm version major` (4.x.x)
+2. `npm version patch` (x.x.1) or `npm version minor` (x.1.0) or `npm version major` (5.x.x)
 3. `npm run clean:all`
 4. `npm run build:lib`
 5. `npm publish dist/angular-modal-gallery`
 6. `git push origin master`
-7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v4.0.1)
+7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
 
 ## Beta releases (@beta)
 1. `cd angular-modal-gallery`
@@ -72,7 +72,7 @@ TODO RESTORE THESE STEPS IN 4.x.x VERSIONS:<br>
 4. `npm run build:lib`
 5. `npm publish dist/angular-modal-gallery --tag beta`
 6. `git push origin master`
-7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v4.0.1)
+7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
 
 
 ## Alpha releases (@next)
@@ -82,5 +82,5 @@ TODO RESTORE THESE STEPS IN 4.x.x VERSIONS:<br>
 4. `npm run build:lib`
 5. `npm publish dist/angular-modal-gallery --tag next`
 6. `git push origin master`
-7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v4.0.1)
+7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
 
