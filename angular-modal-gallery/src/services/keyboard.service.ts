@@ -22,11 +22,12 @@
  SOFTWARE.
  */
 
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import 'mousetrap';
 
-import { KEYBOARD_CONFIGURATION } from '../modal-gallery.module';
 import { KeyboardServiceConfig } from '../interfaces/keyboard-service-config.interface';
+
+export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 
 /**
  * Service to intercept ctrl+s (or cmd+s on macOS) using a third-party library, called Mousetrap.

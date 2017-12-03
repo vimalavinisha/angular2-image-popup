@@ -23,12 +23,12 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { DotsConfig } from '../../interfaces/dots-config.interface';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
+import { InternalLibImage } from '../../interfaces/image-internal.class';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.

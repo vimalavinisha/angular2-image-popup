@@ -24,7 +24,15 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonSize, ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES } from '../../interfaces/buttons-config.interface';
+import {
+  ButtonConfig,
+  ButtonEvent,
+  ButtonsConfig,
+  ButtonSize,
+  ButtonsStrategy,
+  ButtonType,
+  WHITELIST_BUTTON_TYPES
+} from '../../interfaces/buttons-config.interface';
 import { Image } from '../../interfaces/image.class';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
@@ -47,7 +55,7 @@ export interface InternalButtonConfig extends ButtonConfig {
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
 
   /**
-   * Input of type `InternalLibImage` that represent the visible image.
+   * Input of type `Image` that represent the visible image.
    */
   @Input() currentImage: Image;
   /**

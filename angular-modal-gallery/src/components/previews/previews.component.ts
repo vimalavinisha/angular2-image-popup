@@ -23,7 +23,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Image } from '../../interfaces/image.class';
 import { PreviewConfig } from '../../interfaces/preview-config.interface';
 import { SlideConfig } from '../../interfaces/slide-config.interface';
@@ -31,6 +30,7 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { ImageSize } from '../../interfaces/image-size.interface';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT, PREV } from '../../utils/user-input.util';
+import { InternalLibImage } from '../../interfaces/image-internal.class';
 
 /**
  * Component with image previews

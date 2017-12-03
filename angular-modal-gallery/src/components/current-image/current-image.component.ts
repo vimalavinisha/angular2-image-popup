@@ -26,7 +26,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 import { Keyboard } from '../../interfaces/keyboard.enum';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
 import { Action } from '../../interfaces/action.enum';
-import { InternalLibImage } from '../modal-gallery/modal-gallery.component';
 import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
 import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
@@ -34,6 +33,7 @@ import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT, PREV } from '../../utils/user-input.util';
+import { InternalLibImage } from '../../interfaces/image-internal.class';
 
 /**
  * Interface to describe the Load Event, used to
