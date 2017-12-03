@@ -3,6 +3,9 @@
 - emit show output event every time the current image changes
 - fix to add images updating the internal model (this bug is caused by OnPush strategy into modal-gallery.component) 
 
+### Chores
+- upgrade CI config files to 5.0.0-alpha.2
+
 
 # 5.0.0-alpha.1
 ### Features
