@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: npm-install-global
-          command: sudo npm install -g codeclimate-test-reporter
+          command: sudo npm install -g @angular/cli codeclimate-test-reporter
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -102,9 +102,6 @@ jobs:
       - run:
           name: run-build-prod-demo-universal
           command: cd examples/universal && ng build --prod
-      - run:
-          name: run-test-demo-universal
-          command: cd examples/universal && ng test --single-run
       - run:
           name: run-build-ssr-demo-universal
           command: cd examples/universal && npm run build:ssr

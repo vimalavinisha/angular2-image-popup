@@ -48,7 +48,6 @@ cd examples/universal
 ng build
 ng build --prod
 ng build --aot
-ng test --single-run
 npm run build:ssr
 npm run build:prerender
 cd ../..
