@@ -62,7 +62,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   @Input() slideConfig: SlideConfig;
   /**
    * Input of type `PreviewConfig` to init PreviewsComponent's features.
-   * For instance, it contains a param to show/hide this component, sizes, and so on.
+   * For instance, it contains a param to show/hide this component, sizes.
    */
   @Input() previewConfig: PreviewConfig;
   /**

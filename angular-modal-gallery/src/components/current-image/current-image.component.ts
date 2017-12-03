@@ -36,6 +36,16 @@ import { AccessibleComponent } from '../accessible.component';
 import { NEXT, PREV } from '../../utils/user-input.util';
 
 /**
+ * Interface to describe the Load Event, used to
+ * emit an event when the image is finally loaded and the spinner has gone.
+ */
+export interface ImageLoadEvent {
+  status: boolean;
+  index: number;
+  id: number;
+}
+
+/**
  * Component with the current image with some additional elements like arrows and side previews.
  */
 @Component({
@@ -87,9 +97,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   @Input() keyboardConfig: KeyboardConfig;
 
   /**
-   * Output to emit an event when images are loaded.
+   * Output to emit an event when images are loaded. The payload contains an `ImageLoadEvent`.
    */
-  @Output() loadImage: EventEmitter<any> = new EventEmitter<any>();
+  @Output() loadImage: EventEmitter<ImageLoadEvent> = new EventEmitter<ImageLoadEvent>();
   /**
    * Output to emit any changes of the current image. The payload contains an `ImageModalEvent`.
    */

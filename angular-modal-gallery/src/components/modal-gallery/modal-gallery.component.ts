@@ -23,7 +23,20 @@
  SOFTWARE.
  */
 
-import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ButtonEvent, ButtonsConfig } from '../../interfaces/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../interfaces/image.class';
@@ -36,7 +49,7 @@ import { SlideConfig } from '../../interfaces/slide-config.interface';
 import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { DotsConfig } from '../../interfaces/dots-config.interface';
-import { CurrentImageComponent } from '../current-image/current-image.component';
+import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 
 /**
  * Internal representation of an Image adding other fields
@@ -101,13 +114,13 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
   selector: 'ks-modal-gallery',
   exportAs: 'modalGallery',
   styleUrls: ['modal-gallery.scss'],
-  templateUrl: 'modal-gallery.html'
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'modal-gallery.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Array input that represents a list of Images used to show both
-   * thumbs and the modal gallery.
+   * Input of type Array of `Image` that represent the model of
+   * this library with all images, thumbs and so on.
    */
   @Input() modalImages: Image[];
   /**
@@ -115,66 +128,95 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
    */
   @Input() downloadable = false;
-
   /**
    * Object of type `ButtonsConfig` to show/hide buttons.
-   * This is used only inside `ngOnInit()` to create `configButtons`
    */
   @Input() buttonsConfig: ButtonsConfig;
   /**
-   * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
-   */
-  @Input() keyboardConfig: KeyboardConfig;
-  /**
-   * enableCloseOutside's input to enable modal-gallery close's behaviour while clicking
+   * Boolean to enable modal-gallery close behaviour when clicking
    * on the semi-transparent background. Enabled by default.
    */
   @Input() enableCloseOutside = true;
-
   /**
-   * Object of type `SlideConfig` to configure sliding of modal gallery.
-   * Disabled by default.
-   * Leave here the default values because it's used by two sibling components.
+   * Input of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide dots.
+   */
+  @Input() dotsConfig: DotsConfig;
+  /**
+   * Input of type `PreviewConfig` to init PreviewsComponent's features.
+   * For instance, it contains a param to show/hide previews.
+   */
+  @Input() previewConfig: PreviewConfig;
+  /**
+   * Object of type `LoadingConfig` that contains fields like enable/disable
+   * and a way to choose a loading spinner.
+   */
+  @Input() loadingConfig: LoadingConfig;
+  /**
+   * Input of type `SlideConfig` to init side previews and `infinite sliding`.
    */
   @Input() slideConfig: SlideConfig = {
     infinite: false,
     sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}
   };
-
   /**
-   * Description object with the configuration to show image descriptions.
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  @Input() accessibilityConfig: AccessibilityConfig = defaultAccessibilityConfig;
+  /**
+   * Object of type `Description` to configure and show image descriptions.
    */
   @Input() description: Description;
+  /**
+   * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
+   */
+  @Input() keyboardConfig: KeyboardConfig;
 
-  @Input() loadingConfig: LoadingConfig;
-
-  @Input() dotsConfig: DotsConfig;
-
-  @Input() previewConfig: PreviewConfig;
-
-  @Input() accessibilityConfig: AccessibilityConfig = defaultAccessibilityConfig;
-
+  /**
+   * Output to emit an event when the modal gallery is closed.
+   */
   @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when an image is changed.
+   */
   @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when the current image is the first one.
+   */
   @Output() firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when the current image is the last one.
+   */
   @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when the modal gallery is closed.
+   */
   @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when a button is clicked, but before that the action is triggered.
+   */
   @Output() buttonBeforeHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit an event when a button is clicked, but after that the action is triggered.
+   */
   @Output() buttonAfterHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
-
+  /**
+   * Reference to the CurrentImageComponent to invoke methods on it.
+   */
   @ViewChild(CurrentImageComponent) currentImageComponent;
 
   /**
-   * Boolean that it is true if the modal gallery is visible
+   * Boolean that it is true if the modal gallery is visible. False by default.
    */
   opened = false;
   /**
-   * Boolean to open the modal gallery. Closed by default.
+   * Boolean to open the modal gallery. False by default.
    */
   showGallery = false;
   /**
-   * Array of `InternalLibImage` that represent the model of this library with all images, thumbs and so on.
+   * Array of `InternalLibImage` representing the model of this library with all images, thumbs and so on.
    */
   images: InternalLibImage[];
   /**
@@ -183,19 +225,19 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   currentImage: InternalLibImage;
 
   /**
-   * Constructor with the injection of ´KeyboardService´
+   * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
    */
-  constructor(private keyboardService: KeyboardService,
-              @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private keyboardService: KeyboardService, @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   /**
-   * Method ´ngOnInit´ to build `configButtons` and to call `initImages()`.
+   * Method ´ngOnInit´ to init images calling `initImages()`.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    // call initImages passing true as parameter, because I want to emit `hasData` event
+    // call initImages passing true as parameter,
+    // because I want to emit `hasData` event
     this.initImages(true);
   }
 
@@ -207,16 +249,18 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   ngOnChanges(changes: SimpleChanges) {
     // TODO probably I should check changes.something
-    // to prevent errors when you pass to this library
-    // the array of images inside a subscribe block, in this way: `...subscribe(val => { this.images = arrayOfImages })`
-    // As you can see, I'm providing examples in these situations in all official demos
     if (this.modalImages) {
       // I pass `false` as parameter, because I DON'T want to emit `hasData`
-      // event (preventing multiple hasData events while initializing)
+      // event (preventing multiple hasData events while initializing).
+      // `hasData` should be emitted only one time.
       this.initImages(false);
     }
   }
 
+  /**
+   * Method called by custom upper buttons.
+   * @param {ButtonEvent} event payload
+   */
   onCustomEmit(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.buttonBeforeHook.emit(eventToEmit);
@@ -225,6 +269,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   // TODO implement on refresh
+  /**
+   * Method called by the refresh upper button.
+   * @param {ButtonEvent} event
+   */
   onRefresh(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
 
@@ -254,19 +302,19 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonAfterHook.emit(eventToEmit);
   }
 
+  /**
+   * Method called by the delete upper button.
+   * @param {ButtonEvent} event
+   */
   onDelete(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-
-    const imageIndexToDelete: number = this.currentImageComponent.getIndex(event.image);
-
-    console.log('ondelete - imageIndexToDelete: ' + imageIndexToDelete);
-
     this.buttonBeforeHook.emit(eventToEmit);
 
     if (this.images.length === 1) {
       this.closeGallery();
     }
 
+    const imageIndexToDelete: number = this.currentImageComponent.getIndex(event.image);
     if (imageIndexToDelete === this.images.length - 1) {
       // last image
       this.currentImageComponent.prevImage();
@@ -277,11 +325,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonAfterHook.emit(eventToEmit);
   }
 
+  /**
+   * Method called by the navigate upper button.
+   * @param {ButtonEvent} event
+   */
   onNavigate(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-
     this.buttonBeforeHook.emit(eventToEmit);
-    console.log('on navigate', eventToEmit);
     // To support SSR
     if (isPlatformBrowser(this.platformId)) {
       // Client only code
@@ -292,29 +342,34 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonAfterHook.emit(eventToEmit);
   }
 
+  /**
+   * Method called by the download upper button.
+   * @param {ButtonEvent} event
+   */
   onDownload(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-
     this.buttonBeforeHook.emit(eventToEmit);
-    console.log('on download', eventToEmit);
     this.downloadImage();
     this.buttonAfterHook.emit(eventToEmit);
   }
 
-  // /**
-  //  * Method `closeGallery` to close the modal gallery.
-  //  * @param action Enum of type `Action` that represents the source
-  //  *  action that closed the modal gallery. NORMAL by default.
-  //  */
+  /**
+   * Method called by the close upper button.
+   * @param {ButtonEvent} event payload
+   * @param {Action} action that triggered the close method
+   */
   onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-
     this.buttonBeforeHook.emit(eventToEmit);
-    console.log('on close', eventToEmit);
     this.closeGallery(action);
     this.buttonAfterHook.emit(eventToEmit);
   }
 
+  /**
+   * Method to close the modal gallery specifying the action.
+   * It also reset the `keyboardService` to prevent multiple listeners.
+   * @param {Action} action type. `Action.NORMAL` by default
+   */
   closeGallery(action: Action = Action.NORMAL) {
     this.close.emit(new ImageModalEvent(action, true));
     this.opened = false;
@@ -322,20 +377,20 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Method `onShowModalGallery` called when you click on an image of your gallery.
-   * The input index is the index of the clicked image thumb.
-   * @param index Number that represents the index of the clicked image.
+   * Method called when you click on an image of your plain (or inline) gallery.
+   * @param index of the clicked image.
    */
   onShowModalGallery(index: number) {
     this.showModalGallery(index);
   }
 
   /**
-   * Method `showModalGallery` to show the modal gallery displaying the image with
+   * Method to show the modal gallery displaying the image with
    * the index specified as input parameter.
    * It will also register a new `keyboardService` to catch keyboard's events to download the current
-   * image with keyboard's shortcuts. This service, will be removed when modal gallery component will be destroyed.
-   * @param index Number that represents the index of the image to show.
+   * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
+   * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
+   * @param index of the image to show.
    */
   showModalGallery(index: number) {
     this.keyboardService.add((event: KeyboardEvent, combo: string) => {
@@ -351,11 +406,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.opened = true;
     this.currentImage = this.images[index];
 
-    // emit current visible image index
+    // emit a new ImageModalEvent with the index of the current image
     this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
   }
 
-
+  /**
+   * Method called when the image changes and used to update the `currentImage` object.
+   * @param {ImageModalEvent} event payload
+   */
   onChangeCurrentImage(event: ImageModalEvent) {
     const newIndex: number = <number>event.result;
 
@@ -366,9 +424,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Method `onClickOutside` to close modal gallery when both `enableCloseOutside` is true and user
-   * clicked on the semi-transparent background around the image.
-   * @param event Boolean that is true if user clicked on the semi-transparent background, false otherwise.
+   * Method called when you click 'outside' (i.e. on the semi-transparent background)
+   * to close the modal gallery if `enableCloseOutside` is true.
+   * @param event payload
    */
   onClickOutside(event: boolean) {
     if (event && this.enableCloseOutside) {
@@ -376,15 +434,28 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onImageLoad(result: any) {
-    // sets as previously loaded the image with index specified by `result.index`
-    (this.images[result.index]).previouslyLoaded = result.status;
+  /**
+   * Method called when an image is loaded and the loading spinner has gone.
+   * It sets the previouslyLoaded flag inside the Image to hide loading spinner when displayed again.
+   * @param {ImageLoadEvent} event payload
+   */
+  onImageLoad(event: ImageLoadEvent) {
+    // sets as previously loaded the image with index specified by `event.index`
+    (this.images[event.index]).previouslyLoaded = event.status;
   }
 
+  /**
+   * Method called when a dot is clicked and used to update the current image.
+   * @param {number} index of the clicked dot
+   */
   onClickDot(index: number) {
     this.currentImage = this.images[index];
   }
 
+  /**
+   * Method called when an image preview is clicked and used to update the current image.
+   * @param {Image} preview image
+   */
   onClickPreview(preview: Image) {
     const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
     if (!!imageFound) {
@@ -393,7 +464,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Method `downloadImage` to download the current visible image, only if `downloadable` is true.
+   * Method to download the current image, only if `downloadable` is true.
+   * It contains also a logic to enable downloading feature also for IE11.
    */
   downloadImage() {
     if (!this.downloadable) {
@@ -410,6 +482,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  /**
+   * Private method to download the current image for all browsers except for IE11.
+   */
   private downloadImageAllBrowsers() {
     const link = document.createElement('a');
     link.href = this.currentImage.img;
@@ -418,7 +493,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     link.click();
     document.body.removeChild(link);
   }
-
+  /**
+   * Private method to download the current image only for IE11 using
+   * custom javascript's methods available only on IE.
+   */
   private downloadImageOnlyIEorEdge() {
     if (isPlatformBrowser(this.platformId)) {
       const req = new XMLHttpRequest();
@@ -433,49 +511,46 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Method `ngOnDestroy` to cleanup resources. In fact, this will reset keyboard's service.
+   * Method to cleanup resources. In fact, this will reset keyboard's service.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
    */
   ngOnDestroy() {
     this.keyboardService.reset();
   }
 
-  // add other info to ButtonImage, for instance the current image as payload
-  private getButtonEventToEmit(event: ButtonEvent) {
+  /**
+   * Private method to get the `ButtonEvent` to emit, merging the input `ButtonEvent`
+   * with the current image.
+   * @param {ButtonEvent} event payload to return
+   * @returns {ButtonEvent} event payload with the current image added
+   */
+  private getButtonEventToEmit(event: ButtonEvent): ButtonEvent {
     return Object.assign(event, {image: this.currentImage});
   }
 
   /**
-   * Method `getFileName` to get the filename from an input path.
+   * Private method to get the filename from an input path.
    * This is used to get the image's name from its path.
-   * @param path String that represents the path of the image.
+   * @param {string} path that represents the path of the image
+   * @returns {string} string filename from the input path
    */
   private getFileName(path: string): string {
     return path.replace(/^.*[\\\/]/, '');
   }
 
   /**
-   * Private method ´initImages´ to initialize `images` as array of `Image` or as an
-   * Observable of `Image[]`. Also, it will call completeInitialization.
+   * Private method to initialize `images` as array of `Image`s.
+   * Also, it will call completeInitialization.
    * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
    *  Use this parameter to prevent multiple `hasData` events.
    */
   private initImages(emitHasDataEvent: boolean = false) {
-    // if (this.modalImages instanceof Array) {
     this.images = <InternalLibImage[]>this.modalImages;
     this.completeInitialization(emitHasDataEvent);
-    // } else {
-    //   if (this.modalImages instanceof Observable) {
-    //     this.subscription = (<Observable<Image[]>>this.modalImages).subscribe((val: Image[]) => {
-    //       this.images = <InternalLibImage[]>val;
-    //       this.completeInitialization(emitHasDataEvent);
-    //     });
-    //   }
-    // }
   }
 
   /**
-   * Private method ´completeInitialization´ to emit ImageModalEvent to say that images are loaded. If you are
-   * using imagePointer feature, it will also call showModalGallery with imagePointer as parameter.
+   * Private method ´completeInitialization´ to emit ImageModalEvent to say that images are loaded.
    * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
    *  Use this parameter to prevent multiple `hasData` events.
    */
@@ -495,11 +570,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Private method `emitBoundaryEvent` to emit events when either the last or the first image are visible.
+   * Private method to emit events when either the last or the first image are visible.
    * @param action Enum of type Action that represents the source of the event that changed the
    *  current image to the first one or the last one.
-   * @param indexToCheck Number of type Action that represents the source of the event that changed the
-   *  current image to either the first or the last one.
+   * @param indexToCheck is the index number of the image (the first or the last one).
    */
   private emitBoundaryEvent(action: Action, indexToCheck: number) {
     // to emit first/last event
@@ -513,7 +587,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  // taken from https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
+  /**
+   * Private method to check if this library is running on
+   * Microsoft browsers or not (i.e. it detects both IE11 and Edge)
+   * supporting also Server-Side Rendering.
+   * Inspired by https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
+   * @returns {any} the result
+   */
   private isIEorEdge(): any {
     if (isPlatformBrowser(this.platformId)) {
       // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
