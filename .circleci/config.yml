@@ -103,9 +103,6 @@ jobs:
           name: run-build-prod-demo-universal
           command: cd examples/universal && ng build --prod
       - run:
-          name: run-test-demo-universal
-          command: cd examples/universal && ng test --single-run
-      - run:
           name: run-build-ssr-demo-universal
           command: cd examples/universal && npm run build:ssr
       - run:
