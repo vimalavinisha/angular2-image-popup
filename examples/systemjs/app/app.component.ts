@@ -24,7 +24,7 @@
  */
 
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
 
@@ -115,24 +115,24 @@ import { ButtonEvent } from 'angular-modal-gallery';
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="false"
-                        [buttonsConfig]="{visible: true, strategy: 3}"></ks-modal-gallery>
+                        [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
     </section>
     <section>
       <h3>B6 - Simple demo - no download button (only with keyboard)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="true"
-                        [buttonsConfig]="{visible: true, strategy: 2}"></ks-modal-gallery>
+                        [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
     </section>
     <section>
       <h3>B7 - Simple demo - download with both button and keyboard</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [downloadable]="true"
-                        [buttonsConfig]="{visible: true, strategy: 3}"></ks-modal-gallery>
+                        [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
     </section>
     <section>
-      <h3>B8 - Simple demo - infinite sliding but NO previews</h3>
+      <h3>B8 - Simple demo - infinite sliding but NO side previews</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
@@ -210,7 +210,7 @@ import { ButtonEvent } from 'angular-modal-gallery';
     <br>
     <h2>Advanced examples</h2>
     <section>
-      <h3>C1 - Advanced demo - custom keyboard</h3>
+      <h3>C1 - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [keyboardConfig]="{esc: 81, left: 40, right: 38}"></ks-modal-gallery>
@@ -291,11 +291,9 @@ import { ButtonEvent } from 'angular-modal-gallery';
 
     <br><br>
     <h4>Created by Stefano Cappa (Ks89)</h4>
-
   `
 })
 export class AppComponent {
-
   openModalWindow = false;
   imagePointer = 0;
 
