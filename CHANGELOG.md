@@ -1,5 +1,37 @@
-# 5.0.0
-TODO
+# 5.0.0-alpha.1
+### Features
+- Rewrite SCSS/CSS layout with **FLEXBOX** fixing some well known bugs #98 #37 (**BREAKING CHANGE**)
+- Improve accessibility with ARIA #99 (**BREAKING CHANGE**)
+- Update to Angular 5 #83
+- Initial support to Server-Side-Rendering (SSR) with Angular Universal #81 (**BREAKING CHANGE**) (**PARTIALLY IMPLEMENTED** - I still have a small issue)
+- Add support for IE11 using navigator.mssaveblob #39
+- Improve modal layout with small previews and eventually also animations #48 (**BREAKING CHANGE**)
+- Support configurable buttons with custom actions #79 and #92 (**BREAKING CHANGE**)
+- Support "https://github.com/mgechev/angular-seed" #56 (it's also working with angular-modal-gallery >= 4.0.0)
+- Infinite sliding will be disabled by default #84 (**BREAKING CHANGE**)
+- Click Outside will be enabled by default #85 (**BREAKING CHANGE**)
+- Which is the best place for image description? Think about it. [I decided to use html's tag figurecaption ] [DONE - This feature will be released with #98] (**BREAKING CHANGE**)
+- Remove all deprecated APIs (both showDownloadButton and showExtUrlButton) (**BREAKING CHANGE**)
+
+### Performances
+- Performance improvements with trackById and OnPush (**BREAKING CHANGE**) (Commit 3cb56435f0426c715ca442cd1e7a6a5cc222c3b9 and #103)
+- add onpush strategy also to modal-gallery.component
+
+### Demos
+- Update systemjs example to 5.0.0
+- Update webpack example to 5.0.0
+- Update angular-cli example to 5.0.0
+- Add new universal example to experiment Server-Side Rendering with Angular Universal
+
+### Docs
+- Update library documentation with typedocs to 5.0.0
+
+### Internal library changes
+- Remove Angular 2 support (for instance replace Renderer with Renderer2) #70 (**BREAKING CHANGE**)
+- General refactoring reorganizing the structure of this project and splitting some components #42 (**BREAKING CHANGE**)
+- remove Observable<Image[]> as input. I decided to switch to Image[] to simplify the sourcecode #105 (**BREAKING CHANGE**)
+- choose which are the right entry points in package.json as described by angular package format 5 specifications 
+
 
 # 4.0.1
 ### Chores
@@ -8,11 +40,11 @@ TODO
 
 # 4.0.0
 ### Features
-- #83 #101 Angular 5.x.x support
-- #100 [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (very important feature)
+- Angular 5.x.x support #83 #101
+- [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (very important feature) #100
 
 ### Bugfixes
-- #101 remove dependencies and devDependencies from /angular-modal-gallery/package.json
+- remove dependencies and devDependencies from /angular-modal-gallery/package.json #101
 
 ### BREAKING CHANGES
 - **Angular 2 is no longer officially supported**, please upgrade to Angular >= 4
@@ -41,15 +73,15 @@ A special thanks to [maxkorz](https://github.com/maxkorz) for the support.
 
 # 4.0.0-rc.2
 ### Bugfixes
-- #101 remove dependencies and devDependencies from /angular-modal-gallery/package.json
+- remove dependencies and devDependencies from /angular-modal-gallery/package.json #101
 
 See 4.0.0-rc.1 for other info.
 
 
 # 4.0.0-rc.1
 ### Features
-- #83 #101 Angular 5.x.x support
-- #100 [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (very important feature)
+- Angular 5.x.x support #83 #101
+- [Angular Package Format v4.0]( https://goo.gl/AMOU5G) support (very important feature) #100
 
 ### BREAKING CHANGES
 - SystemJs users have to change their `systemjs.config.js` from
@@ -76,11 +108,11 @@ This is required by [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specif
 
 # 3.3.5
 ### Chores
-- #96 Update FAQ with question "Error: No provider for KeyboardService!"
+- Update FAQ with question "Error: No provider for KeyboardService!" #96
 
 ### Docs
-- #97 [DOC] fix wrong introduction in demo/no-infinite-sliding
-- #93 [DOC] fix wrong introduction in demo/keyboard-config
+- [DOC] fix wrong introduction in demo/no-infinite-sliding #97
+- [DOC] fix wrong introduction in demo/keyboard-config #93
 
 
 # 3.3.4
