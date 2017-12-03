@@ -1,3 +1,8 @@
+# 5.0.0-alpha.2 (WORK IN PROGRESS)
+### Bug fixes
+- emit show output event everytime the current image changes
+
+
 # 5.0.0-alpha.1
 ### Features
 - Rewrite SCSS/CSS layout with **FLEXBOX** fixing some well known bugs #98 #37 (**BREAKING CHANGE**)
