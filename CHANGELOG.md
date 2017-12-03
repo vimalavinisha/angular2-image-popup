@@ -1,6 +1,7 @@
-# 5.0.0-alpha.2 (WORK IN PROGRESS)
+# 5.0.0-alpha.2
 ### Bug fixes
-- emit show output event everytime the current image changes
+- emit show output event every time the current image changes
+- fix to add images updating the internal model (this bug is caused by OnPush strategy into modal-gallery.component) 
 
 
 # 5.0.0-alpha.1

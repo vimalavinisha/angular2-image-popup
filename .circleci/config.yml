@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/project # this entire string is the value of the env var $CIRCLE_WORKING_DIRECTORY
     docker:
-      - image: circleci/node:7.10.0-browsers
+      - image: circleci/node:8.8.1-browsers
       # Environment variable for all commands executed in the primary container
         environment:
           NODE_ENV: test
@@ -31,6 +31,7 @@ jobs:
             sudo dpkg -i google-chrome.deb
             sudo sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
             rm google-chrome.deb
+      # prepare
       - run:
           name: run-clean-all
           command: npm run clean:all
@@ -44,11 +45,28 @@ jobs:
           name: run-install-demo-angular-cli
           command: cd demo/angular-cli && npm install
       - run:
-          name: run-build-lib
-          command: npm run build:lib
+          name: run-install-demo-universal
+          command: cd demo/universal && npm install
+      - run:
+          name: run-build-all
+          command: npm run build:all
 #      - run: FIXME
 #          name: run-test
 #          command: npm test
+      # main angular-cli
+      - run:
+          name: run-build-dev-main-angular-cli
+          command: ng build
+      - run:
+          name: run-build-aot-main-angular-cli
+          command: ng build --aot
+      - run:
+          name: run-build-prod-main-angular-cli
+          command: ng build --prod
+      - run:
+          name: run-test-main-angular-cli
+          command: ng test --single-run
+      # webpack
       - run:
           name: run-build-dev-demo-webpack
           command: cd demo/webpack && npm run build:dev
@@ -56,20 +74,44 @@ jobs:
           name: run-build-prod-demo-webpack
           command: cd demo/webpack && npm run build:prod
       - run:
-          name: run-clean-demo-webpack
-          command: cd demo/webpack && npm run clean
-      - run:
           name: run-build-prod-aot-demo-webpack
-          command: cd demo/webpack && npm run build:prod:aot
+          command: cd demo/webpack && npm run clean && npm run build:prod:aot
       - run:
           name: run-test-demo-webpack
           command: cd demo/webpack && npm test
+      # angular-cli
       - run:
-          name: run-build-demo-angular-cli
-          command: cd demo/angular-cli && npm run build
+          name: run-build-dev-demo-angular-cli
+          command: cd demo/angular-cli && ng build
       - run:
-          name: run-build-main-angular-cli
-          command: npm run build
+          name: run-build-aot-demo-angular-cli
+          command: cd demo/angular-cli && ng build --aot
+      - run:
+          name: run-build-prod-demo-angular-cli
+          command: cd demo/angular-cli && ng build --prod
+      - run:
+          name: run-test-demo-angular-cli
+          command: cd demo/angular-cli && ng test --single-run
+      # universal
+      - run:
+          name: run-build-dev-demo-universal
+          command: cd demo/universal && ng build
+      - run:
+          name: run-build-aot-demo-universal
+          command: cd demo/universal && ng build --aot
+      - run:
+          name: run-build-prod-demo-universal
+          command: cd demo/universal && ng build --prod
+      - run:
+          name: run-test-demo-universal
+          command: cd demo/universal && ng test --single-run
+      - run:
+          name: run-build-ssr-demo-universal
+          command: cd demo/universal && npm run build:ssr
+      - run:
+          name: run-build-prerender-demo-universal
+          command: cd demo/universal && npm run build:prerender
+      # docs
 #      - run: FIXME
 #          name: run-docs
 #          command: npm run docs

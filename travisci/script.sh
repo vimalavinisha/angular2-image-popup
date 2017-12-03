@@ -4,34 +4,52 @@ echo "preparing build on $TRAVIS_OS_NAME"
 
 npm run clean:all
 
-cd demo/systemjs
+cd examples/systemjs
 npm install
 cd ../..
-cd demo/webpack
+cd examples/webpack
 npm install
 cd ../..
-cd demo/angular-cli
+cd examples/angular-cli
+npm install
+cd ../..
+cd examples/universal
 npm install
 cd ../..
 
 echo "npm run build on $TRAVIS_OS_NAME"
-npm run build:lib
+npm run build:all
 # npm test # FIXME
 
+echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
+ng build
+ng build --prod
+ng build --aot
+ng test --single-run
+
 echo "building official webpack example on $TRAVIS_OS_NAME"
-cd demo/webpack
+cd examples/webpack
 npm run build:dev
 npm run build:prod
 npm run build:prod:aot
- npm test
+npm test
 cd ../..
 
 echo "building official angular-cli example on $TRAVIS_OS_NAME"
-cd demo/angular-cli
-npm run build
-# npm test # TODO
+cd examples/angular-cli
+ng build
+ng build --prod
+ng build --aot
+ng test --single-run
 cd ../..
 
-echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
-npm run build
-# npm test # TODO
+echo "building official universal example on $TRAVIS_OS_NAME"
+cd examples/universal
+ng build
+ng build --prod
+ng build --aot
+ng test --single-run
+npm run build:ssr
+npm run build:prerender
+cd ../..
+

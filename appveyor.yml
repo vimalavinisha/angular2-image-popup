@@ -59,7 +59,7 @@ clone_depth: 5                      # clone entire repository history if not def
 # environment variables
 environment:
   matrix:
-    - nodejs_version: "7"
+    - nodejs_version: "8"
   NODE_ENV: test
   CI: yes
   APPVEYOR: yes
@@ -89,7 +89,7 @@ install:
   # install nodejs and dependencies both global and local
   # use appveyor-retry to retry if npm install fails
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
-  - npm install -g npm@5.3
+  - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - npm install -g @angular/cli@latest
   - npm install -g codeclimate-test-reporter
@@ -122,31 +122,48 @@ build_script:
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
   # prepare
   - npm run clean:all
-  - cd demo/systemjs
+  - cd examples/systemjs
   - npm install
   - cd ../..
-  - cd demo/webpack
+  - cd examples/webpack
   - npm install
   - cd ../..
-  - cd demo/angular-cli
+  - cd examples/angular-cli
+  - npm install
+  - cd ../..
+  - cd examples/universal
   - npm install
   - cd ../..
   # build library
-  - npm run build:lib
+  - npm run build:all
+  # build main angular-cli with ng-packagr
+  - ng build
+  - ng build --prod
+  - ng build --aot
+  - ng test --single-run
   # build official webpack example
-  - cd demo/webpack
+  - cd examples/webpack
   - npm run build:dev
   - npm run build:prod
   - npm run build:prod:aot
   - npm test
   - cd ../..
   # build official angular-cli example
-  - cd demo/angular-cli
-  - npm run build
+  - cd examples/angular-cli
+  - ng build
+  - ng build --prod
+  - ng build --aot
+  - ng test --single-run
   - cd ../..
-  # build main angular-cli with ng-packagr
-  - npm run build
-#  - npm test # TODO
+  # build official universal example
+  - cd examples/universal
+  - ng build
+  - ng build --prod
+  - ng build --aot
+  - ng test --single-run
+  - npm run build:ssr
+  - npm run build:prerender
+  - cd ../..
 
 
 #---------------------------------#

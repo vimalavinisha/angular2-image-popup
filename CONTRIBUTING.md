@@ -3,48 +3,69 @@ Sometimes, shy developers have really good ideas. So don't be shy and open an is
 If you want to help me, modify the source code, but **before to create a pull request, follow these steps**
 
 **Attention! This is really important**
-Every time you'll run `npm install` inside a demo's folder, you must rebuild the library with `npm run build:lib`
+Every time you'll run `npm install` inside a demo's folder, you must rebuild all with `npm run build:all`
 
-
-1. `npm install -g lite-server @angular/cli` (on macOS use `sudo npm install -g lite-server @angular/cli`)
+# A. Cleanup and initialization
+1. `npm install -g lite-server @angular/cli`
 2. remove all `node_modules` and temp folders with compiled files (if necessary)
 3. `npm install` (from the root of this project)
 4. `npm run clean:all`
-5. `cd demo/systemjs`
+5. `cd examples/systemjs`
 6. `npm install`
 7. `cd ../..`
-8. `cd demo/webpack`
+8. `cd examples/webpack`
 9. `npm install`
 10. `cd ../..`
-11. `cd demo/angular-cli`
+11. `cd examples/angular-cli`
 12. `npm install`
 13. `cd ../../..`
-14. `npm run build:lib`
-17. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
-18. `cd demo/systemjs`
-19. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-20. `cd ../..`
-21. `cd demo/webpack`
-22. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-23. `npm run build:dev`
-24. `cd dist`
-25. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-26. `cd ..`
-27. `npm run build:prod`
-28. `cd dist`
-29. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-30. `cd ..`
-31. `npm run build:prod:aot` (if necessary re-follow all the steps from the beginning)
-32. `cd dist`
-33. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-34. `cd ../../..`
-35. `cd demo/angular-cli`
-36. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-37. `npm run build`
-38. `cd dist`
-39. `lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-40. `cd ..`
-41. **If it is ok, create your pull request**
+14. `cd examples/universal`
+15. `npm install`
+16. `cd ../../..`
+17. `npm run build:all`
+18. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
+
+# B. Run systemjs example
+1. `cd examples/systemjs`
+2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+3. `cd ../..`
+
+# C. Run webpack example
+1. `cd examples/webpack`
+2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+3. `npm run build:dev`
+4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+5. `cd ..`
+6. `npm run build:prod`
+7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+8. `cd ..`
+9. `npm run build:prod:aot` (if necessary re-follow all the steps from the beginning)
+10. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+11. `cd ../../..`
+
+# D. Run angular-cli example
+1. `cd examples/angular-cli`
+2. `npm run start` => if everything is ok (also in browser's console), kill the process and go to the next step
+3. `ng build`
+4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+5. `cd ..`
+6. `ng build --aot`
+7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+8. `cd ..`
+9. `ng build --prod`
+10. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+11. `cd ../../..`
+
+# D. Run universal example
+1. `cd examples/universal`
+2. `npm run start` => if everything is ok (also in browser's console), kill the process and go to the next step
+3. `npm run build:ssr && npm run serve:ssr` => if everything is ok (also in browser's console), kill the process and go to the next step
+4. `npm run build:prerender && npm run serve:prerender` => if everything is ok (also in browser's console), kill the process and go to the next step
+5. `cd ../../..`
+
+# E. Create your pull request
+1. **If it is ok, create your pull request specifying all the details**
+
 
 TODO RESTORE THESE STEPS IN 5.x.x VERSIONS:<br>
 -15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-<br>
@@ -53,6 +74,7 @@ TODO RESTORE THESE STEPS IN 5.x.x VERSIONS:<br>
 <br>
 <br>
 <br>
+
 
 # Only for the author @Ks89 - How to publish this on npm?
 
