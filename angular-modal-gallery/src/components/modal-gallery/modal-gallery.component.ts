@@ -354,6 +354,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.close.emit(new ImageModalEvent(action, true));
     this.opened = false;
     this.keyboardService.reset();
+
+    // shows scrollbar
+    document.body.style.overflow = 'visible';
   }
 
   /**
@@ -361,6 +364,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index of the clicked image.
    */
   onShowModalGallery(index: number) {
+    // hides scrollbar
+    document.body.style.overflow = 'hidden';
     this.showModalGallery(index);
   }
 
