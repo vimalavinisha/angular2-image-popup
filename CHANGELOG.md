@@ -1,3 +1,11 @@
+# 5.0.0-alpha.3
+### Features
+- prevent browser scrolling when modal gallery is opened (implemented thanks to this `hide scrollbar to fix right margin (thanks to @Enngage)`)
+
+### Bugfixes
+- hide scrollbar to fix right margin (thanks to @Enngage)
+
+
 # 5.0.0-alpha.2
 ### Bug fixes
 - emit show output event every time the current image changes
