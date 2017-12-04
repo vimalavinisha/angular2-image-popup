@@ -432,6 +432,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         this.isFirstImage = false;
         this.isLastImage = true;
         break;
+      default:
+        this.isFirstImage = false;
+        this.isLastImage = false;
+        break;
     }
   }
 
