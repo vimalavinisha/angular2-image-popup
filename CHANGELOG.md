@@ -4,6 +4,7 @@
 
 ### Bugfixes
 - hide scrollbar to fix right margin (thanks to @Enngage)
+- restore isFirstImage and isLastImage to show previews again after reached the boundaries
 
 
 # 5.0.0-alpha.2
