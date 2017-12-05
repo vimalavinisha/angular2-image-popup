@@ -1,4 +1,7 @@
-<ks-gallery [images]="images" [showGallery]="showGallery" (show)="onShowModalGallery($event)"></ks-gallery>
+<ks-gallery [images]="images"
+            [showGallery]="showGallery"
+            [plainGalleryConfig]="plainGalleryConfig"
+            (show)="onShowModalGallery($event)"></ks-gallery>
 
 <ks-background [isOpen]="opened"
                [accessibilityConfig]="accessibilityConfig"></ks-background>

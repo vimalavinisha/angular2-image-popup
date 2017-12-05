@@ -22,8 +22,9 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Image } from '../../interfaces/image.class';
+import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../interfaces/plain-gallery-config.interface';
 
 /**
  * Component with the gallery of thumbs.
@@ -37,12 +38,54 @@ import { Image } from '../../interfaces/image.class';
   templateUrl: 'gallery.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryComponent {
+export class GalleryComponent implements OnInit {
 
   @Input() images: Image[];
   @Input() showGallery: boolean;
+  @Input() plainGalleryConfig: PlainGalleryConfig;
 
   @Output() show: EventEmitter<number> = new EventEmitter<number>();
+
+  configPlainGallery: PlainGalleryConfig;
+
+  imageGrid: Image[][];
+
+  private defaultLayout: LineLayout = new LineLayout({length: 5, iconClass: '', otherCount: 2}, false);
+
+  private defaultPlainConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: this.defaultLayout,
+    size: {
+      width: 50,
+      height: 50,
+      unit: 'px'
+    }
+  };
+
+  ngOnInit() {
+    const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
+    console.log('plainGalleryConfig config', config);
+    // validate
+    if (config.layout instanceof LineLayout) {
+      if (config.strategy !== PlainGalleryStrategy.ROW && config.strategy !== PlainGalleryStrategy.COLUMN) {
+        throw new Error('LineLayout requires strategy: ROW or COLUMN');
+      }
+    }
+
+    if (config.layout instanceof GridLayout) {
+      if (config.strategy !== PlainGalleryStrategy.GRID && config.strategy !== PlainGalleryStrategy.ADVANCED_GRID) {
+        throw new Error('GridLayout requires strategy: GRID or ADVANCED_GRID');
+      }
+    }
+
+    // init
+    this.configPlainGallery = config;
+
+    console.log('plainGalleryConfig this.configPlainGallery', this.configPlainGallery);
+
+    // init imageGrid
+    // this.imageGrid = this.images;
+  }
 
   showModalGallery(index: number) {
     this.show.emit(index);

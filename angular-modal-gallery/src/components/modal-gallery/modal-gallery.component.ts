@@ -51,6 +51,7 @@ import { KeyboardService } from '../../services/keyboard.service';
 import { DotsConfig } from '../../interfaces/dots-config.interface';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { InternalLibImage } from '../../interfaces/image-internal.class';
+import { PlainGalleryConfig } from '../../interfaces/plain-gallery-config.interface';
 
 
 /**
@@ -152,6 +153,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
+
+  // TODO add doc
+  @Input() plainGalleryConfig: PlainGalleryConfig;
 
   /**
    * Output to emit an event when the modal gallery is closed.
