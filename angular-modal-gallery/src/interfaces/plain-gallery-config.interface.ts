@@ -46,9 +46,8 @@ export enum PlainGalleryStrategy {
 }
 
 export interface Size {
-  width: number;
-  height: number;
-  unit: string;
+  width: string;
+  height: string;
 }
 
 

@@ -1,18 +1,11 @@
 <div class="ng-gallery" *ngIf="showGallery">
-  <div *ngFor="let i of images; trackBy: trackById; let index = index">
-    <img *ngIf="i && i.img" [src]="i.thumb ? i.thumb : i.img" class="ng-thumb" (click)="showModalGallery(index)"
-         alt="{{getAltDescriptionByIndex(index)}}"/>
-  </div>
+  <ng-container *ngFor="let imgRow of imageGrid; let i = index">
+    <ng-container *ngFor="let imgCol of imgRow; let j = index">
+      <img *ngIf="imgCol && imgCol.img"
+           [src]="imgCol.thumb ? imgCol.thumb : imgCol.img"
+           class="ng-thumb"
+           (click)="showModalGallery(j)"
+           alt="{{getAltDescriptionByIndex(j)}}"/>
+    </ng-container>
+  </ng-container>
 </div>
-
-<!--<div class="ng-gallery" *ngIf="showGallery">-->
-  <!--<ng-container *ngFor="let imgRow of imageGrid; let i = index">-->
-    <!--<ng-container *ngFor="let imgCol of imgRow; let j = index">-->
-      <!--<img *ngIf="imgCol && imgCol.img"-->
-           <!--[src]="imgCol.thumb ? imgCol.thumb : imgCol.img"-->
-           <!--class="ng-thumb"-->
-           <!--(click)="showModalGallery(j)"-->
-           <!--alt="{{getAltDescriptionByIndex(j)}}"/>-->
-    <!--</ng-container>-->
-  <!--</ng-container>-->
-<!--</div>-->

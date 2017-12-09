@@ -16,8 +16,7 @@
       <img *ngIf="preview?.img"
            class="inside preview-image {{isActive(preview) ? 'active' : ''}}"
            [src]="preview.thumb ? preview.thumb : preview.img"
-           ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height,
-             unitWidth: configPreview.size.unit, unitHeight: configPreview.size.unit}"
+           ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height}"
            [attr.aria-label]="preview.ariaLabel ? preview.ariaLabel : ''"
            [title]="preview.title ? preview.title : ''"
            alt="{{preview.alt ? preview.alt : ''}}"

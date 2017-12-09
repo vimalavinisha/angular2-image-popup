@@ -138,7 +138,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() slideConfig: SlideConfig = {
     infinite: false,
-    sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}
+    sidePreviews: {show: true, width: '100px', height: '100px'}
   };
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.

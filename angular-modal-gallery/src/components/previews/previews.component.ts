@@ -98,7 +98,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Default preview size object
    * @type ImageSize
    */
-  private defaultPreviewSize: ImageSize = {height: 50, width: 50, unit: 'px'};
+  private defaultPreviewSize: ImageSize = {height: '50px', width: '50px'};
   /**
    * Default preview config object
    * @type PreviewConfig

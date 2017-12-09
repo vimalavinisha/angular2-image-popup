@@ -20,9 +20,8 @@ export interface ButtonConfig {
 }
 
 export interface ButtonSize {
-  width: number;
-  height: number;
-  unit: string;
+  width: string;
+  height: string;
 }
 
 export interface ButtonEvent {

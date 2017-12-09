@@ -57,9 +57,8 @@ export class AppComponent {
     strategy: PlainGalleryStrategy.ROW,
     layout:  new LineLayout({length: 2, iconClass: '', otherCount: 2}, false),
     size: {
-      width: 50,
-      height: 50,
-      unit: 'px'
+      width: '50px',
+      height: '50px'
     }
   };
 
@@ -67,9 +66,8 @@ export class AppComponent {
     strategy: PlainGalleryStrategy.GRID,
     layout:  new GridLayout({length: 3, iconClass: '', otherCount: 2}, 1, 2),
     size: {
-      width: 50,
-      height: 50,
-      unit: 'px'
+      width: '50px',
+      height: '50px'
     }
   };
 
@@ -125,9 +123,8 @@ export class AppComponent {
     clickable: true,
     alwaysCenter: false,
     size: {
-      width: 70,
-      height: 70,
-      unit: 'px'
+      width: '70px',
+      height: '70px'
     }
   };
 
@@ -253,7 +250,7 @@ export class AppComponent {
 
   previewConfigCustomSize: PreviewConfig = {
     visible: true,
-    size: {width: 30, height: 30, unit: 'px'}
+    size: {width: '30px', height: '30px'}
   };
 
 

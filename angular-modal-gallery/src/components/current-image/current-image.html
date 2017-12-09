@@ -17,8 +17,7 @@
            class="inside current-image-previous"
            [src]="leftPreview.thumb ? leftPreview.thumb : leftPreview.img"
            [hidden]="loading"
-           ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height,
-         unitWidth: slideConfig.sidePreviews.unit, unitHeight: slideConfig.sidePreviews.unit}"
+           ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height}"
            [attr.aria-label]="leftPreview.ariaLabel"
            [title]="leftPreview.title ? leftPreview.title : getDescriptionToDisplay(leftPreview)"
            alt="{{leftPreview.alt ? leftPreview.alt : getAltDescriptionByImage(leftPreview)}}"
@@ -53,8 +52,7 @@
            class="inside current-image-next"
            [src]="rightPreview.thumb ? rightPreview.thumb : rightPreview.img"
            [hidden]="loading"
-           ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height,
-         unitWidth: slideConfig.sidePreviews.unit, unitHeight: slideConfig.sidePreviews.unit}"
+           ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height}"
            [attr.aria-label]="rightPreview.ariaLabel"
            [title]="rightPreview.title ? rightPreview.title : getDescriptionToDisplay(rightPreview)"
            alt="{{rightPreview.alt ? rightPreview.alt : getAltDescriptionByImage(rightPreview)}}"
@@ -62,8 +60,8 @@
            (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, clickAction)"/>
       <ng-template #lastImage>
         <div class="current-image-next hidden"
-             [style.width]="slideConfig.sidePreviews?.width+slideConfig.sidePreviews?.unit"
-             [style.height]="slideConfig.sidePreviews?.height+slideConfig.sidePreviews?.unit">
+             [style.width]="slideConfig.sidePreviews?.width"
+             [style.height]="slideConfig.sidePreviews?.height">
         </div>
       </ng-template>
     </ng-container>

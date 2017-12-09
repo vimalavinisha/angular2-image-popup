@@ -3,8 +3,6 @@ import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChang
 export interface Size {
   width: number;
   height: number;
-  unitWidth: string;
-  unitHeight: string;
 }
 
 @Directive({
@@ -27,7 +25,7 @@ export class SizeDirective implements OnInit, OnChanges {
 
   private applyStyle() {
     // apply [style.width]
-    this.renderer.setStyle(this.el.nativeElement, 'width', `${this.sizeConfig.width}${this.sizeConfig.unitWidth}`);
-    this.renderer.setStyle(this.el.nativeElement, 'height', `${this.sizeConfig.height}${this.sizeConfig.unitHeight}`);
+    this.renderer.setStyle(this.el.nativeElement, 'width', this.sizeConfig.width);
+    this.renderer.setStyle(this.el.nativeElement, 'height', this.sizeConfig.height);
   }
 }

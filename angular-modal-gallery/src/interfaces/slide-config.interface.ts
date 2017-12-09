@@ -8,7 +8,6 @@ export interface SlideConfig {
 
 export interface SidePreviewsConfig {
   show: boolean;
-  width: number;
-  height: number;
-  unit: string;
+  width: string;
+  height: string;
 }
