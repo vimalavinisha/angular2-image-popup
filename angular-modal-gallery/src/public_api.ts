@@ -35,3 +35,13 @@ export { PreviewConfig } from './interfaces/preview-config.interface';
 export { AccessibilityConfig } from './interfaces/accessibility.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './interfaces/buttons-config.interface';
+
+export {
+  PlainGalleryConfig,
+  PlainGalleryLayout,
+  LineLayout,
+  GridLayout,
+  PlainGalleryStrategy,
+  Size,
+  BreakConfig
+} from './interfaces/plain-gallery-config.interface';

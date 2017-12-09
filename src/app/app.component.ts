@@ -36,7 +36,11 @@ import {
   DotsConfig,
   Image,
   ImageModalEvent,
-  PreviewConfig
+  PreviewConfig,
+  PlainGalleryConfig,
+  LineLayout,
+  PlainGalleryStrategy,
+  GridLayout
 } from 'angular-modal-gallery';
 
 @Component({
@@ -48,6 +52,26 @@ export class AppComponent {
 
   openModalWindow = false;
   imagePointer = 0;
+
+  plainGalleryRow: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout:  new LineLayout({length: 2, iconClass: '', otherCount: 2}, false),
+    size: {
+      width: 50,
+      height: 50,
+      unit: 'px'
+    }
+  };
+
+  plainGalleryColumn: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.GRID,
+    layout:  new GridLayout({length: 3, iconClass: '', otherCount: 2}, 1, 2),
+    size: {
+      width: 50,
+      height: 50,
+      unit: 'px'
+    }
+  };
 
   images: Image[] = [
     new Image(

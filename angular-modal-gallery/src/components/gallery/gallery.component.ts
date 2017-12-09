@@ -48,9 +48,10 @@ export class GalleryComponent implements OnInit {
 
   configPlainGallery: PlainGalleryConfig;
 
-  imageGrid: Image[][];
+  imageGrid: Image[][] = [];
 
-  private defaultLayout: LineLayout = new LineLayout({length: 5, iconClass: '', otherCount: 2}, false);
+  // length=-1 means infinity
+  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', otherCount: 2}, false);
 
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -65,26 +66,41 @@ export class GalleryComponent implements OnInit {
   ngOnInit() {
     const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
     console.log('plainGalleryConfig config', config);
-    // validate
+
     if (config.layout instanceof LineLayout) {
       if (config.strategy !== PlainGalleryStrategy.ROW && config.strategy !== PlainGalleryStrategy.COLUMN) {
         throw new Error('LineLayout requires strategy: ROW or COLUMN');
       }
+
+      if (!config.layout.breakConfig) {
+        throw new Error('breakConfig must be valid');
+      }
+
+      const row: Image[] = this.images.filter((val: Image, i: number) => i < config.layout.breakConfig.length || config.layout.breakConfig.length === -1);
+      this.imageGrid = [row];
     }
 
     if (config.layout instanceof GridLayout) {
       if (config.strategy !== PlainGalleryStrategy.GRID && config.strategy !== PlainGalleryStrategy.ADVANCED_GRID) {
         throw new Error('GridLayout requires strategy: GRID or ADVANCED_GRID');
       }
+
+      const count: number = Math.ceil(this.images.length / config.layout.breakConfig.length);
+      let start = 0;
+      let end: number = config.layout.breakConfig.length - 1;
+
+      for (let j = 0; j < count; j++) {
+        const row: Image[] = this.images.filter((val: Image, i: number) => i >= start && i <= end);
+        this.imageGrid.push(row);
+        start = end + 1;
+        end = end + config.layout.breakConfig.length - 1;
+      }
+
     }
 
-    // init
     this.configPlainGallery = config;
 
-    console.log('plainGalleryConfig this.configPlainGallery', this.configPlainGallery);
-
-    // init imageGrid
-    // this.imageGrid = this.images;
+    console.log('this.imageGrid', this.imageGrid);
   }
 
   showModalGallery(index: number) {
