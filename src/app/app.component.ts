@@ -109,6 +109,51 @@ export class AppComponent {
     )
   ];
 
+  imagesRect: Image[] = [
+    new Image(
+      0,
+      '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
+      '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg',
+      null, null
+    ),
+    new Image(
+      1,
+      '../assets/images/gallery/pexels-photo-47223.jpeg',
+      '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg',
+      null, null
+    ),
+    new Image(
+      2,
+      '../assets/images/gallery/pexels-photo-52062.jpeg',
+      '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
+      null, null
+    ),
+    new Image(
+      3,
+      '../assets/images/gallery/pexels-photo-66943.jpeg',
+      '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg',
+      null, null
+    ),
+    new Image(
+      4,
+      '../assets/images/gallery/pexels-photo-93750.jpeg',
+      '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg',
+      null, null
+    ),
+    new Image(
+      5,
+      '../assets/images/gallery/pexels-photo-94420.jpeg',
+      '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg',
+      null, null
+    ),
+    new Image(
+      6,
+      '../assets/images/gallery/pexels-photo-96947.jpeg',
+      '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg',
+      null, null
+    )
+  ];
+
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 

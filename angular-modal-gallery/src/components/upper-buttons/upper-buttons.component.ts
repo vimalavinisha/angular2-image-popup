@@ -104,7 +104,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Default button size object
    * @type ButtonSize
    */
-  private defaultSize: ButtonSize = {height: '30px', width: '30px'};
+  private defaultSize: ButtonSize = {height: 'auto', width: '30px'};
 
   /**
    * Default buttons array for standard configuration
