@@ -5,6 +5,7 @@
 ### Bugfixes
 - hide scrollbar to fix right margin (thanks to @Enngage)
 - restore isFirstImage and isLastImage to show previews again after reached the boundaries
+- add height:auto to previews to display also rectangular images
 
 
 # 5.0.0-alpha.2
