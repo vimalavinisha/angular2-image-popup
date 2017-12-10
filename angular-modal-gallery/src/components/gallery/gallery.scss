@@ -23,17 +23,17 @@
  SOFTWARE.
  */
 
-.ng-gallery {
-  width: 100%;
-  display: inline-block;
-}
+.plain-container-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 
-img {
-  &.ng-thumb {
-    height: 50px;
-    float: left;
-    display: block;
+  .image {
+    width: 50px;
+    height: auto;
+    margin-left: 2px;
+    margin-right: 2px;
     cursor: pointer;
-    margin: 2px 2px 0 0;
   }
 }
