@@ -52,6 +52,7 @@ export class GalleryComponent implements OnInit {
 
   wrapStyle = false;
   widthStyle = '';
+  directionStyle = '';
 
   // length=-1 means infinity
   private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, false);
@@ -80,6 +81,16 @@ export class GalleryComponent implements OnInit {
 
       const row: Image[] = this.images.filter((val: Image, i: number) => i < config.layout.breakConfig.length || config.layout.breakConfig.length === -1);
       this.imageGrid = [row];
+
+      switch (config.strategy) {
+        case PlainGalleryStrategy.ROW:
+          this.directionStyle = config.layout.reverse ? 'row-reverse' : 'row';
+          break;
+        case PlainGalleryStrategy.COLUMN:
+          this.directionStyle = config.layout.reverse ? 'column-reverse' : 'column';
+          this.wrapStyle = config.layout.breakConfig.wrap;
+          break;
+      }
     }
 
     if (config.layout instanceof GridLayout) {
@@ -105,11 +116,15 @@ export class GalleryComponent implements OnInit {
 
       this.widthStyle = ((pixels * config.layout.breakConfig.length) + (pixels / 2)) + 'px';
       this.wrapStyle = config.layout.breakConfig.wrap;
+
+      this.directionStyle = 'row';
     }
 
     this.configPlainGallery = config;
 
     console.log('this.imageGrid', this.imageGrid);
+
+    console.log('this.directionStyle: ', this.directionStyle);
   }
 
   showModalGallery(index: number) {

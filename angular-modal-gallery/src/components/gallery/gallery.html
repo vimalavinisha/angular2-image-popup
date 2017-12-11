@@ -1,5 +1,6 @@
 <div *ngIf="showGallery"
-     class="plain-container-row" ksWrap [wrap]="wrapStyle" [width]="widthStyle">
+     class="plain-container"
+     ksWrap [wrap]="wrapStyle" [width]="widthStyle" [direction]="directionStyle">
 
   <ng-container *ngFor="let imgRow of imageGrid; let i = index">
     <ng-container *ngFor="let imgCol of imgRow; let j = index">

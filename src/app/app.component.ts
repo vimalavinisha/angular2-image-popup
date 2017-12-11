@@ -63,6 +63,15 @@ export class AppComponent {
   };
 
   plainGalleryColumn: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
+    layout:  new LineLayout({length: 3, iconClass: '', wrap: true}, false),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+
+  plainGalleryGrid: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.GRID,
     layout:  new GridLayout({length: 3, iconClass: '', wrap: true}),
     size: {
