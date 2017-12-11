@@ -50,8 +50,11 @@ export class GalleryComponent implements OnInit {
 
   imageGrid: Image[][] = [];
 
+  wrapStyle = false;
+  widthStyle = '';
+
   // length=-1 means infinity
-  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', otherCount: 2}, false);
+  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, false);
 
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -94,6 +97,14 @@ export class GalleryComponent implements OnInit {
         start = end + 1;
         end = end + config.layout.breakConfig.length - 1;
       }
+
+      // force wrap for grid layout
+      config.layout.breakConfig.wrap = true;
+
+      const pixels: number = +(config.size.width.replace('px', ''));
+
+      this.widthStyle = ((pixels * config.layout.breakConfig.length) + (pixels / 2)) + 'px';
+      this.wrapStyle = config.layout.breakConfig.wrap;
     }
 
     this.configPlainGallery = config;

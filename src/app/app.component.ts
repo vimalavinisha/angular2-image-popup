@@ -55,7 +55,7 @@ export class AppComponent {
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout:  new LineLayout({length: 2, iconClass: '', otherCount: 2}, false),
+    layout:  new LineLayout({length: 2, iconClass: '', wrap: true}, false),
     size: {
       width: '50px',
       height: '50px'
@@ -64,7 +64,7 @@ export class AppComponent {
 
   plainGalleryColumn: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.GRID,
-    layout:  new GridLayout({length: 3, iconClass: '', otherCount: 2}, 1, 2),
+    layout:  new GridLayout({length: 3, iconClass: '', wrap: true}),
     size: {
       width: '50px',
       height: '50px'

@@ -26,13 +26,8 @@ export class LineLayout extends PlainGalleryLayout {
 }
 
 export class GridLayout extends PlainGalleryLayout {
-  rows: number;
-  cols: number;
-
-  constructor(breakConfig: BreakConfig, rows: number, cols: number) {
+  constructor(breakConfig: BreakConfig) {
     super(breakConfig);
-    this.rows = rows;
-    this.cols = cols;
   }
 }
 
@@ -54,5 +49,5 @@ export interface Size {
 export interface BreakConfig {
   length: number;
   iconClass: string;
-  otherCount: number;
+  wrap: boolean;
 }
