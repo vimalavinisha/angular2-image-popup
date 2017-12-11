@@ -52,10 +52,11 @@ export class GalleryComponent implements OnInit {
 
   wrapStyle = false;
   widthStyle = '';
-  directionStyle = '';
+  directionStyle: string;
+  justifyStyle: string;
 
   // length=-1 means infinity
-  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, false);
+  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, false, 'flex-start');
 
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -91,6 +92,12 @@ export class GalleryComponent implements OnInit {
           this.wrapStyle = config.layout.breakConfig.wrap;
           break;
       }
+
+      if (config.layout.reverse && (config.layout.justify === 'flex-start' || config.layout.justify === 'flex-end')) {
+        config.layout.justify = config.layout.justify === 'flex-start' ? 'flex-end' : 'flex-start';
+      }
+
+      this.justifyStyle = config.layout.justify;
     }
 
     if (config.layout instanceof GridLayout) {

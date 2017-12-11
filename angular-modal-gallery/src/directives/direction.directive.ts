@@ -1,12 +1,12 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges } from '@angular/core';
 
 @Directive({
-  selector: '[ksWrap]'
+  selector: '[ksDirection]'
 })
-export class WrapDirective implements OnInit, OnChanges {
+export class DirectionDirective implements OnInit, OnChanges {
 
-  @Input() wrap: boolean;
-  @Input() width: string;
+  @Input() direction: string;
+  @Input() justify: string;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {
   }
@@ -20,10 +20,10 @@ export class WrapDirective implements OnInit, OnChanges {
   }
 
   private applyStyle() {
-    if (!this.wrap) {
+    if (!this.direction || !this.justify) {
       return;
     }
-    this.renderer.setStyle(this.el.nativeElement, 'width', this.width);
-    this.renderer.setStyle(this.el.nativeElement, 'flex-wrap', this.wrap ? 'wrap' : 'nowrap');
+    this.renderer.setStyle(this.el.nativeElement, 'flex-direction', this.direction);
+    this.renderer.setStyle(this.el.nativeElement, 'justify-content', this.justify);
   }
 }

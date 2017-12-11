@@ -6,25 +6,41 @@
 <br>
 <hr>
 
-<h2>Minimal examples</h2>
+<h2>Layout examples</h2>
 <section>
-  <h3>A0 - Minimal demo - row plain gallery layout</h3>
+  <h3>Z1 - row plain gallery layout (limit 2)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryRow"></ks-modal-gallery>
 </section>
 <section>
-  <h3>A0bis - Minimal demo - column plain gallery layout</h3>
+  <h3>Z1bis - row plain gallery layout reverse (limit 2)</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="images"
+                    [plainGalleryConfig]="plainGalleryRowReverse"></ks-modal-gallery>
+</section>
+<section>
+  <h3>Z2 - column plain gallery layout (limit 3)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryColumn"></ks-modal-gallery>
 </section>
 <section>
-  <h3>A0tris - Minimal demo - grid plain gallery layout</h3>
+  <h3>Z2bis - column plain gallery layout reverse (limit 3)</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="images"
+                    [plainGalleryConfig]="plainGalleryColumnReverse"></ks-modal-gallery>
+</section>
+<section>
+  <h3>Z3 - grid plain gallery layout</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
 </section>
+<br>
+<hr>
+<br>
+<h2>Minimal examples</h2>
 <section>
   <h3>A1 - Minimal demo - all defaults</h3>
   <br>

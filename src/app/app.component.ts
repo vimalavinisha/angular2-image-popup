@@ -55,7 +55,15 @@ export class AppComponent {
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout:  new LineLayout({length: 2, iconClass: '', wrap: true}, false),
+    layout:  new LineLayout({length: 2, iconClass: '', wrap: true}, false, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+  plainGalleryRowReverse: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout:  new LineLayout({length: 2, iconClass: '', wrap: true}, true, 'flex-start'),
     size: {
       width: '50px',
       height: '50px'
@@ -64,7 +72,15 @@ export class AppComponent {
 
   plainGalleryColumn: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.COLUMN,
-    layout:  new LineLayout({length: 3, iconClass: '', wrap: true}, false),
+    layout:  new LineLayout({length: 3, iconClass: '', wrap: true}, false, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+  plainGalleryColumnReverse: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
+    layout:  new LineLayout({length: 3, iconClass: '', wrap: true}, true, 'flex-start'),
     size: {
       width: '50px',
       height: '50px'

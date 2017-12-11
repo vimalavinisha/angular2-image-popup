@@ -18,10 +18,12 @@ export class PlainGalleryLayout {
 
 export class LineLayout extends PlainGalleryLayout {
   reverse: boolean;
+  justify: string;
 
-  constructor(breakConfig: BreakConfig, reverse: boolean) {
+  constructor(breakConfig: BreakConfig, reverse: boolean, justify: string) {
     super(breakConfig);
     this.reverse = reverse;
+    this.justify = justify;
   }
 }
 

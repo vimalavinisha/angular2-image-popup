@@ -25,8 +25,11 @@
 
 .plain-container {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+
+  // defined via Angular using DirectionDirective
+  //flex-direction: row;
+  //justify-content: flex-start;
 
   .image {
     width: 50px;
