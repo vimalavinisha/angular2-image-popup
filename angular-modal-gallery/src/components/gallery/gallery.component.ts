@@ -56,7 +56,7 @@ export class GalleryComponent implements OnInit {
   justifyStyle: string;
 
   // length=-1 means infinity
-  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, false, 'flex-start');
+  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, 'flex-start');
 
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -85,16 +85,12 @@ export class GalleryComponent implements OnInit {
 
       switch (config.strategy) {
         case PlainGalleryStrategy.ROW:
-          this.directionStyle = config.layout.reverse ? 'row-reverse' : 'row';
+          this.directionStyle = 'row';
           break;
         case PlainGalleryStrategy.COLUMN:
-          this.directionStyle = config.layout.reverse ? 'column-reverse' : 'column';
+          this.directionStyle = 'column';
           this.wrapStyle = config.layout.breakConfig.wrap;
           break;
-      }
-
-      if (config.layout.reverse && (config.layout.justify === 'flex-start' || config.layout.justify === 'flex-end')) {
-        config.layout.justify = config.layout.justify === 'flex-start' ? 'flex-end' : 'flex-start';
       }
 
       this.justifyStyle = config.layout.justify;
