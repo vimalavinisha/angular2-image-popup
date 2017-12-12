@@ -1,3 +1,12 @@
+# 5.0.0-alpha.4
+### Features
+- change all "Size" objects using strings to be able to set also 'auto'
+- update all default sizes to support rectangle images (not only squared)
+- initial implementation of plain gallery with different layouts (row, column, grid)
+- add square thumbnails feature #76 with an API to choose between <img> and <a> for thumbs
+
+
+
 # 5.0.0-alpha.3
 ### Features
 - prevent browser scrolling when modal gallery is opened (implemented thanks to this `hide scrollbar to fix right margin (thanks to @Enngage)`)
