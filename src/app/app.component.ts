@@ -25,22 +25,8 @@
 import { Component } from '@angular/core';
 
 import {
-  AccessibilityConfig,
-  Action,
-  ButtonEvent,
-  ButtonsConfig,
-  ButtonsStrategy,
-  ButtonType,
-  Description,
-  DescriptionStrategy,
-  DotsConfig,
-  Image,
-  ImageModalEvent,
-  PreviewConfig,
-  PlainGalleryConfig,
-  LineLayout,
-  PlainGalleryStrategy,
-  GridLayout
+  AccessibilityConfig, Action, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy, DotsConfig, GridLayout,
+  Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 
 @Component({
@@ -55,7 +41,7 @@ export class AppComponent {
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout:  new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
     size: {
       width: '80px',
       height: '80px'
@@ -63,16 +49,25 @@ export class AppComponent {
   };
   plainGalleryRowSpaceAround: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout:  new LineLayout({length: 2, iconClass: '', wrap: true}, 'space-around'),
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'space-around'),
     size: {
       width: '50px',
       height: '50px'
     }
   };
+  plainGalleryRowATags: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    },
+    advanced: {aTags: true}
+  };
 
   plainGalleryColumn: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.COLUMN,
-    layout:  new LineLayout({length: 3, iconClass: '', wrap: true}, 'flex-start'),
+    layout: new LineLayout({length: 3, iconClass: '', wrap: true}, 'flex-start'),
     size: {
       width: '50px',
       height: '50px'
@@ -81,7 +76,7 @@ export class AppComponent {
 
   plainGalleryGrid: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.GRID,
-    layout:  new GridLayout({length: 3, iconClass: '', wrap: true}),
+    layout: new GridLayout({length: 3, iconClass: '', wrap: true}),
     size: {
       width: '80px',
       height: '80px'

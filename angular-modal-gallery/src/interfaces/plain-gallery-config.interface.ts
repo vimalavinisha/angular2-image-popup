@@ -6,6 +6,7 @@ export interface PlainGalleryConfig {
   strategy: PlainGalleryStrategy;
   layout: PlainGalleryLayout;
   size: Size;
+  advanced?: AdvancedConfig;
 }
 
 export class PlainGalleryLayout {
@@ -50,4 +51,8 @@ export interface BreakConfig {
   length: number;
   iconClass: string;
   wrap: boolean;
+}
+
+export interface AdvancedConfig {
+  aTags: boolean;
 }

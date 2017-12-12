@@ -5,12 +5,27 @@
 
   <ng-container *ngFor="let imgRow of imageGrid; let i = index">
     <ng-container *ngFor="let imgCol of imgRow; let j = index">
-      <img *ngIf="imgCol && imgCol.img"
-           [src]="imgCol.thumb ? imgCol.thumb : imgCol.img"
-           class="image"
+
+      <ng-container *ngIf="!configPlainGallery.advanced?.aTags; else aTags">
+        <img *ngIf="imgCol && imgCol.img"
+             [src]="imgCol.thumb ? imgCol.thumb : imgCol.img"
+             class="image"
+             ksSize [sizeConfig]="{width: configPlainGallery.size.width, height: configPlainGallery.size.height}"
+             alt="{{getAltDescriptionByIndex(j)}}"
+             (click)="showModalGallery(j)"/>
+      </ng-container>
+
+      <!-- Add directive to set background with the image url as param to pass thumb or img-->
+      <!-- to do something like this <a style="background: url('path to image') 50% 50%/cover">.-->
+      <ng-template #aTags>
+        <a *ngIf="imgCol && imgCol.img"
+           href="#"
+           class="aTagImage"
+           ksATagBgImage [image]="imgCol" [style]="'50% 50%/cover'"
            ksSize [sizeConfig]="{width: configPlainGallery.size.width, height: configPlainGallery.size.height}"
-           alt="{{getAltDescriptionByIndex(j)}}"
-           (click)="showModalGallery(j)"/>
+           (click)="showModalGallery(j)"></a>
+      </ng-template>
+
     </ng-container>
   </ng-container>
 

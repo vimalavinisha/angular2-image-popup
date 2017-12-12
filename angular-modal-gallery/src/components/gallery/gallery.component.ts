@@ -64,6 +64,9 @@ export class GalleryComponent implements OnInit {
     size: {
       width: '50px',
       height: 'auto'
+    },
+    advanced: {
+      aTags: false
     }
   };
 
