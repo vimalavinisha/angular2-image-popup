@@ -8,8 +8,9 @@
       <img *ngIf="imgCol && imgCol.img"
            [src]="imgCol.thumb ? imgCol.thumb : imgCol.img"
            class="image"
-           (click)="showModalGallery(j)"
-           alt="{{getAltDescriptionByIndex(j)}}"/>
+           ksSize [sizeConfig]="{width: configPlainGallery.size.width, height: configPlainGallery.size.height}"
+           alt="{{getAltDescriptionByIndex(j)}}"
+           (click)="showModalGallery(j)"/>
     </ng-container>
   </ng-container>
 
