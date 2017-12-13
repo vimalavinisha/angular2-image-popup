@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { Image } from '../../interfaces/image.class';
 import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../interfaces/plain-gallery-config.interface';
 
@@ -71,6 +71,7 @@ export class GalleryComponent implements OnInit, OnChanges {
   };
 
   ngOnInit() {
+    this.configPlainGallery = this.initPlainGalleryConfig();
     this.initImageGrid();
   }
 
@@ -80,41 +81,51 @@ export class GalleryComponent implements OnInit, OnChanges {
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
-    console.log('------------> ', changes);
-    // const simpleChange: SimpleChange = changes.currentImage;
-    // if (!simpleChange) {
-    //   return;
-    // }
-    // const prev: InternalLibImage = simpleChange.previousValue;
-    // const current: InternalLibImage = simpleChange.currentValue;
-    //
-    // // if was loaded before, but not now
-    // if (prev && current && prev.previouslyLoaded && !current.previouslyLoaded) {
-    //   this.loading = !current.previouslyLoaded;
-    //   this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
-    //   this.loading = false;
-    // }
-    //
-    // if (this.isOpen) {
-    //   this.manageSlideConfig(this.getIndex(this.currentImage));
-    // }
+    const imagesChange: SimpleChange = changes.images;
+    const configChange: SimpleChange = changes.plainGalleryConfig;
 
-    this.initImageGrid();
+    // I'm using !change.firstChange because the first time will be called both onInit and onChange and I don't
+    // want to execute initialization two times.
+    if (configChange && !configChange.firstChange &&
+      (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))) {
+      this.configPlainGallery = this.initPlainGalleryConfig();
+    }
+    if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
+      this.initImageGrid();
+    }
   }
 
-  private initImageGrid() {
+  private initPlainGalleryConfig() {
     const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
-    console.log('plainGalleryConfig config', config);
+
+    if (!config.layout || !config.layout.breakConfig) {
+      throw new Error('Both layout and breakConfig must be valid');
+    }
 
     if (config.layout instanceof LineLayout) {
       if (config.strategy !== PlainGalleryStrategy.ROW && config.strategy !== PlainGalleryStrategy.COLUMN) {
-        throw new Error('LineLayout requires strategy: ROW or COLUMN');
+        throw new Error('LineLayout requires either ROW or COLUMN strategy');
       }
+    }
 
-      if (!config.layout.breakConfig) {
-        throw new Error('breakConfig must be valid');
+    if (config.layout instanceof GridLayout) {
+      if (config.strategy !== PlainGalleryStrategy.GRID && config.strategy !== PlainGalleryStrategy.ADVANCED_GRID) {
+        throw new Error('GridLayout requires either GRID or ADVANCED_GRID strategy');
       }
+      // force wrap for grid layout
+      config.layout.breakConfig.wrap = true;
+    }
 
+    return config;
+  }
+
+  private initImageGrid() {
+    const config: PlainGalleryConfig = this.configPlainGallery;
+
+    // reset the array to prevent issues in case of GridLayout
+    this.imageGrid = [];
+
+    if (config.layout instanceof LineLayout) {
       const row: Image[] = this.images.filter((val: Image, i: number) => i < config.layout.breakConfig.length || config.layout.breakConfig.length === -1);
       this.imageGrid = [row];
 
@@ -127,15 +138,10 @@ export class GalleryComponent implements OnInit, OnChanges {
           this.wrapStyle = config.layout.breakConfig.wrap;
           break;
       }
-
       this.justifyStyle = config.layout.justify;
     }
 
     if (config.layout instanceof GridLayout) {
-      if (config.strategy !== PlainGalleryStrategy.GRID && config.strategy !== PlainGalleryStrategy.ADVANCED_GRID) {
-        throw new Error('GridLayout requires strategy: GRID or ADVANCED_GRID');
-      }
-
       const count: number = Math.ceil(this.images.length / config.layout.breakConfig.length);
       let start = 0;
       let end: number = config.layout.breakConfig.length - 1;
@@ -147,9 +153,6 @@ export class GalleryComponent implements OnInit, OnChanges {
         end = end + config.layout.breakConfig.length - 1;
       }
 
-      // force wrap for grid layout
-      config.layout.breakConfig.wrap = true;
-
       const pixels: number = +(config.size.width.replace('px', ''));
 
       this.widthStyle = ((pixels * config.layout.breakConfig.length) + (pixels / 2)) + 'px';
@@ -157,12 +160,6 @@ export class GalleryComponent implements OnInit, OnChanges {
 
       this.directionStyle = 'row';
     }
-
-    this.configPlainGallery = config;
-
-    console.log('this.imageGrid', this.imageGrid);
-
-    console.log('this.directionStyle: ', this.directionStyle);
   }
 
   showModalGallery(index: number) {

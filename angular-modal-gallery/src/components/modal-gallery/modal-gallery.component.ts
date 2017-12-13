@@ -23,7 +23,7 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChanges,
+  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChange, SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -214,31 +214,25 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    // call initImages passing true as parameter,
-    // because I want to emit `hasData` event
-    this.initImages(true);
+    // call initImages to init images and to emit `hasData` event
+    this.initImages();
   }
 
   /**
-   * Method ´ngOnChanges´ to init images preventing errors.
+   * Method ´ngOnChanges´ to re-init images if input is changed.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called before `ngOnInit()` and whenever one or more data-bound input properties change.
    * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
    */
   ngOnChanges(changes: SimpleChanges) {
-    // TODO probably I should check changes.modalImages.previousValue and currentValue
-    // TODO also using changes.modalImages.firstChange to check if it is the first
-    // TODO change of this property
+    const imagesChange: SimpleChange = changes.modalImages;
+    const modalOpenerIndexChange: SimpleChange = changes.modalOpenerByIndex;
 
-    if (this.modalImages) {
-      // I pass `false` as parameter, because I DON'T want to emit `hasData`
-      // event (preventing multiple hasData events while initializing).
-      // `hasData` should be emitted only one time.
-      this.initImages(false);
+    if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
+      this.initImages();
     }
 
-    console.log('changes', changes);
-    if (changes && changes.modalOpenerByIndex) {
+    if (modalOpenerIndexChange) {
       const prevModalOpenerIndex: number = changes.modalOpenerByIndex.previousValue;
       const currModalOpenerIndex: number = changes.modalOpenerByIndex.currentValue;
       if (currModalOpenerIndex !== -1) {
@@ -255,7 +249,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   onCustomEmit(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.buttonBeforeHook.emit(eventToEmit);
-    console.log('on onCustomEmit', eventToEmit);
+    // console.log('on onCustomEmit', eventToEmit);
     this.buttonAfterHook.emit(eventToEmit);
   }
 
@@ -541,33 +535,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Private method to initialize `images` as array of `Image`s.
-   * Also, it will call completeInitialization.
-   * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
-   *  Use this parameter to prevent multiple `hasData` events.
+   * Also, it will emit ImageModalEvent to say that images are loaded.
    */
-  private initImages(emitHasDataEvent: boolean = false) {
+  private initImages() {
     this.images = <InternalLibImage[]>this.modalImages;
-    this.completeInitialization(emitHasDataEvent);
-  }
-
-  /**
-   * Private method ´completeInitialization´ to emit ImageModalEvent to say that images are loaded.
-   * @param emitHasDataEvent boolean to emit `hasData` event while initializing `angular-modal-gallery`.
-   *  Use this parameter to prevent multiple `hasData` events.
-   */
-  private completeInitialization(emitHasDataEvent: boolean) {
-    if (emitHasDataEvent) {
-      // this will prevent multiple emissions if called from both ngOnInit and ngOnChanges
-      this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
-    }
-    // this.loading = false;
-    // if (this.imagePointer >= 0) {
-    //   this.showGallery = false;
-    //   this.showModalGallery(this.imagePointer);
-    // } else {
-
+    this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
     this.showGallery = this.images.length > 0;
-    // }
   }
 
   /**

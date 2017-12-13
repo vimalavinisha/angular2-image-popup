@@ -343,8 +343,10 @@ export class AppComponent {
     console.log('Opening modal gallery from custom plain gallery, with image: ', image);
     if (image) {
       this.currentIndexCustomLayout = this.images.indexOf(image);
+      console.log('set new currentIndexCustomLayout to ' + this.currentIndexCustomLayout);
     } else {
       this.currentIndexCustomLayout = -1;
+      console.log('reset currentIndexCustomLayout to ' + this.currentIndexCustomLayout);
     }
   }
 
