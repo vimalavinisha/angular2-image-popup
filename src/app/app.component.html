@@ -32,10 +32,36 @@
                     [plainGalleryConfig]="plainGalleryColumn"></ks-modal-gallery>
 </section>
 <section>
-  <h3>Z3 - grid plain gallery layout  and custom size</h3>
+  <h3>Z3 - grid plain gallery layout and custom size</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
+</section>
+<section>
+  <h3>Z4 - full custom plain gallery with image pointer</h3>
+  <br>
+  <div class="my-app-custom-plain-container">
+    <ng-container *ngFor="let img of images; let i = index">
+      <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
+        <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 2 - 1}} more </a>
+        <img *ngIf="img.thumb; else noThumb"
+             class="my-app-custom-image"
+             [src]="img.thumb"
+             (click)="openImageModal(img)"
+             [alt]="img.description"/>
+
+        <ng-template #noThumb>
+          <img class="my-app-custom-image"
+               [src]="img.img"
+               (click)="openImageModal(img)"
+               [alt]="img.description"/>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+  <ks-modal-gallery [modalImages]="images"
+                    [modalOpenerByIndex]="currentIndexCustomLayout"
+                    [hideDefaultPlainGallery]="true"></ks-modal-gallery>
 </section>
 <br>
 <hr>
@@ -258,7 +284,8 @@
                     [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span></h3>
+  <h3>C9 - Advanced demo - preview custom configuration always center <span
+    style="color:red;">STILL NOT IMPLEMENTED</span></h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>
@@ -279,7 +306,8 @@
 </section>
 
 <section>
-  <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and buttonAfterHook</h3>
+  <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
+    buttonAfterHook</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigFull"

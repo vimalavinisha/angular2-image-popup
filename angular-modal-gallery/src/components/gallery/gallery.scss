@@ -23,26 +23,26 @@
  */
 
 .plain-container {
-  display: flex;
   align-items: center;
+  display: flex;
 
   // defined via Angular using DirectionDirective
   //flex-direction: row;
   //justify-content: flex-start;
 
   .image {
-    width: 50px;
+    cursor: pointer;
     height: auto;
     margin-left: 2px;
     margin-right: 2px;
-    cursor: pointer;
+    width: 50px;
   }
 
-  .aTagImage  {
+  .a-tag-image {
+    cursor: pointer;
     //width: 50px;
     //height: auto;
     margin-left: 2px;
     margin-right: 2px;
-    cursor: pointer;
   }
 }

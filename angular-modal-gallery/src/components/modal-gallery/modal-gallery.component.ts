@@ -23,17 +23,7 @@
  */
 
 import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  PLATFORM_ID,
-  SimpleChanges,
+  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -103,6 +93,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * this library with all images, thumbs and so on.
    */
   @Input() modalImages: Image[];
+
+  // TODO add docs
+  @Input() modalOpenerByIndex = -1;
+  @Input() hideDefaultPlainGallery = false;
+
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
@@ -231,12 +226,25 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
    */
   ngOnChanges(changes: SimpleChanges) {
-    // TODO probably I should check changes.something
+    // TODO probably I should check changes.modalImages.previousValue and currentValue
+    // TODO also using changes.modalImages.firstChange to check if it is the first
+    // TODO change of this property
+
     if (this.modalImages) {
       // I pass `false` as parameter, because I DON'T want to emit `hasData`
       // event (preventing multiple hasData events while initializing).
       // `hasData` should be emitted only one time.
       this.initImages(false);
+    }
+
+    console.log('changes', changes);
+    if (changes && changes.modalOpenerByIndex) {
+      const prevModalOpenerIndex: number = changes.modalOpenerByIndex.previousValue;
+      const currModalOpenerIndex: number = changes.modalOpenerByIndex.currentValue;
+      if (prevModalOpenerIndex !== currModalOpenerIndex && currModalOpenerIndex !== -1) {
+        console.log('opening modal gallery from custom plain gallery, index: ', currModalOpenerIndex);
+        this.showModalGallery(currModalOpenerIndex);
+      }
     }
   }
 

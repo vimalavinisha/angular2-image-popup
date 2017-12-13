@@ -36,8 +36,7 @@ import {
 })
 export class AppComponent {
 
-  openModalWindow = false;
-  imagePointer = 0;
+  currentIndexCustomLayout = -1;
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -341,8 +340,12 @@ export class AppComponent {
   };
 
   openImageModal(image: Image) {
-    this.imagePointer = this.images.indexOf(image);
-    this.openModalWindow = true;
+    console.log('Opening modal gallery from custom plain gallery, with image: ', image);
+    if (image) {
+      this.currentIndexCustomLayout = this.images.indexOf(image);
+    } else {
+      this.currentIndexCustomLayout = -1;
+    }
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -406,7 +409,7 @@ export class AppComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-    this.openModalWindow = false;
+    this.currentIndexCustomLayout = -1;
   }
 
   addRandomImage() {
