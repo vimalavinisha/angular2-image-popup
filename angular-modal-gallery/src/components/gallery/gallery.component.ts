@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Image } from '../../interfaces/image.class';
 import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../interfaces/plain-gallery-config.interface';
 
@@ -38,7 +38,7 @@ import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from
   templateUrl: 'gallery.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent implements OnInit, OnChanges {
 
   @Input() images: Image[];
   @Input() showGallery: boolean;
@@ -71,6 +71,38 @@ export class GalleryComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.initImageGrid();
+  }
+
+  /**
+   * Method ´ngOnChanges´ to update `imageGrid`, `configPlainGallery` and other stuff.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called when any data-bound property of a directive changes!!!
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('------------> ', changes);
+    // const simpleChange: SimpleChange = changes.currentImage;
+    // if (!simpleChange) {
+    //   return;
+    // }
+    // const prev: InternalLibImage = simpleChange.previousValue;
+    // const current: InternalLibImage = simpleChange.currentValue;
+    //
+    // // if was loaded before, but not now
+    // if (prev && current && prev.previouslyLoaded && !current.previouslyLoaded) {
+    //   this.loading = !current.previouslyLoaded;
+    //   this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
+    //   this.loading = false;
+    // }
+    //
+    // if (this.isOpen) {
+    //   this.manageSlideConfig(this.getIndex(this.currentImage));
+    // }
+
+    this.initImageGrid();
+  }
+
+  private initImageGrid() {
     const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
     console.log('plainGalleryConfig config', config);
 

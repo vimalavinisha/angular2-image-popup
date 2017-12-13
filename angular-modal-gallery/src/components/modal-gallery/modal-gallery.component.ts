@@ -241,7 +241,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     if (changes && changes.modalOpenerByIndex) {
       const prevModalOpenerIndex: number = changes.modalOpenerByIndex.previousValue;
       const currModalOpenerIndex: number = changes.modalOpenerByIndex.currentValue;
-      if (prevModalOpenerIndex !== currModalOpenerIndex && currModalOpenerIndex !== -1) {
+      if (currModalOpenerIndex !== -1) {
         console.log('opening modal gallery from custom plain gallery, index: ', currModalOpenerIndex);
         this.showModalGallery(currModalOpenerIndex);
       }
