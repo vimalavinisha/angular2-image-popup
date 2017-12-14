@@ -30,7 +30,7 @@ import {
 } from 'angular-modal-gallery';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ks-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -415,9 +415,17 @@ export class AppComponent {
   }
 
   addRandomImage() {
-    const newImage: Image = Object.assign({},
-      this.images[Math.floor(Math.random() * this.images.length)],
-      {id: this.images.length - 1 + 1});
+    const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+    const newImage: Image = new Image(
+      this.images.length - 1 + 1,
+      imageToCopy.img,
+      imageToCopy.thumb,
+      imageToCopy.description,
+      imageToCopy.extUrl,
+      imageToCopy.title,
+      imageToCopy.alt,
+      imageToCopy.ariaLabel);
+
     this.images = [...this.images, newImage];
   }
 

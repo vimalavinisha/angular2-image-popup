@@ -150,7 +150,7 @@ export class GalleryComponent implements OnInit, OnChanges {
         const row: Image[] = this.images.filter((val: Image, i: number) => i >= start && i <= end);
         this.imageGrid.push(row);
         start = end + 1;
-        end = end + config.layout.breakConfig.length - 1;
+        end = start + config.layout.breakConfig.length - 1;
       }
 
       const pixels: number = +(config.size.width.replace('px', ''));
@@ -160,10 +160,17 @@ export class GalleryComponent implements OnInit, OnChanges {
 
       this.directionStyle = 'row';
     }
+
+    // console.log('gallery init grid after', this.imageGrid);
   }
 
   showModalGallery(index: number) {
     this.show.emit(index);
+  }
+
+  showModalGalleryByImage(img: Image) {
+    const index: number = this.images.findIndex((val: Image) => val.id === img.id);
+    this.showModalGallery(index);
   }
 
   /**
