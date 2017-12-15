@@ -55,4 +55,10 @@ export interface BreakConfig {
 
 export interface AdvancedConfig {
   aTags: boolean;
+  customPlainGallery?: CustomConfig;
+}
+
+export interface CustomConfig {
+  modalOpenerByIndex: number;
+  hideDefaultPlainGallery: boolean;
 }

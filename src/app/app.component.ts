@@ -36,9 +36,21 @@ import {
 })
 export class AppComponent {
 
-  customPlainGalleryConfig = {modalOpenerByIndex: -1, hideDefaultPlainGallery: true};
-
-  // currentIndexCustomLayout = -1;
+  customPlainGalleryConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    advanced: {
+      aTags: false,
+      customPlainGallery: {
+        modalOpenerByIndex: -1,
+        hideDefaultPlainGallery: true
+      }
+    }
+  };
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -352,7 +364,16 @@ export class AppComponent {
       console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
     }
 
-    this.customPlainGalleryConfig = {hideDefaultPlainGallery: true, modalOpenerByIndex: currentIndexCustomLayout};
+    this.customPlainGalleryConfig = Object.assign({},
+      this.customPlainGalleryConfig, {
+        advanced: {
+          aTags: false,
+          customPlainGallery: {
+            modalOpenerByIndex: currentIndexCustomLayout,
+            hideDefaultPlainGallery: true
+          }
+        }
+      });
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -416,7 +437,17 @@ export class AppComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-    this.customPlainGalleryConfig = {modalOpenerByIndex: -1, hideDefaultPlainGallery: true};
+
+    this.customPlainGalleryConfig = Object.assign({},
+      this.customPlainGalleryConfig, {
+        advanced: {
+          aTags: false,
+          customPlainGallery: {
+            modalOpenerByIndex: -1,
+            hideDefaultPlainGallery: true
+          }
+        }
+      });
   }
 
   addRandomImage() {

@@ -94,11 +94,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() modalImages: Image[];
 
-  // TODO add docs
-  @Input() customPlainGalleryConfig: { modalOpenerByIndex: -1, hideDefaultPlainGallery: false };
-  // @Input() modalOpenerByIndex = -1;
-  // @Input() hideDefaultPlainGallery = false;
-
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
@@ -228,18 +223,20 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     console.log('modal-image trigger onChanges');
     const imagesChange: SimpleChange = changes.modalImages;
-    const customPlainGalleryConfigChange: SimpleChange = changes.customPlainGalleryConfig;
+    const plainGalleryConfigChange: SimpleChange = changes.plainGalleryConfig;
 
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
       this.initImages();
     }
 
-    if (customPlainGalleryConfigChange) {
-      const prevcustomPlainGalleryConfig: any = customPlainGalleryConfigChange.previousValue;
-      const currcustomPlainGalleryConfig: any = customPlainGalleryConfigChange.currentValue;
-      if (currcustomPlainGalleryConfig.modalOpenerByIndex !== -1) {
-        console.log('opening modal gallery from custom plain gallery, index: ', currcustomPlainGalleryConfig);
-        this.showModalGallery(currcustomPlainGalleryConfig.modalOpenerByIndex);
+    if (plainGalleryConfigChange) {
+      // const prevPlainGalleryConfigChange: any = plainGalleryConfigChange.previousValue;
+      const currPlainGalleryConfigChange: any = plainGalleryConfigChange.currentValue;
+      if (currPlainGalleryConfigChange.advanced &&
+          currPlainGalleryConfigChange.advanced.customPlainGallery &&
+          currPlainGalleryConfigChange.advanced.customPlainGallery.modalOpenerByIndex !== -1) {
+        // console.log('opening modal gallery from custom plain gallery, index: ', currPlainGalleryConfigChange);
+        this.showModalGallery(currPlainGalleryConfigChange.advanced.customPlainGallery.modalOpenerByIndex);
       }
     }
   }
