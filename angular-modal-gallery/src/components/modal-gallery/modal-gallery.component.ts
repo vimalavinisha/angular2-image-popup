@@ -95,8 +95,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Input() modalImages: Image[];
 
   // TODO add docs
-  @Input() modalOpenerByIndex = -1;
-  @Input() hideDefaultPlainGallery = false;
+  @Input() customPlainGalleryConfig: { modalOpenerByIndex: -1, hideDefaultPlainGallery: false };
+  // @Input() modalOpenerByIndex = -1;
+  // @Input() hideDefaultPlainGallery = false;
 
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
@@ -225,19 +226,20 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
    */
   ngOnChanges(changes: SimpleChanges) {
+    console.log('modal-image trigger onChanges');
     const imagesChange: SimpleChange = changes.modalImages;
-    const modalOpenerIndexChange: SimpleChange = changes.modalOpenerByIndex;
+    const customPlainGalleryConfigChange: SimpleChange = changes.customPlainGalleryConfig;
 
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
       this.initImages();
     }
 
-    if (modalOpenerIndexChange) {
-      const prevModalOpenerIndex: number = changes.modalOpenerByIndex.previousValue;
-      const currModalOpenerIndex: number = changes.modalOpenerByIndex.currentValue;
-      if (currModalOpenerIndex !== -1) {
-        console.log('opening modal gallery from custom plain gallery, index: ', currModalOpenerIndex);
-        this.showModalGallery(currModalOpenerIndex);
+    if (customPlainGalleryConfigChange) {
+      const prevcustomPlainGalleryConfig: any = customPlainGalleryConfigChange.previousValue;
+      const currcustomPlainGalleryConfig: any = customPlainGalleryConfigChange.currentValue;
+      if (currcustomPlainGalleryConfig.modalOpenerByIndex !== -1) {
+        console.log('opening modal gallery from custom plain gallery, index: ', currcustomPlainGalleryConfig);
+        this.showModalGallery(currcustomPlainGalleryConfig.modalOpenerByIndex);
       }
     }
   }

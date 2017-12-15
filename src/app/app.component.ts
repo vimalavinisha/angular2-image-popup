@@ -36,7 +36,9 @@ import {
 })
 export class AppComponent {
 
-  currentIndexCustomLayout = -1;
+  customPlainGalleryConfig = {modalOpenerByIndex: -1, hideDefaultPlainGallery: true};
+
+  // currentIndexCustomLayout = -1;
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
@@ -341,13 +343,16 @@ export class AppComponent {
 
   openImageModal(image: Image) {
     console.log('Opening modal gallery from custom plain gallery, with image: ', image);
+    let currentIndexCustomLayout;
     if (image) {
-      this.currentIndexCustomLayout = this.images.indexOf(image);
-      console.log('set new currentIndexCustomLayout to ' + this.currentIndexCustomLayout);
+      currentIndexCustomLayout = this.images.indexOf(image);
+      console.log('set new currentIndexCustomLayout to ' + currentIndexCustomLayout);
     } else {
-      this.currentIndexCustomLayout = -1;
-      console.log('reset currentIndexCustomLayout to ' + this.currentIndexCustomLayout);
+      currentIndexCustomLayout = -1;
+      console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
     }
+
+    this.customPlainGalleryConfig = {hideDefaultPlainGallery: true, modalOpenerByIndex: currentIndexCustomLayout};
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -411,7 +416,7 @@ export class AppComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-    this.currentIndexCustomLayout = -1;
+    this.customPlainGalleryConfig = {modalOpenerByIndex: -1, hideDefaultPlainGallery: true};
   }
 
   addRandomImage() {

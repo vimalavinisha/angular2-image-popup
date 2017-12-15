@@ -1,5 +1,5 @@
 <ks-gallery [images]="images"
-            [showGallery]="showGallery && !hideDefaultPlainGallery"
+            [showGallery]="showGallery && !customPlainGalleryConfig.hideDefaultPlainGallery"
             [plainGalleryConfig]="plainGalleryConfig"
             (show)="onShowModalGallery($event)"></ks-gallery>
 
