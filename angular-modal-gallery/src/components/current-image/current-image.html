@@ -25,8 +25,8 @@
            (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, clickAction)"/>
       <ng-template #firstImage>
         <div class="current-image-previous hidden"
-             [style.width]="slideConfig.sidePreviews?.width+slideConfig.sidePreviews?.unit"
-             [style.height]="slideConfig.sidePreviews?.height+slideConfig.sidePreviews?.unit"></div>
+             [style.width]="slideConfig.sidePreviews?.width"
+             [style.height]="slideConfig.sidePreviews?.height"></div>
       </ng-template>
     </ng-container>
   </ng-container>
