@@ -25,66 +25,187 @@
 import { Component } from '@angular/core';
 
 import {
-  AccessibilityConfig,
-  Action,
-  ButtonEvent,
-  ButtonsConfig,
-  ButtonsStrategy,
-  ButtonType,
-  Description,
-  DescriptionStrategy,
-  DotsConfig,
-  Image,
-  ImageModalEvent,
-  PreviewConfig
+  AccessibilityConfig, Action, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy, DotsConfig, GridLayout,
+  Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 
 console.log('`Lazy` component loaded asynchronously');
 
 @Component({
-  selector: 'mmw-cv-page',
+  selector: 'mmw-lazy-page',
   templateUrl: 'lazy.html',
   styleUrls: ['lazy.scss']
 })
 export class LazyComponent {
-  openModalWindow = false;
-  imagePointer = 0;
+
+  customPlainGalleryConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    advanced: {
+      aTags: false,
+      customPlainGallery: {
+        modalOpenerByIndex: -1,
+        hideDefaultPlainGallery: true
+      }
+    }
+  };
+
+  plainGalleryRow: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    }
+  };
+  plainGalleryRowSpaceAround: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'space-around'),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+  plainGalleryRowATags: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    },
+    advanced: {aTags: true}
+  };
+
+  plainGalleryColumn: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
+    layout: new LineLayout({length: 3, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+
+  plainGalleryGrid: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.GRID,
+    layout: new GridLayout({length: 3, iconClass: '', wrap: true}),
+    size: {
+      width: '80px',
+      height: '80px'
+    }
+  };
 
   images: Image[] = [
     new Image(
       0,
-      '../../../../assets/images/gallery/img1.jpg',
-      null, // no thumb
-      null, // no description
-      'http://www.google.com'
+      { // modal
+        img: '../assets/images/gallery/img1.jpg',
+        extUrl: 'http://www.google.com'
+      }
     ),
     new Image(
       1,
-      '../../../../assets/images/gallery/img2.png', // example with a PNG image
-      null, // no thumb
-      'Description 2',
-      null // url
+      { // modal
+        img: '../assets/images/gallery/img2.png',
+        description: 'Description 2'
+      }
     ),
     new Image(
       2,
-      '../../../../assets/images/gallery/img3.jpg',
-      '../../../../assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
-      'Description 3',
-      'http://www.google.com'
+      { // modal
+        img: '../assets/images/gallery/img3.jpg',
+        description: 'Description 3',
+        extUrl: 'http://www.google.com'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/img3.png'
+      }
     ),
     new Image(
       3,
-      '../../../../assets/images/gallery/img4.jpg',
-      null, // no thumb
-      'Description 4',
-      'http://www.google.com'
+      { // modal
+        img: '../assets/images/gallery/img4.jpg',
+        description: 'Description 4',
+        extUrl: 'http://www.google.com'
+      }
     ),
     new Image(
       4,
-      '../../../../assets/images/gallery/img5.jpg',
-      '../../../../assets/images/gallery/thumbs/img5.jpg',
-      null, // no description
-      null // url
+      { // modal
+        img: '../assets/images/gallery/img5.jpg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/img5.jpg'
+      }
+    )
+  ];
+
+  imagesRect: Image[] = [
+    new Image(
+      0,
+      { // modal
+        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
+      }
+    ),
+    new Image(
+      1,
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-47223.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
+      }
+    ),
+    new Image(
+      2,
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-52062.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg'
+      }
+    ),
+    new Image(
+      3,
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-66943.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
+      }
+    ),
+    new Image(
+      4,
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-93750.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
+      }
+    ),
+    new Image(
+      5,
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-94420.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
+      }
+    ),
+    new Image(
+      6,
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-96947.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
+      }
     )
   ];
 
@@ -102,9 +223,8 @@ export class LazyComponent {
     clickable: true,
     alwaysCenter: false,
     size: {
-      width: 70,
-      height: 70,
-      unit: 'px'
+      width: '70px',
+      height: '70px'
     }
   };
 
@@ -230,7 +350,7 @@ export class LazyComponent {
 
   previewConfigCustomSize: PreviewConfig = {
     visible: true,
-    size: {width: 30, height: 30, unit: 'px'}
+    size: {width: '30px', height: '30px'}
   };
 
 
@@ -264,8 +384,26 @@ export class LazyComponent {
   };
 
   openImageModal(image: Image) {
-    this.imagePointer = this.images.indexOf(image);
-    this.openModalWindow = true;
+    console.log('Opening modal gallery from custom plain gallery, with image: ', image);
+    let currentIndexCustomLayout;
+    if (image) {
+      currentIndexCustomLayout = this.images.indexOf(image);
+      console.log('set new currentIndexCustomLayout to ' + currentIndexCustomLayout);
+    } else {
+      currentIndexCustomLayout = -1;
+      console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
+    }
+
+    this.customPlainGalleryConfig = Object.assign({},
+      this.customPlainGalleryConfig, {
+        advanced: {
+          aTags: false,
+          customPlainGallery: {
+            modalOpenerByIndex: currentIndexCustomLayout,
+            hideDefaultPlainGallery: true
+          }
+        }
+      });
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -329,13 +467,22 @@ export class LazyComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-    this.openModalWindow = false;
+
+    this.customPlainGalleryConfig = Object.assign({},
+      this.customPlainGalleryConfig, {
+        advanced: {
+          aTags: false,
+          customPlainGallery: {
+            modalOpenerByIndex: -1,
+            hideDefaultPlainGallery: true
+          }
+        }
+      });
   }
 
   addRandomImage() {
-    const newImage: Image = Object.assign({},
-      this.images[Math.floor(Math.random() * this.images.length)],
-      {id: this.images.length - 1 + 1});
+    const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+    const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
   }
 

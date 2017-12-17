@@ -23,45 +23,38 @@
  SOFTWARE.
  */
 
-.more {
-  position: absolute;
-  /* margin: 0px; */
-  /* top: 0px; */
-  margin-top: 2px;
-  /* word-break: break-word; */
-  background: rgba(0, 0, 0, 0.7);
-  height: 50px;
+.my-app-custom-plain-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.my-app-custom-plain-container .my-app-custom-image {
+  cursor: pointer;
+  height: auto;
+  margin-right: 2px;
   width: 50px;
-  padding-left: 0px;
-  padding-top: 2px;
-  padding-top: 2px;
-  text-align: center;
 }
 
-.list-img {
-  height: 50px;
-  margin-top: 2px;
+.my-app-custom-plain-container .my-app-custom-image:after {
+  border-top: 2px;
   cursor: pointer;
+  display: none;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
-.float-left {
-  float: left;
-  margin-right: 5px;
-  color: #ffffff;
-}
-
-.float-left a:hover {
-  color: red;
+.more {
+  background: rgba(0, 0, 0, .7);
   cursor: pointer;
-}
-
-
-
-/* Not required by angular-modal-gallery. Used only in this demo */
-.red-text {
-  color: red;
-}
-
-.center-text {
+  color: #fff;
+  padding-top: 4px;
+  height: 46px;
+  position: absolute;
   text-align: center;
+  width: 50px;
 }

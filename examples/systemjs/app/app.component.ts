@@ -26,25 +26,16 @@
 import { Component } from '@angular/core';
 
 import {
-  AccessibilityConfig,
-  Action,
-  ButtonEvent,
-  ButtonsConfig,
-  ButtonsStrategy,
-  ButtonType,
-  Description,
-  DescriptionStrategy,
-  DotsConfig,
-  Image,
-  ImageModalEvent,
-  PreviewConfig
+  AccessibilityConfig, Action, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description,
+  DescriptionStrategy, DotsConfig, GridLayout,
+  Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 
 @Component({
   selector: 'my-app',
   styleUrls: ['./app/main.css'],
   template: `
-    <h1>angular-modal-gallery official angular-cli demo</h1>
+    <h1>angular-modal-gallery official systemjs demo</h1>
     <hr>
     <p>If you want, you can <b>add a random image</b> to every example
       <button (click)="addRandomImage()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
@@ -52,11 +43,75 @@ import {
     <br>
     <hr>
 
+    <h2>Layout examples</h2>
+    <section>
+      <h3>Z1 - row plain gallery layout (limit 2) and custom size</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [plainGalleryConfig]="plainGalleryRow"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>Z1bis - row plain gallery layout space around (limit 2)</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [plainGalleryConfig]="plainGalleryRowSpaceAround"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>Z1tris - row plain gallery layout with a tags (limit 2)</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [plainGalleryConfig]="plainGalleryRowATags"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>Z2 - column plain gallery layout (limit 3)</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [plainGalleryConfig]="plainGalleryColumn"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>Z3 - grid plain gallery layout and custom size</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="images"
+                        [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>Z4 - full custom plain gallery with image pointer</h3>
+      <br>
+      <div class="my-app-custom-plain-container">
+        <ng-container *ngFor="let img of images; let i = index">
+          <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
+            <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 2 - 1}} more </a>
+            <img *ngIf="img.plain && img.plain.img; else noThumb"
+                 class="my-app-custom-image"
+                 [src]="img.plain.img"
+                 (click)="openImageModal(img)"
+                 [alt]="img.modal.description"/>
+
+            <ng-template #noThumb>
+              <img class="my-app-custom-image"
+                   [src]="img.modal.img"
+                   (click)="openImageModal(img)"
+                   [alt]="img.modal.description"/>
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
+      <ks-modal-gallery [modalImages]="images"
+                        [plainGalleryConfig]="customPlainGalleryConfig"></ks-modal-gallery>
+    </section>
+    <br>
+    <hr>
+    <br>
     <h2>Minimal examples</h2>
     <section>
       <h3>A1 - Minimal demo - all defaults</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"></ks-modal-gallery>
+    </section>
+    <section>
+      <h3>A1bis - Minimal demo - all defaults with rect images</h3>
+      <br>
+      <ks-modal-gallery [modalImages]="imagesRect"></ks-modal-gallery>
     </section>
     <section>
       <h3>A2 - Minimal demo - listen for events</h3>
@@ -265,7 +320,8 @@ import {
                         [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
     </section>
     <section>
-      <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span></h3>
+      <h3>C9 - Advanced demo - preview custom configuration always center <span
+        style="color:red;">STILL NOT IMPLEMENTED</span></h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>
@@ -286,7 +342,8 @@ import {
     </section>
 
     <section>
-      <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and buttonAfterHook</h3>
+      <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
+        buttonAfterHook</h3>
       <br>
       <ks-modal-gallery [modalImages]="images"
                         [buttonsConfig]="buttonsConfigFull"
@@ -299,44 +356,175 @@ import {
   `
 })
 export class AppComponent {
-  openModalWindow = false;
-  imagePointer = 0;
+
+  customPlainGalleryConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    advanced: {
+      aTags: false,
+      customPlainGallery: {
+        modalOpenerByIndex: -1,
+        hideDefaultPlainGallery: true
+      }
+    }
+  };
+
+  plainGalleryRow: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    }
+  };
+  plainGalleryRowSpaceAround: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'space-around'),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+  plainGalleryRowATags: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    },
+    advanced: {aTags: true}
+  };
+
+  plainGalleryColumn: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
+    layout: new LineLayout({length: 3, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '50px',
+      height: '50px'
+    }
+  };
+
+  plainGalleryGrid: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.GRID,
+    layout: new GridLayout({length: 3, iconClass: '', wrap: true}),
+    size: {
+      width: '80px',
+      height: '80px'
+    }
+  };
 
   images: Image[] = [
     new Image(
       0,
-      './app/assets/images/gallery/img1.jpg',
-      null, // no thumb
-      null, // no description
-      'http://www.google.com'
+      { // modal
+        img: './app/assets/images/gallery/img1.jpg',
+        extUrl: 'http://www.google.com'
+      }
     ),
     new Image(
       1,
-      './app/assets/images/gallery/img2.png', // example with a PNG image
-      null, // no thumb
-      'Description 2',
-      null // url
+      { // modal
+        img: './app/assets/images/gallery/img2.png',
+        description: 'Description 2'
+      }
     ),
     new Image(
       2,
-      './app/assets/images/gallery/img3.jpg',
-      './app/assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
-      'Description 3',
-      'http://www.google.com'
+      { // modal
+        img: './app/assets/images/gallery/img3.jpg',
+        description: 'Description 3',
+        extUrl: 'http://www.google.com'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/img3.png'
+      }
     ),
     new Image(
       3,
-      './app/assets/images/gallery/img4.jpg',
-      null, // no thumb
-      'Description 4',
-      'http://www.google.com'
+      { // modal
+        img: './app/assets/images/gallery/img4.jpg',
+        description: 'Description 4',
+        extUrl: 'http://www.google.com'
+      }
     ),
     new Image(
       4,
-      './app/assets/images/gallery/img5.jpg',
-      './app/assets/images/gallery/thumbs/img5.jpg',
-      null, // no description
-      null // url
+      { // modal
+        img: './app/assets/images/gallery/img5.jpg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/img5.jpg'
+      }
+    )
+  ];
+
+  imagesRect: Image[] = [
+    new Image(
+      0,
+      { // modal
+        img: './app/assets/images/gallery/milan-pegasus-gallery-statue.jpg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
+      }
+    ),
+    new Image(
+      1,
+      { // modal
+        img: './app/assets/images/gallery/pexels-photo-47223.jpeg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
+      }
+    ),
+    new Image(
+      2,
+      { // modal
+        img: './app/assets/images/gallery/pexels-photo-52062.jpeg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-pexels-photo-52062.jpg'
+      }
+    ),
+    new Image(
+      3,
+      { // modal
+        img: './app/assets/images/gallery/pexels-photo-66943.jpeg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
+      }
+    ),
+    new Image(
+      4,
+      { // modal
+        img: './app/assets/images/gallery/pexels-photo-93750.jpeg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
+      }
+    ),
+    new Image(
+      5,
+      { // modal
+        img: './app/assets/images/gallery/pexels-photo-94420.jpeg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
+      }
+    ),
+    new Image(
+      6,
+      { // modal
+        img: './app/assets/images/gallery/pexels-photo-96947.jpeg'
+      },
+      { // plain
+        img: './app/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
+      }
     )
   ];
 
@@ -354,9 +542,8 @@ export class AppComponent {
     clickable: true,
     alwaysCenter: false,
     size: {
-      width: 70,
-      height: 70,
-      unit: 'px'
+      width: '70px',
+      height: '70px'
     }
   };
 
@@ -482,7 +669,7 @@ export class AppComponent {
 
   previewConfigCustomSize: PreviewConfig = {
     visible: true,
-    size: {width: 30, height: 30, unit: 'px'}
+    size: {width: '30px', height: '30px'}
   };
 
 
@@ -516,8 +703,26 @@ export class AppComponent {
   };
 
   openImageModal(image: Image) {
-    this.imagePointer = this.images.indexOf(image);
-    this.openModalWindow = true;
+    console.log('Opening modal gallery from custom plain gallery, with image: ', image);
+    let currentIndexCustomLayout;
+    if (image) {
+      currentIndexCustomLayout = this.images.indexOf(image);
+      console.log('set new currentIndexCustomLayout to ' + currentIndexCustomLayout);
+    } else {
+      currentIndexCustomLayout = -1;
+      console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
+    }
+
+    this.customPlainGalleryConfig = Object.assign({},
+      this.customPlainGalleryConfig, {
+        advanced: {
+          aTags: false,
+          customPlainGallery: {
+            modalOpenerByIndex: currentIndexCustomLayout,
+            hideDefaultPlainGallery: true
+          }
+        }
+      });
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -581,13 +786,22 @@ export class AppComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-    this.openModalWindow = false;
+
+    this.customPlainGalleryConfig = Object.assign({},
+      this.customPlainGalleryConfig, {
+        advanced: {
+          aTags: false,
+          customPlainGallery: {
+            modalOpenerByIndex: -1,
+            hideDefaultPlainGallery: true
+          }
+        }
+      });
   }
 
   addRandomImage() {
-    const newImage: Image = Object.assign({},
-      this.images[Math.floor(Math.random() * this.images.length)],
-      {id: this.images.length - 1 + 1});
+    const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+    const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
   }
 

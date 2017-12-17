@@ -9,11 +9,76 @@
         </p>
         <br>
         <hr>
+
+        <h2>Layout examples</h2>
+        <section>
+          <h3>Z1 - row plain gallery layout (limit 2) and custom size</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="images"
+                            [plainGalleryConfig]="plainGalleryRow"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>Z1bis - row plain gallery layout space around (limit 2)</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="images"
+                            [plainGalleryConfig]="plainGalleryRowSpaceAround"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>Z1tris - row plain gallery layout with a tags (limit 2)</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="images"
+                            [plainGalleryConfig]="plainGalleryRowATags"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>Z2 - column plain gallery layout (limit 3)</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="images"
+                            [plainGalleryConfig]="plainGalleryColumn"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>Z3 - grid plain gallery layout and custom size</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="images"
+                            [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>Z4 - full custom plain gallery with image pointer</h3>
+          <br>
+          <div class="my-app-custom-plain-container">
+            <ng-container *ngFor="let img of images; let i = index">
+              <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
+                <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 2 - 1}} more </a>
+                <img *ngIf="img.plain && img.plain.img; else noThumb"
+                     class="my-app-custom-image"
+                     [src]="img.plain.img"
+                     (click)="openImageModal(img)"
+                     [alt]="img.modal.description"/>
+
+                <ng-template #noThumb>
+                  <img class="my-app-custom-image"
+                       [src]="img.modal.img"
+                       (click)="openImageModal(img)"
+                       [alt]="img.modal.description"/>
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+          <ks-modal-gallery [modalImages]="images"
+                            [plainGalleryConfig]="customPlainGalleryConfig"></ks-modal-gallery>
+        </section>
+        <br>
+        <hr>
+        <br>
         <h2>Minimal examples</h2>
         <section>
           <h3>A1 - Minimal demo - all defaults</h3>
           <br>
           <ks-modal-gallery [modalImages]="images"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>A1bis - Minimal demo - all defaults with rect images</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="imagesRect"></ks-modal-gallery>
         </section>
         <section>
           <h3>A2 - Minimal demo - listen for events</h3>
@@ -222,7 +287,8 @@
                             [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
         </section>
         <section>
-          <h3>C9 - Advanced demo - preview custom configuration always center <span style="color:red;">STILL NOT IMPLEMENTED</span></h3>
+          <h3>C9 - Advanced demo - preview custom configuration always center <span
+            style="color:red;">STILL NOT IMPLEMENTED</span></h3>
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>
@@ -243,7 +309,8 @@
         </section>
 
         <section>
-          <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and buttonAfterHook</h3>
+          <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
+            buttonAfterHook</h3>
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [buttonsConfig]="buttonsConfigFull"

@@ -1,9 +1,9 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/project # this entire string is the value of the env var $CIRCLE_WORKING_DIRECTORY
+    working_directory: ~/my-project
     docker:
-      - image: circleci/node:7.10.0-browsers
+      - image: circleci/node:latest-browsers # before was 7.10.0-browsers
       # Environment variable for all commands executed in the primary container
         environment:
           NODE_ENV: test
@@ -14,14 +14,17 @@ jobs:
           name: npm-install-global
           command: sudo npm install -g @angular/cli codeclimate-test-reporter
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: my-project-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: node-sass-clean
+          command: npm rebuild node-sass --force
       - run:
           name: npm-install
           command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: my-project-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - ./node_modules
+            - "node_modules"
       - run:
           name: Install Chromedriver latest version
           command: |
@@ -58,14 +61,11 @@ jobs:
           name: run-build-dev-main-angular-cli
           command: ng build
       - run:
-          name: run-build-aot-main-angular-cli
-          command: ng build --aot
-      - run:
-          name: run-build-prod-main-angular-cli
-          command: ng build --prod
+          name: run-build-prod-aot-main-angular-cli
+          command: ng build --prod --aot
       - run:
           name: run-test-main-angular-cli
-          command: ng test --single-run
+          command: ng test --watch=false --code-coverage=true
       # webpack
       - run:
           name: run-build-dev-demo-webpack
@@ -84,24 +84,18 @@ jobs:
           name: run-build-dev-demo-angular-cli
           command: cd examples/angular-cli && ng build
       - run:
-          name: run-build-aot-demo-angular-cli
-          command: cd examples/angular-cli && ng build --aot
-      - run:
-          name: run-build-prod-demo-angular-cli
-          command: cd examples/angular-cli && ng build --prod
+          name: run-build-prod-aot-demo-angular-cli
+          command: cd examples/angular-cli && ng build --prod --aot
       - run:
           name: run-test-demo-angular-cli
-          command: cd examples/angular-cli && ng test --single-run
+          command: cd examples/angular-cli && ng test --watch=false --code-coverage=true
       # universal
       - run:
           name: run-build-dev-demo-universal
           command: cd examples/universal && ng build
       - run:
-          name: run-build-aot-demo-universal
-          command: cd examples/universal && ng build --aot
-      - run:
-          name: run-build-prod-demo-universal
-          command: cd examples/universal && ng build --prod
+          name: run-build-prod-aot-demo-universal
+          command: cd examples/universal && ng build --prod --aot
       - run:
           name: run-build-ssr-demo-universal
           command: cd examples/universal && npm run build:ssr
@@ -109,9 +103,9 @@ jobs:
           name: run-build-prerender-demo-universal
           command: cd examples/universal && npm run build:prerender
       # docs
-#      - run: FIXME
-#          name: run-docs
-#          command: npm run docs
+      - run:
+          name: run-docs
+          command: npm run docs
       - run:
           name: run-compodoc
           command: npm run compodoc

@@ -10,6 +10,9 @@ dist: trusty # to use Ubuntu 14.04
 #osx_image: xcode8.3 # to use macOS Sierra 10.12
 sudo: false
 
+git:
+  depth: 3
+
 env:
   global:
     - secure: GOoX1vNqT8dAl8W+3+21COisLgIDLMAPkc4v/nknxlw4rcJ7kp7o5GHuKW9N4BzvXNMFt403jhL8sUL5slnn0qs4K+6ldW/6YC6BvDPFKC4wpmCFylcbXPIJzJredA6lKF12kKZPE7dtORt0FOfsBlZKtJvqlF75M1cm3SzCzBVuP0/q94K7uFVdGTbvh67Z1uoUC5mlsz9Y6oCMkKMhfZM8abimY8t81nMAHEnjbIKmqkStOtpKrM5ZgHwKUI0j4fhGxSeaErZ2oOer8PztJj9XpAPn7yky/QxdVKqvWzrlishAsU8nEwNVpX0WJFw66m2TVuYGTHbRxcNx4MIQjGNDVlhHh6D3fN27lJtwdUQc6Bkm2R14T0gGKd3w+DbtMfnQPD4x9dTt/agL+C4Glq2WI3ZqM1YBnbfnjukzLBbrF8vqTy3VH6lI4JVxEQnHQ84mCe7lvDVWv/wO7zY63s6hZxXvl/r+Z7hZ1m+VRUjnips0Abri3AW2EP/fUkeiR163f7/xKj0oI65mCLPCm5ntAL1YxHItJtnfq+1PulGiFggrZt8HEAGDDS8gQit57AxV8TxJnsg++E0SdhVRRUCD5/lURLj/Uy+gVs+GHyVM5sGv2LDy57ddXv7vYQOxI7MoC/MiG3XX6irULCs+wykDTzLkENBCgmxALRsLKxI= # CODECLIMATE
@@ -38,8 +41,11 @@ script:
   - bash travisci/script.sh
 after_success:
   - source travisci/after_success.sh
+#after_script:
+#  - bash travisci/after_script.sh
+
 cache:
   apt: true
   bundler: true
   directories:
-    - node_modules
+    - ./node_modules

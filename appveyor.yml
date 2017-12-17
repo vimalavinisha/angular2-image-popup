@@ -24,10 +24,11 @@ branches:
 #skip_tags: true
 
 # Skipping commits affecting specific files (GitHub only). More details here: /docs/appveyor-yml
-#skip_commits:
-#  files:
-#    - docs/*
-#    - '**/*.html'
+skip_commits:
+  files:
+     - .circleci/*
+     - travisci/*
+     - .travis.yml
 
 # Including commits affecting specific files (GitHub only). More details here: /docs/appveyor-yml
 #only_commits:
@@ -91,8 +92,8 @@ install:
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g @angular/cli@latest
   - npm install -g codeclimate-test-reporter
+  - npm install -g @angular/cli
   - npm install
 
 
@@ -138,9 +139,8 @@ build_script:
   - npm run build:all
   # build main angular-cli with ng-packagr
   - ng build
-  - ng build --prod
-  - ng build --aot
-  - ng test --single-run
+  - ng build --prod --aot
+  - ng test --watch=false --code-coverage=true
   # build official webpack example
   - cd examples/webpack
   - npm run build:dev
@@ -151,15 +151,13 @@ build_script:
   # build official angular-cli example
   - cd examples/angular-cli
   - ng build
-  - ng build --prod
-  - ng build --aot
-  - ng test --single-run
+  - ng build --prod --aot
+  - ng test --watch=false --code-coverage=true
   - cd ../..
   # build official universal example
   - cd examples/universal
   - ng build
-  - ng build --prod
-  - ng build --aot
+  - ng build --prod --aot
   - npm run build:ssr
   - npm run build:prerender
   - cd ../..
@@ -211,7 +209,7 @@ deploy_script:
 
 # on successful build
 on_success:
-  # - npm run docs # FIXME
+  - npm run docs
   - npm run compodoc
 #  - codeclimate-test-reporter < .\coverage\lcov.info  # FIXME
 #  - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info # FIXME

@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-# FIXME
 # build documentation
-#echo "npm run docs on $TRAVIS_OS_NAME"
-#npm run docs
+echo "npm run docs on $TRAVIS_OS_NAME"
+npm run docs
 
 # build documentation
 echo "npm run compodoc on $TRAVIS_OS_NAME"
