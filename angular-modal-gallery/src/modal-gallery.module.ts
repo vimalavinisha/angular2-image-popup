@@ -26,11 +26,9 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DIRECTIVES } from './directives/directives';
+import { COMPONENTS, ModalGalleryComponent } from './components/components';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './interfaces/keyboard-service-config.interface';
-
-import { COMPONENTS } from './components/components';
-import { ModalGalleryComponent } from './components/modal-gallery/modal-gallery.component';
 
 /**
  * Module with `forRoot` method to import it in the root module of your application.

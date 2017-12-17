@@ -1,4 +1,4 @@
-import { Image } from './image.class';
+import { Image, ModalImage, PlainImage } from './image.class';
 
 /**
  * Internal representation of an Image adding other fields
@@ -7,16 +7,8 @@ import { Image } from './image.class';
 export class InternalLibImage extends Image {
   previouslyLoaded: boolean;
 
-  constructor(id: number,
-              img: string,
-              thumb?: string | null | undefined,
-              description?: string | null | undefined,
-              extUrl?: string | null | undefined,
-              title?: string | null | undefined,
-              alt?: string | null | undefined,
-              ariaLabel?: string | null | undefined,
-              previouslyLoaded: boolean = false) {
-    super(id, img, thumb, description, extUrl, title, alt, ariaLabel);
+  constructor(id: number, modal: ModalImage, plain?: PlainImage, previouslyLoaded: boolean = false) {
+    super(id, modal, plain);
 
     this.previouslyLoaded = previouslyLoaded;
   }

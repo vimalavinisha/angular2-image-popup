@@ -99,83 +99,111 @@ export class AppComponent {
   images: Image[] = [
     new Image(
       0,
-      '../assets/images/gallery/img1.jpg',
-      null, // no thumb
-      null, // no description
-      'http://www.google.com'
+      { // modal
+        img: '../assets/images/gallery/img1.jpg',
+        extUrl: 'http://www.google.com'
+      }
     ),
     new Image(
       1,
-      '../assets/images/gallery/img2.png', // example with a PNG image
-      null, // no thumb
-      'Description 2',
-      null // url
+      { // modal
+        img: '../assets/images/gallery/img2.png',
+        description: 'Description 2'
+      }
     ),
     new Image(
       2,
-      '../assets/images/gallery/img3.jpg',
-      '../assets/images/gallery/thumbs/img3.png', // example with a PNG thumb image
-      'Description 3',
-      'http://www.google.com'
+      { // modal
+        img: '../assets/images/gallery/img3.jpg',
+        description: 'Description 3',
+        extUrl: 'http://www.google.com'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/img3.png'
+      }
     ),
     new Image(
       3,
-      '../assets/images/gallery/img4.jpg',
-      null, // no thumb
-      'Description 4',
-      'http://www.google.com'
+      { // modal
+        img: '../assets/images/gallery/img4.jpg',
+        description: 'Description 4',
+        extUrl: 'http://www.google.com'
+      }
     ),
     new Image(
       4,
-      '../assets/images/gallery/img5.jpg',
-      '../assets/images/gallery/thumbs/img5.jpg',
-      null, // no description
-      null // url
+      { // modal
+        img: '../assets/images/gallery/img5.jpg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/img5.jpg'
+      }
     )
   ];
 
   imagesRect: Image[] = [
     new Image(
       0,
-      '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
-      '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
+      }
     ),
     new Image(
       1,
-      '../assets/images/gallery/pexels-photo-47223.jpeg',
-      '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-47223.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
+      }
     ),
     new Image(
       2,
-      '../assets/images/gallery/pexels-photo-52062.jpeg',
-      '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-52062.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg'
+      }
     ),
     new Image(
       3,
-      '../assets/images/gallery/pexels-photo-66943.jpeg',
-      '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-66943.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
+      }
     ),
     new Image(
       4,
-      '../assets/images/gallery/pexels-photo-93750.jpeg',
-      '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-93750.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
+      }
     ),
     new Image(
       5,
-      '../assets/images/gallery/pexels-photo-94420.jpeg',
-      '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-94420.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
+      }
     ),
     new Image(
       6,
-      '../assets/images/gallery/pexels-photo-96947.jpeg',
-      '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg',
-      null, null
+      { // modal
+        img: '../assets/images/gallery/pexels-photo-96947.jpeg'
+      },
+      { // plain
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
+      }
     )
   ];
 
@@ -452,16 +480,7 @@ export class AppComponent {
 
   addRandomImage() {
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
-    const newImage: Image = new Image(
-      this.images.length - 1 + 1,
-      imageToCopy.img,
-      imageToCopy.thumb,
-      imageToCopy.description,
-      imageToCopy.extUrl,
-      imageToCopy.title,
-      imageToCopy.alt,
-      imageToCopy.ariaLabel);
-
+    const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
   }
 

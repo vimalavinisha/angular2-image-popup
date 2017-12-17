@@ -7,8 +7,8 @@
     <ng-container *ngFor="let imgCol of imgRow; let j = index">
 
       <ng-container *ngIf="!configPlainGallery.advanced?.aTags; else aTags">
-        <img *ngIf="imgCol && imgCol.img"
-             [src]="imgCol.thumb ? imgCol.thumb : imgCol.img"
+        <img *ngIf="imgCol && imgCol.modal && imgCol.modal.img"
+             [src]="imgCol.plain && imgCol.plain.img ? imgCol.plain.img : imgCol.modal.img"
              class="image"
              ksSize [sizeConfig]="{width: configPlainGallery.size.width, height: configPlainGallery.size.height}"
              alt="{{getAltDescriptionByIndex(j)}}"
@@ -18,7 +18,7 @@
       <!-- Add directive to set background with the image url as param to pass thumb or img-->
       <!-- to do something like this <a style="background: url('path to image') 50% 50%/cover">.-->
       <ng-template #aTags>
-        <a *ngIf="imgCol && imgCol.img"
+        <a *ngIf="imgCol && imgCol.modal && imgCol.modal.img"
            href="#"
            class="a-tag-image"
            ksATagBgImage [image]="imgCol" [style]="'50% 50%/cover'"

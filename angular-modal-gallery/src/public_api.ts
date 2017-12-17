@@ -22,17 +22,17 @@
  * SOFTWARE.
  */
 
-import { ModalGalleryModule } from './modal-gallery.module';
-
 export { ModalGalleryModule } from './modal-gallery.module';
 
 export { Action } from './interfaces/action.enum';
-export { Image, ImageModalEvent } from './interfaces/image.class';
+export { Image, PlainImage, ModalImage, ImageModalEvent } from './interfaces/image.class';
 export { Description, DescriptionStrategy } from './interfaces/description.interface';
 export { KeyboardConfig } from './interfaces/keyboard-config.interface';
 export { DotsConfig } from './interfaces/dots-config.interface';
 export { PreviewConfig } from './interfaces/preview-config.interface';
 export { AccessibilityConfig } from './interfaces/accessibility.interface';
+
+export { Size } from './interfaces/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './interfaces/buttons-config.interface';
 
@@ -42,6 +42,5 @@ export {
   LineLayout,
   GridLayout,
   PlainGalleryStrategy,
-  Size,
   BreakConfig
 } from './interfaces/plain-gallery-config.interface';

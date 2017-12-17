@@ -184,10 +184,12 @@ export class GalleryComponent implements OnInit, OnChanges {
     if (!this.images) {
       return '';
     }
-    if (!this.images[index] || !this.images[index].description) {
+
+    const image: Image = this.images[index];
+    if (!image || !image.modal || !image.modal.description) {
       return `Image ${index}`;
     }
-    return this.images[index].description;
+    return image.modal.description;
   }
 
   trackById(index: number, item: Image) {

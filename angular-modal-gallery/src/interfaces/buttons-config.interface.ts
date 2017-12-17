@@ -3,6 +3,7 @@
  */
 import { Action } from './action.enum';
 import { InternalLibImage } from './image-internal.class';
+import { Size } from './size.interface';
 
 export interface ButtonsConfig {
   visible: boolean;
@@ -12,16 +13,11 @@ export interface ButtonsConfig {
 
 export interface ButtonConfig {
   className?: string;
-  size?: ButtonSize;
+  size?: Size;
   fontSize?: string;
   type: ButtonType;
   title?: string;
   ariaLabel?: string;
-}
-
-export interface ButtonSize {
-  width: string;
-  height: string;
 }
 
 export interface ButtonEvent {

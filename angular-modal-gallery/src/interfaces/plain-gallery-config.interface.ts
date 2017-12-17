@@ -2,6 +2,8 @@
  * Interface `PlainGalleryConfig` to configure
  * plain-gallery features.
  */
+import { Size } from './size.interface';
+
 export interface PlainGalleryConfig {
   strategy: PlainGalleryStrategy;
   layout: PlainGalleryLayout;
@@ -40,12 +42,6 @@ export enum PlainGalleryStrategy {
   GRID,
   ADVANCED_GRID
 }
-
-export interface Size {
-  width: string;
-  height: string;
-}
-
 
 export interface BreakConfig {
   length: number;

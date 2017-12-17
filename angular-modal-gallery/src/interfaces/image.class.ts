@@ -1,38 +1,37 @@
+import { Action } from './action.enum';
+import { Size } from './size.interface';
+
 /**
  * Class `Image` that represents an Image with both images and thumb paths,
  * also with a description and an external url.
  * The only required value is the image path `img`.
  */
-import { Action } from './action.enum';
-
 export class Image {
   id: number;
-  img: string;
-  thumb?: string | null | undefined;
-  description?: string | null | undefined;
-  extUrl?: string | null | undefined;
-  title?: string | null | undefined;
-  alt?: string | null | undefined;
-  ariaLabel?: string | null | undefined;
 
-  constructor(id: number,
-              img: string,
-              thumb?: string | null | undefined,
-              description?: string | null | undefined,
-              extUrl?: string | null | undefined,
-              title?: string | null | undefined,
-              alt?: string | null | undefined,
-              ariaLabel?: string | null | undefined) {
+  modal: ModalImage;
+  plain?: PlainImage;
+
+  constructor(id: number, modal: ModalImage, plain?: PlainImage) {
     this.id = id;
-    this.img = img;
-    this.thumb = thumb;
-    this.description = description;
-    this.extUrl = extUrl;
-    this.title = title;
-    this.alt = alt;
-    this.ariaLabel = ariaLabel;
+    this.modal = modal;
+    this.plain = plain;
   }
 }
+
+export interface ImageData {
+  img: string;
+  description?: string;
+  extUrl?: string;
+  title?: string;
+  alt?: string;
+  ariaLabel?: string;
+  size?: Size;
+}
+
+export interface PlainImage extends ImageData {}
+
+export interface ModalImage extends ImageData {}
 
 /**
  * Class `ImageModalEvent` that represents the Event after an action `action` and its result.

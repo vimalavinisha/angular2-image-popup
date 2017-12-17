@@ -25,7 +25,6 @@
 import { ClickOutsideDirective } from './click-outside.directive';
 import { SizeDirective } from './size.directive';
 import { KeyboardNavigationDirective } from './keyboard-navigation.directive';
-import { ScrollStopDirective } from './scroll-stop.directive';
 import { WrapDirective } from './wrap.directive';
 import { DirectionDirective } from './direction.directive';
 import { ATagBgImageDirective } from './a-tag-bg-image.directive';
@@ -35,6 +34,5 @@ import { ATagBgImageDirective } from './a-tag-bg-image.directive';
  */
 export const DIRECTIVES = [
   ClickOutsideDirective, SizeDirective, KeyboardNavigationDirective,
-  ScrollStopDirective, WrapDirective, DirectionDirective,
-  ATagBgImageDirective
+  WrapDirective, DirectionDirective, ATagBgImageDirective
 ];

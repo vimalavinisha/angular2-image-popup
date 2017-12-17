@@ -44,17 +44,17 @@
     <ng-container *ngFor="let img of images; let i = index">
       <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
         <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 2 - 1}} more </a>
-        <img *ngIf="img.thumb; else noThumb"
+        <img *ngIf="img.plain && img.plain.img; else noThumb"
              class="my-app-custom-image"
-             [src]="img.thumb"
+             [src]="img.plain.img"
              (click)="openImageModal(img)"
-             [alt]="img.description"/>
+             [alt]="img.modal.description"/>
 
         <ng-template #noThumb>
           <img class="my-app-custom-image"
-               [src]="img.img"
+               [src]="img.modal.img"
                (click)="openImageModal(img)"
-               [alt]="img.description"/>
+               [alt]="img.modal.description"/>
         </ng-template>
       </div>
     </ng-container>

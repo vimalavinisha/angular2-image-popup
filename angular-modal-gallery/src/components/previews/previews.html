@@ -13,13 +13,13 @@
     </a>
 
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
-      <img *ngIf="preview?.img"
+      <img *ngIf="preview.modal.img"
            class="inside preview-image {{isActive(preview) ? 'active' : ''}}"
-           [src]="preview.thumb ? preview.thumb : preview.img"
+           [src]="preview.plain && preview.plain.img ? preview.plain.img : preview.modal.img"
            ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height}"
-           [attr.aria-label]="preview.ariaLabel ? preview.ariaLabel : ''"
-           [title]="preview.title ? preview.title : ''"
-           alt="{{preview.alt ? preview.alt : ''}}"
+           [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
+           [title]="preview.modal.title ? preview.modal.title : ''"
+           alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
            [tabindex]="0" role="img"
            (click)="onImageEvent(preview, $event)" (keyup)="onImageEvent(preview, $event)"/>
     </ng-container>

@@ -28,7 +28,6 @@ import {
   ButtonConfig,
   ButtonEvent,
   ButtonsConfig,
-  ButtonSize,
   ButtonsStrategy,
   ButtonType,
   WHITELIST_BUTTON_TYPES
@@ -37,6 +36,7 @@ import { Image } from '../../interfaces/image.class';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
 import { Action } from '../../interfaces/action.enum';
+import { Size } from '../../interfaces/size.interface';
 
 export interface InternalButtonConfig extends ButtonConfig {
   id?: number; // useful only for trackById, not needed by users
@@ -104,7 +104,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Default button size object
    * @type ButtonSize
    */
-  private defaultSize: ButtonSize = {height: 'auto', width: '30px'};
+  private defaultSize: Size = {height: 'auto', width: '30px'};
 
   /**
    * Default buttons array for standard configuration
@@ -228,7 +228,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         this.triggerOnMouseAndKeyboard(this.delete, event, dataToEmit);
         break;
       case ButtonType.EXTURL:
-        if (!this.currentImage || !this.currentImage.extUrl) {
+        if (!this.currentImage || !this.currentImage.modal || !this.currentImage.modal.extUrl) {
           return;
         }
         this.triggerOnMouseAndKeyboard(this.navigate, event, dataToEmit);

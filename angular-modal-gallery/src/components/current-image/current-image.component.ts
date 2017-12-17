@@ -229,11 +229,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
-    const imageWithoutDescription: boolean = !image.description || image.description === '';
+    const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
 
     switch (this.description.strategy) {
       case DescriptionStrategy.HIDE_IF_EMPTY:
-        return imageWithoutDescription ? '' : image.description + '';
+        return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
         return '';
     }
@@ -250,7 +250,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       return prevDescription + middleDescription;
     }
 
-    const currImgDescription: string = image.description ? image.description : '';
+    const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
     const endDescription: string = this.description.beforeTextDescription + currImgDescription;
     return prevDescription + middleDescription + endDescription;
   }
@@ -267,7 +267,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     if (!image) {
       return '';
     }
-    return !image.description ? `Image ${this.getIndex(image)}` : image.description;
+    return image.modal && image.modal.description ? image.modal.description : `Image ${this.getIndex(image)}`;
   }
 
   /**

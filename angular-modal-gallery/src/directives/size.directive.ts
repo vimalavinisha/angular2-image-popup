@@ -1,9 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges } from '@angular/core';
-
-export interface Size {
-  width: number;
-  height: number;
-}
+import { Size } from '../interfaces/size.interface';
 
 @Directive({
   selector: '[ksSize]'

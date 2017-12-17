@@ -221,7 +221,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
    */
   ngOnChanges(changes: SimpleChanges) {
-    console.log('modal-image trigger onChanges');
     const imagesChange: SimpleChange = changes.modalImages;
     const plainGalleryConfigChange: SimpleChange = changes.plainGalleryConfig;
 
@@ -319,8 +318,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     // To support SSR
     if (isPlatformBrowser(this.platformId)) {
       // Client only code
-      if (eventToEmit.image && eventToEmit.image.extUrl) {
-        window.location.href = eventToEmit.image.extUrl;
+      if (eventToEmit.image && eventToEmit.image.modal.extUrl) {
+        window.location.href = eventToEmit.image.modal.extUrl;
       }
     }
     this.buttonAfterHook.emit(eventToEmit);
@@ -480,8 +479,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   private downloadImageAllBrowsers() {
     const link = document.createElement('a');
-    link.href = this.currentImage.img;
-    link.setAttribute('download', this.getFileName(this.currentImage.img));
+    link.href = this.currentImage.modal.img;
+    link.setAttribute('download', this.getFileName(this.currentImage.modal.img));
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -494,11 +493,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   private downloadImageOnlyIEorEdge() {
     if (isPlatformBrowser(this.platformId)) {
       const req = new XMLHttpRequest();
-      req.open('GET', this.currentImage.img, true);
+      req.open('GET', this.currentImage.modal.img, true);
       req.responseType = 'arraybuffer';
       req.onload = event => {
         const blob = new Blob([req.response], {type: 'image/png'});
-        window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.img));
+        window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.modal.img));
       };
       req.send();
     }

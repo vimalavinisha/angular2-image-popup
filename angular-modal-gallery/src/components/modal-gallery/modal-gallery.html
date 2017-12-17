@@ -7,7 +7,6 @@
                [accessibilityConfig]="accessibilityConfig"></ks-background>
 
 <div id="modal-gallery-wrapper" *ngIf="opened"
-     ksScrollStop [enable]="true"
      [attr.aria-label]="accessibilityConfig.modalGalleryContentAriaLabel"
      [title]="accessibilityConfig.modalGalleryContentTitle"
      click-outside [clickOutsideEnable]="enableCloseOutside"
