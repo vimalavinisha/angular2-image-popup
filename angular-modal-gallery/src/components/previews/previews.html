@@ -1,21 +1,21 @@
 <nav class="previews-container"
-     [attr.aria-label]="accessibilityConfig.previewsContainerAriaLabel"
-     [title]="accessibilityConfig.previewsContainerTitle">
+     [attr.aria-label]="accessibilityConfig?.previewsContainerAriaLabel"
+     [title]="accessibilityConfig?.previewsContainerTitle">
 
   <ng-container *ngIf="!configPreview || configPreview?.visible">
     <a class="nav-left"
-       [attr.aria-label]="accessibilityConfig.previewScrollPrevAriaLabel"
+       [attr.aria-label]="accessibilityConfig?.previewScrollPrevAriaLabel"
        [tabindex]="configPreview.arrows && start > 0 ? 0 : -1" role="button"
        (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
       <div class="inside {{configPreview.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.previewScrollPrevTitle"></div>
+           [title]="accessibilityConfig?.previewScrollPrevTitle"></div>
     </a>
 
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
       <img *ngIf="preview.modal.img"
            class="inside preview-image {{isActive(preview) ? 'active' : ''}}"
-           [src]="preview.plain && preview.plain.img ? preview.plain.img : preview.modal.img"
+           [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
            ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height}"
            [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
            [title]="preview.modal.title ? preview.modal.title : ''"
@@ -26,12 +26,12 @@
 
 
     <a class="nav-right"
-       [attr.aria-label]="accessibilityConfig.previewScrollNextAriaLabel"
+       [attr.aria-label]="accessibilityConfig?.previewScrollNextAriaLabel"
        [tabindex]="configPreview.arrows && end < images.length ? 0 : -1" role="button"
        (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
       <div class="inside {{configPreview.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.previewScrollNextTitle"></div>
+           [title]="accessibilityConfig?.previewScrollNextTitle"></div>
     </a>
   </ng-container>
 

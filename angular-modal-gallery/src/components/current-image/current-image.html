@@ -15,7 +15,7 @@
     <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
       <img *ngIf="!isFirstImage; else firstImage"
            class="inside current-image-previous"
-           [src]="leftPreview.plain && leftPreview.plain.img ? leftPreview.plain.img : leftPreview.modal.img"
+           [src]="leftPreview.plain?.img ? leftPreview.plain.img : leftPreview.modal.img"
            [hidden]="loading"
            ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height}"
            [attr.aria-label]="leftPreview.modal.ariaLabel"
@@ -50,7 +50,7 @@
     <ng-container *ngIf="getRightPreviewImage() as rightPreview">
       <img *ngIf="!isLastImage; else lastImage"
            class="inside current-image-next"
-           [src]="rightPreview.plain && rightPreview.plain.img ? rightPreview.plain.img : rightPreview.modal.img"
+           [src]="rightPreview.plain?.img ? rightPreview.plain.img : rightPreview.modal.img"
            [hidden]="loading"
            ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height}"
            [attr.aria-label]="rightPreview.modal.ariaLabel"
