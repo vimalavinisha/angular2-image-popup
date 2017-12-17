@@ -2,7 +2,9 @@
 
 [![bitHound Overall Score](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/score.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery)   [![bitHound Code](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/code.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery)   [![bitHound Dependencies](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/dependencies.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery/master/dependencies/npm)   [![bitHound Dev Dependencies](https://www.bithound.io/github/Ks89/angular-modal-gallery/badges/devDependencies.svg)](https://www.bithound.io/github/Ks89/angular-modal-gallery/master/dependencies/npm)
 
-[![NPM](https://nodei.co/npm/angular-modal-gallery.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/angular-modal-gallery/)    [![NPM](https://nodei.co/npm-dl/angular-modal-gallery.png?months=9&height=3)](https://nodei.co/npm/angular-modal-gallery/)
+[![npm@latest](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm (tag)](https://img.shields.io/npm/v/npm/next.svg?style=flat-square)](https://www.npmjs.com/package/angular-modal-gallery)
+
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg?style=flat-square)](https://github.com/Ks89/angular-modal-gallery)   [![GitHub (pre-)release](https://img.shields.io/github/release/qubyte/rubidium/all.svg?style=flat-square)](https://github.com/Ks89/angular-modal-gallery)
 
 <br>
 
