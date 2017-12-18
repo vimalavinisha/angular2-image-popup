@@ -5,8 +5,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "build:dev": "ng build --dev",
+    "build:prod": "ng build --prod --aot",
+    "test": "karma start --watch=false --code-coverage=true",
+    "test:watch": "karma start --watch=true --code-coverage=true",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

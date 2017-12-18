@@ -22,9 +22,9 @@ npm run build:all
 # npm test # FIXME
 
 echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
-ng build
-ng build --prod --aot
-ng test --watch=false --code-coverage=true
+npm run build:dev
+npm run build:prod
+npm test
 
 echo "building official webpack example on $TRAVIS_OS_NAME"
 cd examples/webpack
@@ -36,16 +36,17 @@ cd ../..
 
 echo "building official angular-cli example on $TRAVIS_OS_NAME"
 cd examples/angular-cli
-ng build
-ng build --prod --aot
-ng test --watch=false --code-coverage=true
+npm run build:dev
+npm run build:prod
+npm test
 cd ../..
 
 echo "building official universal example on $TRAVIS_OS_NAME"
 cd examples/universal
-ng build
-ng build --prod --aot
+npm run build:dev
+npm run build:prod
 npm run build:ssr
 npm run build:prerender
+npm test
 cd ../..
 

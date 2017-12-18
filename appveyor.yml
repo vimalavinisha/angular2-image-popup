@@ -93,8 +93,9 @@ install:
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - npm install -g codeclimate-test-reporter
-  - npm install -g @angular/cli
   - npm install
+  # rebuild again node-sass
+  - npm rebuild node-sass --force
 
 
 #---------------------------------#
@@ -138,9 +139,9 @@ build_script:
   # build library
   - npm run build:all
   # build main angular-cli with ng-packagr
-  - ng build
-  - ng build --prod --aot
-  - ng test --watch=false --code-coverage=true
+  - npm run build:dev
+  - npm run build:prod
+  - npm test
   # build official webpack example
   - cd examples/webpack
   - npm run build:dev
@@ -150,16 +151,17 @@ build_script:
   - cd ../..
   # build official angular-cli example
   - cd examples/angular-cli
-  - ng build
-  - ng build --prod --aot
-  - ng test --watch=false --code-coverage=true
+  - npm run build:dev
+  - npm run build:prod
+  - npm run test
   - cd ../..
   # build official universal example
   - cd examples/universal
-  - ng build
-  - ng build --prod --aot
+  - npm run build:dev
+  - npm run build:prod
   - npm run build:ssr
   - npm run build:prerender
+  - npm test
   - cd ../..
 
 
