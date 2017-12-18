@@ -17,7 +17,7 @@
            class="inside current-image-previous"
            [src]="leftPreview.plain?.img ? leftPreview.plain.img : leftPreview.modal.img"
            [hidden]="loading"
-           ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height}"
+           ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
            [attr.aria-label]="leftPreview.modal.ariaLabel"
            [title]="leftPreview.modal.title ? leftPreview.modal.title : getDescriptionToDisplay(leftPreview)"
            alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
@@ -25,8 +25,7 @@
            (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, clickAction)"/>
       <ng-template #firstImage>
         <div class="current-image-previous hidden"
-             [style.width]="slideConfig.sidePreviews?.width"
-             [style.height]="slideConfig.sidePreviews?.height"></div>
+             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"></div>
       </ng-template>
     </ng-container>
   </ng-container>
@@ -52,7 +51,7 @@
            class="inside current-image-next"
            [src]="rightPreview.plain?.img ? rightPreview.plain.img : rightPreview.modal.img"
            [hidden]="loading"
-           ksSize [sizeConfig]="{width: slideConfig.sidePreviews.width, height: slideConfig.sidePreviews.height}"
+           ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
            [attr.aria-label]="rightPreview.modal.ariaLabel"
            [title]="rightPreview.modal.title ? rightPreview.modal.title : getDescriptionToDisplay(rightPreview)"
            alt="{{rightPreview.modal.alt ? rightPreview.modal.alt : getAltDescriptionByImage(rightPreview)}}"
@@ -60,8 +59,7 @@
            (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, clickAction)"/>
       <ng-template #lastImage>
         <div class="current-image-next hidden"
-             [style.width]="slideConfig.sidePreviews?.width"
-             [style.height]="slideConfig.sidePreviews?.height">
+             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}">
         </div>
       </ng-template>
     </ng-container>

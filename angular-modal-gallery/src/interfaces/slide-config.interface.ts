@@ -1,6 +1,8 @@
 /**
  * Interface `SlideConfig` to configure sliding features of modal gallery.
  */
+import { Size } from './size.interface';
+
 export interface SlideConfig {
   infinite?: boolean;
   sidePreviews?: SidePreviewsConfig;
@@ -8,6 +10,5 @@ export interface SlideConfig {
 
 export interface SidePreviewsConfig {
   show: boolean;
-  width: string;
-  height: string;
+  size: Size;
 }
