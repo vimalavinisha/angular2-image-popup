@@ -25,13 +25,38 @@
 $text-color: #fff;
 $background: rgba(0, 0, 0, .7);
 
-.my-app-custom-plain-container {
+.my-app-custom-plain-container-row {
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 
-  .my-app-custom-image {
+  .my-app-custom-image-row {
+    cursor: pointer;
+    height: auto;
+    margin-right: 2px;
+    width: 50px;
+
+    &.after {
+      border-top: 2px;
+      cursor: pointer;
+      display: none;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+  }
+}
+
+.my-app-custom-plain-container-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .my-app-custom-image-column {
     cursor: pointer;
     height: auto;
     margin-right: 2px;

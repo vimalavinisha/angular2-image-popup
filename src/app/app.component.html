@@ -38,29 +38,54 @@
                     [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
 </section>
 <section>
-  <h3>Z4 - full custom plain gallery with image pointer</h3>
+  <h3>Z4 - full custom plain gallery (row) with image pointer</h3>
   <br>
-  <div class="my-app-custom-plain-container">
+  <div class="my-app-custom-plain-container-row">
     <ng-container *ngFor="let img of images; let i = index">
       <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
-        <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 2 - 1}} more </a>
+        <a class="more" *ngIf="i==2" (click)="openImageModalRow(img)"> +{{images.length - 2 - 1}} more </a>
         <img *ngIf="img.plain && img.plain.img; else noThumb"
-             class="my-app-custom-image"
+             class="my-app-custom-image-row"
              [src]="img.plain.img"
-             (click)="openImageModal(img)"
+             (click)="openImageModalRow(img)"
              [alt]="img.modal.description"/>
 
         <ng-template #noThumb>
-          <img class="my-app-custom-image"
+          <img class="my-app-custom-image-row"
                [src]="img.modal.img"
-               (click)="openImageModal(img)"
+               (click)="openImageModalRow(img)"
                [alt]="img.modal.description"/>
         </ng-template>
       </div>
     </ng-container>
   </div>
   <ks-modal-gallery [modalImages]="images"
-                    [plainGalleryConfig]="customPlainGalleryConfig"></ks-modal-gallery>
+                    [plainGalleryConfig]="customPlainGalleryRowConfig"></ks-modal-gallery>
+</section>
+<section>
+  <h3>Z4 - full custom plain gallery (column) with image pointer</h3>
+  <br>
+  <div class="my-app-custom-plain-container-column">
+    <ng-container *ngFor="let img of images; let i = index">
+      <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
+        <a class="more" *ngIf="i==2" (click)="openImageModalColumn(img)"> +{{images.length - 2 - 1}} more </a>
+        <img *ngIf="img.plain && img.plain.img; else noThumb"
+             class="my-app-custom-image-column"
+             [src]="img.plain.img"
+             (click)="openImageModalColumn(img)"
+             [alt]="img.modal.description"/>
+
+        <ng-template #noThumb>
+          <img class="my-app-custom-image-column"
+               [src]="img.modal.img"
+               (click)="openImageModalColumn(img)"
+               [alt]="img.modal.description"/>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+  <ks-modal-gallery [modalImages]="images"
+                    [plainGalleryConfig]="customPlainGalleryColumnConfig"></ks-modal-gallery>
 </section>
 <br>
 <hr>

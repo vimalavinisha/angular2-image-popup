@@ -36,8 +36,24 @@ import {
 })
 export class AppComponent {
 
-  customPlainGalleryConfig: PlainGalleryConfig = {
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    advanced: {
+      aTags: false,
+      customPlainGallery: {
+        modalOpenerByIndex: -1,
+        hideDefaultPlainGallery: true
+      }
+    }
+  };
+
+  customPlainGalleryColumnConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
     layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
     size: {
       width: '80px',
@@ -381,27 +397,16 @@ export class AppComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
-  openImageModal(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery, with image: ', image);
-    let currentIndexCustomLayout;
-    if (image) {
-      currentIndexCustomLayout = this.images.indexOf(image);
-      console.log('set new currentIndexCustomLayout to ' + currentIndexCustomLayout);
-    } else {
-      currentIndexCustomLayout = -1;
-      console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
-    }
+  openImageModalRow(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery(index));
+  }
 
-    this.customPlainGalleryConfig = Object.assign({},
-      this.customPlainGalleryConfig, {
-        advanced: {
-          aTags: false,
-          customPlainGallery: {
-            modalOpenerByIndex: currentIndexCustomLayout,
-            hideDefaultPlainGallery: true
-          }
-        }
-      });
+  openImageModalColumn(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image);
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery(index));
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -466,16 +471,9 @@ export class AppComponent {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
 
-    this.customPlainGalleryConfig = Object.assign({},
-      this.customPlainGalleryConfig, {
-        advanced: {
-          aTags: false,
-          customPlainGallery: {
-            modalOpenerByIndex: -1,
-            hideDefaultPlainGallery: true
-          }
-        }
-      });
+    // reset custom plain gallery config
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery());
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery());
   }
 
   addRandomImage() {
@@ -486,5 +484,29 @@ export class AppComponent {
 
   trackById(index: number, item: Image) {
     return item.id;
+  }
+
+  private getCurrentIndexCustomLayout(image: Image): number {
+    let currentIndexCustomLayout;
+    if (image) {
+      currentIndexCustomLayout = this.images.indexOf(image);
+      console.log(`set new currentIndexCustomLayout to ${currentIndexCustomLayout}`);
+    } else {
+      currentIndexCustomLayout = -1;
+      console.log(`reset currentIndexCustomLayout to ${currentIndexCustomLayout}`);
+    }
+    return currentIndexCustomLayout;
+  }
+
+  private getAdvancedPlainGallery(index: number = -1) {
+    return {
+      advanced: {
+        aTags: false,
+        customPlainGallery: {
+          modalOpenerByIndex: index,
+          hideDefaultPlainGallery: true
+        }
+      }
+    };
   }
 }
