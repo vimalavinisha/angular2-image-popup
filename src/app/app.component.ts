@@ -43,13 +43,7 @@ export class AppComponent {
       width: '80px',
       height: '80px'
     },
-    advanced: {
-      aTags: false,
-      customPlainGallery: {
-        modalOpenerByIndex: -1,
-        hideDefaultPlainGallery: true
-      }
-    }
+    ...this.getAdvancedPlainGallery()
   };
 
   customPlainGalleryColumnConfig: PlainGalleryConfig = {
@@ -59,13 +53,7 @@ export class AppComponent {
       width: '80px',
       height: '80px'
     },
-    advanced: {
-      aTags: false,
-      customPlainGallery: {
-        modalOpenerByIndex: -1,
-        hideDefaultPlainGallery: true
-      }
-    }
+    ...this.getAdvancedPlainGallery()
   };
 
   plainGalleryRow: PlainGalleryConfig = {
