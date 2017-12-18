@@ -367,8 +367,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index of the clicked image.
    */
   onShowModalGallery(index: number) {
-    // hides scrollbar
-    document.body.style.overflow = 'hidden';
     this.showModalGallery(index);
   }
 
@@ -381,6 +379,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param index of the image to show.
    */
   showModalGallery(index: number) {
+    // hides scrollbar
+    document.body.style.overflow = 'hidden';
+
     this.keyboardService.add((event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
         event.preventDefault();

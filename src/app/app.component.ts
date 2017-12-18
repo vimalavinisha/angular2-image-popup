@@ -56,6 +56,16 @@ export class AppComponent {
     ...this.getAdvancedPlainGallery()
   };
 
+  customPlainGalleryRowDescConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    ...this.getAdvancedPlainGallery()
+  };
+
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
@@ -149,7 +159,8 @@ export class AppComponent {
     new Image(
       0,
       { // modal
-        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg'
+        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
+        description: 'Description 1',
       },
       { // plain
         img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
@@ -167,16 +178,19 @@ export class AppComponent {
     new Image(
       2,
       { // modal
-        img: '../assets/images/gallery/pexels-photo-52062.jpeg'
+        img: '../assets/images/gallery/pexels-photo-52062.jpeg',
+        description: 'Description 3',
       },
       { // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
+        description: 'Description 3',
       }
     ),
     new Image(
       3,
       { // modal
-        img: '../assets/images/gallery/pexels-photo-66943.jpeg'
+        img: '../assets/images/gallery/pexels-photo-66943.jpeg',
+        description: 'Description 4',
       },
       { // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
@@ -194,7 +208,8 @@ export class AppComponent {
     new Image(
       5,
       { // modal
-        img: '../assets/images/gallery/pexels-photo-94420.jpeg'
+        img: '../assets/images/gallery/pexels-photo-94420.jpeg',
+        description: 'Description 6',
       },
       { // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
@@ -387,14 +402,20 @@ export class AppComponent {
 
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
-    const index: number = this.getCurrentIndexCustomLayout(image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery(index));
   }
 
   openImageModalColumn(image: Image) {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
-    const index: number = this.getCurrentIndexCustomLayout(image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery(index));
+  }
+
+  openImageModalRowDescription(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, this.getAdvancedPlainGallery(index));
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -462,6 +483,7 @@ export class AppComponent {
     // reset custom plain gallery config
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery());
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery());
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, this.getAdvancedPlainGallery());
   }
 
   addRandomImage() {
@@ -474,10 +496,10 @@ export class AppComponent {
     return item.id;
   }
 
-  private getCurrentIndexCustomLayout(image: Image): number {
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     let currentIndexCustomLayout;
     if (image) {
-      currentIndexCustomLayout = this.images.indexOf(image);
+      currentIndexCustomLayout = images.indexOf(image);
       console.log(`set new currentIndexCustomLayout to ${currentIndexCustomLayout}`);
     } else {
       currentIndexCustomLayout = -1;

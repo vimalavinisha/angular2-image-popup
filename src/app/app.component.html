@@ -63,7 +63,7 @@
                     [plainGalleryConfig]="customPlainGalleryRowConfig"></ks-modal-gallery>
 </section>
 <section>
-  <h3>Z4 - full custom plain gallery (column) with image pointer</h3>
+  <h3>Z5 - full custom plain gallery (column) with image pointer</h3>
   <br>
   <div class="my-app-custom-plain-container-column">
     <ng-container *ngFor="let img of images; let i = index">
@@ -86,6 +86,21 @@
   </div>
   <ks-modal-gallery [modalImages]="images"
                     [plainGalleryConfig]="customPlainGalleryColumnConfig"></ks-modal-gallery>
+</section>
+<section>
+  <h3>Z6 - full custom plain gallery (row) with descriptions</h3>
+  <br>
+  <div class="my-app-custom-plain-container-with-desc">
+    <ng-container *ngFor="let img of imagesRect">
+      <figure class="my-app-custom-image-with-desc">
+        <img [src]="img.modal.img"
+             (click)="openImageModalRowDescription(img)"/>
+        <figcaption class="description">{{img.modal.description ? img.modal.description : 'No description available'}}</figcaption>
+      </figure>
+    </ng-container>
+  </div>
+  <ks-modal-gallery [modalImages]="imagesRect"
+                    [plainGalleryConfig]="customPlainGalleryRowDescConfig"></ks-modal-gallery>
 </section>
 <br>
 <hr>
