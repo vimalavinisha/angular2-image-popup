@@ -119,9 +119,8 @@ $background: rgba(0, 0, 0, .7);
 .more {
   background: $background;
   cursor: pointer;
-  color: $text-color;
-  padding-top: 4px;
-  height: 46px;
+  color: $text-color !important;
+  height: 50px;
   position: absolute;
   text-align: center;
   width: 50px;
