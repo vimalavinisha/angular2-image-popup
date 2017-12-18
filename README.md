@@ -53,8 +53,7 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 ## Installation
 - `npm install --save angular-modal-gallery`
 - `npm install --save hammerjs mousetrap`
-- `npm install --save-dev @types/mousetrap`
-- `npm install --save-dev @types/hammerjs`
+- `npm install --save-dev @types/mousetrap @types/hammerjs`
 
 
 ## News
@@ -95,16 +94,6 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 - Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
 - Tested with SystemJs 0.20.x and Angular-cli 1.x.x
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
-- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
-
-
-## Features
-- Angular module to import this library
-- Angular component to display the image gallery
-- AOT support
-- Angular >= 4 (Angular >=5 supported from version 4.0.0)
-- Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
-- Tested with SystemJs 0.20.x and Angular-cli 1.x.x
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
 
 
