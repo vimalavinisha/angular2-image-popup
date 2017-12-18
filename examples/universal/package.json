@@ -1,35 +1,20 @@
 {
-  "name": "ng-universal-demo",
-  "version": "0.0.0",
+  "name": "angular-modal-gallery-universal-demo",
+  "version": "5.0.0",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/angular/universal-starter.git"
-  },
-  "contributors": [
-    "AngularClass <hello@angularclass.com>",
-    "PatrickJS <patrick@angularclass.com>",
-    "Jeff Whelpley <jeff@gethuman.com>",
-    "Jeff Cross <crossj@google.com>",
-    "Mark Pieszak <mpieszak84@gmail.com>",
-    "Jason Jean <jasonjean1993@gmail.com>",
-    "Fabian Wiles <fabian.wiles@gmail.com>"
-  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:dev": "ng build --dev",
-    "build:prod": "ng build --prod --aot",
-    "build:client-and-server-bundles": "ng build --prod && ng build --prod --app 1 --output-hashing=false",
+    "build:prod": "ng build --prod --aot --build-optimizer=true",
+    "build:client-and-server-bundles": "ng build --prod --build-optimizer=true && ng build --prod --build-optimizer=true --app 1 --output-hashing=false",
     "build:prerender": "npm run build:client-and-server-bundles && npm run webpack:server && npm run generate:prerender",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "generate:prerender": "cd dist && node prerender",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:prerender": "cd dist/browser && http-server",
-    "serve:ssr": "node dist/server",
-    "test": "karma start --watch=false --code-coverage=true",
-    "test:watch": "karma start --watch=true --code-coverage=true"
+    "serve:ssr": "node dist/server"
   },
   "private": true,
   "dependencies": {

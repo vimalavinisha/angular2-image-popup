@@ -141,7 +141,7 @@ build_script:
   # build main angular-cli with ng-packagr
   - npm run build:dev
   - npm run build:prod
-  - npm test
+  - npm run test:ci
   # build official webpack example
   - cd examples/webpack
   - npm run build:dev
@@ -153,7 +153,7 @@ build_script:
   - cd examples/angular-cli
   - npm run build:dev
   - npm run build:prod
-  - npm run test
+  - npm run test:ci
   - cd ../..
   # build official universal example
   - cd examples/universal
@@ -161,7 +161,7 @@ build_script:
   - npm run build:prod
   - npm run build:ssr
   - npm run build:prerender
-  - npm test
+#  - npm test
   - cd ../..
 
 

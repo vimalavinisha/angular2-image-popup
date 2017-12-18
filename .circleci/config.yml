@@ -55,7 +55,7 @@ jobs:
           command: npm run build:all
 #      - run: FIXME
 #          name: run-test
-#          command: npm test
+#          command: npm run test:ci
       # main angular-cli
       - run:
           name: run-build-dev-main-angular-cli
@@ -65,7 +65,7 @@ jobs:
           command: npm run build:prod
       - run:
           name: run-test-main-angular-cli
-          command: npm test
+          command: npm run test:ci
       # webpack
       - run:
           name: run-build-dev-demo-webpack
@@ -88,7 +88,7 @@ jobs:
           command: cd examples/angular-cli && npm run build:prod
       - run:
           name: run-test-demo-angular-cli
-          command: cd examples/angular-cli && npm test
+          command: cd examples/angular-cli && npm run test:ci
       # universal
       - run:
           name: run-build-dev-demo-universal
@@ -102,9 +102,9 @@ jobs:
       - run:
           name: run-build-prerender-demo-universal
           command: cd examples/universal && npm run build:prerender
-      - run:
-          name: run-test-demo-demo-universal
-          command: cd examples/universal && npm test
+#      - run:
+#          name: run-test-demo-demo-universal
+#          command: cd examples/universal && npm test
       # docs
       - run:
           name: run-docs

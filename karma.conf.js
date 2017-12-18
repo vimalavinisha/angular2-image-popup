@@ -7,7 +7,8 @@
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * copi
+ * es of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all
@@ -22,10 +23,16 @@
  * SOFTWARE.
  */
 
-// module.exports = require('./config/karma.conf.js');
-
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
+
+const os = require('os');
+
+console.log(`Starting Karma with isCI=${!!isCI()}`);
+
+function isCI() {
+  return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS;
+}
 
 module.exports = function (config) {
   config.set({
@@ -64,7 +71,21 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: ['ChromeHeadless'],
+    singleRun: false,
+
+    customLaunchers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--no-sandbox',
+          // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+          '--headless',
+          '--disable-gpu',
+          // Without a remote debugging port, Google Chrome exits immediately.
+          ' --remote-debugging-port=9222',
+        ]
+      }
+    }
   });
 };

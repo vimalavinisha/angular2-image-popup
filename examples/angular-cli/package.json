@@ -6,9 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build:dev": "ng build --dev",
-    "build:prod": "ng build --prod --aot",
+    "build:prod": "ng build --prod --aot --build-optimizer=true",
     "test": "karma start --watch=false --code-coverage=true",
     "test:watch": "karma start --watch=true --code-coverage=true",
+    "test:ci": "ng test --watch=false --no-progress --code-coverage=true",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
