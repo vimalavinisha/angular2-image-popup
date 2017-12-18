@@ -2,7 +2,6 @@
  The MIT License (MIT)
 
  Copyright (c) 2017 Stefano Cappa (Ks89)
- Copyright (c) 2016 vimalavinisha
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -32,345 +31,40 @@ import {
 } from 'angular-modal-gallery';
 
 @Component({
-  selector: 'my-app',
+  selector: 'ks-app',
   styleUrls: ['./app/main.css'],
-  template: `
-    <h1>angular-modal-gallery official systemjs demo</h1>
-    <hr>
-    <p>If you want, you can <b>add a random image</b> to every example
-      <button (click)="addRandomImage()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
-    </p>
-    <br>
-    <hr>
-
-    <h2>Layout examples</h2>
-    <section>
-      <h3>Z1 - row plain gallery layout (limit 2) and custom size</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [plainGalleryConfig]="plainGalleryRow"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>Z1bis - row plain gallery layout space around (limit 2)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [plainGalleryConfig]="plainGalleryRowSpaceAround"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>Z1tris - row plain gallery layout with a tags (limit 2)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [plainGalleryConfig]="plainGalleryRowATags"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>Z2 - column plain gallery layout (limit 3)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [plainGalleryConfig]="plainGalleryColumn"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>Z3 - grid plain gallery layout and custom size</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>Z4 - full custom plain gallery with image pointer</h3>
-      <br>
-      <div class="my-app-custom-plain-container">
-        <ng-container *ngFor="let img of images; let i = index">
-          <div *ngIf="i <= 2"> <!-- 2 is a fixed value that I'm using to display only two images -->
-            <a class="more" *ngIf="i==2" (click)="openImageModal(img)"> +{{images.length - 2 - 1}} more </a>
-            <img *ngIf="img.plain && img.plain.img; else noThumb"
-                 class="my-app-custom-image"
-                 [src]="img.plain.img"
-                 (click)="openImageModal(img)"
-                 [alt]="img.modal.description"/>
-
-            <ng-template #noThumb>
-              <img class="my-app-custom-image"
-                   [src]="img.modal.img"
-                   (click)="openImageModal(img)"
-                   [alt]="img.modal.description"/>
-            </ng-template>
-          </div>
-        </ng-container>
-      </div>
-      <ks-modal-gallery [modalImages]="images"
-                        [plainGalleryConfig]="customPlainGalleryConfig"></ks-modal-gallery>
-    </section>
-    <br>
-    <hr>
-    <br>
-    <h2>Minimal examples</h2>
-    <section>
-      <h3>A1 - Minimal demo - all defaults</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>A1bis - Minimal demo - all defaults with rect images</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="imagesRect"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>A2 - Minimal demo - listen for events</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        (hasData)="onImageLoaded($event)"
-                        (close)="onCloseImageModal($event)"
-                        (show)="onVisibleIndex($event)"
-                        (firstImage)="onIsFirstImage($event)"
-                        (lastImage)="onIsLastImage($event)"
-                        (buttonBeforeHook)="onButtonBeforeHook($event)"
-                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>A3 - Minimal demo - single image</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="singleImage"></ks-modal-gallery>
-    </section>
-    <br>
-    <hr>
-    <br>
-    <h2>Simple examples</h2>
-    <section>
-      <h3>B1 - Simple demo - only current image and buttons (previews and dots are hidden)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="{visible: false}"
-                        [dotsConfig]="{visible: false}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B2 - Simple demo - only current image (buttons, previews and dots are hidden)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [buttonsConfig]="{visible: false, strategy: 1}"
-                        [previewConfig]="{visible: false}"
-                        [dotsConfig]="{visible: false}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B3 - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [slideConfig]="{infinite: false, sidePreviews: {show: false}}"
-                        [buttonsConfig]="{visible: false, strategy: 1}"
-                        [previewConfig]="{visible: false}"
-                        [dotsConfig]="{visible: false}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B3bis - Simple demo - custom preview size</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="{visible: true, size: {width: 90, height: 90, unit: 'px'}}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B4 - Simple demo - disable closeOutside</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [enableCloseOutside]="false"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B5 - Simple demo - no downloadable at all</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [downloadable]="false"
-                        [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B6 - Simple demo - no download button (only with keyboard)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [downloadable]="true"
-                        [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B7 - Simple demo - download with both button and keyboard</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [downloadable]="true"
-                        [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B8 - Simple demo - infinite sliding but NO side previews</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B9 - Simple demo - infinite sliding and previews</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [slideConfig]="{infinite: true, sidePreviews: {show: true, width: 100, height: 100, unit: 'px'}}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B10 - Simple demo - disable loading spinner</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [loadingConfig]="{enable: false, type: 1}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B11 - Simple demo - loading spinner of type Standard</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [loadingConfig]="{enable: true, type: 1}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B12 - Simple demo - loading spinner of type Circular</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [loadingConfig]="{enable: true, type: 2}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B13 - Simple demo - loading spinner of type Bars</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [loadingConfig]="{enable: true, type: 3}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B14 - Simple demo - loading spinner of type Dots</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [loadingConfig]="{enable: true, type: 4}"></ks-modal-gallery>
-    </section>
-
-    <section>
-      <h3>B15 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B16 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B17 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B18 - Simple demo - buttons config FULL strategy (all buttons)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [buttonsConfig]="buttonsConfigFull"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>B19 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [downloadable]="true"
-                        [buttonsConfig]="customButtonsConfig"></ks-modal-gallery>
-    </section>
-    <br>
-    <hr>
-    <br>
-    <h2>Advanced examples</h2>
-    <section>
-      <h3>C1 - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [keyboardConfig]="{esc: 81, left: 40, right: 38}"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C2 - Advanced demo - custom description always visible</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [description]="customDescription"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C3 - Advanced demo - custom description hide if empty</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [description]="customDescriptionHideIfEmpty"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C4 - Advanced demo - custom description always hidden</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [description]="customFullDescriptionHidden"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C5 - Advanced demo - custom FULL description always visible</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [description]="customFullDescription"></ks-modal-gallery>
-    </section>
-
-
-    <section>
-      <h3>C6 - Advanced demo - preview custom configuration with 1 image (clickable)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="previewConfigFiveImages"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C7 - Advanced demo - preview custom configuration without arrows (clickable)</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="previewConfigNoArrows"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C8 - Advanced demo - preview custom configuration not clickable</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C9 - Advanced demo - preview custom configuration always center <span
-        style="color:red;">STILL NOT IMPLEMENTED</span></h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>
-    </section>
-    <section>
-      <h3>C10 - Advanced demo - preview custom configuration with custom size</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
-    </section>
-
-
-    <section>
-      <h3>C11 - Advanced demo - accessibility config</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
-    </section>
-
-    <section>
-      <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
-        buttonAfterHook</h3>
-      <br>
-      <ks-modal-gallery [modalImages]="images"
-                        [buttonsConfig]="buttonsConfigFull"
-                        (buttonBeforeHook)="onButtonBeforeHook($event)"
-                        (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
-    </section>
-
-    <br><br>
-    <h4>Created by Stefano Cappa (Ks89)</h4>
-  `
+  templateUrl: './app/app.html'
 })
 export class AppComponent {
 
-  customPlainGalleryConfig: PlainGalleryConfig = {
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
     size: {
       width: '80px',
       height: '80px'
     },
-    advanced: {
-      aTags: false,
-      customPlainGallery: {
-        modalOpenerByIndex: -1,
-        hideDefaultPlainGallery: true
-      }
-    }
+    ...this.getAdvancedPlainGallery()
+  };
+
+  customPlainGalleryColumnConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    ...this.getAdvancedPlainGallery()
+  };
+
+  customPlainGalleryRowDescConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    ...this.getAdvancedPlainGallery()
   };
 
   plainGalleryRow: PlainGalleryConfig = {
@@ -421,32 +115,32 @@ export class AppComponent {
     new Image(
       0,
       { // modal
-        img: './app/assets/images/gallery/img1.jpg',
+        img: '../assets/images/gallery/img1.jpg',
         extUrl: 'http://www.google.com'
       }
     ),
     new Image(
       1,
       { // modal
-        img: './app/assets/images/gallery/img2.png',
+        img: '../assets/images/gallery/img2.png',
         description: 'Description 2'
       }
     ),
     new Image(
       2,
       { // modal
-        img: './app/assets/images/gallery/img3.jpg',
+        img: '../assets/images/gallery/img3.jpg',
         description: 'Description 3',
         extUrl: 'http://www.google.com'
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/img3.png'
+        img: '../assets/images/gallery/thumbs/img3.png'
       }
     ),
     new Image(
       3,
       { // modal
-        img: './app/assets/images/gallery/img4.jpg',
+        img: '../assets/images/gallery/img4.jpg',
         description: 'Description 4',
         extUrl: 'http://www.google.com'
       }
@@ -454,10 +148,10 @@ export class AppComponent {
     new Image(
       4,
       { // modal
-        img: './app/assets/images/gallery/img5.jpg'
+        img: '../assets/images/gallery/img5.jpg'
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/img5.jpg'
+        img: '../assets/images/gallery/thumbs/img5.jpg'
       }
     )
   ];
@@ -466,64 +160,69 @@ export class AppComponent {
     new Image(
       0,
       { // modal
-        img: './app/assets/images/gallery/milan-pegasus-gallery-statue.jpg'
+        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
+        description: 'Description 1',
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
+        img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
       }
     ),
     new Image(
       1,
       { // modal
-        img: './app/assets/images/gallery/pexels-photo-47223.jpeg'
+        img: '../assets/images/gallery/pexels-photo-47223.jpeg'
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
       }
     ),
     new Image(
       2,
       { // modal
-        img: './app/assets/images/gallery/pexels-photo-52062.jpeg'
+        img: '../assets/images/gallery/pexels-photo-52062.jpeg',
+        description: 'Description 3',
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-pexels-photo-52062.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
+        description: 'Description 3',
       }
     ),
     new Image(
       3,
       { // modal
-        img: './app/assets/images/gallery/pexels-photo-66943.jpeg'
+        img: '../assets/images/gallery/pexels-photo-66943.jpeg',
+        description: 'Description 4',
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
       }
     ),
     new Image(
       4,
       { // modal
-        img: './app/assets/images/gallery/pexels-photo-93750.jpeg'
+        img: '../assets/images/gallery/pexels-photo-93750.jpeg'
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
       }
     ),
     new Image(
       5,
       { // modal
-        img: './app/assets/images/gallery/pexels-photo-94420.jpeg'
+        img: '../assets/images/gallery/pexels-photo-94420.jpeg',
+        description: 'Description 6',
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
       }
     ),
     new Image(
       6,
       { // modal
-        img: './app/assets/images/gallery/pexels-photo-96947.jpeg'
+        img: '../assets/images/gallery/pexels-photo-96947.jpeg'
       },
       { // plain
-        img: './app/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
       }
     )
   ];
@@ -702,27 +401,22 @@ export class AppComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
-  openImageModal(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery, with image: ', image);
-    let currentIndexCustomLayout;
-    if (image) {
-      currentIndexCustomLayout = this.images.indexOf(image);
-      console.log('set new currentIndexCustomLayout to ' + currentIndexCustomLayout);
-    } else {
-      currentIndexCustomLayout = -1;
-      console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
-    }
+  openImageModalRow(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery(index));
+  }
 
-    this.customPlainGalleryConfig = Object.assign({},
-      this.customPlainGalleryConfig, {
-        advanced: {
-          aTags: false,
-          customPlainGallery: {
-            modalOpenerByIndex: currentIndexCustomLayout,
-            hideDefaultPlainGallery: true
-          }
-        }
-      });
+  openImageModalColumn(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery(index));
+  }
+
+  openImageModalRowDescription(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, this.getAdvancedPlainGallery(index));
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -787,16 +481,10 @@ export class AppComponent {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
 
-    this.customPlainGalleryConfig = Object.assign({},
-      this.customPlainGalleryConfig, {
-        advanced: {
-          aTags: false,
-          customPlainGallery: {
-            modalOpenerByIndex: -1,
-            hideDefaultPlainGallery: true
-          }
-        }
-      });
+    // reset custom plain gallery config
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery());
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery());
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, this.getAdvancedPlainGallery());
   }
 
   addRandomImage() {
@@ -807,5 +495,29 @@ export class AppComponent {
 
   trackById(index: number, item: Image) {
     return item.id;
+  }
+
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    let currentIndexCustomLayout;
+    if (image) {
+      currentIndexCustomLayout = images.indexOf(image);
+      console.log(`set new currentIndexCustomLayout to ${currentIndexCustomLayout}`);
+    } else {
+      currentIndexCustomLayout = -1;
+      console.log(`reset currentIndexCustomLayout to ${currentIndexCustomLayout}`);
+    }
+    return currentIndexCustomLayout;
+  }
+
+  private getAdvancedPlainGallery(index: number = -1) {
+    return {
+      advanced: {
+        aTags: false,
+        customPlainGallery: {
+          modalOpenerByIndex: index,
+          hideDefaultPlainGallery: true
+        }
+      }
+    };
   }
 }

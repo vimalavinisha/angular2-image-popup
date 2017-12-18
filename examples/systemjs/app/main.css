@@ -2,7 +2,6 @@
  The MIT License (MIT)
 
  Copyright (c) 2017 Stefano Cappa (Ks89)
- Copyright (c) 2016 vimalavinisha
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +22,21 @@
  SOFTWARE.
  */
 
-.my-app-custom-plain-container {
+.my-app-custom-plain-container-row {
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
 
-.my-app-custom-plain-container .my-app-custom-image {
+.my-app-custom-plain-container-row .my-app-custom-image-row {
   cursor: pointer;
   height: auto;
   margin-right: 2px;
   width: 50px;
 }
 
-.my-app-custom-plain-container .my-app-custom-image:after {
+.my-app-custom-plain-container-row .my-app-custom-image-row.after {
   border-top: 2px;
   cursor: pointer;
   display: none;
@@ -48,8 +47,74 @@
   width: 100%;
 }
 
+.my-app-custom-plain-container-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.my-app-custom-plain-container-column .my-app-custom-image-column {
+  cursor: pointer;
+  height: auto;
+  margin-right: 2px;
+  width: 50px;
+}
+
+.my-app-custom-plain-container-column .my-app-custom-image-column.after {
+  border-top: 2px;
+  cursor: pointer;
+  display: none;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.my-app-custom-plain-container-with-desc {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.my-app-custom-plain-container-with-desc figure {
+  margin: 0;
+  position: relative;
+}
+
+.my-app-custom-plain-container-with-desc figure img {
+  max-width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.my-app-custom-plain-container-with-desc figure figcaption {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 85%;
+  padding: 5px;
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+}
+
+.my-app-custom-plain-container-with-desc .description {
+  font-weight: bold;
+  text-align: center;
+}
+
+.my-app-custom-plain-container-with-desc .my-app-custom-image-with-desc {
+  height: auto;
+  margin-right: 2px;
+  width: 200px;
+  align-self: start;
+}
+
 .more {
-  background: rgba(0, 0, 0, .7);
+  background: rgba(0, 0, 0, 0.7);
   cursor: pointer;
   color: #fff;
   padding-top: 4px;

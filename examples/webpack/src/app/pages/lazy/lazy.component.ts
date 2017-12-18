@@ -38,20 +38,34 @@ console.log('`Lazy` component loaded asynchronously');
 })
 export class LazyComponent {
 
-  customPlainGalleryConfig: PlainGalleryConfig = {
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
     size: {
       width: '80px',
       height: '80px'
     },
-    advanced: {
-      aTags: false,
-      customPlainGallery: {
-        modalOpenerByIndex: -1,
-        hideDefaultPlainGallery: true
-      }
-    }
+    ...this.getAdvancedPlainGallery()
+  };
+
+  customPlainGalleryColumnConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.COLUMN,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    ...this.getAdvancedPlainGallery()
+  };
+
+  customPlainGalleryRowDescConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.ROW,
+    layout: new LineLayout({length: 2, iconClass: '', wrap: true}, 'flex-start'),
+    size: {
+      width: '80px',
+      height: '80px'
+    },
+    ...this.getAdvancedPlainGallery()
   };
 
   plainGalleryRow: PlainGalleryConfig = {
@@ -147,7 +161,8 @@ export class LazyComponent {
     new Image(
       0,
       { // modal
-        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg'
+        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
+        description: 'Description 1',
       },
       { // plain
         img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
@@ -165,16 +180,19 @@ export class LazyComponent {
     new Image(
       2,
       { // modal
-        img: '../assets/images/gallery/pexels-photo-52062.jpeg'
+        img: '../assets/images/gallery/pexels-photo-52062.jpeg',
+        description: 'Description 3',
       },
       { // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg'
+        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
+        description: 'Description 3',
       }
     ),
     new Image(
       3,
       { // modal
-        img: '../assets/images/gallery/pexels-photo-66943.jpeg'
+        img: '../assets/images/gallery/pexels-photo-66943.jpeg',
+        description: 'Description 4',
       },
       { // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
@@ -192,7 +210,8 @@ export class LazyComponent {
     new Image(
       5,
       { // modal
-        img: '../assets/images/gallery/pexels-photo-94420.jpeg'
+        img: '../assets/images/gallery/pexels-photo-94420.jpeg',
+        description: 'Description 6',
       },
       { // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
@@ -383,27 +402,22 @@ export class LazyComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
-  openImageModal(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery, with image: ', image);
-    let currentIndexCustomLayout;
-    if (image) {
-      currentIndexCustomLayout = this.images.indexOf(image);
-      console.log('set new currentIndexCustomLayout to ' + currentIndexCustomLayout);
-    } else {
-      currentIndexCustomLayout = -1;
-      console.log('reset currentIndexCustomLayout to ' + currentIndexCustomLayout);
-    }
+  openImageModalRow(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery(index));
+  }
 
-    this.customPlainGalleryConfig = Object.assign({},
-      this.customPlainGalleryConfig, {
-        advanced: {
-          aTags: false,
-          customPlainGallery: {
-            modalOpenerByIndex: currentIndexCustomLayout,
-            hideDefaultPlainGallery: true
-          }
-        }
-      });
+  openImageModalColumn(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery(index));
+  }
+
+  openImageModalRowDescription(image: Image) {
+    console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, this.getAdvancedPlainGallery(index));
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -468,16 +482,10 @@ export class LazyComponent {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
 
-    this.customPlainGalleryConfig = Object.assign({},
-      this.customPlainGalleryConfig, {
-        advanced: {
-          aTags: false,
-          customPlainGallery: {
-            modalOpenerByIndex: -1,
-            hideDefaultPlainGallery: true
-          }
-        }
-      });
+    // reset custom plain gallery config
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, this.getAdvancedPlainGallery());
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, this.getAdvancedPlainGallery());
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, this.getAdvancedPlainGallery());
   }
 
   addRandomImage() {
@@ -488,5 +496,29 @@ export class LazyComponent {
 
   trackById(index: number, item: Image) {
     return item.id;
+  }
+
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    let currentIndexCustomLayout;
+    if (image) {
+      currentIndexCustomLayout = images.indexOf(image);
+      console.log(`set new currentIndexCustomLayout to ${currentIndexCustomLayout}`);
+    } else {
+      currentIndexCustomLayout = -1;
+      console.log(`reset currentIndexCustomLayout to ${currentIndexCustomLayout}`);
+    }
+    return currentIndexCustomLayout;
+  }
+
+  private getAdvancedPlainGallery(index: number = -1) {
+    return {
+      advanced: {
+        aTags: false,
+        customPlainGallery: {
+          modalOpenerByIndex: index,
+          hideDefaultPlainGallery: true
+        }
+      }
+    };
   }
 }
