@@ -182,7 +182,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const current: InternalLibImage = simpleChange.currentValue;
 
     // if was loaded before, but not now
-    if (prev && current && prev.previouslyLoaded && !current.previouslyLoaded) {
+    if (/*prev && prev.previouslyLoaded && */current && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
       this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
       this.loading = false;
