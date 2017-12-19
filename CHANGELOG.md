@@ -1,10 +1,26 @@
 # 5.0.0-alpha.4
 ### Features
-- change all "Size" objects using strings to be able to set also 'auto'
-- update all default sizes to support rectangle images (not only squared)
-- initial implementation of plain gallery with different layouts (row, column, grid)
+- initial implementation of plain gallery with different layouts (row, column, grid) #91
+- re-implement 'image pointer' feature #49
 - add square thumbnails feature #76 with an API to choose between <img> and <a> for thumbs
+- new class Image API (with modal and plain inner objects)
+- add official examples of plain gallery (row with breakConfig, column with breakConfig, grid, row with image pointer, column with image pointer, custom row of images with description)
+- change all "Size" objects using strings to be able to set also 'auto' (apply the same fix to ksSize)
+- update all default sizes to support rectangle images (not only squared)
 
+### Bugfixes
+- central image now shown on Microsoft Edge Desktop #108
+- fix click-outside.directive on both Edge, IE and Firefox, changing event.toElement to event.target
+- fix typedoc support to build the documentation
+
+### Chores
+- add license attributions (in README and in the main angular-cli example) to both icons and spinners authors
+- add CI scripts (TravisCI, AppVeyor, CircleCI)
+- badges in README.md
+
+### Demos
+- update all demos to alpha 4
+- refactor systemjs demo moving html in an external file
 
 
 # 5.0.0-alpha.3
