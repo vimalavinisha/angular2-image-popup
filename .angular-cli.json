@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "angular-modal-gallery-angularcli-demo"
+    "name": "angular-modal-gallery-main-demo"
   },
   "apps": [
     {

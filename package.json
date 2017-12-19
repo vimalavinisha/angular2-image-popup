@@ -94,11 +94,11 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-packagr": "^1.6.0",
     "protractor": "^5.2.2",
-    "rimraf": "^2.6.1",
+    "rimraf": "^2.6.2",
+    "snyk": "^1.51.0",
     "ts-node": "~3.3.0",
     "tslint": "^5.8.0",
     "typedoc": "^0.9.0",
-    "typescript": "=2.5.3",
-    "snyk": "^1.51.0"
+    "typescript": "=2.5.3"
   }
 }
