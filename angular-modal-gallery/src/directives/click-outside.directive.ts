@@ -42,14 +42,11 @@ export class ClickOutsideDirective {
   onClick(event: MouseEvent) {
     event.stopPropagation();
 
-    const targetElement: Element = event.toElement;
+    const targetElement: any = event.target;
 
     if (!this.clickOutsideEnable || !targetElement) {
       return false;
     }
-
-    // console.log('id ', targetElement.id);
-    // console.log('className ', targetElement.className);
 
     const isInside = targetElement.className && targetElement.className.startsWith('inside');
     const isHidden = targetElement.className.includes('hidden');
