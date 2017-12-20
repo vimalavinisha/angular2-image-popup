@@ -1,12 +1,37 @@
 # 5.0.0-alpha.4
 ### Features
+- change all "Size" objects using strings to be able to set also 'auto' (apply the same fix to ksSize)
+- update all default sizes to support rectangle images (not only squared)
 - initial implementation of plain gallery with different layouts (row, column, grid) #91
 - re-implement 'image pointer' feature #49
 - add square thumbnails feature #76 with an API to choose between <img> and <a> for thumbs
 - new class Image API (with modal and plain inner objects)
 - add official examples of plain gallery (row with breakConfig, column with breakConfig, grid, row with image pointer, column with image pointer, custom row of images with description)
-- change all "Size" objects using strings to be able to set also 'auto' (apply the same fix to ksSize)
-- update all default sizes to support rectangle images (not only squared)
+- define APIs for plain gallery:
+  ```
+  PlainGalleryConfig = {
+    strategy: ENUM of type PlainGalleryStrategy,
+    layout: {  // PlainGalleryLayout type that can be LineLayout or GridLayout
+      breakConfig: {
+        length: number,  //  number of images to show
+        iconClass: string, // still not implemented (and probably I'll remove it)
+        wrap: boolean // refer to the [wrap property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-4)
+      },
+      justify: string // refer to the [justify property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-6)
+    },
+    size: {
+      width: string, // it can be '50px', or percentage or also 'auto'
+      height: string // the same for width
+    },
+    advanced?: AdvancedConfig {
+      aTags: boolean, // images will be shown as <a> tags with background instead of <img>
+      customPlainGallery: { // to create a custom plain gallery
+        modalOpenerByIndex: number, // index of the image to open
+        hideDefaultPlainGallery: boolean  // set to true to hide the defaut gallery (prevent multiple plain galleries)
+      }
+    }
+  }
+  ```
 
 ### Bugfixes
 - central image now shown on Microsoft Edge Desktop #108
