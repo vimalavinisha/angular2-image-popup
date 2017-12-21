@@ -10,17 +10,17 @@
 - define APIs for plain gallery:
   ```
   PlainGalleryConfig = {
-    strategy: ENUM of type PlainGalleryStrategy,
+    strategy: ENUM of type PlainGalleryStrategy (ROW, COLUM, GRID...)
     layout: {  // PlainGalleryLayout type that can be LineLayout or GridLayout
       breakConfig: {
         length: number,  //  number of images to show
         iconClass: string, // still not implemented (and probably I'll remove it)
-        wrap: boolean // refer to the [wrap property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-4)
+        wrap: boolean // refers to the [wrap property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-4)
       },
-      justify: string // refer to the [justify property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-6)
+      justify: string // refers to the [justify property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-6)
     },
     size: {
-      width: string, // it can be '50px', or percentage or also 'auto'
+      width: string, // it can be '50px', percentage, 'auto' and so on
       height: string // the same for width
     },
     advanced?: AdvancedConfig {
