@@ -7,30 +7,40 @@ import { Size } from './size.interface';
 export interface PlainGalleryConfig {
   strategy: PlainGalleryStrategy;
   layout: PlainGalleryLayout;
-  size: Size;
   advanced?: AdvancedConfig;
 }
 
-export class PlainGalleryLayout {
+export interface PlainGalleryLayout {}
+
+export class LineLayout implements PlainGalleryLayout {
   breakConfig: BreakConfig;
-
-  constructor(breakConfig: BreakConfig) {
-    this.breakConfig = breakConfig;
-  }
-}
-
-export class LineLayout extends PlainGalleryLayout {
   justify: string;
+  size: Size;
 
-  constructor(breakConfig: BreakConfig, justify: string) {
-    super(breakConfig);
+  constructor(size: Size, breakConfig: BreakConfig, justify: string) {
+    this.size = size;
+    this.breakConfig = breakConfig;
     this.justify = justify;
   }
 }
 
-export class GridLayout extends PlainGalleryLayout {
-  constructor(breakConfig: BreakConfig) {
-    super(breakConfig);
+export class GridLayout implements PlainGalleryLayout {
+  breakConfig: BreakConfig;
+  size: Size;
+
+  constructor(size: Size, breakConfig: BreakConfig) {
+    this.size = size;
+    this.breakConfig = breakConfig;
+  }
+}
+
+export class AdvancedLayout implements PlainGalleryLayout {
+  modalOpenerByIndex: number;
+  hideDefaultPlainGallery: boolean;
+
+  constructor(modalOpenerByIndex: number, hideDefaultPlainGallery: boolean) {
+    this.modalOpenerByIndex = modalOpenerByIndex;
+    this.hideDefaultPlainGallery = hideDefaultPlainGallery;
   }
 }
 
@@ -40,21 +50,14 @@ export enum PlainGalleryStrategy {
   ROW = 1,
   COLUMN,
   GRID,
-  ADVANCED_GRID
+  CUSTOM // full custom strategy
 }
 
 export interface BreakConfig {
   length: number;
-  iconClass: string;
   wrap: boolean;
 }
 
 export interface AdvancedConfig {
   aTags: boolean;
-  customPlainGallery?: CustomConfig;
-}
-
-export interface CustomConfig {
-  modalOpenerByIndex: number;
-  hideDefaultPlainGallery: boolean;
 }

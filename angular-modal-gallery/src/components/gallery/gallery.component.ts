@@ -24,7 +24,8 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { Image } from '../../interfaces/image.class';
-import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../interfaces/plain-gallery-config.interface';
+import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../interfaces/plain-gallery-config.interface';
+import { Size } from '../../interfaces/size.interface';
 
 /**
  * Component with the gallery of thumbs.
@@ -50,24 +51,21 @@ export class GalleryComponent implements OnInit, OnChanges {
 
   imageGrid: Image[][] = [];
 
+  size: Size;
   wrapStyle = false;
   widthStyle = '';
   directionStyle: string;
   justifyStyle: string;
 
+  private defaultSize: Size = {width: '50px', height: 'auto'};
+
   // length=-1 means infinity
-  private defaultLayout: LineLayout = new LineLayout({length: -1, iconClass: '', wrap: false}, 'flex-start');
+  private defaultLayout: LineLayout = new LineLayout(this.defaultSize, {length: -1, wrap: false}, 'flex-start');
 
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: this.defaultLayout,
-    size: {
-      width: '50px',
-      height: 'auto'
-    },
-    advanced: {
-      aTags: false
-    }
+    advanced: {aTags: false}
   };
 
   ngOnInit() {
@@ -98,22 +96,30 @@ export class GalleryComponent implements OnInit, OnChanges {
   private initPlainGalleryConfig() {
     const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
 
-    if (!config.layout || !config.layout.breakConfig) {
-      throw new Error('Both layout and breakConfig must be valid');
-    }
-
     if (config.layout instanceof LineLayout) {
       if (config.strategy !== PlainGalleryStrategy.ROW && config.strategy !== PlainGalleryStrategy.COLUMN) {
         throw new Error('LineLayout requires either ROW or COLUMN strategy');
       }
+      if (!config.layout || !config.layout.breakConfig) {
+        throw new Error('Both layout and breakConfig must be valid');
+      }
     }
 
     if (config.layout instanceof GridLayout) {
-      if (config.strategy !== PlainGalleryStrategy.GRID && config.strategy !== PlainGalleryStrategy.ADVANCED_GRID) {
-        throw new Error('GridLayout requires either GRID or ADVANCED_GRID strategy');
+      if (config.strategy !== PlainGalleryStrategy.GRID) {
+        throw new Error('GridLayout requires GRID strategy');
+      }
+      if (!config.layout || !config.layout.breakConfig) {
+        throw new Error('Both layout and breakConfig must be valid');
       }
       // force wrap for grid layout
       config.layout.breakConfig.wrap = true;
+    }
+
+    if (config.layout instanceof AdvancedLayout) {
+      if (config.strategy !== PlainGalleryStrategy.CUSTOM) {
+        throw new Error('AdvancedLayout requires CUSTOM strategy');
+      }
     }
 
     return config;
@@ -126,8 +132,11 @@ export class GalleryComponent implements OnInit, OnChanges {
     this.imageGrid = [];
 
     if (config.layout instanceof LineLayout) {
-      const row: Image[] = this.images.filter((val: Image, i: number) => i < config.layout.breakConfig.length || config.layout.breakConfig.length === -1);
+      const layout: LineLayout = config.layout;
+      const row: Image[] = this.images.filter((val: Image, i: number) => i < layout.breakConfig.length || layout.breakConfig.length === -1);
       this.imageGrid = [row];
+
+      this.size = config.layout.size;
 
       switch (config.strategy) {
         case PlainGalleryStrategy.ROW:
@@ -135,28 +144,31 @@ export class GalleryComponent implements OnInit, OnChanges {
           break;
         case PlainGalleryStrategy.COLUMN:
           this.directionStyle = 'column';
-          this.wrapStyle = config.layout.breakConfig.wrap;
+          this.wrapStyle = layout.breakConfig.wrap;
           break;
       }
-      this.justifyStyle = config.layout.justify;
+      this.justifyStyle = layout.justify;
     }
 
     if (config.layout instanceof GridLayout) {
-      const count: number = Math.ceil(this.images.length / config.layout.breakConfig.length);
+      const layout: GridLayout = config.layout;
+      const count: number = Math.ceil(this.images.length / layout.breakConfig.length);
       let start = 0;
-      let end: number = config.layout.breakConfig.length - 1;
+      let end: number = layout.breakConfig.length - 1;
 
       for (let j = 0; j < count; j++) {
         const row: Image[] = this.images.filter((val: Image, i: number) => i >= start && i <= end);
         this.imageGrid.push(row);
         start = end + 1;
-        end = start + config.layout.breakConfig.length - 1;
+        end = start + layout.breakConfig.length - 1;
       }
 
-      const pixels: number = +(config.size.width.replace('px', ''));
+      this.size = config.layout.size;
 
-      this.widthStyle = ((pixels * config.layout.breakConfig.length) + (pixels / 2)) + 'px';
-      this.wrapStyle = config.layout.breakConfig.wrap;
+      const pixels: number = +(layout.size.width.replace('px', ''));
+
+      this.widthStyle = ((pixels * layout.breakConfig.length) + (pixels / 2)) + 'px';
+      this.wrapStyle = layout.breakConfig.wrap;
 
       this.directionStyle = 'row';
     }

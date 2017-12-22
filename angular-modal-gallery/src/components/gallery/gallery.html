@@ -10,7 +10,7 @@
         <img *ngIf="imgCol && imgCol.modal && imgCol.modal.img"
              [src]="imgCol.plain && imgCol.plain.img ? imgCol.plain.img : imgCol.modal.img"
              class="image"
-             ksSize [sizeConfig]="{width: configPlainGallery.size.width, height: configPlainGallery.size.height}"
+             ksSize [sizeConfig]="{width: size.width, height: size.height}"
              alt="{{getAltDescriptionByIndex(j)}}"
              (click)="showModalGalleryByImage(imgCol)"/>
       </ng-container>
@@ -22,7 +22,7 @@
            href="#"
            class="a-tag-image"
            ksATagBgImage [image]="imgCol" [style]="'50% 50%/cover'"
-           ksSize [sizeConfig]="{width: configPlainGallery.size.width, height: configPlainGallery.size.height}"
+           ksSize [sizeConfig]="{width: size.width, height: size.height}"
            (click)="showModalGallery(j)"></a>
       </ng-template>
 
