@@ -20,6 +20,9 @@ export class SizeDirective implements OnInit, OnChanges {
   }
 
   private applyStyle() {
+    if (!this.sizeConfig) {
+      return;
+    }
     // apply [style.width]
     this.renderer.setStyle(this.el.nativeElement, 'width', this.sizeConfig.width);
     this.renderer.setStyle(this.el.nativeElement, 'height', this.sizeConfig.height);

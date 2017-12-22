@@ -39,20 +39,17 @@ export class AppComponent {
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true),
-    advanced: {aTags: false}
+    layout: new AdvancedLayout(-1, true)
   };
 
   customPlainGalleryColumnConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true),
-    advanced: {aTags: false}
+    layout: new AdvancedLayout(-1, true)
   };
 
   customPlainGalleryRowDescConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({width: '80px', height: '80px'}, {length: 2, wrap: true}, 'flex-start'),
-    advanced: {aTags: false}
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
   };
 
   plainGalleryRow: PlainGalleryConfig = {
@@ -372,19 +369,19 @@ export class AppComponent {
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, new AdvancedLayout(index, true));
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true)});
   }
 
   openImageModalColumn(image: Image) {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, new AdvancedLayout(index, true));
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true)});
   }
 
   openImageModalRowDescription(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, new AdvancedLayout(index, true));
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true)});
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -450,9 +447,9 @@ export class AppComponent {
     console.log('onClose result:' + event.result);
 
     // reset custom plain gallery config
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, new AdvancedLayout(-1, true));
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, new AdvancedLayout(-1, true));
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, new AdvancedLayout(-1, true));
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(-1, true)});
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(-1, true)});
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(-1, true)});
   }
 
   addRandomImage() {

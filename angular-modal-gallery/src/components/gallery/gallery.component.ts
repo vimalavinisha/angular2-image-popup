@@ -82,15 +82,20 @@ export class GalleryComponent implements OnInit, OnChanges {
     const imagesChange: SimpleChange = changes.images;
     const configChange: SimpleChange = changes.plainGalleryConfig;
 
+    // console.log('gallery ngOnChanges called with configChange', configChange);
+
     // I'm using !change.firstChange because the first time will be called both onInit and onChange and I don't
     // want to execute initialization two times.
     if (configChange && !configChange.firstChange &&
       (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))) {
+      // console.log('initializing plain gallery');
       this.configPlainGallery = this.initPlainGalleryConfig();
     }
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
+      // console.log('initializing imageGrid');
       this.initImageGrid();
     }
+    // console.log('gallery ngOnChanges finished');
   }
 
   private initPlainGalleryConfig() {
@@ -173,7 +178,9 @@ export class GalleryComponent implements OnInit, OnChanges {
       this.directionStyle = 'row';
     }
 
-    // console.log('gallery init grid after', this.imageGrid);
+    if (config.layout instanceof AdvancedLayout) {
+      this.imageGrid = [this.images];
+    }
   }
 
   showModalGallery(index: number) {
