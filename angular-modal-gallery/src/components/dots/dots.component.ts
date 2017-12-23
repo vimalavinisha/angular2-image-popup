@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,12 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Image } from '../../interfaces/image.class';
-import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
-import { DotsConfig } from '../../interfaces/dots-config.interface';
+import { Image } from '../../model/image.class';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { DotsConfig } from '../../model/dots-config.interface';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
-import { InternalLibImage } from '../../interfaces/image-internal.class';
+import { InternalLibImage } from '../../model/image-internal.class';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -41,26 +41,26 @@ import { InternalLibImage } from '../../interfaces/image-internal.class';
 })
 export class DotsComponent extends AccessibleComponent implements OnInit {
   /**
-   * Input of type `InternalLibImage` that represent the visible image.
+   * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: InternalLibImage;
   /**
-   * Input of type Array of `InternalLibImage` that represent the model of this library with all images,
+   * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input() images: InternalLibImage[];
   /**
-   * Input of type boolean that it is true if the modal gallery is visible.
+   * Boolean that it is true if the modal gallery is visible.
    * If yes, also this component should be visible.
    */
   @Input() isOpen: boolean;
   /**
-   * Input of type `DotsConfig` to init DotsComponent's features.
+   * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
   @Input() dotsConfig: DotsConfig = {visible: true};
   /**
-   * Input of type `AccessibilityConfig` to init custom accessibility features.
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
   @Input() accessibilityConfig: AccessibilityConfig;

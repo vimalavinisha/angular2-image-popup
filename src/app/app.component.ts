@@ -25,10 +25,9 @@
 import { Component } from '@angular/core';
 
 import {
-  AccessibilityConfig, Action, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy, DotsConfig, GridLayout,
-  Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
+  AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
+  DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
-import { AdvancedLayout } from '../../angular-modal-gallery/src/interfaces/plain-gallery-config.interface';
 
 @Component({
   selector: 'ks-root',
@@ -369,19 +368,19 @@ export class AppComponent {
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true)});
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, {layout: new AdvancedLayout(index, true)});
   }
 
   openImageModalColumn(image: Image) {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true)});
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, {layout: new AdvancedLayout(index, true)});
   }
 
   openImageModalRowDescription(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true)});
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, {layout: new AdvancedLayout(index, true)});
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -445,11 +444,10 @@ export class AppComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-
     // reset custom plain gallery config
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(-1, true)});
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(-1, true)});
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(-1, true)});
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, {layout: new AdvancedLayout(-1, true)});
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, {layout: new AdvancedLayout(-1, true)});
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, {layout: new AdvancedLayout(-1, true)});
   }
 
   addRandomImage() {
@@ -463,14 +461,6 @@ export class AppComponent {
   }
 
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    let currentIndexCustomLayout;
-    if (image) {
-      currentIndexCustomLayout = images.indexOf(image);
-      console.log(`set new currentIndexCustomLayout to ${currentIndexCustomLayout}`);
-    } else {
-      currentIndexCustomLayout = -1;
-      console.log(`reset currentIndexCustomLayout to ${currentIndexCustomLayout}`);
-    }
-    return currentIndexCustomLayout;
+    return image ? images.indexOf(image) : -1;
   }
 }

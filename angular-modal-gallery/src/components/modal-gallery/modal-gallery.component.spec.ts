@@ -32,8 +32,8 @@ import { ExternalUrlButtonDirective } from '../../directives/external-url-button
 import { DownloadButtonDirective } from '../../directives/download-button.directive';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
-import { ButtonsConfig } from '../../interfaces/buttons-config.interface';
-import { KeyboardServiceConfig } from '../../interfaces/keyboard-service-config.interface';
+import { ButtonsConfig } from '../../model/buttons-config.interface';
+import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
 import 'hammerjs';
 import 'mousetrap';
 

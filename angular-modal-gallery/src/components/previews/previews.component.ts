@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { Image } from '../../interfaces/image.class';
-import { PreviewConfig } from '../../interfaces/preview-config.interface';
-import { SlideConfig } from '../../interfaces/slide-config.interface';
-import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
-import { ImageSize } from '../../interfaces/image-size.interface';
+import { Image } from '../../model/image.class';
+import { PreviewConfig } from '../../model/preview-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { InternalLibImage } from '../../interfaces/image-internal.class';
+import { InternalLibImage } from '../../model/image-internal.class';
+import { Size } from '../../model/size.interface';
 
 /**
  * Component with image previews
@@ -43,30 +43,30 @@ import { InternalLibImage } from '../../interfaces/image-internal.class';
 })
 export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
   /**
-   * Input of type `InternalLibImage` that represent the visible image.
+   * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: InternalLibImage;
   /**
-   * Input of type Array of `InternalLibImage` that represent the model of this library with all images,
+   * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input() images: InternalLibImage[];
   /**
-   * Input of type boolean that it is true if the modal gallery is visible.
+   * Boolean that it is true if the modal gallery is visible.
    * If yes, also this component should be visible.
    */
   @Input() isOpen: boolean;
   /**
-   * Input of type `SlideConfig` to get `infinite sliding`.
+   * Object of type `SlideConfig` to get `infinite sliding`.
    */
   @Input() slideConfig: SlideConfig;
   /**
-   * Input of type `PreviewConfig` to init PreviewsComponent's features.
+   * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
    */
   @Input() previewConfig: PreviewConfig;
   /**
-   * Input of type `AccessibilityConfig` to init custom accessibility features.
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
   @Input() accessibilityConfig: AccessibilityConfig;
@@ -74,8 +74,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Output to emit the clicked preview. The payload contains the `InternalLibImage` associated to the clicked preview.
    */
   @Output() clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
+
   /**
-   * Input of type Array of `InternalLibImage` exposed to the template. This field is initialized
+   * Array of `InternalLibImage` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
   previews: InternalLibImage[] = [];
@@ -86,21 +87,21 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   configPreview: PreviewConfig;
 
   /**
-   * Start index of the images Input used to display previews.
+   * Start index of the input images used to display previews.
    */
   start: number;
   /**
-   * End index of the images Input used to display previews.
+   * End index of the input images used to display previews.
    */
   end: number;
 
   /**
-   * Default preview size object
-   * @type ImageSize
+   * Default preview's size object
+   * @type Size
    */
-  private defaultPreviewSize: ImageSize = {height: '50px', width: 'auto'};
+  private defaultPreviewSize: Size = {height: '50px', width: 'auto'};
   /**
-   * Default preview config object
+   * Default preview's config object
    * @type PreviewConfig
    */
   private defaultPreviewConfig: PreviewConfig = {
@@ -108,7 +109,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     number: 3,
     arrows: true,
     clickable: true,
-    alwaysCenter: false,
+    alwaysCenter: false, // TODO still not implemented
     size: this.defaultPreviewSize
   };
 
@@ -139,7 +140,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method to check if an image is active (i.e. a preview image).
-   * @param {InternalLibImage} preview an image to check if it's active or not
+   * @param {InternalLibImage} preview is an image to check if it's active or not
    * @returns {boolean} true if is active, false otherwise
    */
   isActive(preview: InternalLibImage): boolean {
@@ -209,7 +210,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method called by events from both keyboard and mouse on a preview.
-   * This will trigger the clickpreview output with the input preview as payload.
+   * This will trigger the `clickpreview` output with the input preview as its payload.
    * @param {InternalLibImage} preview that triggered this method
    * @param {KeyboardEvent | MouseEvent} event payload
    */

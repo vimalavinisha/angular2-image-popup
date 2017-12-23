@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,17 +23,17 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { Keyboard } from '../../interfaces/keyboard.enum';
-import { Image, ImageModalEvent } from '../../interfaces/image.class';
-import { Action } from '../../interfaces/action.enum';
-import { Description, DescriptionStrategy } from '../../interfaces/description.interface';
-import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
-import { LoadingConfig, LoadingType } from '../../interfaces/loading-config.interface';
-import { SlideConfig } from '../../interfaces/slide-config.interface';
-import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { Keyboard } from '../../model/keyboard.enum';
+import { Image, ImageModalEvent } from '../../model/image.class';
+import { Action } from '../../model/action.enum';
+import { Description, DescriptionStrategy } from '../../model/description.interface';
+import { KeyboardConfig } from '../../model/keyboard-config.interface';
+import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { InternalLibImage } from '../../interfaces/image-internal.class';
+import { InternalLibImage } from '../../model/image-internal.class';
 
 /**
  * Interface to describe the Load Event, used to
@@ -60,16 +60,16 @@ export interface ImageLoadEvent {
 })
 export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges {
   /**
-   * Input of type `InternalLibImage` that represent the visible image.
+   * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input() currentImage: InternalLibImage;
   /**
-   * Input of type Array of `InternalLibImage` that represent the model of this library with all images,
+   * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input() images: InternalLibImage[];
   /**
-   * Input of type boolean that it is true if the modal gallery is visible.
+   * Boolean that it is true if the modal gallery is visible.
    * If yes, also this component should be visible.
    */
   @Input() isOpen: boolean;
@@ -79,7 +79,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input() loadingConfig: LoadingConfig;
   /**
-   * Input of type `SlideConfig` to get `infinite sliding`.
+   * Object of type `SlideConfig` to get `infinite sliding`.
    */
   @Input() slideConfig: SlideConfig;
   /**
@@ -92,7 +92,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input() descriptionConfig: Description;
   /**
-   * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
+   * Object of type `KeyboardConfig` to assign custom keys to both ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
 
@@ -181,8 +181,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const prev: InternalLibImage = simpleChange.previousValue;
     const current: InternalLibImage = simpleChange.currentValue;
 
-    // if was loaded before, but not now
-    if (/*prev && prev.previouslyLoaded && */current && !current.previouslyLoaded) {
+    // if not currently loaded
+    if (current && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
       this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
       this.loading = false;
@@ -258,8 +258,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to get `alt attribute`.
    * `alt` specifies an alternate text for an image, if the image cannot be displayed.
-   * There is a similar version of this method into `gallery.component.ts` that
-   * receives the image index as input.
    * @param {Image} image to get its alt description. If not provided it will be the current image
    * @returns String alt description of the image (or the current image if not provided)
    */

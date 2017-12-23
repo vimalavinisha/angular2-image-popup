@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -27,20 +27,21 @@ import {
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { ButtonEvent, ButtonsConfig } from '../../interfaces/buttons-config.interface';
-import { Image, ImageModalEvent } from '../../interfaces/image.class';
-import { Action } from '../../interfaces/action.enum';
-import { Description } from '../../interfaces/description.interface';
-import { KeyboardConfig } from '../../interfaces/keyboard-config.interface';
-import { LoadingConfig } from '../../interfaces/loading-config.interface';
-import { PreviewConfig } from '../../interfaces/preview-config.interface';
-import { SlideConfig } from '../../interfaces/slide-config.interface';
-import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+
+import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
+import { Image, ImageModalEvent } from '../../model/image.class';
+import { Action } from '../../model/action.enum';
+import { Description } from '../../model/description.interface';
+import { KeyboardConfig } from '../../model/keyboard-config.interface';
+import { LoadingConfig } from '../../model/loading-config.interface';
+import { PreviewConfig } from '../../model/preview-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
-import { DotsConfig } from '../../interfaces/dots-config.interface';
+import { DotsConfig } from '../../model/dots-config.interface';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
-import { InternalLibImage } from '../../interfaces/image-internal.class';
-import { PlainGalleryConfig } from '../../interfaces/plain-gallery-config.interface';
+import { InternalLibImage } from '../../model/image-internal.class';
+import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 
 
 /**
@@ -89,8 +90,7 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Input of type Array of `Image` that represent the model of
-   * this library with all images, thumbs and so on.
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
   @Input() modalImages: Image[];
 
@@ -109,12 +109,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() enableCloseOutside = true;
   /**
-   * Input of type `DotsConfig` to init DotsComponent's features.
+   * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide dots.
    */
   @Input() dotsConfig: DotsConfig;
   /**
-   * Input of type `PreviewConfig` to init PreviewsComponent's features.
+   * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide previews.
    */
   @Input() previewConfig: PreviewConfig;
@@ -124,7 +124,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() loadingConfig: LoadingConfig;
   /**
-   * Input of type `SlideConfig` to init side previews and `infinite sliding`.
+   * Object of type `SlideConfig` to init side previews and `infinite sliding`.
    */
   @Input() slideConfig: SlideConfig = {
     infinite: false,
@@ -143,8 +143,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
   @Input() keyboardConfig: KeyboardConfig;
-
-  // TODO add doc
+  /**
+   * Object of type `PlainGalleryConfig` to configure the plain gallery.
+   */
   @Input() plainGalleryConfig: PlainGalleryConfig;
 
   /**
@@ -230,12 +231,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
     if (plainGalleryConfigChange) {
       // const prevPlainGalleryConfigChange: any = plainGalleryConfigChange.previousValue;
-      const currPlainGalleryConfigChange: any = plainGalleryConfigChange.currentValue;
-      if (currPlainGalleryConfigChange.advanced &&
-          currPlainGalleryConfigChange.advanced.customPlainGallery &&
-          currPlainGalleryConfigChange.advanced.customPlainGallery.modalOpenerByIndex !== -1) {
+      const currPlainGalleryConfigChange: PlainGalleryConfig = plainGalleryConfigChange.currentValue;
+      if (currPlainGalleryConfigChange.layout && currPlainGalleryConfigChange.layout instanceof AdvancedLayout &&
+        currPlainGalleryConfigChange.layout.modalOpenerByIndex !== -1) {
         // console.log('opening modal gallery from custom plain gallery, index: ', currPlainGalleryConfigChange);
-        this.showModalGallery(currPlainGalleryConfigChange.advanced.customPlainGallery.modalOpenerByIndex);
+        this.showModalGallery(currPlainGalleryConfigChange.layout.modalOpenerByIndex);
       }
     }
   }
@@ -254,7 +254,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   // TODO implement on refresh
   /**
    * Method called by the refresh upper button.
-   * @param {ButtonEvent} event
+   * @param {ButtonEvent} event payload
    */
   onRefresh(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
@@ -287,7 +287,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Method called by the delete upper button.
-   * @param {ButtonEvent} event
+   * @param {ButtonEvent} event payload
    */
   onDelete(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
@@ -310,7 +310,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Method called by the navigate upper button.
-   * @param {ButtonEvent} event
+   * @param {ButtonEvent} event payload
    */
   onNavigate(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
@@ -327,7 +327,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Method called by the download upper button.
-   * @param {ButtonEvent} event
+   * @param {ButtonEvent} event payload
    */
   onDownload(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
@@ -339,7 +339,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Method called by the close upper button.
    * @param {ButtonEvent} event payload
-   * @param {Action} action that triggered the close method
+   * @param {Action} action that triggered the close method. `Action.NORMAL` by default
    */
   onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
@@ -364,7 +364,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Method called when you click on an image of your plain (or inline) gallery.
-   * @param index of the clicked image.
+   * @param index of the clicked image
    */
   onShowModalGallery(index: number) {
     this.showModalGallery(index);
@@ -376,7 +376,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * It will also register a new `keyboardService` to catch keyboard's events to download the current
    * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
    * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
-   * @param index of the image to show.
+   * @param index of the image to show
    */
   showModalGallery(index: number) {
     // hides scrollbar
@@ -419,7 +419,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Method called when you click 'outside' (i.e. on the semi-transparent background)
    * to close the modal gallery if `enableCloseOutside` is true.
-   * @param event payload
+   * @param {boolean} event payload. True to close the modal gallery, false otherwise
    */
   onClickOutside(event: boolean) {
     if (event && this.enableCloseOutside) {
@@ -460,7 +460,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Method to download the current image, only if `downloadable` is true.
-   * It contains also a logic to enable downloading feature also for IE11.
+   * It contains also a logic to enable downloading features also for IE11.
    */
   downloadImage() {
     if (!this.downloadable) {
@@ -518,7 +518,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Private method to get the `ButtonEvent` to emit, merging the input `ButtonEvent`
    * with the current image.
    * @param {ButtonEvent} event payload to return
-   * @returns {ButtonEvent} event payload with the current image added
+   * @returns {ButtonEvent} event payload with the current image included
    */
   private getButtonEventToEmit(event: ButtonEvent): ButtonEvent {
     return Object.assign(event, {image: this.currentImage});

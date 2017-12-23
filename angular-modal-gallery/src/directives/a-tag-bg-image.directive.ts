@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges } from '@angular/core';
-import { Image } from '../interfaces/image.class';
+import { Image } from '../model/image.class';
 
 @Directive({
   selector: '[ksATagBgImage]'

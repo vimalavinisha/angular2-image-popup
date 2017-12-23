@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017 Stefano Cappa
+ * Copyright (c) 2017-2018 Stefano Cappa
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,24 @@
 
 export { ModalGalleryModule } from './modal-gallery.module';
 
-export { Action } from './interfaces/action.enum';
-export { Image, PlainImage, ModalImage, ImageModalEvent } from './interfaces/image.class';
-export { Description, DescriptionStrategy } from './interfaces/description.interface';
-export { KeyboardConfig } from './interfaces/keyboard-config.interface';
-export { DotsConfig } from './interfaces/dots-config.interface';
-export { PreviewConfig } from './interfaces/preview-config.interface';
-export { AccessibilityConfig } from './interfaces/accessibility.interface';
+export { Action } from './model/action.enum';
+export { Image, PlainImage, ModalImage, ImageModalEvent } from './model/image.class';
+export { Description, DescriptionStrategy } from './model/description.interface';
+export { KeyboardConfig } from './model/keyboard-config.interface';
+export { DotsConfig } from './model/dots-config.interface';
+export { PreviewConfig } from './model/preview-config.interface';
+export { AccessibilityConfig } from './model/accessibility.interface';
 
-export { Size } from './interfaces/size.interface';
+export { Size } from './model/size.interface';
 
-export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './interfaces/buttons-config.interface';
+export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './model/buttons-config.interface';
 
 export {
   PlainGalleryConfig,
   PlainGalleryLayout,
   LineLayout,
   GridLayout,
+  AdvancedLayout,
   PlainGalleryStrategy,
   BreakConfig
-} from './interfaces/plain-gallery-config.interface';
+} from './model/plain-gallery-config.interface';

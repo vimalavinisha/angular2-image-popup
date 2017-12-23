@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,16 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
-import { Image } from '../../interfaces/image.class';
-import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../interfaces/plain-gallery-config.interface';
-import { Size } from '../../interfaces/size.interface';
+import { Image } from '../../model/image.class';
+import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { Size } from '../../model/size.interface';
 
 /**
  * Component with the gallery of thumbs.
- * In receives an array of Images and a boolean to show/hide
- * the gallery (feature used by imagePointer).
- * Also it emits click events as outputs.
+ * In receives an array of Images, a boolean to show/hide
+ * the gallery (feature used by imagePointer) and a config
+ * object to customize the behaviour of this component.
+ * Also, it emits click events as outputs.
  */
 @Component({
   selector: 'ks-gallery',
@@ -88,14 +89,11 @@ export class GalleryComponent implements OnInit, OnChanges {
     // want to execute initialization two times.
     if (configChange && !configChange.firstChange &&
       (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))) {
-      // console.log('initializing plain gallery');
       this.configPlainGallery = this.initPlainGalleryConfig();
     }
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
-      // console.log('initializing imageGrid');
       this.initImageGrid();
     }
-    // console.log('gallery ngOnChanges finished');
   }
 
   private initPlainGalleryConfig() {
@@ -126,6 +124,8 @@ export class GalleryComponent implements OnInit, OnChanges {
         throw new Error('AdvancedLayout requires CUSTOM strategy');
       }
     }
+
+    // console.log('initPlainGalleryConfig config', config);
 
     return config;
   }

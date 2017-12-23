@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 
 /**
  * Component with the semi-transparent background.
@@ -36,8 +36,8 @@ import { AccessibilityConfig } from '../../interfaces/accessibility.interface';
 })
 export class BackgroundComponent {
   /**
-   * Boolean that it is true if the modal gallery is visible.
-   * If yes, also this component should be visible.
+   * Boolean that it is true if the modal gallery is visible,
+   * so also this component should be visible.
    */
   @Input() isOpen: boolean;
   /**

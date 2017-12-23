@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 import { DIRECTIVES } from './directives/directives';
 import { COMPONENTS, ModalGalleryComponent } from './components/components';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
-import { KeyboardServiceConfig } from './interfaces/keyboard-service-config.interface';
+import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 
 /**
  * Module with `forRoot` method to import it in the root module of your application.
@@ -49,7 +49,7 @@ export class ModalGalleryModule {
         },
         {
           provide: KeyboardService,
-          useFactory: setupRouter,
+          useFactory: setupKeyboardService,
           deps: [KEYBOARD_CONFIGURATION]
         }
       ]
@@ -57,6 +57,11 @@ export class ModalGalleryModule {
   }
 }
 
-export function setupRouter(injector: KeyboardServiceConfig) {
+/**
+ * Function to setup the keyboard service inside the `forRoot` method.
+ * @param {KeyboardServiceConfig} injector is an interface of type `KeyboardServiceConfig` to pass data to KeyboardService
+ * @returns {KeyboardService} an instance of the `KeyboardService`.
+ */
+export function setupKeyboardService(injector: KeyboardServiceConfig): KeyboardService {
   return new KeyboardService(injector);
 }

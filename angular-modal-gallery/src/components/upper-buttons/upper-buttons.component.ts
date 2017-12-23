@@ -24,20 +24,16 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import {
-  ButtonConfig,
-  ButtonEvent,
-  ButtonsConfig,
-  ButtonsStrategy,
-  ButtonType,
-  WHITELIST_BUTTON_TYPES
-} from '../../interfaces/buttons-config.interface';
-import { Image } from '../../interfaces/image.class';
+import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES } from '../../model/buttons-config.interface';
+import { Image } from '../../model/image.class';
 import { AccessibleComponent } from '../accessible.component';
 import { NEXT } from '../../utils/user-input.util';
-import { Action } from '../../interfaces/action.enum';
-import { Size } from '../../interfaces/size.interface';
+import { Action } from '../../model/action.enum';
+import { Size } from '../../model/size.interface';
 
+/**
+ * Internal representation of `ButtonConfig` with an optional `id` field, used by trackId to improve performances.
+ */
 export interface InternalButtonConfig extends ButtonConfig {
   id?: number; // useful only for trackById, not needed by users
 }
@@ -55,11 +51,11 @@ export interface InternalButtonConfig extends ButtonConfig {
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
 
   /**
-   * Input of type `Image` that represent the visible image.
+   * Object of type `Image` that represent the visible image.
    */
   @Input() currentImage: Image;
   /**
-   * Input of type `ButtonsConfig` to init UpperButtonsComponent's features.
+   * Object of type `ButtonsConfig` to init UpperButtonsComponent's features.
    * For instance, it contains an array of buttons.
    */
   @Input() buttonsConfig: ButtonsConfig;
@@ -90,7 +86,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
-   * Input of type Array of `InternalButtonConfig` exposed to the template. This field is initialized
+   * Array of `InternalButtonConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
   buttons: InternalButtonConfig[];
@@ -102,7 +98,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Default button size object
-   * @type ButtonSize
+   * @type Size
    */
   private defaultSize: Size = {height: 'auto', width: '30px'};
 
@@ -207,6 +203,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param {number} index of the button that called this method
    * @param {KeyboardEvent | MouseEvent} event payload
    * @param {Action} action that triggered the source event or `Action.CLICK` if not specified
+   * @throws an error if the button type is unknown
    */
   onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
     if (!event) {
@@ -251,10 +248,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Method used in the template to track ids in ngFor.
    * @param {number} index of the array
    * @param {Image} item of the array
-   * @returns {number} the id of the item
+   * @returns {number} the id of the item or undefined if the item is not valid
    */
-  trackById(index: number, item: InternalButtonConfig) {
-    return item.id;
+  trackById(index: number, item: InternalButtonConfig): number | undefined {
+    return item ? item.id : undefined;
   }
 
   /**
@@ -286,7 +283,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Private method to valid custom buttons received as input.
+   * Private method to validate custom buttons received as input.
    * @param {ButtonConfig[]} buttons config array
    * @returns {ButtonConfig[]} the same input buttons config array
    * @throws an error is exists a button with an unknown type

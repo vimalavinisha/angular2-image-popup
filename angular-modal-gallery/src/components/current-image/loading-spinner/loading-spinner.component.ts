@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { LoadingConfig, LoadingType } from '../../../interfaces/loading-config.interface';
-import { AccessibilityConfig } from '../../../interfaces/accessibility.interface';
+import { LoadingConfig, LoadingType } from '../../../model/loading-config.interface';
+import { AccessibilityConfig } from '../../../model/accessibility.interface';
 
 /**
  * Component with the loading spinner

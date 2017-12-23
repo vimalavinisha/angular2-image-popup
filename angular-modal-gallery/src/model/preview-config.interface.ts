@@ -1,7 +1,7 @@
 /**
  * Interface `PreviewConfig`.
  */
-import { ImageSize } from './image-size.interface';
+import { Size } from './size.interface';
 
 export interface PreviewConfig {
   visible: boolean;
@@ -9,5 +9,5 @@ export interface PreviewConfig {
   arrows?: boolean;
   clickable?: boolean;
   alwaysCenter?: boolean;
-  size?: ImageSize;
+  size?: Size;
 }
