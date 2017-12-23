@@ -416,6 +416,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.show.emit(new ImageModalEvent(event.action, newIndex + 1));
   }
 
+  isPlainGalleryVisible(): boolean {
+    if (this.plainGalleryConfig && this.plainGalleryConfig.layout && this.plainGalleryConfig.layout instanceof AdvancedLayout) {
+      return !this.plainGalleryConfig.layout.hideDefaultPlainGallery;
+    }
+    return true;
+  }
+
   /**
    * Method called when you click 'outside' (i.e. on the semi-transparent background)
    * to close the modal gallery if `enableCloseOutside` is true.
@@ -478,6 +485,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
+   * Method to cleanup resources. In fact, this will reset keyboard's service.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
+   */
+  ngOnDestroy() {
+    this.keyboardService.reset();
+  }
+
+  /**
    * Private method to download the current image for all browsers except for IE11.
    */
   private downloadImageAllBrowsers() {
@@ -504,14 +519,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       };
       req.send();
     }
-  }
-
-  /**
-   * Method to cleanup resources. In fact, this will reset keyboard's service.
-   * This is an Angular's lifecycle hook that is called when this component is destroyed.
-   */
-  ngOnDestroy() {
-    this.keyboardService.reset();
   }
 
   /**
