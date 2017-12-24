@@ -47,6 +47,9 @@
 - update all demos to alpha 4
 - refactor systemjs demo moving html in an external file
 
+### Docs
+- Complete library documentation with typedocs
+
 
 # 5.0.0-alpha.3
 ### Features

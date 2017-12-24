@@ -23,7 +23,8 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 15. `npm install`
 16. `cd ../../..`
 17. `npm run build:all`
-18. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
+18. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`
+19. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
 
 # B. Run systemjs example
 1. `cd examples/systemjs`
@@ -69,7 +70,6 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 
 TODO RESTORE THESE STEPS IN 5.x.x VERSIONS:<br>
 -15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-<br>
--16. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`-
 <br>
 <br>
 <br>
