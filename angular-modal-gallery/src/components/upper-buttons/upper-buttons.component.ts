@@ -98,13 +98,11 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Default button size object
-   * @type Size
    */
   private defaultSize: Size = {height: 'auto', width: '30px'};
 
   /**
    * Default buttons array for standard configuration
-   * @type ButtonConfig[]
    */
   private defaultButtonsDefault: ButtonConfig[] = [{
     className: 'close-image',
@@ -116,7 +114,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Default buttons array for simple configuration
-   * @type ButtonConfig[]
    */
   private simpleButtonsDefault: ButtonConfig[] = [
     {
@@ -131,7 +128,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Default buttons array for advanced configuration
-   * @type ButtonConfig[]
    */
   private advancedButtonsDefault: ButtonConfig[] = [
     {
@@ -146,7 +142,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Default buttons array for full configuration
-   * @type ButtonConfig[]
    */
   private fullButtonsDefault: ButtonConfig[] = [
     {

@@ -97,12 +97,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Default preview's size object
-   * @type Size
    */
   private defaultPreviewSize: Size = {height: '50px', width: 'auto'};
   /**
    * Default preview's config object
-   * @type PreviewConfig
    */
   private defaultPreviewConfig: PreviewConfig = {
     visible: true,

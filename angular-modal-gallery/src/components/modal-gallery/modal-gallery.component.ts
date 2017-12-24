@@ -46,7 +46,6 @@ import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-co
 
 /**
  * Default accessibility configuration.
- * @type AccessibilityConfig
  */
 const defaultAccessibilityConfig: AccessibilityConfig = {
   backgroundAriaLabel: 'Modal gallery full screen background',

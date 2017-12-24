@@ -68,7 +68,6 @@ export class GalleryComponent implements OnInit, OnChanges {
   /**
    * Bi-dimensional array of `Image` object to store images to display as plain gallery.
    * [] by default.
-   * @type {Image[][]}
    */
   imageGrid: Image[][] = [];
   /**
@@ -79,42 +78,35 @@ export class GalleryComponent implements OnInit, OnChanges {
    * Boolean passed as input to `ks-wrap` directive to configure flex-wrap css property.
    * However it's not enough, because you need to limit the width using `widthStyle` public variable.
    * For more info check https://developer.mozilla.org/it/docs/Web/CSS/flex-wrap
-   * @type {boolean}
    */
   wrapStyle = false;
   /**
    * String passed as input to `ks-wrap` directive to set width to be able to force overflow.
    * In this way, `wrapStyle` (flex-wrap css property) will be used as requested.
-   * @type {string}
    */
   widthStyle = '';
   /**
    * String passed as input to `ks-direction` directive to set the flex-direction css property.
    * For more info check https://developer.mozilla.org/it/docs/Web/CSS/flex-direction
-   * @type {string}
    */
   directionStyle: string;
   /**
    * String passed as input to `ks-direction` directive to set the justify-content css property.
    * For more info check https://developer.mozilla.org/it/docs/Web/CSS/justify-content
-   * @type {string}
    */
   justifyStyle: string;
 
   /**
    * Default image size object
-   * @type {Size}
    */
   private defaultSize: Size = {width: '50px', height: 'auto'};
   /**
    * Default layout config object
    * Note that length=-1 means infinity
-   * @type {LineLayout}
    */
   private defaultLayout: LineLayout = new LineLayout(this.defaultSize, {length: -1, wrap: false}, 'flex-start');
   /**
    * Default plain gallery config object
-   * @type {PlainGalleryConfig}
    */
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
