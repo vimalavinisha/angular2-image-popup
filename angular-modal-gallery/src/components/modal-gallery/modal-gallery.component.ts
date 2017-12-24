@@ -364,7 +364,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Method called when you click on an image of your plain (or inline) gallery.
-   * @param index of the clicked image
+   * @param {number} index of the clicked image
    */
   onShowModalGallery(index: number) {
     this.showModalGallery(index);
@@ -376,7 +376,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * It will also register a new `keyboardService` to catch keyboard's events to download the current
    * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
    * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
-   * @param index of the image to show
+   * @param {number} index of the image to show
    */
   showModalGallery(index: number) {
     // hides scrollbar

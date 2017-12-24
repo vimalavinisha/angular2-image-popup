@@ -11,7 +11,8 @@
              [src]="imgCol.plain && imgCol.plain.img ? imgCol.plain.img : imgCol.modal.img"
              class="image"
              ksSize [sizeConfig]="{width: size?.width, height: size?.height}"
-             alt="{{getAltDescriptionByIndex(j)}}"
+             alt="{{getAltDescriptionByImage(imgCol)}}"
+             [tabindex]="0" role="img"
              (click)="showModalGalleryByImage(imgCol)"/>
       </ng-container>
 
@@ -23,6 +24,7 @@
            class="a-tag-image"
            ksATagBgImage [image]="imgCol" [style]="'50% 50%/cover'"
            ksSize [sizeConfig]="{width: size?.width, height: size?.height}"
+           [tabindex]="0"
            (click)="showModalGallery(j)"></a>
       </ng-template>
 

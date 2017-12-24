@@ -42,40 +42,99 @@ import { Size } from '../../model/size.interface';
 })
 export class GalleryComponent implements OnInit, OnChanges {
 
+  /**
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   */
   @Input() images: Image[];
+  /**
+   * Boolean to show/hide plain gallery. If true the plain gallery will be visible, false otherwise.
+   */
   @Input() showGallery: boolean;
+  /**
+   * Object of type `PlainGalleryConfig` to configure the plain gallery.
+   */
   @Input() plainGalleryConfig: PlainGalleryConfig;
 
+  /**
+   * Output to emit an event when an image is changed.
+   */
   @Output() show: EventEmitter<number> = new EventEmitter<number>();
 
+  /**
+   * Object of type `PlainGalleryConfig` to configure this component.
+   */
   configPlainGallery: PlainGalleryConfig;
 
+  /**
+   * Bi-dimensional array of `Image` object to store images to display as plain gallery.
+   * [] by default.
+   * @type {Image[][]}
+   */
   imageGrid: Image[][] = [];
-
+  /**
+   * Size object used in the template to resize images.
+   */
   size: Size;
+  /**
+   * Boolean passed as input to `ks-wrap` directive to configure flex-wrap css property.
+   * However it's not enough, because you need to limit the width using `widthStyle` public variable.
+   * For more info check https://developer.mozilla.org/it/docs/Web/CSS/flex-wrap
+   * @type {boolean}
+   */
   wrapStyle = false;
+  /**
+   * String passed as input to `ks-wrap` directive to set width to be able to force overflow.
+   * In this way, `wrapStyle` (flex-wrap css property) will be used as requested.
+   * @type {string}
+   */
   widthStyle = '';
+  /**
+   * String passed as input to `ks-direction` directive to set the flex-direction css property.
+   * For more info check https://developer.mozilla.org/it/docs/Web/CSS/flex-direction
+   * @type {string}
+   */
   directionStyle: string;
+  /**
+   * String passed as input to `ks-direction` directive to set the justify-content css property.
+   * For more info check https://developer.mozilla.org/it/docs/Web/CSS/justify-content
+   * @type {string}
+   */
   justifyStyle: string;
 
+  /**
+   * Default image size object
+   * @type {Size}
+   */
   private defaultSize: Size = {width: '50px', height: 'auto'};
-
-  // length=-1 means infinity
+  /**
+   * Default layout config object
+   * Note that length=-1 means infinity
+   * @type {LineLayout}
+   */
   private defaultLayout: LineLayout = new LineLayout(this.defaultSize, {length: -1, wrap: false}, 'flex-start');
-
+  /**
+   * Default plain gallery config object
+   * @type {PlainGalleryConfig}
+   */
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: this.defaultLayout,
     advanced: {aTags: false}
   };
 
+  /**
+   * Method ´ngOnInit´ to init both `configPlainGallery` calling `initPlainGalleryConfig()`
+   * and `imageGrid invoking `initImageGrid()`.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
+   */
   ngOnInit() {
     this.configPlainGallery = this.initPlainGalleryConfig();
     this.initImageGrid();
   }
 
   /**
-   * Method ´ngOnChanges´ to update `imageGrid`, `configPlainGallery` and other stuff.
+   * Method ´ngOnChanges´ to update both `imageGrid` and`configPlainGallery`.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
@@ -83,12 +142,11 @@ export class GalleryComponent implements OnInit, OnChanges {
     const imagesChange: SimpleChange = changes.images;
     const configChange: SimpleChange = changes.plainGalleryConfig;
 
-    // console.log('gallery ngOnChanges called with configChange', configChange);
-
     // I'm using !change.firstChange because the first time will be called both onInit and onChange and I don't
     // want to execute initialization two times.
     if (configChange && !configChange.firstChange &&
       (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))) {
+
       this.configPlainGallery = this.initPlainGalleryConfig();
     }
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
@@ -96,7 +154,12 @@ export class GalleryComponent implements OnInit, OnChanges {
     }
   }
 
-  private initPlainGalleryConfig() {
+  /**
+   * Private method to build and return a `PlainGalleryConfig` object, proving also default values.
+   * @throws an Error if layout and strategy aren't compatible
+   * @returns {PlainGalleryConfig} the plain gallery configuration
+   */
+  private initPlainGalleryConfig(): PlainGalleryConfig {
     const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
 
     if (config.layout instanceof LineLayout) {
@@ -124,12 +187,13 @@ export class GalleryComponent implements OnInit, OnChanges {
         throw new Error('AdvancedLayout requires CUSTOM strategy');
       }
     }
-
-    // console.log('initPlainGalleryConfig config', config);
-
     return config;
   }
 
+  /**
+   * Private method to init both `imageGrid` and other style variables,
+   * based on the layout type.
+   */
   private initImageGrid() {
     const config: PlainGalleryConfig = this.configPlainGallery;
 
@@ -183,35 +247,60 @@ export class GalleryComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Method called when you click on an image of the plain (or inline) gallery.
+   * This will emit the show event with the index number as payload.
+   * @param {number} index of the clicked image
+   */
   showModalGallery(index: number) {
     this.show.emit(index);
   }
 
+  /**
+   * Method called when you click on an image of the plain (or inline) gallery.
+   * This will emit the show event with the image as payload.
+   * @param {Image} img is the Image to show
+   */
   showModalGalleryByImage(img: Image) {
     const index: number = this.images.findIndex((val: Image) => val.id === img.id);
     this.showModalGallery(index);
   }
 
   /**
-   * Method to get `alt attribute`.
-   * `alt` specifies an alternate text for an image, if the image cannot be displayed.
-   * There is a similar version of this method into `modal-gallery.component.ts` that
-   * receives an Image as input.
-   * @param index Number that represents the image index.
+   * Method to get the index of an image.
+   * @param {Image} image to get the index, or the visible image, if not passed
+   * @param {Image[]} arrayOfImages to search the image within it
+   * @returns {number} the index of the image
    */
-  getAltDescriptionByIndex(index: number) {
-    if (!this.images) {
-      return '';
+  getIndex(image: Image, arrayOfImages: Image[] = this.images): number {
+    // id is mandatory. You can use either numbers or strings.
+    // If the id is 0, I shouldn't throw an error.
+    if (!image || (!image.id && image.id !== 0)) {
+      throw new Error(`Image 'id' is mandatory`);
     }
-
-    const image: Image = this.images[index];
-    if (!image || !image.modal || !image.modal.description) {
-      return `Image ${index}`;
-    }
-    return image.modal.description;
+    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
-  trackById(index: number, item: Image) {
+  /**
+   * Method to get `alt attribute`.
+   * `alt` specifies an alternate text for an image, if the image cannot be displayed.
+   * @param {Image} image to get its alt description. If not provided it will be the current image
+   * @returns String alt description of the image (or the current image if not provided)
+   */
+  getAltDescriptionByImage(image: Image): string {
+    if (!image) {
+      return '';
+    }
+    return image.modal && image.modal.description ? image.modal.description : `Image ${this.getIndex(image)}`;
+  }
+
+  /**
+   * Method used in the template to track ids in ngFor.
+   * @param {number} index of the array
+   * @param {Image} item of the array
+   * @returns {number} the id of the item
+   */
+  trackById(index: number, item: Image): number {
     return item.id;
   }
 }
