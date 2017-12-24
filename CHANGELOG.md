@@ -43,7 +43,6 @@
     hideDefaultPlainGallery: boolean  // set to true to hide the defaut gallery (prevent multiple plain galleries)
   }
   ```
-  
 
 ### Bugfixes
 - central image now shown on Microsoft Edge Desktop #108
