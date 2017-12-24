@@ -10,28 +10,40 @@
 - define APIs for plain gallery:
   ```
   PlainGalleryConfig = {
-    strategy: ENUM of type PlainGalleryStrategy (ROW, COLUM, GRID...)
-    layout: {  // PlainGalleryLayout type that can be LineLayout or GridLayout
-      breakConfig: {
-        length: number,  //  number of images to show
-        iconClass: string, // still not implemented (and probably I'll remove it)
-        wrap: boolean // refers to the [wrap property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-4)
-      },
-      justify: string // refers to the [justify property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-6)
-    },
-    size: {
-      width: string, // it can be '50px', percentage, 'auto' and so on
-      height: string // the same for width
-    },
+    strategy: ENUM of type PlainGalleryStrategy (ROW, COLUM, GRID, CUSTOM)
+    layout: // PlainGalleryLayout type that can be either LineLayout, GridLayout or AdvancedLayout
     advanced?: AdvancedConfig {
-      aTags: boolean, // images will be shown as <a> tags with background instead of <img>
-      customPlainGallery: { // to create a custom plain gallery
-        modalOpenerByIndex: number, // index of the image to open
-        hideDefaultPlainGallery: boolean  // set to true to hide the defaut gallery (prevent multiple plain galleries)
-      }
+      aTags: boolean // images will be shown as <a> tags with background instead of <img>
     }
   }
+  
+  Size = {
+    width: string, // it can be '50px', percentage, 'auto' and so on
+    height: string // the same for width
+  }
+  
+  BreakConfig = {
+    length: number,  //  number of images to show
+    wrap: boolean // refers to the [wrap property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-4)
+  }
+  
+  LineLayout = {
+    breakConfig: BreakConfig;
+    justify: string; string // refers to the [justify property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-6)
+    size: Size;
+  }
+  
+  GridLayout = {
+    breakConfig: BreakConfig;
+    size: Size;
+  }
+    
+  AdvancedLayout = {
+    modalOpenerByIndex: number, // index of the image to open
+    hideDefaultPlainGallery: boolean  // set to true to hide the defaut gallery (prevent multiple plain galleries)
+  }
   ```
+  
 
 ### Bugfixes
 - central image now shown on Microsoft Edge Desktop #108
