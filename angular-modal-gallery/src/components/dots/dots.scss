@@ -28,6 +28,9 @@ $dot-width: 10px;
 $dot-height: 10px;
 $dot-radius: 5px;
 $dot-side-margin: 4px;
+$dot-opacity: .5;
+$dot-hover-opacity: .9;
+$dot-active-opacity: .9;
 $fade-in-time: .8s;
 
 @mixin dot($color, $width, $height, $side-margin, $radius) {
@@ -50,10 +53,10 @@ $fade-in-time: .8s;
 
     //animation: fadein-semi-visible05 $fade-in-time;
     cursor: pointer;
-    opacity: .5;
+    opacity: $dot-opacity;
 
     &:hover {
-      opacity: .9;
+      opacity: $dot-hover-opacity;
       transition: all .5s ease;
       transition-property: opacity;
     }
@@ -61,7 +64,7 @@ $fade-in-time: .8s;
     &.active {
       //animation: fadein-semi-visible09 $fade-in-time;
       cursor: pointer;
-      opacity: .9;
+      opacity: $dot-active-opacity;
     }
   }
 }

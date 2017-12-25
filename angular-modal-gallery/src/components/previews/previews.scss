@@ -28,6 +28,10 @@ $container-margin-bottom: 15px;
 $preview-image-fade-in-time: .8s;
 $preview-image-side-margin: 2px;
 $preview-container-fade-in-time: .8s;
+$preview-image-opacity: .7;
+$preview-image-hover-opacity: 1;
+$preview-image-active-opacity: 1;
+$preview-image-height: 50px;
 
 $nav-color: #919191;
 $nav-animation-time: 1s;
@@ -67,17 +71,17 @@ $nav-side-margin: 10px;
       cursor: pointer;
       margin-left: $preview-image-side-margin;
       margin-right: $preview-image-side-margin;
-      opacity: .7;
-      height: 50px;
+      opacity: $preview-image-opacity;
+      height: $preview-image-height;
       //animation: fadein-semi-visible08 $preview-image-fade-in-time;
 
       &.active {
-        opacity: 1;
+        opacity: $preview-image-hover-opacity;
         //animation: fadein-visible $preview-image-fade-in-time;
       }
 
       &:hover {
-        opacity: 1;
+        opacity: $preview-image-active-opacity;
         transition: all .5s ease;
         transition-property: opacity;
       }
