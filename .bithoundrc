@@ -1,11 +1,11 @@
 {
   "ignore": [
     "**/node_modules/**",
-    "**/**-min-**",
-    "**/**-min.**",
-    "**/**.min.**",
-    "bower_components/**",
     "dist/**",
+    "coverage/**",
+    ".scannerwork/**",
+    "reports/**",
+    "angular-modal-gallery/**",
     "docs/**"
   ],
   "test": [

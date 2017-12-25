@@ -24,17 +24,24 @@ engines:
     enabled: false
 ratings:
   paths:
-  - src/**
+  - libs/**
   - "**.css"
   - "**.scss"
 exclude_paths:
-- "demo/**/*.*"
-- "dist"
-- "bundle"
-- "aot"
-- ".awcache"
+- "angular-modal-gallery"
+- "*.ngfactory.ts"
+- "*.ngsummary.json"
+- "**/dist"
+- "**/aot"
+- "**/.awcache"
+- "**/dll"
+- "angular-modal-gallery"
+- "src/angular-modal-gallery/"
 - "docs"
+- "coverage"
+- ".scannerwork/"
+- "/reports/"
+- "examples/**/*.*"
 - "**/*.log"
-- "e2e/"
-- "rollup.config.js"
+- "**/e2e/"
 - "src/**/*.spec.ts"
