@@ -55,7 +55,7 @@ init:
 #shallow_clone: true  # default is false
 
 # set clone depth
-clone_depth: 5                      # clone entire repository history if not defined
+clone_depth: 5  # clone entire repository history if not defined
 
 # environment variables
 environment:
