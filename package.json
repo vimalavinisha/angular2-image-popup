@@ -16,6 +16,9 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run build:lib && ng serve",
+    "serve": "npm run serve:dev",
+    "serve:dev": "ng serve --dev --show-circular-dependencies",
+    "serve:prod": "ng serve --prod  --aot --build-optimizer=true",
     "build": "npm run build:lib && npm run build:main",
     "build:lib": "ng-packagr -p libs/angular-modal-gallery/package.json",
     "build:main": "npm run build:main:dev",
