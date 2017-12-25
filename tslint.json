@@ -1,6 +1,7 @@
 {
   "rulesDirectory": [
-    "node_modules/codelyzer"
+    "node_modules/codelyzer",
+    "node_modules/@nrwl/schematics/src/tslint"
   ],
   "rules": {
     "arrow-return-shorthand": true,
@@ -11,11 +12,15 @@
       "check-space"
     ],
     "curly": true,
+    "deprecation": {
+      "severity": "warn"
+    },
     "eofline": true,
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs"
+      "rxjs",
+      "rxjs/Rx"
     ],
     "import-spacing": true,
     "indent": [
@@ -26,7 +31,7 @@
     "label-position": true,
     "max-line-length": [
       true,
-      155
+      240
     ],
     "member-access": false,
     "member-ordering": [
@@ -54,7 +59,7 @@
     "no-debugger": true,
     "no-duplicate-super": true,
     "no-empty": false,
-    "no-empty-interface": false,
+    "no-empty-interface": true,
     "no-eval": true,
     "no-inferrable-types": [
       true,
@@ -117,15 +122,16 @@
     "directive-selector": [
       true,
       "attribute",
-      "ks",
+      "app",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "ks",
+      "app",
       "kebab-case"
     ],
+    "no-output-on-prefix": true,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -134,9 +140,6 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "no-access-missing-member": true,
-    "templates-use-public": true,
-    "invoke-injectable": true
+    "directive-class-suffix": true
   }
 }

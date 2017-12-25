@@ -1,13 +1,18 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@nrwl/schematics/src/schema.json",
   "project": {
-    "name": "angular-modal-gallery-main-demo"
+    "name": "angular-modal-gallery",
+    "npmScope": "angular-modal-gallery",
+    "latestMigration": "20171219-add-affected-commands"
+  },
+  "warnings": {
+    "typescriptMismatch": false
   },
   "apps": [
     {
-      "root": "src",
-      "name": "dev",
-      "outDir": "dist/app",
+      "name": "main",
+      "root": "apps/main/src",
+      "outDir": "dist/apps/main",
       "assets": [
         "assets",
         "favicon.ico"
@@ -15,9 +20,9 @@
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
-      "test": "test.ts",
+      "test": "../../../test.js",
       "tsconfig": "tsconfig.app.json",
-      "testTsconfig": "tsconfig.spec.json",
+      "testTsconfig": "../../../tsconfig.spec.json",
       "prefix": "app",
       "styles": [
         "styles.scss"
@@ -30,48 +35,10 @@
       }
     },
     {
-      "root": "src",
-      "name": "packages",
-      "outDir": "dist/app",
-      "assets": [
-        "assets",
-        "favicon.ico"
-      ],
-      "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.packages.json",
-      "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
-      "styles": [
-        "styles.css"
-      ],
-      "scripts": [],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
-      }
-    }
-  ],
-  "e2e": {
-    "protractor": {
-      "config": "./protractor.conf.js"
-    }
-  },
-  "lint": [
-    {
-      "project": "src/tsconfig.app.json",
-      "exclude": "**/node_modules/**"
-    },
-    {
-      "project": "src/tsconfig.spec.json",
-      "exclude": "**/node_modules/**"
-    },
-    {
-      "project": "e2e/tsconfig.e2e.json",
-      "exclude": "**/node_modules/**"
+      "name": "angular-modal-gallery",
+      "root": "libs/angular-modal-gallery/src",
+      "test": "../../../test.js",
+      "appRoot": ""
     }
   ],
   "test": {
@@ -79,7 +46,34 @@
       "config": "./karma.conf.js"
     }
   },
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "./tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "apps/main/src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "apps/main/e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
   "defaults": {
+    "schematics": {
+      "collection": "@nrwl/schematics",
+      "postGenerate": "npm run format",
+      "newProject": [
+        "app",
+        "lib"
+      ]
+    },
     "styleExt": "scss",
     "component": {}
   }

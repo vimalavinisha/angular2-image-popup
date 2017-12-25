@@ -26,12 +26,40 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
+
+const { makeSureNoAppIsSelected } = require('@nrwl/schematics/src/utils/cli-config-utils');
+// Nx only supports running unit tests for all apps and libs.
+makeSureNoAppIsSelected();
+
+
 const os = require('os');
 
 console.log(`Starting Karma with isCI=${!!isCI()}`);
 
 function isCI() {
   return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS;
+}
+
+function getBrowsers() {
+  if (process.env.CI) {
+    if (process.env.APPVEYOR) { // variable defined by APPVEYOR itself
+      // only for AppVeyor
+      return ['Chrome', 'Firefox' /*, 'IE'*/];
+    } else if (process.env.TRAVIS) { // variable defined by TRAVIS itself
+      return ['ChromeHeadless', 'Chrome', 'Firefox'];
+    } else if (process.env.CIRCLECI) { // variable defined by CIRCLECI itself
+      return ['ChromeHeadless', 'Chrome', 'Firefox'];
+    }
+  } else {
+    switch(os.platform()) {
+      case 'win32': // Windows
+        return ['ChromeHeadless', 'Chrome', 'Firefox'/*,'IE','Edge'*/];
+      case 'darwin': // macOS
+        return ['ChromeHeadless', 'Chrome', 'Firefox', 'Safari'];
+      default: // other (linux, freebsd, openbsd, sunos, aix)
+        return ['ChromeHeadless', 'Chrome', 'Firefox'];
+    }
+  }
 }
 
 module.exports = function (config) {
@@ -48,15 +76,6 @@ module.exports = function (config) {
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    files: [
-      { pattern: './src/test.ts', watched: false },
-    ],
-    preprocessors: {
-      './src/test.ts': ['@angular/cli']
-    },
-    mime: {
-      'text/x-typescript': ['ts','tsx']
-    },
     coverageIstanbulReporter: {
       reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
@@ -64,28 +83,107 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    reporters: config.angularCli && config.angularCli.codeCoverage
-      ? ['progress', 'coverage-istanbul']
-      : ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
-    singleRun: false,
+    browsers: ['Chrome'],
+    singleRun: false
 
-    customLaunchers: {
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: [
-          '--no-sandbox',
-          // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
-          '--headless',
-          '--disable-gpu',
-          // Without a remote debugging port, Google Chrome exits immediately.
-          ' --remote-debugging-port=9222',
-        ]
-      }
-    }
+
+    // basePath: '',
+    // frameworks: ['jasmine', '@angular/cli'],
+    // plugins: [
+    //   require('karma-jasmine'),
+    //   require('karma-chrome-launcher'),
+    //   require('karma-edge-launcher'),
+    //   require('karma-firefox-launcher'),
+    //   require('karma-ie-launcher'),
+    //   require('karma-safari-launcher'),
+    //   require('karma-coverage'),
+    //   require('karma-jasmine-diff-reporter'),
+    //   require('karma-jasmine-html-reporter'),
+    //   require('karma-mocha-reporter'),
+    //   require('karma-remap-coverage'),
+    //   // require('karma-sonarqube-unit-reporter'),
+    //   require('karma-coverage-istanbul-reporter'),
+    //   require('@angular/cli/plugins/karma')
+    // ],
+    // client:{
+    //   clearContext: false // leave Jasmine Spec Runner output visible in browser
+    // },
+    // coverageIstanbulReporter: {
+    //   reports: [ 'html', 'lcovonly', 'json' ],
+    //   fixWebpackSourcePaths: true
+    // },
+    // angularCli: {
+    //   environment: 'dev'
+    // },
+    //
+    // // TODO restore something like reporters: config.angularCli && config.angularCli.codeCoverage
+    // // ? ['progress', 'coverage-istanbul']
+    // // : ['progress', 'kjhtml'],
+    // reporters: ['progress', 'mocha', 'kjhtml', 'coverage',
+    //   'remap-coverage'/*, 'sonarqubeUnit'*/],
+    // port: 9876,
+    // colors: true,
+    // logLevel: config.LOG_INFO,
+    // autoWatch: true,
+    // browsers: getBrowsers(),
+    // singleRun: false,
+    //
+    // coverageReporter: {
+    //   type: 'in-memory'
+    // },
+    //
+    // // sonarQubeUnitReporter: {
+    // //   sonarQubeVersion: '5.x',
+    // //   outputFile: 'reports/ut_report.xml',
+    // //   overrideTestDescription: true,
+    // //   testPath: 'libs/angular-modal-gallery',
+    // //   testFilePattern: '.spec.ts',
+    // //   useBrowserName: false
+    // // },
+    // //
+    // // remapCoverageReporter: {
+    // //   'text-summary': null,
+    // //   'json': './coverage/coverage.json',
+    // //   'html': './coverage/html',
+    // //   'lcovonly': './coverage/lcov.info'
+    // // },
+    //
+    // jasmineDiffReporter: {
+    //   multiline: true
+    // },
+    //
+    // customLaunchers: {
+    //   ChromeHeadless: {
+    //     base: 'Chrome',
+    //     flags: [
+    //       '--no-sandbox',
+    //       // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+    //       '--headless',
+    //       '--disable-gpu',
+    //       // Without a remote debugging port, Google Chrome exits immediately.
+    //       ' --remote-debugging-port=9222',
+    //     ]
+    //   }
+    // },
+    //
+    // // For AppVeyor and TravisCI to prevent timeouts
+    // browserNoActivityTimeout: 60000,
+    //
+    // //
+    // // files: [
+    // //   { pattern: './src/test.ts', watched: false },
+    // // ],
+    // // preprocessors: {
+    // //   './src/test.ts': ['@angular/cli']
+    // // },
+    // // mime: {
+    // //   'text/x-typescript': ['ts','tsx']
+    // // },
+
   });
 };
