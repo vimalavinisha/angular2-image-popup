@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,37 @@
  SOFTWARE.
  */
 
+/**
+ * Keycode of the keyboard's key `space`
+ */
 export const SPACE_KEY = 32;
+/**
+ * Keycode of the keyboard's key `enter`
+ */
 export const ENTER_KEY = 13;
+/**
+ * Keycode of the main mouse button
+ */
 export const MOUSE_MAIN_BUTTON_CLICK = 0;
 
+/**
+ * Const NEXT
+ */
 export const NEXT = 1;
+/**
+ * Const PREV
+ */
 export const PREV = -1;
+/**
+ * Const NOTHING to represents a situation when it isn't both NEXT and PREV
+ */
 export const NOTHING = 0;
 
+/**
+ * Const to represent the right direction
+ */
 export const DIRECTION_RIGHT = 'right';
+/**
+ * Const to represent the left direction
+ */
 export const DIRECTION_LEFT = 'left';

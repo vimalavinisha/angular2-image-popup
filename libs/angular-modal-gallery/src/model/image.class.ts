@@ -1,10 +1,33 @@
+/*
+ The MIT License (MIT)
+
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+
 import { Action } from './action.enum';
 import { Size } from './size.interface';
 
 /**
- * Class `Image` that represents an Image with both images and thumb paths,
- * also with a description and an external url.
- * The only required value is the image path `img`.
+ * Class `Image` that represents an image with both `modal` and `plain` configurations.
+ * Both image `id` and `modal` are mandatory, instead `plain` is optional.
  */
 export class Image {
   id: number;
@@ -19,6 +42,10 @@ export class Image {
   }
 }
 
+/**
+ * Interface `ImageData` to configure an image, but it isn't used directly.
+ * Please, refers to `PlainImage` or `ModalImage`.
+ */
 export interface ImageData {
   img: string;
   description?: string;
@@ -29,12 +56,18 @@ export interface ImageData {
   size?: Size;
 }
 
-export interface PlainImage extends ImageData {}
-
+/**
+ * Interface `ModalImage` to configure the modal image.
+ */
 export interface ModalImage extends ImageData {}
 
 /**
- * Class `ImageModalEvent` that represents the Event after an action `action` and its result.
+ * Interface `PlainImage` to configure the plain image.
+ */
+export interface PlainImage extends ImageData {}
+
+/**
+ * Class `ImageModalEvent` that represents the event payload with the result and the triggered action.
  */
 export class ImageModalEvent {
   action: Action;

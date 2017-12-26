@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,26 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
 
 /**
  * Directive to close the modal gallery clicking on the semi-transparent background.
- * In fact, it listens for a click on the element with id="ng-gallery-content" and it emits
+ * In fact, it listens for a click on all elements that aren't 'inside' and it emits
  * an event using `@Output clickOutside`.
  */
 @Directive({
-  selector: '[click-outside]'
+  selector: '[ksClickOutside]'
 })
 export class ClickOutsideDirective {
+  /**
+   * Boolean to enable this directive.
+   */
   @Input() clickOutsideEnable: boolean;
-
+  /**
+   * Output to emit an event if the clicked element class doesn't contain 'inside' or it is 'hidden'. The payload is a boolean.
+   */
   @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  /**
+   * Method called by Angular itself every click thanks to `@HostListener`.
+   * @param {MouseEvent} event payload received evey click
+   */
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     event.stopPropagation();
@@ -44,7 +53,7 @@ export class ClickOutsideDirective {
     const targetElement: any = event.target;
 
     if (!this.clickOutsideEnable || !targetElement) {
-      return false;
+      return;
     }
 
     const isInside = targetElement.className && targetElement.className.startsWith('inside');

@@ -60,7 +60,7 @@ export class ModalGalleryModule {
 /**
  * Function to setup the keyboard service inside the `forRoot` method.
  * @param {KeyboardServiceConfig} injector is an interface of type `KeyboardServiceConfig` to pass data to KeyboardService
- * @returns {KeyboardService} an instance of the `KeyboardService`.
+ * @returns {KeyboardService} an instance of the `KeyboardService`
  */
 export function setupKeyboardService(injector: KeyboardServiceConfig): KeyboardService {
   return new KeyboardService(injector);

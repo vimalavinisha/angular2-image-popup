@@ -22,6 +22,11 @@
  * SOFTWARE.
  */
 
+/**
+ * Index file to export all interfaces, enums, classes and so on.
+ * This file represents the public apis.
+ */
+
 export { ModalGalleryModule } from './src/modal-gallery.module';
 
 export { Action } from './src/model/action.enum';

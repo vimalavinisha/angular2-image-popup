@@ -9,7 +9,7 @@
 <div id="modal-gallery-wrapper" *ngIf="opened"
      [attr.aria-label]="accessibilityConfig.modalGalleryContentAriaLabel"
      [title]="accessibilityConfig.modalGalleryContentTitle"
-     click-outside [clickOutsideEnable]="enableCloseOutside"
+     ksClickOutside [clickOutsideEnable]="enableCloseOutside"
      (clickOutside)="onClickOutside($event)">
 
   <div id="flex-min-height-ie-fix">
