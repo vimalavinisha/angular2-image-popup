@@ -23,8 +23,7 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy,
-  OnInit, Output, PLATFORM_ID, SimpleChange, SimpleChanges,
+  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChange, SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -63,6 +62,9 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
   mainPrevImageTitle: 'Previous image',
   mainNextImageAriaLabel: 'Next image',
   mainNextImageTitle: 'Next image',
+
+  // plainContainerAriaLabel: '',
+  // plainContainerTitle: '',
 
   dotsContainerAriaLabel: 'Image navigation dots',
   dotsContainerTitle: '',
