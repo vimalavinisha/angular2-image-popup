@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 
-# build documentation
+# build typedoc documentation
 echo "npm run docs on $TRAVIS_OS_NAME"
-npm run docs
+npm run docs:typedoc
 
-# build documentation
+# build compodoc documentation
 echo "npm run compodoc on $TRAVIS_OS_NAME"
-npm run compodoc
+npm run docs:compodoc
 
-# FIXME
-## send test coverage to codeclimate.com
-#echo "npm run codeclimate on $TRAVIS_OS_NAME"
-#npm run codeclimate
-#
-## send test coverage to coveralls.io
-#echo "npm run coveralls on $TRAVIS_OS_NAME"
-#npm run coveralls
+# send test coverage to codeclimate.com
+echo "npm run codeclimate on $TRAVIS_OS_NAME"
+npm run codeclimate
+
+# send test coverage to coveralls.io
+echo "npm run coveralls on $TRAVIS_OS_NAME"
+npm run coveralls

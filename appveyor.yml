@@ -213,10 +213,10 @@ deploy_script:
 
 # on successful build
 on_success:
-  - npm run docs
-  - npm run compodoc
-#  - codeclimate-test-reporter < .\coverage\lcov.info  # FIXME
-#  - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info # FIXME
+  - npm run docs:typedoc
+  - npm run docs:compodoc
+  - codeclimate-test-reporter < .\coverage\lcov.info
+  - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info
 
 # on build failure
 #on_failure:

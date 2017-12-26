@@ -113,10 +113,10 @@ jobs:
       # docs
       - run:
           name: run-docs
-          command: npm run docs
+          command: npm run docs:typedoc
       - run:
           name: run-compodoc
-          command: npm run compodoc
+          command: npm run docs:compodoc
       - run:
           name: run-codeclimate
           command: npm run codeclimate
