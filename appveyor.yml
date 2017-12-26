@@ -136,8 +136,9 @@ build_script:
   - cd examples/universal
   - npm install
   - cd ../..
-  # build library
+  # build and test library
   - npm run build:all
+  - npm run test:ci
   # build main angular-cli with ng-packagr
   - npm run build:dev
   - npm run build:prod

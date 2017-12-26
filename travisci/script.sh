@@ -17,9 +17,9 @@ cd examples/universal
 npm install
 cd ../..
 
-echo "npm run build on $TRAVIS_OS_NAME"
+echo "npm run build and test library on $TRAVIS_OS_NAME"
 npm run build:all
-# npm test # FIXME
+npm run test:ci
 
 echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
 npm run build:dev
