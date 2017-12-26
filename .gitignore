@@ -41,14 +41,13 @@ Thumbs.db
 **/aot
 **/.awcache
 **/dll
-angular-modal-gallery
-src/angular-modal-gallery/
+angular-modal-gallery/
 
 # Docs
-docs
+docs/
 
 # Tests
-coverage
+coverage/
 
 # SonarQube
 .scannerwork/

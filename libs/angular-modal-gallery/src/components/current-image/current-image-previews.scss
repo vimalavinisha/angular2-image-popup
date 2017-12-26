@@ -1,0 +1,77 @@
+/*
+ The MIT License (MIT)
+
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+
+$preview-img-normal-opacity: .5;
+$preview-img-hover-opacity: 1;
+
+/** Mobile **/
+/** Tablet **/
+@media only screen and (max-width: 1024px), only screen and (max-device-width: 1024px) {
+  .current-image-previous {
+    display: none;
+  }
+
+  .current-image-next {
+    display: none;
+  }
+}
+
+/** Desktops or greater **/
+@media only screen and (min-device-width: 1025px) {
+
+  .current-image-preview {
+    height: auto;
+    cursor: pointer;
+    opacity: $preview-img-normal-opacity;
+    animation: fadein-semi-visible05 .8s;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+
+    &:hover {
+      opacity: $preview-img-hover-opacity;
+      transition-property: opacity;
+      transition: all .5s ease;
+    }
+  }
+
+  .current-image-previous {
+    @extend .current-image-preview;
+  }
+
+  .current-image-next {
+    @extend .current-image-preview;
+  }
+}
+
+@mixin fadein($opacity-from, $opacity-to) {
+  from {
+    opacity: $opacity-from
+  }
+  to {
+    opacity: $opacity-to
+  }
+}
+
+@keyframes fadein-semi-visible05 {
+  @include fadein(0, .5);
+}
