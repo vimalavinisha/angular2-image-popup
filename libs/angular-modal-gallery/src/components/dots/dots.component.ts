@@ -23,12 +23,11 @@
  */
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Image } from '../../model/image.class';
-import { AccessibilityConfig } from '../../model/accessibility.interface';
-import { DotsConfig } from '../../model/dots-config.interface';
+
 import { AccessibleComponent } from '../accessible.component';
-import { NEXT } from '../../utils/user-input.util';
-import { InternalLibImage } from '../../model/image-internal.class';
+
+import { AccessibilityConfig, DotsConfig, Image, InternalLibImage } from '../../model';
+import { getIndex, NEXT } from '../../utils';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -58,7 +57,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
-  @Input() dotsConfig: DotsConfig = { visible: true };
+  @Input() dotsConfig: DotsConfig = {visible: true};
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
@@ -82,7 +81,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultConfig: DotsConfig = { visible: true };
+    const defaultConfig: DotsConfig = {visible: true};
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
   }
 
@@ -92,22 +91,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * @returns {boolean} true if is active, false otherwise
    */
   isActive(index: number): boolean {
-    return index === this.getIndex();
-  }
-
-  /**
-   * Method to get the index of an image.
-   * @param {Image} image to get the index, or the visible image, if not passed
-   * @param {Image[]} arrayOfImages to search the image within it
-   * @returns {number} the index of the image
-   */
-  getIndex(image: Image = this.currentImage, arrayOfImages: Image[] = this.images): number {
-    // id is mandatory. You can use either numbers or strings.
-    // If the id is 0, I shouldn't throw an error.
-    if (!image || (!image.id && image.id !== 0)) {
-      throw new Error(`Image 'id' is mandatory`);
-    }
-    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
+    return index === getIndex(this.currentImage, this.images);
   }
 
   /**

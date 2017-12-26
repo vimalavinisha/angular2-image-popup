@@ -22,28 +22,22 @@
  SOFTWARE.
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChange,
-  SimpleChanges
-} from '@angular/core';
-import { Keyboard } from '../../model/keyboard.enum';
-import { Image, ImageModalEvent } from '../../model/image.class';
-import { Action } from '../../model/action.enum';
-import { Description, DescriptionStrategy } from '../../model/description.interface';
-import { KeyboardConfig } from '../../model/keyboard-config.interface';
-import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
-import { SlideConfig } from '../../model/slide-config.interface';
-import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+
 import { AccessibleComponent } from '../accessible.component';
-import { NEXT, PREV } from '../../utils/user-input.util';
-import { InternalLibImage } from '../../model/image-internal.class';
+
+import {
+  AccessibilityConfig,
+  Action,
+  Description, DescriptionStrategy,
+  Image, InternalLibImage,
+  ImageModalEvent,
+  Keyboard, KeyboardConfig,
+  LoadingConfig, LoadingType,
+  SlideConfig
+} from '../../model';
+
+import { getIndex, NEXT, PREV } from '../../utils';
 
 /**
  * Interface to describe the Load Event, used to
@@ -162,7 +156,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
+    const defaultLoading: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
     const defaultDescription: Description = {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       imageText: 'Image ',
@@ -190,12 +184,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     // if not currently loaded
     if (current && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
-      this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage)));
+      this.changeImage.emit(new ImageModalEvent(Action.LOAD, getIndex(this.currentImage, this.images)));
       this.loading = false;
     }
 
     if (this.isOpen) {
-      this.manageSlideConfig(this.getIndex(this.currentImage));
+      this.manageSlideConfig(getIndex(this.currentImage, this.images));
     }
   }
 
@@ -246,7 +240,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         return '';
     }
 
-    const currentIndex: number = this.getIndex(image);
+    const currentIndex: number = getIndex(image, this.images);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
 
@@ -273,22 +267,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     if (!image) {
       return '';
     }
-    return image.modal && image.modal.description ? image.modal.description : `Image ${this.getIndex(image)}`;
-  }
-
-  /**
-   * Method to get the index of an image.
-   * @param {Image} image to get the index, or the visible image, if not passed
-   * @param {Image[]} arrayOfImages to search the image within it
-   * @returns {number} the index of the image
-   */
-  getIndex(image: Image = this.currentImage, arrayOfImages: Image[] = this.images): number {
-    // id is mandatory. You can use either numbers or strings.
-    // If the id is 0, I shouldn't throw an error.
-    if (!image || (!image.id && image.id !== 0)) {
-      throw new Error(`Image 'id' is mandatory`);
-    }
-    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
+    return image.modal && image.modal.description ? image.modal.description : `Image ${getIndex(image, this.images)}`;
   }
 
   /**
@@ -296,7 +275,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns {Image} the image to show as size preview on the left
    */
   getLeftPreviewImage(): Image {
-    const currentIndex: number = this.getIndex(this.currentImage);
+    const currentIndex: number = getIndex(this.currentImage, this.images);
     if (currentIndex === 0 && this.slideConfig.infinite) {
       // the current image is the first one,
       // so the previous one is the last image
@@ -312,7 +291,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns {Image} the image to show as size preview on the right
    */
   getRightPreviewImage(): Image {
-    const currentIndex: number = this.getIndex(this.currentImage);
+    const currentIndex: number = getIndex(this.currentImage, this.images);
     if (currentIndex === this.images.length - 1 && this.slideConfig.infinite) {
       // the current image is the last one,
       // so the next one is the first image
@@ -363,7 +342,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     const prevImage: InternalLibImage = this.getPrevImage();
     this.loading = !prevImage.previouslyLoaded;
-    this.changeImage.emit(new ImageModalEvent(action, this.getIndex(prevImage)));
+    this.changeImage.emit(new ImageModalEvent(action, getIndex(prevImage, this.images)));
   }
 
   /**
@@ -378,7 +357,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     const nextImage: InternalLibImage = this.getNextImage();
     this.loading = !nextImage.previouslyLoaded;
-    this.changeImage.emit(new ImageModalEvent(action, this.getIndex(nextImage)));
+    this.changeImage.emit(new ImageModalEvent(action, getIndex(nextImage, this.images)));
   }
 
   /**
@@ -389,7 +368,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   onImageLoad(event: Event) {
     this.loadImage.emit({
       status: true,
-      index: this.getIndex(this.currentImage),
+      index: getIndex(this.currentImage, this.images),
       id: this.currentImage.id
     });
 
@@ -413,6 +392,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       // case this.SWIPE_ACTION.DOWN:
       //   break;
     }
+  }
+
+  /**
+   * Method used in `modal-gallery.component` to get the index of an image to delete.
+   * @param {Image} image to get the index, or the visible image, if not passed
+   * @returns {number} the index of the image
+   */
+  getIndexToDelete(image: Image = this.currentImage): number {
+    return getIndex(image, this.images);
   }
 
   /**
@@ -469,7 +457,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   private isPreventSliding(boundaryIndex: number): boolean {
     return (
-      !!this.slideConfig && this.slideConfig.infinite === false && this.getIndex(this.currentImage) === boundaryIndex
+      !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex
     );
   }
 
@@ -479,7 +467,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * That happens because all modal images are shown like in a circle.
    */
   private getNextImage(): InternalLibImage {
-    const currentIndex: number = this.getIndex(this.currentImage);
+    const currentIndex: number = getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
       newIndex = currentIndex + 1;
@@ -495,7 +483,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * That happens because all modal images are shown like in a circle.
    */
   private getPrevImage(): InternalLibImage {
-    const currentIndex: number = this.getIndex(this.currentImage);
+    const currentIndex: number = getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
       newIndex = currentIndex - 1;

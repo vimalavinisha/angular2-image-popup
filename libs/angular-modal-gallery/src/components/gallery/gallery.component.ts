@@ -22,26 +22,10 @@
  SOFTWARE.
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChange,
-  SimpleChanges
-} from '@angular/core';
-import { Image } from '../../model/image.class';
-import {
-  AdvancedLayout,
-  GridLayout,
-  LineLayout,
-  PlainGalleryConfig,
-  PlainGalleryStrategy
-} from '../../model/plain-gallery-config.interface';
-import { Size } from '../../model/size.interface';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+
+import { AdvancedLayout, GridLayout, Image, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, Size } from '../../model';
+import { getIndex } from '../../utils';
 
 /**
  * Component with the gallery of thumbs.
@@ -114,19 +98,19 @@ export class GalleryComponent implements OnInit, OnChanges {
   /**
    * Default image size object
    */
-  private defaultSize: Size = { width: '50px', height: 'auto' };
+  private defaultSize: Size = {width: '50px', height: 'auto'};
   /**
    * Default layout config object
    * Note that length=-1 means infinity
    */
-  private defaultLayout: LineLayout = new LineLayout(this.defaultSize, { length: -1, wrap: false }, 'flex-start');
+  private defaultLayout: LineLayout = new LineLayout(this.defaultSize, {length: -1, wrap: false}, 'flex-start');
   /**
    * Default plain gallery config object
    */
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: this.defaultLayout,
-    advanced: { aTags: false }
+    advanced: {aTags: false}
   };
 
   /**
@@ -166,8 +150,8 @@ export class GalleryComponent implements OnInit, OnChanges {
 
   /**
    * Private method to build and return a `PlainGalleryConfig` object, proving also default values.
-   * @throws an Error if layout and strategy aren't compatible
    * @returns {PlainGalleryConfig} the plain gallery configuration
+   * @throws an Error if layout and strategy aren't compatible
    */
   private initPlainGalleryConfig(): PlainGalleryConfig {
     const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
@@ -279,21 +263,6 @@ export class GalleryComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Method to get the index of an image.
-   * @param {Image} image to get the index, or the visible image, if not passed
-   * @param {Image[]} arrayOfImages to search the image within it
-   * @returns {number} the index of the image
-   */
-  getIndex(image: Image, arrayOfImages: Image[] = this.images): number {
-    // id is mandatory. You can use either numbers or strings.
-    // If the id is 0, I shouldn't throw an error.
-    if (!image || (!image.id && image.id !== 0)) {
-      throw new Error(`Image 'id' is mandatory`);
-    }
-    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
-  }
-
-  /**
    * Method to get `alt attribute`.
    * `alt` specifies an alternate text for an image, if the image cannot be displayed.
    * @param {Image} image to get its alt description. If not provided it will be the current image
@@ -303,7 +272,7 @@ export class GalleryComponent implements OnInit, OnChanges {
     if (!image) {
       return '';
     }
-    return image.modal && image.modal.description ? image.modal.description : `Image ${this.getIndex(image)}`;
+    return image.modal && image.modal.description ? image.modal.description : `Image ${getIndex(image, this.images)}`;
   }
 
   /**

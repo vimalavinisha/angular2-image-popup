@@ -23,7 +23,8 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AccessibilityConfig } from '../../model/accessibility.interface';
+
+import { AccessibilityConfig } from '../../model';
 
 /**
  * Component with the semi-transparent background.

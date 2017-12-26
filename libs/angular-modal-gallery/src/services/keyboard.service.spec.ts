@@ -26,7 +26,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { InjectionToken } from '@angular/core';
 
 import { KeyboardService } from './keyboard.service';
-import { KeyboardServiceConfig } from '../model/keyboard-service-config.interface';
+import { KeyboardServiceConfig } from '../model';
 
 const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 

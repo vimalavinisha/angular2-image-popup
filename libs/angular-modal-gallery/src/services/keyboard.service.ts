@@ -25,7 +25,7 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import 'mousetrap';
 
-import { KeyboardServiceConfig } from '../model/keyboard-service-config.interface';
+import { KeyboardServiceConfig } from '../model';
 
 export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 

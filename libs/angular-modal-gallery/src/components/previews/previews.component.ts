@@ -22,25 +22,12 @@
  SOFTWARE.
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChange,
-  SimpleChanges
-} from '@angular/core';
-import { Image } from '../../model/image.class';
-import { PreviewConfig } from '../../model/preview-config.interface';
-import { SlideConfig } from '../../model/slide-config.interface';
-import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+
 import { AccessibleComponent } from '../accessible.component';
-import { NEXT, PREV } from '../../utils/user-input.util';
-import { InternalLibImage } from '../../model/image-internal.class';
-import { Size } from '../../model/size.interface';
+
+import { Image, InternalLibImage, Size, PreviewConfig, SlideConfig, AccessibilityConfig } from '../../model';
+import { getIndex, NEXT, PREV } from '../../utils';
 
 /**
  * Component with image previews
@@ -108,7 +95,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Default preview's size object
    */
-  private defaultPreviewSize: Size = { height: '50px', width: 'auto' };
+  private defaultPreviewSize: Size = {height: '50px', width: 'auto'};
   /**
    * Default preview's config object
    */
@@ -129,7 +116,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   ngOnInit() {
     this.configPreview = Object.freeze(Object.assign(this.defaultPreviewConfig, this.previewConfig));
-    switch (this.getIndex(this.currentImage)) {
+    switch (getIndex(this.currentImage, this.images)) {
       case 0:
         // first image
         this.setBeginningIndexesPreviews();
@@ -177,14 +164,14 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       // to manage infinite sliding I have to reset both `start` and `end` at the beginning
       // to show again previews from the first image.
       // This happens when you navigate over the last image to return to the first one
-      if (this.getIndex(prev) === this.images.length - 1 && this.getIndex(current) === 0) {
+      if (getIndex(prev, this.images) === this.images.length - 1 && getIndex(current, this.images) === 0) {
         // first image
         this.setBeginningIndexesPreviews();
         this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
         return;
       }
       // the same for the opposite case, when you navigate back from the fist image to go to the last one.
-      if (this.getIndex(prev) === 0 && this.getIndex(current) === this.images.length - 1) {
+      if (getIndex(prev, this.images) === 0 && getIndex(current, this.images) === this.images.length - 1) {
         // last image
         this.setEndIndexesPreviews();
         this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
@@ -192,27 +179,12 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       }
 
       // otherwise manage standard scenarios
-      if (this.getIndex(prev) > this.getIndex(current)) {
+      if (getIndex(prev, this.images) > getIndex(current, this.images)) {
         this.previous();
-      } else if (this.getIndex(prev) < this.getIndex(current)) {
+      } else if (getIndex(prev, this.images) < getIndex(current, this.images)) {
         this.next();
       }
     }
-  }
-
-  /**
-   * Method to get the index of an image.
-   * @param {Image} image to get the index, or the visible image, if not passed
-   * @param {Image[]} arrayOfImages to search the image within it
-   * @returns {number} the index of the image
-   */
-  getIndex(image: Image = this.currentImage, arrayOfImages: Image[] = this.images): number {
-    // id is mandatory. You can use either numbers or strings.
-    // If the id is 0, I shouldn't throw an error.
-    if (!image || (!image.id && image.id !== 0)) {
-      throw new Error(`Image 'id' is mandatory`);
-    }
-    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 
   /**
@@ -277,8 +249,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Private method to update both `start` and `end` based on the currentImage.
    */
   private setIndexesPreviews() {
-    this.start = this.getIndex(this.currentImage) - Math.floor(<number>this.configPreview.number / 2);
-    this.end = this.getIndex(this.currentImage) + Math.floor(<number>this.configPreview.number / 2) + 1;
+    this.start = getIndex(this.currentImage, this.images) - Math.floor(<number>this.configPreview.number / 2);
+    this.end = getIndex(this.currentImage, this.images) + Math.floor(<number>this.configPreview.number / 2) + 1;
   }
 
   /**
@@ -328,7 +300,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     return (
       !!this.slideConfig &&
       this.slideConfig.infinite === false &&
-      this.getIndex(this.currentImage, this.previews) === boundaryIndex
+      getIndex(this.currentImage, this.previews) === boundaryIndex
     );
   }
 }

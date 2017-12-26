@@ -23,15 +23,8 @@
  */
 
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-  DIRECTION_RIGHT,
-  ENTER_KEY,
-  MOUSE_MAIN_BUTTON_CLICK,
-  NEXT,
-  NOTHING,
-  PREV,
-  SPACE_KEY
-} from '../utils/user-input.util';
+
+import { DIRECTION_RIGHT, ENTER_KEY, MOUSE_MAIN_BUTTON_CLICK, NEXT, NOTHING, PREV, SPACE_KEY } from '../utils';
 
 /**
  * Provides some useful methods to add accessibility features to subclasses.

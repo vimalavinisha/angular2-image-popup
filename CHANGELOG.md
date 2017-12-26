@@ -1,5 +1,13 @@
 # 5.0.0-alpha.5
-- TODO
+### Internal library changes
+- switch to Nwrl nx workspace
+- improve scss
+- add both e2e and unit tests support with Nwrl nx workspace
+- move `getIndex` to utils
+- general refactoring to import from model/index and utils/index
+
+### Docs
+- add Typedoc also for interfaces, enums, classes, directives and so on
 
 
 # 5.0.0-alpha.4

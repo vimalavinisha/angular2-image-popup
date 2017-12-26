@@ -24,19 +24,10 @@
 
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import {
-  ButtonConfig,
-  ButtonEvent,
-  ButtonsConfig,
-  ButtonsStrategy,
-  ButtonType,
-  WHITELIST_BUTTON_TYPES
-} from '../../model/buttons-config.interface';
-import { Image } from '../../model/image.class';
 import { AccessibleComponent } from '../accessible.component';
-import { NEXT } from '../../utils/user-input.util';
-import { Action } from '../../model/action.enum';
-import { Size } from '../../model/size.interface';
+
+import { Action, ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Size, WHITELIST_BUTTON_TYPES } from '../../model';
+import { NEXT } from '../../utils';
 
 /**
  * Internal representation of `ButtonConfig` with an optional `id` field, used by trackId to improve performances.
@@ -105,7 +96,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Default button size object
    */
-  private defaultSize: Size = { height: 'auto', width: '30px' };
+  private defaultSize: Size = {height: 'auto', width: '30px'};
 
   /**
    * Default buttons array for standard configuration
@@ -176,7 +167,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultConfig: ButtonsConfig = { visible: true, strategy: ButtonsStrategy.DEFAULT };
+    const defaultConfig: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.DEFAULT};
     this.configButtons = Object.assign(defaultConfig, this.buttonsConfig);
 
     switch (this.configButtons.strategy) {
@@ -208,12 +199,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param {Action} action that triggered the source event or `Action.CLICK` if not specified
    * @throws an error if the button type is unknown
    */
-  onEvent(
-    button: InternalButtonConfig,
-    index: number,
-    event: KeyboardEvent | MouseEvent,
-    action: Action = Action.CLICK
-  ) {
+  onEvent(button: InternalButtonConfig,
+          index: number,
+          event: KeyboardEvent | MouseEvent,
+          action: Action = Action.CLICK) {
     if (!event) {
       return;
     }
@@ -268,11 +257,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param {KeyboardEvent | MouseEvent} event is the source that triggered this method
    * @param {ButtonEvent} dataToEmit payload to emit
    */
-  private triggerOnMouseAndKeyboard(
-    emitter: EventEmitter<ButtonEvent>,
-    event: KeyboardEvent | MouseEvent,
-    dataToEmit: ButtonEvent
-  ) {
+  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
+                                    event: KeyboardEvent | MouseEvent,
+                                    dataToEmit: ButtonEvent) {
     if (!emitter) {
       console.error('UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard');
     }
@@ -289,7 +276,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @returns {ButtonConfig[]} the input array with incremental numeric ids
    */
   private addButtonIds(buttons: ButtonConfig[]): ButtonConfig[] {
-    return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, { id: i }));
+    return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, {id: i}));
   }
 
   /**
