@@ -256,10 +256,13 @@
                     [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B18 - Simple demo - buttons config FULL strategy (all buttons)</h3>
+  <h3>B18 - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
+    buttonAfterHook (mandatory to handle delete events)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
-                    [buttonsConfig]="buttonsConfigFull"></ks-modal-gallery>
+                    [buttonsConfig]="buttonsConfigFull"
+                    (buttonBeforeHook)="onButtonBeforeHook($event)"
+                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
 </section>
 <section>
   <h3>B19 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
@@ -335,23 +338,11 @@
   <ks-modal-gallery [modalImages]="images"
                     [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
 </section>
-
-
 <section>
   <h3>C11 - Advanced demo - accessibility config</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
-</section>
-
-<section>
-  <h3>C12 - Advanced demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
-    buttonAfterHook</h3>
-  <br>
-  <ks-modal-gallery [modalImages]="images"
-                    [buttonsConfig]="buttonsConfigFull"
-                    (buttonBeforeHook)="onButtonBeforeHook($event)"
-                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
 </section>
 
 <br><br>
