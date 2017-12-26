@@ -50,12 +50,14 @@ jobs:
       - run:
           name: run-install-demo-universal
           command: cd examples/universal && npm install
+      # build the library and copy it in all examples
       - run:
-          name: run-build-all
+          name: run-build-all-libray
           command: npm run build:all
-#      - run: FIXME
-#          name: run-test
-#          command: npm run test:ci
+      # test the library
+      - run:
+          name: run-test-library
+          command: npm run test:ci
       # main angular-cli
       - run:
           name: run-build-dev-main-angular-cli
@@ -112,9 +114,9 @@ jobs:
       - run:
           name: run-compodoc
           command: npm run compodoc
-#      - run:
-#          name: run-codeclimate
-#          command: npm run codeclimate
-#      - run:
-#          name: run-coveralls
-#          command: npm run coveralls
+      - run:
+          name: run-codeclimate
+          command: npm run codeclimate
+      - run:
+          name: run-coveralls
+          command: npm run coveralls

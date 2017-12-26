@@ -20,9 +20,6 @@ node_modules
 # Optional eslint cache
 .eslintcache
 
-# Output of 'npm pack'
-*.tgz
-
 # Yarn Integrity file
 .yarn-integrity
 
