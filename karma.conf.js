@@ -27,7 +27,7 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 
-const { makeSureNoAppIsSelected } = require('@nrwl/schematics/src/utils/cli-config-utils');
+const {makeSureNoAppIsSelected} = require('@nrwl/schematics/src/utils/cli-config-utils');
 // Nx only supports running unit tests for all apps and libs.
 makeSureNoAppIsSelected();
 
@@ -51,11 +51,11 @@ function getBrowsers() {
       return ['ChromeHeadless', 'Chrome', 'Firefox'];
     }
   } else {
-    switch(os.platform()) {
+    switch (os.platform()) {
       case 'win32': // Windows
         return ['ChromeHeadless', 'Chrome', 'Firefox'/*,'IE','Edge'*/];
       case 'darwin': // macOS
-        return ['ChromeHeadless', 'Chrome', 'Firefox', 'Safari'];
+        return ['ChromeHeadless', 'Chrome', 'Firefox'/*, 'Safari'*/];
       default: // other (linux, freebsd, openbsd, sunos, aix)
         return ['ChromeHeadless', 'Chrome', 'Firefox'];
     }
@@ -69,121 +69,81 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-edge-launcher'),
+      require('karma-firefox-launcher'),
+      require('karma-ie-launcher'),
+      require('karma-safari-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
+      require('karma-coverage'),
+      require('karma-mocha-reporter'),
+      require('karma-sonarqube-unit-reporter'),
       require('@angular/cli/plugins/karma')
     ],
-    client:{
+    client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
-    },
-    coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
-      fixWebpackSourcePaths: true
     },
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'kjhtml'],
+
+    /*
+     * when angular-cli's coverage is enabled
+     * - mocha is used to show mocha results in console (ps you cannot add both progress and mocha at the same time)
+     * - coverage is used to show coverage result in console
+     * - coverage-istanbul is recommended by angular-cli and used to emit html and lcov
+     * - sonrqube is used to build the report used by SonarQube
+     * when is disabled
+     * - progress is an alternative of mocha (default and recommended by angular-cli
+     * - kjhtml is used to show karma progress inside the browser
+     *
+     */
+    reporters: config.angularCli && config.angularCli.codeCoverage
+      ? ['mocha', 'coverage', 'coverage-istanbul', 'sonarqubeUnit']
+      : ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: getBrowsers(),
+    singleRun: false,
 
+    // required by coverage-istanbul
+    coverageIstanbulReporter: {
+      reports: ['html', 'lcovonly'],
+      fixWebpackSourcePaths: true
+    },
 
-    // basePath: '',
-    // frameworks: ['jasmine', '@angular/cli'],
-    // plugins: [
-    //   require('karma-jasmine'),
-    //   require('karma-chrome-launcher'),
-    //   require('karma-edge-launcher'),
-    //   require('karma-firefox-launcher'),
-    //   require('karma-ie-launcher'),
-    //   require('karma-safari-launcher'),
-    //   require('karma-coverage'),
-    //   require('karma-jasmine-diff-reporter'),
-    //   require('karma-jasmine-html-reporter'),
-    //   require('karma-mocha-reporter'),
-    //   require('karma-remap-coverage'),
-    //   // require('karma-sonarqube-unit-reporter'),
-    //   require('karma-coverage-istanbul-reporter'),
-    //   require('@angular/cli/plugins/karma')
-    // ],
-    // client:{
-    //   clearContext: false // leave Jasmine Spec Runner output visible in browser
-    // },
-    // coverageIstanbulReporter: {
-    //   reports: [ 'html', 'lcovonly', 'json' ],
-    //   fixWebpackSourcePaths: true
-    // },
-    // angularCli: {
-    //   environment: 'dev'
-    // },
-    //
-    // // TODO restore something like reporters: config.angularCli && config.angularCli.codeCoverage
-    // // ? ['progress', 'coverage-istanbul']
-    // // : ['progress', 'kjhtml'],
-    // reporters: ['progress', 'mocha', 'kjhtml', 'coverage',
-    //   'remap-coverage'/*, 'sonarqubeUnit'*/],
-    // port: 9876,
-    // colors: true,
-    // logLevel: config.LOG_INFO,
-    // autoWatch: true,
-    // browsers: getBrowsers(),
-    // singleRun: false,
-    //
-    // coverageReporter: {
-    //   type: 'in-memory'
-    // },
-    //
-    // // sonarQubeUnitReporter: {
-    // //   sonarQubeVersion: '5.x',
-    // //   outputFile: 'reports/ut_report.xml',
-    // //   overrideTestDescription: true,
-    // //   testPath: 'libs/angular-modal-gallery',
-    // //   testFilePattern: '.spec.ts',
-    // //   useBrowserName: false
-    // // },
-    // //
-    // // remapCoverageReporter: {
-    // //   'text-summary': null,
-    // //   'json': './coverage/coverage.json',
-    // //   'html': './coverage/html',
-    // //   'lcovonly': './coverage/lcov.info'
-    // // },
-    //
-    // jasmineDiffReporter: {
-    //   multiline: true
-    // },
-    //
-    // customLaunchers: {
-    //   ChromeHeadless: {
-    //     base: 'Chrome',
-    //     flags: [
-    //       '--no-sandbox',
-    //       // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
-    //       '--headless',
-    //       '--disable-gpu',
-    //       // Without a remote debugging port, Google Chrome exits immediately.
-    //       ' --remote-debugging-port=9222',
-    //     ]
-    //   }
-    // },
-    //
-    // // For AppVeyor and TravisCI to prevent timeouts
-    // browserNoActivityTimeout: 60000,
-    //
-    // //
-    // // files: [
-    // //   { pattern: './src/test.ts', watched: false },
-    // // ],
-    // // preprocessors: {
-    // //   './src/test.ts': ['@angular/cli']
-    // // },
-    // // mime: {
-    // //   'text/x-typescript': ['ts','tsx']
-    // // },
+    // required by karma-coverage to show code coverage in console
+    coverageReporter: {
+      type: 'text-summary'
+    },
 
+    // required by karma-sonarqube-unit-reporter
+    sonarQubeUnitReporter: {
+      sonarQubeVersion: '5.x',
+      outputFile: 'reports/ut_report.xml',
+      overrideTestDescription: true,
+      testPath: 'libs/angular-modal-gallery/src',
+      testFilePattern: '.spec.ts',
+      useBrowserName: false
+    },
+
+    customLaunchers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--no-sandbox',
+          // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+          '--headless',
+          '--disable-gpu',
+          // Without a remote debugging port, Google Chrome exits immediately.
+          ' --remote-debugging-port=9222',
+        ]
+      }
+    },
+
+    // For AppVeyor and TravisCI to prevent timeouts
+    browserNoActivityTimeout: 60000
   });
 };

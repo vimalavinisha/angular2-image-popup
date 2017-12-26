@@ -13,6 +13,8 @@
     "**/*.ts"
   ],
   "exclude": [
+    "apps/**/*.*",
+    "examples/**/*.*",
     "**/e2e/*.ts",
     "**/*.e2e-spec.ts",
     "**/*.po.ts",
