@@ -139,9 +139,10 @@ build_script:
   # build and test library
   - npm run build:all
   - npm run test:ci
+  - npm run e2e:ci
   # build main angular-cli with ng-packagr
-  - npm run build:dev
-  - npm run build:prod
+  - npm run build:main:dev
+  - npm run build:main:prod
   - npm run test:ci
   # build official webpack example
   - cd examples/webpack

@@ -58,13 +58,16 @@ jobs:
       - run:
           name: run-test-library
           command: npm run test:ci
+      - run:
+          name: run-e2e-library
+          command: npm run e2e:ci
       # main angular-cli
       - run:
           name: run-build-dev-main-angular-cli
-          command: npm run build:dev
+          command: npm run build:main:dev
       - run:
           name: run-build-prod-main-angular-cli
-          command: npm run build:prod
+          command: npm run build:main:prod
       - run:
           name: run-test-main-angular-cli
           command: npm run test:ci

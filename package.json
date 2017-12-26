@@ -52,7 +52,7 @@
     "test:ci": "ng test --watch=false --no-progress --code-coverage=true",
     "e2e": "ng e2e --app=main",
     "e2e:ee": "npm run e2e -- --element-explorer=true",
-    "e2e:ci": "ng e2e --no-progress --config=protractor-ci.conf.js",
+    "e2e:ci": "npm run e2e -- --no-progress --config=protractor-ci.conf.js",
     "lint": "ng lint",
     "docs": "npm run docs:typedoc && npm run docs:compodoc",
     "docs:typedoc": "typedoc --out ./docs/typedoc --mode file --target ES6 --exclude **/*.spec.ts ./libs/angular-modal-gallery/src",

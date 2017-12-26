@@ -20,10 +20,11 @@ cd ../..
 echo "npm run build and test library on $TRAVIS_OS_NAME"
 npm run build:all
 npm run test:ci
+npm run e2e:ci
 
 echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
-npm run build:dev
-npm run build:prod
+npm run build:main:dev
+npm run build:main:prod
 npm run test:ci
 
 echo "building official webpack example on $TRAVIS_OS_NAME"
