@@ -26,8 +26,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 
 import { AccessibleComponent } from '../accessible.component';
 
-import { Action, ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Size, WHITELIST_BUTTON_TYPES } from '../../model';
-import { NEXT } from '../../utils';
+import { Action } from '../../model/action.enum';
+import { Image } from '../../model/image.class';
+import { Size } from '../../model/size.interface';
+import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES } from '../../model/buttons-config.interface';
+
+import { NEXT } from '../../utils/user-input.util';
 
 /**
  * Internal representation of `ButtonConfig` with an optional `id` field, used by trackId to improve performances.

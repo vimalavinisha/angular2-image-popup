@@ -26,8 +26,13 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 
 import { AccessibleComponent } from '../accessible.component';
 
-import { AccessibilityConfig, DotsConfig, Image, InternalLibImage } from '../../model';
-import { getIndex, NEXT } from '../../utils';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { Image } from '../../model/image.class';
+import { InternalLibImage } from '../../model/image-internal.class';
+import { DotsConfig } from '../../model/dots-config.interface';
+
+import { NEXT } from '../../utils/user-input.util';
+import { getIndex } from '../../utils/image.util';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.

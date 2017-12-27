@@ -26,18 +26,18 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 
 import { AccessibleComponent } from '../accessible.component';
 
-import {
-  AccessibilityConfig,
-  Action,
-  Description, DescriptionStrategy,
-  Image, InternalLibImage,
-  ImageModalEvent,
-  Keyboard, KeyboardConfig,
-  LoadingConfig, LoadingType,
-  SlideConfig
-} from '../../model';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { Action } from '../../model/action.enum';
+import { Description, DescriptionStrategy } from '../../model/description.interface';
+import { Image, ImageModalEvent } from '../../model/image.class';
+import { InternalLibImage } from '../../model/image-internal.class';
+import { Keyboard } from '../../model/keyboard.enum';
+import { KeyboardConfig } from '../../model/keyboard-config.interface';
+import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
 
-import { getIndex, NEXT, PREV } from '../../utils';
+import { NEXT, PREV } from '../../utils/user-input.util';
+import { getIndex } from '../../utils/image.util';
 
 /**
  * Interface to describe the Load Event, used to

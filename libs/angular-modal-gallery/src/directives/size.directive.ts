@@ -23,8 +23,7 @@
  */
 
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2 } from '@angular/core';
-
-import { Size } from '../model/index/MODELS';
+import { Size } from '../model/size.interface';
 
 /**
  * Directive to change the size of an element.

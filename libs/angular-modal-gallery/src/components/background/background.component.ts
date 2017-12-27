@@ -24,7 +24,7 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { AccessibilityConfig } from '../../model';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 
 /**
  * Component with the semi-transparent background.

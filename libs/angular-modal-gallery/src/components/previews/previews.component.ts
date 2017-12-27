@@ -26,8 +26,15 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 
 import { AccessibleComponent } from '../accessible.component';
 
-import { Image, InternalLibImage, Size, PreviewConfig, SlideConfig, AccessibilityConfig } from '../../model';
-import { getIndex, NEXT, PREV } from '../../utils';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { Image } from '../../model/image.class';
+import { InternalLibImage } from '../../model/image-internal.class';
+import { Size } from '../../model/size.interface';
+import { PreviewConfig } from '../../model/preview-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
+
+import { NEXT, PREV } from '../../utils/user-input.util';
+import { getIndex } from '../../utils/image.util';
 
 /**
  * Component with image previews

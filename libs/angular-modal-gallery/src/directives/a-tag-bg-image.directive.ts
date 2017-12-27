@@ -24,7 +24,7 @@
 
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2 } from '@angular/core';
 
-import { Image } from '../model';
+import { Image } from '../model/image.class';
 
 /**
  * Directive to add an image to an `<a>` tag with some additional custom properties.
