@@ -32,7 +32,6 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { DotsConfig } from '../../model/dots-config.interface';
 
 import { NEXT } from '../../utils/user-input.util';
-import { ImageUtil } from '../../utils/image.util';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -96,7 +95,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * @returns {boolean} true if is active, false otherwise
    */
   isActive(index: number): boolean {
-    return index === ImageUtil.getIndex(this.currentImage, this.images);
+    return index === this.getIndex(this.currentImage, this.images);
   }
 
   /**
@@ -119,5 +118,21 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    */
   trackById(index: number, item: Image): number {
     return item.id;
+  }
+
+  /**
+   * Private method to get the index of an image.
+   * @param {Image} image to get the index
+   * @param {Image[]} arrayOfImages to search the image within it
+   * @returns {number} the index of the image
+   * @throws an Error if the input image doesn't contain an id
+   */
+  private getIndex(image: Image, arrayOfImages: Image[]): number {
+    // id is mandatory. You can use either numbers or strings.
+    // If the id is 0, I shouldn't throw an error.
+    if (!image || (!image.id && image.id !== 0)) {
+      throw new Error(`Image 'id' is mandatory`);
+    }
+    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 }

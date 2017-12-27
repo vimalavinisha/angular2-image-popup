@@ -37,7 +37,6 @@ import { LoadingConfig, LoadingType } from '../../model/loading-config.interface
 import { SlideConfig } from '../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { ImageUtil } from '../../utils/image.util';
 
 /**
  * Interface to describe the Load Event, used to
@@ -184,12 +183,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     // if not currently loaded
     if (current && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
-      this.changeImage.emit(new ImageModalEvent(Action.LOAD, ImageUtil.getIndex(this.currentImage, this.images)));
+      this.changeImage.emit(new ImageModalEvent(Action.LOAD, this.getIndex(this.currentImage, this.images)));
       this.loading = false;
     }
 
     if (this.isOpen) {
-      this.manageSlideConfig(ImageUtil.getIndex(this.currentImage, this.images));
+      this.manageSlideConfig(this.getIndex(this.currentImage, this.images));
     }
   }
 
@@ -240,7 +239,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         return '';
     }
 
-    const currentIndex: number = ImageUtil.getIndex(image, this.images);
+    const currentIndex: number = this.getIndex(image, this.images);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
 
@@ -267,7 +266,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     if (!image) {
       return '';
     }
-    return image.modal && image.modal.description ? image.modal.description : `Image ${ImageUtil.getIndex(image, this.images)}`;
+    return image.modal && image.modal.description ? image.modal.description : `Image ${this.getIndex(image, this.images)}`;
   }
 
   /**
@@ -275,7 +274,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns {Image} the image to show as size preview on the left
    */
   getLeftPreviewImage(): Image {
-    const currentIndex: number = ImageUtil.getIndex(this.currentImage, this.images);
+    const currentIndex: number = this.getIndex(this.currentImage, this.images);
     if (currentIndex === 0 && this.slideConfig.infinite) {
       // the current image is the first one,
       // so the previous one is the last image
@@ -291,7 +290,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns {Image} the image to show as size preview on the right
    */
   getRightPreviewImage(): Image {
-    const currentIndex: number = ImageUtil.getIndex(this.currentImage, this.images);
+    const currentIndex: number = this.getIndex(this.currentImage, this.images);
     if (currentIndex === this.images.length - 1 && this.slideConfig.infinite) {
       // the current image is the last one,
       // so the next one is the first image
@@ -342,7 +341,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     const prevImage: InternalLibImage = this.getPrevImage();
     this.loading = !prevImage.previouslyLoaded;
-    this.changeImage.emit(new ImageModalEvent(action, ImageUtil.getIndex(prevImage, this.images)));
+    this.changeImage.emit(new ImageModalEvent(action, this.getIndex(prevImage, this.images)));
   }
 
   /**
@@ -357,7 +356,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     const nextImage: InternalLibImage = this.getNextImage();
     this.loading = !nextImage.previouslyLoaded;
-    this.changeImage.emit(new ImageModalEvent(action, ImageUtil.getIndex(nextImage, this.images)));
+    this.changeImage.emit(new ImageModalEvent(action, this.getIndex(nextImage, this.images)));
   }
 
   /**
@@ -368,7 +367,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   onImageLoad(event: Event) {
     this.loadImage.emit({
       status: true,
-      index: ImageUtil.getIndex(this.currentImage, this.images),
+      index: this.getIndex(this.currentImage, this.images),
       id: this.currentImage.id
     });
 
@@ -400,7 +399,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns {number} the index of the image
    */
   getIndexToDelete(image: Image = this.currentImage): number {
-    return ImageUtil.getIndex(image, this.images);
+    return this.getIndex(image, this.images);
   }
 
   /**
@@ -433,6 +432,22 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
+   * Private method to get the index of an image.
+   * @param {Image} image to get the index
+   * @param {Image[]} arrayOfImages to search the image within it
+   * @returns {number} the index of the image
+   * @throws an Error if the input image doesn't contain an id
+   */
+  private getIndex(image: Image, arrayOfImages: Image[]): number {
+    // id is mandatory. You can use either numbers or strings.
+    // If the id is 0, I shouldn't throw an error.
+    if (!image || (!image.id && image.id !== 0)) {
+      throw new Error(`Image 'id' is mandatory`);
+    }
+    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
+  }
+
+  /**
    * Private method to manage boundary arrows and sliding.
    * This is based on the slideConfig input to enable/disable 'infinite sliding'.
    * @param {number} index of the visible image
@@ -457,7 +472,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   private isPreventSliding(boundaryIndex: number): boolean {
     return (
-      !!this.slideConfig && this.slideConfig.infinite === false && ImageUtil.getIndex(this.currentImage, this.images) === boundaryIndex
+      !!this.slideConfig && this.slideConfig.infinite === false && this.getIndex(this.currentImage, this.images) === boundaryIndex
     );
   }
 
@@ -467,7 +482,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * That happens because all modal images are shown like in a circle.
    */
   private getNextImage(): InternalLibImage {
-    const currentIndex: number = ImageUtil.getIndex(this.currentImage, this.images);
+    const currentIndex: number = this.getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
       newIndex = currentIndex + 1;
@@ -483,7 +498,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * That happens because all modal images are shown like in a circle.
    */
   private getPrevImage(): InternalLibImage {
-    const currentIndex: number = ImageUtil.getIndex(this.currentImage, this.images);
+    const currentIndex: number = this.getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
       newIndex = currentIndex - 1;
