@@ -29,6 +29,9 @@ export interface AccessibilityConfig {
   backgroundAriaLabel: string;
   backgroundTitle: string;
 
+  plainGalleryContentAriaLabel: string;
+  plainGalleryContentTitle: string;
+
   modalGalleryContentAriaLabel: string;
   modalGalleryContentTitle: string;
 

@@ -102,7 +102,10 @@ export interface BreakConfig {
 
 /**
  * Interface `AdvancedConfig` to use `<a>` tags instead of `<img>`.
+ * It also contains a string property to customize the css background property.
+ * For more info check here https://www.w3schools.com/cssref/css3_pr_background.asp
  */
 export interface AdvancedConfig {
   aTags: boolean;
+  additionalBackground: string;
 }

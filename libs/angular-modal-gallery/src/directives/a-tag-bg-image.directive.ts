@@ -39,6 +39,7 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
   @Input() image: Image;
   /**
    * Additional style to customize the background attribute.
+   * Empty string by default.
    */
   @Input() style: string;
 

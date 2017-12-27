@@ -61,8 +61,10 @@ export class AppComponent {
   };
   plainGalleryRowATags: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({width: '50px', height: '50px'}, {length: 2, wrap: true}, 'flex-start'),
-    advanced: {aTags: true}
+    layout: new LineLayout({width: '95px', height: '63px'}, {length: 4, wrap: true}, 'flex-start'),
+    // when advanced is defined, additionalBackground: '50% 50%/cover' will be used by default.
+    // I added this here, to be more explicit.
+    advanced: {aTags: true, additionalBackground: '50% 50%/cover'}
   };
 
   plainGalleryColumn: PlainGalleryConfig = {
@@ -98,7 +100,10 @@ export class AppComponent {
         extUrl: 'http://www.google.com'
       },
       { // plain
-        img: '../assets/images/gallery/thumbs/img3.png'
+        img: '../assets/images/gallery/thumbs/img3.png',
+        title: 'custom title 2',
+        alt: 'custom alt 2',
+        ariaLabel: 'arial label 2'
       }
     ),
     new Image(
@@ -340,8 +345,11 @@ export class AppComponent {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
     backgroundTitle: 'CUSTOM background title',
 
+    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
+    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
+
     modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
-    modalGalleryContentTitle: 'CUSTOM gallery content title',
+    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
 
     loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
     loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',

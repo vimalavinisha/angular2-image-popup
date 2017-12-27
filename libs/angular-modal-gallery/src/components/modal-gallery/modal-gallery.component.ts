@@ -50,6 +50,9 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
   backgroundAriaLabel: 'Modal gallery full screen background',
   backgroundTitle: '',
 
+  plainGalleryContentAriaLabel: 'Plain gallery content',
+  plainGalleryContentTitle: '',
+
   modalGalleryContentAriaLabel: 'Modal gallery content',
   modalGalleryContentTitle: '',
 
@@ -62,9 +65,6 @@ const defaultAccessibilityConfig: AccessibilityConfig = {
   mainPrevImageTitle: 'Previous image',
   mainNextImageAriaLabel: 'Next image',
   mainNextImageTitle: 'Next image',
-
-  // plainContainerAriaLabel: '',
-  // plainContainerTitle: '',
 
   dotsContainerAriaLabel: 'Image navigation dots',
   dotsContainerTitle: '',
