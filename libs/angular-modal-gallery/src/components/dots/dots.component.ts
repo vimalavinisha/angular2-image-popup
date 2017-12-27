@@ -32,7 +32,7 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { DotsConfig } from '../../model/dots-config.interface';
 
 import { NEXT } from '../../utils/user-input.util';
-import { getIndex } from '../../utils/image.util';
+import { ImageUtil } from '../../utils/image.util';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -96,7 +96,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * @returns {boolean} true if is active, false otherwise
    */
   isActive(index: number): boolean {
-    return index === getIndex(this.currentImage, this.images);
+    return index === ImageUtil.getIndex(this.currentImage, this.images);
   }
 
   /**

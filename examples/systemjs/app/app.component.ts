@@ -340,8 +340,11 @@ export class AppComponent {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
     backgroundTitle: 'CUSTOM background title',
 
+    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
+    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
+
     modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
-    modalGalleryContentTitle: 'CUSTOM gallery content title',
+    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
 
     loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
     loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',

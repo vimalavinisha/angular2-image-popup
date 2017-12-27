@@ -34,7 +34,7 @@ import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { getIndex } from '../../utils/image.util';
+import { ImageUtil } from '../../utils/image.util';
 
 /**
  * Component with image previews
@@ -123,7 +123,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   ngOnInit() {
     this.configPreview = Object.freeze(Object.assign(this.defaultPreviewConfig, this.previewConfig));
-    switch (getIndex(this.currentImage, this.images)) {
+    switch (ImageUtil.getIndex(this.currentImage, this.images)) {
       case 0:
         // first image
         this.setBeginningIndexesPreviews();
@@ -171,14 +171,14 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       // to manage infinite sliding I have to reset both `start` and `end` at the beginning
       // to show again previews from the first image.
       // This happens when you navigate over the last image to return to the first one
-      if (getIndex(prev, this.images) === this.images.length - 1 && getIndex(current, this.images) === 0) {
+      if (ImageUtil.getIndex(prev, this.images) === this.images.length - 1 && ImageUtil.getIndex(current, this.images) === 0) {
         // first image
         this.setBeginningIndexesPreviews();
         this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
         return;
       }
       // the same for the opposite case, when you navigate back from the fist image to go to the last one.
-      if (getIndex(prev, this.images) === 0 && getIndex(current, this.images) === this.images.length - 1) {
+      if (ImageUtil.getIndex(prev, this.images) === 0 && ImageUtil.getIndex(current, this.images) === this.images.length - 1) {
         // last image
         this.setEndIndexesPreviews();
         this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
@@ -186,9 +186,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       }
 
       // otherwise manage standard scenarios
-      if (getIndex(prev, this.images) > getIndex(current, this.images)) {
+      if (ImageUtil.getIndex(prev, this.images) > ImageUtil.getIndex(current, this.images)) {
         this.previous();
-      } else if (getIndex(prev, this.images) < getIndex(current, this.images)) {
+      } else if (ImageUtil.getIndex(prev, this.images) < ImageUtil.getIndex(current, this.images)) {
         this.next();
       }
     }
@@ -256,8 +256,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Private method to update both `start` and `end` based on the currentImage.
    */
   private setIndexesPreviews() {
-    this.start = getIndex(this.currentImage, this.images) - Math.floor(<number>this.configPreview.number / 2);
-    this.end = getIndex(this.currentImage, this.images) + Math.floor(<number>this.configPreview.number / 2) + 1;
+    this.start = ImageUtil.getIndex(this.currentImage, this.images) - Math.floor(<number>this.configPreview.number / 2);
+    this.end = ImageUtil.getIndex(this.currentImage, this.images) + Math.floor(<number>this.configPreview.number / 2) + 1;
   }
 
   /**
@@ -307,7 +307,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     return (
       !!this.slideConfig &&
       this.slideConfig.infinite === false &&
-      getIndex(this.currentImage, this.previews) === boundaryIndex
+      ImageUtil.getIndex(this.currentImage, this.previews) === boundaryIndex
     );
   }
 }

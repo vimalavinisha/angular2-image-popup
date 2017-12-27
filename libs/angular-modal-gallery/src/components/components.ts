@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { GalleryComponent } from './plain-gallery/plain-gallery.component';
+import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
 import { BackgroundComponent } from './background/background.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 import { UpperButtonsComponent } from './upper-buttons/upper-buttons.component';
@@ -39,7 +39,7 @@ export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
  */
 export const COMPONENTS = [
   BackgroundComponent,
-  GalleryComponent,
+  PlainGalleryComponent,
   ModalGalleryComponent,
   UpperButtonsComponent,
   DotsComponent,
