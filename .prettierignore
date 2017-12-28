@@ -3,15 +3,23 @@
 /.scannerwork
 /angular-modal-gallery
 /coverage
-/examples
 /dist
-/node_modules
+**/node_modules
 /reports
 
+**/.editorconfig
+**/.bootstraprc
+**/*.map
+**/*.ejs
 **/*.html
 **/*.md
 **/*.yml
 **/*.scss
 **/*.css
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.ico
+**/*.svg
 
 **/.DS_Store
