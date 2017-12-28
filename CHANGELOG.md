@@ -17,8 +17,8 @@
 - add Typedoc also for interfaces, enums, classes, directives and so on
 
 ### Others
-- add prettier config
-- add sass-lint config
+- add prettier config with both .prettierignore and .prettierrc.json
+- add sass-lint config with .sass-lint.yml
 
 
 # 5.0.0-alpha.4
