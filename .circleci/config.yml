@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/my-project
     docker:
-      - image: circleci/node:7-browsers # before was 7.10.0-browsers and node:latest-browsers
+      - image: circleci/node:8-browsers # before was 7.10.0-browsers and node:latest-browsers
       # Environment variable for all commands executed in the primary container
         environment:
           NODE_ENV: test
