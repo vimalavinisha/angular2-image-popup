@@ -7,6 +7,14 @@
 **/node_modules
 /reports
 
+**/*.spec.ts
+**/e2e
+
+**/tslint.json
+
+**/webpack.*.js
+
+**/.angular-cli.json
 **/.editorconfig
 **/.bootstraprc
 **/*.map
