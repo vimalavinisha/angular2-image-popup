@@ -65,6 +65,7 @@
     "coveralls": "coveralls < coverage/lcov.info",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "prettier": "./node_modules/.bin/prettier --list-different --write \"**/*.*\"",
+    "prettier:nowrite": "./node_modules/.bin/prettier --list-different \"**/*.*\"",
     "apps:affected": "node ./node_modules/@nrwl/schematics/src/affected/run-affected.js apps",
     "build:affected": "node ./node_modules/@nrwl/schematics/src/affected/run-affected.js build",
     "e2e:affected": "node ./node_modules/@nrwl/schematics/src/affected/run-affected.js e2e",
