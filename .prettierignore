@@ -1,0 +1,17 @@
+/.circleci
+/.github
+/.scannerwork
+/angular-modal-gallery
+/coverage
+/examples
+/dist
+/node_modules
+/reports
+
+**/*.html
+**/*.md
+**/*.yml
+**/*.scss
+**/*.css
+
+**/.DS_Store
