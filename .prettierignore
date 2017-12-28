@@ -1,22 +1,33 @@
-/.circleci
-/.github
-/.scannerwork
-/angular-modal-gallery
-/coverage
-/dist
-**/node_modules
-/reports
+/.git/
+/.idea/
+
+/.circleci/
+/appveyor.yml
+/travisci/
+/.travis.yml
+
+/.github/
+/.scannerwork/
+/angular-modal-gallery/
+/coverage/
+/dist/
+**/node_modules/
+/reports/
 
 **/*.spec.ts
-**/e2e
+**/e2e/
 
 **/tslint.json
 
 **/webpack.*.js
 
+**/package.json
+**/package-lock.json
+
 **/.angular-cli.json
 **/.editorconfig
 **/.bootstraprc
+**/*.properties
 **/*.map
 **/*.ejs
 **/*.html
@@ -29,5 +40,12 @@
 **/*.png
 **/*.ico
 **/*.svg
+**/*.tgz
+
+**/.bithoundrc
+**/.gitignore
+**/.prettierignore
+**/.snyk
 
 **/.DS_Store
+**/Thumbs.db
