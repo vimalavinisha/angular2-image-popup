@@ -60,7 +60,9 @@ clone_depth: 5  # clone entire repository history if not defined
 # environment variables
 environment:
   matrix:
+    - nodejs_version: "7"
     - nodejs_version: "8"
+    - nodejs_version: "9"
   NODE_ENV: test
   CI: yes
   APPVEYOR: yes

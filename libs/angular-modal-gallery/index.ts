@@ -26,4 +26,27 @@
  * Index file to export all interfaces, enums, classes and so on.
  * This file represents the public apis.
  */
-export * from './public_api';
+
+export { ModalGalleryModule } from './src/modal-gallery.module';
+
+export { Action } from './src/model/action.enum';
+export { Image, PlainImage, ModalImage, ImageModalEvent } from './src/model/image.class';
+export { Description, DescriptionStrategy } from './src/model/description.interface';
+export { KeyboardConfig } from './src/model/keyboard-config.interface';
+export { DotsConfig } from './src/model/dots-config.interface';
+export { PreviewConfig } from './src/model/preview-config.interface';
+export { AccessibilityConfig } from './src/model/accessibility.interface';
+
+export { Size } from './src/model/size.interface';
+
+export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './src/model/buttons-config.interface';
+
+export {
+  PlainGalleryConfig,
+  PlainGalleryLayout,
+  LineLayout,
+  GridLayout,
+  AdvancedLayout,
+  PlainGalleryStrategy,
+  BreakConfig
+} from './src/model/plain-gallery-config.interface';
