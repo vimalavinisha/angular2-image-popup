@@ -43,8 +43,7 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
    */
   @Input() style: string;
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {
-  }
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   /**
    * Method ´ngOnInit´ to apply the style of this directive.

@@ -61,7 +61,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
-  @Input() dotsConfig: DotsConfig = {visible: true};
+  @Input() dotsConfig: DotsConfig = { visible: true };
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
@@ -85,7 +85,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultConfig: DotsConfig = {visible: true};
+    const defaultConfig: DotsConfig = { visible: true };
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
   }
 

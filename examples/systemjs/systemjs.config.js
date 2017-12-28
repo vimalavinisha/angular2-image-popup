@@ -25,35 +25,29 @@
 (function(global) {
   // map tells the System loader where to look for things
   let map = {
-    'app'                       : 'app',
-    '@angular'                  : 'node_modules/@angular',
-    'rxjs'                      : 'node_modules/rxjs',
-    'angular-modal-gallery'     : 'node_modules/angular-modal-gallery/bundles',
-    'hammerjs'                  : 'node_modules/hammerjs',
-    'mousetrap'                 : 'node_modules/mousetrap'
+    app: 'app',
+    '@angular': 'node_modules/@angular',
+    rxjs: 'node_modules/rxjs',
+    'angular-modal-gallery': 'node_modules/angular-modal-gallery/bundles',
+    hammerjs: 'node_modules/hammerjs',
+    mousetrap: 'node_modules/mousetrap'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   let packages = {
-    'app'                       : { main: 'main' },
-    'rxjs'                      : { main: 'Rx' },
-    'hammerjs'                  : { main: 'hammer.js' },
-    'mousetrap'                 : { main: 'mousetrap.js'},
-    'angular-modal-gallery'     : { main: 'angular-modal-gallery.umd.js' }
+    app: { main: 'main' },
+    rxjs: { main: 'Rx' },
+    hammerjs: { main: 'hammer.js' },
+    mousetrap: { main: 'mousetrap.js' },
+    'angular-modal-gallery': { main: 'angular-modal-gallery.umd.js' }
   };
-  let ngPackageNames = [
-    'common',
-    'compiler',
-    'core',
-    'platform-browser',
-    'platform-browser-dynamic'
-  ];
+  let ngPackageNames = ['common', 'compiler', 'core', 'platform-browser', 'platform-browser-dynamic'];
   // Individual files (~300 requests):
   function packIndex(pkgName) {
-    packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
+    packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
   }
   // Bundled (~40 requests):
   function packUmd(pkgName) {
-    packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+    packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
   }
   // Most environments should use UMD; some (Karma) need the individual index files
   let setPackageConfig = System.packageWithIndex ? packIndex : packUmd;

@@ -39,9 +39,9 @@ import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`np
 import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
-import { SharedModule } from './shared/shared.module';
-import { COMPONENTS } from './pages/components';
-import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+import { COMPONENTS } from './pages/components';
+import { AppComponent } from './app.component';
 
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { RouterModule, PreloadAllModules } from '@angular/router';
@@ -60,16 +60,11 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 
     ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
   ],
-  declarations: [
-    AppComponent,
-    COMPONENTS
-  ],
+  declarations: [AppComponent, COMPONENTS],
   providers: [],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
-
 export class AppModule {
-
   // ----------- Hot Module Replacement via AngularClass library - BEGIN ------------
   constructor(public appRef: ApplicationRef) {}
   hmrOnInit(store: any): any {
@@ -94,10 +89,10 @@ export class AppModule {
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // inject your AppStore and grab state then set it on store
     // var appState = this.AppStore.get()
-    store.state = {data: 'example value'};
+    store.state = { data: 'example value' };
     // store.state = Object.assign({}, appState)
     // save input values
-    store.restoreInputValues  = createInputTransfer();
+    store.restoreInputValues = createInputTransfer();
     // remove styles
     removeNgStyles();
   }

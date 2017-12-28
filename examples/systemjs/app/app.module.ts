@@ -33,9 +33,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
@@ -43,5 +41,4 @@ import { AppComponent } from './app.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

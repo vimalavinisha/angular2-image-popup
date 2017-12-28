@@ -54,16 +54,18 @@ ROUTES.forEach(route => {
   var fullPath = join(BROWSER_FOLDER, route);
 
   // Make sure the directory structure is there
-  if(!existsSync(fullPath)){
+  if (!existsSync(fullPath)) {
     mkdirSync(fullPath);
   }
 
   // Writes rendered HTML to index.html, replacing the file if it already exists.
-  previousRender = previousRender.then(_ => renderModuleFactory(AppServerModuleNgFactory, {
-    document: index,
-    url: route,
-    extraProviders: [
-      provideModuleMap(LAZY_MODULE_MAP)
-    ]
-  })).then(html => writeFileSync(join(fullPath, 'index.html'), html));
+  previousRender = previousRender
+    .then(_ =>
+      renderModuleFactory(AppServerModuleNgFactory, {
+        document: index,
+        url: route,
+        extraProviders: [provideModuleMap(LAZY_MODULE_MAP)]
+      })
+    )
+    .then(html => writeFileSync(join(fullPath, 'index.html'), html));
 });

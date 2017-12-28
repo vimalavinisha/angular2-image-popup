@@ -39,27 +39,31 @@ function isCI() {
 
 function getBrowsers() {
   if (process.env.CI) {
-    if (process.env.APPVEYOR) { // variable defined by APPVEYOR itself
+    if (process.env.APPVEYOR) {
+      // variable defined by APPVEYOR itself
       // only for AppVeyor
       return ['Chrome', 'Firefox' /*, 'IE'*/];
-    } else if (process.env.TRAVIS) { // variable defined by TRAVIS itself
+    } else if (process.env.TRAVIS) {
+      // variable defined by TRAVIS itself
       return ['ChromeHeadless', 'Chrome', 'Firefox'];
-    } else if (process.env.CIRCLECI) { // variable defined by CIRCLECI itself
+    } else if (process.env.CIRCLECI) {
+      // variable defined by CIRCLECI itself
       return ['ChromeHeadless', 'Chrome', 'Firefox'];
     }
   } else {
-    switch(os.platform()) {
+    switch (os.platform()) {
       case 'win32': // Windows
         return ['ChromeHeadless', 'Chrome', 'Firefox' /*'IE'*/];
       case 'darwin': // macOS
-        return ['ChromeHeadless', 'Chrome', 'Firefox'/*, 'Safari'*/];
-      default: // other (linux, freebsd, openbsd, sunos, aix)
+        return ['ChromeHeadless', 'Chrome', 'Firefox' /*, 'Safari'*/];
+      default:
+        // other (linux, freebsd, openbsd, sunos, aix)
         return ['ChromeHeadless', 'Chrome', 'Firefox'];
     }
   }
 }
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
@@ -90,7 +94,6 @@ module.exports = function (config) {
 
     reporters: ['progress', 'mocha', 'kjhtml', 'coverage', 'remap-coverage'],
 
-
     // webpackServer: {noInfo: true},
 
     port: 9876,
@@ -108,9 +111,9 @@ module.exports = function (config) {
 
     remapCoverageReporter: {
       'text-summary': null,
-      'json': './coverage/coverage.json',
-      'html': './coverage/html',
-      'lcovonly': './coverage/lcov.info'
+      json: './coverage/coverage.json',
+      html: './coverage/html',
+      lcovonly: './coverage/lcov.info'
     },
     jasmineDiffReporter: {
       multiline: true
@@ -125,13 +128,13 @@ module.exports = function (config) {
           '--headless',
           '--disable-gpu',
           // Without a remote debugging port, Google Chrome exits immediately.
-          ' --remote-debugging-port=9222',
+          ' --remote-debugging-port=9222'
         ]
       }
     },
 
     // For AppVeyor and TravisCI to prevent timeouts
-    browserNoActivityTimeout: 60000,
+    browserNoActivityTimeout: 60000
     //browserDisconnectTimeout: 60000,
     //browserDisconnectTolerance: 10
   });

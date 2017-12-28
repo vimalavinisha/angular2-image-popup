@@ -101,7 +101,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Default preview's size object
    */
-  private defaultPreviewSize: Size = {height: '50px', width: 'auto'};
+  private defaultPreviewSize: Size = { height: '50px', width: 'auto' };
   /**
    * Default preview's config object
    */
@@ -319,10 +319,6 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @returns {boolean} if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return (
-      !!this.slideConfig &&
-      this.slideConfig.infinite === false &&
-      this.getIndex(this.currentImage, this.previews) === boundaryIndex
-    );
+    return !!this.slideConfig && this.slideConfig.infinite === false && this.getIndex(this.currentImage, this.previews) === boundaryIndex;
   }
 }

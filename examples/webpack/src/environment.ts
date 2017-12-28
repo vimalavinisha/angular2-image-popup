@@ -3,14 +3,8 @@
 /**
  * Angular 2
  */
-import {
-  enableDebugTools,
-  disableDebugTools
-} from '@angular/platform-browser';
-import {
-  ApplicationRef,
-  enableProdMode
-} from '@angular/core';
+import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
+import { ApplicationRef, enableProdMode } from '@angular/core';
 /**
  * Environment Providers
  */
@@ -39,14 +33,12 @@ if ('production' === webpack.ENV) {
   };
 
   PROVIDERS = [
-    ...PROVIDERS,
+    ...PROVIDERS
     /**
      * Custom providers in production.
      */
   ];
-
 } else {
-
   _decorateModuleRef = (modRef: any) => {
     const appRef = modRef.injector.get(ApplicationRef);
     const cmpRef = appRef.components[0];
@@ -59,16 +51,13 @@ if ('production' === webpack.ENV) {
    * Development
    */
   PROVIDERS = [
-    ...PROVIDERS,
+    ...PROVIDERS
     /**
      * Custom providers in development.
      */
   ];
-
 }
 
 export const decorateModuleRef = _decorateModuleRef;
 
-export const ENV_PROVIDERS = [
-  ...PROVIDERS
-];
+export const ENV_PROVIDERS = [...PROVIDERS];

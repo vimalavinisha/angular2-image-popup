@@ -32,11 +32,4 @@ import { ATagBgImageDirective } from './a-tag-bg-image.directive';
 /**
  * Array of all directives.
  */
-export const DIRECTIVES = [
-  ClickOutsideDirective,
-  SizeDirective,
-  KeyboardNavigationDirective,
-  WrapDirective,
-  DirectionDirective,
-  ATagBgImageDirective
-];
+export const DIRECTIVES = [ClickOutsideDirective, SizeDirective, KeyboardNavigationDirective, WrapDirective, DirectionDirective, ATagBgImageDirective];

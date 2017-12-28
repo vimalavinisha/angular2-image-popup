@@ -7,11 +7,9 @@ const appDir = getAppDirectoryUsingCliConfig();
 
 exports.config = {
   allScriptsTimeout: 11000,
-  specs: [
-    appDir + '/e2e/**/*.e2e-spec.ts'
-  ],
+  specs: [appDir + '/e2e/**/*.e2e-spec.ts'],
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome'
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',

@@ -22,8 +22,6 @@
  * SOFTWARE.
  */
 
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
-export const SHARED_COMPONENTS = [
-  NavbarComponent
-];
+export const SHARED_COMPONENTS = [NavbarComponent];

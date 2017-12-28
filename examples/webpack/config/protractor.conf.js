@@ -64,10 +64,10 @@ exports.config = {
   directConnect: true,
 
   capabilities: {
-    'browserName': 'chrome',
-    'chromeOptions': {
+    browserName: 'chrome',
+    chromeOptions: {
       // args: ["--headless", "--disable-gpu", "--window-size=800,600"]
-      'args': ['show-fps-counter=true']
+      args: ['show-fps-counter=true']
     }
   },
 

@@ -155,7 +155,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultLoading: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
+    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
     const defaultDescription: Description = {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       imageText: 'Image ',
@@ -199,10 +199,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   onKeyPress(keyCode: number) {
     const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
-    const right: number =
-      this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
-    const left: number =
-      this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
+    const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
+    const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
 
     switch (keyCode) {
       case esc:
@@ -471,9 +469,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return (
-      !!this.slideConfig && this.slideConfig.infinite === false && this.getIndex(this.currentImage, this.images) === boundaryIndex
-    );
+    return !!this.slideConfig && this.slideConfig.infinite === false && this.getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 
   /**

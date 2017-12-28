@@ -25,8 +25,23 @@
 import { Component } from '@angular/core';
 
 import {
-  AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
-  DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
+  AccessibilityConfig,
+  Action,
+  AdvancedLayout,
+  ButtonEvent,
+  ButtonsConfig,
+  ButtonsStrategy,
+  ButtonType,
+  Description,
+  DescriptionStrategy,
+  DotsConfig,
+  GridLayout,
+  Image,
+  ImageModalEvent,
+  LineLayout,
+  PlainGalleryConfig,
+  PlainGalleryStrategy,
+  PreviewConfig
 } from 'angular-modal-gallery';
 
 @Component({
@@ -35,7 +50,6 @@ import {
   templateUrl: './app/app.html'
 })
 export class AppComponent {
-
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -53,70 +67,68 @@ export class AppComponent {
 
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({width: '80px', height: '80px'}, {length: 2, wrap: true}, 'flex-start')
+    layout: new LineLayout({ width: '80px', height: '80px' }, { length: 2, wrap: true }, 'flex-start')
   };
   plainGalleryRowSpaceAround: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({width: '50px', height: '50px'}, {length: 2, wrap: true}, 'space-around')
+    layout: new LineLayout({ width: '50px', height: '50px' }, { length: 2, wrap: true }, 'space-around')
   };
   plainGalleryRowATags: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({width: '95px', height: '63px'}, {length: 4, wrap: true}, 'flex-start'),
+    layout: new LineLayout({ width: '95px', height: '63px' }, { length: 4, wrap: true }, 'flex-start'),
     // when advanced is defined, additionalBackground: '50% 50%/cover' will be used by default.
     // I added this here, to be more explicit.
-    advanced: {aTags: true, additionalBackground: '50% 50%/cover'}
+    advanced: { aTags: true, additionalBackground: '50% 50%/cover' }
   };
 
   plainGalleryColumn: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.COLUMN,
-    layout: new LineLayout({width: '50px', height: '50px'}, {length: 3, wrap: true}, 'flex-start')
+    layout: new LineLayout({ width: '50px', height: '50px' }, { length: 3, wrap: true }, 'flex-start')
   };
 
   plainGalleryGrid: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.GRID,
-    layout: new GridLayout({width: '80px', height: '80px'}, {length: 3, wrap: true})
+    layout: new GridLayout({ width: '80px', height: '80px' }, { length: 3, wrap: true })
   };
 
   images: Image[] = [
-    new Image(
-      0,
-      { // modal
-        img: '../assets/images/gallery/img1.jpg',
-        extUrl: 'http://www.google.com'
-      }
-    ),
-    new Image(
-      1,
-      { // modal
-        img: '../assets/images/gallery/img2.png',
-        description: 'Description 2'
-      }
-    ),
+    new Image(0, {
+      // modal
+      img: '../assets/images/gallery/img1.jpg',
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(1, {
+      // modal
+      img: '../assets/images/gallery/img2.png',
+      description: 'Description 2'
+    }),
     new Image(
       2,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/img3.jpg',
         description: 'Description 3',
         extUrl: 'http://www.google.com'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/img3.png'
       }
     ),
-    new Image(
-      3,
-      { // modal
-        img: '../assets/images/gallery/img4.jpg',
-        description: 'Description 4',
-        extUrl: 'http://www.google.com'
-      }
-    ),
+    new Image(3, {
+      // modal
+      img: '../assets/images/gallery/img4.jpg',
+      description: 'Description 4',
+      extUrl: 'http://www.google.com'
+    }),
     new Image(
       4,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/img5.jpg'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/img5.jpg'
       }
     )
@@ -125,69 +137,83 @@ export class AppComponent {
   imagesRect: Image[] = [
     new Image(
       0,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
         description: 'Description 1'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
       }
     ),
     new Image(
       1,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/pexels-photo-47223.jpeg'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
       }
     ),
     new Image(
       2,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/pexels-photo-52062.jpeg',
         description: 'Description 3'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
         description: 'Description 3'
       }
     ),
     new Image(
       3,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/pexels-photo-66943.jpeg',
         description: 'Description 4'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
       }
     ),
     new Image(
       4,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/pexels-photo-93750.jpeg'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
       }
     ),
     new Image(
       5,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/pexels-photo-94420.jpeg',
         description: 'Description 6'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
       }
     ),
     new Image(
       6,
-      { // modal
+      {
+        // modal
         img: '../assets/images/gallery/pexels-photo-96947.jpeg'
       },
-      { // plain
+      {
+        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
       }
     )
@@ -311,7 +337,6 @@ export class AppComponent {
     ]
   };
 
-
   previewConfigFiveImages: PreviewConfig = {
     visible: true,
     number: 1
@@ -334,9 +359,8 @@ export class AppComponent {
 
   previewConfigCustomSize: PreviewConfig = {
     visible: true,
-    size: {width: '30px', height: '30px'}
+    size: { width: '30px', height: '30px' }
   };
-
 
   accessibilityConfig: AccessibilityConfig = {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
@@ -373,19 +397,19 @@ export class AppComponent {
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, {layout: new AdvancedLayout(index, true)});
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
 
   openImageModalColumn(image: Image) {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, {layout: new AdvancedLayout(index, true)});
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
   }
 
   openImageModalRowDescription(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, {layout: new AdvancedLayout(index, true)});
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
   }
 
   onButtonBeforeHook(event: ButtonEvent) {
@@ -407,7 +431,6 @@ export class AppComponent {
       console.log('delete in app with images count ' + this.images.length);
 
       this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
-
     }
   }
 
@@ -450,9 +473,9 @@ export class AppComponent {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
     // reset custom plain gallery config
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, {layout: new AdvancedLayout(-1, true)});
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, {layout: new AdvancedLayout(-1, true)});
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, {layout: new AdvancedLayout(-1, true)});
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(-1, true) });
+    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(-1, true) });
+    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(-1, true) });
   }
 
   addRandomImage() {

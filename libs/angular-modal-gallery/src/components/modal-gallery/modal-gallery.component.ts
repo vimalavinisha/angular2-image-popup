@@ -23,7 +23,18 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChange, SimpleChanges,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+  SimpleChange,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
@@ -129,7 +140,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   slideConfig: SlideConfig = {
     infinite: false,
-    sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}
+    sidePreviews: { show: true, size: { width: '100px', height: 'auto' } }
   };
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
@@ -203,8 +214,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
    */
-  constructor(private keyboardService: KeyboardService, @Inject(PLATFORM_ID) private platformId: Object) {
-  }
+  constructor(private keyboardService: KeyboardService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   /**
    * Method ´ngOnInit´ to init images calling `initImages()`.
@@ -266,7 +276,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonBeforeHook.emit(eventToEmit);
     console.log('TODO implement on refresh inside the library', eventToEmit);
 
-    this.currentImage = Object.assign({}, this.currentImage, {previouslyLoaded: false});
+    this.currentImage = Object.assign({}, this.currentImage, { previouslyLoaded: false });
 
     // TODO add logic to hide and show the current image
 
@@ -421,11 +431,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   isPlainGalleryVisible(): boolean {
-    if (
-      this.plainGalleryConfig &&
-      this.plainGalleryConfig.layout &&
-      this.plainGalleryConfig.layout instanceof AdvancedLayout
-    ) {
+    if (this.plainGalleryConfig && this.plainGalleryConfig.layout && this.plainGalleryConfig.layout instanceof AdvancedLayout) {
       return !this.plainGalleryConfig.layout.hideDefaultPlainGallery;
     }
     return true;
@@ -450,7 +456,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   onImageLoad(event: ImageLoadEvent) {
     // sets as previously loaded the image with index specified by `event.status`
     this.images = this.images.map((img: InternalLibImage) => {
-      return Object.assign({}, img, {previouslyLoaded: event.status});
+      return Object.assign({}, img, { previouslyLoaded: event.status });
     });
   }
 
@@ -522,7 +528,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       req.open('GET', this.currentImage.modal.img, true);
       req.responseType = 'arraybuffer';
       req.onload = event => {
-        const blob = new Blob([req.response], {type: 'image/png'});
+        const blob = new Blob([req.response], { type: 'image/png' });
         window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.modal.img));
       };
       req.send();
@@ -536,7 +542,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @returns {ButtonEvent} event payload with the current image included
    */
   private getButtonEventToEmit(event: ButtonEvent): ButtonEvent {
-    return Object.assign(event, {image: this.currentImage});
+    return Object.assign(event, { image: this.currentImage });
   }
 
   /**

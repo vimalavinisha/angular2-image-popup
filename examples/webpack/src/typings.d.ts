@@ -35,5 +35,5 @@ interface SystemJS {
 
 // webpack
 declare const webpack: {
-  ENV: string
+  ENV: string;
 };

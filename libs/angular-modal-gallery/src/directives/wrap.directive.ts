@@ -40,8 +40,7 @@ export class WrapDirective implements OnInit, OnChanges {
    */
   @Input() width: string;
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {
-  }
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   /**
    * Method ´ngOnInit´ to apply the style of this directive.

@@ -100,7 +100,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Default button size object
    */
-  private defaultSize: Size = {height: 'auto', width: '30px'};
+  private defaultSize: Size = { height: 'auto', width: '30px' };
 
   /**
    * Default buttons array for standard configuration
@@ -171,7 +171,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultConfig: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.DEFAULT};
+    const defaultConfig: ButtonsConfig = { visible: true, strategy: ButtonsStrategy.DEFAULT };
     this.configButtons = Object.assign(defaultConfig, this.buttonsConfig);
 
     switch (this.configButtons.strategy) {
@@ -203,10 +203,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param {Action} action that triggered the source event or `Action.CLICK` if not specified
    * @throws an error if the button type is unknown
    */
-  onEvent(button: InternalButtonConfig,
-          index: number,
-          event: KeyboardEvent | MouseEvent,
-          action: Action = Action.CLICK) {
+  onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
     if (!event) {
       return;
     }
@@ -261,9 +258,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param {KeyboardEvent | MouseEvent} event is the source that triggered this method
    * @param {ButtonEvent} dataToEmit payload to emit
    */
-  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>,
-                                    event: KeyboardEvent | MouseEvent,
-                                    dataToEmit: ButtonEvent) {
+  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>, event: KeyboardEvent | MouseEvent, dataToEmit: ButtonEvent) {
     if (!emitter) {
       console.error('UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard');
     }
@@ -280,7 +275,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @returns {ButtonConfig[]} the input array with incremental numeric ids
    */
   private addButtonIds(buttons: ButtonConfig[]): ButtonConfig[] {
-    return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, {id: i}));
+    return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, { id: i }));
   }
 
   /**
@@ -291,9 +286,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {
     buttons.forEach((val: ButtonConfig) => {
-      const isValidBtnType: ButtonType | void = WHITELIST_BUTTON_TYPES.find(
-        (btnType: ButtonType) => btnType === val.type
-      );
+      const isValidBtnType: ButtonType | void = WHITELIST_BUTTON_TYPES.find((btnType: ButtonType) => btnType === val.type);
 
       if (!isValidBtnType) {
         throw new Error(`Unknown ButtonType. For custom types use ButtonType.CUSTOM`);

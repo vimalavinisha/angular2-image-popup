@@ -27,5 +27,4 @@ import { Component } from '@angular/core';
   selector: 'mmw-not-found',
   template: '<h3>Error 404: Not found</h3>'
 })
-
-export class NotFound404Component { }
+export class NotFound404Component {}

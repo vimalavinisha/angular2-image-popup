@@ -24,6 +24,4 @@
 
 import { LazyComponent } from './lazy.component';
 
-export const routes = [
-  { path: '', component: LazyComponent }
-];
+export const routes = [{ path: '', component: LazyComponent }];

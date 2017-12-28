@@ -36,6 +36,4 @@ import { Meta, Title } from '@angular/platform-browser';
   `,
   styles: []
 })
-export class AppComponent {
-
-}
+export class AppComponent {}

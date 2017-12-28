@@ -35,16 +35,13 @@ import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------
 // **************************************************************************
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
-    BrowserModule.withServerTransition({appId: 'my-app'}),
+    BrowserModule.withServerTransition({ appId: 'my-app' }),
     RouterModule.forRoot([
-      {path: '', component: HomeComponent, pathMatch: 'full'},
-      {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
-      {path: 'lazy/nested', loadChildren: './lazy/lazy.module#LazyModule'}
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule' },
+      { path: 'lazy/nested', loadChildren: './lazy/lazy.module#LazyModule' }
     ]),
 
     ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
@@ -52,5 +49,4 @@ import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

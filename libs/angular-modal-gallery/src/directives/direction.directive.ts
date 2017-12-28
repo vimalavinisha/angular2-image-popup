@@ -40,8 +40,7 @@ export class DirectionDirective implements OnInit, OnChanges {
    */
   @Input() justify: string;
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {
-  }
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   /**
    * Method ´ngOnInit´ to apply the style of this directive.

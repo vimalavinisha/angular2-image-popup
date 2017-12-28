@@ -37,7 +37,9 @@
       "type": "image/png"
     }
   ],
-  "related_applications": [{
-    "platform": "web"
-  }]
+  "related_applications": [
+    {
+      "platform": "web"
+    }
+  ]
 }

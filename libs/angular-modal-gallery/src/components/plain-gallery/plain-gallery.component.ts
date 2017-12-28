@@ -105,19 +105,19 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   /**
    * Default image size object
    */
-  private defaultSize: Size = {width: '50px', height: 'auto'};
+  private defaultSize: Size = { width: '50px', height: 'auto' };
   /**
    * Default layout config object
    * Note that length=-1 means infinity
    */
-  private defaultLayout: LineLayout = new LineLayout(this.defaultSize, {length: -1, wrap: false}, 'flex-start');
+  private defaultLayout: LineLayout = new LineLayout(this.defaultSize, { length: -1, wrap: false }, 'flex-start');
   /**
    * Default plain gallery config object
    */
   private defaultPlainConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: this.defaultLayout,
-    advanced: {aTags: false, additionalBackground: '50% 50%/cover'}
+    advanced: { aTags: false, additionalBackground: '50% 50%/cover' }
   };
 
   /**
@@ -145,8 +145,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     if (
       configChange &&
       !configChange.firstChange &&
-      (configChange.previousValue !== configChange.currentValue ||
-        (!configChange.previousValue && !configChange.currentValue))
+      (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))
     ) {
       this.configPlainGallery = this.initPlainGalleryConfig();
     }
@@ -193,7 +192,6 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
    * @returns {string} the title of the input image
    */
   getTitleDisplay(image: Image): string {
-
     let description = '';
 
     if (image.plain && image.plain.description) {
@@ -270,9 +268,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
 
     if (config.layout instanceof LineLayout) {
       const layout: LineLayout = config.layout;
-      const row: Image[] = this.images.filter(
-        (val: Image, i: number) => i < layout.breakConfig.length || layout.breakConfig.length === -1
-      );
+      const row: Image[] = this.images.filter((val: Image, i: number) => i < layout.breakConfig.length || layout.breakConfig.length === -1);
       this.imageGrid = [row];
 
       this.size = config.layout.size;

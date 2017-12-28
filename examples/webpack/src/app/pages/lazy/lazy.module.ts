@@ -28,7 +28,7 @@ import { RouterModule } from '@angular/router';
 
 import { routes } from './lazy.routes';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { LazyComponent } from './lazy.component';
 
 // ********************** angular-modal-gallery *****************************
@@ -38,9 +38,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------
 console.log('`Lazy` bundle loaded asynchronously');
 
 @NgModule({
-  declarations: [
-    LazyComponent
-  ],
+  declarations: [LazyComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

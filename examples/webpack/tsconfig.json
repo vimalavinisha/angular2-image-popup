@@ -12,17 +12,12 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "noEmit": true,
-    "lib": [
-      "dom",
-      "es6"
-    ],
+    "lib": ["dom", "es6"],
     "baseUrl": ".",
     "paths": {
       "@angular/*": ["node_modules/@angular/*"]
     },
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": [
     "node_modules",

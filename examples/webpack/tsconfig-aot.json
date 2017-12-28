@@ -13,29 +13,14 @@
     "noImplicitAny": false,
     "noEmit": true,
     "suppressImplicitAnyIndexErrors": true,
-    "lib": [
-      "dom",
-      "es6"
-    ],
+    "lib": ["dom", "es6"],
     "baseUrl": ".",
     "paths": {
       "@angular/*": ["node_modules/@angular/*"]
     },
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "typeRoots": ["node_modules/@types"]
   },
-  "exclude": [
-    "src/admin/**/*.*",
-    "node_modules",
-    "coverage",
-    "config",
-    "aot",
-    "**/*.spec.ts",
-    "**/*.e2e.ts",
-    "docs",
-    "typedocs"
-  ],
+  "exclude": ["src/admin/**/*.*", "node_modules", "coverage", "config", "aot", "**/*.spec.ts", "**/*.e2e.ts", "docs", "typedocs"],
 
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true,
@@ -44,7 +29,7 @@
   },
   "angularCompilerOptions": {
     "genDir": "aot",
-    "skipMetadataEmit" : true,
+    "skipMetadataEmit": true,
     "preserveWhitespaces": false // required for AOT to remove whitespaces, because I cannot provide this value to platformBrowser into main.aot.ts
   },
   "compileOnSave": false,

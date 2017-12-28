@@ -41,8 +41,6 @@ require('zone.js/dist/fake-async-test');
 // RxJS
 require('rxjs/Rx');
 
-
-
 //https://github.com/qdouble/angular-webpack2-starter/blob/master/test-config/spec-bundle.js
 
 /*
@@ -56,7 +54,6 @@ require('rxjs/Rx');
  */
 var testContext = require.context('../src', true, /\.spec\.ts/);
 
-
 /*
  * get all the files, for each file, call the context function
  * that will require the file and load it up here. Context will
@@ -69,11 +66,7 @@ function requireAll(requireContext) {
 // requires and returns all modules that match
 const modules = requireAll(testContext);
 
-
 const testing = require('@angular/core/testing');
 const browser = require('@angular/platform-browser-dynamic/testing');
 
-testing.getTestBed().initTestEnvironment(
-  browser.BrowserDynamicTestingModule,
-  browser.platformBrowserDynamicTesting()
-);
+testing.getTestBed().initTestEnvironment(browser.BrowserDynamicTestingModule, browser.platformBrowserDynamicTesting());
