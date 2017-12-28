@@ -1,4 +1,7 @@
 # 5.0.0-alpha.5
+### Features
+- add accessibility features to plain-gallery
+
 ### Internal library changes
 - switch to Nwrl nx workspace
 - improve scss
@@ -8,9 +11,14 @@
 
 ### CI
 - add sonarcloud.io analysys
+- fix and update all CI config files
 
 ### Docs
 - add Typedoc also for interfaces, enums, classes, directives and so on
+
+### Others
+- add prettier config
+- add sass-lint config
 
 
 # 5.0.0-alpha.4
