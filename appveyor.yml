@@ -137,10 +137,10 @@ build_script:
   - cd examples/universal
   - npm install
   - cd ../..
-  # build and test library
+  # build
   - npm run build:all
-  - npm run test:ci
-  - npm run e2e:ci
+  # Note: unit testing and e2e testing scripts are below in "test_script"
+  # -------------------- examples ----------------------
   # build main angular-cli with ng-packagr
   - npm run build:main:dev
   - npm run build:main:prod
@@ -183,7 +183,8 @@ test_script:
   - node --version && npm --version
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
   # run tests
-#  - npm test # FIXME
+  - npm run test:ci
+  - npm run e2e:ci
 
 #---------------------------------#
 #      artifacts configuration    #

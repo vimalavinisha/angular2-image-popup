@@ -17,10 +17,8 @@ cd examples/universal
 npm install
 cd ../..
 
-echo "npm run build and test library on $TRAVIS_OS_NAME"
+echo "npm run build library on $TRAVIS_OS_NAME"
 npm run build:all
-npm run test:ci
-npm run e2e:ci
 
 echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
 npm run build:main:dev
@@ -51,3 +49,6 @@ npm run build:prerender
 #npm test
 cd ../..
 
+echo "testing library on $TRAVIS_OS_NAME"
+npm run test:ci
+npm run e2e:ci

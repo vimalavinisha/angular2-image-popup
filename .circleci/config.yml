@@ -54,13 +54,6 @@ jobs:
       - run:
           name: run-build-all-libray
           command: npm run build:all
-      # test the library
-      - run:
-          name: run-test-library
-          command: npm run test:ci
-      - run:
-          name: run-e2e-library
-          command: npm run e2e:ci
       # main angular-cli
       - run:
           name: run-build-dev-main-angular-cli
@@ -110,6 +103,13 @@ jobs:
 #      - run:
 #          name: run-test-demo-demo-universal
 #          command: cd examples/universal && npm test
+      # test the library
+      - run:
+          name: run-test-library
+          command: npm run test:ci
+      - run:
+          name: run-e2e-library
+          command: npm run e2e:ci
       # docs
       - run:
           name: run-docs
