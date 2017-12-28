@@ -120,7 +120,7 @@
     "karma-sonarqube-unit-reporter": "0.0.14",
     "lite-server": "^2.3.0",
     "ng-packagr": "^1.6.0",
-    "prettier": "^1.9.0",
+    "prettier": "1.9.2",
     "protractor": "^5.2.2",
     "rimraf": "^2.6.2",
     "sass-lint": "^1.12.1",

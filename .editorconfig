@@ -10,7 +10,7 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.md]
-max_line_length = 155
+max_line_length = 240
 trim_trailing_whitespace = false
 
 [*.{js,json,ts}]
