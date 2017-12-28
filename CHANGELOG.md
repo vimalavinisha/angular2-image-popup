@@ -6,6 +6,9 @@
 - move `getIndex` to utils
 - general refactoring to import from model/index and utils/index
 
+### CI
+- add sonarcloud.io analysys
+
 ### Docs
 - add Typedoc also for interfaces, enums, classes, directives and so on
 
