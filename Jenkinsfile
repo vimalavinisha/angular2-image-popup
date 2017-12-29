@@ -9,6 +9,10 @@ node {
         sh "node -v"
         sh "npm -v"
         sh "npm rebuild node-sass --force"
+        sh "cd examples/systemjs && npm rebuild node-sass --force"
+        sh "cd examples/webpack && npm rebuild node-sass --force"
+        sh "cd examples/angular-cli npm rebuild node-sass --force"
+        sh "cd examples/universal && npm rebuild node-sass --force"
     }
 
     stage('checkout') {
