@@ -29,6 +29,8 @@ import { Image } from '../../model/image.class';
 import { Size } from '../../model/size.interface';
 import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
+import { getIndex } from '../../utils/image.util';
+
 /**
  * Component with the gallery of thumbs.
  * In receives an array of Images, a boolean to show/hide
@@ -183,7 +185,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     if (!image) {
       return '';
     }
-    return image.plain && image.plain.description ? image.plain.description : `Image ${this.getIndex(image, this.images)}`;
+    return image.plain && image.plain.description ? image.plain.description : `Image ${getIndex(image, this.images)}`;
   }
 
   /**
@@ -200,7 +202,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
       description = image.modal.description;
     }
 
-    const currentIndex: number = this.getIndex(image, this.images);
+    const currentIndex: number = getIndex(image, this.images);
     const prevDescription: string = 'Image ' + (currentIndex + 1) + '/' + this.images.length;
     let currImgDescription: string = description ? description : '';
 
@@ -311,21 +313,5 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     if (config.layout instanceof AdvancedLayout) {
       this.imageGrid = [this.images];
     }
-  }
-
-  /**
-   * Private method to get the index of an image.
-   * @param {Image} image to get the index
-   * @param {Image[]} arrayOfImages to search the image within it
-   * @returns {number} the index of the image
-   * @throws an Error if the input image doesn't contain an id
-   */
-  private getIndex(image: Image, arrayOfImages: Image[]): number {
-    // id is mandatory. You can use either numbers or strings.
-    // If the id is 0, I shouldn't throw an error.
-    if (!image || (!image.id && image.id !== 0)) {
-      throw new Error(`Image 'id' is mandatory`);
-    }
-    return arrayOfImages.findIndex((val: Image) => val.id === image.id);
   }
 }
