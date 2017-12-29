@@ -742,7 +742,8 @@
 //
 //     // TODO This feature will be deprecated ad removed sooner or later, so don't loose your time with this test
 //     IMAGES.forEach((val: Image, index: number) => {
-//       it(`(to deprecate) should display the modal gallery after a click on the item with index=${index} of the thumbs gallery with IMAGE POINTER (Array)`, () => {
+//       it(`(to deprecate) should display the modal gallery after a click on the item with index=${index} of the
+//            thumbs gallery with IMAGE POINTER (Array)`, () => {
 //         comp.show.subscribe((out: ImageModalEvent) => {
 //           expect(out.action).toBe(Action.LOAD);
 //           expect(out.result).toBe(comp.imagePointer + 1);

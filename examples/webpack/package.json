@@ -56,7 +56,7 @@
     "@angular/platform-browser-dynamic": "^4.4.1",
     "@angular/platform-server": "^4.4.1",
     "@angular/router": "^4.4.1",
-    "angular-modal-gallery": "^5.0.0-alpha.2",
+    "angular-modal-gallery": "^5.0.0-alpha.4",
     "bootstrap": "^4.0.0-beta",
     "bootstrap-loader": "^2.2.0",
     "classlist.js": "^1.1.20150312",
@@ -72,7 +72,7 @@
     "rxjs": "^5.5.6",
     "tether": "^1.4.3",
     "web-animations-js": "^2.3.1",
-    "zone.js": "^0.8.17"
+    "zone.js": "^0.8.19"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^4.4.1",
@@ -80,9 +80,9 @@
     "@angularclass/hmr-loader": "^3.0.4",
     "@compodoc/compodoc": "^1.0.5",
     "@types/hammerjs": "^2.0.35",
-    "@types/jasmine": "^2.8.2",
+    "@types/jasmine": "^2.8.3",
     "@types/jquery": "^3.2.13",
-    "@types/mousetrap": "^1.5.34",
+    "@types/mousetrap": "^1.6.0",
     "@types/node": "^8.5.2",
     "@types/selenium-webdriver": "^3.0.6",
     "@types/source-map": "^0.5.0",
@@ -92,7 +92,7 @@
     "autodll-webpack-plugin": "=0.2.1",
     "autoprefixer": "^7.2.1",
     "awesome-typescript-loader": "^3.4.1",
-    "browser-sync": "^2.21.0",
+    "browser-sync": "^2.23.1",
     "browser-sync-webpack-plugin": "^1.2.0",
     "chunk-manifest-webpack-plugin": "^1.1.2",
     "codelyzer": "^3.2.1",

@@ -44,19 +44,19 @@ Thumbs.db
 /angular-modal-gallery/
 
 # Docs
-docs/
+/docs/
 
 # Tests
-coverage/
+/coverage/
 
 # SonarQube
 .scannerwork/
 /reports/
 
 # Examples
-examples/systemjs/app/*.js
-examples/systemjs/app/*.map
-examples/webpack/docs/
-examples/webpack/dist/
-examples/angular-cli/dist/
-examples/universal-starter/dist/
+/examples/systemjs/app/*.js
+/examples/systemjs/app/*.map
+/examples/webpack/docs/
+/examples/webpack/dist/
+/examples/angular-cli/dist/
+/examples/universal-starter/dist/

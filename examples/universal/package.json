@@ -30,19 +30,19 @@
     "@angular/router": "^5.1.2",
     "@nguniversal/express-engine": "^5.0.0-beta.5",
     "@nguniversal/module-map-ngfactory-loader": "^5.0.0-beta.5",
-    "angular-modal-gallery": "^5.0.0-alpha.2",
+    "angular-modal-gallery": "^5.0.0-alpha.4",
     "core-js": "^2.4.1",
     "hammerjs": "^2.0.8",
     "mousetrap": "^1.6.1",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.14"
+    "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.2",
+    "@angular/cli": "^1.6.3",
     "@angular/compiler-cli": "^5.1.2",
     "@angular/language-service": "^5.1.2",
     "@types/hammerjs": "^2.0.35",
-    "@types/mousetrap": "^1.5.34",
+    "@types/mousetrap": "^1.6.0",
     "@types/node": "^8.5.2",
     "cpy-cli": "^1.0.1",
     "express": "^4.15.2",
@@ -50,6 +50,6 @@
     "reflect-metadata": "^0.1.10",
     "regexp-replace-loader": "^1.0.1",
     "ts-loader": "^3.2.0",
-    "typescript": "^2.5.3"
+    "typescript": "=2.5.3"
   }
 }
