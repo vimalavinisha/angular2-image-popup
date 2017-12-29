@@ -8,6 +8,7 @@ node {
         sh "npm install -g npm@latest"
         sh "node -v"
         sh "npm -v"
+        sh "npm rebuild node-sass --force"
     }
 
     stage('checkout') {
