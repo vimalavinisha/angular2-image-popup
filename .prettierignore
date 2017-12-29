@@ -10,9 +10,12 @@
 /.scannerwork/
 /angular-modal-gallery/
 /coverage/
-/dist/
+**/dist/
 **/node_modules/
 /reports/
+
+/examples/universal/dist/
+/examples/webpack/.awcache/
 
 **/*.spec.ts
 **/e2e/
