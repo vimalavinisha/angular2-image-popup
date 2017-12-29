@@ -31,7 +31,7 @@
  */
 import { Image } from '../model/image.class';
 
-function getIndex(image: Image, arrayOfImages: Image[]): number {
+export function getIndex(image: Image, arrayOfImages: Image[]): number {
   // id is mandatory. You can use either numbers or strings.
   // If the id is 0, I shouldn't throw an error.
   if (!image || (!image.id && image.id !== 0)) {
