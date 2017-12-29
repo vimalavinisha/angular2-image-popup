@@ -12,6 +12,7 @@
 ### CI
 - add sonarcloud.io analysys
 - fix and update all CI config files
+- add Jenkins 2
 
 ### Docs
 - add Typedoc also for interfaces, enums, classes, directives and so on
