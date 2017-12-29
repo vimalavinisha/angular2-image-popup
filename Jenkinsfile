@@ -11,6 +11,10 @@ node {
         checkout scm
     }
 
+    stage('npm install @angular/cli globally') {
+        sh "npm install -g @angular/cli@1.6.0"
+    }
+
     stage('npm install') {
         sh "npm install"
     }
