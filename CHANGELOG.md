@@ -4,7 +4,7 @@
 
 ### Internal library changes
 - switch to Nwrl nx workspace
-- improve scss
+- improve scss with sass-lint
 - add both e2e and unit tests support with Nwrl nx workspace
 - move `getIndex` to utils
 - general refactoring to import from model/index and utils/index
