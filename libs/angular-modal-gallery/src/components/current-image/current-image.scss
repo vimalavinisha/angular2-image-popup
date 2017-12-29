@@ -1,28 +1,26 @@
-/*
- The MIT License (MIT)
+// The MIT License (MIT)
+//
+// Copyright (c) 2017-2018 Stefano Cappa (Ks89)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
- Copyright (c) 2017-2018 Stefano Cappa (Ks89)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
-
-/* all svgs are converted to base 64 with this website http://b64.io/ */
+// all svgs are converted to base 64 with this website http://b64.io/
 
 $main-img-container-margin-top: 20px;
 $main-img-container-margin-bottom: 20px;
@@ -77,18 +75,18 @@ $description-color: white;
 
 #current-image {
   height: auto;
-  /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
+  // Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally
   max-height: $curr-img-max-height;
   max-width: $curr-img-max-width;
   cursor: pointer;
 }
 
-/* trick found here https://stackoverflow.com/a/37600130/3590376 */
-/* Using a media query I can set a max width */
+// trick found here https://stackoverflow.com/a/37600130/3590376
+// Using a media query I can set a max width
 @media screen and (min-width: $curr-img-max-width-trick) {
   #current-image {
     height: auto;
-    /* Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally */
+    // Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally
     max-width: $curr-img-max-width-trick;
     max-height: $curr-img-max-height;
     cursor: pointer;
@@ -101,13 +99,13 @@ $description-color: white;
 }
 
 figure {
-  margin: 0; /* => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones*/
+  margin: 0; // => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones
   position: relative;
 
   img {
-    /*display: block;*/
-    /* don't use this */
-    /* Bootstrap 4 img-fluid class uses max-width: 100% and height: auto*/
+    // display: block;
+    // don't use this
+    // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
     max-width: 100%;
     height: auto;
   }
@@ -131,10 +129,10 @@ figcaption {
 
 @mixin fadein($opacity-from, $opacity-to) {
   from {
-    opacity: $opacity-from
+    opacity: $opacity-from;
   }
   to {
-    opacity: $opacity-to
+    opacity: $opacity-to;
   }
 }
 
