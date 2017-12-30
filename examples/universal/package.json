@@ -50,6 +50,6 @@
     "reflect-metadata": "^0.1.10",
     "regexp-replace-loader": "^1.0.1",
     "ts-loader": "^3.2.0",
-    "typescript": "=2.5.3"
+    "typescript": "2.5.3"
   }
 }

@@ -43,6 +43,16 @@ const DIST_FOLDER = join(process.cwd(), 'dist');
 // Our index.html we'll use as our template
 const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
 
+// ----------------------------------------------
+// ----------------------------------------------
+// workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
+// const domino = require('domino');
+// const win = domino.createWindow(template);
+// global['window'] = win;
+// global['document'] = win.document;
+// ----------------------------------------------
+// ----------------------------------------------
+
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
 
