@@ -6,7 +6,7 @@ If you want to help me, modify the source code, but **before to create a pull re
 Every time you'll run `npm install` inside a demo's folder, you must rebuild all with `npm run build:all`
 
 # A. Cleanup and initialization
-1. `npm install -g lite-server @angular/cli`
+1. `npm install -g lite-server @angular/cli@1.6.0`
 2. remove all `node_modules` and temp folders with compiled files (if necessary)
 3. `npm install` (from the root of this project)
 4. `npm run clean:all`
@@ -23,15 +23,26 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 15. `npm install`
 16. `cd ../../..`
 17. `npm run build:all`
-18. `npm run docs` => try to open `./docs/index.html` with the `internal library documentation`
-19. `npm run compodoc` => try to open `./documentation/index.html` with the `internal library documentation`
+18. `npm run docs:typedoc` => try to open `./docs/typedoc/index.html` with the `internal library documentation`
+19. `npm run docs:compodoc` => try to open `./docs/compodoc/index.html` with the `internal library documentation`
+20. `npm test`
+21. `npm run e2e`
 
-# B. Run systemjs example
+# B. Run main angular-cli example
+1. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+3. `npm run build:main:dev`
+4. `cd dist/apps/main/ && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+5. `cd ../../..`
+6. `npm run build:main:prod`
+7. `cd dist/apps/main/ && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+8. `cd ../../..`
+
+# C. Run systemjs example
 1. `cd examples/systemjs`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `cd ../..`
 
-# C. Run webpack example
+# D. Run webpack example
 1. `cd examples/webpack`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
@@ -44,37 +55,29 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 10. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
 11. `cd ../../..`
 
-# D. Run angular-cli example
+# E. Run angular-cli example
 1. `cd examples/angular-cli`
-2. `npm run start` => if everything is ok (also in browser's console), kill the process and go to the next step
-3. `ng build`
+2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
+3. `npm run build:dev`
 4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
 5. `cd ..`
-6. `ng build --aot`
+6. `npm run build:prod`
 7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-8. `cd ..`
-9. `ng build --prod`
-10. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-11. `cd ../../..`
+8. `cd ../../..`
 
-# D. Run universal example
+# F. Run universal example
 1. `cd examples/universal`
 2. `npm run start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:ssr && npm run serve:ssr` => if everything is ok (also in browser's console), kill the process and go to the next step
 4. `npm run build:prerender && npm run serve:prerender` => if everything is ok (also in browser's console), kill the process and go to the next step
 5. `cd ../../..`
 
-# E. Create your pull request
+# G. Create your pull request
 1. **If it is ok, create your pull request specifying all the details**
 
 
-TODO RESTORE THESE STEPS IN 5.x.x VERSIONS:<br>
--15. `npm test` => **IMPORTANT** if everything is ok, try to open `./coverage/html/index.html` with the `code coverage`-<br>
-<br>
-<br>
-<br>
-<br>
-
+<br/>
+<br/>
 
 # Only for the author @Ks89 - How to publish this on npm?
 
@@ -105,4 +108,3 @@ TODO RESTORE THESE STEPS IN 5.x.x VERSIONS:<br>
 5. `npm publish dist/angular-modal-gallery --tag next`
 6. `git push origin master`
 7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
-

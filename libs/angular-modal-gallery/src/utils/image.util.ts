@@ -23,19 +23,32 @@
  */
 
 /**
- * Private method to get the index of an image.
- * @param {Image} image to get the index
+ * Private method to get the index of the input `image` from `arrayOfImages`
+ * @param {Image} image to get the index. The image 'id' must be a number >= 0
  * @param {Image[]} arrayOfImages to search the image within it
- * @returns {number} the index of the image
- * @throws an Error if the input image doesn't contain an id
+ * @returns {number} the index of the image. -1 if not found.
+ * @throws an Error if either image or arrayOfImages are not valid,
+ *  or if the input image doesn't contain an 'id', or the 'id' is < 0
  */
 import { Image } from '../model/image.class';
 
 export function getIndex(image: Image, arrayOfImages: Image[]): number {
-  // id is mandatory. You can use either numbers or strings.
-  // If the id is 0, I shouldn't throw an error.
-  if (!image || (!image.id && image.id !== 0)) {
-    throw new Error(`Image 'id' is mandatory`);
+  if (!image) {
+    throw new Error('image must be a valid Image object');
   }
+
+  if (!arrayOfImages) {
+    throw new Error('arrayOfImages must be a valid Image[]');
+  }
+
+  if (!image.id && image.id !== 0) {
+    // id = 0 is admitted
+    throw new Error(`A numeric Image 'id' is mandatory`);
+  }
+
+  if (image.id < 0) {
+    throw new Error(`Image 'id' must be >= 0`);
+  }
+
   return arrayOfImages.findIndex((val: Image) => val.id === image.id);
 }

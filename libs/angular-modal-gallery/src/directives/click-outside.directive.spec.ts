@@ -22,88 +22,119 @@
  SOFTWARE.
  */
 
-// import { Component, DebugElement, EventEmitter, Output } from '@angular/core';
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { ClickOutsideDirective } from './click-outside.directive';
-// import { By } from '@angular/platform-browser';
-//
-// @Component({
-//   selector: 'test-click-outside',
-//   template: `
-//     <div class="ng-overlay">
-//
-//       <div id="ng-gallery-content" class="ng-gallery-content"
-//            click-outside [clickOutsideEnable]="true"
-//            (clickOutside)="onClickOutside($event)">
-//
-//         <div class="uil-ring-css">
-//           <div></div>
-//         </div>
-//
-//         <a class="nav-left"><i class="fa fa-angle-left"></i></a>
-//         <img class="effect" src=""/>
-//         <a class="nav-right"><i class="fa fa-angle-right"></i></a>
-//         <span class="info-text"></span>
-//       </div>
-//     </div>
-//   `
-// })
-// class TestClickOutsideComponent {
-//   @Output() clicked: EventEmitter<boolean> = new EventEmitter<boolean>();
-//
-//   onClickOutside(event: boolean) {
-//     console.log('clicked outside in comp');
-//     this.clicked.emit(event);
-//   }
-// }
-//
-// let fixture: ComponentFixture<TestClickOutsideComponent>;
-// let comp: TestClickOutsideComponent;
-// let des: DebugElement[] = [];
-// let directive: ClickOutsideDirective;
-//
-// describe('ClickOutsideDirective', () => {
-//   beforeEach(() => {
-//     TestBed.resetTestingModule();
-//     TestBed.configureTestingModule({
-//       declarations: [TestClickOutsideComponent, ClickOutsideDirective]
-//     }); // not necessary with webpack .compileComponents();
-//
-//     fixture = TestBed.createComponent(TestClickOutsideComponent);
-//     comp = fixture.componentInstance;
-//
-//     fixture.detectChanges();
-//     return fixture.whenStable().then(() => {
-//       fixture.detectChanges();
-//       des = fixture.debugElement.queryAll(By.directive(ClickOutsideDirective));
-//       directive = <ClickOutsideDirective>des[0].injector.get(ClickOutsideDirective);
-//     });
-//   });
-//
-//   it('can instantiate it', () => expect(comp).not.toBeNull());
-//
-//   describe('---tests---', () => {
-//     beforeEach(() => fixture.detectChanges());
-//
-//     it('should have ${expected.length} close-button elements', () => {
-//       expect(des.length).toBe(1);
-//     });
-//
-//     it(`should check expected results`, () => {
-//       directive.clickOutsideEnable = true;
-//
-//       let clickOutsideDirective: DebugElement = fixture.debugElement.query(By.directive(ClickOutsideDirective));
-//       expect(clickOutsideDirective.name).toBe('div');
-//       expect(clickOutsideDirective.attributes['class']).toBe('ng-gallery-content');
-//       expect(clickOutsideDirective.attributes['click-outside']).toBe('');
-//
-//       fixture.detectChanges();
-//
-//       let overlay: DebugElement = fixture.debugElement.query(By.css('div#ng-gallery-content.ng-gallery-content'));
-//       comp.clicked.subscribe((res: boolean) => {
-//         expect(res).toBe(true);
-//       });
-//       overlay.nativeElement.click(); // for this scenario use the native click
-//     });
-//   });
-// });
+import { Component, DebugElement, EventEmitter, Output } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ClickOutsideDirective } from './click-outside.directive';
+import { By } from '@angular/platform-browser';
+
+@Component({
+  selector: 'ks-test-click-outside',
+  template: `
+    <div id="modal-gallery-wrapper"
+         ksClickOutside [clickOutsideEnable]="enableCloseOutside"
+         (clickOutside)="onClickOutside($event)">
+
+      <div class="ng-overlay"></div>
+
+      <div id="flex-min-height-ie-fix">
+        <div id="modal-gallery-container">
+
+          <img id="current-image-test" class="inside current-image-next" [src]="'path'"/>
+
+          <div id="hidden-div-test" class="div-class hidden"></div>
+
+        </div>
+      </div>
+    </div>
+  `
+})
+class TestClickOutsideComponent {
+  @Output() clicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  onClickOutside(event: boolean) {
+    console.log('clicked outside in comp');
+    this.clicked.emit(event);
+  }
+}
+
+let fixture: ComponentFixture<TestClickOutsideComponent>;
+let comp: TestClickOutsideComponent;
+let des: DebugElement[] = [];
+let directive: ClickOutsideDirective;
+
+describe('ClickOutsideDirective', () => {
+  beforeEach(() => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      declarations: [TestClickOutsideComponent, ClickOutsideDirective]
+    }); // not necessary with webpack .compileComponents();
+
+    fixture = TestBed.createComponent(TestClickOutsideComponent);
+    comp = fixture.componentInstance;
+
+    fixture.detectChanges();
+    return fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      des = fixture.debugElement.queryAll(By.directive(ClickOutsideDirective));
+      directive = <ClickOutsideDirective>des[0].injector.get(ClickOutsideDirective);
+    });
+  });
+
+  it('can instantiate it', () => expect(comp).not.toBeNull());
+
+  it('should have click-outside directive', () => {
+    expect(des.length).toBe(1);
+  });
+
+  describe('---click outside---', () => {
+    beforeEach(() => fixture.detectChanges());
+
+    it(`should check for ksClickOutside`, () => {
+      const clickOutsideDirective: DebugElement = fixture.debugElement.query(By.directive(ClickOutsideDirective));
+      expect(clickOutsideDirective.name).toBe('div');
+      expect(clickOutsideDirective.attributes['id']).toBe('modal-gallery-wrapper');
+      expect(clickOutsideDirective.attributes['ksClickOutside']).toBe('');
+    });
+
+    it(`should close the modal gallery after a click`, () => {
+      directive.clickOutsideEnable = true;
+      fixture.detectChanges();
+      const overlay: DebugElement = fixture.debugElement.query(By.css('div#modal-gallery-wrapper'));
+      comp.clicked.subscribe((res: boolean) => {
+        expect(res).toBe(true);
+      });
+      // in this scenario I'm using the native click
+      overlay.nativeElement.click();
+    });
+
+    it(`shouldn't close the modal gallery after a click, because close-outside directive is disabled`, () => {
+      directive.clickOutsideEnable = false;
+      fixture.detectChanges();
+      const overlay: DebugElement = fixture.debugElement.query(By.css('div#modal-gallery-wrapper'));
+      comp.clicked.subscribe(() => {
+        fail('if clickOutsideEnable = false there will be no clicked events');
+      });
+      overlay.nativeElement.click();
+    });
+
+    it(`shouldn't close the modal gallery after a click over the current-image, because it isn't 'inside'`, () => {
+      directive.clickOutsideEnable = true;
+      fixture.detectChanges();
+      const image: DebugElement = fixture.debugElement.query(By.css('img#current-image-test'));
+      comp.clicked.subscribe((res: boolean) => {
+        fail(`if it's 'not inside' (variable isInside = false) there will be no clicked events`);
+      });
+      image.nativeElement.click();
+    });
+
+    it(`should close the modal gallery after a click over an 'hidden' div`, () => {
+      directive.clickOutsideEnable = true;
+      fixture.detectChanges();
+      const image: DebugElement = fixture.debugElement.query(By.css('div#hidden-div-test'));
+      comp.clicked.subscribe((res: boolean) => {
+        expect(res).toBe(true);
+      });
+      image.nativeElement.click();
+    });
+  });
+});
