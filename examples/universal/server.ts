@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -46,10 +46,10 @@ const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toStri
 // ----------------------------------------------
 // ----------------------------------------------
 // workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
-// const domino = require('domino');
-// const win = domino.createWindow(template);
-// global['window'] = win;
-// global['document'] = win.document;
+const domino = require('domino');
+const win = domino.createWindow(template);
+global['window'] = win;
+global['document'] = win.document;
 // ----------------------------------------------
 // ----------------------------------------------
 
@@ -87,6 +87,7 @@ app.get(
 
 // ALl regular routes use the Universal engine
 app.get('*', (req, res) => {
+  global['navigator'] = req['headers']['user-agent'];
   res.render('index', { req });
 });
 

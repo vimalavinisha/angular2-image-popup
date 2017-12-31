@@ -59,4 +59,5 @@ Thumbs.db
 /examples/webpack/docs/
 /examples/webpack/dist/
 /examples/angular-cli/dist/
+/examples/angular-cli-material/dist/
 /examples/universal-starter/dist/

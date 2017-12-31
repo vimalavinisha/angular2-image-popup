@@ -167,6 +167,12 @@ build_script:
   - npm run build:prod
   - npm run test:ci
   - cd ../..
+  # build official angular-cli-material example
+  - cd examples/angular-cli-material
+  - npm run build:dev
+  - npm run build:prod
+  - npm run test:ci
+  - cd ../..
   # build official universal example
   - cd examples/universal
   - npm run build:dev

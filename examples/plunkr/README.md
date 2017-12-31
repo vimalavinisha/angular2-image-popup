@@ -8,7 +8,7 @@ angular-modal-gallery 5.x.x official [plunkr demo](https://embed.plnkr.co/kzrd05
 ```
  The MIT License (MIT)
 
- Copyright (c) 2017 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

@@ -56,6 +56,12 @@ node {
         sh "cd examples/angular-cli && npm run test:ci"
     }
 
+    stage('angular-cli-material example') {
+        sh "cd examples/angular-cli-material && npm run build:dev"
+        sh "cd examples/angular-cli-material && npm run build:prod"
+        sh "cd examples/angular-cli-material && npm run test:ci"
+    }
+
     stage('universal example') {
         sh "cd examples/universal && npm run build:dev"
         sh "cd examples/universal && npm run build:prod"

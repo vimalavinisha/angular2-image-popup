@@ -87,6 +87,16 @@ jobs:
       - run:
           name: run-test-demo-angular-cli
           command: cd examples/angular-cli && npm run test:ci
+      # angular-cli-material
+      - run:
+          name: run-build-dev-demo-angular-cli-material
+          command: cd examples/angular-cli-material && npm run build:dev
+      - run:
+          name: run-build-prod-aot-demo-angular-cli-material
+          command: cd examples/angular-cli-material && npm run build:prod
+      - run:
+          name: run-test-demo-angular-cli-material
+          command: cd examples/angular-cli-material && npm run test:ci
       # universal
       - run:
           name: run-build-dev-demo-universal
