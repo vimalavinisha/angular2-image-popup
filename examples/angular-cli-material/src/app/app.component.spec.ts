@@ -27,14 +27,24 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatButtonModule, MatCheckboxModule, MatDialog, MatDialogModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatButtonModule,
+        MatCheckboxModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule
+      ],
       declarations: [
         AppComponent
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [MatDialog]
     });
     TestBed.compileComponents();
   });
