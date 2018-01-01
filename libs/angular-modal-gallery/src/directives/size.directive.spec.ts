@@ -21,45 +21,57 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { WrapDirective } from './wrap.directive';
+import { SizeDirective } from './size.directive';
+import { Size } from '../model/size.interface';
+
+const expected: Size[] = [
+  {width: '100px', height: '80px'},
+  {width: '50px', height: '20px'},
+  {width: '50%', height: '100%'},
+  {width: 'auto', height: 'auto'},
+  {width: 'auto', height: '20px'},
+  {width: '50px', height: 'auto'},
+  {width: '', height: ''}
+];
 
 @Component({
-  selector: 'ks-test-wrap',
+  selector: 'ks-test-size',
   template: `
-    <div ksWrap [wrap]="true" [width]="'100px'"></div>
-    <div ksWrap [wrap]="false" [width]="'100px'"></div>
+    <div ksSize [sizeConfig]="{width: '100px', height: '80px'}"></div>
+    <div ksSize [sizeConfig]="{width: '50px', height: '20px'}"></div>
+    <div ksSize [sizeConfig]="{width: '50%', height: '100%'}"></div>
+    <div ksSize [sizeConfig]="{width: 'auto', height: 'auto'}"></div>
+    <div ksSize [sizeConfig]="{width: 'auto', height: '20px'}"></div>
+    <div ksSize [sizeConfig]="{width: '50px', height: 'auto'}"></div>
+    <div ksSize [sizeConfig]=" {width: '', height: ''}"></div>
   `
 })
-class TestWrapComponent {}
+class TestSizeComponent {}
 
-let fixture: ComponentFixture<TestWrapComponent>;
-let comp: TestWrapComponent;
+let fixture: ComponentFixture<TestSizeComponent>;
+let comp: TestSizeComponent;
 let des: DebugElement[] = [];
 let bareElement: DebugElement;
 
-const expected: any = [
-  {width: '100px', wrap: true, wrapStyle: 'wrap'},
-  {width: '', wrap: false, wrapStyle: ''}
-];
-
-describe('WrapDirective', () => {
+describe('SizeDirective', () => {
 
   beforeEach(() => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      declarations: [TestWrapComponent, WrapDirective]
+      declarations: [TestSizeComponent, SizeDirective]
     }); // not necessary with webpack .compileComponents();
-    fixture = TestBed.createComponent(TestWrapComponent);
+    fixture = TestBed.createComponent(TestSizeComponent);
     comp = fixture.componentInstance;
 
     fixture.detectChanges();
     return fixture.whenStable().then(() => {
       fixture.detectChanges();
-      bareElement = fixture.debugElement.query(By.css('div:not(ksWrap)'));
-      des = fixture.debugElement.queryAll(By.directive(WrapDirective));
+      bareElement = fixture.debugElement.query(By.css('div:not(ksSize)'));
+      des = fixture.debugElement.queryAll(By.directive(SizeDirective));
     });
   });
 
@@ -70,18 +82,18 @@ describe('WrapDirective', () => {
     beforeEach(() => fixture.detectChanges());
 
     it('should have this directive', () => {
-      expect(des.length).toBe(2);
+      expect(des.length).toBe(expected.length);
     });
 
-    expected.forEach((val: any, index: number) => {
+    expected.forEach((val: Size, index: number) => {
       it(`should check expected results for <div> at position ${index}`, () => {
         expect(des[index].nativeElement.style.width).toBe(val.width);
-        expect(des[index].nativeElement.style['flex-wrap']).toBe(val.wrapStyle);
+        expect(des[index].nativeElement.style.height).toBe(val.height);
       });
     });
 
     it('should check expected results for bare <div> without this directive', () => {
-      expect(bareElement.properties['ksWrap']).toBeUndefined();
+      expect(bareElement.properties['ksSize']).toBeUndefined();
     });
   });
 });
