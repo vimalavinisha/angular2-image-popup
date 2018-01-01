@@ -47,7 +47,7 @@ Thumbs.db
 /docs/
 
 # Tests
-/coverage/
+**/coverage/
 
 # SonarQube
 .scannerwork/

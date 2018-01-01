@@ -16,6 +16,10 @@
 
 /examples/universal/dist/
 /examples/webpack/.awcache/
+/examples/webpack/coverage/
+/examples/angular-cli-material/coverage/
+/examples/angular-cli-material/dist/
+/examples/angular-cli/dist/
 
 **/*.spec.ts
 **/e2e/
