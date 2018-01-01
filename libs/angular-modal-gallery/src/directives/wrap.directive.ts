@@ -61,9 +61,10 @@ export class WrapDirective implements OnInit, OnChanges {
   }
 
   /**
-   * Private method to change the flex-wrap css property.
+   * Private method to change both widht and flex-wrap css properties.
    */
   private applyStyle() {
+    // TODO is this right???? If wrap os false I cannot apply width and flex-wrap
     if (!this.wrap) {
       return;
     }
