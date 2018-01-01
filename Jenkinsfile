@@ -42,14 +42,13 @@ node {
     stage('main example') {
         sh "npm run build:main:dev"
         sh "npm run build:main:prod"
-        sh "xvfb-run npm run test:ci"
     }
 
     stage('webpack example') {
         sh "cd examples/webpack && npm run build:dev"
         sh "cd examples/webpack && npm run build:prod"
         sh "cd examples/webpack && npm run clean && npm run build:prod:aot"
-        sh "cd examples/webpack && xvfb-run npm run test:jenkins"
+        sh "cd examples/webpack && xvfb-run npm run test:ci:jenkins"
     }
 
     stage('angular-cli example') {

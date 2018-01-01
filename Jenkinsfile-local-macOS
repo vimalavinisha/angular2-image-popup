@@ -30,6 +30,7 @@ node {
         sh "cd examples/systemjs && npm install"
         sh "cd examples/webpack && npm install"
         sh "cd examples/angular-cli && npm install"
+        sh "cd examples/angular-cli-material && npm install"
         sh "cd examples/universal && npm install"
     }
 
@@ -40,7 +41,6 @@ node {
     stage('main example') {
         sh "npm run build:main:dev"
         sh "npm run build:main:prod"
-        sh "npm run test:ci"
     }
 
     stage('webpack example') {
