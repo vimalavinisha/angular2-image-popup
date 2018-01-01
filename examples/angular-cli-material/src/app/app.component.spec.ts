@@ -24,10 +24,11 @@
 
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatButtonModule, MatCheckboxModule, MatDialog, MatDialogModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDialog, MatDialogModule,
+  MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(() => {
