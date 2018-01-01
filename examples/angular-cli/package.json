@@ -10,6 +10,7 @@
     "test": "karma start --watch=false --code-coverage=true",
     "test:watch": "karma start --watch=true --code-coverage=true",
     "test:ci": "ng test --watch=false --no-progress --code-coverage=true",
+    "test:ci:jenkins": "cross-env-shell CI=true JENKINS=true ng test --watch=false --no-progress --code-coverage=true",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -42,6 +43,7 @@
     "@types/mousetrap": "^1.6.0",
     "@types/node": "^8.5.2",
     "codelyzer": "^4.0.2",
+    "cross-env": "^5.1.3",
     "jasmine-core": "^2.8.0",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "^2.0.0",

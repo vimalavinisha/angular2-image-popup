@@ -35,7 +35,7 @@ const os = require('os');
 console.log(`Starting Karma with isCI=${!!isCI()}`);
 
 function isCI() {
-  return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS;
+  return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS || process.env.JENKINS || process.env.CIRCLECI;
 }
 
 function getBrowsers() {
@@ -50,13 +50,16 @@ function getBrowsers() {
     } else if (process.env.CIRCLECI) {
       // variable defined by CIRCLECI itself
       return ['ChromeHeadless', 'Chrome', 'Firefox'];
+    } else if (process.env.JENKINS) {
+      // var that you must define in you server with Jenkins
+      return ['ChromeHeadless', 'Firefox'];
     }
   } else {
     switch (os.platform()) {
       case 'win32': // Windows
-        return ['ChromeHeadless', 'Chrome', 'Firefox' /*,'IE','Edge'*/];
+        return ['ChromeHeadless', 'Chrome', 'Firefox', 'IE' /*,'Edge'*/];
       case 'darwin': // macOS
-        return ['ChromeHeadless', 'Chrome', 'Firefox' /*, 'Safari'*/];
+        return ['ChromeHeadless', 'Chrome', 'Firefox', 'Safari'];
       default:
         // other (linux, freebsd, openbsd, sunos, aix)
         return ['ChromeHeadless', 'Chrome', 'Firefox'];

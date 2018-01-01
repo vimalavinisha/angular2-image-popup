@@ -1,9 +1,8 @@
 node {
     def nodeHome = tool name: 'node-9.3.0', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-    env.PATH = "${nodeHome}:${nodeHome}/bin:${env.PATH}"
+    env.PATH = "${nodeHome}/bin:${env.PATH}"
 
     stage('check tools') {
-        echo env.PATH
         sh "node -v"
         sh "npm -v"
         sh "npm install -g npm@latest"
@@ -31,7 +30,6 @@ node {
         sh "cd examples/systemjs && npm install"
         sh "cd examples/webpack && npm install"
         sh "cd examples/angular-cli && npm install"
-        sh "cd examples/angular-cli-material && npm install"
         sh "cd examples/universal && npm install"
     }
 
@@ -42,26 +40,26 @@ node {
     stage('main example') {
         sh "npm run build:main:dev"
         sh "npm run build:main:prod"
-        sh "xvfb-run npm run test:ci"
+        sh "npm run test:ci"
     }
 
     stage('webpack example') {
         sh "cd examples/webpack && npm run build:dev"
         sh "cd examples/webpack && npm run build:prod"
         sh "cd examples/webpack && npm run clean && npm run build:prod:aot"
-        sh "cd examples/webpack && xvfb-run npm run test:jenkins"
+        sh "cd examples/webpack && npm test"
     }
 
     stage('angular-cli example') {
         sh "cd examples/angular-cli && npm run build:dev"
         sh "cd examples/angular-cli && npm run build:prod"
-        sh "cd examples/angular-cli && xvfb-run npm run test:ci:jenkins"
+        sh "cd examples/angular-cli && npm run test:ci"
     }
 
     stage('angular-cli-material example') {
         sh "cd examples/angular-cli-material && npm run build:dev"
         sh "cd examples/angular-cli-material && npm run build:prod"
-        sh "cd examples/angular-cli-material && xvfb-run npm run test:ci:jenkins"
+        sh "cd examples/angular-cli-material && npm run test:ci"
     }
 
     stage('universal example') {
@@ -72,11 +70,11 @@ node {
     }
 
     stage('npm test') {
-        sh "xvfb-run npm run test:ci:jenkins"
+        sh "npm run test:ci"
     }
 
     stage('npm e2e') {
-        sh "xvfb-run npm run e2e:ci"
+        sh "npm run e2e:ci"
     }
 
     stage('npm typedoc') {
