@@ -44,7 +44,6 @@ echo "building official angular-cli-material example on $TRAVIS_OS_NAME"
 cd examples/angular-cli-material
 npm run build:dev
 npm run build:prod
-npm run test:ci
 cd ../..
 
 echo "building official universal example on $TRAVIS_OS_NAME"

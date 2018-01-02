@@ -60,7 +60,6 @@ node {
     stage('angular-cli-material example') {
         sh "cd examples/angular-cli-material && npm run build:dev"
         sh "cd examples/angular-cli-material && npm run build:prod"
-        sh "cd examples/angular-cli-material && xvfb-run npm run test:ci:jenkins"
     }
 
     stage('universal example') {
