@@ -24,9 +24,10 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-@import 'variables';
-@import '../node_modules/font-awesome/scss/font-awesome';
-@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import "variables";
+@import "../node_modules/font-awesome/scss/font-awesome";
+@import "~@angular/material/theming";
+//@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 
 /* Not required by angular-modal-gallery. Used only in this demo */
