@@ -12,7 +12,7 @@
 ### CI
 - add sonarcloud.io analysys
 - fix and update all CI config files
-- add Jenkins 2
+- add Jenkins 2 (both local macOS and remote config on a private vps)
 
 ### Docs
 - add Typedoc also for interfaces, enums, classes, directives and so on
