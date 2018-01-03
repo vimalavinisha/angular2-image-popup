@@ -72,6 +72,6 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
     }
 
     const imgPath: string = this.image.plain && this.image.plain.img ? this.image.plain.img : this.image.modal.img;
-    this.renderer.setStyle(this.el.nativeElement, 'background', `url('${imgPath}') ${this.style}`);
+    this.renderer.setStyle(this.el.nativeElement, 'background', `url("${imgPath}") ${this.style}`);
   }
 }

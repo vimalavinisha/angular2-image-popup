@@ -35,6 +35,7 @@ const expected: Size[] = [
   {width: 'auto', height: 'auto'},
   {width: 'auto', height: '20px'},
   {width: '50px', height: 'auto'},
+  {width: '', height: ''},
   {width: '', height: ''}
 ];
 
@@ -47,7 +48,8 @@ const expected: Size[] = [
     <div ksSize [sizeConfig]="{width: 'auto', height: 'auto'}"></div>
     <div ksSize [sizeConfig]="{width: 'auto', height: '20px'}"></div>
     <div ksSize [sizeConfig]="{width: '50px', height: 'auto'}"></div>
-    <div ksSize [sizeConfig]=" {width: '', height: ''}"></div>
+    <div ksSize [sizeConfig]="{width: '', height: ''}"></div>
+    <div ksSize [sizeConfig]="null"></div>
   `
 })
 class TestSizeComponent {}
