@@ -20,12 +20,12 @@
     "tsc:w": "tsc -w"
   },
   "dependencies": {
-    "@angular/common": "^5.1.2",
-    "@angular/compiler": "^5.1.2",
-    "@angular/core": "^5.1.2",
-    "@angular/platform-browser": "^5.1.2",
-    "@angular/platform-browser-dynamic": "^5.1.2",
-    "@angular/router": "^5.1.2",
+    "@angular/common": "^5.2.0",
+    "@angular/compiler": "^5.2.0",
+    "@angular/core": "^5.2.0",
+    "@angular/platform-browser": "^5.2.0",
+    "@angular/platform-browser-dynamic": "^5.2.0",
+    "@angular/router": "^5.2.0",
     "angular-modal-gallery": "^5.0.0-alpha.4",
     "core-js": "^2.5.1",
     "font-awesome": "^4.6.3",
@@ -34,12 +34,12 @@
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.6",
     "systemjs": "^0.20.19",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.20"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
     "copyfiles": "^1.2.0",
     "lite-server": "^2.3.0",
-    "typescript": "~2.5.2"
+    "typescript": "^2.6.2"
   }
 }
