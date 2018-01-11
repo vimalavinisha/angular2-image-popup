@@ -28,8 +28,9 @@ import { AccessibleComponent } from '../accessible.component';
 
 import { Action } from '../../model/action.enum';
 import { Image } from '../../model/image.class';
-import { Size } from '../../model/size.interface';
 import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES } from '../../model/buttons-config.interface';
+
+import { closeButton, deleteButton, downloadButton, extUrlButton, refreshButton } from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
 
@@ -98,71 +99,21 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   configButtons: ButtonsConfig;
 
   /**
-   * Default button size object
-   */
-  private defaultSize: Size = { height: 'auto', width: '30px' };
-
-  /**
    * Default buttons array for standard configuration
    */
-  private defaultButtonsDefault: ButtonConfig[] = [
-    {
-      className: 'close-image',
-      size: this.defaultSize,
-      type: ButtonType.CLOSE,
-      title: 'Close this modal image gallery',
-      ariaLabel: 'Close this modal image gallery'
-    }
-  ];
-
+  private defaultButtonsDefault: ButtonConfig[] = [closeButton];
   /**
    * Default buttons array for simple configuration
    */
-  private simpleButtonsDefault: ButtonConfig[] = [
-    {
-      className: 'download-image',
-      size: this.defaultSize,
-      type: ButtonType.DOWNLOAD,
-      title: 'Download the current image',
-      ariaLabel: 'Download the current image'
-    },
-    ...this.defaultButtonsDefault
-  ];
-
+  private simpleButtonsDefault: ButtonConfig[] = [downloadButton, ...this.defaultButtonsDefault];
   /**
    * Default buttons array for advanced configuration
    */
-  private advancedButtonsDefault: ButtonConfig[] = [
-    {
-      className: 'ext-url-image',
-      size: this.defaultSize,
-      type: ButtonType.EXTURL,
-      title: 'Navigate the current image',
-      ariaLabel: 'Navigate the current image'
-    },
-    ...this.simpleButtonsDefault
-  ];
-
+  private advancedButtonsDefault: ButtonConfig[] = [extUrlButton, ...this.simpleButtonsDefault];
   /**
    * Default buttons array for full configuration
    */
-  private fullButtonsDefault: ButtonConfig[] = [
-    {
-      className: 'refresh-image',
-      size: this.defaultSize,
-      type: ButtonType.REFRESH,
-      title: 'Refresh all images',
-      ariaLabel: 'Refresh all images'
-    },
-    {
-      className: 'delete-image',
-      size: this.defaultSize,
-      type: ButtonType.DELETE,
-      title: 'Delete the current image',
-      ariaLabel: 'Delete the current image'
-    },
-    ...this.advancedButtonsDefault
-  ];
+  private fullButtonsDefault: ButtonConfig[] = [refreshButton, deleteButton, ...this.advancedButtonsDefault];
 
   /**
    * Method ´ngOnInit´ to build `configButtons` applying a default value and also to
@@ -215,6 +166,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
       image: null,
       action: action
     };
+    console.error('dataToEmit', dataToEmit);
     switch (button.type) {
       case ButtonType.REFRESH:
         this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
