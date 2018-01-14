@@ -46,10 +46,10 @@ const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toStri
 // ----------------------------------------------
 // ----------------------------------------------
 // workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
-const domino = require('domino');
-const win = domino.createWindow(template);
-global['window'] = win;
-global['document'] = win.document;
+// const domino = require('domino');
+// const win = domino.createWindow(template);
+// global['window'] = win;
+// global['document'] = win.document;
 // ----------------------------------------------
 // ----------------------------------------------
 
@@ -87,7 +87,12 @@ app.get(
 
 // ALl regular routes use the Universal engine
 app.get('*', (req, res) => {
-  global['navigator'] = req['headers']['user-agent'];
+
+  // ---------------------------------------------------
+  // part of the workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
+  // global['navigator'] = req['headers']['user-agent'];
+  // ---------------------------------------------------
+
   res.render('index', { req });
 });
 
