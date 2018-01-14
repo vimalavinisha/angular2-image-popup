@@ -10,6 +10,7 @@
 /.scannerwork/
 /angular-modal-gallery/
 /coverage/
+/docs/
 **/dist/
 **/node_modules/
 /reports/
@@ -20,6 +21,8 @@
 /examples/angular-cli-material/coverage/
 /examples/angular-cli-material/dist/
 /examples/angular-cli/dist/
+
+/examples/universal/server.ts
 
 **/*.spec.ts
 **/e2e/

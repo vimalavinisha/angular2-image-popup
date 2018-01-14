@@ -87,7 +87,6 @@ app.get(
 
 // ALl regular routes use the Universal engine
 app.get('*', (req, res) => {
-
   // ---------------------------------------------------
   // part of the workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
   // global['navigator'] = req['headers']['user-agent'];
