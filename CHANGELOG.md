@@ -1,6 +1,7 @@
 # 5.0.0-alpha.5
 ### Features
 - add accessibility features to plain-gallery
+- improve PlainGalleryConfig.advanced adding the new 'additionalBackground' property **BREAKING CHANGE**
 
 ### Bugfixes
 - fix some small bugs everywhere, in particular in upper-buttons.component
