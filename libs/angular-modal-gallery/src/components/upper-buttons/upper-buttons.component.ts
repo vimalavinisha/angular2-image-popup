@@ -237,7 +237,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {
     buttons.forEach((val: ButtonConfig) => {
-      if (!WHITELIST_BUTTON_TYPES.includes(val.type)) {
+      const indexOfButtonType: number = WHITELIST_BUTTON_TYPES.findIndex((type: ButtonType) => type === val.type);
+      if (indexOfButtonType === -1) {
         throw new Error(`Unknown ButtonType. For custom types use ButtonType.CUSTOM`);
       }
     });
