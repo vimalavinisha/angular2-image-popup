@@ -2,6 +2,9 @@
 ### Features
 - add accessibility features to plain-gallery
 
+### Bugfixes
+- fix some small bugs everywhere, in particular in upper-buttons.component
+
 ### Internal library changes
 - switch to Nwrl nx workspace
 - improve scss with sass-lint and ts files with prettier
@@ -20,6 +23,11 @@
 ### Others
 - add prettier config with both .prettierignore and .prettierrc.json
 - add sass-lint config with .sass-lint.yml
+
+### Unit testing
+- add tests for all services
+- add tests for all directive except for `keyboard-navigation.directive`
+- add test for `upper-buttons.component`
 
 
 # 5.0.0-alpha.4
