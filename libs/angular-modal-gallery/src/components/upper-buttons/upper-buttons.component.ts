@@ -124,7 +124,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   ngOnInit() {
     const defaultConfig: ButtonsConfig = { visible: true, strategy: ButtonsStrategy.DEFAULT };
     this.configButtons = Object.assign(defaultConfig, this.buttonsConfig);
-
     switch (this.configButtons.strategy) {
       case ButtonsStrategy.SIMPLE:
         this.buttons = this.addButtonIds(this.simpleButtonsDefault);
@@ -149,24 +148,21 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Method called by events from both keyboard and mouse on a button.
    * This will call a private method to trigger an output with the right payload.
    * @param {InternalButtonConfig} button that called this method
-   * @param {number} index of the button that called this method
    * @param {KeyboardEvent | MouseEvent} event payload
    * @param {Action} action that triggered the source event or `Action.CLICK` if not specified
    * @throws an error if the button type is unknown
    */
-  onEvent(button: InternalButtonConfig, index: number, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
+  onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
     if (!event) {
       return;
     }
     const dataToEmit: ButtonEvent = {
-      buttonIndex: index,
       button: button,
       // current image initialized as null
       // (I'll fill this value inside the parent of this component
       image: null,
       action: action
     };
-    console.error('dataToEmit', dataToEmit);
     switch (button.type) {
       case ButtonType.REFRESH:
         this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
@@ -212,7 +208,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>, event: KeyboardEvent | MouseEvent, dataToEmit: ButtonEvent) {
     if (!emitter) {
-      console.error('UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard');
+      throw new Error(`UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard`);
     }
 
     const result: number = super.handleImageEvent(event);
@@ -223,11 +219,14 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Private method to add ids to the array of buttons.
+   * It adds ids in a reverse way, to be sure that the last button will always have id = 0.
+   * This is really useful in unit testing to be sure that close button always have id = 0, download 1 and so on...
+   * It's totally transparent to the user.
    * @param {ButtonConfig[]} buttons config array
    * @returns {ButtonConfig[]} the input array with incremental numeric ids
    */
   private addButtonIds(buttons: ButtonConfig[]): ButtonConfig[] {
-    return buttons.map((val: ButtonConfig, i: number) => Object.assign({}, val, { id: i }));
+    return buttons.map((val: ButtonConfig, i: number) => Object.assign(val, { id: buttons.length - 1 - i }));
   }
 
   /**
@@ -238,9 +237,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {
     buttons.forEach((val: ButtonConfig) => {
-      const isValidBtnType: ButtonType | void = WHITELIST_BUTTON_TYPES.find((btnType: ButtonType) => btnType === val.type);
-
-      if (!isValidBtnType) {
+      if (!WHITELIST_BUTTON_TYPES.includes(val.type)) {
         throw new Error(`Unknown ButtonType. For custom types use ButtonType.CUSTOM`);
       }
     });

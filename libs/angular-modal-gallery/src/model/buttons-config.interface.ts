@@ -51,7 +51,6 @@ export interface ButtonConfig {
  * Interface `ButtonEvent` to represent the event payload when a button is clicked.
  */
 export interface ButtonEvent {
-  buttonIndex: number;
   button: ButtonConfig;
   image: InternalLibImage | null;
   action: Action;

@@ -7,7 +7,7 @@
        [ngStyle]="{'font-size': btn.fontSize}"
        [attr.aria-label]="btn.ariaLabel"
        [tabindex]="0" role="button"
-       (click)="onEvent(btn, index, $event)" (keyup)="onEvent(btn, index, $event)">
+       (click)="onEvent(btn, $event)" (keyup)="onEvent(btn, $event)">
       <div class="inside {{btn.className}}" aria-hidden="true" title="{{btn.title}}"></div>
     </a>
   </ng-container>
