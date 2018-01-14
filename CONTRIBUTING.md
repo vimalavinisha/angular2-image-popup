@@ -96,9 +96,6 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 3. `npm run clean:all`
 4. `npm run build:lib`
 5. `npm publish dist/angular-modal-gallery --tag beta`
-6. `git push origin master`
-7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
-
 
 ## Alpha releases (@next)
 1. `cd angular-modal-gallery`
@@ -106,5 +103,3 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 3. `npm run clean:all`
 4. `npm run build:lib`
 5. `npm publish dist/angular-modal-gallery --tag next`
-6. `git push origin master`
-7. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
