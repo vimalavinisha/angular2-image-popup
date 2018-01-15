@@ -53,41 +53,7 @@ import { DotsConfig } from '../../model/dots-config.interface';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
-
-/**
- * Default accessibility configuration.
- */
-const defaultAccessibilityConfig: AccessibilityConfig = {
-  backgroundAriaLabel: 'Modal gallery full screen background',
-  backgroundTitle: '',
-
-  plainGalleryContentAriaLabel: 'Plain gallery content',
-  plainGalleryContentTitle: '',
-
-  modalGalleryContentAriaLabel: 'Modal gallery content',
-  modalGalleryContentTitle: '',
-
-  loadingSpinnerAriaLabel: 'The current image is loading. Please be patient.',
-  loadingSpinnerTitle: 'The current image is loading. Please be patient.',
-
-  mainContainerAriaLabel: 'Current image and navigation',
-  mainContainerTitle: '',
-  mainPrevImageAriaLabel: 'Previous image',
-  mainPrevImageTitle: 'Previous image',
-  mainNextImageAriaLabel: 'Next image',
-  mainNextImageTitle: 'Next image',
-
-  dotsContainerAriaLabel: 'Image navigation dots',
-  dotsContainerTitle: '',
-  dotAriaLabel: 'Navigate to image number',
-
-  previewsContainerAriaLabel: 'Image previews',
-  previewsContainerTitle: '',
-  previewScrollPrevAriaLabel: 'Scroll previous previews',
-  previewScrollPrevTitle: 'Scroll previous previews',
-  previewScrollNextAriaLabel: 'Scroll next previews',
-  previewScrollNextTitle: 'Scroll next previews'
-};
+import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -146,7 +112,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input() accessibilityConfig: AccessibilityConfig = defaultAccessibilityConfig;
+  @Input() accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
   /**
    * Object of type `Description` to configure and show image descriptions.
    */

@@ -1,3 +1,9 @@
+# 5.0.0-alpha.6
+### Features
+- (requested by @Enngage) configure exturl button to navigate to an external url also in a new tab, instead of only in the current one #116
+- expose as public constants both default accessibility config, all button default configs and default size
+
+
 # 5.0.0-alpha.5
 ### Features
 - add accessibility features to plain-gallery

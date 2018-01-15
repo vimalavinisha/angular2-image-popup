@@ -41,6 +41,16 @@ export { Size } from './src/model/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './src/model/buttons-config.interface';
 
+export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './src/components/accessibility-default';
+export {
+  KS_DEFAULT_BTN_CLOSE,
+  KS_DEFAULT_BTN_DELETE,
+  KS_DEFAULT_BTN_DOWNLOAD,
+  KS_DEFAULT_BTN_EXTURL,
+  KS_DEFAULT_BTN_REFRESH,
+  KS_DEFAULT_SIZE
+} from './src/components/upper-buttons/upper-buttons-default';
+
 export {
   PlainGalleryConfig,
   PlainGalleryLayout,

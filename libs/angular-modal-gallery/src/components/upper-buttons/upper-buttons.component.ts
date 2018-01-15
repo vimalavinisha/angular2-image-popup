@@ -30,7 +30,13 @@ import { Action } from '../../model/action.enum';
 import { Image } from '../../model/image.class';
 import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, WHITELIST_BUTTON_TYPES } from '../../model/buttons-config.interface';
 
-import { closeButton, deleteButton, downloadButton, extUrlButton, refreshButton } from './upper-buttons-default';
+import {
+  KS_DEFAULT_BTN_CLOSE,
+  KS_DEFAULT_BTN_DELETE,
+  KS_DEFAULT_BTN_DOWNLOAD,
+  KS_DEFAULT_BTN_EXTURL,
+  KS_DEFAULT_BTN_REFRESH
+} from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
 
@@ -101,19 +107,19 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Default buttons array for standard configuration
    */
-  private defaultButtonsDefault: ButtonConfig[] = [closeButton];
+  private defaultButtonsDefault: ButtonConfig[] = [KS_DEFAULT_BTN_CLOSE];
   /**
    * Default buttons array for simple configuration
    */
-  private simpleButtonsDefault: ButtonConfig[] = [downloadButton, ...this.defaultButtonsDefault];
+  private simpleButtonsDefault: ButtonConfig[] = [KS_DEFAULT_BTN_DOWNLOAD, ...this.defaultButtonsDefault];
   /**
    * Default buttons array for advanced configuration
    */
-  private advancedButtonsDefault: ButtonConfig[] = [extUrlButton, ...this.simpleButtonsDefault];
+  private advancedButtonsDefault: ButtonConfig[] = [KS_DEFAULT_BTN_EXTURL, ...this.simpleButtonsDefault];
   /**
    * Default buttons array for full configuration
    */
-  private fullButtonsDefault: ButtonConfig[] = [refreshButton, deleteButton, ...this.advancedButtonsDefault];
+  private fullButtonsDefault: ButtonConfig[] = [KS_DEFAULT_BTN_REFRESH, KS_DEFAULT_BTN_DELETE, ...this.advancedButtonsDefault];
 
   /**
    * Method ´ngOnInit´ to build `configButtons` applying a default value and also to
