@@ -21,10 +21,17 @@ import { By } from '@angular/platform-browser';
 import { Image } from '../../model/image.class';
 import { InternalButtonConfig, UpperButtonsComponent } from './upper-buttons.component';
 import { SizeDirective } from '../../directives/size.directive';
-import { ButtonsConfig, ButtonEvent, ButtonConfig, ButtonsStrategy, ButtonType } from '../../model/buttons-config.interface';
+import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType } from '../../model/buttons-config.interface';
 import { Action } from '../../model/action.enum';
 import { Size } from '../../model/size.interface';
-import { closeButton, defaultSize, deleteButton, downloadButton, extUrlButton, refreshButton } from './upper-buttons-default';
+import {
+  KS_DEFAULT_BTN_CLOSE,
+  KS_DEFAULT_BTN_DELETE,
+  KS_DEFAULT_BTN_DOWNLOAD,
+  KS_DEFAULT_BTN_EXTURL,
+  KS_DEFAULT_BTN_REFRESH,
+  KS_DEFAULT_SIZE
+} from './upper-buttons-default';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;
@@ -53,7 +60,7 @@ const UNKNOWN_BUTTON_TYPE = 7;
 
 const CUSTOM_BTN: ButtonConfig = {
   className: 'custom-image',
-  size: defaultSize,
+  size: KS_DEFAULT_SIZE,
   type: ButtonType.CUSTOM,
   title: 'Custom title',
   ariaLabel: 'Custom aria label'
@@ -61,7 +68,7 @@ const CUSTOM_BTN: ButtonConfig = {
 
 const WRONG_TYPE_BTN: ButtonConfig = {
   className: 'wrong-type-image',
-  size: defaultSize,
+  size: KS_DEFAULT_SIZE,
   type: UNKNOWN_BUTTON_TYPE,
   title: 'Custom wrong-type title',
   ariaLabel: 'Custom wrong-type aria label'
@@ -144,8 +151,16 @@ const UNKNOWN_CASES: ButtonsConfig[] = [
 const CUSTOM_CASES: ButtonsConfig[] = [
   {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [CUSTOM_BTN]},
   {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [CUSTOM_BTN, CUSTOM_BTN]},
-  {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [closeButton, CUSTOM_BTN, CUSTOM_BTN, downloadButton, downloadButton]},
-  {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [downloadButton, closeButton, refreshButton, deleteButton, extUrlButton, closeButton]}
+  {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [KS_DEFAULT_BTN_CLOSE, CUSTOM_BTN, CUSTOM_BTN, KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_DOWNLOAD]
+  },
+  {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_REFRESH, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_CLOSE]
+  }
 ];
 
 const CUSTOM_SIZES: ButtonsConfig[] = [
@@ -175,7 +190,24 @@ const NOT_VALID_BTN_TYPE_CASES: ButtonsConfig[] = [
   {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [WRONG_TYPE_BTN]}
 ];
 
-  function getButtonEvent(button: ButtonConfig): ButtonEvent {
+const EXTURL_BTN_NEW_TAB: ButtonConfig = Object.assign({}, KS_DEFAULT_BTN_EXTURL, {extUrlInNewTab: true});
+
+const EXT_URL_IN_A_NEW_TAB_CASES: ButtonsConfig[] = [
+  {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [EXTURL_BTN_NEW_TAB]},
+  {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [CUSTOM_BTN, EXTURL_BTN_NEW_TAB]},
+  {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [KS_DEFAULT_BTN_CLOSE, EXTURL_BTN_NEW_TAB, CUSTOM_BTN, KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_DOWNLOAD]
+  },
+  {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_REFRESH, KS_DEFAULT_BTN_DELETE, EXTURL_BTN_NEW_TAB]
+  }
+];
+
+function getButtonEvent(button: ButtonConfig): ButtonEvent {
   return {
     button: button,
     // upper-buttons.component always returns a null image to the main component, so I should test for a null
@@ -194,15 +226,15 @@ function updateInputs(image: Image, configButtons: ButtonsConfig) {
 function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
   switch (btnType) {
     case ButtonType.CLOSE:
-      return Object.assign({}, closeButton, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_CLOSE, {size: size});
     case ButtonType.DOWNLOAD:
-      return Object.assign({}, downloadButton, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_DOWNLOAD, {size: size});
     case ButtonType.EXTURL:
-      return Object.assign({}, extUrlButton, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_EXTURL, {size: size});
     case ButtonType.DELETE:
-      return Object.assign({}, deleteButton, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_DELETE, {size: size});
     case ButtonType.REFRESH:
-      return Object.assign({}, refreshButton, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size: size});
     case ButtonType.CUSTOM:
       return Object.assign({}, CUSTOM_BTN, {size: size});
     default:
@@ -298,19 +330,19 @@ describe('UpperButtonsComponent', () => {
         testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
         comp.close.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(closeButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(refreshButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
         });
         comp.delete.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(deleteButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
         comp.navigate.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(extUrlButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_EXTURL));
         });
         comp.download.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(downloadButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -340,19 +372,19 @@ describe('UpperButtonsComponent', () => {
         testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
         comp.close.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(closeButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(refreshButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
         });
         comp.delete.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(deleteButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
         comp.navigate.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(extUrlButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_EXTURL));
         });
         comp.download.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(downloadButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -386,16 +418,16 @@ describe('UpperButtonsComponent', () => {
             fail('navigate output should be never called, because input image is not valid or extUrl is not defined');
           });
           comp.close.subscribe((res: ButtonEvent) => {
-            expect(res).toEqual(getButtonEvent(closeButton));
+            expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
           });
           comp.refresh.subscribe((res: ButtonEvent) => {
-            expect(res).toEqual(getButtonEvent(refreshButton));
+            expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
           });
           comp.delete.subscribe((res: ButtonEvent) => {
-            expect(res).toEqual(getButtonEvent(deleteButton));
+            expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
           });
           comp.download.subscribe((res: ButtonEvent) => {
-            expect(res).toEqual(getButtonEvent(downloadButton));
+            expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
           });
 
           // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -424,19 +456,62 @@ describe('UpperButtonsComponent', () => {
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
         comp.close.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(closeButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(refreshButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
         });
         comp.delete.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(deleteButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
         comp.navigate.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(extUrlButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_EXTURL));
         });
         comp.download.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(downloadButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
+        });
+        comp.customEmit.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(CUSTOM_BTN));
+        });
+
+        // iterate over all buttons from LEFT TO RIGHT
+        // testing html elements, attributes and properties
+        btns.forEach((debugElement: DebugElement, btnIndex: number) => {
+          testCurrentHtmlBtn(debugElement, btnIndex);
+        });
+
+        // iterate over all buttons from LEFT TO RIGHT
+        // clicking all of them
+        btns.forEach((debugElement: DebugElement) => {
+          debugElement.nativeElement.click();
+        });
+      });
+    });
+
+    EXT_URL_IN_A_NEW_TAB_CASES.forEach((currentButtonConfig: ButtonsConfig, index: number) => {
+      it(`should display buttons where extUrl buttons open extUrl in a new tab and subscribe to click events. Test i=${index}`, () => {
+        updateInputs(IMAGE_EXTURL, currentButtonConfig);
+
+        // expect a valid ButtonStrategy because passed to this test as input (via currentButtonConfig)
+        expect(ButtonsStrategy[currentButtonConfig.strategy]).not.toBeUndefined();
+
+        const element: DebugElement = fixture.debugElement;
+        const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
+
+        comp.close.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
+        });
+        comp.refresh.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
+        });
+        comp.delete.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
+        });
+        comp.navigate.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(EXTURL_BTN_NEW_TAB));
+        });
+        comp.download.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
         });
         comp.customEmit.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_BTN));
@@ -549,7 +624,7 @@ describe('UpperButtonsComponent', () => {
         expect(btns.length).toBe(1);
 
         comp.close.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(closeButton));
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
