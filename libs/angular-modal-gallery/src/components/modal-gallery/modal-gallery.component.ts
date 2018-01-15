@@ -331,9 +331,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.buttonBeforeHook.emit(eventToEmit);
     // To support SSR
     if (isPlatformBrowser(this.platformId)) {
-      // Client only code
       if (eventToEmit.image && eventToEmit.image.modal.extUrl) {
-        window.location.href = eventToEmit.image.modal.extUrl;
+        // where I should open this link? The current tab or another one?
+        if (eventToEmit.button && eventToEmit.button.extUrlInNewTab) {
+          window.open(eventToEmit.image.modal.extUrl, '_blank');
+        } else {
+          window.location.href = eventToEmit.image.modal.extUrl;
+        }
       }
     }
     this.buttonAfterHook.emit(eventToEmit);

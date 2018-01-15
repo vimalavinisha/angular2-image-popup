@@ -45,6 +45,7 @@ export interface ButtonConfig {
   type: ButtonType;
   title?: string;
   ariaLabel?: string;
+  extUrlInNewTab?: boolean; // to open the external url in a new tab, instead of the current one
 }
 
 /**

@@ -298,6 +298,36 @@ export class AppComponent {
     strategy: ButtonsStrategy.FULL
   };
 
+  // default buttons but extUrl will open the link in a new tab instead of the current one
+  // this requires to specify all buttons manually (also if they are not really custom)
+  customButtonsConfigExtUrlNewTab: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'refresh-image',
+        type: ButtonType.REFRESH
+      },
+      {
+        className: 'delete-image',
+        type: ButtonType.DELETE
+      },
+      {
+        className: 'ext-url-image',
+        type: ButtonType.EXTURL,
+        extUrlInNewTab: true // <--- this is the important thing to understand this example
+      },
+      {
+        className: 'download-image',
+        type: ButtonType.DOWNLOAD
+      },
+      {
+        className: 'close-image',
+        type: ButtonType.CLOSE
+      }
+    ]
+  };
+
   customButtonsConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
