@@ -14,5 +14,9 @@
       "angular-modal-gallery/*": ["libs/*"]
     }
   },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhiteSpace": false
+  },
   "exclude": ["node_modules", "tmp"]
 }
