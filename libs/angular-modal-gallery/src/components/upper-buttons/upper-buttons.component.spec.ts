@@ -21,9 +21,8 @@ import { By } from '@angular/platform-browser';
 import { Image } from '../../model/image.class';
 import { InternalButtonConfig, UpperButtonsComponent } from './upper-buttons.component';
 import { SizeDirective } from '../../directives/size.directive';
-import { ButtonsConfig } from '../../model/buttons-config.interface';
-import { ButtonConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery/angular-modal-gallery/src/model/buttons-config.interface';
-import { Action, ButtonEvent } from 'angular-modal-gallery/angular-modal-gallery';
+import { ButtonsConfig, ButtonEvent, ButtonConfig, ButtonsStrategy, ButtonType } from '../../model/buttons-config.interface';
+import { Action } from '../../model/action.enum';
 import { Size } from '../../model/size.interface';
 import { closeButton, defaultSize, deleteButton, downloadButton, extUrlButton, refreshButton } from './upper-buttons-default';
 
