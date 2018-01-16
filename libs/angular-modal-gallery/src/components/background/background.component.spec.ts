@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { BackgroundComponent } from './background.component';
-import { AccessibilityConfig } from 'angular-modal-gallery/angular-modal-gallery/src/model/accessibility.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 
 let comp: BackgroundComponent;
 let fixture: ComponentFixture<BackgroundComponent>;

@@ -44,7 +44,7 @@ import { LoadingConfig, LoadingType } from '../../../model/loading-config.interf
 export class LoadingSpinnerComponent {
   /**
    * Object of type `LoadingConfig` exposed to the template.
-   * It contains fields like enable/disable and a way to choose a loading spinner.
+   * It contains a field to choose a loading spinner.
    */
   @Input() loadingConfig: LoadingConfig;
   /**
