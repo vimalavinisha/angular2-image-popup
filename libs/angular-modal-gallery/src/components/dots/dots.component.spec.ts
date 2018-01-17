@@ -112,7 +112,6 @@ describe('DotsComponent', () => {
       const element: DebugElement = fixture.debugElement;
 
       const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-      // expect(dotsContainer).not.toBeNull();
       expect(dotsContainer.name).toBe('nav');
       expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
       expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
@@ -121,13 +120,9 @@ describe('DotsComponent', () => {
       expect(dots.length).toBe(IMAGES.length);
 
       dots.forEach((dot: DebugElement, index: number) => {
-        // console.log('index ' + index + ', dot', dot);
         expect(dot.name).toBe('div');
         expect(dot.attributes['role']).toBe('navigation');
         expect(dot.properties['tabIndex']).toBe(0);
-
-        fixture.detectChanges();
-
         if (index === activeDotIndex) {
           // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
           expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
@@ -151,7 +146,6 @@ describe('DotsComponent', () => {
       const element: DebugElement = fixture.debugElement;
 
       const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-      // expect(dotsContainer).not.toBeNull();
       expect(dotsContainer.name).toBe('nav');
       expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
       expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
@@ -160,7 +154,6 @@ describe('DotsComponent', () => {
       expect(dots.length).toBe(IMAGES.length);
 
       dots.forEach((dot: DebugElement, index: number) => {
-        // console.log('index ' + index + ', dot', dot);
         expect(dot.name).toBe('div');
         expect(dot.attributes['role']).toBe('navigation');
         expect(dot.properties['tabIndex']).toBe(0);
@@ -188,7 +181,6 @@ describe('DotsComponent', () => {
       const element: DebugElement = fixture.debugElement;
 
       const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-      // expect(dotsContainer).not.toBeNull();
       expect(dotsContainer.name).toBe('nav');
       expect(dotsContainer.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.dotsContainerAriaLabel);
       expect(dotsContainer.properties['title']).toBe(CUSTOM_ACCESSIBILITY.dotsContainerTitle);
@@ -197,7 +189,6 @@ describe('DotsComponent', () => {
       expect(dots.length).toBe(IMAGES.length);
 
       dots.forEach((dot: DebugElement, index: number) => {
-        // console.log('index ' + index + ', dot', dot);
         expect(dot.name).toBe('div');
         expect(dot.attributes['role']).toBe('navigation');
         expect(dot.properties['tabIndex']).toBe(0);
@@ -227,7 +218,7 @@ describe('DotsComponent', () => {
 
       comp.clickDot.subscribe((index: number) => {
         expect(index).toBe(indexToClick);
-      }, err => fail('after a click I should receive a clickDot event'));
+      }, () => fail('after a click I should receive a clickDot event'));
 
       const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
       expect(dotsContainer).not.toBeNull();
@@ -292,6 +283,33 @@ describe('DotsComponent', () => {
 
       const dots: DebugElement[] = dotsContainer.children;
       expect(dots.length).toBe(0);
+    });
+
+    it(`shouldn't display active dot when the currentImage is invalid, because 'isActive' method throws a managed error and return false`, () => {
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.currentImage = new InternalLibImage(-1, null);
+      comp.images = IMAGES;
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+
+      const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
+      expect(dotsContainer.name).toBe('nav');
+      expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
+      expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
+
+      const dots: DebugElement[] = dotsContainer.children;
+      expect(dots.length).toBe(IMAGES.length);
+
+      // all dots are NOT active, bat simply 'inside dot'
+      dots.forEach((dot: DebugElement, index: number) => {
+        expect(dot.name).toBe('div');
+        expect(dot.attributes['role']).toBe('navigation');
+        expect(dot.properties['tabIndex']).toBe(0);
+        expect(dot.attributes['class']).toBe('inside dot');
+        expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
+      });
     });
   });
 });
