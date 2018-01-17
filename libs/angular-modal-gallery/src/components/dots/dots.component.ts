@@ -54,11 +54,6 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
    */
   @Input() images: InternalLibImage[];
   /**
-   * Boolean that it is true if the modal gallery is visible.
-   * If yes, also this component should be visible.
-   */
-  @Input() isOpen: boolean;
-  /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
@@ -92,11 +87,22 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
 
   /**
    * Method to check if an image is active (i.e. the current image).
+   * It checks currentImage and images to prevent errors.
    * @param {number} index of the image to check if it's active or not
-   * @returns {boolean} true if is active, false otherwise
+   * @returns {boolean} true if is active (and input params are valid), false otherwise
    */
   isActive(index: number): boolean {
-    return index === getIndex(this.currentImage, this.images);
+    if (!this.currentImage || !this.images || this.images.length === 0) {
+      return false;
+    }
+    let imageIndex: number;
+    try {
+      imageIndex = getIndex(this.currentImage, this.images);
+    } catch (err) {
+      console.error(`Internal error while trying to show the active 'dot'`, err);
+      return false;
+    }
+    return index === imageIndex;
   }
 
   /**
