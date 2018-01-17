@@ -100,8 +100,7 @@ describe('DotsComponent', () => {
 
   describe('---YES---', () => {
 
-    it(`should display dots based of the number of input images and click on one of them`, () => {
-      const indexToClick = 1;
+    it(`should display dots (first one is active) based of the number of input images`, () => {
       const activeDotIndex = 0;
       comp.dotsConfig = DOTS_CONFIG_VISIBLE;
       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
@@ -111,10 +110,6 @@ describe('DotsComponent', () => {
       fixture.detectChanges();
 
       const element: DebugElement = fixture.debugElement;
-
-      comp.clickDot.subscribe((index: number) => {
-        expect(index).toBe(indexToClick);
-      });
 
       const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
       // expect(dotsContainer).not.toBeNull();
@@ -131,21 +126,20 @@ describe('DotsComponent', () => {
         expect(dot.attributes['role']).toBe('navigation');
         expect(dot.properties['tabIndex']).toBe(0);
 
+        fixture.detectChanges();
+
         if (index === activeDotIndex) {
-          console.log('sono qui a index=' + index + ' e activeDotIndex=' + activeDotIndex);
-          expect(dot.attributes['class']).toBe('inside dot'); // FIXME this should be inside dot active
+          // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
+          expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
         } else {
-          console.log('sono la a index=' + index + ' e activeDotIndex=' + activeDotIndex);
           expect(dot.attributes['class']).toBe('inside dot');
+          // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
         }
         expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
       });
-
-      // clicks on a dot
-      dots[1].nativeElement.click();
     });
 
-    it(`should display dots, because by default dotsConfig are visible`, () => {
+    it(`should display dots (first one is active), because by default dotsConfig are visible`, () => {
       const activeDotIndex = 0;
       comp.dotsConfig = undefined; // or null, or something not valid
       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
@@ -172,17 +166,17 @@ describe('DotsComponent', () => {
         expect(dot.properties['tabIndex']).toBe(0);
 
         if (index === activeDotIndex) {
-          console.log('sono qui a index=' + index + ' e activeDotIndex=' + activeDotIndex);
-          expect(dot.attributes['class']).toBe('inside dot'); // FIXME this should be inside dot active
+          // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
+          expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
         } else {
-          console.log('sono la a index=' + index + ' e activeDotIndex=' + activeDotIndex);
           expect(dot.attributes['class']).toBe('inside dot');
+          // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
         }
         expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
       });
     });
 
-    it(`should display dots with custom accessibility`, () => {
+    it(`should display dots (first one is active) with custom accessibility`, () => {
       const activeDotIndex = 0;
       comp.dotsConfig = DOTS_CONFIG_VISIBLE;
       comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
@@ -209,54 +203,40 @@ describe('DotsComponent', () => {
         expect(dot.properties['tabIndex']).toBe(0);
 
         if (index === activeDotIndex) {
-          console.log('sono qui a index=' + index + ' e activeDotIndex=' + activeDotIndex);
-          expect(dot.attributes['class']).toBe('inside dot'); // FIXME this should be inside dot active
+          // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
+          expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
         } else {
-          console.log('sono la a index=' + index + ' e activeDotIndex=' + activeDotIndex);
           expect(dot.attributes['class']).toBe('inside dot');
+          // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
         }
         expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
       });
     });
-    // <nav class="dots-container" [attr.aria-label]="accessibilityConfig?.dotsContainerAriaLabel"
-    //   [title]="accessibilityConfig?.dotsContainerTitle">
-    // <ng-container *ngIf="!configDots || configDots?.visible">
-    // <div class="inside dot"
-    // *ngFor="let img of images; trackBy: trackById; let index = index"
-    //   [ngClass]="{'active': isActive(index)}"
-    //   [attr.aria-label]="accessibilityConfig?.dotAriaLabel + ' ' + (index + 1)"
-    //   [tabindex]="0" role="navigation"
-    // (click)="onDotEvent(index, $event)" (keyup)="onDotEvent(index, $event)"></div>
-    //   </ng-container>
-    //   </nav>
-    // expect(btnDebugElement.name).toBe('a');
-    //   expect(btnDebugElement.attributes['class']).toBe('upper-button');
-    //   expect(btnDebugElement.attributes['kssize']).not.toBeNull();
-    //   expect(btnDebugElement.attributes['sizeConfig']).toBeUndefined();
-    //   // expect(btnDebugElement.attributes['style']).toBe('width: 30px; height: auto;');
-    //   expect(btnDebugElement.attributes['aria-label']).toBe(currentButton.ariaLabel);
-    //   expect(btnDebugElement.attributes['role']).toBe('button');
-    //   expect(btnDebugElement.properties['tabIndex']).toBe(0);
-    //   // expect(btnDebugElement.properties['hidden']).toBe(false);
-    //
-    //   // console.log('btnDebugElement.attributes ' + btnIndex, btnDebugElement.attributes);
-    //   // console.log('btnDebugElement.properties ' + btnIndex, btnDebugElement.properties);
-    //
-    //   if (currentButton.fontSize) {
-    //     expect(btnDebugElement.nativeElement.style.fontSize).toBe(currentButton.fontSize);
-    //   }
-    //   if (currentButton.size) {
-    //     expect(btnDebugElement.nativeElement.style.width).toBe(currentButton.size.width);
-    //     expect(btnDebugElement.nativeElement.style.height).toBe(currentButton.size.height);
-    //   }
-    //
-    //   const childrenElements: DebugElement[] = btnDebugElement.children;
-    //   expect(childrenElements.length).toBe(1);
-    //   expect(childrenElements[0].attributes['aria-hidden']).toBe('true');
-    //   expect(childrenElements[0].properties['className']).toBe('inside ' + currentButton.className);
-    //   expect(childrenElements[0].properties['title']).toBe(currentButton.title);
-    //   // console.log('childrenElements.attributes ' + btnIndex, childrenElements[0].attributes);
-    //   // console.log('childrenElements.properties ' + btnIndex, childrenElements[0].properties);
+
+    it(`should display dots and click on one of themem`, () => {
+      const indexToClick = 1;
+      const activeDotIndex = 0;
+      comp.dotsConfig = DOTS_CONFIG_VISIBLE;
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.currentImage = IMAGES[activeDotIndex];
+      comp.images = IMAGES;
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+
+      comp.clickDot.subscribe((index: number) => {
+        expect(index).toBe(indexToClick);
+      }, err => fail('after a click I should receive a clickDot event'));
+
+      const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
+      expect(dotsContainer).not.toBeNull();
+      const dots: DebugElement[] = dotsContainer.children;
+      expect(dots.length).toBe(IMAGES.length);
+
+      // clicks on a dot
+      dots[1].nativeElement.click();
+    });
   });
 
   describe('---NO---', () => {
