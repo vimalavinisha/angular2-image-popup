@@ -56,11 +56,6 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   @Input() images: InternalLibImage[];
   /**
-   * Boolean that it is true if the modal gallery is visible.
-   * If yes, also this component should be visible.
-   */
-  @Input() isOpen: boolean;
-  /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
   @Input() slideConfig: SlideConfig;
@@ -122,22 +117,39 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.configPreview = Object.freeze(Object.assign(this.defaultPreviewConfig, this.previewConfig));
-    switch (getIndex(this.currentImage, this.images)) {
+    console.log('-------------------------------------------------------1a', this.previewConfig);
+    console.log('-------------------------------------------------------1b', this.defaultPreviewConfig);
+    this.configPreview = Object.assign(this.defaultPreviewConfig, this.previewConfig);
+    console.log('-------------------------------------------------------1c', this.configPreview);
+
+    let index: number;
+    try {
+      index = getIndex(this.currentImage, this.images);
+    } catch (err) {
+      console.error('Error while initializing angular-modal-gallery previews component');
+      throw err;
+    }
+    console.log('-------------------------------------------------------1d', index);
+    switch (index) {
       case 0:
         // first image
+        console.log('-------------------------------------------------------2');
         this.setBeginningIndexesPreviews();
         break;
       case this.images.length - 1:
         // last image
+        console.log('-------------------------------------------------------3');
         this.setEndIndexesPreviews();
         break;
       default:
         // other images
+        console.log('-------------------------------------------------------4');
         this.setIndexesPreviews();
         break;
     }
+    console.log('-------------------------------------------------------5');
     this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+    console.log('-------------------------------------------------------6');
   }
 
   /**

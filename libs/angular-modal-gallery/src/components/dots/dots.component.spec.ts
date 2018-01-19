@@ -19,10 +19,10 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { DotsComponent } from './dots.component';
-import { AccessibilityConfig } from 'angular-modal-gallery/angular-modal-gallery/src/model/accessibility.interface';
-import { DotsConfig } from 'angular-modal-gallery/angular-modal-gallery/src/model/dots-config.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { DotsConfig } from '../../model/dots-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../components/accessibility-default';
-import { InternalLibImage } from 'angular-modal-gallery/angular-modal-gallery/src/model/image-internal.class';
+import { InternalLibImage } from '../../model/image-internal.class';
 
 const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
 CUSTOM_ACCESSIBILITY.dotsContainerTitle = 'custom dotsContainerTitle';
