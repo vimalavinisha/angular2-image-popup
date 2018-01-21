@@ -192,6 +192,22 @@ function checkPreview(preview: DebugElement, activeIndex: number, currentIndex: 
   expect(preview.properties['className']).toBe('inside preview-image ' + ((activeIndex === currentIndex) ? 'active' : ''));
 }
 
+function checkPreviewStateAfterClick(previews: DebugElement[], prevValue: InternalLibImage, currValue: InternalLibImage,
+                                     start: number, end: number, activeIndex: number = 0) {
+  fixture.detectChanges();
+  comp.ngOnChanges(<SimpleChanges>{
+    currentImage: {
+      previousValue: prevValue,
+      currentValue: currValue,
+      firstChange: false,
+      isFirstChange: () => false
+    }
+  });
+  expect(comp.start).toBe(start);
+  expect(comp.end).toBe(end);
+  expect(comp.previews).toEqual(IMAGES.slice(start, end));
+}
+
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [PreviewsComponent, SizeDirective]
@@ -526,160 +542,34 @@ describe('PreviewsComponent', () => {
         // however this is a unit testing and I cannot use modal-gallery.component,
         // so I have to simulate this behaviour manually
         previews[0].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[0],
-            currentValue: IMAGES[0],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(0);
-        expect(comp.end).toBe(3);
-        expect(comp.previews).toEqual(IMAGES.slice(0, 3));
+        checkPreviewStateAfterClick(previews, IMAGES[0], IMAGES[0], 0, 3, 0);
         previews.forEach((preview: DebugElement, i: number) => checkPreviewDefault(preview, 0, i));
 
         previews[1].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[0],
-            currentValue: IMAGES[1],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(1);
-        expect(comp.end).toBe(4);
-        expect(comp.previews).toEqual(IMAGES.slice(1, 4));
-        fixture.detectChanges();
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 1, index));
+        checkPreviewStateAfterClick(previews, IMAGES[0], IMAGES[1], 1, 4, 1);
 
         previews[1].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[1],
-            currentValue: IMAGES[2],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(2);
-        expect(comp.end).toBe(5);
-        expect(comp.previews).toEqual(IMAGES.slice(2, 5));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 2, index));
+        checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[2], 2, 5, 2);
 
         previews[1].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[2],
-            currentValue: IMAGES[3],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(2);
-        expect(comp.end).toBe(5);
-        expect(comp.previews).toEqual(IMAGES.slice(2, 5));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 3, index));
+        checkPreviewStateAfterClick(previews, IMAGES[2], IMAGES[3], 2, 5, 3);
 
         previews[2].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[3],
-            currentValue: IMAGES[4],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(2);
-        expect(comp.end).toBe(5);
-        expect(comp.previews).toEqual(IMAGES.slice(2, 5));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 4, index));
+        checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[4], 2, 5, 4);
 
         // ... and then go back
 
         previews[1].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[4],
-            currentValue: IMAGES[3],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(1);
-        expect(comp.end).toBe(4);
-        expect(comp.previews).toEqual(IMAGES.slice(1, 4));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 3, index));
+        checkPreviewStateAfterClick(previews, IMAGES[4], IMAGES[3], 1, 4, 3);
 
         previews[1].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[3],
-            currentValue: IMAGES[2],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(0);
-        expect(comp.end).toBe(3);
-        expect(comp.previews).toEqual(IMAGES.slice(0, 3));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 2, index));
+        checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[2], 0, 3, 2);
 
         previews[1].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[2],
-            currentValue: IMAGES[1],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(0);
-        expect(comp.end).toBe(3);
-        expect(comp.previews).toEqual(IMAGES.slice(0, 3));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 1, index));
+        checkPreviewStateAfterClick(previews, IMAGES[2], IMAGES[1], 0, 3, 1);
 
         previews[0].nativeElement.click();
-        fixture.detectChanges();
-
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[1],
-            currentValue: IMAGES[0],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-
-        expect(comp.start).toBe(0);
-        expect(comp.end).toBe(3);
-        expect(comp.previews).toEqual(IMAGES.slice(0, 3));
-        // previews.forEach((preview: DebugElement, index: number) => checkPreviewDefault(preview, 0, index));
+        checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[0], 0, 3, 0);
       }));
     });
   });
