@@ -242,13 +242,16 @@ function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
   }
 }
 
-function testCurrentHtmlBtn(btnDebugElement: DebugElement, btnIndex: number) {
+function testCurrentHtmlBtn(btnDebugElement: DebugElement, btnIndex: number, size: Size) {
   const currentButton: InternalButtonConfig = comp.buttons[btnIndex];
   expect(btnDebugElement.name).toBe('a');
   expect(btnDebugElement.attributes['class']).toBe('upper-button');
   expect(btnDebugElement.attributes['kssize']).not.toBeNull();
   expect(btnDebugElement.attributes['sizeConfig']).toBeUndefined();
-  // expect(btnDebugElement.attributes['style']).toBe('width: 30px; height: auto;');
+  if (size) {
+    expect(btnDebugElement.styles.width).toBe(size.width);
+    expect(btnDebugElement.styles.height).toBe(size.height);
+  }
   expect(btnDebugElement.attributes['aria-label']).toBe(currentButton.ariaLabel);
   expect(btnDebugElement.attributes['role']).toBe('button');
   expect(btnDebugElement.properties['tabIndex']).toBe(0);
@@ -348,7 +351,7 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -390,7 +393,7 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -433,7 +436,7 @@ describe('UpperButtonsComponent', () => {
           // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
           // testing html elements, attributes and properties
           btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-            testCurrentHtmlBtn(debugElement, btnIndex);
+            testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
           });
 
           // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -477,7 +480,7 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
         // iterate over all buttons from LEFT TO RIGHT
@@ -520,7 +523,7 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
         // iterate over all buttons from LEFT TO RIGHT
@@ -563,7 +566,7 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          testCurrentHtmlBtn(debugElement, btnIndex, null);
         });
 
         // iterate over all buttons from LEFT TO RIGHT
@@ -587,7 +590,17 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          switch (index) {
+            case 0:
+              testCurrentHtmlBtn(debugElement, btnIndex, CUSTOM_SIZE);
+              break;
+            case 1:
+              testCurrentHtmlBtn(debugElement, btnIndex, CUSTOM_SIZE_AUTO_HEIGHT);
+              break;
+            case 2:
+              testCurrentHtmlBtn(debugElement, btnIndex, CUSTOM_SIZE_AUTO_WIDTH);
+              break;
+          }
         });
       });
     });
@@ -630,7 +643,7 @@ describe('UpperButtonsComponent', () => {
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex);
+          testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
