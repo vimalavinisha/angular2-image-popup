@@ -25,8 +25,22 @@ import { PreviewsComponent } from './previews.component';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { Size } from '../../model/size.interface';
-import { KS_DEFAULT_SIZE } from 'angular-modal-gallery/angular-modal-gallery';
+import { ModalImage, PlainImage } from '../../model/image.class';
 import { SizeDirective } from '../../directives/size.directive';
+import { KS_DEFAULT_SIZE } from './upper-buttons-default';
+
+interface NavigationTestData {
+  initial: {
+    start: number,
+    end: number,
+    activeIndex: number
+  };
+  expected: {
+    start: number,
+    end: number,
+    activeIndex: number
+  };
+}
 
 const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
 CUSTOM_ACCESSIBILITY.dotsContainerTitle = 'custom dotsContainerTitle';
@@ -91,6 +105,70 @@ const IMAGES: InternalLibImage[] = [
   )
 ];
 
+
+const NAVIGATION_NEXT_PREVIEWS: NavigationTestData[] = [
+  {
+    initial: {start: 0, end: 3, activeIndex: 0},
+    expected: {start: 1, end: 4, activeIndex: 0}
+  },
+  {
+    initial: {start: 1, end: 4, activeIndex: 0},
+    expected: {start: 2, end: 5, activeIndex: 0}
+  }
+];
+
+const NAVIGATION_PREV_PREVIEWS: NavigationTestData[] = [
+  {
+    initial: {start: 2, end: 5, activeIndex: 0},
+    expected: {start: 1, end: 4, activeIndex: 0}
+  },
+  {
+    initial: {start: 1, end: 4, activeIndex: 0},
+    expected: {start: 0, end: 3, activeIndex: 0}
+  }
+];
+
+function checkArrows(arrows: DebugElement[], first: boolean, last: boolean) {
+  const prevArrowClass = first ? 'inside empty-arrow-preview-image' : 'inside left-arrow-preview-image';
+  const nextArrowClass = last ? 'inside empty-arrow-preview-image' : 'inside right-arrow-preview-image';
+
+  console.log('prevArrowClass ' + prevArrowClass);
+  console.log('nextArrowClass ' + nextArrowClass);
+
+  expect(arrows.length).toBe(2);
+  expect(arrows[0].attributes['class']).toBe('nav-left');
+  expect(arrows[0].attributes['role']).toBe('button');
+  expect(arrows[0].attributes['aria-label']).toBe('Scroll previous previews');
+  // expect(arrows[0].properties['tabIndex']).toBe(first ? -1 : 0); // because with the first image, prev arrow is hidden
+  expect(arrows[0].children[0].attributes['aria-hidden']).toBe('true');
+  expect(arrows[0].children[0].properties['title']).toBe('Scroll previous previews');
+  expect(arrows[0].children[0].properties['className']).toBe(prevArrowClass); // 'inside left-arrow-preview-image');
+
+  expect(arrows[1].attributes['class']).toBe('nav-right');
+  expect(arrows[1].attributes['role']).toBe('button');
+  expect(arrows[1].attributes['aria-label']).toBe('Scroll next previews');
+  // expect(arrows[1].properties['tabIndex']).toBe(last ? -1 : 0);
+  expect(arrows[1].children[0].attributes['aria-hidden']).toBe('true');
+  expect(arrows[1].children[0].properties['title']).toBe('Scroll next previews');
+  expect(arrows[1].children[0].properties['className']).toBe(nextArrowClass);
+  // expect(arrows[0].children[0].classes).toBe('inside left-arrow-preview-image');
+}
+
+function checkPreview(preview: DebugElement, activeIndex: number, currentIndex: number) {
+  const currentPlainImg: PlainImage = IMAGES[currentIndex].plain;
+  const currentModalImg: ModalImage = IMAGES[currentIndex].modal;
+  expect(preview.name).toBe('img');
+  expect(preview.attributes['role']).toBe('img');
+  expect(preview.attributes['aria-label']).toBe('');
+  expect(preview.attributes['ksSize']).toBe('');
+  expect(preview.properties['className']).toBe('inside preview-image ' + ((activeIndex === currentIndex) ? 'active' : ''));
+  expect(preview.properties['src']).toBe(currentPlainImg && currentPlainImg.img ? currentPlainImg.img : currentModalImg.img);
+  expect(preview.properties['title']).toBe('');
+  expect(preview.properties['alt']).toBe('');
+  expect(preview.properties['tabIndex']).toBe(0);
+  expect(preview.properties['className']).toBe('inside preview-image ' + ((activeIndex === currentIndex) ? 'active' : ''));
+}
+
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [PreviewsComponent, SizeDirective]
@@ -111,9 +189,41 @@ describe('PreviewsComponent', () => {
 
   describe('---YES---', () => {
 
-    it(`should display previews (first one is active) based of the input images`, () => {
+
+    it(`should display previews (first one is active) based of input images`, () => {
       const initialActivePreview = 0;
       const afterClickActivePreview = 0;
+      const numberOfVisiblePreviews = 3;
+      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.currentImage = IMAGES[initialActivePreview];
+      comp.images = IMAGES;
+      comp.slideConfig = SLIDE_CONFIG;
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+
+      const arrows: DebugElement[] = element.queryAll(By.css('a'));
+      checkArrows(arrows, true, false);
+
+      const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
+      expect(previewsContainer.name).toBe('nav');
+      expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+
+      const previews: DebugElement[] = element.queryAll(By.css('img'));
+      expect(previews.length).toBe(numberOfVisiblePreviews);
+
+      previews.forEach((preview: DebugElement, index: number) => {
+        checkPreview(preview, initialActivePreview, index);
+      });
+    });
+
+    it(`should display previews (first one is active) and click on the second one`, () => {
+      const initialActivePreview = 0;
+      const afterClickActivePreview = 0;
+      const numberOfVisiblePreviews = 3;
       comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.currentImage = IMAGES[initialActivePreview];
@@ -129,315 +239,121 @@ describe('PreviewsComponent', () => {
 
       const element: DebugElement = fixture.debugElement;
 
-      const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
-      expect(previewsContainer.name).toBe('nav');
-      expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
-
       const arrows: DebugElement[] = element.queryAll(By.css('a'));
-      expect(arrows.length).toBe(2);
-      expect(arrows[0].attributes['class']).toBe('nav-left');
-      expect(arrows[0].attributes['role']).toBe('button');
-      expect(arrows[0].attributes['aria-label']).toBe('Scroll previous previews');
-      expect(arrows[0].properties['tabIndex']).toBe(-1); // because with the first image, prev arrow is hidden
-      expect(arrows[0].children[0].attributes['aria-hidden']).toBe('true');
-      // expect(arrows[0].children[0].classes).toBe('inside left-arrow-preview-image');
-      expect(arrows[0].children[0].properties['title']).toBe('Scroll previous previews');
-      expect(arrows[0].children[0].properties['className']).toBe('inside empty-arrow-preview-image'); // 'inside left-arrow-preview-image');
-
-      expect(arrows[1].attributes['class']).toBe('nav-right');
-      expect(arrows[1].attributes['role']).toBe('button');
-      expect(arrows[1].attributes['aria-label']).toBe('Scroll next previews');
-      expect(arrows[1].properties['tabIndex']).toBe(0);
-      expect(arrows[1].children[0].attributes['aria-hidden']).toBe('true');
-      expect(arrows[1].children[0].properties['className']).toBe('inside right-arrow-preview-image');
-      expect(arrows[1].children[0].properties['title']).toBe('Scroll next previews');
+      checkArrows(arrows, true, false);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
-      expect(previews.length).toBe(3);
+      expect(previews.length).toBe(numberOfVisiblePreviews);
 
       previews.forEach((preview: DebugElement, index: number) => {
-        expect(preview.name).toBe('img');
-        expect(preview.attributes['role']).toBe('img');
-        expect(preview.attributes['aria-label']).toBe('');
-        expect(preview.attributes['ksSize']).toBe('');
-
-        expect(preview.properties['className']).toBe('inside preview-image ' + ((initialActivePreview === index) ? 'active' : ''));
-        expect(preview.properties['src']).toBe(IMAGES[index].plain && IMAGES[index].plain.img ? IMAGES[index].plain.img : IMAGES[index].modal.img);
-        expect(preview.properties['title']).toBe('');
-        expect(preview.properties['alt']).toBe('');
-        expect(preview.properties['tabIndex']).toBe(0);
-
-        if (index === initialActivePreview) {
-          expect(preview.properties['className']).toBe('inside preview-image active');
-        } else {
-          expect(preview.properties['className']).toBe('inside preview-image ');
-        }
+        checkPreview(preview, initialActivePreview, index);
       });
 
       previews[afterClickActivePreview].nativeElement.click();
     });
 
-    it(`should display previews (first one is active) based of the input images`, async(() => {
-      const initialActivePreview = 0;
-      const afterClickActivePreview = 0;
-      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.currentImage = IMAGES[initialActivePreview];
-      comp.images = IMAGES;
-      comp.slideConfig = SLIDE_CONFIG;
-      comp.ngOnInit();
-      fixture.detectChanges();
+    NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
+      it(`should navigate previews clicking on left arrow. Test i=${index}`, async(() => {
+        comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.currentImage = IMAGES[val.initial.activeIndex];
+        comp.images = IMAGES;
+        comp.slideConfig = SLIDE_CONFIG;
+        comp.ngOnInit();
+        fixture.detectChanges();
 
-      // comp.clickPreview.subscribe((res: InternalLibImage) => {
-      //   console.log(res, IMAGES[afterClickActivePreview]);
-      //   expect(res).toEqual(IMAGES[afterClickActivePreview]);
-      // });
+        const element: DebugElement = fixture.debugElement;
 
-      const element: DebugElement = fixture.debugElement;
+        const previews: DebugElement[] = element.queryAll(By.css('img'));
+        expect(previews.length).toBe(3);
 
-      const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
-      expect(previewsContainer.name).toBe('nav');
-      expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+        const arrows: DebugElement[] = element.queryAll(By.css('a'));
+        expect(arrows.length).toBe(2);
 
-      const arrows: DebugElement[] = element.queryAll(By.css('a'));
-      expect(arrows.length).toBe(2);
-      expect(arrows[0].attributes['class']).toBe('nav-left');
-      expect(arrows[0].attributes['role']).toBe('button');
-      expect(arrows[0].attributes['aria-label']).toBe('Scroll previous previews');
-      expect(arrows[0].properties['tabIndex']).toBe(-1); // because with the first image, prev arrow is hidden
-      expect(arrows[0].children[0].attributes['aria-hidden']).toBe('true');
-      // expect(arrows[0].children[0].classes).toBe('inside left-arrow-preview-image');
-      expect(arrows[0].children[0].properties['title']).toBe('Scroll previous previews');
-      expect(arrows[0].children[0].properties['className']).toBe('inside empty-arrow-preview-image'); // 'inside left-arrow-preview-image');
+        spyOn(comp, 'onNavigationEvent').and.callThrough();
 
-      expect(arrows[1].attributes['class']).toBe('nav-right');
-      expect(arrows[1].attributes['role']).toBe('button');
-      expect(arrows[1].attributes['aria-label']).toBe('Scroll next previews');
-      expect(arrows[1].properties['tabIndex']).toBe(0);
-      expect(arrows[1].children[0].attributes['aria-hidden']).toBe('true');
-      expect(arrows[1].children[0].properties['className']).toBe('inside right-arrow-preview-image');
-      expect(arrows[1].children[0].properties['title']).toBe('Scroll next previews');
+        if (index !== 0) {
+          arrows[1].nativeElement.click();
+          fixture.detectChanges();
+        }
 
-      // const previews: DebugElement[] = element.queryAll(By.css('img'));
-      // expect(previews.length).toBe(3);
-      //
-      // previews.forEach((preview: DebugElement, index: number) => {
-      //   expect(preview.name).toBe('img');
-      //   expect(preview.attributes['role']).toBe('img');
-      //   expect(preview.attributes['aria-label']).toBe('');
-      //   expect(preview.attributes['ksSize']).toBe('');
-      //
-      //   expect(preview.properties['className']).toBe('inside preview-image ' + ((initialActivePreview === index) ? 'active' : ''));
-      //   expect(preview.properties['src']).toBe(IMAGES[index].plain && IMAGES[index].plain.img ? IMAGES[index].plain.img : IMAGES[index].modal.img);
-      //   expect(preview.properties['title']).toBe('');
-      //   expect(preview.properties['alt']).toBe('');
-      //   expect(preview.properties['tabIndex']).toBe(0);
-      //
-      //   if (index === initialActivePreview) {
-      //     expect(preview.properties['className']).toBe('inside preview-image active');
-      //   } else {
-      //     expect(preview.properties['className']).toBe('inside preview-image ');
-      //   }
-      // });
+        expect(comp.start).toBe(val.initial.start);
+        expect(comp.end).toBe(val.initial.end);
+        expect(comp.previews).toEqual(IMAGES.slice(val.initial.start, val.initial.end));
 
-      expect(comp.start).toBe(0);
-      expect(comp.end).toBe(3);
-      expect(comp.previews).toEqual(IMAGES.slice(0, 3));
+        if (index === 0) {
+          checkArrows(arrows, true, false);
+        } else {
+          checkArrows(arrows, false, false);
+        }
 
-      spyOn(comp, 'onNavigationEvent').and.callThrough();
+        arrows[1].nativeElement.click();
 
-      arrows[1].nativeElement.click();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+          expect(comp.onNavigationEvent).toHaveBeenCalled();
+          expect(comp.start).toBe(val.expected.start);
+          expect(comp.end).toBe(val.expected.end);
+          expect(comp.previews).toEqual(IMAGES.slice(val.expected.start, val.expected.end));
+          if (index === 0) {
+            checkArrows(arrows, false, false);
+          } else {
+            checkArrows(arrows, false, true);
+          }
+        });
+      }));
+    });
 
-      // let button = fixture.debugElement.nativeElement.querySelector('button');
-      // button.click();
-
-      fixture.whenStable().then(() => {
-        console.log(']]]]]]]]]]]]]]');
-        expect(comp.onNavigationEvent).toHaveBeenCalled();
-        expect(comp.start).toBe(1);
-        expect(comp.end).toBe(4);
-        expect(comp.previews).toEqual(IMAGES.slice(1, 4));
-      });
-    }));
-
-    // it(`should display dots (first one is active), because by default previewConfig are visible`, () => {
-    //   const activeDotIndex = 0;
-    //   comp.previewConfig = undefined; // or null, or something not valid
-    //   comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //   comp.currentImage = IMAGES[activeDotIndex];
-    //   comp.images = IMAGES;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
+    // NAVIGATION_PREV_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
+    //   it(`should navigate back previews clicking on right arrow. Test i=${index}`, async(() => {
+    //     comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
+    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+    //     comp.currentImage = IMAGES[val.initial.activeIndex];
+    //     comp.images = IMAGES;
+    //     comp.slideConfig = SLIDE_CONFIG;
+    //     comp.ngOnInit();
+    //     fixture.detectChanges();
     //
-    //   const element: DebugElement = fixture.debugElement;
+    //     const element: DebugElement = fixture.debugElement;
     //
-    //   const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-    //   expect(dotsContainer.name).toBe('nav');
-    //   expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
-    //   expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
+    //     const previews: DebugElement[] = element.queryAll(By.css('img'));
+    //     expect(previews.length).toBe(3);
     //
-    //   const dots: DebugElement[] = dotsContainer.children;
-    //   expect(dots.length).toBe(IMAGES.length);
+    //     const arrows: DebugElement[] = element.queryAll(By.css('a'));
+    //     expect(arrows.length).toBe(2);
     //
-    //   dots.forEach((dot: DebugElement, index: number) => {
-    //     expect(dot.name).toBe('div');
-    //     expect(dot.attributes['role']).toBe('navigation');
-    //     expect(dot.properties['tabIndex']).toBe(0);
+    //     spyOn(comp, 'onNavigationEvent').and.callThrough();
     //
-    //     if (index === activeDotIndex) {
-    //       // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
-    //       expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
-    //     } else {
-    //       expect(dot.attributes['class']).toBe('inside dot');
-    //       // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
+    //     if (index !== 0) {
+    //       arrows[0].nativeElement.click();
+    //       fixture.detectChanges();
     //     }
-    //     expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
-    //   });
-    // });
     //
-    // it(`should display dots (first one is active) with custom accessibility`, () => {
-    //   const activeDotIndex = 0;
-    //   comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-    //   comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
-    //   comp.currentImage = IMAGES[activeDotIndex];
-    //   comp.images = IMAGES;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
+    //     expect(comp.start).toBe(val.initial.start);
+    //     expect(comp.end).toBe(val.initial.end);
+    //     expect(comp.previews).toEqual(IMAGES.slice(val.initial.start, val.initial.end));
     //
-    //   const element: DebugElement = fixture.debugElement;
-    //
-    //   const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-    //   expect(dotsContainer.name).toBe('nav');
-    //   expect(dotsContainer.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.dotsContainerAriaLabel);
-    //   expect(dotsContainer.properties['title']).toBe(CUSTOM_ACCESSIBILITY.dotsContainerTitle);
-    //
-    //   const dots: DebugElement[] = dotsContainer.children;
-    //   expect(dots.length).toBe(IMAGES.length);
-    //
-    //   dots.forEach((dot: DebugElement, index: number) => {
-    //     expect(dot.name).toBe('div');
-    //     expect(dot.attributes['role']).toBe('navigation');
-    //     expect(dot.properties['tabIndex']).toBe(0);
-    //
-    //     if (index === activeDotIndex) {
-    //       // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
-    //       expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
+    //     if (index === 0) {
+    //       checkArrows(arrows, false, true);
     //     } else {
-    //       expect(dot.attributes['class']).toBe('inside dot');
-    //       // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
+    //       checkArrows(arrows, false, false);
     //     }
-    //     expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
-    //   });
-    // });
     //
-    // it(`should display dots and click on one of themem`, () => {
-    //   const indexToClick = 1;
-    //   const activeDotIndex = 0;
-    //   comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-    //   comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //   comp.currentImage = IMAGES[activeDotIndex];
-    //   comp.images = IMAGES;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
+    //     arrows[0].nativeElement.click();
     //
-    //   const element: DebugElement = fixture.debugElement;
-    //
-    //   comp.clickPreview.subscribe((index: number) => {
-    //     expect(index).toBe(indexToClick);
-    //   }, () => fail('after a click I should receive a clickDot event'));
-    //
-    //   const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-    //   expect(dotsContainer).not.toBeNull();
-    //   const dots: DebugElement[] = dotsContainer.children;
-    //   expect(dots.length).toBe(IMAGES.length);
-    //
-    //   // clicks on a dot
-    //   dots[1].nativeElement.click();
+    //     fixture.whenStable().then(() => {
+    //       fixture.detectChanges();
+    //       expect(comp.onNavigationEvent).toHaveBeenCalled();
+    //       expect(comp.start).toBe(val.expected.start);
+    //       expect(comp.end).toBe(val.expected.end);
+    //       expect(comp.previews).toEqual(IMAGES.slice(val.expected.start, val.expected.end));
+    //       if (index === 0) {
+    //         checkArrows(arrows, false, false);
+    //       } else {
+    //         checkArrows(arrows, true, false);
+    //       }
+    //     });
+    //   }));
     // });
   });
-
-  // describe('---NO---', () => {
-  //
-  //   it(`shouldn't display dots, because visibility is false.`, () => {
-  //     comp.previewConfig = PREVIEWS_CONFIG_HIDDEN;
-  //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-  //     comp.ngOnInit();
-  //     fixture.detectChanges();
-  //
-  //     const element: DebugElement = fixture.debugElement;
-  //
-  //     const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-  //     expect(dotsContainer.name).toBe('nav');
-  //     expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
-  //     expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
-  //
-  //     const dots: DebugElement[] = element.queryAll(By.css('div.inside.dot'));
-  //     expect(dots.length).toBe(0);
-  //   });
-  //
-  //   it(`shouldn't display dots, because the array of images as input is empty`, () => {
-  //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-  //     comp.currentImage = null;
-  //     comp.images = [];
-  //     comp.ngOnInit();
-  //     fixture.detectChanges();
-  //
-  //     const element: DebugElement = fixture.debugElement;
-  //
-  //     const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-  //     expect(dotsContainer.name).toBe('nav');
-  //     expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
-  //     expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
-  //
-  //     const dots: DebugElement[] = dotsContainer.children;
-  //     expect(dots.length).toBe(0);
-  //   });
-  //
-  //   it(`shouldn't display dots, because the array of images as input is not valid`, () => {
-  //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-  //     comp.currentImage = null;
-  //     comp.images = null;
-  //     comp.ngOnInit();
-  //     fixture.detectChanges();
-  //
-  //     const element: DebugElement = fixture.debugElement;
-  //
-  //     const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-  //     expect(dotsContainer.name).toBe('nav');
-  //     expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
-  //     expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
-  //
-  //     const dots: DebugElement[] = dotsContainer.children;
-  //     expect(dots.length).toBe(0);
-  //   });
-  //
-  //   it(`shouldn't display active dot when the currentImage is invalid, because 'isActive' method throws a managed error and return false`, () => {
-  //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-  //     comp.currentImage = new InternalLibImage(-1, null);
-  //     comp.images = IMAGES;
-  //     comp.ngOnInit();
-  //     fixture.detectChanges();
-  //
-  //     const element: DebugElement = fixture.debugElement;
-  //
-  //     const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-  //     expect(dotsContainer.name).toBe('nav');
-  //     expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerAriaLabel);
-  //     expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotsContainerTitle);
-  //
-  //     const dots: DebugElement[] = dotsContainer.children;
-  //     expect(dots.length).toBe(IMAGES.length);
-  //
-  //     // all dots are NOT active, bat simply 'inside dot'
-  //     dots.forEach((dot: DebugElement, index: number) => {
-  //       expect(dot.name).toBe('div');
-  //       expect(dot.attributes['role']).toBe('navigation');
-  //       expect(dot.properties['tabIndex']).toBe(0);
-  //       expect(dot.attributes['class']).toBe('inside dot');
-  //       expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
-  //     });
-  //   });
-  // });
 });
