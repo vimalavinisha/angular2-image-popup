@@ -27,7 +27,7 @@ import { SlideConfig } from '../../model/slide-config.interface';
 import { Size } from '../../model/size.interface';
 import { ModalImage, PlainImage } from '../../model/image.class';
 import { SizeDirective } from '../../directives/size.directive';
-import { KS_DEFAULT_SIZE } from './upper-buttons-default';
+import { KS_DEFAULT_SIZE } from '../upper-buttons/upper-buttons-default';
 
 interface NavigationTestData {
   initial: {

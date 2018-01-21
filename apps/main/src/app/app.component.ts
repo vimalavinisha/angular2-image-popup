@@ -222,6 +222,32 @@ export class AppComponent {
     )
   ];
 
+  imagesMixedSizes: Image[] = [
+    new Image(0, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-135230.png',
+      description: 'Description 1'
+    }),
+    new Image(1, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-547115.jpeg'
+    }),
+    new Image(2, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-556664.jpeg',
+      description: 'Description 3'
+    }),
+    new Image(3, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-787594.jpeg',
+      description: 'Description 4'
+    }),
+    new Image(4, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-803105.jpeg'
+    })
+  ];
+
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
