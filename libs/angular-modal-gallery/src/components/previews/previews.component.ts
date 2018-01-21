@@ -106,7 +106,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     number: 3,
     arrows: true,
     clickable: true,
-    alwaysCenter: false, // TODO still not implemented
+    // alwaysCenter: false, // TODO still not implemented
     size: this.defaultPreviewSize
   };
 
@@ -172,14 +172,23 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       // to manage infinite sliding I have to reset both `start` and `end` at the beginning
       // to show again previews from the first image.
       // This happens when you navigate over the last image to return to the first one
-      if (getIndex(prev, this.images) === this.images.length - 1 && getIndex(current, this.images) === 0) {
+      let prevIndex: number;
+      let currentIndex: number;
+      try {
+        prevIndex = getIndex(prev, this.images);
+        currentIndex = getIndex(current, this.images);
+      } catch (err) {
+        console.error('Cannot get previous and current image indexes in previews');
+        throw err;
+      }
+      if (prevIndex === this.images.length - 1 && currentIndex === 0) {
         // first image
         this.setBeginningIndexesPreviews();
         this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
         return;
       }
       // the same for the opposite case, when you navigate back from the fist image to go to the last one.
-      if (getIndex(prev, this.images) === 0 && getIndex(current, this.images) === this.images.length - 1) {
+      if (prevIndex === 0 && currentIndex === this.images.length - 1) {
         // last image
         this.setEndIndexesPreviews();
         this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
@@ -187,9 +196,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
       }
 
       // otherwise manage standard scenarios
-      if (getIndex(prev, this.images) > getIndex(current, this.images)) {
+      if (prevIndex > currentIndex) {
         this.previous();
-      } else if (getIndex(prev, this.images) < getIndex(current, this.images)) {
+      } else if (prevIndex < currentIndex) {
         this.next();
       }
     }
