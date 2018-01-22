@@ -171,7 +171,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
    * @param {Image} img is the Image to show
    */
   showModalGalleryByImage(img: Image) {
-    const index: number = this.images.findIndex((val: Image) => val.id === img.id);
+    const index: number = this.images.findIndex((val: Image) => val && img && val.id === img.id);
     this.showModalGallery(index);
   }
 
@@ -185,7 +185,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     if (!image) {
       return '';
     }
-    return image.plain && image.plain.description ? image.plain.description : `Image ${getIndex(image, this.images)}`;
+    return image.plain && image.plain.description ? image.plain.description : `Image ${getIndex(image, this.images) + 1}`;
   }
 
   /**
