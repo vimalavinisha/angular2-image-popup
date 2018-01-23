@@ -1,8 +1,8 @@
 <ks-plain-gallery [images]="images"
-            [showGallery]="showGallery && isPlainGalleryVisible()"
-            [plainGalleryConfig]="plainGalleryConfig"
-            [accessibilityConfig]="accessibilityConfig"
-            (show)="onShowModalGallery($event)"></ks-plain-gallery>
+                  [showGallery]="showGallery && isPlainGalleryVisible()"
+                  [plainGalleryConfig]="plainGalleryConfig"
+                  [accessibilityConfig]="accessibilityConfig"
+                  (show)="onShowModalGallery($event)"></ks-plain-gallery>
 
 <ks-background [isOpen]="opened"
                [accessibilityConfig]="accessibilityConfig"></ks-background>
@@ -37,18 +37,19 @@
                         (changeImage)="onChangeCurrentImage($event)"
                         (close)="onCloseGallery($event)"></ks-current-image>
 
-      <ks-dots [images]="images"
-               [currentImage]="currentImage"
-               [dotsConfig]="dotsConfig"
-               [accessibilityConfig]="accessibilityConfig"
-               (clickDot)="onClickDot($event)"></ks-dots>
+      <div>
+        <ks-dots [images]="images"
+                 [currentImage]="currentImage"
+                 [dotsConfig]="dotsConfig"
+                 [accessibilityConfig]="accessibilityConfig"
+                 (clickDot)="onClickDot($event)"></ks-dots>
 
-      <ks-previews [images]="images"
-                   [currentImage]="currentImage"
-                   [previewConfig]="previewConfig"
-                   [accessibilityConfig]="accessibilityConfig"
-                   (clickPreview)="onClickPreview($event)"></ks-previews>
-
+        <ks-previews [images]="images"
+                     [currentImage]="currentImage"
+                     [previewConfig]="previewConfig"
+                     [accessibilityConfig]="accessibilityConfig"
+                     (clickPreview)="onClickPreview($event)"></ks-previews>
+      </div>
     </div>
   </div>
 </div>

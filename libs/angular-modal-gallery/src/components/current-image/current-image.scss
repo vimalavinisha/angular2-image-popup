@@ -25,7 +25,7 @@
 $main-img-container-margin-top: 20px;
 $main-img-container-margin-bottom: 20px;
 
-$curr-img-max-width-trick: 700px;
+$curr-img-max-width-trick: 70vw;
 $curr-img-max-width: 80vw;
 $curr-img-max-height: 60vh;
 
@@ -43,14 +43,20 @@ $figcaption-right: 0;
 
 $description-color: white;
 
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .main-image-container {
   display: flex;
-  flex-grow: 1;
+  //flex-grow: 1;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: $main-img-container-margin-top;
-  margin-bottom: $main-img-container-margin-bottom;
+  //margin-top: $main-img-container-margin-top;
+  //margin-bottom: $main-img-container-margin-bottom;
 
   .nav {
     animation: animatezoom $nav-animation-time;
@@ -76,8 +82,8 @@ $description-color: white;
 #current-image {
   height: auto;
   // Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally
-  max-height: $curr-img-max-height;
   max-width: $curr-img-max-width;
+  max-height: $curr-img-max-height;
   cursor: pointer;
 }
 
