@@ -104,7 +104,7 @@
     "@compodoc/compodoc": "^1.0.5",
     "@nrwl/schematics": "^0.6.10",
     "@types/hammerjs": "^2.0.35",
-    "@types/jasmine": "^2.8.3",
+    "@types/jasmine": "^2.8.5",
     "@types/jasminewd2": "~2.0.2",
     "@types/mousetrap": "^1.6.0",
     "@types/node": "^9.3.0",
