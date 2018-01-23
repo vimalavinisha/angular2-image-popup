@@ -260,7 +260,6 @@ export class AppComponent {
     number: 3,
     arrows: true,
     clickable: true,
-    alwaysCenter: false,
     size: {
       width: '70px',
       height: '70px'
@@ -411,9 +410,9 @@ export class AppComponent {
     clickable: false
   };
 
+  // TODO still not implemented
   previewConfigAlwaysCenter: PreviewConfig = {
-    visible: true,
-    alwaysCenter: true
+    visible: true
   };
 
   previewConfigCustomSize: PreviewConfig = {
