@@ -1,10 +1,14 @@
-# 5.0.0-alpha.6
+# 5.0.0-beta.1
 ### Features
 - (requested by @Enngage) configure exturl button to navigate to an external url also in a new tab, instead of only in the current one #116
 - expose as public constants both default accessibility config, all button default configs and default size
+- increase the maximum size of current modal image reducing useless spacing and margins
 
 ### Bugfixes
 - (thanks to @Enngage) current image should be centered also vertically
+
+### Unit testing
+- add unit tests for background, previews, dots, loading spinner, plain-gallery
 
 
 # 5.0.0-alpha.5

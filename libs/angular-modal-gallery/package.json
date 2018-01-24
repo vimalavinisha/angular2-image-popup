@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "angular-modal-gallery",
-  "version": "5.0.0-alpha.5",
+  "version": "5.0.0-beta.1",
   "ngPackage": {
     "lib": {
       "entryFile": "index.ts"
@@ -40,6 +40,8 @@
     "angular5-modal",
     "ngx-modal-gallery",
     "popup",
+    "plain",
+    "plain-gallery",
     "gallery",
     "modal",
     "angular2-modal-popup",
