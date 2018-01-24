@@ -3,6 +3,9 @@
 - (requested by @Enngage) configure exturl button to navigate to an external url also in a new tab, instead of only in the current one #116
 - expose as public constants both default accessibility config, all button default configs and default size
 
+### Bugfixes
+- (thanks to @Enngage) current image should be centered also vertically
+
 
 # 5.0.0-alpha.5
 ### Features

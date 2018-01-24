@@ -47,11 +47,13 @@ import {
 } from 'angular-modal-gallery';
 
 @Component({
-  selector: 'ks-root',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  // ----------------------------------------------------
+  // ----------------------------------------------------
   tiles = [
     { text: 'One', cols: 3, rows: 1, color: 'lightblue' },
     { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
@@ -61,6 +63,22 @@ export class AppComponent {
 
   animal: string;
   name: string;
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog(): void {
+    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: { name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+  // ----------------------------------------------------
+  // ----------------------------------------------------
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -124,7 +142,10 @@ export class AppComponent {
       },
       {
         // plain
-        img: '../assets/images/gallery/thumbs/img3.png'
+        img: '../assets/images/gallery/thumbs/img3.png',
+        title: 'custom title 2',
+        alt: 'custom alt 2',
+        ariaLabel: 'arial label 2'
       }
     ),
     new Image(3, {
@@ -231,6 +252,32 @@ export class AppComponent {
     )
   ];
 
+  imagesMixedSizes: Image[] = [
+    new Image(0, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-135230.png',
+      description: 'Description 1'
+    }),
+    new Image(1, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-547115.jpeg'
+    }),
+    new Image(2, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-556664.jpeg',
+      description: 'Description 3'
+    }),
+    new Image(3, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-787594.jpeg',
+      description: 'Description 4'
+    }),
+    new Image(4, {
+      // modal
+      img: '../assets/images/gallery/pexels-photo-803105.jpeg'
+    })
+  ];
+
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
@@ -243,7 +290,6 @@ export class AppComponent {
     number: 3,
     arrows: true,
     clickable: true,
-    alwaysCenter: false,
     size: {
       width: '70px',
       height: '70px'
@@ -394,9 +440,9 @@ export class AppComponent {
     clickable: false
   };
 
+  // TODO still not implemented
   previewConfigAlwaysCenter: PreviewConfig = {
-    visible: true,
-    alwaysCenter: true
+    visible: true
   };
 
   previewConfigCustomSize: PreviewConfig = {
@@ -435,20 +481,6 @@ export class AppComponent {
     previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
-
-  constructor(public dialog: MatDialog) {}
-
-  openDialog(): void {
-    let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '250px',
-      data: { name: this.name, animal: this.animal }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
-  }
 
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
@@ -549,6 +581,8 @@ export class AppComponent {
   }
 }
 
+// ----------------------------------------------------
+// ----------------------------------------------------
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'dialog-overview-example-dialog.html'
@@ -560,3 +594,5 @@ export class DialogOverviewExampleDialog {
     this.dialogRef.close();
   }
 }
+// ----------------------------------------------------
+// ----------------------------------------------------

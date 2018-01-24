@@ -99,7 +99,8 @@
               <figure class="my-app-custom-image-with-desc">
                 <img [src]="img.modal.img"
                      (click)="openImageModalRowDescription(img)"/>
-                <figcaption class="description">{{img.modal.description ? img.modal.description : 'No description available'}}</figcaption>
+                <figcaption class="description">{{img.modal.description ? img.modal.description : 'No description available'}}
+                </figcaption>
               </figure>
             </ng-container>
           </div>
@@ -119,6 +120,11 @@
           <h3>A1bis - Minimal demo - all defaults with rect images</h3>
           <br>
           <ks-modal-gallery [modalImages]="imagesRect"></ks-modal-gallery>
+        </section>
+        <section>
+          <h3>A1tris - Minimal demo - all defaults with images of different sizes</h3>
+          <br>
+          <ks-modal-gallery [modalImages]="imagesMixedSizes"></ks-modal-gallery>
         </section>
         <section>
           <h3>A2 - Minimal demo - listen for events</h3>
@@ -254,7 +260,7 @@
                             [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
         </section>
         <section>
-          <h3>B17 - Simple demo - buttons config ADVANCED strategy (close, download and exturl)</h3>
+          <h3>B17 - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current tab)</h3>
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
@@ -336,22 +342,22 @@
           <ks-modal-gallery [modalImages]="images"
                             [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
         </section>
+        <!--<section>-->
+        <!--<h3>C9 - Advanced demo - preview custom configuration always center <span-->
+        <!--style="color:red;">STILL NOT IMPLEMENTED</span></h3>-->
+        <!--<br>-->
+        <!--<ks-modal-gallery [modalImages]="images"-->
+        <!--[previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>-->
+        <!--</section>-->
         <section>
-          <h3>C9 - Advanced demo - preview custom configuration always center <span
-            style="color:red;">STILL NOT IMPLEMENTED</span></h3>
-          <br>
-          <ks-modal-gallery [modalImages]="images"
-                            [previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>
-        </section>
-        <section>
-          <h3>C10 - Advanced demo - preview custom configuration with custom size</h3>
+          <h3>9 - Advanced demo - preview custom configuration with custom size</h3>
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
         </section>
 
         <section>
-          <h3>C11 - Advanced demo - accessibility config</h3>
+          <h3>C10 - Advanced demo - accessibility config</h3>
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
@@ -363,19 +369,36 @@
         <section>
           <h4>A special thank to all authors of icons used in this library:</h4>
           <ul>
-            <li>Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
-            <li>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
-            <li>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
-            <li>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
-            <li>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></li>
+            <li>Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a
+              href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+              href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            </li>
+            <li>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a
+              href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+              href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            </li>
+            <li>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
+              href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+              href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            </li>
+            <li>Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a
+              href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+              href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            </li>
+            <li>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor
+              Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+              href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            </li>
           </ul>
         </section>
 
         <section>
           <h4>A special thanks to all authors of spinners used in this library:</h4>
           <ul>
-            <li><a href="https://github.com/lukehaas">Luke Haas (@lukehaas)</a> - <a href="https://github.com/lukehaas/css-loaders">lukehaas/css-loaders</a></li>
-            <li><a href="https://github.com/martinvd">Martin van Driel (@martinvd)</a> - <a href="https://codepen.io/martinvd/pen/xbQJom">martinvd example on codepen.io</a></li>
+            <li><a href="https://github.com/lukehaas">Luke Haas (@lukehaas)</a> - <a
+              href="https://github.com/lukehaas/css-loaders">lukehaas/css-loaders</a></li>
+            <li><a href="https://github.com/martinvd">Martin van Driel (@martinvd)</a> - <a
+              href="https://codepen.io/martinvd/pen/xbQJom">martinvd example on codepen.io</a></li>
           </ul>
         </section>
 

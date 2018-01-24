@@ -17,6 +17,7 @@
 
 /examples/universal/dist/
 /examples/webpack/.awcache/
+/examples/webpack/aot/
 /examples/webpack/coverage/
 /examples/angular-cli-material/coverage/
 /examples/angular-cli-material/dist/
