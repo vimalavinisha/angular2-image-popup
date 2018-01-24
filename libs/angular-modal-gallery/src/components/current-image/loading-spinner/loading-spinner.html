@@ -1,21 +1,28 @@
-<div [attr.aria-label]="accessibilityConfig?.loadingSpinnerAriaLabel" [title]="accessibilityConfig?.loadingSpinnerTitle">
-  <ng-container *ngIf="loadingConfig.type === loadingStandard">
-    <div class="cssload-loader">
-      <div class="cssload-inner cssload-one"></div>
-      <div class="cssload-inner cssload-two"></div>
-      <div class="cssload-inner cssload-three"></div>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="loadingConfig.type === loadingBars">
-    <div class="loader-bars">
-    </div>
-  </ng-container>
-  <ng-container *ngIf="loadingConfig.type === loadingCircular">
-    <div class="loader-circular">
-    </div>
-  </ng-container>
-  <ng-container *ngIf="loadingConfig.type === loadingDots">
-    <div class="loader-dots">
-    </div>
+<div [attr.aria-label]="accessibilityConfig?.loadingSpinnerAriaLabel"
+     [title]="accessibilityConfig?.loadingSpinnerTitle">
+  
+  <ng-container [ngSwitch]="loadingConfig.type">
+    <ng-container *ngSwitchCase="loadingStandard">
+      <div class="cssload-loader">
+        <div class="cssload-inner cssload-one"></div>
+        <div class="cssload-inner cssload-two"></div>
+        <div class="cssload-inner cssload-three"></div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="loadingBars">
+      <div class="loader-bars">
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="loadingCircular">
+      <div class="loader-circular">
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="loadingDots">
+      <div class="loader-dots">
+      </div>
+    </ng-container>
+    <!--<ng-container *ngSwitchDefault>-->
+    <!---->
+    <!--</ng-container>-->
   </ng-container>
 </div>
