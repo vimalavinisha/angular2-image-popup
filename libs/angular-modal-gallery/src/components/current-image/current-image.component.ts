@@ -164,7 +164,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       beforeTextDescription: ' - '
     };
     this.configLoading = Object.assign(defaultLoading, this.loadingConfig);
-    this.description = Object.freeze(Object.assign(defaultDescription, this.descriptionConfig));
+    this.description = Object.assign(defaultDescription, this.descriptionConfig);
   }
 
   /**
@@ -178,18 +178,26 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     if (!simpleChange) {
       return;
     }
-    const prev: InternalLibImage = simpleChange.previousValue;
+    // const prev: InternalLibImage = simpleChange.previousValue;
     const current: InternalLibImage = simpleChange.currentValue;
+
+    let index: number;
+    try {
+      index = getIndex(this.currentImage, this.images);
+    } catch (err) {
+      console.error('Cannot get the current image index in current-image');
+      throw err;
+    }
 
     // if not currently loaded
     if (current && !current.previouslyLoaded) {
       this.loading = !current.previouslyLoaded;
-      this.changeImage.emit(new ImageModalEvent(Action.LOAD, getIndex(this.currentImage, this.images)));
+      this.changeImage.emit(new ImageModalEvent(Action.LOAD, index));
       this.loading = false;
     }
 
     if (this.isOpen) {
-      this.manageSlideConfig(getIndex(this.currentImage, this.images));
+      this.manageSlideConfig(index);
     }
   }
 
@@ -265,7 +273,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     if (!image) {
       return '';
     }
-    return image.modal && image.modal.description ? image.modal.description : `Image ${getIndex(image, this.images)}`;
+    return image.modal && image.modal.description ? image.modal.description : `Image ${getIndex(image, this.images) + 1}`;
   }
 
   /**
