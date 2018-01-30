@@ -29,6 +29,7 @@ import { LoadingConfig, LoadingType } from '../../model/loading-config.interface
 import { SlideConfig } from '../../model/slide-config.interface';
 import { Description, DescriptionStrategy } from '../../model/description.interface';
 import { Size } from '../../model/size.interface';
+import { AccessibilityConfig } from '../../model/accessibility.interface';
 
 let comp: CurrentImageComponent;
 let fixture: ComponentFixture<CurrentImageComponent>;
@@ -91,15 +92,35 @@ const TEST_MODEL: TestModel[] = [
   }
 ];
 
-// const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
-// CUSTOM_ACCESSIBILITY.plainGalleryContentAriaLabel = 'custom plainGalleryContentAriaLabel';
-// CUSTOM_ACCESSIBILITY.plainGalleryContentTitle = 'custom plainGalleryContentTitle';
-//
+const TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS: TestModel[] = [
+  Object.assign({}, TEST_MODEL[0], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[1], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[2], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[3], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[4], {leftPreviewTitle: '', rightPreviewTitle: ''})
+];
+
+const TEST_MODEL_HIDEEMPTY_DESCRIPTIONS: TestModel[] = [
+  Object.assign({}, TEST_MODEL[0], {currentImgTitle: '', leftPreviewTitle: '', rightPreviewTitle: 'Description 2'}),
+  Object.assign({}, TEST_MODEL[1], {currentImgTitle: 'Description 2', leftPreviewTitle: '', rightPreviewTitle: 'Description 3'}),
+  Object.assign({}, TEST_MODEL[2], {currentImgTitle: 'Description 3', leftPreviewTitle: 'Description 2', rightPreviewTitle: 'Description 4'}),
+  Object.assign({}, TEST_MODEL[3], {currentImgTitle: 'Description 4', leftPreviewTitle: 'Description 3', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[4], {currentImgTitle: '', leftPreviewTitle: 'Description 4', rightPreviewTitle: ''})
+];
+
+const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
+CUSTOM_ACCESSIBILITY.mainContainerTitle = 'custom mainContainerTitle';
+CUSTOM_ACCESSIBILITY.mainContainerAriaLabel = 'custom mainContainerAriaLabel';
+CUSTOM_ACCESSIBILITY.mainNextImageTitle = 'custom mainNextImageTitle';
+CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel = 'custom mainNextImageAriaLabel';
+CUSTOM_ACCESSIBILITY.mainPrevImageTitle = 'custom mainPrevImageTitle';
+CUSTOM_ACCESSIBILITY.mainPrevImageAriaLabel = 'custom mainPrevImageAriaLabel';
+
 const DEFAULT_SIZE: Size = {height: 'auto', width: '100px'};
-// const CUSTOM_SIZE: Size = {height: '40px', width: '40px'};
-// const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '40px'};
-// const CUSTOM_SIZE_AUTO_WIDTH: Size = {height: '40px', width: 'auto'};
-// const CUSTOM_SIZES: Size[] = [CUSTOM_SIZE, CUSTOM_SIZE_AUTO_HEIGHT, CUSTOM_SIZE_AUTO_WIDTH];
+const CUSTOM_SIZE: Size = {height: '100px', width: '100px'};
+const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '100px'};
+const CUSTOM_SIZE_AUTO_WIDTH: Size = {height: '100px', width: 'auto'};
+const CUSTOM_SIZES: Size[] = [CUSTOM_SIZE, CUSTOM_SIZE_AUTO_HEIGHT, CUSTOM_SIZE_AUTO_WIDTH];
 
 const IMAGES: InternalLibImage[] = [
   new InternalLibImage(0, {
@@ -147,7 +168,8 @@ const IMAGES: InternalLibImage[] = [
   )
 ];
 
-function checkMainContainer(element: DebugElement) {
+function checkMainContainer() {
+  const element: DebugElement = fixture.debugElement;
   const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
   expect(mainCurrentImage.name).toBe('main');
   expect(mainCurrentImage.attributes['ksKeyboardNavigation']).toBe('');
@@ -155,7 +177,8 @@ function checkMainContainer(element: DebugElement) {
   expect(mainCurrentImage.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainContainerAriaLabel);
 }
 
-function checkCurrentImage(element: DebugElement, currentImage: InternalLibImage, val: TestModel) {
+function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withDescription: boolean = true) {
+  const element: DebugElement = fixture.debugElement;
   const currentFigure: DebugElement = element.query(By.css('figure#current-figure'));
   expect(currentFigure.name).toBe('figure');
   const currentImageElement: DebugElement = currentFigure.children[0];
@@ -163,15 +186,19 @@ function checkCurrentImage(element: DebugElement, currentImage: InternalLibImage
   expect(currentImageElement.attributes['class']).toBe('inside');
   expect(currentImageElement.attributes['role']).toBe('img');
   expect(currentImageElement.properties['src']).toBe(currentImage.modal.img);
-  expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
+  expect(currentImageElement.properties['title']).toBe(withDescription ? val.currentImgTitle : '');
   expect(currentImageElement.properties['alt']).toBe(val.currentAlt);
   expect(currentImageElement.properties['tabIndex']).toBe(0);
-  const currentFigcaption: DebugElement = currentFigure.children[1];
-  expect(currentFigcaption.attributes['class']).toBe('inside description');
-  expect(currentFigcaption.nativeElement.textContent).toEqual(val.currentDescription);
+
+  if (withDescription) {
+    const currentFigcaption: DebugElement = currentFigure.children[1];
+    expect(currentFigcaption.attributes['class']).toBe('inside description');
+    expect(currentFigcaption.nativeElement.textContent).toEqual(val.currentDescription);
+  }
 }
 
-function checkArrows(element: DebugElement, isFirstImage: boolean, isLastImage: boolean) {
+function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
+  const element: DebugElement = fixture.debugElement;
   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
   expect(aNavLeft.name).toBe('a');
   expect(aNavLeft.attributes['role']).toBe('button');
@@ -193,8 +220,9 @@ function checkArrows(element: DebugElement, isFirstImage: boolean, isLastImage: 
   expect(divNavRight.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
 }
 
-function checkSidePreviews(element: DebugElement, prevImage: InternalLibImage, nextImage: InternalLibImage,
+function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
                            isFirstImage: boolean, isLastImage: boolean, val: TestModel) {
+  const element: DebugElement = fixture.debugElement;
   const leftPreviewImage: DebugElement = element.query(By.css(isFirstImage
     ? 'div.current-image-previous.hidden'
     : 'img.inside.current-image-previous'));
@@ -254,7 +282,6 @@ describe('CurrentImageComponent', () => {
         comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
         comp.keyboardConfig = null;
-
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -265,19 +292,102 @@ describe('CurrentImageComponent', () => {
         });
         comp.ngOnInit();
         fixture.detectChanges();
-
-        const element: DebugElement = fixture.debugElement;
-
-        checkMainContainer(element);
-        checkCurrentImage(element, IMAGES[index], val);
-        checkArrows(element, index === 0, index === IMAGES.length - 1);
-        checkSidePreviews(element, IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
         // comp.show.subscribe((res: number) => {
         //   expect(res).toBe(0);
         // });
         //
         // plainImages[0].nativeElement.click();
       });
+    });
+
+    TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
+      it(`should display current image when description is always hidden. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN};
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val, false);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+      });
+    });
+
+    TEST_MODEL_HIDEEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
+      it(`should display current image when description is HIDE_IF_EMPTY. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.HIDE_IF_EMPTY};
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        const imageWithoutDescription: boolean = !IMAGES[index].modal || !IMAGES[index].modal.description || IMAGES[index].modal.description === '';
+        checkCurrentImage(IMAGES[index], val, !imageWithoutDescription);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+      });
+    });
+
+    it(`should display current image with custom accessibility`, () => {
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      comp.isOpen = true;
+      comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+      comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
+      comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[0],
+          currentValue: IMAGES[0],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      const element: DebugElement = fixture.debugElement;
+      const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
+      expect(mainCurrentImage.properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainContainerTitle);
+      expect(mainCurrentImage.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainContainerAriaLabel);
+      const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
+      expect(aNavLeft.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageAriaLabel);
+      expect(aNavLeft.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageTitle);
+      const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
+      expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
+      expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
     });
   });
 });
