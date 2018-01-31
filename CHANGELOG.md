@@ -1,3 +1,11 @@
+# 5.0.0-beta.2
+### Bugfixes
+- when slideConfig doesn't contain the 'infinite' property should disable inifinite sliding
+
+### Unit testing
+- add unit tests for current-image and modal-gallery
+
+
 # 5.0.0-beta.1
 ### Features
 - (requested by @Enngage) configure exturl button to navigate to an external url also in a new tab, instead of only in the current one #116

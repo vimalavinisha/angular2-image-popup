@@ -444,7 +444,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param {number} index of the visible image
    */
   private manageSlideConfig(index: number) {
-    if (!this.slideConfig || this.slideConfig.infinite !== false) {
+    if (!this.slideConfig || this.slideConfig.infinite === true) {
+      // enable infinite sliding
       this.isFirstImage = false;
       this.isLastImage = false;
     } else {

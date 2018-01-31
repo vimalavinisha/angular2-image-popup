@@ -101,11 +101,26 @@ const TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS: TestModel[] = [
 ];
 
 const TEST_MODEL_HIDEEMPTY_DESCRIPTIONS: TestModel[] = [
-  Object.assign({}, TEST_MODEL[0], {currentImgTitle: '', leftPreviewTitle: '', rightPreviewTitle: 'Description 2'}),
-  Object.assign({}, TEST_MODEL[1], {currentImgTitle: 'Description 2', leftPreviewTitle: '', rightPreviewTitle: 'Description 3'}),
-  Object.assign({}, TEST_MODEL[2], {currentImgTitle: 'Description 3', leftPreviewTitle: 'Description 2', rightPreviewTitle: 'Description 4'}),
-  Object.assign({}, TEST_MODEL[3], {currentImgTitle: 'Description 4', leftPreviewTitle: 'Description 3', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[4], {currentImgTitle: '', leftPreviewTitle: 'Description 4', rightPreviewTitle: ''})
+  Object.assign({}, TEST_MODEL[0], {
+    currentImgTitle: '', leftPreviewTitle: '',
+    rightPreviewTitle: 'Description 2', currentDescription: 'Image 1/5'
+  }),
+  Object.assign({}, TEST_MODEL[1], {
+    currentImgTitle: 'Description 2', leftPreviewTitle: '',
+    rightPreviewTitle: 'Description 3', currentDescription: 'Description 2'
+  }),
+  Object.assign({}, TEST_MODEL[2], {
+    currentImgTitle: 'Description 3', leftPreviewTitle: 'Description 2',
+    rightPreviewTitle: 'Description 4', currentDescription: 'Description 3'
+  }),
+  Object.assign({}, TEST_MODEL[3], {
+    currentImgTitle: 'Description 4', leftPreviewTitle: 'Description 3',
+    rightPreviewTitle: '', currentDescription: 'Description 4'
+  }),
+  Object.assign({}, TEST_MODEL[4], {
+    currentImgTitle: '', leftPreviewTitle: 'Description 4',
+    rightPreviewTitle: '', currentDescription: 'Image 5/5'
+  })
 ];
 
 const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
@@ -121,6 +136,26 @@ const CUSTOM_SIZE: Size = {height: '100px', width: '100px'};
 const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '100px'};
 const CUSTOM_SIZE_AUTO_WIDTH: Size = {height: '100px', width: 'auto'};
 const CUSTOM_SIZES: Size[] = [CUSTOM_SIZE, CUSTOM_SIZE_AUTO_HEIGHT, CUSTOM_SIZE_AUTO_WIDTH];
+
+const CUSTOM_SLIDE_CONFIG: SlideConfig[] = [
+  {infinite: false, sidePreviews: {show: true, size: CUSTOM_SIZE}},
+  {infinite: false, sidePreviews: {show: true, size: CUSTOM_SIZE_AUTO_HEIGHT}},
+  {infinite: false, sidePreviews: {show: true, size: CUSTOM_SIZE_AUTO_WIDTH}},
+  {sidePreviews: {show: true, size: DEFAULT_SIZE}}
+];
+
+const CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS: SlideConfig[] = [
+  {sidePreviews: {show: false, size: DEFAULT_SIZE}},
+  {infinite: true},
+  {infinite: false}
+];
+
+const CUSTOM_SLIDE_CONFIG_INFINITE: SlideConfig[] = [
+  {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+  {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+  {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+  {infinite: true}
+];
 
 const IMAGES: InternalLibImage[] = [
   new InternalLibImage(0, {
@@ -198,6 +233,7 @@ function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withD
 }
 
 function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
+  console.log('checkArrows: ' + isFirstImage + ' , ' + isLastImage);
   const element: DebugElement = fixture.debugElement;
   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
   expect(aNavLeft.name).toBe('a');
@@ -221,7 +257,7 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
 }
 
 function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
-                           isFirstImage: boolean, isLastImage: boolean, val: TestModel) {
+                           isFirstImage: boolean, isLastImage: boolean, val: TestModel, size: Size = DEFAULT_SIZE) {
   const element: DebugElement = fixture.debugElement;
   const leftPreviewImage: DebugElement = element.query(By.css(isFirstImage
     ? 'div.current-image-previous.hidden'
@@ -234,8 +270,8 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
     expect(leftPreviewImage.properties['alt']).toBe(val.leftPreviewAlt);
   }
   expect(leftPreviewImage.attributes['class']).toBe(isFirstImage ? 'current-image-previous hidden' : 'inside current-image-previous');
-  expect(leftPreviewImage.styles.width).toBe(DEFAULT_SIZE.width);
-  expect(leftPreviewImage.styles.height).toBe(DEFAULT_SIZE.height);
+  expect(leftPreviewImage.styles.width).toBe(size.width);
+  expect(leftPreviewImage.styles.height).toBe(size.height);
 
   const rightPreviewImage: DebugElement = element.query(By.css(isLastImage
     ? 'div.current-image-next.hidden'
@@ -248,8 +284,8 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
     expect(rightPreviewImage.properties['alt']).toBe(val.rightPreviewAlt);
   }
   expect(rightPreviewImage.attributes['class']).toBe(isLastImage ? 'current-image-next hidden' : 'inside current-image-next');
-  expect(rightPreviewImage.styles.width).toBe(DEFAULT_SIZE.width);
-  expect(rightPreviewImage.styles.height).toBe(DEFAULT_SIZE.height);
+  expect(rightPreviewImage.styles.width).toBe(size.width);
+  expect(rightPreviewImage.styles.height).toBe(size.height);
 }
 
 function initTestBed() {
@@ -305,7 +341,7 @@ describe('CurrentImageComponent', () => {
     });
 
     TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
-      it(`should display current image when description is always hidden. Test i=${index}`, () => {
+      it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
@@ -359,6 +395,69 @@ describe('CurrentImageComponent', () => {
       });
     });
 
+    CUSTOM_SLIDE_CONFIG.forEach((slideConfig: SlideConfig, j: number) => {
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        it(`should display current image, arrows and side previews with custom slideConfig. Test i=${index}, j=${j}`, () => {
+          comp.images = IMAGES;
+          comp.currentImage = IMAGES[index];
+          comp.isOpen = true;
+          comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+          comp.slideConfig = slideConfig;
+          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+          comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+          comp.keyboardConfig = null;
+          comp.ngOnChanges(<SimpleChanges>{
+            currentImage: {
+              previousValue: IMAGES[index],
+              currentValue: IMAGES[index],
+              firstChange: false,
+              isFirstChange: () => false
+            }
+          });
+          comp.ngOnInit();
+          fixture.detectChanges();
+          checkMainContainer();
+          checkCurrentImage(IMAGES[index], val);
+          checkArrows(index === 0, index === IMAGES.length - 1);
+          checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1],
+            index === 0, index === IMAGES.length - 1,
+            val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
+        });
+      });
+    });
+
+    // CUSTOM_SLIDE_CONFIG_INFINITE.forEach((slideConfig: SlideConfig, j: number) => {
+    //   TEST_MODEL.forEach((val: TestModel, index: number) => {
+    //     it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
+    //       comp.images = IMAGES;
+    //       comp.currentImage = IMAGES[index];
+    //       comp.isOpen = true;
+    //       comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+    //       comp.slideConfig = slideConfig;
+    //       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+    //       comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+    //       comp.keyboardConfig = null;
+    //       comp.ngOnChanges(<SimpleChanges>{
+    //         currentImage: {
+    //           previousValue: IMAGES[index],
+    //           currentValue: IMAGES[index],
+    //           firstChange: false,
+    //           isFirstChange: () => false
+    //         }
+    //       });
+    //       comp.ngOnInit();
+    //       fixture.detectChanges();
+    //       checkMainContainer();
+    //       checkCurrentImage(IMAGES[index], val);
+    //       console.log('checkArrows before ' + index + ' infinite: ' + slideConfig.infinite);
+    //       checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
+    //       // checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1],
+    //       //   index === 0, index === IMAGES.length - 1,
+    //       //   val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
+    //     });
+    //   });
+    // });
+
     it(`should display current image with custom accessibility`, () => {
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
@@ -389,5 +488,40 @@ describe('CurrentImageComponent', () => {
       expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
       expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
     });
+
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
+      it(`should display current image without side previews. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: false, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        const element: DebugElement = fixture.debugElement;
+        const leftPreviewImage: DebugElement = element.query(By.css('div.current-image-previous.hidden'));
+        expect(leftPreviewImage).toBeNull();
+        const rightPreviewImage: DebugElement = element.query(By.css('div.current-image-next.hidden'));
+        expect(rightPreviewImage).toBeNull();
+      });
+    });
+  });
+
+  describe('---NO---', () => {
+
   });
 });
