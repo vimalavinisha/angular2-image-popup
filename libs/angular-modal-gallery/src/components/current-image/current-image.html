@@ -4,16 +4,16 @@
 
   <a class="nav-left" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
-     [tabindex]="isFirstImage ? -1 : 0" role="button"
+     [tabindex]="isFirstImage || slideConfig?.infinite ? -1 : 0" role="button"
      (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
-    <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
+    <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.mainPrevImageTitle"></div>
   </a>
 
   <ng-container *ngIf="slideConfig?.sidePreviews?.show">
     <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
-      <img *ngIf="!isFirstImage; else firstImage"
+      <img *ngIf="!isFirstImage || slideConfig?.infinite; else firstImage"
            class="inside current-image-previous"
            [src]="leftPreview.plain?.img ? leftPreview.plain.img : leftPreview.modal.img"
            [hidden]="loading"
@@ -47,7 +47,7 @@
 
   <ng-container *ngIf="slideConfig?.sidePreviews?.show">
     <ng-container *ngIf="getRightPreviewImage() as rightPreview">
-      <img *ngIf="!isLastImage; else lastImage"
+      <img *ngIf="!isLastImage || slideConfig?.infinite; else lastImage"
            class="inside current-image-next"
            [src]="rightPreview.plain?.img ? rightPreview.plain.img : rightPreview.modal.img"
            [hidden]="loading"
@@ -72,9 +72,9 @@
 
   <a class="nav-right" *ngIf="images?.length > 1"
      [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
-     [tabindex]="isLastImage ? -1 : 0" role="button"
+     [tabindex]="isLastImage || slideConfig?.infinite ? -1 : 0" role="button"
      (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
-    <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
+    <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig.mainNextImageTitle"></div>
   </a>
