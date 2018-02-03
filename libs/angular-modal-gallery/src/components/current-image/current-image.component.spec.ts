@@ -92,6 +92,54 @@ const TEST_MODEL: TestModel[] = [
   }
 ];
 
+const TEST_MODEL_INFINITE: TestModel[] = [
+  {
+    currentImgTitle: 'Image 1/5',
+    currentAlt: 'Image 1',
+    currentDescription: 'Image 1/5',
+    leftPreviewTitle: 'Image 5/5',
+    leftPreviewAlt: 'Image 5',
+    rightPreviewTitle: 'Image 2/5 - Description 2',
+    rightPreviewAlt: 'Description 2'
+  },
+  {
+    currentImgTitle: 'Image 2/5 - Description 2',
+    currentAlt: 'Description 2',
+    currentDescription: 'Image 2/5 - Description 2',
+    leftPreviewTitle: 'Image 1/5',
+    leftPreviewAlt: 'Image 1',
+    rightPreviewTitle: 'Image 3/5 - Description 3',
+    rightPreviewAlt: 'Description 3'
+  },
+  {
+    currentImgTitle: 'Image 3/5 - Description 3',
+    currentAlt: 'Description 3',
+    currentDescription: 'Image 3/5 - Description 3',
+    leftPreviewTitle: 'Image 2/5 - Description 2',
+    leftPreviewAlt: 'Description 2',
+    rightPreviewTitle: 'Image 4/5 - Description 4',
+    rightPreviewAlt: 'Description 4'
+  },
+  {
+    currentImgTitle: 'Image 4/5 - Description 4',
+    currentAlt: 'Description 4',
+    currentDescription: 'Image 4/5 - Description 4',
+    leftPreviewTitle: 'Image 3/5 - Description 3',
+    leftPreviewAlt: 'Description 3',
+    rightPreviewTitle: 'Image 5/5',
+    rightPreviewAlt: 'Image 5'
+  },
+  {
+    currentImgTitle: 'Image 5/5',
+    currentAlt: 'Image 5',
+    currentDescription: 'Image 5/5',
+    leftPreviewTitle: 'Image 4/5 - Description 4',
+    leftPreviewAlt: 'Description 4',
+    rightPreviewTitle: 'Image 1/5',
+    rightPreviewAlt: 'Image 1'
+  }
+];
+
 const TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS: TestModel[] = [
   Object.assign({}, TEST_MODEL[0], {leftPreviewTitle: '', rightPreviewTitle: ''}),
   Object.assign({}, TEST_MODEL[1], {leftPreviewTitle: '', rightPreviewTitle: ''}),
@@ -233,7 +281,6 @@ function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withD
 }
 
 function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
-  console.log('checkArrows: ' + isFirstImage + ' , ' + isLastImage);
   const element: DebugElement = fixture.debugElement;
   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
   expect(aNavLeft.name).toBe('a');
@@ -259,6 +306,11 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
 function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
                            isFirstImage: boolean, isLastImage: boolean, val: TestModel, size: Size = DEFAULT_SIZE) {
   const element: DebugElement = fixture.debugElement;
+
+  console.log('checkSidePreviews isFirstImage' + isFirstImage + ' isLastImage ' + isLastImage);
+  console.log('checkSidePreviews prevImage', prevImage);
+  console.log('checkSidePreviews isLastImage', nextImage);
+
   const leftPreviewImage: DebugElement = element.query(By.css(isFirstImage
     ? 'div.current-image-previous.hidden'
     : 'img.inside.current-image-previous'));
@@ -426,37 +478,38 @@ describe('CurrentImageComponent', () => {
       });
     });
 
-    // CUSTOM_SLIDE_CONFIG_INFINITE.forEach((slideConfig: SlideConfig, j: number) => {
-    //   TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //     it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
-    //       comp.images = IMAGES;
-    //       comp.currentImage = IMAGES[index];
-    //       comp.isOpen = true;
-    //       comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //       comp.slideConfig = slideConfig;
-    //       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //       comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //       comp.keyboardConfig = null;
-    //       comp.ngOnChanges(<SimpleChanges>{
-    //         currentImage: {
-    //           previousValue: IMAGES[index],
-    //           currentValue: IMAGES[index],
-    //           firstChange: false,
-    //           isFirstChange: () => false
-    //         }
-    //       });
-    //       comp.ngOnInit();
-    //       fixture.detectChanges();
-    //       checkMainContainer();
-    //       checkCurrentImage(IMAGES[index], val);
-    //       console.log('checkArrows before ' + index + ' infinite: ' + slideConfig.infinite);
-    //       checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
-    //       // checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1],
-    //       //   index === 0, index === IMAGES.length - 1,
-    //       //   val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
-    //     });
-    //   });
-    // });
+    CUSTOM_SLIDE_CONFIG_INFINITE.forEach((slideConfig: SlideConfig, j: number) => {
+      TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
+        it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
+          comp.images = IMAGES;
+          comp.currentImage = IMAGES[index];
+          comp.isOpen = true;
+          comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+          comp.slideConfig = slideConfig;
+          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+          comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+          comp.keyboardConfig = null;
+          comp.ngOnChanges(<SimpleChanges>{
+            currentImage: {
+              previousValue: IMAGES[index],
+              currentValue: IMAGES[index],
+              firstChange: false,
+              isFirstChange: () => false
+            }
+          });
+          comp.ngOnInit();
+          fixture.detectChanges();
+          checkMainContainer();
+          checkCurrentImage(IMAGES[index], val);
+          checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
+          checkSidePreviews(
+            index === 0 ? IMAGES[IMAGES.length - 1] : IMAGES[index - 1],
+            index === IMAGES.length - 1 ? IMAGES[0] : IMAGES[index + 1],
+            (index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite,
+            val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
+        });
+      });
+    });
 
     it(`should display current image with custom accessibility`, () => {
       comp.images = IMAGES;
@@ -519,9 +572,5 @@ describe('CurrentImageComponent', () => {
         expect(rightPreviewImage).toBeNull();
       });
     });
-  });
-
-  describe('---NO---', () => {
-
   });
 });
