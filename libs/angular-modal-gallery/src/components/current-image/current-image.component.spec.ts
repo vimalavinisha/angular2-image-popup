@@ -502,11 +502,13 @@ describe('CurrentImageComponent', () => {
           checkMainContainer();
           checkCurrentImage(IMAGES[index], val);
           checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
-          checkSidePreviews(
-            index === 0 ? IMAGES[IMAGES.length - 1] : IMAGES[index - 1],
-            index === IMAGES.length - 1 ? IMAGES[0] : IMAGES[index + 1],
-            (index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite,
-            val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
+          if (slideConfig.sidePreviews) {
+            checkSidePreviews(
+              index === 0 ? IMAGES[IMAGES.length - 1] : IMAGES[index - 1],
+              index === IMAGES.length - 1 ? IMAGES[0] : IMAGES[index + 1],
+              (index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite,
+              val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
+          }
         });
       });
     });
