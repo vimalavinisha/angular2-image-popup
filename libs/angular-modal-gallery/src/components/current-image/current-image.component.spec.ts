@@ -193,6 +193,8 @@ const CUSTOM_SLIDE_CONFIG: SlideConfig[] = [
 ];
 
 const CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS: SlideConfig[] = [
+  {infinite: false, sidePreviews: {show: false, size: DEFAULT_SIZE}},
+  {infinite: true, sidePreviews: {show: false, size: DEFAULT_SIZE}},
   {sidePreviews: {show: false, size: DEFAULT_SIZE}},
   {infinite: true},
   {infinite: false}
@@ -306,11 +308,6 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
 function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
                            isFirstImage: boolean, isLastImage: boolean, val: TestModel, size: Size = DEFAULT_SIZE) {
   const element: DebugElement = fixture.debugElement;
-
-  console.log('checkSidePreviews isFirstImage' + isFirstImage + ' isLastImage ' + isLastImage);
-  console.log('checkSidePreviews prevImage', prevImage);
-  console.log('checkSidePreviews isLastImage', nextImage);
-
   const leftPreviewImage: DebugElement = element.query(By.css(isFirstImage
     ? 'div.current-image-previous.hidden'
     : 'img.inside.current-image-previous'));
@@ -513,6 +510,45 @@ describe('CurrentImageComponent', () => {
       });
     });
 
+    CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS.forEach((slideConfig: SlideConfig, j: number) => {
+      TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
+        it(`should display current image and arrows WITHOUT side previews. Test i=${index}, j=${j}`, () => {
+          comp.images = IMAGES;
+          comp.currentImage = IMAGES[index];
+          comp.isOpen = true;
+          comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+          comp.slideConfig = slideConfig;
+          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+          comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+          comp.keyboardConfig = null;
+          comp.ngOnChanges(<SimpleChanges>{
+            currentImage: {
+              previousValue: IMAGES[index],
+              currentValue: IMAGES[index],
+              firstChange: false,
+              isFirstChange: () => false
+            }
+          });
+          comp.ngOnInit();
+          fixture.detectChanges();
+          checkMainContainer();
+          checkCurrentImage(IMAGES[index], val);
+          checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
+
+          // no side previews
+          const element: DebugElement = fixture.debugElement;
+          const leftPreviewImage: DebugElement = element.query(By.css((index === 0) && !slideConfig.infinite
+            ? 'div.current-image-previous.hidden'
+            : 'img.inside.current-image-previous'));
+          expect(leftPreviewImage).toBeNull();
+          const rightPreviewImage: DebugElement = element.query(By.css((index === IMAGES.length - 1) && !slideConfig.infinite
+            ? 'div.current-image-next.hidden'
+            : 'img.inside.current-image-next'));
+          expect(rightPreviewImage).toBeNull();
+        });
+      });
+    });
+
     it(`should display current image with custom accessibility`, () => {
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
@@ -542,37 +578,6 @@ describe('CurrentImageComponent', () => {
       const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
       expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
       expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
-    });
-
-    TEST_MODEL.forEach((val: TestModel, index: number) => {
-      it(`should display current image without side previews. Test i=${index}`, () => {
-        comp.images = IMAGES;
-        comp.currentImage = IMAGES[index];
-        comp.isOpen = true;
-        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: false, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-        comp.keyboardConfig = null;
-        comp.ngOnChanges(<SimpleChanges>{
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        });
-        comp.ngOnInit();
-        fixture.detectChanges();
-        checkMainContainer();
-        checkCurrentImage(IMAGES[index], val);
-        checkArrows(index === 0, index === IMAGES.length - 1);
-        const element: DebugElement = fixture.debugElement;
-        const leftPreviewImage: DebugElement = element.query(By.css('div.current-image-previous.hidden'));
-        expect(leftPreviewImage).toBeNull();
-        const rightPreviewImage: DebugElement = element.query(By.css('div.current-image-next.hidden'));
-        expect(rightPreviewImage).toBeNull();
-      });
     });
   });
 });
