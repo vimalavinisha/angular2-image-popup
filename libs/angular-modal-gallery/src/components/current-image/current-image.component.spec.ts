@@ -30,6 +30,8 @@ import { SlideConfig } from '../../model/slide-config.interface';
 import { Description, DescriptionStrategy } from '../../model/description.interface';
 import { Size } from '../../model/size.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { ImageModalEvent } from '../../model/image.class';
+import { Action } from '../../model/action.enum';
 
 let comp: CurrentImageComponent;
 let fixture: ComponentFixture<CurrentImageComponent>;
@@ -386,6 +388,134 @@ describe('CurrentImageComponent', () => {
         // });
         //
         // plainImages[0].nativeElement.click();
+      });
+    });
+
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
+      it(`should navigate between images clicking on current image. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+
+        const element: DebugElement = fixture.debugElement;
+        const currentImage: DebugElement = element.query(By.css('img#current-image'));
+        expect(currentImage.name).toBe('img');
+
+        if (index !== IMAGES.length - 1) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(index + 1);
+            expect(res.action).toBe(Action.CLICK);
+          });
+
+          currentImage.nativeElement.click();
+        }
+      });
+    });
+
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
+      it(`should navigate between images clicking on right side preview. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+
+        const element: DebugElement = fixture.debugElement;
+        const rightPreviewImage: DebugElement = element.query(By.css(index === IMAGES.length - 1
+          ? 'div.current-image-next.hidden'
+          : 'img.inside.current-image-next'));
+
+        if (index !== IMAGES.length - 1) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(index + 1);
+            expect(res.action).toBe(Action.CLICK);
+          });
+
+          spyOn(comp, 'onNavigationEvent').and.callThrough();
+
+          rightPreviewImage.nativeElement.click();
+        }
+      });
+    });
+
+
+    [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
+      it(`should navigate between images clicking on left side preview. Test i=${index}`, () => {
+        const currentIndex: number = IMAGES.length - 1 - index;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[currentIndex];
+        comp.isOpen = true;
+        comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[currentIndex],
+            currentValue: IMAGES[currentIndex],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[currentIndex], val);
+        checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[currentIndex - 1], IMAGES[currentIndex + 1], currentIndex === 0, currentIndex === IMAGES.length - 1, val);
+
+        const element: DebugElement = fixture.debugElement;
+        const leftPreviewImage: DebugElement = element.query(By.css(currentIndex === 0
+          ? 'div.current-image-previous.hidden'
+          : 'img.inside.current-image-previous'));
+
+        if (currentIndex !== 0) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(currentIndex - 1);
+            expect(res.action).toBe(Action.CLICK);
+          });
+
+          spyOn(comp, 'onNavigationEvent').and.callThrough();
+
+          leftPreviewImage.nativeElement.click();
+        }
       });
     });
 
