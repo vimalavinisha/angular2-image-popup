@@ -94,6 +94,8 @@ const TEST_MODEL: TestModel[] = [
   }
 ];
 
+const TEST_MODEL_SINGLE_IMAGE: TestModel = TEST_MODEL[0];
+
 const TEST_MODEL_INFINITE: TestModel[] = [
   {
     currentImgTitle: 'Image 1/5',
@@ -381,14 +383,30 @@ describe('CurrentImageComponent', () => {
         fixture.detectChanges();
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
-        checkArrows(index === 0, index === IMAGES.length - 1);
-        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
-        // comp.show.subscribe((res: number) => {
-        //   expect(res).toBe(0);
-        // });
-        //
-        // plainImages[0].nativeElement.click();
       });
+    });
+
+    it(`should display current image with arrows and side previews when there is only one image.`, () => {
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      comp.isOpen = true;
+      comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+      comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[0],
+          currentValue: IMAGES[0],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      checkMainContainer();
+      checkCurrentImage(IMAGES[0], TEST_MODEL_SINGLE_IMAGE);
     });
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
@@ -708,6 +726,74 @@ describe('CurrentImageComponent', () => {
       const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
       expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
       expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
+    });
+  });
+
+  describe('---YES---', () => {
+    it(`cannot navigate from the last image to the first one if infinite sliding is disabled`, () => {
+      const index: number = IMAGES.length - 1;
+      const infiniteSliding = false;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[index];
+      comp.isOpen = true;
+      comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+      comp.slideConfig = <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[index],
+          currentValue: IMAGES[index],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      checkMainContainer();
+      checkCurrentImage(IMAGES[index], TEST_MODEL_INFINITE[TEST_MODEL_INFINITE.length - 1]);
+      checkArrows(index === 0 && !infiniteSliding, (index === IMAGES.length - 1) && !infiniteSliding);
+      checkSidePreviews(IMAGES[index - 1], IMAGES[0],
+        index === 0 && !infiniteSliding, (index === IMAGES.length - 1) && !infiniteSliding, TEST_MODEL_INFINITE[TEST_MODEL_INFINITE.length - 1]);
+
+      comp.changeImage.subscribe((res: ImageModalEvent) => {
+        fail(`shouldn't call 'changeImage' event, when infinite sliding is disabled and you are trying to navigate from the last image to the first one`);
+      });
+      comp.nextImage(Action.CLICK);
+    });
+
+    it(`cannot navigate from the first image to the last one if infinite sliding is disabled`, () => {
+      const index = 0;
+      const infiniteSliding = false;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[index];
+      comp.isOpen = true;
+      comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
+      comp.slideConfig = <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[index],
+          currentValue: IMAGES[index],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      checkMainContainer();
+      checkCurrentImage(IMAGES[index], TEST_MODEL_INFINITE[0]);
+      checkArrows(index === 0 && !infiniteSliding, (index === IMAGES.length - 1) && !infiniteSliding);
+      checkSidePreviews(IMAGES[IMAGES.length - 1], IMAGES[index + 1],
+        index === 0 && !infiniteSliding, (index === IMAGES.length - 1) && !infiniteSliding, TEST_MODEL_INFINITE[0]);
+
+      comp.changeImage.subscribe((res: ImageModalEvent) => {
+        fail(`shouldn't call 'changeImage' event, when infinite sliding is disabled and you are trying to navigate from the first image to the last one`);
+      });
+      comp.prevImage(Action.CLICK);
     });
   });
 });
