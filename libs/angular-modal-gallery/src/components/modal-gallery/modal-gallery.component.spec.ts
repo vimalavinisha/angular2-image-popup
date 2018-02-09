@@ -409,7 +409,7 @@ describe('ModalGalleryComponent', () => {
       expect(plainGallery).not.toBeNull();
     });
 
-    it(`should display both modal and plain galleries`, () => {
+    it(`should display modal gallery`, () => {
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.ngOnChanges(<SimpleChanges>{
@@ -420,16 +420,21 @@ describe('ModalGalleryComponent', () => {
           isFirstChange: () => false
         }
       });
+
+      comp.hasData.subscribe(val => {
+        console.log('hasData', val);
+      });
+
       comp.ngOnInit();
-      fixture.detectChanges();
-
       const element: DebugElement = fixture.debugElement;
-      fixture.detectChanges();
 
-      // const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      // expect(modalGallery).not.toBeNull();
-      // const plainGallery: DebugElement = element.query(By.css('div.plain-container'));
-      // expect(plainGallery).toBeNull();
+      comp.show.subscribe(val => {
+        fixture.detectChanges();
+        const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+        expect(modalGallery).not.toBeNull();
+      });
+
+      comp.showModalGallery(0);
     });
 
     // it(`should display current image with arrows and side previews when there is only one image.`, () => {
