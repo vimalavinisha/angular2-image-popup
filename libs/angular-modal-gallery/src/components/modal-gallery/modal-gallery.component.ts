@@ -240,13 +240,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
 
     this.buttonBeforeHook.emit(eventToEmit);
-    console.log('TODO implement on refresh inside the library', eventToEmit);
+    // console.log('TODO implement on refresh inside the library', eventToEmit);
 
     this.currentImage = Object.assign({}, this.currentImage, { previouslyLoaded: false });
 
     // TODO add logic to hide and show the current image
 
-    console.log('onRefresh', this.currentImage);
+    // console.log('onRefresh', this.currentImage);
 
     // const indexNum: number = this.currentImageComponent.getIndex();
 

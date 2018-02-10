@@ -27,7 +27,7 @@ import { BackgroundComponent } from '../background/background.component';
 import { CurrentImageComponent } from '../current-image/current-image.component';
 import { LoadingSpinnerComponent } from '../current-image/loading-spinner/loading-spinner.component';
 import { PreviewsComponent } from '../previews/previews.component';
-import { UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
+import { InternalButtonConfig, UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
 import { DotsComponent } from '../dots/dots.component';
 import { PlainGalleryComponent } from '../plain-gallery/plain-gallery.component';
 import { SlideConfig } from '../../model/slide-config.interface';
@@ -41,6 +41,9 @@ import { WrapDirective } from '../../directives/wrap.directive';
 import { DirectionDirective } from '../../directives/direction.directive';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from '../../services/keyboard.service';
 import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
+import { Action } from '../../model/action.enum';
+import { ButtonEvent } from '../../model/buttons-config.interface';
+import { ButtonType } from 'angular-modal-gallery/angular-modal-gallery/src/model/buttons-config.interface';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -350,6 +353,17 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
   expect(rightPreviewImage.styles.height).toBe(size.height);
 }
 
+function getSimpleChangesMock(): SimpleChanges {
+  return <SimpleChanges>{
+    currentImage: {
+      previousValue: IMAGES,
+      currentValue: IMAGES,
+      firstChange: false,
+      isFirstChange: () => false
+    }
+  };
+}
+
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [ModalGalleryComponent, ClickOutsideDirective, BackgroundComponent,
@@ -391,14 +405,7 @@ describe('ModalGalleryComponent', () => {
     it(`should display plain gallery, but not modal gallery`, () => {
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
-      comp.ngOnChanges(<SimpleChanges>{
-        currentImage: {
-          previousValue: IMAGES,
-          currentValue: IMAGES,
-          firstChange: false,
-          isFirstChange: () => false
-        }
-      });
+      comp.ngOnChanges(getSimpleChangesMock());
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -412,17 +419,10 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery`, () => {
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
-      comp.ngOnChanges(<SimpleChanges>{
-        currentImage: {
-          previousValue: IMAGES,
-          currentValue: IMAGES,
-          firstChange: false,
-          isFirstChange: () => false
-        }
-      });
+      comp.ngOnChanges(getSimpleChangesMock());
 
       comp.hasData.subscribe(val => {
-        console.log('hasData', val);
+        expect(val).toBeTruthy();
       });
 
       comp.ngOnInit();
@@ -437,346 +437,120 @@ describe('ModalGalleryComponent', () => {
       comp.showModalGallery(0);
     });
 
-    // it(`should display current image with arrows and side previews when there is only one image.`, () => {
-    //   comp.images = IMAGES;
-    //   comp.currentImage = IMAGES[0];
-    //   comp.isOpen = true;
-    //   comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //   comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //   comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //   comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //   comp.keyboardConfig = null;
-    //   comp.ngOnChanges(<SimpleChanges>{
-    //     currentImage: {
-    //       previousValue: IMAGES[0],
-    //       currentValue: IMAGES[0],
-    //       firstChange: false,
-    //       isFirstChange: () => false
-    //     }
+    it(`should call onCustomEmit and subscribe to its events`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.CUSTOM, id: 1},
+        image: null,
+        action: Action.CLICK
+      };
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.onCustomEmit(mockButtonEvent);
+    });
+
+    it(`should call onRefresh and subscribe to its events`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.REFRESH, id: 1},
+        image: null,
+        action: Action.CLICK
+      };
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+
+        expect(comp.currentImage.previouslyLoaded).toBeDefined();
+        expect(comp.currentImage.previouslyLoaded).toBeFalsy();
+      });
+
+      comp.onCustomEmit(mockButtonEvent);
+    });
+
+    // it(`should call onDelete and subscribe to its events`, () => {
+    //   const mockButtonEvent: ButtonEvent = {
+    //     button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
+    //     image: null,
+    //     action: Action.CLICK
+    //   };
+    //
+    //   // mock current-image component
+    //   comp.currentImageComponent.getIndexToDelete = () => 0;
+    //
+    //   const currentImage: InternalLibImage = IMAGES[0];
+    //   comp.modalImages = IMAGES;
+    //   comp.currentImage = currentImage;
+    //   comp.ngOnChanges(getSimpleChangesMock());
+    //
+    //   comp.hasData.subscribe(val => {
+    //     expect(val).toBeTruthy();
     //   });
+    //
     //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //   checkMainContainer();
-    //   checkCurrentImage(IMAGES[0], TEST_MODEL_SINGLE_IMAGE);
-    // });
     //
-    // TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //   it(`should navigate between images clicking on current image. Test i=${index}`, () => {
-    //     comp.images = IMAGES;
-    //     comp.currentImage = IMAGES[index];
-    //     comp.isOpen = true;
-    //     comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //     comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //     comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //     comp.keyboardConfig = null;
-    //     comp.ngOnChanges(<SimpleChanges>{
-    //       currentImage: {
-    //         previousValue: IMAGES[index],
-    //         currentValue: IMAGES[index],
-    //         firstChange: false,
-    //         isFirstChange: () => false
-    //       }
-    //     });
-    //     comp.ngOnInit();
+    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+    //     console.log('buttonBeforeHook', event);
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //
+    //   });
+    //
+    //   comp.show.subscribe(val => {
+    //     console.log('comp.show.subscribe called');
     //     fixture.detectChanges();
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[index], val);
-    //     checkArrows(index === 0, index === IMAGES.length - 1);
-    //     checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
-    //
-    //     const element: DebugElement = fixture.debugElement;
-    //     const currentImage: DebugElement = element.query(By.css('img#current-image'));
-    //     expect(currentImage.name).toBe('img');
-    //
-    //     if (index !== IMAGES.length - 1) {
-    //       comp.changeImage.subscribe((res: ImageModalEvent) => {
-    //         expect(res.result).toBe(index + 1);
-    //         expect(res.action).toBe(Action.CLICK);
-    //       });
-    //
-    //       currentImage.nativeElement.click();
-    //     }
+    //     expect(val).toBe(0);
+    //     expect(comp.images.length).toBe(IMAGES.length - 1);
     //   });
-    // });
     //
-    // TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //   it(`should navigate between images clicking on right side preview. Test i=${index}`, () => {
-    //     comp.images = IMAGES;
-    //     comp.currentImage = IMAGES[index];
-    //     comp.isOpen = true;
-    //     comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //     comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //     comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //     comp.keyboardConfig = null;
-    //     comp.ngOnChanges(<SimpleChanges>{
-    //       currentImage: {
-    //         previousValue: IMAGES[index],
-    //         currentValue: IMAGES[index],
-    //         firstChange: false,
-    //         isFirstChange: () => false
-    //       }
-    //     });
-    //     comp.ngOnInit();
+    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+    //     console.log('buttonAfterHook', event);
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
     //     fixture.detectChanges();
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[index], val);
-    //     checkArrows(index === 0, index === IMAGES.length - 1);
-    //     checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
-    //
-    //     const element: DebugElement = fixture.debugElement;
-    //     const rightPreviewImage: DebugElement = element.query(By.css(index === IMAGES.length - 1
-    //       ? 'div.current-image-next.hidden'
-    //       : 'img.inside.current-image-next'));
-    //
-    //     if (index !== IMAGES.length - 1) {
-    //       comp.changeImage.subscribe((res: ImageModalEvent) => {
-    //         expect(res.result).toBe(index + 1);
-    //         expect(res.action).toBe(Action.CLICK);
-    //       });
-    //
-    //       spyOn(comp, 'onNavigationEvent').and.callThrough();
-    //
-    //       rightPreviewImage.nativeElement.click();
-    //     }
     //   });
-    // });
     //
-    //
-    // [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
-    //   it(`should navigate between images clicking on left side preview. Test i=${index}`, () => {
-    //     const currentIndex: number = IMAGES.length - 1 - index;
-    //     comp.images = IMAGES;
-    //     comp.currentImage = IMAGES[currentIndex];
-    //     comp.isOpen = true;
-    //     comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //     comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //     comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //     comp.keyboardConfig = null;
-    //     comp.ngOnChanges(<SimpleChanges>{
-    //       currentImage: {
-    //         previousValue: IMAGES[currentIndex],
-    //         currentValue: IMAGES[currentIndex],
-    //         firstChange: false,
-    //         isFirstChange: () => false
-    //       }
-    //     });
-    //     comp.ngOnInit();
-    //     fixture.detectChanges();
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[currentIndex], val);
-    //     checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
-    //     checkSidePreviews(IMAGES[currentIndex - 1], IMAGES[currentIndex + 1], currentIndex === 0, currentIndex === IMAGES.length - 1, val);
-    //
-    //     const element: DebugElement = fixture.debugElement;
-    //     const leftPreviewImage: DebugElement = element.query(By.css(currentIndex === 0
-    //       ? 'div.current-image-previous.hidden'
-    //       : 'img.inside.current-image-previous'));
-    //
-    //     if (currentIndex !== 0) {
-    //       comp.changeImage.subscribe((res: ImageModalEvent) => {
-    //         expect(res.result).toBe(currentIndex - 1);
-    //         expect(res.action).toBe(Action.CLICK);
-    //       });
-    //
-    //       spyOn(comp, 'onNavigationEvent').and.callThrough();
-    //
-    //       leftPreviewImage.nativeElement.click();
-    //     }
-    //   });
-    // });
-    //
-    // TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
-    //   it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
-    //     comp.images = IMAGES;
-    //     comp.currentImage = IMAGES[index];
-    //     comp.isOpen = true;
-    //     comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //     comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //     comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN};
-    //     comp.keyboardConfig = null;
-    //     comp.ngOnChanges(<SimpleChanges>{
-    //       currentImage: {
-    //         previousValue: IMAGES[index],
-    //         currentValue: IMAGES[index],
-    //         firstChange: false,
-    //         isFirstChange: () => false
-    //       }
-    //     });
-    //     comp.ngOnInit();
-    //     fixture.detectChanges();
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[index], val, false);
-    //     checkArrows(index === 0, index === IMAGES.length - 1);
-    //     checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
-    //   });
-    // });
-    //
-    // TEST_MODEL_HIDEEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
-    //   it(`should display current image when description is HIDE_IF_EMPTY. Test i=${index}`, () => {
-    //     comp.images = IMAGES;
-    //     comp.currentImage = IMAGES[index];
-    //     comp.isOpen = true;
-    //     comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //     comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //     comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.HIDE_IF_EMPTY};
-    //     comp.keyboardConfig = null;
-    //     comp.ngOnChanges(<SimpleChanges>{
-    //       currentImage: {
-    //         previousValue: IMAGES[index],
-    //         currentValue: IMAGES[index],
-    //         firstChange: false,
-    //         isFirstChange: () => false
-    //       }
-    //     });
-    //     comp.ngOnInit();
-    //     fixture.detectChanges();
-    //     checkMainContainer();
-    //     const imageWithoutDescription: boolean = !IMAGES[index].modal || !IMAGES[index].modal.description || IMAGES[index].modal.description === '';
-    //     checkCurrentImage(IMAGES[index], val, !imageWithoutDescription);
-    //     checkArrows(index === 0, index === IMAGES.length - 1);
-    //     checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
-    //   });
-    // });
-    //
-    // CUSTOM_SLIDE_CONFIG.forEach((slideConfig: SlideConfig, j: number) => {
-    //   TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //     it(`should display current image, arrows and side previews with custom slideConfig. Test i=${index}, j=${j}`, () => {
-    //       comp.images = IMAGES;
-    //       comp.currentImage = IMAGES[index];
-    //       comp.isOpen = true;
-    //       comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //       comp.slideConfig = slideConfig;
-    //       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //       comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //       comp.keyboardConfig = null;
-    //       comp.ngOnChanges(<SimpleChanges>{
-    //         currentImage: {
-    //           previousValue: IMAGES[index],
-    //           currentValue: IMAGES[index],
-    //           firstChange: false,
-    //           isFirstChange: () => false
-    //         }
-    //       });
-    //       comp.ngOnInit();
-    //       fixture.detectChanges();
-    //       checkMainContainer();
-    //       checkCurrentImage(IMAGES[index], val);
-    //       checkArrows(index === 0, index === IMAGES.length - 1);
-    //       checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1],
-    //         index === 0, index === IMAGES.length - 1,
-    //         val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
-    //     });
-    //   });
-    // });
-    //
-    // CUSTOM_SLIDE_CONFIG_INFINITE.forEach((slideConfig: SlideConfig, j: number) => {
-    //   TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
-    //     it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
-    //       comp.images = IMAGES;
-    //       comp.currentImage = IMAGES[index];
-    //       comp.isOpen = true;
-    //       comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //       comp.slideConfig = slideConfig;
-    //       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //       comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //       comp.keyboardConfig = null;
-    //       comp.ngOnChanges(<SimpleChanges>{
-    //         currentImage: {
-    //           previousValue: IMAGES[index],
-    //           currentValue: IMAGES[index],
-    //           firstChange: false,
-    //           isFirstChange: () => false
-    //         }
-    //       });
-    //       comp.ngOnInit();
-    //       fixture.detectChanges();
-    //       checkMainContainer();
-    //       checkCurrentImage(IMAGES[index], val);
-    //       checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
-    //       if (slideConfig.sidePreviews) {
-    //         checkSidePreviews(
-    //           index === 0 ? IMAGES[IMAGES.length - 1] : IMAGES[index - 1],
-    //           index === IMAGES.length - 1 ? IMAGES[0] : IMAGES[index + 1],
-    //           (index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite,
-    //           val, slideConfig.sidePreviews ? slideConfig.sidePreviews.size : DEFAULT_SIZE);
-    //       }
-    //     });
-    //   });
-    // });
-    //
-    // CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS.forEach((slideConfig: SlideConfig, j: number) => {
-    //   TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
-    //     it(`should display current image and arrows WITHOUT side previews. Test i=${index}, j=${j}`, () => {
-    //       comp.images = IMAGES;
-    //       comp.currentImage = IMAGES[index];
-    //       comp.isOpen = true;
-    //       comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //       comp.slideConfig = slideConfig;
-    //       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //       comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //       comp.keyboardConfig = null;
-    //       comp.ngOnChanges(<SimpleChanges>{
-    //         currentImage: {
-    //           previousValue: IMAGES[index],
-    //           currentValue: IMAGES[index],
-    //           firstChange: false,
-    //           isFirstChange: () => false
-    //         }
-    //       });
-    //       comp.ngOnInit();
-    //       fixture.detectChanges();
-    //       checkMainContainer();
-    //       checkCurrentImage(IMAGES[index], val);
-    //       checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
-    //
-    //       // no side previews
-    //       const element: DebugElement = fixture.debugElement;
-    //       const leftPreviewImage: DebugElement = element.query(By.css((index === 0) && !slideConfig.infinite
-    //         ? 'div.current-image-previous.hidden'
-    //         : 'img.inside.current-image-previous'));
-    //       expect(leftPreviewImage).toBeNull();
-    //       const rightPreviewImage: DebugElement = element.query(By.css((index === IMAGES.length - 1) && !slideConfig.infinite
-    //         ? 'div.current-image-next.hidden'
-    //         : 'img.inside.current-image-next'));
-    //       expect(rightPreviewImage).toBeNull();
-    //     });
-    //   });
-    // });
-    //
-    // it(`should display current image with custom accessibility`, () => {
-    //   comp.images = IMAGES;
-    //   comp.currentImage = IMAGES[0];
-    //   comp.isOpen = true;
-    //   comp.loadingConfig = <LoadingConfig>{enable: true, type: LoadingType.STANDARD};
-    //   comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-    //   comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
-    //   comp.descriptionConfig = <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE};
-    //   comp.keyboardConfig = null;
-    //   comp.ngOnChanges(<SimpleChanges>{
-    //     currentImage: {
-    //       previousValue: IMAGES[0],
-    //       currentValue: IMAGES[0],
-    //       firstChange: false,
-    //       isFirstChange: () => false
-    //     }
-    //   });
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //   const element: DebugElement = fixture.debugElement;
-    //   const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
-    //   expect(mainCurrentImage.properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainContainerTitle);
-    //   expect(mainCurrentImage.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainContainerAriaLabel);
-    //   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
-    //   expect(aNavLeft.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageAriaLabel);
-    //   expect(aNavLeft.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageTitle);
-    //   const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
-    //   expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
-    //   expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
+    //   comp.onDelete(mockButtonEvent);
     // });
   });
 });
