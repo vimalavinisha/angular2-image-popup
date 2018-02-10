@@ -1,7 +1,7 @@
 # 5.0.0-beta.2
 ### Bugfixes
-- when slideConfig doesn't contain the 'infinite' property should disable inifinite sliding
-- fix accessibility bug in current-image when inifinite === true
+- when slideConfig doesn't contain the 'infinite' property should disable inifinte sliding
+- fix accessibility bug in current-image when inifinte === true
 
 ### Unit testing
 - add unit tests for current-image and modal-gallery
