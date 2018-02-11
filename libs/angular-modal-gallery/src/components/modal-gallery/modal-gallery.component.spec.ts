@@ -43,6 +43,7 @@ import { ImageModalEvent } from '../../model/image.class';
 import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { LineLayout, PlainGalleryStrategy } from 'angular-modal-gallery/angular-modal-gallery/src/model/plain-gallery-config.interface';
 import { AdvancedLayout } from 'angular-modal-gallery/angular-modal-gallery';
+import { getIndex } from '../../utils/image.util';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -246,123 +247,27 @@ describe('ModalGalleryComponent', () => {
       comp.onCustomEmit(mockButtonEvent);
     });
 
-    // it(`should call onDelete (first image) and subscribe to its events`, () => {
-    //   const mockButtonEvent: ButtonEvent = {
-    //     button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
-    //     image: null,
-    //     action: Action.CLICK
-    //   };
-    //
-    //   // mock current-image component
-    //   comp.currentImageComponent = {
-    //     getIndexToDelete: () => 0,
-    //     nextImage: () => {
-    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[1], IMAGES)));
-    //     },
-    //     prevImage: () => {
-    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[0], IMAGES)));
-    //     }
-    //   };
-    //
-    //   const currentImage: InternalLibImage = IMAGES[0];
-    //   comp.modalImages = IMAGES;
-    //   comp.currentImage = currentImage;
-    //   comp.ngOnChanges(getSimpleChangesMock());
-    //
-    //   comp.hasData.subscribe(val => {
-    //     expect(val).toBeTruthy();
-    //   });
-    //
-    //   comp.ngOnInit();
-    //
-    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
-    //     console.log('buttonBeforeHook', event);
-    //     expect(event.button).toEqual(mockButtonEvent.button);
-    //     expect(event.image).toEqual(currentImage);
-    //     expect(event.action).toEqual(mockButtonEvent.action);
-    //
-    //   });
-    //
-    //   comp.show.subscribe((val: ImageModalEvent) => {
-    //     console.log('comp.show.subscribe called', val);
-    //     expect(val).toEqual(new ImageModalEvent(Action.CLICK, 1 + 1 ));
-    //     // expect(comp.images.length).toBe(IMAGES.length - 1);
-    //   });
-    //
-    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
-    //     console.log('buttonAfterHook', event);
-    //     expect(event.button).toEqual(mockButtonEvent.button);
-    //     expect(event.image).toEqual(currentImage);
-    //     expect(event.action).toEqual(mockButtonEvent.action);
-    //   });
-    //
-    //   comp.onDelete(mockButtonEvent);
-    // });
-    //
-    // it(`should call onDelete (last image) and subscribe to its events`, () => {
-    //   const mockButtonEvent: ButtonEvent = {
-    //     button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
-    //     image: null,
-    //     action: Action.CLICK
-    //   };
-    //
-    //   // mock current-image component
-    //   comp.currentImageComponent = {
-    //     getIndexToDelete: () => IMAGES.length - 1,
-    //     nextImage: () => {
-    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[IMAGES.length - 1], IMAGES)));
-    //     },
-    //     prevImage: () => {
-    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[IMAGES.length - 1], IMAGES)));
-    //     }
-    //   };
-    //
-    //   const currentImage: InternalLibImage = IMAGES[IMAGES.length - 1];
-    //   comp.modalImages = IMAGES;
-    //   comp.currentImage = currentImage;
-    //   comp.ngOnChanges(getSimpleChangesMock());
-    //
-    //   comp.hasData.subscribe(val => {
-    //     expect(val).toBeTruthy();
-    //   });
-    //
-    //   comp.ngOnInit();
-    //
-    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
-    //     console.log('buttonBeforeHook', event);
-    //     expect(event.button).toEqual(mockButtonEvent.button);
-    //     expect(event.image).toEqual(currentImage);
-    //     expect(event.action).toEqual(mockButtonEvent.action);
-    //
-    //   });
-    //
-    //   comp.show.subscribe((val: ImageModalEvent) => {
-    //     console.log('comp.show.subscribe called', val);
-    //     // expect(val).toEqual(new ImageModalEvent(Action.CLICK, 2));
-    //     // expect(comp.images.length).toBe(IMAGES.length - 1);
-    //   });
-    //
-    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
-    //     console.log('buttonAfterHook', event);
-    //     expect(event.button).toEqual(mockButtonEvent.button);
-    //     expect(event.image).toEqual(currentImage);
-    //     expect(event.action).toEqual(mockButtonEvent.action);
-    //   });
-    //
-    //   comp.onDelete(mockButtonEvent);
-    // });
-
-    it(`should call onDownload and subscribe to its events`, () => {
+    it(`should call onDelete (first image) and subscribe to its events`, () => {
       const mockButtonEvent: ButtonEvent = {
-        button: <InternalButtonConfig>{type: ButtonType.DOWNLOAD, id: 1},
+        button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
         image: null,
         action: Action.CLICK
       };
+
+      // mock current-image component
+      comp.currentImageComponent = {
+        getIndexToDelete: () => 0,
+        nextImage: () => {
+          comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[1], IMAGES)));
+        },
+        prevImage: () => {
+          comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[0], IMAGES)));
+        }
+      };
+
       const currentImage: InternalLibImage = IMAGES[0];
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
-      // comp.downloadable = true; // images are now downloadable // TODO restore this
-
       comp.ngOnChanges(getSimpleChangesMock());
 
       comp.hasData.subscribe(val => {
@@ -375,6 +280,11 @@ describe('ModalGalleryComponent', () => {
         expect(event.button).toEqual(mockButtonEvent.button);
         expect(event.image).toEqual(currentImage);
         expect(event.action).toEqual(mockButtonEvent.action);
+
+      });
+
+      comp.show.subscribe((val: ImageModalEvent) => {
+        expect(val).toEqual(new ImageModalEvent(Action.CLICK, (0) + 1 + 1));
       });
 
       comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
@@ -383,12 +293,144 @@ describe('ModalGalleryComponent', () => {
         expect(event.action).toEqual(mockButtonEvent.action);
       });
 
-      comp.onDownload(mockButtonEvent);
+      comp.onDelete(mockButtonEvent);
     });
+
+    it(`should call onDelete (last image) and subscribe to its events`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 2},
+        image: null,
+        action: Action.CLICK
+      };
+
+      // mock current-image component
+      comp.currentImageComponent = {
+        getIndexToDelete: () => IMAGES.length - 1,
+        nextImage: () => {
+          comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[IMAGES.length - 1], IMAGES)));
+        },
+        prevImage: () => {
+          comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[IMAGES.length - 2], IMAGES)));
+        }
+      };
+
+      const currentImage: InternalLibImage = IMAGES[IMAGES.length - 1 ];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+
+      });
+
+      comp.show.subscribe((val: ImageModalEvent) => {
+        expect(val).toEqual(new ImageModalEvent(Action.CLICK, (IMAGES.length - 1) + 1 - 1));
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.onDelete(mockButtonEvent);
+    });
+
+    it(`should call onDelete (with only an image) and close modal gallery automatically`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
+        image: null,
+        action: Action.CLICK
+      };
+
+      // mock current-image component
+      comp.currentImageComponent = {
+        getIndexToDelete: () => 0,
+        nextImage: () => {
+          comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, 0));
+        },
+        prevImage: () => {
+          comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, 0));
+        }
+      };
+
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES.slice(0, 1); // only one image
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+
+      });
+
+      comp.close.subscribe((val: ImageModalEvent) => {
+        expect(val).toEqual(new ImageModalEvent(Action.NORMAL, true));
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.onDelete(mockButtonEvent);
+    });
+
+    // it(`should call onDownload and subscribe to its events`, () => {
+    //   const mockButtonEvent: ButtonEvent = {
+    //     button: <InternalButtonConfig>{type: ButtonType.DOWNLOAD, id: 3},
+    //     image: null,
+    //     action: Action.CLICK
+    //   };
+    //   const currentImage: InternalLibImage = IMAGES[0];
+    //   comp.modalImages = IMAGES;
+    //   comp.currentImage = currentImage;
+    //   comp.downloadable = true; // images are now downloadable
+    //
+    //   comp.ngOnChanges(getSimpleChangesMock());
+    //
+    //   comp.hasData.subscribe(val => {
+    //     expect(val).toBeTruthy();
+    //   });
+    //
+    //   comp.ngOnInit();
+    //
+    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //   });
+    //
+    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //   });
+    //
+    //   comp.onDownload(mockButtonEvent);
+    // });
 
     // it(`should call onNavigate and subscribe to its events`, () => {
     //   const mockButtonEvent: ButtonEvent = {
-    //     button: <InternalButtonConfig>{type: ButtonType.EXTURL, id: 1},
+    //     button: <InternalButtonConfig>{type: ButtonType.EXTURL, id: 4},
     //     image: null,
     //     action: Action.CLICK
     //   };
@@ -396,6 +438,8 @@ describe('ModalGalleryComponent', () => {
     //   comp.modalImages = IMAGES;
     //   comp.currentImage = currentImage;
     //
+    //   // const windowLocationSpy = spyOn(window, 'location').and.returnValue({location: {href: ''}});
+    //   const windowLocationHrefSpy = spyOn(window.location, 'href').and.returnValue({href: ''});
     //   comp.ngOnChanges(getSimpleChangesMock());
     //
     //   comp.hasData.subscribe(val => {
@@ -421,7 +465,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call onClose and subscribe to its events`, () => {
       const mockButtonEvent: ButtonEvent = {
-        button: <InternalButtonConfig>{type: ButtonType.CLOSE, id: 1},
+        button: <InternalButtonConfig>{type: ButtonType.CLOSE, id: 5},
         image: null,
         action: Action.CLICK
       };
@@ -436,7 +480,8 @@ describe('ModalGalleryComponent', () => {
       });
 
       comp.close.subscribe(val => {
-        console.log('comp.close ', new ImageModalEvent(Action.CLICK, true));
+        expect(val.action).toBe(Action.NORMAL);
+        expect(val.result).toBeTruthy();
       });
 
       comp.ngOnInit();
