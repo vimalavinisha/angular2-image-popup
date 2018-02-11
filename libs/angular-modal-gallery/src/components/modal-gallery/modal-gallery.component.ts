@@ -527,7 +527,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   /**
    * Private method to initialize `images` as array of `Image`s.
-   * Also, it will emit ImageModalEvent to say that images are loaded.
+   * Also, it will emit ImageowmodaModalEvent to say that images are loaded.
    */
   private initImages() {
     this.images = <InternalLibImage[]>this.modalImages;

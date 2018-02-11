@@ -20,19 +20,15 @@ import 'mousetrap';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { ModalGalleryComponent } from './modal-gallery.component';
 import { BackgroundComponent } from '../background/background.component';
-import { CurrentImageComponent } from '../current-image/current-image.component';
+import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { LoadingSpinnerComponent } from '../current-image/loading-spinner/loading-spinner.component';
 import { PreviewsComponent } from '../previews/previews.component';
 import { InternalButtonConfig, UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
 import { DotsComponent } from '../dots/dots.component';
 import { PlainGalleryComponent } from '../plain-gallery/plain-gallery.component';
-import { SlideConfig } from '../../model/slide-config.interface';
-import { Size } from '../../model/size.interface';
-import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { SizeDirective } from '../../directives/size.directive';
 import { KeyboardNavigationDirective } from '../../directives/keyboard-navigation.directive';
@@ -42,186 +38,14 @@ import { DirectionDirective } from '../../directives/direction.directive';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from '../../services/keyboard.service';
 import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
 import { Action } from '../../model/action.enum';
-import { ButtonEvent } from '../../model/buttons-config.interface';
-import { ButtonType } from 'angular-modal-gallery/angular-modal-gallery/src/model/buttons-config.interface';
+import { ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
+import { ImageModalEvent } from '../../model/image.class';
+import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
+import { LineLayout, PlainGalleryStrategy } from 'angular-modal-gallery/angular-modal-gallery/src/model/plain-gallery-config.interface';
+import { AdvancedLayout } from 'angular-modal-gallery/angular-modal-gallery';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
-
-interface TestModel {
-  currentImgTitle: string;
-  currentAlt: string;
-  currentDescription: string;
-  leftPreviewTitle: string;
-  leftPreviewAlt: string;
-  rightPreviewTitle: string;
-  rightPreviewAlt: string;
-}
-
-const TEST_MODEL: TestModel[] = [
-  {
-    currentImgTitle: 'Image 1/5',
-    currentAlt: 'Image 1',
-    currentDescription: 'Image 1/5',
-    leftPreviewTitle: '',
-    leftPreviewAlt: '',
-    rightPreviewTitle: 'Image 2/5 - Description 2',
-    rightPreviewAlt: 'Description 2'
-  },
-  {
-    currentImgTitle: 'Image 2/5 - Description 2',
-    currentAlt: 'Description 2',
-    currentDescription: 'Image 2/5 - Description 2',
-    leftPreviewTitle: 'Image 1/5',
-    leftPreviewAlt: 'Image 1',
-    rightPreviewTitle: 'Image 3/5 - Description 3',
-    rightPreviewAlt: 'Description 3'
-  },
-  {
-    currentImgTitle: 'Image 3/5 - Description 3',
-    currentAlt: 'Description 3',
-    currentDescription: 'Image 3/5 - Description 3',
-    leftPreviewTitle: 'Image 2/5 - Description 2',
-    leftPreviewAlt: 'Description 2',
-    rightPreviewTitle: 'Image 4/5 - Description 4',
-    rightPreviewAlt: 'Description 4'
-  },
-  {
-    currentImgTitle: 'Image 4/5 - Description 4',
-    currentAlt: 'Description 4',
-    currentDescription: 'Image 4/5 - Description 4',
-    leftPreviewTitle: 'Image 3/5 - Description 3',
-    leftPreviewAlt: 'Description 3',
-    rightPreviewTitle: 'Image 5/5',
-    rightPreviewAlt: 'Image 5'
-  },
-  {
-    currentImgTitle: 'Image 5/5',
-    currentAlt: 'Image 5',
-    currentDescription: 'Image 5/5',
-    leftPreviewTitle: 'Image 4/5 - Description 4',
-    leftPreviewAlt: 'Description 4',
-    rightPreviewTitle: '',
-    rightPreviewAlt: ''
-  }
-];
-
-const TEST_MODEL_SINGLE_IMAGE: TestModel = TEST_MODEL[0];
-
-const TEST_MODEL_INFINITE: TestModel[] = [
-  {
-    currentImgTitle: 'Image 1/5',
-    currentAlt: 'Image 1',
-    currentDescription: 'Image 1/5',
-    leftPreviewTitle: 'Image 5/5',
-    leftPreviewAlt: 'Image 5',
-    rightPreviewTitle: 'Image 2/5 - Description 2',
-    rightPreviewAlt: 'Description 2'
-  },
-  {
-    currentImgTitle: 'Image 2/5 - Description 2',
-    currentAlt: 'Description 2',
-    currentDescription: 'Image 2/5 - Description 2',
-    leftPreviewTitle: 'Image 1/5',
-    leftPreviewAlt: 'Image 1',
-    rightPreviewTitle: 'Image 3/5 - Description 3',
-    rightPreviewAlt: 'Description 3'
-  },
-  {
-    currentImgTitle: 'Image 3/5 - Description 3',
-    currentAlt: 'Description 3',
-    currentDescription: 'Image 3/5 - Description 3',
-    leftPreviewTitle: 'Image 2/5 - Description 2',
-    leftPreviewAlt: 'Description 2',
-    rightPreviewTitle: 'Image 4/5 - Description 4',
-    rightPreviewAlt: 'Description 4'
-  },
-  {
-    currentImgTitle: 'Image 4/5 - Description 4',
-    currentAlt: 'Description 4',
-    currentDescription: 'Image 4/5 - Description 4',
-    leftPreviewTitle: 'Image 3/5 - Description 3',
-    leftPreviewAlt: 'Description 3',
-    rightPreviewTitle: 'Image 5/5',
-    rightPreviewAlt: 'Image 5'
-  },
-  {
-    currentImgTitle: 'Image 5/5',
-    currentAlt: 'Image 5',
-    currentDescription: 'Image 5/5',
-    leftPreviewTitle: 'Image 4/5 - Description 4',
-    leftPreviewAlt: 'Description 4',
-    rightPreviewTitle: 'Image 1/5',
-    rightPreviewAlt: 'Image 1'
-  }
-];
-
-const TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS: TestModel[] = [
-  Object.assign({}, TEST_MODEL[0], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[1], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[2], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[3], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[4], {leftPreviewTitle: '', rightPreviewTitle: ''})
-];
-
-const TEST_MODEL_HIDEEMPTY_DESCRIPTIONS: TestModel[] = [
-  Object.assign({}, TEST_MODEL[0], {
-    currentImgTitle: '', leftPreviewTitle: '',
-    rightPreviewTitle: 'Description 2', currentDescription: 'Image 1/5'
-  }),
-  Object.assign({}, TEST_MODEL[1], {
-    currentImgTitle: 'Description 2', leftPreviewTitle: '',
-    rightPreviewTitle: 'Description 3', currentDescription: 'Description 2'
-  }),
-  Object.assign({}, TEST_MODEL[2], {
-    currentImgTitle: 'Description 3', leftPreviewTitle: 'Description 2',
-    rightPreviewTitle: 'Description 4', currentDescription: 'Description 3'
-  }),
-  Object.assign({}, TEST_MODEL[3], {
-    currentImgTitle: 'Description 4', leftPreviewTitle: 'Description 3',
-    rightPreviewTitle: '', currentDescription: 'Description 4'
-  }),
-  Object.assign({}, TEST_MODEL[4], {
-    currentImgTitle: '', leftPreviewTitle: 'Description 4',
-    rightPreviewTitle: '', currentDescription: 'Image 5/5'
-  })
-];
-
-const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
-CUSTOM_ACCESSIBILITY.mainContainerTitle = 'custom mainContainerTitle';
-CUSTOM_ACCESSIBILITY.mainContainerAriaLabel = 'custom mainContainerAriaLabel';
-CUSTOM_ACCESSIBILITY.mainNextImageTitle = 'custom mainNextImageTitle';
-CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel = 'custom mainNextImageAriaLabel';
-CUSTOM_ACCESSIBILITY.mainPrevImageTitle = 'custom mainPrevImageTitle';
-CUSTOM_ACCESSIBILITY.mainPrevImageAriaLabel = 'custom mainPrevImageAriaLabel';
-
-const DEFAULT_SIZE: Size = {height: 'auto', width: '100px'};
-const CUSTOM_SIZE: Size = {height: '100px', width: '100px'};
-const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '100px'};
-const CUSTOM_SIZE_AUTO_WIDTH: Size = {height: '100px', width: 'auto'};
-const CUSTOM_SIZES: Size[] = [CUSTOM_SIZE, CUSTOM_SIZE_AUTO_HEIGHT, CUSTOM_SIZE_AUTO_WIDTH];
-
-const CUSTOM_SLIDE_CONFIG: SlideConfig[] = [
-  {infinite: false, sidePreviews: {show: true, size: CUSTOM_SIZE}},
-  {infinite: false, sidePreviews: {show: true, size: CUSTOM_SIZE_AUTO_HEIGHT}},
-  {infinite: false, sidePreviews: {show: true, size: CUSTOM_SIZE_AUTO_WIDTH}},
-  {sidePreviews: {show: true, size: DEFAULT_SIZE}}
-];
-
-const CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS: SlideConfig[] = [
-  {infinite: false, sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {infinite: true, sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {infinite: true},
-  {infinite: false}
-];
-
-const CUSTOM_SLIDE_CONFIG_INFINITE: SlideConfig[] = [
-  {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
-  {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
-  {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
-  {infinite: true}
-];
 
 const IMAGES: InternalLibImage[] = [
   new InternalLibImage(0, {
@@ -269,93 +93,9 @@ const IMAGES: InternalLibImage[] = [
   )
 ];
 
-function checkMainContainer() {
-  const element: DebugElement = fixture.debugElement;
-  const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
-  expect(mainCurrentImage.name).toBe('main');
-  expect(mainCurrentImage.attributes['ksKeyboardNavigation']).toBe('');
-  expect(mainCurrentImage.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainContainerTitle);
-  expect(mainCurrentImage.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainContainerAriaLabel);
-}
-
-function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withDescription: boolean = true) {
-  const element: DebugElement = fixture.debugElement;
-  const currentFigure: DebugElement = element.query(By.css('figure#current-figure'));
-  expect(currentFigure.name).toBe('figure');
-  const currentImageElement: DebugElement = currentFigure.children[0];
-  expect(currentImageElement.name).toBe('img');
-  expect(currentImageElement.attributes['class']).toBe('inside');
-  expect(currentImageElement.attributes['role']).toBe('img');
-  expect(currentImageElement.properties['src']).toBe(currentImage.modal.img);
-  expect(currentImageElement.properties['title']).toBe(withDescription ? val.currentImgTitle : '');
-  expect(currentImageElement.properties['alt']).toBe(val.currentAlt);
-  expect(currentImageElement.properties['tabIndex']).toBe(0);
-
-  if (withDescription) {
-    const currentFigcaption: DebugElement = currentFigure.children[1];
-    expect(currentFigcaption.attributes['class']).toBe('inside description');
-    expect(currentFigcaption.nativeElement.textContent).toEqual(val.currentDescription);
-  }
-}
-
-function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
-  const element: DebugElement = fixture.debugElement;
-  const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
-  expect(aNavLeft.name).toBe('a');
-  expect(aNavLeft.attributes['role']).toBe('button');
-  expect(aNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageAriaLabel);
-  expect(aNavLeft.properties['tabIndex']).toBe(isFirstImage ? -1 : 0);
-  const divNavLeft: DebugElement = aNavLeft.children[0];
-  expect(divNavLeft.attributes['aria-hidden']).toBe('true');
-  expect(divNavLeft.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'));
-  expect(divNavLeft.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
-
-  const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
-  expect(aNavRight.name).toBe('a');
-  expect(aNavRight.attributes['role']).toBe('button');
-  expect(aNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageAriaLabel);
-  expect(aNavRight.properties['tabIndex']).toBe(isLastImage ? -1 : 0);
-  const divNavRight: DebugElement = aNavRight.children[0];
-  expect(divNavRight.attributes['aria-hidden']).toBe('true');
-  expect(divNavRight.properties['className']).toBe('inside ' + (isLastImage ? 'empty-arrow-image' : 'right-arrow-image'));
-  expect(divNavRight.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
-}
-
-function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
-                           isFirstImage: boolean, isLastImage: boolean, val: TestModel, size: Size = DEFAULT_SIZE) {
-  const element: DebugElement = fixture.debugElement;
-  const leftPreviewImage: DebugElement = element.query(By.css(isFirstImage
-    ? 'div.current-image-previous.hidden'
-    : 'img.inside.current-image-previous'));
-  expect(leftPreviewImage.name).toBe(isFirstImage ? 'div' : 'img');
-  expect(leftPreviewImage.attributes['ksSize']).toBe('');
-  if (!isFirstImage) {
-    expect(leftPreviewImage.properties['src']).toBe(prevImage.plain ? prevImage.plain.img : prevImage.modal.img);
-    expect(leftPreviewImage.properties['title']).toBe(val.leftPreviewTitle);
-    expect(leftPreviewImage.properties['alt']).toBe(val.leftPreviewAlt);
-  }
-  expect(leftPreviewImage.attributes['class']).toBe(isFirstImage ? 'current-image-previous hidden' : 'inside current-image-previous');
-  expect(leftPreviewImage.styles.width).toBe(size.width);
-  expect(leftPreviewImage.styles.height).toBe(size.height);
-
-  const rightPreviewImage: DebugElement = element.query(By.css(isLastImage
-    ? 'div.current-image-next.hidden'
-    : 'img.inside.current-image-next'));
-  expect(rightPreviewImage.name).toBe(isLastImage ? 'div' : 'img');
-  expect(rightPreviewImage.attributes['ksSize']).toBe('');
-  if (!isLastImage) {
-    expect(rightPreviewImage.properties['src']).toBe(nextImage.plain ? nextImage.plain.img : nextImage.modal.img);
-    expect(rightPreviewImage.properties['title']).toBe(val.rightPreviewTitle);
-    expect(rightPreviewImage.properties['alt']).toBe(val.rightPreviewAlt);
-  }
-  expect(rightPreviewImage.attributes['class']).toBe(isLastImage ? 'current-image-next hidden' : 'inside current-image-next');
-  expect(rightPreviewImage.styles.width).toBe(size.width);
-  expect(rightPreviewImage.styles.height).toBe(size.height);
-}
-
 function getSimpleChangesMock(): SimpleChanges {
   return <SimpleChanges>{
-    currentImage: {
+    modalImages: {
       previousValue: IMAGES,
       currentValue: IMAGES,
       firstChange: false,
@@ -434,7 +174,7 @@ describe('ModalGalleryComponent', () => {
         expect(modalGallery).not.toBeNull();
       });
 
-      comp.showModalGallery(0);
+      comp.onShowModalGallery(0);
     });
 
     it(`should call onCustomEmit and subscribe to its events`, () => {
@@ -506,7 +246,7 @@ describe('ModalGalleryComponent', () => {
       comp.onCustomEmit(mockButtonEvent);
     });
 
-    // it(`should call onDelete and subscribe to its events`, () => {
+    // it(`should call onDelete (first image) and subscribe to its events`, () => {
     //   const mockButtonEvent: ButtonEvent = {
     //     button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
     //     image: null,
@@ -514,7 +254,15 @@ describe('ModalGalleryComponent', () => {
     //   };
     //
     //   // mock current-image component
-    //   comp.currentImageComponent.getIndexToDelete = () => 0;
+    //   comp.currentImageComponent = {
+    //     getIndexToDelete: () => 0,
+    //     nextImage: () => {
+    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[1], IMAGES)));
+    //     },
+    //     prevImage: () => {
+    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[0], IMAGES)));
+    //     }
+    //   };
     //
     //   const currentImage: InternalLibImage = IMAGES[0];
     //   comp.modalImages = IMAGES;
@@ -535,11 +283,10 @@ describe('ModalGalleryComponent', () => {
     //
     //   });
     //
-    //   comp.show.subscribe(val => {
-    //     console.log('comp.show.subscribe called');
-    //     fixture.detectChanges();
-    //     expect(val).toBe(0);
-    //     expect(comp.images.length).toBe(IMAGES.length - 1);
+    //   comp.show.subscribe((val: ImageModalEvent) => {
+    //     console.log('comp.show.subscribe called', val);
+    //     expect(val).toEqual(new ImageModalEvent(Action.CLICK, 1 + 1 ));
+    //     // expect(comp.images.length).toBe(IMAGES.length - 1);
     //   });
     //
     //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
@@ -547,10 +294,306 @@ describe('ModalGalleryComponent', () => {
     //     expect(event.button).toEqual(mockButtonEvent.button);
     //     expect(event.image).toEqual(currentImage);
     //     expect(event.action).toEqual(mockButtonEvent.action);
-    //     fixture.detectChanges();
     //   });
     //
     //   comp.onDelete(mockButtonEvent);
     // });
+    //
+    // it(`should call onDelete (last image) and subscribe to its events`, () => {
+    //   const mockButtonEvent: ButtonEvent = {
+    //     button: <InternalButtonConfig>{type: ButtonType.DELETE, id: 1},
+    //     image: null,
+    //     action: Action.CLICK
+    //   };
+    //
+    //   // mock current-image component
+    //   comp.currentImageComponent = {
+    //     getIndexToDelete: () => IMAGES.length - 1,
+    //     nextImage: () => {
+    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[IMAGES.length - 1], IMAGES)));
+    //     },
+    //     prevImage: () => {
+    //       comp.onChangeCurrentImage(new ImageModalEvent(Action.CLICK, getIndex(IMAGES[IMAGES.length - 1], IMAGES)));
+    //     }
+    //   };
+    //
+    //   const currentImage: InternalLibImage = IMAGES[IMAGES.length - 1];
+    //   comp.modalImages = IMAGES;
+    //   comp.currentImage = currentImage;
+    //   comp.ngOnChanges(getSimpleChangesMock());
+    //
+    //   comp.hasData.subscribe(val => {
+    //     expect(val).toBeTruthy();
+    //   });
+    //
+    //   comp.ngOnInit();
+    //
+    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+    //     console.log('buttonBeforeHook', event);
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //
+    //   });
+    //
+    //   comp.show.subscribe((val: ImageModalEvent) => {
+    //     console.log('comp.show.subscribe called', val);
+    //     // expect(val).toEqual(new ImageModalEvent(Action.CLICK, 2));
+    //     // expect(comp.images.length).toBe(IMAGES.length - 1);
+    //   });
+    //
+    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+    //     console.log('buttonAfterHook', event);
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //   });
+    //
+    //   comp.onDelete(mockButtonEvent);
+    // });
+
+    it(`should call onDownload and subscribe to its events`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.DOWNLOAD, id: 1},
+        image: null,
+        action: Action.CLICK
+      };
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      // comp.downloadable = true; // images are now downloadable // TODO restore this
+
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.onDownload(mockButtonEvent);
+    });
+
+    // it(`should call onNavigate and subscribe to its events`, () => {
+    //   const mockButtonEvent: ButtonEvent = {
+    //     button: <InternalButtonConfig>{type: ButtonType.EXTURL, id: 1},
+    //     image: null,
+    //     action: Action.CLICK
+    //   };
+    //   const currentImage: InternalLibImage = IMAGES[0];
+    //   comp.modalImages = IMAGES;
+    //   comp.currentImage = currentImage;
+    //
+    //   comp.ngOnChanges(getSimpleChangesMock());
+    //
+    //   comp.hasData.subscribe(val => {
+    //     expect(val).toBeTruthy();
+    //   });
+    //
+    //   comp.ngOnInit();
+    //
+    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //   });
+    //
+    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //   });
+    //
+    //   comp.onNavigate(mockButtonEvent);
+    // });
+
+    it(`should call onClose and subscribe to its events`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.CLOSE, id: 1},
+        image: null,
+        action: Action.CLICK
+      };
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.close.subscribe(val => {
+        console.log('comp.close ', new ImageModalEvent(Action.CLICK, true));
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.onCloseGallery(mockButtonEvent);
+    });
+
+    it(`should call closeOutside and subscribe to its events`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.enableCloseOutside = true;
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+      comp.close.subscribe((event: ImageModalEvent) => {
+        expect(event.result).toBeTruthy();
+        expect(event.action).toBe(Action.CLICK);
+      });
+      comp.onClickOutside(true);
+    });
+
+    it(`should call onClickDot to change the current image`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+      comp.onClickDot(2);
+      expect(comp.currentImage.id).toBe(2);
+    });
+
+    it(`should call onClickPreview to change the current image`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+      comp.onClickPreview(IMAGES[1]);
+      expect(comp.currentImage.id).toBe(IMAGES[1].id);
+    });
+
+    it(`should call onImageLoad`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+      comp.onImageLoad(<ImageLoadEvent>{status: true, index: 0, id: currentImage.id});
+      expect(comp.images[0].id).toBe(currentImage.id);
+      expect(comp.images[0].previouslyLoaded).toBeTruthy();
+    });
+
+    [
+      null,
+      {layout: null},
+      {
+        strategy: PlainGalleryStrategy.ROW,
+        layout: new LineLayout({width: '100px', height: '100px'}, {length: 2, wrap: false}, 'flex-start')
+      }
+    ].forEach((val: any, index: number) => {
+      it(`should expect isPlainGalleryVisible to be true`, () => {
+        comp.plainGalleryConfig = val;
+        expect(comp.isPlainGalleryVisible).toBeTruthy();
+      });
+    });
+
+    it(`should call ngOnChanges with different inputs, to re-init images`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.hasData.subscribe((val: ImageModalEvent) => {
+        expect(val.action).toBe(Action.LOAD);
+        expect(val.result).toBe(true);
+      });
+
+      comp.ngOnChanges(<SimpleChanges>{
+        modalImages: {
+          previousValue: IMAGES,
+          // random value, the important thing is previousValue !== currentValue
+          currentValue: IMAGES.slice(0, 3),
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+    });
+
+    it(`should call ngOnChanges with advancedPlainLayout to open modal gallery`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.show.subscribe((val: ImageModalEvent) => {
+        expect(val.action).toBe(Action.LOAD);
+        expect(val.result).toBe(1);
+      });
+
+      comp.ngOnInit();
+
+      comp.ngOnChanges(<SimpleChanges>{
+        plainGalleryConfig: {
+          currentValue: <PlainGalleryConfig>{strategy: PlainGalleryStrategy.CUSTOM, layout: new AdvancedLayout(0, true)},
+          previousValue: null, // not important for this test
+          firstChange: false, // not important for this test
+          isFirstChange: () => false // not important for this test
+        }
+      });
+
+
+    });
+  });
+
+  describe('------NO------', () => {
+    it(`should call onDownload but image is not downloadable`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.DOWNLOAD, id: 1},
+        image: null,
+        action: Action.CLICK
+      };
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+      comp.onDownload(mockButtonEvent);
+    });
+
+    it(`should call onClickPreview but with a wrong Image id, so currentImage won't change`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.enableCloseOutside = true;
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+      comp.onClickPreview(Object.assign({}, IMAGES[1], {id: 1000}));
+      expect(comp.currentImage).toEqual(IMAGES[0]);
+    });
+
+    it(`should expect isPlainGalleryVisible to be false`, () => {
+      comp.plainGalleryConfig = <PlainGalleryConfig>{
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(0, true),
+        hideDefaultPlainGallery: true
+      };
+      expect(comp.isPlainGalleryVisible()).toBeFalsy();
+    });
   });
 });
