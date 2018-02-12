@@ -244,7 +244,7 @@ describe('ModalGalleryComponent', () => {
         expect(comp.currentImage.previouslyLoaded).toBeFalsy();
       });
 
-      comp.onCustomEmit(mockButtonEvent);
+      comp.onRefresh(mockButtonEvent);
     });
 
     it(`should call onDelete (first image) and subscribe to its events`, () => {
@@ -639,6 +639,40 @@ describe('ModalGalleryComponent', () => {
         hideDefaultPlainGallery: true
       };
       expect(comp.isPlainGalleryVisible()).toBeFalsy();
+    });
+
+    it(`shouldn't download, because downloadable is false`, () => {
+      const mockButtonEvent: ButtonEvent = {
+        button: <InternalButtonConfig>{type: ButtonType.DOWNLOAD, id: 3},
+        image: null,
+        action: Action.CLICK
+      };
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+      comp.downloadable = false; // images aren't downloadable
+
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+        expect(event.button).toEqual(mockButtonEvent.button);
+        expect(event.image).toEqual(currentImage);
+        expect(event.action).toEqual(mockButtonEvent.action);
+      });
+
+      comp.onDownload(mockButtonEvent);
     });
   });
 });
