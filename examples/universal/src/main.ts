@@ -30,6 +30,7 @@ import { environment } from './environments/environment';
 
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery >= 3.x.x (`npm i --save hammerjs`)
+import 'mousetrap'; // Mandatory for angular-modal-gallery >= 3.x.x (`npm i --save mousetrap`)
 // **************************************************************************
 
 if (environment.production) {

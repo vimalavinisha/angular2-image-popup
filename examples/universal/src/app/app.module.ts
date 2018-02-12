@@ -30,7 +30,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
 // ********************** angular-modal-gallery *****************************
-import 'mousetrap'; // (`npm i --save mousetrap` and `npm i --save-dev @types/mousetrap`)
 import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 

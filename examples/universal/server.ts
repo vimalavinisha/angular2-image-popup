@@ -46,10 +46,28 @@ const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toStri
 // ----------------------------------------------
 // ----------------------------------------------
 // workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
-// const domino = require('domino');
-// const win = domino.createWindow(template);
-// global['window'] = win;
-// global['document'] = win.document;
+const domino = require('domino');
+const win = domino.createWindow(template);
+global['window'] = win;
+global['document'] = win.document;
+global['DOMTokenList'] = win.DOMTokenList;
+global['Node'] = win.Node;
+global['Text'] = win.Text;
+global['HTMLElement'] = win.HTMLElement;
+global['navigator'] = win.navigator;
+global['MutationObserver'] = getMockMutationObserver();
+
+function getMockMutationObserver() {
+  return class {
+    observe(node, options) {
+    }
+    disconnect() {
+    }
+    takeRecords() {
+      return [];
+    }
+  };
+}
 // ----------------------------------------------
 // ----------------------------------------------
 
@@ -58,6 +76,7 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/mai
 
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 // Import module map for lazy loading
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
@@ -89,10 +108,43 @@ app.get(
 app.get('*', (req, res) => {
   // ---------------------------------------------------
   // part of the workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
-  // global['navigator'] = req['headers']['user-agent'];
+  global['navigator'] = req['headers']['user-agent'];
   // ---------------------------------------------------
 
-  res.render('index', { req });
+  const http = req.headers['x-forwarded-proto'] === undefined ? 'http' : req.headers['x-forwarded-proto'];
+
+
+  // res.render('index', { req });
+
+  // tslint:disable-next-line:no-console
+  console.time(`GET: ${req.originalUrl}`);
+  res.render(
+    'index',
+    {
+      req: req,
+      res: res,
+      providers: [
+        {
+          provide: REQUEST, useValue: (req)
+        },
+        {
+          provide: RESPONSE, useValue: (res)
+        },
+        {
+          provide: 'ORIGIN_URL',
+          useValue: (`${http}://${req.headers.host}`)
+        }
+      ]
+    },
+    (err, html) => {
+      if (!!err) {
+        throw err;
+      }
+
+      // tslint:disable-next-line:no-console
+      console.timeEnd(`GET: ${req.originalUrl}`);
+      res.send(html);
+    });
 });
 
 // Start up the Node server
