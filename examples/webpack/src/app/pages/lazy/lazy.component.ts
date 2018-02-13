@@ -336,10 +336,6 @@ export class LazyComponent {
         type: ButtonType.REFRESH
       },
       {
-        className: 'delete-image',
-        type: ButtonType.DELETE
-      },
-      {
         className: 'ext-url-image',
         type: ButtonType.EXTURL,
         extUrlInNewTab: true // <--- this is the important thing to understand this example
@@ -515,18 +511,18 @@ export class LazyComponent {
 
   onVisibleIndex(event: ImageModalEvent) {
     this.customFullDescription.customFullDescription = `Custom description of visible image with index= ${event.result}`;
-    console.log('action: ' + Action[event.action]);
-    console.log('result:' + event.result);
+    console.log('onVisibleIndex action: ' + Action[event.action]);
+    console.log('onVisibleIndex result:' + event.result);
   }
 
   onIsFirstImage(event: ImageModalEvent) {
-    console.log('onfirst action: ' + Action[event.action]);
-    console.log('onfirst result:' + event.result);
+    console.log('onIsFirstImage onfirst action: ' + Action[event.action]);
+    console.log('onIsFirstImage onfirst result:' + event.result);
   }
 
   onIsLastImage(event: ImageModalEvent) {
-    console.log('onlast action: ' + Action[event.action]);
-    console.log('onlast result:' + event.result);
+    console.log('onIsLastImage onlast action: ' + Action[event.action]);
+    console.log('onIsLastImage onlast result:' + event.result);
   }
 
   onCloseImageModal(event: ImageModalEvent) {

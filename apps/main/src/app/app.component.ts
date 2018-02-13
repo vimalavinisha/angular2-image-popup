@@ -334,10 +334,6 @@ export class AppComponent {
         type: ButtonType.REFRESH
       },
       {
-        className: 'delete-image',
-        type: ButtonType.DELETE
-      },
-      {
         className: 'ext-url-image',
         type: ButtonType.EXTURL,
         extUrlInNewTab: true // <--- this is the important thing to understand this example

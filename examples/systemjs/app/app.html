@@ -267,6 +267,7 @@
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigFull"
+                    (show)="onVisibleIndex($event)"
                     (buttonBeforeHook)="onButtonBeforeHook($event)"
                     (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
 </section>
@@ -397,4 +398,3 @@
       href="https://codepen.io/martinvd/pen/xbQJom">martinvd example on codepen.io</a></li>
   </ul>
 </section>
-

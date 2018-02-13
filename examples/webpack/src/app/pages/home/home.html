@@ -271,6 +271,7 @@
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [buttonsConfig]="buttonsConfigFull"
+                            (show)="onVisibleIndex($event)"
                             (buttonBeforeHook)="onButtonBeforeHook($event)"
                             (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
         </section>
@@ -350,7 +351,7 @@
         <!--[previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>-->
         <!--</section>-->
         <section>
-          <h3>9 - Advanced demo - preview custom configuration with custom size</h3>
+          <h3>C9 - Advanced demo - preview custom configuration with custom size</h3>
           <br>
           <ks-modal-gallery [modalImages]="images"
                             [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
