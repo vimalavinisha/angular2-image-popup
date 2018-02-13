@@ -118,27 +118,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   ngOnInit() {
     this.configPreview = Object.assign(this.defaultPreviewConfig, this.previewConfig);
-    let index: number;
-    try {
-      index = getIndex(this.currentImage, this.images);
-    } catch (err) {
-      throw err;
-    }
-    switch (index) {
-      case 0:
-        // first image
-        this.setBeginningIndexesPreviews();
-        break;
-      case this.images.length - 1:
-        // last image
-        this.setEndIndexesPreviews();
-        break;
-      default:
-        // other images
-        this.setIndexesPreviews();
-        break;
-    }
-    this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+
+    // init previews based on currentImage and the full array of images
+    this.initPreviews(this.currentImage, this.images);
   }
 
   /**
@@ -165,8 +147,16 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     if (!simpleChange) {
       return;
     }
+
     const prev: InternalLibImage = simpleChange.previousValue;
     const current: InternalLibImage = simpleChange.currentValue;
+
+    if (current && changes.images && changes.images.previousValue && changes.images.currentValue) {
+      // I'm in this if statement, if input images are changed (for instance, because I removed one of them with the 'delete button',
+      // or because users changed the images array while modal gallery is still open).
+      // In this case, I have to re-init previews, because the input array of images is changed.
+      this.initPreviews(current, changes.images.currentValue);
+    }
 
     if (prev && current && prev.id !== current.id) {
       // to manage infinite sliding I have to reset both `start` and `end` at the beginning
@@ -244,6 +234,36 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   trackById(index: number, item: Image): number {
     return item.id;
+  }
+
+  /**
+   * Private method to init previews based on the currentImage and the full array of images.
+   * The current image in mandatory to show always the current preview (as highlighted).
+   * @param {InternalLibImage} currentImage to decide how to show previews, because I always want to see the current image as highlighted
+   * @param {InternalLibImage[]} images is the array of all images.
+   */
+  private initPreviews(currentImage: InternalLibImage, images: InternalLibImage[]) {
+    let index: number;
+    try {
+      index = getIndex(currentImage, images);
+    } catch (err) {
+      throw err;
+    }
+    switch (index) {
+      case 0:
+        // first image
+        this.setBeginningIndexesPreviews();
+        break;
+      case images.length - 1:
+        // last image
+        this.setEndIndexesPreviews();
+        break;
+      default:
+        // other images
+        this.setIndexesPreviews();
+        break;
+    }
+    this.previews = images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
 
   /**
