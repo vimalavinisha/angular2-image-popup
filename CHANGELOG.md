@@ -1,3 +1,12 @@
+# 5.0.0-beta.3
+### Bugfixes
+- permit to remove images without to break previews
+- loading spinner is working again. Also I updated all examples with new images (modal+thumb) to show in a better way spinners
+
+### Unit testing
+- complete unit testing
+
+
 # 5.0.0-beta.2
 ### Bugfixes
 - when slideConfig doesn't contain the 'infinite' property should disable inifinte sliding
