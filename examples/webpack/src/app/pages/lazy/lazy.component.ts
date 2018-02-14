@@ -250,6 +250,44 @@ export class LazyComponent {
     })
   ];
 
+  imagesForLoadingSpinner: Image[] = [
+    new Image(
+      0,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo-74506.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-74506-thumb.jpg' }
+    ),
+    new Image(
+      1,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo-106006.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-106006-thumb.jpg' }
+    ),
+    new Image(
+      2,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo-464336.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-464336-thumb.jpg' }
+    ),
+    new Image(
+      3,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-thumb.jpg' }
+    ),
+    new Image(
+      4,
+      {
+        img: '../assets/images/loading-spinner-samples/traffic-highway-lights-night-56891.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/traffic-highway-lights-night-56891-thumb.jpg' }
+    )
+  ];
+
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
