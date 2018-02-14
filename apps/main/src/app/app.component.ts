@@ -93,25 +93,21 @@ export class AppComponent {
 
   images: Image[] = [
     new Image(0, {
-      // modal
       img: '../assets/images/gallery/img1.jpg',
       extUrl: 'http://www.google.com'
     }),
     new Image(1, {
-      // modal
-      img: '../assets/images/gallery/img2.png',
+      img: '../assets/images/gallery/img2.jpg',
       description: 'Description 2'
     }),
     new Image(
       2,
       {
-        // modal
         img: '../assets/images/gallery/img3.jpg',
         description: 'Description 3',
         extUrl: 'http://www.google.com'
       },
       {
-        // plain
         img: '../assets/images/gallery/thumbs/img3.png',
         title: 'custom title 2',
         alt: 'custom alt 2',
@@ -119,57 +115,30 @@ export class AppComponent {
       }
     ),
     new Image(3, {
-      // modal
       img: '../assets/images/gallery/img4.jpg',
       description: 'Description 4',
       extUrl: 'http://www.google.com'
     }),
-    new Image(
-      4,
-      {
-        // modal
-        img: '../assets/images/gallery/img5.jpg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/img5.jpg'
-      }
-    )
+    new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
 
   imagesRect: Image[] = [
     new Image(
       0,
       {
-        // modal
         img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
         description: 'Description 1'
       },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
-      }
+      { img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg' }
     ),
-    new Image(
-      1,
-      {
-        // modal
-        img: '../assets/images/gallery/pexels-photo-47223.jpeg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
-      }
-    ),
+    new Image(1, { img: '../assets/images/gallery/pexels-photo-47223.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg' }),
     new Image(
       2,
       {
-        // modal
         img: '../assets/images/gallery/pexels-photo-52062.jpeg',
         description: 'Description 3'
       },
       {
-        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
         description: 'Description 3'
       }
@@ -177,75 +146,82 @@ export class AppComponent {
     new Image(
       3,
       {
-        // modal
         img: '../assets/images/gallery/pexels-photo-66943.jpeg',
         description: 'Description 4'
       },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
-      }
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg' }
     ),
-    new Image(
-      4,
-      {
-        // modal
-        img: '../assets/images/gallery/pexels-photo-93750.jpeg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
-      }
-    ),
+    new Image(4, { img: '../assets/images/gallery/pexels-photo-93750.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg' }),
     new Image(
       5,
       {
-        // modal
         img: '../assets/images/gallery/pexels-photo-94420.jpeg',
         description: 'Description 6'
       },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
-      }
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg' }
     ),
-    new Image(
-      6,
-      {
-        // modal
-        img: '../assets/images/gallery/pexels-photo-96947.jpeg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
-      }
-    )
+    new Image(6, { img: '../assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
 
   imagesMixedSizes: Image[] = [
     new Image(0, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-135230.png',
       description: 'Description 1'
     }),
     new Image(1, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-547115.jpeg'
     }),
     new Image(2, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-556664.jpeg',
       description: 'Description 3'
     }),
     new Image(3, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-787594.jpeg',
       description: 'Description 4'
     }),
     new Image(4, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-803105.jpeg'
     })
+  ];
+
+  // example of images with small previews (they are different files) to show
+  // loading spinners
+  imagesForLoadingSpinner: Image[] = [
+    new Image(
+      0,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo-74506.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-74506-thumb.jpg' }
+    ),
+    new Image(
+      1,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo-106006.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-106006-thumb.jpg' }
+    ),
+    new Image(
+      2,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo-464336.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-464336-thumb.jpg' }
+    ),
+    new Image(
+      3,
+      {
+        img: '../assets/images/loading-spinner-samples/pexels-photo.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/pexels-photo-thumb.jpg' }
+    ),
+    new Image(
+      4,
+      {
+        img: '../assets/images/loading-spinner-samples/traffic-highway-lights-night-56891.jpg'
+      },
+      { img: '../assets/images/loading-spinner-samples/traffic-highway-lights-night-56891-thumb.jpg' }
+    )
   ];
 
   // array with a single image inside (the first one)

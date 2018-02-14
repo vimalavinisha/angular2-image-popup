@@ -174,6 +174,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
+    // console.log('currentImage onChanges loading before', this.loading);
+
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
       return;
@@ -189,12 +191,18 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       throw err;
     }
 
+    // TODO why I was using this 'this.changeImage.emit(new ImageModalEvent(Action.LOAD, index))' ???
     // if not currently loaded
-    if (current && !current.previouslyLoaded) {
-      this.loading = !current.previouslyLoaded;
-      this.changeImage.emit(new ImageModalEvent(Action.LOAD, index));
-      this.loading = false;
-    }
+    // console.log('currentImage onChanges current', current);
+    // if (current && !current.previouslyLoaded) {
+    //   console.log('currentImage onChanges changing loading');
+    //   // this.loading = !current.previouslyLoaded;
+    //   this.changeImage.emit(new ImageModalEvent(Action.LOAD, index));
+    //   // this.loading = false;
+    //   console.log('currentImage onChanges loading changed');
+    // }
+
+    // console.log('currentImage onChanges loading after', this.loading);
 
     if (this.isOpen) {
       this.manageSlideConfig(index);
@@ -372,11 +380,17 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param {Event} event that triggered the load
    */
   onImageLoad(event: Event) {
-    this.loadImage.emit({
+    // console.log('currentImage onImageLoad', event);
+
+    const loadImageData: ImageLoadEvent = {
       status: true,
       index: getIndex(this.currentImage, this.images),
       id: this.currentImage.id
-    });
+    };
+
+    this.loadImage.emit(loadImageData);
+
+    // console.log('currentImage onImageLoad loadImageData', loadImageData);
 
     this.loading = false;
   }
