@@ -110,9 +110,9 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 7. `git push origin master`
 8. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
 
-## Beta releases (@beta)
+## Beta and RC releases (@beta)
 1. `cd libs/angular-modal-gallery`
-2. Manually change the version of `./libs/angular-modal-gallery/package.json` with this format `x.x.x-beta.x` (also respect semver!)
+2. Manually change the version of `./libs/angular-modal-gallery/package.json` with either this format `x.x.x-beta.x` or `x.x.x-rc.x` (also respect semver!)
 3. `cd ../..`
 4. `npm run clean:all`
 5. `npm run build:lib`
