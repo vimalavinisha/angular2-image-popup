@@ -2,7 +2,7 @@
      [attr.aria-label]="accessibilityConfig?.previewsContainerAriaLabel"
      [title]="accessibilityConfig?.previewsContainerTitle">
 
-  <ng-container *ngIf="!configPreview || configPreview?.visible">
+  <ng-container *ngIf="configPreview?.visible">
     <a class="nav-left"
        [attr.aria-label]="accessibilityConfig?.previewScrollPrevAriaLabel"
        [tabindex]="configPreview.arrows && start > 0 ? 0 : -1" role="button"
@@ -13,10 +13,11 @@
     </a>
 
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
-      <img *ngIf="preview.modal.img"
+      <img *ngIf="preview?.modal?.img"
            class="inside preview-image {{isActive(preview) ? 'active' : ''}}"
            [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
-           ksSize [sizeConfig]="{width: configPreview.size.width, height: configPreview.size.height}"
+           ksSize [sizeConfig]="{width: configPreview.size ? configPreview.size.width : defaultPreviewSize.width,
+                                 height: configPreview.size ? configPreview.size.height : defaultPreviewSize.height}"
            [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
            [title]="preview.modal.title ? preview.modal.title : ''"
            alt="{{preview.modal.alt ? preview.modal.alt : ''}}"

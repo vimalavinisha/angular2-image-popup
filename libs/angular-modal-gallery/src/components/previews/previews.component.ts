@@ -95,9 +95,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   end: number;
 
   /**
-   * Default preview's size object
+   * Default preview's size object, also used in the template to apply default sizes to ksSize's directive.
    */
-  private defaultPreviewSize: Size = { height: '50px', width: 'auto' };
+  defaultPreviewSize: Size = { height: '50px', width: 'auto' };
+
   /**
    * Default preview's config object
    */
@@ -117,7 +118,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.configPreview = Object.assign(this.defaultPreviewConfig, this.previewConfig);
+    this.configPreview = Object.assign({}, this.defaultPreviewConfig, this.previewConfig);
 
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);

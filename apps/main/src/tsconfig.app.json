@@ -8,5 +8,11 @@
     "**/*.ts"
     /* add all lazy-loaded libraries here: "../../../libs/my-lib/index.ts" */
   ],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhiteSpace": false,
+    "strictInjectionParameters": true,
+    "strictNullChecks": true
+  }
 }

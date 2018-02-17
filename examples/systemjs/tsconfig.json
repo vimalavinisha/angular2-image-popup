@@ -11,5 +11,11 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhiteSpace": false,
+    "strictInjectionParameters": true,
+    "strictNullChecks": true
   }
 }
