@@ -49,22 +49,24 @@ export class Image {
 export interface ImageData {
   img: string;
   description?: string;
-  extUrl?: string;
   title?: string;
   alt?: string;
   ariaLabel?: string;
-  size?: Size;
 }
 
 /**
  * Interface `ModalImage` to configure the modal image.
  */
-export interface ModalImage extends ImageData {}
+export interface ModalImage extends ImageData {
+  extUrl?: string;
+}
 
 /**
  * Interface `PlainImage` to configure the plain image.
  */
-export interface PlainImage extends ImageData {}
+export interface PlainImage extends ImageData {
+  size?: Size;
+}
 
 /**
  * Class `ImageModalEvent` that represents the event payload with the result and the triggered action.
