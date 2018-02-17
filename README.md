@@ -36,7 +36,7 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 
 <br><br>
 
-# angular-modal-gallery 5.0.0 Beta (WORK IN PROGRESS)
+# angular-modal-gallery 5.0.0 RC (WORK IN PROGRESS)
 
 **angular-modal-gallery 5.0.0 features/roadmap [HERE](https://github.com/Ks89/angular-modal-gallery/issues/80).**
 
@@ -59,6 +59,8 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 
 
 ## News
+- 02/17/2018 - 5.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 02/10/2018 - 5.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/24/2018 - 5.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/14/2018 - 5.0.0-alpha.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 12/24/2017 - 5.0.0-alpha.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

@@ -1,7 +1,11 @@
-# 5.0.0-beta.3
+# 5.0.0-rc.1
 ### Bugfixes
+- fix prod/aot build with strictNullChecks and add fullTemplateTypeCheck, preserveWhiteSpace, strictInjectionParameters, strictNullChecks to all examples. Reported by @Enngage #122
 - permit to remove images without to break previews
-- loading spinner is working again. Also I updated all examples with new images (modal+thumb) to show in a better way spinners
+- loading spinner is working again. Also I updated all examples with new images (modal+thumb) to show in a better way spinners #120
+
+### Internal library changes
+- PlainImage and ModalImage should share only common things, instead of extending a class with all params. This is really confusing.
 
 ### Unit testing
 - complete unit testing
