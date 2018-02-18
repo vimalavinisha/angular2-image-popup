@@ -60,7 +60,7 @@ import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
  */
 @Component({
   selector: 'ks-modal-gallery',
-  exportAs: 'modalGallery',
+  exportAs: 'ksModalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html',
   changeDetection: ChangeDetectionStrategy.OnPush
