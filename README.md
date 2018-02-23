@@ -49,6 +49,20 @@ It's also possible to navigate between these modal images with both **keyboard a
 - configurable previews (visible only on bigger screen)
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/))
 
+
+## **Documentation**
+
+*Image loading could be slow, because this website is hosted on Github pages*
+
+[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
+
+
+## **Live demo**
+
+[OFFICIAL LIVE DEMO](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
+
+<br>
+
 <br>
 
 # angular-modal-gallery 5.0.0 RC (WORK IN PROGRESS)
@@ -60,12 +74,6 @@ It's also possible to navigate between these modal images with both **keyboard a
 **Please, add your ideas or help to implement some features.**
 
 <br>
-
-## **Official live DEMO + DOCUMENTATION**
-
-*Image loading could be slow, because this demo is hosted on Github pages*
-
-[CLICK HERE FOR DEMO/DOCUMENTATION](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
 
 ## Installation
 - `npm install --save angular-modal-gallery`
