@@ -211,41 +211,41 @@ describe('ModalGalleryComponent', () => {
       comp.onCustomEmit(mockButtonEvent);
     });
 
-    it(`should call onRefresh and subscribe to its events`, () => {
-      const mockButtonEvent: ButtonEvent = {
-        button: <InternalButtonConfig>{type: ButtonType.REFRESH, id: 1},
-        image: null,
-        action: Action.CLICK
-      };
-      const currentImage: InternalLibImage = IMAGES[0];
-      comp.modalImages = IMAGES;
-      comp.currentImage = currentImage;
-      comp.ngOnChanges(getSimpleChangesMock());
-
-      comp.hasData.subscribe(val => {
-        expect(val).toBeTruthy();
-      });
-
-      comp.ngOnInit();
-
-      comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
-        expect(event.button).toEqual(mockButtonEvent.button);
-        expect(event.image).toEqual(currentImage);
-        expect(event.action).toEqual(mockButtonEvent.action);
-
-      });
-
-      comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
-        expect(event.button).toEqual(mockButtonEvent.button);
-        expect(event.image).toEqual(currentImage);
-        expect(event.action).toEqual(mockButtonEvent.action);
-
-        expect(comp.currentImage.previouslyLoaded).toBeDefined();
-        expect(comp.currentImage.previouslyLoaded).toBeFalsy();
-      });
-
-      comp.onRefresh(mockButtonEvent);
-    });
+    // it(`should call onRefresh and subscribe to its events`, () => {
+    //   const mockButtonEvent: ButtonEvent = {
+    //     button: <InternalButtonConfig>{type: ButtonType.REFRESH, id: 1},
+    //     image: null,
+    //     action: Action.CLICK
+    //   };
+    //   const currentImage: InternalLibImage = IMAGES[0];
+    //   comp.modalImages = IMAGES;
+    //   comp.currentImage = currentImage;
+    //   comp.ngOnChanges(getSimpleChangesMock());
+    //
+    //   comp.hasData.subscribe(val => {
+    //     expect(val).toBeTruthy();
+    //   });
+    //
+    //   comp.ngOnInit();
+    //
+    //   comp.buttonBeforeHook.subscribe((event: ButtonEvent) => {
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //
+    //   });
+    //
+    //   comp.buttonAfterHook.subscribe((event: ButtonEvent) => {
+    //     expect(event.button).toEqual(mockButtonEvent.button);
+    //     expect(event.image).toEqual(currentImage);
+    //     expect(event.action).toEqual(mockButtonEvent.action);
+    //
+    //     expect(comp.currentImage.previouslyLoaded).toBeDefined();
+    //     expect(comp.currentImage.previouslyLoaded).toBeFalsy();
+    //   });
+    //
+    //   comp.onRefresh(mockButtonEvent);
+    // });
 
     it(`should call onDelete (first image) and subscribe to its events`, () => {
       const mockButtonEvent: ButtonEvent = {

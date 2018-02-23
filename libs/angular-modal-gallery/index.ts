@@ -47,7 +47,7 @@ export {
   KS_DEFAULT_BTN_DELETE,
   KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
-  KS_DEFAULT_BTN_REFRESH,
+  // KS_DEFAULT_BTN_REFRESH,
   KS_DEFAULT_SIZE
 } from './src/components/upper-buttons/upper-buttons-default';
 

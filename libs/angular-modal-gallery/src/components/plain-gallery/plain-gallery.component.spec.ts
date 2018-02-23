@@ -409,7 +409,7 @@ describe('PlainGalleryComponent', () => {
       expect(plainImages.length).toBe(IMAGES.length);
       expect(plainImages[0].name).toBe('a');
       expect(plainImages[0].attributes['ksSize']).toBe('');
-      expect(plainImages[0].attributes['href']).toBe('#');
+      // expect(plainImages[0].attributes['href']).toBe('#');
       expect(plainImages[0].attributes['class']).toBe('a-tag-image');
       // expect(plainImages[0].attributes['aria-label']).toBe(IMAGES[0].modal.ariaLabel);
       expect(plainImages[0].properties['title']).toBe('Image 1/5');
@@ -420,7 +420,7 @@ describe('PlainGalleryComponent', () => {
 
       expect(plainImages[1].name).toBe('a');
       expect(plainImages[1].attributes['ksSize']).toBe('');
-      expect(plainImages[1].attributes['href']).toBe('#');
+      // expect(plainImages[1].attributes['href']).toBe('#');
       expect(plainImages[1].attributes['class']).toBe('a-tag-image');
       // expect(plainImages[1].attributes['aria-label']).toBe(IMAGES[0].modal.ariaLabel);
       expect(plainImages[1].properties['title']).toBe('Image 2/5 - Description 2');
@@ -431,7 +431,7 @@ describe('PlainGalleryComponent', () => {
 
       expect(plainImages[2].name).toBe('a');
       expect(plainImages[2].attributes['ksSize']).toBe('');
-      expect(plainImages[2].attributes['href']).toBe('#');
+      // expect(plainImages[2].attributes['href']).toBe('#');
       expect(plainImages[2].attributes['class']).toBe('a-tag-image');
       // expect(plainImages[2].attributes['aria-label']).toBe(IMAGES[0].modal.ariaLabel);
       expect(plainImages[2].properties['title']).toBe(IMAGES[2].plain.title);
@@ -442,7 +442,7 @@ describe('PlainGalleryComponent', () => {
 
       expect(plainImages[3].name).toBe('a');
       expect(plainImages[3].attributes['ksSize']).toBe('');
-      expect(plainImages[3].attributes['href']).toBe('#');
+      // expect(plainImages[3].attributes['href']).toBe('#');
       expect(plainImages[3].attributes['class']).toBe('a-tag-image');
       // expect(plainImages[3].attributes['aria-label']).toBe(IMAGES[0].modal.ariaLabel);
       expect(plainImages[3].properties['title']).toBe('Image 4/5 - Description 4');
@@ -453,7 +453,7 @@ describe('PlainGalleryComponent', () => {
 
       expect(plainImages[4].name).toBe('a');
       expect(plainImages[4].attributes['ksSize']).toBe('');
-      expect(plainImages[4].attributes['href']).toBe('#');
+      // expect(plainImages[4].attributes['href']).toBe('#');
       expect(plainImages[4].attributes['class']).toBe('a-tag-image');
       // expect(plainImages[4].attributes['aria-label']).toBe(IMAGES[0].modal.ariaLabel);
       expect(plainImages[4].properties['title']).toBe('Image 5/5');

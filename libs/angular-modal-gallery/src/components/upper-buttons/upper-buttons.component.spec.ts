@@ -27,14 +27,7 @@ import { SizeDirective } from '../../directives/size.directive';
 import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType } from '../../model/buttons-config.interface';
 import { Action } from '../../model/action.enum';
 import { Size } from '../../model/size.interface';
-import {
-  KS_DEFAULT_BTN_CLOSE,
-  KS_DEFAULT_BTN_DELETE,
-  KS_DEFAULT_BTN_DOWNLOAD,
-  KS_DEFAULT_BTN_EXTURL,
-  KS_DEFAULT_BTN_REFRESH,
-  KS_DEFAULT_SIZE
-} from './upper-buttons-default';
+import { KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_SIZE } from './upper-buttons-default';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;
@@ -99,13 +92,13 @@ const CUSTOM_FA_BUTTONS: ButtonConfig[] = [
     title: 'custom close title',
     fontSize: '20px'
   },
-  {
-    className: 'fa fa-refresh white',
-    type: ButtonType.REFRESH,
-    ariaLabel: 'custom refresh aria label',
-    title: 'custom refresh title',
-    fontSize: '20px'
-  },
+  // {
+  //   className: 'fa fa-refresh white',
+  //   type: ButtonType.REFRESH,
+  //   ariaLabel: 'custom refresh aria label',
+  //   title: 'custom refresh title',
+  //   fontSize: '20px'
+  // },
   {
     className: 'fa fa-download white',
     type: ButtonType.DOWNLOAD,
@@ -162,7 +155,8 @@ const CUSTOM_CASES: ButtonsConfig[] = [
   {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
-    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_REFRESH, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_CLOSE]
+    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, /* KS_DEFAULT_BTN_REFRESH*/
+      KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_CLOSE]
   }
 ];
 
@@ -170,19 +164,19 @@ const CUSTOM_SIZES: ButtonsConfig[] = [
   {
     visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [
       buildBtnWithCustomSize(ButtonType.DOWNLOAD, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.CLOSE, CUSTOM_SIZE),
-      buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE),
+      // buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE),
       buildBtnWithCustomSize(ButtonType.CUSTOM, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.DELETE, CUSTOM_SIZE)]
   },
   {
     visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [
       buildBtnWithCustomSize(ButtonType.DOWNLOAD, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.CLOSE, CUSTOM_SIZE_AUTO_HEIGHT),
-      buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE_AUTO_HEIGHT),
+      // buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE_AUTO_HEIGHT),
       buildBtnWithCustomSize(ButtonType.CUSTOM, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.DELETE, CUSTOM_SIZE_AUTO_HEIGHT)]
   },
   {
     visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [
       buildBtnWithCustomSize(ButtonType.DOWNLOAD, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.CLOSE, CUSTOM_SIZE_AUTO_WIDTH),
-      buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE_AUTO_WIDTH),
+      // buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE_AUTO_WIDTH),
       buildBtnWithCustomSize(ButtonType.CUSTOM, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.DELETE, CUSTOM_SIZE_AUTO_WIDTH)]
   }
 ];
@@ -206,7 +200,7 @@ const EXT_URL_IN_A_NEW_TAB_CASES: ButtonsConfig[] = [
   {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
-    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_REFRESH, KS_DEFAULT_BTN_DELETE, EXTURL_BTN_NEW_TAB]
+    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, /* KS_DEFAULT_BTN_REFRESH, */ KS_DEFAULT_BTN_DELETE, EXTURL_BTN_NEW_TAB]
   }
 ];
 
@@ -236,8 +230,8 @@ function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
       return Object.assign({}, KS_DEFAULT_BTN_EXTURL, {size: size});
     case ButtonType.DELETE:
       return Object.assign({}, KS_DEFAULT_BTN_DELETE, {size: size});
-    case ButtonType.REFRESH:
-      return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size: size});
+    // case ButtonType.REFRESH:
+    //   return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size: size});
     case ButtonType.CUSTOM:
       return Object.assign({}, CUSTOM_BTN, {size: size});
     default:
@@ -292,7 +286,7 @@ function testBtnNumberByStrategy(strategy: ButtonsStrategy, btnDebugElementsCoun
       expect(btnDebugElementsCount).toBe(3);
       break;
     case ButtonsStrategy.FULL:
-      expect(btnDebugElementsCount).toBe(5);
+      expect(btnDebugElementsCount).toBe(4); // with refresh this must be 5
       break;
     case ButtonsStrategy.CUSTOM:
       // no constraints with custom strategy
@@ -338,9 +332,9 @@ describe('UpperButtonsComponent', () => {
         comp.close.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        });
+        // comp.refresh.subscribe((res: ButtonEvent) => {
+        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
+        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -380,9 +374,9 @@ describe('UpperButtonsComponent', () => {
         comp.close.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        });
+        // comp.refresh.subscribe((res: ButtonEvent) => {
+        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
+        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -426,9 +420,9 @@ describe('UpperButtonsComponent', () => {
           comp.close.subscribe((res: ButtonEvent) => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
           });
-          comp.refresh.subscribe((res: ButtonEvent) => {
-            expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-          });
+          // comp.refresh.subscribe((res: ButtonEvent) => {
+          //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
+          // });
           comp.delete.subscribe((res: ButtonEvent) => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
           });
@@ -464,9 +458,9 @@ describe('UpperButtonsComponent', () => {
         comp.close.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        });
+        // comp.refresh.subscribe((res: ButtonEvent) => {
+        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
+        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -507,9 +501,9 @@ describe('UpperButtonsComponent', () => {
         comp.close.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        });
+        // comp.refresh.subscribe((res: ButtonEvent) => {
+        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
+        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -550,17 +544,17 @@ describe('UpperButtonsComponent', () => {
         comp.close.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[2]));
         });
-        comp.refresh.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[3]));
-        });
+        // comp.refresh.subscribe((res: ButtonEvent) => {
+        //   expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[3]));
+        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[1]));
         });
         comp.navigate.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[5]));
+          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[4]));
         });
         comp.download.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[4]));
+          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[3]));
         });
         comp.customEmit.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[0]));

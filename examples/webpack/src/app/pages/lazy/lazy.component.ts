@@ -370,10 +370,6 @@ export class LazyComponent {
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {
-        className: 'refresh-image',
-        type: ButtonType.REFRESH
-      },
-      {
         className: 'ext-url-image',
         type: ButtonType.EXTURL,
         extUrlInNewTab: true // <--- this is the important thing to understand this example
@@ -405,13 +401,6 @@ export class LazyComponent {
         type: ButtonType.CLOSE,
         ariaLabel: 'custom close aria label',
         title: 'custom close title',
-        fontSize: '20px'
-      },
-      {
-        className: 'fa fa-refresh white',
-        type: ButtonType.REFRESH,
-        ariaLabel: 'custom refresh aria label',
-        title: 'custom refresh title',
         fontSize: '20px'
       },
       {

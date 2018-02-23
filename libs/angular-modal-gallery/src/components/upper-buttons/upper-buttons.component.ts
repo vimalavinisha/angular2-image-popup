@@ -34,8 +34,8 @@ import {
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,
   KS_DEFAULT_BTN_DOWNLOAD,
-  KS_DEFAULT_BTN_EXTURL,
-  KS_DEFAULT_BTN_REFRESH
+  KS_DEFAULT_BTN_EXTURL
+  // KS_DEFAULT_BTN_REFRESH
 } from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
@@ -119,7 +119,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Default buttons array for full configuration
    */
-  private fullButtonsDefault: ButtonConfig[] = [KS_DEFAULT_BTN_REFRESH, KS_DEFAULT_BTN_DELETE, ...this.advancedButtonsDefault];
+  private fullButtonsDefault: ButtonConfig[] = [/*KS_DEFAULT_BTN_REFRESH, */ KS_DEFAULT_BTN_DELETE, ...this.advancedButtonsDefault];
 
   /**
    * Method ´ngOnInit´ to build `configButtons` applying a default value and also to
@@ -170,9 +170,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
       action: action
     };
     switch (button.type) {
-      case ButtonType.REFRESH:
-        this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
-        break;
+      // case ButtonType.REFRESH:
+      //   this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
+      //   break;
       case ButtonType.DELETE:
         this.triggerOnMouseAndKeyboard(this.delete, event, dataToEmit);
         break;

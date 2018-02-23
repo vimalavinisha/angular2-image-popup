@@ -76,8 +76,8 @@ export enum ButtonsStrategy {
 export enum ButtonType {
   // don't use 0 here
   // the first index is 1 and all of the following members are auto-incremented from that point on
-  REFRESH = 1,
-  DELETE,
+  // REFRESH = 1,
+  DELETE = 1,
   EXTURL,
   DOWNLOAD,
   CLOSE,
@@ -88,7 +88,7 @@ export enum ButtonType {
  * Array of admitted types of buttons.
  */
 export const WHITELIST_BUTTON_TYPES: ButtonType[] = [
-  ButtonType.REFRESH,
+  // ButtonType.REFRESH,
   ButtonType.DELETE,
   ButtonType.EXTURL,
   ButtonType.DOWNLOAD,

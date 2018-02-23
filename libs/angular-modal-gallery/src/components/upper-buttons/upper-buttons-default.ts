@@ -40,17 +40,17 @@ export const KS_DEFAULT_BTN_EXTURL: ButtonConfig = {
   title: 'Navigate the current image',
   ariaLabel: 'Navigate the current image'
 };
-/**
- * Default refresh button object
- * @type ButtonConfig
- */
-export const KS_DEFAULT_BTN_REFRESH: ButtonConfig = {
-  className: 'refresh-image',
-  size: KS_DEFAULT_SIZE,
-  type: ButtonType.REFRESH,
-  title: 'Refresh all images',
-  ariaLabel: 'Refresh all images'
-};
+// /**
+//  * Default refresh button object
+//  * @type ButtonConfig
+//  */
+// export const KS_DEFAULT_BTN_REFRESH: ButtonConfig = {
+//   className: 'refresh-image',
+//   size: KS_DEFAULT_SIZE,
+//   type: ButtonType.REFRESH,
+//   title: 'Refresh all images',
+//   ariaLabel: 'Refresh all images'
+// };
 /**
  * Default delete button object
  * @type ButtonConfig

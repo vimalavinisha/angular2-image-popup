@@ -232,38 +232,39 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   // TODO implement on refresh
-  /**
-   * Method called by the refresh upper button.
-   * @param {ButtonEvent} event payload
-   */
-  onRefresh(event: ButtonEvent) {
-    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-
-    this.buttonBeforeHook.emit(eventToEmit);
-    // console.log('TODO implement on refresh inside the library', eventToEmit);
-
-    this.currentImage = Object.assign({}, this.currentImage, { previouslyLoaded: false });
-
-    // TODO add logic to hide and show the current image
-
-    // console.log('onRefresh', this.currentImage);
-
-    // const indexNum: number = this.currentImageComponent.getIndex();
-
-    // this.images = this.images.map((val: InternalLibImage, index: number) => {
-    //   if (index !== 2) {
-    //     return val;
-    //   } else {
-    //     const img: InternalLibImage = Object.assign({}, val, {previouslyLoaded: false});
-    //     return img;
-    //   }
-    // });
-    //
-    // this.closeGallery();
-    // this.showModalGallery(2);
-
-    this.buttonAfterHook.emit(eventToEmit);
-  }
+  // /**
+  //  * Method called by the refresh upper button.
+  //  * STILL NOT IMPLEMENTED, SO DON'T USE IT
+  //  * @param {ButtonEvent} event payload
+  //  */
+  // onRefresh(event: ButtonEvent) {
+  //   const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+  //
+  //   this.buttonBeforeHook.emit(eventToEmit);
+  //   // console.log('TODO implement on refresh inside the library', eventToEmit);
+  //
+  //   this.currentImage = Object.assign({}, this.currentImage, { previouslyLoaded: false });
+  //
+  //   // TODO add logic to hide and show the current image
+  //
+  //   // console.log('onRefresh', this.currentImage);
+  //
+  //   // const indexNum: number = this.currentImageComponent.getIndex();
+  //
+  //   // this.images = this.images.map((val: InternalLibImage, index: number) => {
+  //   //   if (index !== 2) {
+  //   //     return val;
+  //   //   } else {
+  //   //     const img: InternalLibImage = Object.assign({}, val, {previouslyLoaded: false});
+  //   //     return img;
+  //   //   }
+  //   // });
+  //   //
+  //   // this.closeGallery();
+  //   // this.showModalGallery(2);
+  //
+  //   this.buttonAfterHook.emit(eventToEmit);
+  // }
 
   /**
    * Method called by the delete upper button.
