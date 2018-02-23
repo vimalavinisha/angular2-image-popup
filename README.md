@@ -35,7 +35,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 - AOT support
 - Angular >= 4 (Angular >=5 supported from version 4.0.0)
 - compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications
-- official examples with angular-cli, angular-cli + material, SystemJS and Webpack 3
+- official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `Webpack` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high coverage %
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
 - image **download** with buttons or keyboard shortcuts
@@ -59,9 +59,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 
 ## **Live demo**
 
-[OFFICIAL LIVE DEMO](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
-
-<br>
+[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v5/)
 
 <br>
 
@@ -80,7 +78,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 
-From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use all default features without font-awesome. However, if you want you can change button icons with font-awesome. For more info, check the [OFFICIAL DOCUMENTATION](https://ks89.github.io/angular-modal-gallery-2018.github.io/).
+From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018.github.io/).
 
 
 ## Which version should I use?
@@ -95,6 +93,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 
 ## News
+- 02/28/2018 - 5.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/24/2018 - 5.0.0-rc.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/17/2018 - 5.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/10/2018 - 5.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -106,35 +105,11 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 - 12/03/2017 - 5.0.0-alpha.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/05/2017 - 4.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/05/2017 - 4.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 11/04/2017 - 4.0.0-rc.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 11/04/2017 - 4.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/11/2017 - 3.3.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 09/19/2017 - 3.3.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/09/2017 - 3.3.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/09/2017 - 3.3.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/09/2017 - 3.3.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/08/2017 - 3.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/06/2017 - 3.2.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/03/2017 - 3.2.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 07/29/2017 - 3.2.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 07/23/2017 - 3.2.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/14/2017 - 3.1.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/14/2017 - 3.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 04/28/2017 - 3.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/20/2017 - 3.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- ...
 - 03/20/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/30/2017 - 2.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/29/2017 - 2.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- ...
 - 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/28/2017 - 2.0.0-alpha.1 - angular-modal-gallery
-
-
-## How to use it?
-
-Two different ways (both of them are good):
-- using my full and runnable examples (`systemjs`, `webpack`, `angular-cli`, `angular-cli-material`, `universal`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
-- checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
-- sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
 
 
 ## FAQS
@@ -144,6 +119,10 @@ Two different ways (both of them are good):
 2. Question: **I have this error: `Error: No provider for KeyboardService`. What can I do?**<br>
    **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/gettingStarted).
    This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
+3. Question: **How can I remove images using DELETE button without issues?**<br>
+   **Answer**: **You cannot change the input image array. Instead, you should reassign it with a newer array** without the deleted element.
+   In other words, **you must think in a functional way**, without changing the input array of images.
+   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/demo/buttons-strategies).
 
 
 ## Contributing
