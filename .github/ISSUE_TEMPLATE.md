@@ -14,7 +14,7 @@ If your problem is still present, fell free to open an issue with this template.
 <!-- Check one of the following options with "x" -->
 <pre><code>
 [ ] Regression (a behavior that used to work and stopped working in a new release)
-[ ] Bug report  <!-- Please search GitHub for a similar issue or PR before submitting -->
+[ ] Bug report  <!-- Please search on GitHub for a similar issue or PR before submitting -->
 [ ] Feature request
 [ ] Documentation issue or request
 [ ] Support request
@@ -30,20 +30,26 @@ If your problem is still present, fell free to open an issue with this template.
 
 ## Minimal reproduction of the problem with instructions
 <!--
-For bug reports please provide the *STEPS TO REPRODUCE* and if possible a *MINIMAL DEMO* of the problem -->
+For bug reports please provide the *STEPS TO REPRODUCE* and a *MINIMAL LIVE DEMO* of the problem on StackBlitz.com or plnkr.co...-->
+
+My official live example on StackBlitz (based on https://stackblitz.com/edit/angular-modal-gallery-v5) is: <!-- add your public link here -->
+
 
 ## What is the motivation / use case for changing the behavior?
 <!-- Describe the motivation or the concrete use case. -->
 
 
-## Environment
+## Environment (the most important section to fill very carefully)
 
 <pre><code>
-- Node version: XX  <!-- run `node --version` -->
-- npm version: XX  <!-- run `npm --version` -->
-- Platform:  <!-- Mac, Linux, Windows -->
-- Angular version: X.Y.Z
--
+- Node version: X.X.X  <!-- run `node --version` -->
+- npm version: X.X.X  <!-- run `npm --version` -->
+- Operating System and version:  <!-- Mac, Linux, Windows -->
+- Angular version: X.Y.Z <!-- check your package.json -->
+- angular-cli version (or SystemJS/Webpack): X.Y.Z <!-- for angular-cli run `ng -v` otherwise check your package.json-->
+- I'm using Server Side Rendering with angular-universal: YES/NO
+- I'm compiling with mode: DEBUG / PROD / PROD with AOT
+
 <!-- Check whether this is still an issue in the most recent angular-modal-gallery version -->
 
 Browser:
