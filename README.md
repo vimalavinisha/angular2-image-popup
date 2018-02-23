@@ -14,7 +14,7 @@
 
 <br>
 
-![angular-modal-gallery image](https://cloud.githubusercontent.com/assets/6057207/24118289/8ade6952-0dad-11e7-829f-416a24891ce0.png)
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/develop/amg5.png?raw=true)
 
 <br>
 
