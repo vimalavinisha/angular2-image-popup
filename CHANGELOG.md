@@ -1,3 +1,11 @@
+# 5.0.0-rc.2
+### Features
+- remove REFRESH button (BREAKING CHANGE)
+
+### Others
+- update all official examples
+
+
 # 5.0.0-rc.1
 ### Bugfixes
 - fix prod/aot build with strictNullChecks and add fullTemplateTypeCheck, preserveWhiteSpace, strictInjectionParameters, strictNullChecks to all examples. Reported by @Enngage #122

@@ -10,7 +10,7 @@
 
 <br>
 
-# Angular modal gallery
+# angular-modal-gallery
 
 <br>
 
@@ -18,23 +18,38 @@
 
 <br>
 
-**angular-modal-gallery** is an Angular library to create image galleries of **clickable thumbnails**. After a click, it will display a **modal window with full screen images**.
-It's also possible to navigate between these images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
-
-Starting from version 3, you can **download images** (with either the button or with **keyboard shortcut ctrl+s / cmd+s**) or navigate to an **external url**.
-
-Version 3.1.x includes other cool features, for instance **advanced configurations** and a **click outside** feature to close the modal gallery.
-Also, version 3.2.x includes a new input to disable **infinite sliding**.
-With version 3.3.x, you can **change download keyboard's shortcuts from the root module** of your application.
-
-From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications.
-
+**angular-modal-gallery** is an Angular library to create image galleries of **clickable thumbnails**.
+After a click, it will display a **modal window with full screen images**.
+Modal view is composed by **buttons**, the **current image** and optionally, also navigation **dots** and **previews**.
+<br>
+It's also possible to navigate between these modal images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
 **angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 4**
 
-<br><br>
+
+## Features
+- Angular module to import this library
+- work with IE >= 11
+- AOT support
+- Angular >= 4 (Angular >=5 supported from version 4.0.0)
+- compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications
+- official examples with angular-cli, angular-cli + material, SystemJS and Webpack 3
+- unit testing with high coverage %
+- Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
+- image **download** with buttons or keyboard shortcuts
+- advanced **keyboard shortcuts** with `mousetrap` (both local and global)
+- fully configurable default buttons to either close, download, navigate to an external url or delete images
+- support custom buttons with both pre and after hooks
+- **click outside feature** to close the modal gallery clicking on the background
+- configurable plain gallery
+- configurable side-previews (visible only on bigger screen)
+- configurable dots navigation (visible only on bigger screen)
+- configurable previews (visible only on bigger screen)
+- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/))
+
+<br>
 
 # angular-modal-gallery 5.0.0 RC (WORK IN PROGRESS)
 
@@ -44,21 +59,35 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 
 **Please, add your ideas or help to implement some features.**
 
-<br><br>
+<br>
 
 ## **Official live DEMO + DOCUMENTATION**
 
 *Image loading could be slow, because this demo is hosted on Github pages*
 
-[CLICK HERE FOR DEMO/DOCUMENTATION](https://ks89.github.io/angular-modal-gallery.github.io/)
+[CLICK HERE FOR DEMO/DOCUMENTATION](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
 
 ## Installation
 - `npm install --save angular-modal-gallery`
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 
+From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use all default features without font-awesome. However, if you want you can change button icons with font-awesome. For more info, check the [OFFICIAL DOCUMENTATION](https://ks89.github.io/angular-modal-gallery-2018.github.io/).
+
+
+## Which version should I use?
+
+|            | angular-modal-gallery | font-awesome |
+| ---------- | :---:                 | :---:        |
+| AngularJS  | NOT SUPPORTED         |              |
+| Angular 2  | &lt;= 3.3.5           | &gt;= 4.0.0  |
+| Angular 4  | &gt;= 5.0.0           | optional     | 
+| Angular 5  | &gt;= 5.0.0           | optional     |
+| Angular 6  | &gt;= 5.0.0           | optional     |
+
 
 ## News
+- 02/24/2018 - 5.0.0-rc.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/17/2018 - 5.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/10/2018 - 5.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/24/2018 - 5.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -92,23 +121,12 @@ From version 4.x.x, angular-modal-gallery is compliant to [Angular Package Forma
 - 01/28/2017 - 2.0.0-alpha.1 - angular-modal-gallery
 
 
-## Features
-- Angular module to import this library
-- Angular component to display the image gallery
-- AOT support
-- Angular >= 4 (Angular >=5 supported from version 4.0.0)
-- Tested with Webpack 3 + Treeshaking and also inside a Lazy loaded module (check `demo/webpack`)
-- Tested with SystemJs 0.20.x and Angular-cli 1.x.x
-- Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
-- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/))
-
-
 ## How to use it?
 
 Two different ways (both of them are good):
-- using my full and runnable examples (`systemjs`, `webpack`, `angular-cli`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/demo)
-- checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
-- sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery.github.io/)
+- using my full and runnable examples (`systemjs`, `webpack`, `angular-cli`, `angular-cli-material`, `universal`) [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
+- checking small and minimal demos inside the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
+- sometimes I don't provide demos (for instance global configuration of keyboard service), so you have to check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
 
 
 ## FAQS
@@ -116,7 +134,7 @@ Two different ways (both of them are good):
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
 2. Question: **I have this error: `Error: No provider for KeyboardService`. What can I do?**<br>
-   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery.github.io/gettingStarted).
+   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/gettingStarted).
    This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
 
 
@@ -124,7 +142,7 @@ Two different ways (both of them are good):
 
 Check `CONTRIBUTING.md` in this repository
 
-Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/index.html`.
+Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
 
 
 ## A big thank you to
