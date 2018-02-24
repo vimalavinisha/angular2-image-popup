@@ -537,7 +537,6 @@ export class LazyComponent {
   }
 
   onVisibleIndex(event: ImageModalEvent) {
-    this.customFullDescription.customFullDescription = `Custom description of visible image with index= ${event.result}`;
     console.log('onVisibleIndex action: ' + Action[event.action]);
     console.log('onVisibleIndex result:' + event.result);
   }

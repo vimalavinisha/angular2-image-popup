@@ -163,8 +163,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       numberSeparator: '/',
       beforeTextDescription: ' - '
     };
-    this.configLoading = Object.assign(defaultLoading, this.loadingConfig);
-    this.description = Object.assign(defaultDescription, this.descriptionConfig);
+    this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
+    this.description = Object.assign({}, defaultDescription, this.descriptionConfig);
   }
 
   /**
@@ -252,6 +252,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
         return '';
+    }
+
+    // ----------- DescriptionStrategy.ALWAYS_VISIBLE -----------------
+
+    // If customFullDescription use it, otherwise proceed to build a description
+    if (this.description.customFullDescription && this.description.customFullDescription !== '') {
+      return this.description.customFullDescription;
     }
 
     const currentIndex: number = getIndex(image, this.images);
