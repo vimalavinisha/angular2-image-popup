@@ -1,3 +1,11 @@
+# 5.0.0-rc.3
+### Bugfixes
+- full description is working again (broken since beta releases)
+
+### Others
+- add PayPal donation button and prettier badge
+
+
 # 5.0.0-rc.2
 ### Features
 - remove REFRESH button (BREAKING CHANGE)
