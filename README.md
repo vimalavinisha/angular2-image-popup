@@ -8,6 +8,8 @@
 
 [![GitHub release](https://img.shields.io/github/release/Ks89/angular-modal-gallery.svg?style=flat-square)](https://github.com/Ks89/angular-modal-gallery)   [![GitHub (pre-)release](https://img.shields.io/github/release/Ks89/angular-modal-gallery/all.svg?style=flat-square)](https://github.com/Ks89/angular-modal-gallery)
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/stefanocappa)
+
 <br>
 
 # angular-modal-gallery
@@ -171,6 +173,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 <br/>
+
+If you like my projects you can do a free donation here [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/stefanocappa)
+
 
 ## FOSSA report
 
