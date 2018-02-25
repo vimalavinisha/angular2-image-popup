@@ -20,12 +20,12 @@
     "tsc:w": "tsc -w"
   },
   "dependencies": {
-    "@angular/common": "^5.2.4",
-    "@angular/compiler": "^5.2.4",
-    "@angular/core": "^5.2.4",
-    "@angular/platform-browser": "^5.2.4",
-    "@angular/platform-browser-dynamic": "^5.2.4",
-    "@angular/router": "^5.2.4",
+    "@angular/common": "^5.2.6",
+    "@angular/compiler": "^5.2.6",
+    "@angular/core": "^5.2.6",
+    "@angular/platform-browser": "^5.2.6",
+    "@angular/platform-browser-dynamic": "^5.2.6",
+    "@angular/router": "^5.2.6",
     "angular-modal-gallery": "^5.0.0-beta.2",
     "core-js": "^2.5.1",
     "font-awesome": "^4.6.3",

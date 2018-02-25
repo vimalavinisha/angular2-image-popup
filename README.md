@@ -63,17 +63,6 @@ It's also possible to navigate between these modal images with both **keyboard a
 
 [OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v5/)
 
-<br>
-
-# angular-modal-gallery 5.0.0 RC (WORK IN PROGRESS)
-
-**angular-modal-gallery 5.0.0 features/roadmap [HERE](https://github.com/Ks89/angular-modal-gallery/issues/80).**
-
-**The final release will be available at the end of February**
-
-**Please, add your ideas or help to implement some features.**
-
-<br>
 
 ## Installation
 - `npm install --save angular-modal-gallery`
@@ -95,7 +84,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 
 ## News
-- 02/28/2018 - 5.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 02/26/2018 - 5.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/24/2018 - 5.0.0-rc.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/24/2018 - 5.0.0-rc.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/17/2018 - 5.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

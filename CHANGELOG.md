@@ -1,3 +1,59 @@
+# 5.0.0
+### Features
+- Rewrite SCSS/CSS layout in a more powerful way with **FLEXBOX** fixing some well known bugs #98 #37 (BREAKING CHANGE)
+- Improve accessibility with ARIA #99 (BREAKING CHANGE)
+- Remove Angular 2 support (for instance replace Renderer with Renderer2) #70 (BREAKING CHANGE)
+- Update to Angular 5 #83
+- Partial support to Server-Side-Rendering (SSR) with Angular Universal (waiting for 'window' object on server side) #81 (BREAKING CHANGE)
+- Support for IE11 using navigator.mssaveblob #39
+- new class Image API (with modal and plain inner objects) (BREAKNIG CHANGE)
+- Improve modal layout with small previews and eventually also animations #48 (BREAKING CHANGE)
+- Thumbnail size/more options #91 (BREAKNIG CHANGE)
+- Completely rewrite "imagepointer feature" #49 (BREAKING CHANGE)
+- Square thumbnails are now supported #76 (BREAKING CHANGE)
+- Support configurable buttons with custom actions #79 and #92 (BREAKING CHANGE)
+- Infinite sliding will be disabled by default #84 (BREAKING CHANGE)
+- Click Outside will be enabled by default #85 (BREAKING CHANGE)
+- New image descriptions with figcaptions
+- remove Observable<Image[]> as input. I decided to switch to Image[] to simplify the sourcecode #105  (BREAKING CHANGE)
+- Remove all deprecated APIs (both showDownloadButton and showExtUrlButton)
+- prevent browser scrolling when modal gallery is opened
+
+### Performances
+- Performance improvements with trackById and OnPush (BREAKING CHANGE) (Commit 3cb56435f0426c715ca442cd1e7a6a5cc222c3b9 and #103)
+- add onpush strategy also to modal-gallery.component
+
+### Bugfixes
+- Fix a bug on Microsoft Edge Desktop #108 
+
+### Chores
+- add credits and licenses to all images, icons and so on
+- test everything on IE11, Edge, iOS, Android...and what about iPhone X?
+- add sonarcloud.io
+- release the umd bundle on a CDN like unpkg.com (update: available [HERE](https://unpkg.com/angular-modal-gallery@5.0.0-beta.1/bundles/angular-modal-gallery.umd.min.js) )
+
+### Demos
+- Update systemjs example to 5.0.0
+- Update webpack example to 5.0.0
+- Update angular-cli example to 5.0.0
+- Add new universal example to use SSR 
+- Add new angular-cli-material example with Angular Material
+- switch from plnkr.co to stackblitz.com
+- Support "https://github.com/mgechev/angular-seed" #56 (it's also working with angular-modal-gallery >= 4.0.0)
+
+### Docs
+- Add a MINIMAL migration guide from 4.x.x to 5.0.0
+- Update public documentation website to 5.0.0
+- Publish public documentation website on a private VPS (coming soon in a week)
+- Update library documentation with typedocs to 5.0.0
+- add compodoc
+
+### Internal lib changes
+- General refactoring reorganizing the structure of this project and splitting some components #42 (BREAKING CHANGE)
+- Update unit testing to 5.0.0
+- choose which are the right entry points in package.json as described by angular package format 5 specifications 
+
+
 # 5.0.0-rc.3
 ### Bugfixes
 - full description is working again (broken since beta releases)
