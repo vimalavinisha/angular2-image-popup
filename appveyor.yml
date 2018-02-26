@@ -144,6 +144,9 @@ build_script:
   - cd examples/angular-cli
   - npm install
   - cd ../..
+  - cd examples/angular-cli-material
+  - npm install
+  - cd ../..
   - cd examples/universal
   - npm install
   - cd ../..
@@ -154,32 +157,28 @@ build_script:
   # build main angular-cli with ng-packagr
   - npm run build:main:dev
   - npm run build:main:prod
-  - npm run test:ci
   # build official webpack example
   - cd examples/webpack
   - npm run build:dev
   - npm run build:prod
   - npm run build:prod:aot
-  - npm test
   - cd ../..
   # build official angular-cli example
   - cd examples/angular-cli
   - npm run build:dev
   - npm run build:prod
-  - npm run test:ci
   - cd ../..
-#  # build official angular-cli-material example
-#  - cd examples/angular-cli-material
-#  - npm run build:dev
-#  - npm run build:prod
-#  - cd ../..
+  # build official angular-cli-material example
+  - cd examples/angular-cli-material
+  - npm run build:dev
+  - npm run build:prod
+  - cd ../..
   # build official universal example
   - cd examples/universal
   - npm run build:dev
   - npm run build:prod
   - npm run build:ssr
   - npm run build:prerender
-#  - npm test
   - cd ../..
 
 
