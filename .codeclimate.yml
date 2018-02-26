@@ -52,4 +52,4 @@ exclude_paths:
 - "/reports/"
 - "**/*.log"
 - "**/e2e/"
-- "/**/*.spec.ts"
+- "**/*.spec.ts"
