@@ -2,6 +2,10 @@
 
 echo "Before script - OS is $TRAVIS_OS_NAME"
 
+echo "Apply this temporary fix https://github.com/travis-ci/travis-ci/issues/9024"
+sudo chown root /opt/google/chrome/chrome-sandbox
+sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+
 # update webdriver (like npm run webdriver:update)
 node ./node_modules/protractor/bin/webdriver-manager update
 # rebuild again node-sass
