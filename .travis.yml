@@ -5,9 +5,12 @@ node_js:
 
 os:
   - linux
-#  - osx
 dist: trusty # to use Ubuntu 14.04
-#osx_image: xcode8.3 # to use macOS Sierra 10.12
+
+# temporary fix to prevent an issue related to chrome headless. I should restore this to false as soon as possibile.
+# also I should remove these 2 commands from before_script
+# 1. sudo chown root /opt/google/chrome/chrome-sandbox
+# 2. sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 sudo: true
 
 git:

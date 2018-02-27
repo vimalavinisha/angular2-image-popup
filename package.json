@@ -107,7 +107,7 @@
   "devDependencies": {
     "@angular-devkit/core": "^0.4.2",
     "@angular-devkit/schematics": "^0.4.2",
-    "@angular/cli": "file:.angular_cli165.tgz",
+    "@angular/cli": "^1.7.1",
     "@angular/compiler-cli": "^5.2.6",
     "@angular/language-service": "^5.2.6",
     "@compodoc/compodoc": "^1.0.6",
