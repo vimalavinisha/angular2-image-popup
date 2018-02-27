@@ -33,7 +33,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 
 ## Features
 - Angular module to import this library
-- work with IE >= 11
+- works with IE >= 11
 - AOT support
 - Angular >= 4 (Angular >=5 supported from version 4.0.0)
 - compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications
