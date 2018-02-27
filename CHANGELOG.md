@@ -1,3 +1,11 @@
+# 5.0.1
+### Fix
+- I forgot to publish README.md on npmjs :)
+
+### Chores
+- update to 5.0.1 final in all examples
+
+
 # 5.0.0
 ### Features
 - Rewrite SCSS/CSS layout in a more powerful way with **FLEXBOX** fixing some well known bugs #98 #37 (BREAKING CHANGE)

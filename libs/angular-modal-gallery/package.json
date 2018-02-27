@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "angular-modal-gallery",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "ngPackage": {
     "lib": {
       "entryFile": "index.ts"
@@ -15,7 +15,7 @@
     "node": ">=9.3.0",
     "npm": ">=5.6.0"
   },
-  "homepage": "https://ks89.github.io/angular-modal-gallery.github.io",
+  "homepage": "https://ks89.github.io/angular-modal-gallery-2018.github.io/",
   "peerDependencies": {
     "@angular/common": ">=4.0.0",
     "@angular/core": ">=4.0.0",
