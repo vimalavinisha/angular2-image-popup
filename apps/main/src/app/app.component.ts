@@ -104,7 +104,7 @@ export class AppComponent {
       2,
       {
         img: '../assets/images/gallery/img3.jpg',
-        description: 'Description 3',
+        description: '<ul><li>Description</li><li><i>3</i></li></ul>',
         extUrl: 'http://www.google.com'
       },
       {

@@ -1,3 +1,8 @@
+# 5.1.0
+### Features
+- support html image description (requested by @ckelkar) #123
+
+
 # 5.0.1
 ### Fix
 - I forgot to publish README.md on npmjs :)
