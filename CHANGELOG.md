@@ -1,4 +1,4 @@
-# 5.1.0
+# 5.1.0-beta.1
 ### Features
 - support html image description (requested by @ckelkar) #123
 
