@@ -1,35 +1,10 @@
-/*
- The MIT License (MIT)
-
- Copyright (c) 2017-2018 Stefano Cappa (Ks89)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
-
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import { renderModuleFactory } from '@angular/platform-server';
-import { enableProdMode } from '@angular/core';
+import {enableProdMode} from '@angular/core';
 
 import * as express from 'express';
-import { join } from 'path';
-import { readFileSync } from 'fs';
+import {join} from 'path';
+import {readFileSync} from 'fs';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -43,51 +18,21 @@ const DIST_FOLDER = join(process.cwd(), 'dist');
 // Our index.html we'll use as our template
 const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
 
-// ----------------------------------------------
-// ----------------------------------------------
-// workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
-const domino = require('domino');
-const win = domino.createWindow(template);
-global['window'] = win;
-global['document'] = win.document;
-global['DOMTokenList'] = win.DOMTokenList;
-global['Node'] = win.Node;
-global['Text'] = win.Text;
-global['HTMLElement'] = win.HTMLElement;
-global['navigator'] = win.navigator;
-global['MutationObserver'] = getMockMutationObserver();
-
-function getMockMutationObserver() {
-  return class {
-    observe(node, options) {
-    }
-    disconnect() {
-    }
-    takeRecords() {
-      return [];
-    }
-  };
-}
-// ----------------------------------------------
-// ----------------------------------------------
-
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
+const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main.bundle');
 
 // Express Engine
-import { ngExpressEngine } from '@nguniversal/express-engine';
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import {ngExpressEngine} from '@nguniversal/express-engine';
 // Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-app.engine(
-  'html',
-  ngExpressEngine({
-    bootstrap: AppServerModuleNgFactory,
-    providers: [provideModuleMap(LAZY_MODULE_MAP)]
-  })
-);
+app.engine('html', ngExpressEngine({
+  bootstrap: AppServerModuleNgFactory,
+  providers: [
+    provideModuleMap(LAZY_MODULE_MAP)
+  ]
+}));
 
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
@@ -97,54 +42,13 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 */
 
 // Server static files from /browser
-app.get(
-  '*.*',
-  express.static(join(DIST_FOLDER, 'browser'), {
-    maxAge: '1y'
-  })
-);
+app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
+  maxAge: '1y'
+}));
 
 // ALl regular routes use the Universal engine
 app.get('*', (req, res) => {
-  // ---------------------------------------------------
-  // part of the workaround found here https://github.com/angular/universal/issues/830#issuecomment-345228799
-  global['navigator'] = req['headers']['user-agent'];
-  // ---------------------------------------------------
-
-  const http = req.headers['x-forwarded-proto'] === undefined ? 'http' : req.headers['x-forwarded-proto'];
-
-
-  // res.render('index', { req });
-
-  // tslint:disable-next-line:no-console
-  console.time(`GET: ${req.originalUrl}`);
-  res.render(
-    'index',
-    {
-      req: req,
-      res: res,
-      providers: [
-        {
-          provide: REQUEST, useValue: (req)
-        },
-        {
-          provide: RESPONSE, useValue: (res)
-        },
-        {
-          provide: 'ORIGIN_URL',
-          useValue: (`${http}://${req.headers.host}`)
-        }
-      ]
-    },
-    (err, html) => {
-      if (!!err) {
-        throw err;
-      }
-
-      // tslint:disable-next-line:no-console
-      console.timeEnd(`GET: ${req.originalUrl}`);
-      res.send(html);
-    });
+  res.render('index', { req });
 });
 
 // Start up the Node server
