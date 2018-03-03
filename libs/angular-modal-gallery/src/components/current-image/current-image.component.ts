@@ -115,6 +115,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   clickAction: Action = Action.CLICK;
   /**
+   * Enum of type `Action` that represents a keyboard action.
+   * Declared here to be used inside the template.
+   */
+  keyboardAction: Action = Action.KEYBOARD;
+  /**
    * Boolean that it's true when you are watching the first image (currently visible).
    * False by default
    */

@@ -22,7 +22,7 @@
            [title]="leftPreview.modal.title ? leftPreview.modal.title : getDescriptionToDisplay(leftPreview)"
            alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
            [tabindex]="0" role="img"
-           (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, clickAction)"/>
+           (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)"/>
       <ng-template #firstImage>
         <div class="current-image-previous hidden"
              ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"></div>
@@ -38,7 +38,7 @@
          alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
          [tabindex]="0" role="img"
          (load)="onImageLoad($event)"
-         (click)="onImageEvent($event, clickAction)" (keyup)="onImageEvent($event, clickAction)"
+         (click)="onImageEvent($event, clickAction)" (keyup)="onImageEvent($event, keyboardAction)"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
     <figcaption *ngIf="getDescriptionToDisplay() !== ''" class="inside description" [innerHTML]="getDescriptionToDisplay()"></figcaption>
@@ -56,7 +56,7 @@
            [title]="rightPreview.modal.title ? rightPreview.modal.title : getDescriptionToDisplay(rightPreview)"
            alt="{{rightPreview.modal.alt ? rightPreview.modal.alt : getAltDescriptionByImage(rightPreview)}}"
            [tabindex]="0" role="img"
-           (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, clickAction)"/>
+           (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)"/>
       <ng-template #lastImage>
         <div class="current-image-next hidden"
              ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}">
