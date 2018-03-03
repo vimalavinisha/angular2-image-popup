@@ -2,6 +2,8 @@
 ### Features
 - support html image description (requested by @ckelkar) #123
 
+### Bugfixes
+- 
 
 # 5.0.1
 ### Fix
