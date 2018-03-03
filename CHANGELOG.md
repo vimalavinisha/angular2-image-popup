@@ -1,9 +1,12 @@
+# 5.1.0-beta.2
+### Bugfixes
+- pass keyboardAction instead of clickAction for keyup event in current-image.component
+
+
 # 5.1.0-beta.1
 ### Features
 - support html image description (requested by @ckelkar) #123
 
-### Bugfixes
-- 
 
 # 5.0.1
 ### Fix
