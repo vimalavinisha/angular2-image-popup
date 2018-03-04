@@ -262,17 +262,6 @@ export class AppComponent {
     visible: false
   };
 
-  previewConfig: PreviewConfig = {
-    visible: false,
-    number: 3,
-    arrows: true,
-    clickable: true,
-    size: {
-      width: '70px',
-      height: '70px'
-    }
-  };
-
   customDescription: Description = {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
     imageText: 'Look this image ',
@@ -387,7 +376,7 @@ export class AppComponent {
     ]
   };
 
-  previewConfigFiveImages: PreviewConfig = {
+  previewConfigOneImage: PreviewConfig = {
     visible: true,
     number: 1
   };
