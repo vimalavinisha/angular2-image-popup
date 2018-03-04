@@ -1,3 +1,8 @@
+# 5.2.0-beta.1
+### Features
+- window on server side is undefined => add a workaround to fully support SSR #125
+
+
 # 5.1.0
 ### Features
 - support html image description (requested by @ckelkar) #123

@@ -49,6 +49,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
+- Server Side Rendering support with angular-universal (from version 5.2.0)
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/))
 
 
@@ -84,6 +85,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 
 ## News
+- 03/05/2018 - 5.2.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/04/2018 - 5.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/04/2018 - 5.1.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/01/2018 - 5.1.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

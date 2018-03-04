@@ -23,7 +23,11 @@
  */
 
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import 'mousetrap';
+
+// To prevent issues with angular-universal on server-side
+if (typeof window !== 'undefined') {
+  require('mousetrap');
+}
 
 import { KeyboardServiceConfig } from '../model/keyboard-service-config.interface';
 
@@ -49,7 +53,11 @@ export class KeyboardService {
    */
   constructor(@Inject(KEYBOARD_CONFIGURATION) private config: KeyboardServiceConfig) {
     this.shortcuts = this.config && this.config.shortcuts ? this.config.shortcuts : ['ctrl+s', 'meta+s'];
-    this.mousetrap = new (<any>Mousetrap)();
+
+    // To prevent issues with angular-universal on server-side
+    if (typeof window !== 'undefined') {
+      this.mousetrap = new (<any>Mousetrap)();
+    }
   }
 
   /**
@@ -57,15 +65,18 @@ export class KeyboardService {
    * @param {(e: ExtendedKeyboardEvent, combo: string) => any} onBind callback function to add shortcuts
    */
   add(onBind: (e: ExtendedKeyboardEvent, combo: string) => any) {
-    this.mousetrap.bind(this.shortcuts, (event: KeyboardEvent, combo: string) => {
-      if (event.preventDefault) {
-        event.preventDefault();
-      } else {
-        // internet explorer
-        event.returnValue = false;
-      }
-      onBind(event, combo);
-    });
+    // To prevent issues with angular-universal on server-side
+    if (typeof window !== 'undefined') {
+      this.mousetrap.bind(this.shortcuts, (event: KeyboardEvent, combo: string) => {
+        if (event.preventDefault) {
+          event.preventDefault();
+        } else {
+          // internet explorer
+          event.returnValue = false;
+        }
+        onBind(event, combo);
+      });
+    }
   }
 
   /**
@@ -73,6 +84,9 @@ export class KeyboardService {
    * to free resources ad prevent leaks.
    */
   reset() {
-    this.mousetrap.reset();
+    // To prevent issues with angular-universal on server-side
+    if (typeof window !== 'undefined') {
+      this.mousetrap.reset();
+    }
   }
 }
