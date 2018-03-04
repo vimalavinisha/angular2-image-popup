@@ -137,6 +137,37 @@ export class HomeComponent {
     )
   ];
 
+  imagesHtmlDescriptions: Image[] = [
+    new Image(0, {
+      img: '../assets/images/gallery/img1.jpg',
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(1, {
+      img: '../assets/images/gallery/img2.jpg',
+      description: '<ol><li>This is</li><li>the description</li><li>number</li><li>2</li></ol>'
+    }),
+    new Image(
+      2,
+      {
+        img: '../assets/images/gallery/img3.jpg',
+        description: '<ul><li>Description</li><li><i>3</i></li></ul>',
+        extUrl: 'http://www.google.com'
+      },
+      {
+        img: '../assets/images/gallery/thumbs/img3.png',
+        title: 'custom title 2',
+        alt: 'custom alt 2',
+        ariaLabel: 'arial label 2'
+      }
+    ),
+    new Image(3, {
+      img: '../assets/images/gallery/img4.jpg',
+      description: 'Description 4',
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
+  ];
+
   imagesRect: Image[] = [
     new Image(
       0,
