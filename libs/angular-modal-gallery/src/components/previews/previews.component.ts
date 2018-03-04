@@ -120,6 +120,11 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   ngOnInit() {
     this.configPreview = Object.assign({}, this.defaultPreviewConfig, this.previewConfig);
 
+    // if number is <= 0 reset to default
+    if (this.configPreview.number <= 0) {
+      this.configPreview.number = this.defaultPreviewConfig.number;
+    }
+
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);
   }
