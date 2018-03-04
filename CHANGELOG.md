@@ -1,3 +1,8 @@
+# 5.2.1
+### Bugfixes
+- If previews aren’t clickable, I should show a not-allowed mouse cursor
+
+
 # 5.2.0
 ### Features
 - window on server side is undefined => add a workaround to fully support SSR #125
