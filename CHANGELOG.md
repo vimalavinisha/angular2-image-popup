@@ -1,3 +1,8 @@
+# 5.2.2
+### Bugfixes
+- If I set previewsConfig.number with a value <= 0, I should restore the default number (=3)
+
+
 # 5.2.1
 ### Bugfixes
 - If previews aren’t clickable, I should show a not-allowed mouse cursor
