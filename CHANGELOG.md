@@ -1,3 +1,11 @@
+# 5.2.0
+### Features
+- window on server side is undefined => add a workaround to fully support SSR #125
+
+### Bugfixes
+- update all examples with both before and after hooks in example B20 with font-awesome as requested by @matiishyn in #92
+
+
 # 5.2.0-beta.1
 ### Features
 - window on server side is undefined => add a workaround to fully support SSR #125

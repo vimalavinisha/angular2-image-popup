@@ -283,7 +283,9 @@
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
-                    [buttonsConfig]="customButtonsConfig"></ks-modal-gallery>
+                    [buttonsConfig]="customButtonsConfig"
+                    (buttonBeforeHook)="onCustomButtonBeforeHook($event)"
+                    (buttonAfterHook)="onCustomButtonAfterHook($event)"></ks-modal-gallery>
 </section>
 <br>
 <hr>

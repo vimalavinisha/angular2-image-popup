@@ -559,6 +559,23 @@ export class AppComponent {
     // will be really closed.
   }
 
+  onCustomButtonBeforeHook(event: ButtonEvent) {
+    console.log('onCustomButtonBeforeHook ', event);
+    if (!event || !event.button) {
+      return;
+    }
+    // Invoked after a click on a button, but before that the related
+    // action is applied.
+  }
+
+  onCustomButtonAfterHook(event: ButtonEvent) {
+    console.log('onCustomButtonAfterHook ', event);
+    if (!event || !event.button) {
+      return;
+    }
+    // Invoked after both a click on a button and its related action.
+  }
+
   onImageLoaded(event: ImageModalEvent) {
     // angular-modal-gallery will emit this event if it will load successfully input images
     console.log('onImageLoaded action: ' + Action[event.action]);
