@@ -22,7 +22,7 @@
 
 <br>
 
-**angular-modal-gallery** is an Angular library to create image galleries of **clickable thumbnails**.
+**angular-modal-gallery** is an Angular library (SSR compatible) to create image galleries of **clickable thumbnails**.
 After a click, it will display a **modal window with full screen images**.
 Modal view is composed by **buttons**, the **current image** and optionally, also navigation **dots** and **previews**.
 <br>
@@ -40,7 +40,8 @@ It's also possible to navigate between these modal images with both **keyboard a
 - Angular >= 4 (Angular >=5 supported from version 4.0.0)
 - compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `Webpack` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
-- unit testing with high coverage %
+- unit testing with high % coverage
+- **Server Side Rendering** support with angular-universal (from version 5.2.0)
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
 - image **download** with buttons or keyboard shortcuts
 - advanced **keyboard shortcuts** with `mousetrap` (both local and global)
@@ -51,7 +52,6 @@ It's also possible to navigate between these modal images with both **keyboard a
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
-- Server Side Rendering support with angular-universal (from version 5.2.0)
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/))
 
 
@@ -87,7 +87,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 
 ## News
-- 03/??/2018 - 5.2.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 03/08/2018 - 5.2.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/05/2018 - 5.2.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/04/2018 - 5.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/04/2018 - 5.1.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
