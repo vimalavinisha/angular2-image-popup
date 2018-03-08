@@ -10,6 +10,8 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/stefanocappa)
 
+*Do you like angular-modal-gallery? Please, add a 'star' to support this library*
+
 <br>
 
 # angular-modal-gallery
