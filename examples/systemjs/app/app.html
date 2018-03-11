@@ -279,11 +279,11 @@
                     [buttonsConfig]="customButtonsConfigExtUrlNewTab"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B20 - Simple demo - buttons config CUSTOM strategy with font-awesome</h3>
+  <h3>B20 - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome 5</a></h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
-                    [buttonsConfig]="customButtonsConfig"
+                    [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (buttonBeforeHook)="onCustomButtonBeforeHook($event)"
                     (buttonAfterHook)="onCustomButtonAfterHook($event)"></ks-modal-gallery>
 </section>
@@ -332,7 +332,7 @@
   <h3>C7 - Advanced demo - preview custom configuration with 1 image (clickable)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
-                    [previewConfig]="previewConfigFiveImages"></ks-modal-gallery>
+                    [previewConfig]="previewConfigOneImage"></ks-modal-gallery>
 </section>
 <section>
   <h3>C8 - Advanced demo - preview custom configuration without arrows (clickable)</h3>
@@ -405,3 +405,4 @@
       href="https://codepen.io/martinvd/pen/xbQJom">martinvd example on codepen.io</a></li>
   </ul>
 </section>
+

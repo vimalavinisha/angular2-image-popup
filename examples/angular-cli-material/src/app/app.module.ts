@@ -28,11 +28,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
 import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap`)
 import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
+
+// ************************ optional font-awesome 5 ************************
+// to install use both `npm i --save @fortawesome/fontawesome` and `npm i --save @fortawesome/fontawesome-free-solid`
+import { faExternalLinkAlt, faPlus, faTimes, faDownload } from '@fortawesome/fontawesome-free-solid';
+import * as fontawesome from '@fortawesome/fontawesome';
+fontawesome.library.add(faExternalLinkAlt, faPlus, faTimes, faDownload);
+// *************************************************************************
 
 import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
 

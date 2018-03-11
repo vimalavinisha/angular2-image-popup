@@ -93,25 +93,21 @@ export class HomeComponent {
 
   images: Image[] = [
     new Image(0, {
-      // modal
       img: '../assets/images/gallery/img1.jpg',
       extUrl: 'http://www.google.com'
     }),
     new Image(1, {
-      // modal
-      img: '../assets/images/gallery/img2.png',
+      img: '../assets/images/gallery/img2.jpg',
       description: 'Description 2'
     }),
     new Image(
       2,
       {
-        // modal
         img: '../assets/images/gallery/img3.jpg',
         description: 'Description 3',
         extUrl: 'http://www.google.com'
       },
       {
-        // plain
         img: '../assets/images/gallery/thumbs/img3.png',
         title: 'custom title 2',
         alt: 'custom alt 2',
@@ -119,22 +115,11 @@ export class HomeComponent {
       }
     ),
     new Image(3, {
-      // modal
       img: '../assets/images/gallery/img4.jpg',
       description: 'Description 4',
       extUrl: 'http://www.google.com'
     }),
-    new Image(
-      4,
-      {
-        // modal
-        img: '../assets/images/gallery/img5.jpg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/img5.jpg'
-      }
-    )
+    new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
 
   imagesHtmlDescriptions: Image[] = [
@@ -172,35 +157,19 @@ export class HomeComponent {
     new Image(
       0,
       {
-        // modal
         img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
         description: 'Description 1'
       },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg'
-      }
+      { img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg' }
     ),
-    new Image(
-      1,
-      {
-        // modal
-        img: '../assets/images/gallery/pexels-photo-47223.jpeg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg'
-      }
-    ),
+    new Image(1, { img: '../assets/images/gallery/pexels-photo-47223.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg' }),
     new Image(
       2,
       {
-        // modal
         img: '../assets/images/gallery/pexels-photo-52062.jpeg',
         description: 'Description 3'
       },
       {
-        // plain
         img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
         description: 'Description 3'
       }
@@ -208,77 +177,46 @@ export class HomeComponent {
     new Image(
       3,
       {
-        // modal
         img: '../assets/images/gallery/pexels-photo-66943.jpeg',
         description: 'Description 4'
       },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg'
-      }
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg' }
     ),
-    new Image(
-      4,
-      {
-        // modal
-        img: '../assets/images/gallery/pexels-photo-93750.jpeg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg'
-      }
-    ),
+    new Image(4, { img: '../assets/images/gallery/pexels-photo-93750.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg' }),
     new Image(
       5,
       {
-        // modal
         img: '../assets/images/gallery/pexels-photo-94420.jpeg',
         description: 'Description 6'
       },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg'
-      }
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg' }
     ),
-    new Image(
-      6,
-      {
-        // modal
-        img: '../assets/images/gallery/pexels-photo-96947.jpeg'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg'
-      }
-    )
+    new Image(6, { img: '../assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
 
   imagesMixedSizes: Image[] = [
     new Image(0, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-135230.png',
       description: 'Description 1'
     }),
     new Image(1, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-547115.jpeg'
     }),
     new Image(2, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-556664.jpeg',
       description: 'Description 3'
     }),
     new Image(3, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-787594.jpeg',
       description: 'Description 4'
     }),
     new Image(4, {
-      // modal
       img: '../assets/images/gallery/pexels-photo-803105.jpeg'
     })
   ];
 
+  // example of images with small previews (they are different files) to show
+  // loading spinners
   imagesForLoadingSpinner: Image[] = [
     new Image(
       0,
@@ -322,17 +260,6 @@ export class HomeComponent {
 
   dotsConfig: DotsConfig = {
     visible: false
-  };
-
-  previewConfig: PreviewConfig = {
-    visible: false,
-    number: 3,
-    arrows: true,
-    clickable: true,
-    size: {
-      width: '70px',
-      height: '70px'
-    }
   };
 
   customDescription: Description = {
@@ -414,33 +341,33 @@ export class HomeComponent {
     ]
   };
 
-  customButtonsConfig: ButtonsConfig = {
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {
-        className: 'fa fa-plus white',
+        className: 'fas fa-plus white',
         type: ButtonType.CUSTOM,
         ariaLabel: 'custom plus aria label',
         title: 'custom plus title',
         fontSize: '20px'
       },
       {
-        className: 'fa fa-close white',
+        className: 'fas fa-times white',
         type: ButtonType.CLOSE,
         ariaLabel: 'custom close aria label',
         title: 'custom close title',
         fontSize: '20px'
       },
       {
-        className: 'fa fa-download white',
+        className: 'fas fa-download white',
         type: ButtonType.DOWNLOAD,
         ariaLabel: 'custom download aria label',
         title: 'custom download title',
         fontSize: '20px'
       },
       {
-        className: 'fa fa-external-link white',
+        className: 'fas fa-external-link-alt white',
         type: ButtonType.EXTURL,
         ariaLabel: 'custom exturl aria label',
         title: 'custom exturl title',
@@ -449,7 +376,7 @@ export class HomeComponent {
     ]
   };
 
-  previewConfigFiveImages: PreviewConfig = {
+  previewConfigOneImage: PreviewConfig = {
     visible: true,
     number: 1
   };
@@ -557,6 +484,23 @@ export class HomeComponent {
     // For instance: this method will be invoked after a click
     // of 'close' button, but before that the modal gallery
     // will be really closed.
+  }
+
+  onCustomButtonBeforeHook(event: ButtonEvent) {
+    console.log('onCustomButtonBeforeHook ', event);
+    if (!event || !event.button) {
+      return;
+    }
+    // Invoked after a click on a button, but before that the related
+    // action is applied.
+  }
+
+  onCustomButtonAfterHook(event: ButtonEvent) {
+    console.log('onCustomButtonAfterHook ', event);
+    if (!event || !event.button) {
+      return;
+    }
+    // Invoked after both a click on a button and its related action.
   }
 
   onImageLoaded(event: ImageModalEvent) {

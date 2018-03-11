@@ -341,33 +341,33 @@ export class AppComponent {
     ]
   };
 
-  customButtonsConfig: ButtonsConfig = {
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
       {
-        className: 'fa fa-plus white',
+        className: 'fas fa-plus white',
         type: ButtonType.CUSTOM,
         ariaLabel: 'custom plus aria label',
         title: 'custom plus title',
         fontSize: '20px'
       },
       {
-        className: 'fa fa-close white',
+        className: 'fas fa-times white',
         type: ButtonType.CLOSE,
         ariaLabel: 'custom close aria label',
         title: 'custom close title',
         fontSize: '20px'
       },
       {
-        className: 'fa fa-download white',
+        className: 'fas fa-download white',
         type: ButtonType.DOWNLOAD,
         ariaLabel: 'custom download aria label',
         title: 'custom download title',
         fontSize: '20px'
       },
       {
-        className: 'fa fa-external-link white',
+        className: 'fas fa-external-link-alt white',
         type: ButtonType.EXTURL,
         ariaLabel: 'custom exturl aria label',
         title: 'custom exturl title',

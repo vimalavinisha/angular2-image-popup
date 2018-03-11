@@ -29,6 +29,7 @@
     '@angular': 'node_modules/@angular',
     rxjs: 'node_modules/rxjs',
     'angular-modal-gallery': 'node_modules/angular-modal-gallery/bundles',
+    '@fortawesome': 'node_modules/@fortawesome',
     hammerjs: 'node_modules/hammerjs',
     mousetrap: 'node_modules/mousetrap'
   };
@@ -53,6 +54,14 @@
   let setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
   // Add package entries for angular packages
   ngPackageNames.forEach(setPackageConfig);
+
+  let fontAwesomePackageNames = ['fontawesome', 'fontawesome-free-solid'];
+  //add fortawesome/font-awesome 5
+  function packFontAwesomeIndex(pkgName) {
+    packages['@fortawesome/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
+  }
+  fontAwesomePackageNames.forEach(packFontAwesomeIndex);
+
   let config = {
     transpiler: 'ts',
     map: map,

@@ -1,3 +1,12 @@
+# 5.3.0
+### Features
+- official support @fortawesome/fontawesome 5
+
+### Demos
+- force AOT builds in all examples based on angular-cli also for `npm start`
+- replace font-awesome 4.7.0 with fontawesome 5 in all examples (expect for webpack)
+
+
 # 5.2.2
 ### Bugfixes
 - If I set previewsConfig.number with a value <= 0, I should restore the default number (=3)

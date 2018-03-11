@@ -56,8 +56,18 @@ export class ClickOutsideDirective {
       return;
     }
 
-    const isInside = targetElement.className && targetElement.className.startsWith('inside');
-    const isHidden = targetElement.className.includes('hidden');
+    let isInside = false;
+    let isHidden = false;
+
+    if (typeof targetElement.className !== 'string') {
+      // it happens with @fortawesome/fontawesome 5
+      // for some reasons className is an object with 2 empty properties inside
+      isInside = true;
+    } else {
+      // in normal scenarios, use classname, because it's a simple string
+      isInside = targetElement.className && targetElement.className.startsWith('inside');
+      isHidden = targetElement.className.includes('hidden');
+    }
 
     // if inside => don't close modal gallery
     // if hidden => close modal gallery
