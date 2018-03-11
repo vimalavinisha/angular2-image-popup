@@ -5,6 +5,7 @@
 ### Demos
 - force AOT builds in all examples based on angular-cli also for `npm start`
 - replace font-awesome 4.7.0 with fontawesome 5 in all examples (expect for webpack)
+- update all examples based on the main demo
 
 
 # 5.2.2
