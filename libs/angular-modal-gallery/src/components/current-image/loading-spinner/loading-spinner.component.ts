@@ -36,7 +36,10 @@ import { LoadingConfig, LoadingType } from '../../../model/loading-config.interf
     'style-loading-spinner-standard.css',
     'style-loading-spinner-dots.css',
     'style-loading-spinner-bars.css',
-    'style-loading-spinner-circular.css'
+    'style-loading-spinner-circular.css',
+    'style-loading-spinner-cube-flipping.css',
+    'style-loading-spinner-circles.css',
+    'style-loading-spinner-explosing-squares.scss'
   ],
   templateUrl: 'loading-spinner.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -73,4 +76,19 @@ export class LoadingSpinnerComponent {
    * Declared here to be used inside the template.
    */
   loadingDots: LoadingType = LoadingType.DOTS;
+  /**
+   * Enum of type `LoadingType` to choose the cube flipping loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingCubeFlipping: LoadingType = LoadingType.CUBE_FLIPPING;
+  /**
+   * Enum of type `LoadingType` to choose the circles loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingCircles: LoadingType = LoadingType.CIRCLES;
+  /**
+   * Enum of type `LoadingType` to choose the explosing squares loading spinner.
+   * Declared here to be used inside the template.
+   */
+  loadingExplosingSquares: LoadingType = LoadingType.EXPLOSING_SQUARES;
 }

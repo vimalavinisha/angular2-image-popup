@@ -37,5 +37,8 @@ export enum LoadingType {
   STANDARD = 1,
   CIRCULAR,
   BARS,
-  DOTS
+  DOTS,
+  CUBE_FLIPPING,
+  CIRCLES,
+  EXPLOSING_SQUARES
 }

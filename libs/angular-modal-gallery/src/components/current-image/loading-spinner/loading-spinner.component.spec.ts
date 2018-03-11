@@ -37,7 +37,10 @@ const VISIBLE_CONFIG: LoadingConfig[] = [
   {enable: true, type: LoadingType.STANDARD},
   {enable: true, type: LoadingType.BARS},
   {enable: true, type: LoadingType.CIRCULAR},
-  {enable: true, type: LoadingType.DOTS}
+  {enable: true, type: LoadingType.DOTS},
+  {enable: true, type: LoadingType.CUBE_FLIPPING},
+  {enable: true, type: LoadingType.CIRCLES},
+  {enable: true, type: LoadingType.EXPLOSING_SQUARES}
 ];
 
 function initTestBed() {
@@ -102,6 +105,39 @@ describe('LoadingSpinnerComponent', () => {
             expect(barsSpinner).not.toBeUndefined();
             expect(barsSpinner.name).toBe('div');
             break;
+          case LoadingType.CUBE_FLIPPING:
+            const cubeFlippingSpinner: DebugElement = element.query(By.css('div.cube-wrapper'));
+            expect(cubeFlippingSpinner).not.toBeUndefined();
+            expect(cubeFlippingSpinner.name).toBe('div');
+            const cssCubeFolding: DebugElement = element.query(By.css('div.cube-wrapper > div.cube-folding'));
+            expect(cssCubeFolding).not.toBeUndefined();
+            expect(cssCubeFolding.name).toBe('div');
+            const cssLeaf1: DebugElement = element.query(By.css('div.cube-wrapper > div.cube-folding >.leaf1'));
+            expect(cssLeaf1).not.toBeUndefined();
+            expect(cssLeaf1.name).toBe('span');
+            const cssLeaf2: DebugElement = element.query(By.css('div.cube-wrapper > div.cube-folding >.leaf2'));
+            expect(cssLeaf2).not.toBeUndefined();
+            expect(cssLeaf2.name).toBe('span');
+            const cssLeaf3: DebugElement = element.query(By.css('div.cube-wrapper> div.cube-folding >.leaf3'));
+            expect(cssLeaf3).not.toBeUndefined();
+            expect(cssLeaf3.name).toBe('span');
+            break;
+          case LoadingType.CIRCLES:
+            const circlesSpinner: DebugElement = element.query(By.css('#preloader'));
+            expect(circlesSpinner).not.toBeUndefined();
+            expect(circlesSpinner.name).toBe('div');
+            const cssLoader: DebugElement = element.query(By.css('#loader'));
+            expect(cssLoader).not.toBeUndefined();
+            expect(cssLoader.name).toBe('div');
+            break;
+          case LoadingType.EXPLOSING_SQUARES:
+            const explosingSquaresSpinner: DebugElement = element.query(By.css('div.loader'));
+            expect(explosingSquaresSpinner).not.toBeUndefined();
+            expect(explosingSquaresSpinner.name).toBe('div');
+            explosingSquaresSpinner.children.forEach((el: DebugElement) => {
+              expect(el.name).toBe('span');
+            });
+            break;
         }
       });
     });
@@ -148,6 +184,39 @@ describe('LoadingSpinnerComponent', () => {
             const barsSpinner: DebugElement = element.query(By.css('div.loader-bars'));
             expect(barsSpinner).not.toBeUndefined();
             expect(barsSpinner.name).toBe('div');
+            break;
+          case LoadingType.CUBE_FLIPPING:
+            const cubeFlippingSpinner: DebugElement = element.query(By.css('div.cube-wrapper'));
+            expect(cubeFlippingSpinner).not.toBeUndefined();
+            expect(cubeFlippingSpinner.name).toBe('div');
+            const cssCubeFolding: DebugElement = element.query(By.css('div.cube-wrapper > div.cube-folding'));
+            expect(cssCubeFolding).not.toBeUndefined();
+            expect(cssCubeFolding.name).toBe('div');
+            const cssLeaf1: DebugElement = element.query(By.css('div.cube-wrapper > div.cube-folding >.leaf1'));
+            expect(cssLeaf1).not.toBeUndefined();
+            expect(cssLeaf1.name).toBe('span');
+            const cssLeaf2: DebugElement = element.query(By.css('div.cube-wrapper > div.cube-folding >.leaf2'));
+            expect(cssLeaf2).not.toBeUndefined();
+            expect(cssLeaf2.name).toBe('span');
+            const cssLeaf3: DebugElement = element.query(By.css('div.cube-wrapper> div.cube-folding >.leaf3'));
+            expect(cssLeaf3).not.toBeUndefined();
+            expect(cssLeaf3.name).toBe('span');
+            break;
+          case LoadingType.CIRCLES:
+            const circlesSpinner: DebugElement = element.query(By.css('#preloader'));
+            expect(circlesSpinner).not.toBeUndefined();
+            expect(circlesSpinner.name).toBe('div');
+            const cssLoader: DebugElement = element.query(By.css('#loader'));
+            expect(cssLoader).not.toBeUndefined();
+            expect(cssLoader.name).toBe('div');
+            break;
+          case LoadingType.EXPLOSING_SQUARES:
+            const explosingSquaresSpinner: DebugElement = element.query(By.css('div.loader'));
+            expect(explosingSquaresSpinner).not.toBeUndefined();
+            expect(explosingSquaresSpinner.name).toBe('div');
+            explosingSquaresSpinner.children.forEach((el: DebugElement) => {
+              expect(el.name).toBe('span');
+            });
             break;
         }
       });
