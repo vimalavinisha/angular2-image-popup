@@ -41,6 +41,8 @@ export { Size } from './src/model/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './src/model/buttons-config.interface';
 
+export { GalleryService } from './src/services/gallery.service';
+
 export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './src/components/accessibility-default';
 export {
   KS_DEFAULT_BTN_CLOSE,

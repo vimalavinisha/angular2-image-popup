@@ -35,6 +35,7 @@ import {
   Description,
   DescriptionStrategy,
   DotsConfig,
+  GalleryService,
   GridLayout,
   Image,
   ImageModalEvent,
@@ -452,6 +453,8 @@ export class AppComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
+  constructor(private galleryService: GalleryService) {}
+
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
@@ -512,6 +515,15 @@ export class AppComponent {
     }
     // Invoked after a click on a button, but before that the related
     // action is applied.
+
+    if (event.button.type === ButtonType.CUSTOM) {
+      console.log('adding a new random image at the end');
+      this.addRandomImage();
+
+      setTimeout(() => {
+        this.galleryService.openGallery(this.images.length - 1);
+      }, 1000);
+    }
   }
 
   onCustomButtonAfterHook(event: ButtonEvent) {

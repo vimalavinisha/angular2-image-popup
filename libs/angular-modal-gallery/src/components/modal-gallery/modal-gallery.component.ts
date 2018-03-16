@@ -49,11 +49,13 @@ import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
+import { GalleryService } from '../../services/gallery.service';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
+import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -177,10 +179,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   currentImage: InternalLibImage;
 
+  private galleryServiceSubscription: Subscription;
+
   /**
    * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
    */
-  constructor(private keyboardService: KeyboardService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private keyboardService: KeyboardService, private galleryService: GalleryService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   /**
    * Method ´ngOnInit´ to init images calling `initImages()`.
@@ -190,6 +194,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {
     // call initImages to init images and to emit `hasData` event
     this.initImages();
+
+    this.galleryServiceSubscription = this.galleryService.navigate.subscribe((index: number) => {
+      this.currentImage = this.images[index];
+      // emit a new ImageModalEvent with the index of the current image
+      this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
+    });
   }
 
   /**
@@ -483,6 +493,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   ngOnDestroy() {
     this.keyboardService.reset();
+
+    if (this.galleryServiceSubscription) {
+      this.galleryServiceSubscription.unsubscribe();
+    }
   }
 
   /**

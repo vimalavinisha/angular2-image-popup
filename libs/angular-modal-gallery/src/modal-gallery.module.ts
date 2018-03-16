@@ -29,6 +29,7 @@ import { DIRECTIVES } from './directives/directives';
 import { COMPONENTS, ModalGalleryComponent } from './components/components';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
+import { GalleryService } from './services/gallery.service';
 
 /**
  * Module with `forRoot` method to import it in the root module of your application.
@@ -51,6 +52,10 @@ export class ModalGalleryModule {
           provide: KeyboardService,
           useFactory: setupKeyboardService,
           deps: [KEYBOARD_CONFIGURATION]
+        },
+        {
+          provide: GalleryService,
+          useFactory: setupGalleryService
         }
       ]
     };
@@ -64,4 +69,8 @@ export class ModalGalleryModule {
  */
 export function setupKeyboardService(injector: KeyboardServiceConfig): KeyboardService {
   return new KeyboardService(injector);
+}
+
+export function setupGalleryService(): GalleryService {
+  return new GalleryService();
 }
