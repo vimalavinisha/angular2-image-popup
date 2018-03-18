@@ -1,4 +1,4 @@
-# 5.3.0
+# 5.3.0-beta.1
 ### Features
 - official support @fortawesome/fontawesome 5
 
