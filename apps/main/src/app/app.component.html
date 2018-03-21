@@ -302,6 +302,7 @@
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="customButtonsFontAwesomeConfig"
+                    (show)="onVisibleIndex($event)"
                     (buttonBeforeHook)="onCustomButtonBeforeHook($event)"
                     (buttonAfterHook)="onCustomButtonAfterHook($event)"></ks-modal-gallery>
 </section>

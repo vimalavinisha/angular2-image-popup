@@ -522,7 +522,7 @@ export class AppComponent {
 
       setTimeout(() => {
         this.galleryService.openGallery(this.images.length - 1);
-      }, 1000);
+      }, 0);
     }
   }
 
