@@ -414,7 +414,7 @@ export class HomeComponent {
     ]
   };
 
-  customButtonsConfig: ButtonsConfig = {
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [

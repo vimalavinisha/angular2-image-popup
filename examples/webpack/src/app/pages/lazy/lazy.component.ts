@@ -416,7 +416,7 @@ export class LazyComponent {
     ]
   };
 
-  customButtonsConfig: ButtonsConfig = {
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
