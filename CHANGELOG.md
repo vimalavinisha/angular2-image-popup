@@ -1,3 +1,13 @@
+# 5.3.0
+### Features
+- official support @fortawesome/fontawesome 5
+
+### Demos
+- force AOT builds in all examples based on angular-cli also for `npm start`
+- replace font-awesome 4.7.0 with fontawesome 5 in all examples (expect for webpack)
+- update all examples based on the main demo
+
+
 # 5.3.0-beta.1
 ### Features
 - official support @fortawesome/fontawesome 5
