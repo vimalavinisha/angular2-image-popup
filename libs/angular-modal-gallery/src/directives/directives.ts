@@ -28,8 +28,17 @@ import { KeyboardNavigationDirective } from './keyboard-navigation.directive';
 import { WrapDirective } from './wrap.directive';
 import { DirectionDirective } from './direction.directive';
 import { ATagBgImageDirective } from './a-tag-bg-image.directive';
+import { DescriptionDirective } from './description.directive';
 
 /**
  * Array of all directives.
  */
-export const DIRECTIVES = [ClickOutsideDirective, SizeDirective, KeyboardNavigationDirective, WrapDirective, DirectionDirective, ATagBgImageDirective];
+export const DIRECTIVES = [
+  ClickOutsideDirective,
+  SizeDirective,
+  KeyboardNavigationDirective,
+  WrapDirective,
+  DirectionDirective,
+  ATagBgImageDirective,
+  DescriptionDirective
+];

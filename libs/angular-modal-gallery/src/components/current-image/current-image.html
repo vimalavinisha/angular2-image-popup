@@ -41,7 +41,11 @@
          (click)="onImageEvent($event, clickAction)" (keyup)="onImageEvent($event, keyboardAction)"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
-    <figcaption *ngIf="getDescriptionToDisplay() !== ''" class="inside description" [innerHTML]="getDescriptionToDisplay()"></figcaption>
+    <figcaption *ngIf="getDescriptionToDisplay() !== ''"
+                class="inside description"
+                ksDescription [description]="description"
+                [innerHTML]="getDescriptionToDisplay()">
+    </figcaption>
   </figure>
 
 

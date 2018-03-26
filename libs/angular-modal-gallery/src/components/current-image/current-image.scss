@@ -33,13 +33,8 @@ $nav-animation-time: 1s;
 $nav-transition-time: .5s;
 $nav-side-margin: 15px;
 
-$figcaption-bg: rgba(0, 0, 0, .5);
-$figcaption-color: white;
 $figcaption-padding: 10px;
 $figcaption-position: absolute;
-$figcaption-bottom: 5px;
-$figcaption-left: 0;
-$figcaption-right: 0;
 
 $description-color: white;
 
@@ -114,21 +109,16 @@ figure {
     // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
     max-width: 100%;
     height: auto;
+    display: block;
   }
 }
 
 figcaption {
-  background: $figcaption-bg;
-  color: $figcaption-color;
   padding: $figcaption-padding;
   position: $figcaption-position;
-  bottom: $figcaption-bottom;
-  left: $figcaption-left;
-  right: $figcaption-right;
 }
 
 .description {
-  color: $description-color;
   font-weight: bold;
   text-align: center;
 }

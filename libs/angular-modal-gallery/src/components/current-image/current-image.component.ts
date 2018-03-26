@@ -139,6 +139,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * applying transformations, default values and so on to the input of the same type.
    */
   configLoading: LoadingConfig;
+  /**
+   * `Description` object initialized applying transformations, default values
+   * and so on to the input of the same type.
+   */
+  description: Description;
 
   /**
    * Private object without type to define all swipe actions used by hammerjs.
@@ -149,11 +154,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     UP: 'swipeup',
     DOWN: 'swipedown'
   };
-  /**
-   * Private `Description` object initialized applying transformations, default values
-   * and so on to the input of the same type.
-   */
-  private description: Description;
 
   /**
    * Method ´ngOnInit´ to build both `defaultLoading` and `defaultDescription` applying default values.
@@ -166,7 +166,17 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       imageText: 'Image ',
       numberSeparator: '/',
-      beforeTextDescription: ' - '
+      beforeTextDescription: ' - ',
+      margin: {
+        marginTop: '0px',
+        marginBottom: '5px',
+        marginLeft: '0px',
+        marginRight: '0px'
+      },
+      style: {
+        bgColor: 'rgba(0, 0, 0, .5)',
+        textColor: 'red'
+      }
     };
     this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
     this.description = Object.assign({}, defaultDescription, this.descriptionConfig);

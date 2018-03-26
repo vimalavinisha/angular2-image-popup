@@ -44,6 +44,7 @@ import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { LineLayout, PlainGalleryStrategy } from 'angular-modal-gallery/angular-modal-gallery/src/model/plain-gallery-config.interface';
 import { AdvancedLayout } from 'angular-modal-gallery/angular-modal-gallery';
 import { getIndex } from '../../utils/image.util';
+import { DescriptionDirective } from '../../directives/description.directive';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -111,7 +112,7 @@ function initTestBed() {
       UpperButtonsComponent, CurrentImageComponent, LoadingSpinnerComponent,
       DotsComponent, PlainGalleryComponent, PreviewsComponent,
       SizeDirective, KeyboardNavigationDirective, ATagBgImageDirective,
-      WrapDirective, DirectionDirective]
+      WrapDirective, DirectionDirective, DescriptionDirective]
   }).overrideComponent(ModalGalleryComponent, {
     set: {
       providers: [

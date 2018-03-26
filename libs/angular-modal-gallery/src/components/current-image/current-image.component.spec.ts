@@ -33,6 +33,7 @@ import { Size } from '../../model/size.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
+import { DescriptionDirective } from '../../directives/description.directive';
 
 let comp: CurrentImageComponent;
 let fixture: ComponentFixture<CurrentImageComponent>;
@@ -344,7 +345,7 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
 
 function initTestBed() {
   return TestBed.configureTestingModule({
-    declarations: [CurrentImageComponent, SizeDirective, LoadingSpinnerComponent, KeyboardNavigationDirective]
+    declarations: [CurrentImageComponent, SizeDirective, LoadingSpinnerComponent, KeyboardNavigationDirective, DescriptionDirective]
   }).compileComponents();
 }
 

@@ -25,6 +25,7 @@
 /**
  * Interface `Description` to change the description, either with a full custom
  * description or with a small and simple customization.
+ * Also, you could change margins, background style and so on.
  */
 export interface Description {
   strategy: DescriptionStrategy;
@@ -32,6 +33,9 @@ export interface Description {
   imageText?: string;
   numberSeparator?: string;
   beforeTextDescription?: string;
+
+  margin?: DescriptionMargin;
+  style?: DescriptionStyle;
 }
 
 /**
@@ -41,4 +45,22 @@ export enum DescriptionStrategy {
   ALWAYS_HIDDEN = 1,
   ALWAYS_VISIBLE,
   HIDE_IF_EMPTY
+}
+
+/**
+ * Interface to customize margins.
+ */
+export interface DescriptionMargin {
+  marginTop?: string;
+  marginBottom?: string;
+  marginRight?: string;
+  marginLeft?: string;
+}
+
+/**
+ * Interface to change background style and so on.
+ */
+export interface DescriptionStyle {
+  bgColor?: string;
+  textColor?: string;
 }
