@@ -65,16 +65,32 @@ export class DescriptionDirective implements OnInit, OnChanges {
       return;
     }
 
-    if (this.description.margin) {
-      this.renderer.setStyle(this.el.nativeElement, 'margin-top', this.description.margin.marginTop ? this.description.margin.marginTop : '0px');
-      this.renderer.setStyle(this.el.nativeElement, 'margin-bottom', this.description.margin.marginBottom ? this.description.margin.marginBottom : '0px');
-      this.renderer.setStyle(this.el.nativeElement, 'margin-left', this.description.margin.marginLeft ? this.description.margin.marginLeft : '0px');
-      this.renderer.setStyle(this.el.nativeElement, 'margin-right', this.description.margin.marginRight ? this.description.margin.marginRight : '0px');
-    }
-
     if (this.description.style) {
       this.renderer.setStyle(this.el.nativeElement, 'background', this.description.style.bgColor);
       this.renderer.setStyle(this.el.nativeElement, 'color', this.description.style.textColor);
+
+      if (this.description.style.margin) {
+        this.renderer.setStyle(
+          this.el.nativeElement,
+          'margin-top',
+          this.description.style.margin.marginTop ? this.description.style.margin.marginTop : '0px'
+        );
+        this.renderer.setStyle(
+          this.el.nativeElement,
+          'margin-bottom',
+          this.description.style.margin.marginBottom ? this.description.style.margin.marginBottom : '0px'
+        );
+        this.renderer.setStyle(
+          this.el.nativeElement,
+          'margin-left',
+          this.description.style.margin.marginLeft ? this.description.style.margin.marginLeft : '0px'
+        );
+        this.renderer.setStyle(
+          this.el.nativeElement,
+          'margin-right',
+          this.description.style.margin.marginRight ? this.description.style.margin.marginRight : '0px'
+        );
+      }
     }
   }
 }

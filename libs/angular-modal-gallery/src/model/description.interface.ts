@@ -34,7 +34,6 @@ export interface Description {
   numberSeparator?: string;
   beforeTextDescription?: string;
 
-  margin?: DescriptionMargin;
   style?: DescriptionStyle;
 }
 
@@ -58,9 +57,10 @@ export interface DescriptionMargin {
 }
 
 /**
- * Interface to change background style and so on.
+ * Interface to change css properties.
  */
 export interface DescriptionStyle {
   bgColor?: string;
   textColor?: string;
+  margin?: DescriptionMargin;
 }

@@ -167,15 +167,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       imageText: 'Image ',
       numberSeparator: '/',
       beforeTextDescription: ' - ',
-      margin: {
-        marginTop: '0px',
-        marginBottom: '5px',
-        marginLeft: '0px',
-        marginRight: '0px'
-      },
       style: {
         bgColor: 'rgba(0, 0, 0, .5)',
-        textColor: 'white'
+        textColor: 'white',
+        margin: {
+          marginTop: '0px',
+          marginBottom: '5px',
+          marginLeft: '0px',
+          marginRight: '0px'
+        }
       }
     };
     this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);

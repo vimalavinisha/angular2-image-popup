@@ -276,13 +276,13 @@ export class AppComponent {
     beforeTextDescription: ' => ',
     style: {
       bgColor: 'rgba(255,0,0,.5)',
-      textColor: 'blue'
-    },
-    margin: {
-      marginTop: '3px',
-      marginBottom: '0px',
-      marginLeft: '5px',
-      marginRight: '5px'
+      textColor: 'blue',
+      margin: {
+        marginTop: '3px',
+        marginBottom: '0px',
+        marginLeft: '5px',
+        marginRight: '5px'
+      }
     }
   };
 

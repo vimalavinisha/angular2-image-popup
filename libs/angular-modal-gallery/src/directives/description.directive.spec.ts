@@ -31,24 +31,23 @@ import { Description, DescriptionStrategy } from '../model/description.interface
 const expected: Description[] = [
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'},
+    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white', margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}}
+  },
+  {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    style: {margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}}
+  },
+  {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
     style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
   },
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
+    style: {bgColor: 'rbga(255,0,0,.5)', margin: {marginBottom: '0px'}}
   },
-  {
-    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
-  },
-  {
-    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    margin: {marginBottom: '0px'},
-    style: {bgColor: 'rbga(255,0,0,.5)'}
-  },
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: {}, style: {}},
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: null, style: null},
+  {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {}},
+  {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {margin: {}}},
+  {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: null},
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
 ];
 
@@ -76,30 +75,32 @@ const expected: Description[] = [
     <figure>
       <figcaption ksDescription [description]="descriptions[6]"></figcaption>
     </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[7]"></figcaption>
+    </figure>
   `
 })
 class TestDescriptionComponent {
   descriptions: Description[] = [
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'},
+      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white', margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}}
+    },
+    {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      style: {margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}}
+    },
+    {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
     },
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
+      style: {bgColor: 'rbga(255,0,0,.5)', margin: {marginBottom: '0px'}}
     },
-    {
-      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
-    },
-    {
-      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      margin: {marginBottom: '0px'},
-      style: {bgColor: 'rbga(255,0,0,.5)'}
-    },
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: {}, style: {}},
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: null, style: null},
+    {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {}},
+    {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {margin: {}}},
+    {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: null},
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
   ];
 }
@@ -139,16 +140,16 @@ describe('DescriptionDirective', () => {
 
     expected.forEach((val: Description, index: number) => {
       it(`should check expected results for <figcaption> at position ${index}`, () => {
-        if (val && val.margin) {
-          expect(des[index].nativeElement.style.marginTop).toBe(val.margin.marginTop ? val.margin.marginTop : '0px');
-          expect(des[index].nativeElement.style.marginBottom).toBe(val.margin.marginBottom ? val.margin.marginBottom : '0px');
-          expect(des[index].nativeElement.style.marginLeft).toBe(val.margin.marginLeft ? val.margin.marginLeft : '0px');
-          expect(des[index].nativeElement.style.marginRight).toBe(val.margin.marginRight ? val.margin.marginRight : '0px');
-        }
-
         if (val && val.style) {
           expect(des[index].styles.background).toBe(val.style.bgColor);
           expect(des[index].styles.color).toBe(val.style.textColor);
+
+          if (val.style.margin) {
+            expect(des[index].nativeElement.style.marginTop).toBe(val.style.margin.marginTop ? val.style.margin.marginTop : '0px');
+            expect(des[index].nativeElement.style.marginBottom).toBe(val.style.margin.marginBottom ? val.style.margin.marginBottom : '0px');
+            expect(des[index].nativeElement.style.marginLeft).toBe(val.style.margin.marginLeft ? val.style.margin.marginLeft : '0px');
+            expect(des[index].nativeElement.style.marginRight).toBe(val.style.margin.marginRight ? val.style.margin.marginRight : '0px');
+          }
         }
       });
     });
