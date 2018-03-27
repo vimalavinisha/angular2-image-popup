@@ -269,6 +269,23 @@ export class AppComponent {
     beforeTextDescription: ' => '
   };
 
+  customDescriptionStyle: Description = {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    imageText: 'Look this image ',
+    numberSeparator: ' of ',
+    beforeTextDescription: ' => ',
+    style: {
+      bgColor: 'rgba(255,0,0,.5)',
+      textColor: 'blue'
+    },
+    margin: {
+      marginTop: '3px',
+      marginBottom: '0px',
+      marginLeft: '5px',
+      marginRight: '5px'
+    }
+  };
+
   customDescriptionHideIfEmpty: Description = {
     strategy: DescriptionStrategy.HIDE_IF_EMPTY,
     imageText: 'Look this image ',
