@@ -35,6 +35,9 @@ $nav-side-margin: 15px;
 
 $figcaption-padding: 10px;
 $figcaption-position: absolute;
+$figcaption-bottom: 0;
+$figcaption-left: 0;
+$figcaption-right: 0;
 
 $description-color: white;
 
@@ -116,6 +119,9 @@ figure {
 figcaption {
   padding: $figcaption-padding;
   position: $figcaption-position;
+  bottom: $figcaption-bottom;
+  left: $figcaption-left;
+  right: $figcaption-right;
 }
 
 .description {

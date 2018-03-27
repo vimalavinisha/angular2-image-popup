@@ -29,16 +29,24 @@ import { DescriptionDirective } from './description.directive';
 import { Description, DescriptionStrategy } from '../model/description.interface';
 
 const expected: Description[] = [
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+  {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
     margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'},
-    style: {bgColor: '(0,0,0,.5)', textColor: 'white'}},
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}},
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    style: {bgColor: '(0,0,0,.5)', textColor: 'white'}},
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+  },
+  {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
+  },
+  {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+  },
+  {
+    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
     margin: {marginBottom: '0px'},
-    style: {bgColor: '(255,0,0,.5)'}},
+    style: {bgColor: 'rbga(255,0,0,.5)'}
+  },
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: {}, style: {}},
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: null, style: null},
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
@@ -47,21 +55,49 @@ const expected: Description[] = [
 @Component({
   selector: 'ks-test-description',
   template: `
-    <figure><figcaption ksDescription [description]="expected[0]"></figcaption></figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[0]"></figcaption>
+    </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[1]"></figcaption>
+    </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[2]"></figcaption>
+    </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[3]"></figcaption>
+    </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[4]"></figcaption>
+    </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[5]"></figcaption>
+    </figure>
+    <figure>
+      <figcaption ksDescription [description]="descriptions[6]"></figcaption>
+    </figure>
   `
 })
 class TestDescriptionComponent {
-  expected: Description[] = [
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+  descriptions: Description[] = [
+    {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'},
-      style: {bgColor: '(0,0,0,.5)', textColor: 'white'}},
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}},
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      style: {bgColor: '(0,0,0,.5)', textColor: 'white'}},
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+    },
+    {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      margin: {marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
+    },
+    {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+    },
+    {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       margin: {marginBottom: '0px'},
-      style: {bgColor: '(255,0,0,.5)'}},
+      style: {bgColor: 'rbga(255,0,0,.5)'}
+    },
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: {}, style: {}},
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE, margin: null, style: null},
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
@@ -86,7 +122,7 @@ describe('DescriptionDirective', () => {
     fixture.detectChanges();
     return fixture.whenStable().then(() => {
       fixture.detectChanges();
-      bareElement = fixture.debugElement.query(By.css('div:not(ksDescription)'));
+      bareElement = fixture.debugElement.query(By.css('figcaption:not(ksDescription)'));
       des = fixture.debugElement.queryAll(By.directive(DescriptionDirective));
     });
   });
@@ -103,8 +139,17 @@ describe('DescriptionDirective', () => {
 
     expected.forEach((val: Description, index: number) => {
       it(`should check expected results for <figcaption> at position ${index}`, () => {
-        // expect(des[index].nativeElement.style.width).toBe(val.width);
-        // expect(des[index].nativeElement.style.height).toBe(val.height);
+        if (val && val.margin) {
+          expect(des[index].nativeElement.style.marginTop).toBe(val.margin.marginTop ? val.margin.marginTop : '0px');
+          expect(des[index].nativeElement.style.marginBottom).toBe(val.margin.marginBottom ? val.margin.marginBottom : '0px');
+          expect(des[index].nativeElement.style.marginLeft).toBe(val.margin.marginLeft ? val.margin.marginLeft : '0px');
+          expect(des[index].nativeElement.style.marginRight).toBe(val.margin.marginRight ? val.margin.marginRight : '0px');
+        }
+
+        if (val && val.style) {
+          expect(des[index].styles.background).toBe(val.style.bgColor);
+          expect(des[index].styles.color).toBe(val.style.textColor);
+        }
       });
     });
 

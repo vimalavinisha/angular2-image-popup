@@ -175,7 +175,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       },
       style: {
         bgColor: 'rgba(0, 0, 0, .5)',
-        textColor: 'red'
+        textColor: 'white'
       }
     };
     this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
