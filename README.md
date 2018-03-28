@@ -37,7 +37,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 - Angular module to import this library
 - works with IE >= 11
 - AOT support
-- Angular >= 4 (Angular >=5 supported from version 4.0.0)
+- Angular >= 4 (Angular >=5 supported from version 4.0.0 and Angular >=6 from version 5.4.0)
 - compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `Webpack` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
@@ -83,10 +83,11 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 | Angular 2  | &lt;= 3.3.5           | &gt;= 4.0.0  |
 | Angular 4  | &gt;= 5.0.0           | optional     | 
 | Angular 5  | &gt;= 5.0.0           | optional     |
-| Angular 6  | &gt;= 5.0.0           | optional     |
+| Angular 6  | &gt;= 5.4.0           | optional     |
 
 
 ## News
+- ??/??/2018 - 5.4.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/28/2018 - 5.4.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/28/2018 - 5.4.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/24/2018 - 5.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

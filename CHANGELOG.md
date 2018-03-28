@@ -1,6 +1,10 @@
 # 5.4.0
 ### Features
 - add background, text color, position, size and margin properties to Description interface #133 (requested by @tobi-or-not-tobi)
+- add Angular 6 and angular-cli 6 experimental support
+
+### Demos
+- new official example with angular-cli 6.0.0-beta.5 and angular 6.0.0-rc.0
 
 
 # 5.4.0-beta.2
