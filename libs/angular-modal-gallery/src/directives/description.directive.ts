@@ -69,28 +69,32 @@ export class DescriptionDirective implements OnInit, OnChanges {
       this.renderer.setStyle(this.el.nativeElement, 'background', this.description.style.bgColor);
       this.renderer.setStyle(this.el.nativeElement, 'color', this.description.style.textColor);
 
-      if (this.description.style.margin) {
-        this.renderer.setStyle(
-          this.el.nativeElement,
-          'margin-top',
-          this.description.style.margin.marginTop ? this.description.style.margin.marginTop : '0px'
-        );
-        this.renderer.setStyle(
-          this.el.nativeElement,
-          'margin-bottom',
-          this.description.style.margin.marginBottom ? this.description.style.margin.marginBottom : '0px'
-        );
-        this.renderer.setStyle(
-          this.el.nativeElement,
-          'margin-left',
-          this.description.style.margin.marginLeft ? this.description.style.margin.marginLeft : '0px'
-        );
-        this.renderer.setStyle(
-          this.el.nativeElement,
-          'margin-right',
-          this.description.style.margin.marginRight ? this.description.style.margin.marginRight : '0px'
-        );
+      if (this.description.style.width) {
+        this.renderer.setStyle(this.el.nativeElement, 'width', this.description.style.width);
       }
+      if (this.description.style.height) {
+        this.renderer.setStyle(this.el.nativeElement, 'height', this.description.style.height);
+      }
+      if (this.description.style.position) {
+        this.renderer.setStyle(this.el.nativeElement, 'position', this.description.style.position);
+      }
+      if (this.description.style.top) {
+        this.renderer.setStyle(this.el.nativeElement, 'top', this.description.style.top);
+      }
+      if (this.description.style.bottom) {
+        this.renderer.setStyle(this.el.nativeElement, 'bottom', this.description.style.bottom);
+      }
+      if (this.description.style.left) {
+        this.renderer.setStyle(this.el.nativeElement, 'left', this.description.style.left);
+      }
+      if (this.description.style.right) {
+        this.renderer.setStyle(this.el.nativeElement, 'right', this.description.style.right);
+      }
+
+      this.renderer.setStyle(this.el.nativeElement, 'margin-top', this.description.style.marginTop ? this.description.style.marginTop : '0px');
+      this.renderer.setStyle(this.el.nativeElement, 'margin-bottom', this.description.style.marginBottom ? this.description.style.marginBottom : '0px');
+      this.renderer.setStyle(this.el.nativeElement, 'margin-left', this.description.style.marginLeft ? this.description.style.marginLeft : '0px');
+      this.renderer.setStyle(this.el.nativeElement, 'margin-right', this.description.style.marginRight ? this.description.style.marginRight : '0px');
     }
   }
 }

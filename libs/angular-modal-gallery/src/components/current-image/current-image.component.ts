@@ -170,12 +170,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       style: {
         bgColor: 'rgba(0, 0, 0, .5)',
         textColor: 'white',
-        margin: {
-          marginTop: '0px',
-          marginBottom: '5px',
-          marginLeft: '0px',
-          marginRight: '0px'
-        }
+        marginTop: '0px',
+        marginBottom: '5px',
+        marginLeft: '0px',
+        marginRight: '0px'
       }
     };
     this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);

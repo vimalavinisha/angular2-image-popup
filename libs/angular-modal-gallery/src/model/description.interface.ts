@@ -47,20 +47,20 @@ export enum DescriptionStrategy {
 }
 
 /**
- * Interface to customize margins.
- */
-export interface DescriptionMargin {
-  marginTop?: string;
-  marginBottom?: string;
-  marginRight?: string;
-  marginLeft?: string;
-}
-
-/**
  * Interface to change css properties.
  */
 export interface DescriptionStyle {
   bgColor?: string;
   textColor?: string;
-  margin?: DescriptionMargin;
+  width?: string;
+  height?: string;
+  position?: string;
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+  marginTop?: string;
+  marginBottom?: string;
+  marginRight?: string;
+  marginLeft?: string;
 }

@@ -277,12 +277,14 @@ export class HomeComponent {
     style: {
       bgColor: 'rgba(255,0,0,.5)',
       textColor: 'blue',
-      margin: {
-        marginTop: '3px',
-        marginBottom: '0px',
-        marginLeft: '5px',
-        marginRight: '5px'
-      }
+      marginTop: '3px',
+      marginBottom: '0px',
+      marginLeft: '5px',
+      marginRight: '5px',
+      position: 'absolute',
+      top: '0px',
+      height: '25px'
+      // be careful to use width, in particular with % values
     }
   };
 

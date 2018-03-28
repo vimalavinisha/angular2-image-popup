@@ -1,6 +1,11 @@
 # 5.4.0
 ### Features
-- add background, text color and margins properties to Description interface #133 (requested by @tobi-or-not-tobi)
+- add background, text color, position, size and margin properties to Description interface #133 (requested by @tobi-or-not-tobi)
+
+
+# 5.4.0-beta.2
+### Features
+- flatten description's style property adding also other inputs #133 (requested by @tobi-or-not-tobi)
 
 
 # 5.4.0-beta.1
