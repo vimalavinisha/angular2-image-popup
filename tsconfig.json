@@ -11,7 +11,7 @@
     "lib": ["es2017", "dom"],
     "baseUrl": ".",
     "paths": {
-      "angular-modal-gallery/*": ["libs/*"]
+      "@ks89/*": ["libs/*"]
     }
   },
   "exclude": ["node_modules", "tmp"],

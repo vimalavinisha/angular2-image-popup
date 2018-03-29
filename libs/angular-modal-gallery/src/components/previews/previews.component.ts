@@ -121,7 +121,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     this.configPreview = Object.assign({}, this.defaultPreviewConfig, this.previewConfig);
 
     // if number is <= 0 reset to default
-    if (this.configPreview.number <= 0) {
+    if (this.configPreview && this.configPreview.number && this.configPreview.number <= 0) {
       this.configPreview.number = this.defaultPreviewConfig.number;
     }
 
