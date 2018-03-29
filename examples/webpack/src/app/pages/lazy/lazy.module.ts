@@ -33,7 +33,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { LazyComponent } from './lazy.component';
 
 // ********************** angular-modal-gallery *****************************
-import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+import { ModalGalleryModule } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
 console.log('`Lazy` bundle loaded asynchronously');

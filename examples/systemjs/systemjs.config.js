@@ -28,10 +28,10 @@
     app: 'app',
     '@angular': 'node_modules/@angular',
     rxjs: 'node_modules/rxjs',
-    'angular-modal-gallery': 'node_modules/angular-modal-gallery/bundles',
-    '@fortawesome': 'node_modules/@fortawesome',
     hammerjs: 'node_modules/hammerjs',
-    mousetrap: 'node_modules/mousetrap'
+    mousetrap: 'node_modules/mousetrap',
+    '@ks89': 'node_modules/@ks89',
+    '@fortawesome': 'node_modules/@fortawesome'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   let packages = {
@@ -39,28 +39,26 @@
     rxjs: { main: 'Rx' },
     hammerjs: { main: 'hammer.js' },
     mousetrap: { main: 'mousetrap.js' },
-    'angular-modal-gallery': { main: 'angular-modal-gallery.umd.js' }
+    '@fortawesome/fontawesome': { main: 'index.js', defaultExtension: 'js' },
+    '@fortawesome/fontawesome-free-solid': { main: 'index.js', defaultExtension: 'js' },
+    '@ks89/angular-modal-gallery': { main: 'bundles/angular-modal-gallery.umd.min.js', defaultExtension: 'js' }
   };
   let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic'];
+
   // Individual files (~300 requests):
   function packIndex(pkgName) {
     packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
   }
+
   // Bundled (~40 requests):
   function packUmd(pkgName) {
     packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
   }
+
   // Most environments should use UMD; some (Karma) need the individual index files
   let setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
   // Add package entries for angular packages
   ngPackageNames.forEach(setPackageConfig);
-
-  let fontAwesomePackageNames = ['fontawesome', 'fontawesome-free-solid'];
-  //add fortawesome/font-awesome 5
-  function packFontAwesomeIndex(pkgName) {
-    packages['@fortawesome/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
-  }
-  fontAwesomePackageNames.forEach(packFontAwesomeIndex);
 
   let config = {
     transpiler: 'ts',

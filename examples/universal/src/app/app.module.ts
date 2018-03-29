@@ -31,7 +31,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
 // ********************** angular-modal-gallery *****************************
-import { ModalGalleryModule } from 'angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+import { ModalGalleryModule } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
 // ************************ optional font-awesome 5 ************************
