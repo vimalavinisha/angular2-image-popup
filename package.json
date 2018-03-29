@@ -1,7 +1,7 @@
 {
   "name": "angular-modal-gallery",
-  "version": "5.0.0",
-  "description": "Modal image gallery for Angular >=4",
+  "version": "6.0.0",
+  "description": "Modal image gallery for Angular >=5",
   "license": "MIT",
   "author": "Stefano Cappa",
   "homepage": "https://github.com/Ks89",
