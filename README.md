@@ -38,15 +38,15 @@ I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and an
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
-**angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 4**
+**angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 5**
 
 
 ## Features
 - Angular module to import this library
 - works with IE >= 11
 - AOT support
-- Angular >= 4 (Angular >=5 supported from version 4.0.0 and Angular >=6 from version 5.4.0)
-- compliant to [Angular Package Format v4.0]( https://goo.gl/AMOU5G) specifications
+- Angular >= 5
+- compliant to [Angular Package Format v5.0]( https://goo.gl/AMOU5G) specifications
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `Webpack` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
 - **Server Side Rendering** support with angular-universal (from version 5.2.0)
@@ -89,7 +89,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 | ---------- | :---:                 | :---:        |
 | AngularJS  | NOT SUPPORTED         |              |
 | Angular 2  | &lt;= 3.3.5           | &gt;= 4.0.0  |
-| Angular 4  | &gt;= 5.0.0           | optional     | 
+| Angular 4  | &lt;= 5.5.0           | optional     | 
 | Angular 5  | &gt;= 5.0.0           | optional     |
 | Angular 6  | &gt;= 5.4.0           | optional     |
 
