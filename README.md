@@ -46,8 +46,8 @@ I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and an
 - works with IE >= 11
 - AOT support
 - Angular >= 5
-- compliant to [Angular Package Format v5.0]( https://goo.gl/AMOU5G) specifications
-- official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `Webpack` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
+- compliant to Angular Package Format v5 specifications
+- official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
 - **Server Side Rendering** support with angular-universal (from version 5.2.0)
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
@@ -76,7 +76,7 @@ I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and an
 
 
 ## Installation
-- `npm install --save angular-modal-gallery`
+- `npm install --save @ks89/angular-modal-gallery`
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 

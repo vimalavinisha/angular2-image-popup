@@ -13,23 +13,20 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 5. `cd examples/systemjs`
 6. `npm install`
 7. `cd ../..`
-8. `cd examples/webpack`
+8. `cd examples/angular-cli`
 9. `npm install`
-10. `cd ../..`
-11. `cd examples/angular-cli`
+10. `cd ../../..`
+11. `cd examples/universal`
 12. `npm install`
 13. `cd ../../..`
-14. `cd examples/universal`
+14. `cd examples/angular-cli-material`
 15. `npm install`
 16. `cd ../../..`
-17. `cd examples/angular-cli-material`
-18. `npm install`
-19. `cd ../../..`
-20. `npm run build:all`
-21. `npm run docs:typedoc` => try to open `./docs/typedoc/index.html` with the `internal library documentation`
-22. `npm run docs:compodoc` => try to open `./docs/compodoc/index.html` with the `internal library documentation`
-23. `npm test`
-24. `npm run e2e`
+17. `npm run build:all`
+18. `npm run docs:typedoc` => try to open `./docs/typedoc/index.html` with the `internal library documentation`
+19. `npm run docs:compodoc` => try to open `./docs/compodoc/index.html` with the `internal library documentation`
+20. `npm test`
+21. `npm run e2e`
 
 # B. Run main angular-cli example
 1. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
@@ -45,20 +42,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `cd ../..`
 
-# D. Run webpack example
-1. `cd examples/webpack`
-2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-3. `npm run build:dev`
-4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-5. `cd ..`
-6. `npm run build:prod`
-7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-8. `cd ..`
-9. `npm run build:prod:aot`
-10. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-11. `cd ../../..`
-
-# E. Run angular-cli example
+# D. Run angular-cli example
 1. `cd examples/angular-cli`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
@@ -68,7 +52,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
 8. `cd ../../..`
 
-# F. Run universal example
+# E. Run universal example
 1. `cd examples/universal`
 2. `npm run start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
@@ -81,7 +65,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 10. `npm run build:prerender && npm run serve:prerender` => if everything is ok (also in browser's console), kill the process and go to the next step
 11. `cd ../../..`
 
-# G. Run angular-cli-material example
+# F. Run angular-cli-material example
 1. `cd examples/angular-cli-material`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
@@ -91,7 +75,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
 8. `cd ../../..`
 
-# H. Create your pull request
+# G. Create your pull request
 1. **If it is ok, create your pull request specifying all the details**
 
 
@@ -106,7 +90,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 3. `cd ../..`
 4. `npm run clean:all`
 5. `npm run build:lib`
-6. `npm publish angular-modal-gallery`
+6. `npm publish @ks89/angular-modal-gallery`
 7. `git push origin master`
 8. `git push origin vx.x.x`  <-- tag name created by npm version (for instance v5.0.1)
 
@@ -116,7 +100,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 3. `cd ../..`
 4. `npm run clean:all`
 5. `npm run build:lib`
-6. `npm publish angular-modal-gallery --tag beta`
+6. `npm publish @ks89/angular-modal-gallery --tag beta`
 
 ## Alpha releases (@next)
 1. `cd libs/angular-modal-gallery`
@@ -124,4 +108,4 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 3. `cd ../..`
 4. `npm run clean:all`
 5. `npm run build:lib`
-6. `npm publish angular-modal-gallery --tag next`
+6. `npm publish @ks89/angular-modal-gallery --tag next`
