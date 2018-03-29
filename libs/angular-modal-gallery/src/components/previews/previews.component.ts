@@ -131,8 +131,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method to check if an image is active (i.e. a preview image).
-   * @param {InternalLibImage} preview is an image to check if it's active or not
-   * @returns {boolean} true if is active, false otherwise
+   * @param InternalLibImage preview is an image to check if it's active or not
+   * @returns boolean true if is active, false otherwise
    */
   isActive(preview: InternalLibImage): boolean {
     if (!preview || !this.currentImage) {
@@ -203,8 +203,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Method called by events from both keyboard and mouse on a preview.
    * This will trigger the `clickpreview` output with the input preview as its payload.
-   * @param {InternalLibImage} preview that triggered this method
-   * @param {KeyboardEvent | MouseEvent} event payload
+   * @param InternalLibImage preview that triggered this method
+   * @param KeyboardEvent | MouseEvent event payload
    */
   onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent) {
     if (!this.configPreview || !this.configPreview.clickable) {
@@ -220,8 +220,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method called by events from both keyboard and mouse on a navigation arrow.
-   * @param {string} direction of the navigation that can be either 'next' or 'prev'
-   * @param {KeyboardEvent | MouseEvent} event payload
+   * @param string direction of the navigation that can be either 'next' or 'prev'
+   * @param KeyboardEvent | MouseEvent event payload
    */
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
     const result: number = super.handleNavigationEvent(direction, event);
@@ -234,9 +234,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method used in the template to track ids in ngFor.
-   * @param {number} index of the array
-   * @param {Image} item of the array
-   * @returns {number} the id of the item
+   * @param number index of the array
+   * @param Image item of the array
+   * @returns number the id of the item
    */
   trackById(index: number, item: Image): number {
     return item.id;
@@ -245,8 +245,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Private method to init previews based on the currentImage and the full array of images.
    * The current image in mandatory to show always the current preview (as highlighted).
-   * @param {InternalLibImage} currentImage to decide how to show previews, because I always want to see the current image as highlighted
-   * @param {InternalLibImage[]} images is the array of all images.
+   * @param InternalLibImage currentImage to decide how to show previews, because I always want to see the current image as highlighted
+   * @param InternalLibImage[] images is the array of all images.
    */
   private initPreviews(currentImage: InternalLibImage, images: InternalLibImage[]) {
     let index: number;
@@ -336,8 +336,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Private method to block/permit sliding between previews.
-   * @param {number} boundaryIndex is the first or the last index of `images` input array
-   * @returns {boolean} if true block sliding, otherwise not
+   * @param number boundaryIndex is the first or the last index of `images` input array
+   * @returns boolean if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
     return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.previews) === boundaryIndex;

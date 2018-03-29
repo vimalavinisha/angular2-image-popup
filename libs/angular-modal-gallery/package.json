@@ -1,12 +1,12 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "@ks89/angular-modal-gallery",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.2",
   "ngPackage": {
     "lib": {
       "entryFile": "index.ts"
     },
-    "dest": "./@ks89/angular-modal-gallery"
+    "dest": "../../@ks89/angular-modal-gallery"
   },
   "description": "Modal image gallery for Angular >=4",
   "license": "MIT",
@@ -17,8 +17,8 @@
   },
   "homepage": "https://ks89.github.io/angular-modal-gallery-2018.github.io/",
   "peerDependencies": {
-    "@angular/common": ">=4.0.0",
-    "@angular/core": ">=4.0.0",
+    "@angular/common": ">=5.0.0",
+    "@angular/core": ">=5.0.0",
     "hammerjs": ">=2.0.0",
     "mousetrap": ">=1.6.1"
   },

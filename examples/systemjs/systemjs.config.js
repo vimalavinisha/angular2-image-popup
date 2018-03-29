@@ -41,7 +41,7 @@
     mousetrap: { main: 'mousetrap.js' },
     '@fortawesome/fontawesome': { main: 'index.js', defaultExtension: 'js' },
     '@fortawesome/fontawesome-free-solid': { main: 'index.js', defaultExtension: 'js' },
-    '@ks89/angular-modal-gallery': { main: 'bundles/angular-modal-gallery.umd.min.js', defaultExtension: 'js' }
+    '@ks89/angular-modal-gallery': { main: 'bundles/ks89-angular-modal-gallery.umd.min.js', defaultExtension: 'js' }
   };
   let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic'];
 

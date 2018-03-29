@@ -153,9 +153,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Method called by events from both keyboard and mouse on a button.
    * This will call a private method to trigger an output with the right payload.
-   * @param {InternalButtonConfig} button that called this method
-   * @param {KeyboardEvent | MouseEvent} event payload
-   * @param {Action} action that triggered the source event or `Action.CLICK` if not specified
+   * @param InternalButtonConfig button that called this method
+   * @param KeyboardEvent | MouseEvent event payload
+   * @param Action action that triggered the source event or `Action.CLICK` if not specified
    * @throws an error if the button type is unknown
    */
   onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
@@ -198,9 +198,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method used in the template to track ids in ngFor.
-   * @param {number} index of the array
-   * @param {Image} item of the array
-   * @returns {number} the id of the item or undefined if the item is not valid
+   * @param number index of the array
+   * @param Image item of the array
+   * @returns number the id of the item or undefined if the item is not valid
    */
   trackById(index: number, item: InternalButtonConfig): number | undefined {
     return item ? item.id : undefined;
@@ -208,9 +208,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Private method to emit an event using the specified output as an `EventEmitter`.
-   * @param {EventEmitter<ButtonEvent>} emitter is the output to emit the `ButtonEvent`
-   * @param {KeyboardEvent | MouseEvent} event is the source that triggered this method
-   * @param {ButtonEvent} dataToEmit payload to emit
+   * @param EventEmitter<ButtonEvent> emitter is the output to emit the `ButtonEvent`
+   * @param KeyboardEvent | MouseEvent event is the source that triggered this method
+   * @param ButtonEvent dataToEmit payload to emit
    */
   private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>, event: KeyboardEvent | MouseEvent, dataToEmit: ButtonEvent) {
     if (!emitter) {
@@ -228,8 +228,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * It adds ids in a reverse way, to be sure that the last button will always have id = 0.
    * This is really useful in unit testing to be sure that close button always have id = 0, download 1 and so on...
    * It's totally transparent to the user.
-   * @param {ButtonConfig[]} buttons config array
-   * @returns {ButtonConfig[]} the input array with incremental numeric ids
+   * @param ButtonConfig[] buttons config array
+   * @returns ButtonConfig[] the input array with incremental numeric ids
    */
   private addButtonIds(buttons: ButtonConfig[]): ButtonConfig[] {
     return buttons.map((val: ButtonConfig, i: number) => Object.assign(val, { id: buttons.length - 1 - i }));
@@ -237,8 +237,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Private method to validate custom buttons received as input.
-   * @param {ButtonConfig[]} buttons config array
-   * @returns {ButtonConfig[]} the same input buttons config array
+   * @param ButtonConfig[] buttons config array
+   * @returns ButtonConfig[] the same input buttons config array
    * @throws an error is exists a button with an unknown type
    */
   private validateCustomButtons(buttons: ButtonConfig[] = []): ButtonConfig[] {

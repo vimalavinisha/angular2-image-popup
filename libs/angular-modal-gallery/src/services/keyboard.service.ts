@@ -49,7 +49,7 @@ export class KeyboardService {
 
   /**
    * Constructor of `KeyboardService` to init `mousetrap` and `shortcuts` private variables.
-   * @param {KeyboardServiceConfig} config object received by the `forRoot()` function to init custom shortcuts
+   * @param KeyboardServiceConfig config object received by the `forRoot()` function to init custom shortcuts
    */
   constructor(@Inject(KEYBOARD_CONFIGURATION) private config: KeyboardServiceConfig) {
     this.shortcuts = this.config && this.config.shortcuts ? this.config.shortcuts : ['ctrl+s', 'meta+s'];
@@ -62,7 +62,7 @@ export class KeyboardService {
 
   /**
    * Method to add a lister for ctrl+s/cmd+s keyboard events.
-   * @param {(e: ExtendedKeyboardEvent, combo: string) => any} onBind callback function to add shortcuts
+   * @param (e: ExtendedKeyboardEvent, combo: string) => any onBind callback function to add shortcuts
    */
   add(onBind: (e: ExtendedKeyboardEvent, combo: string) => any) {
     // To prevent issues with angular-universal on server-side

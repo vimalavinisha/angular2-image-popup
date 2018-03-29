@@ -88,8 +88,8 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
   /**
    * Method to check if an image is active (i.e. the current image).
    * It checks currentImage and images to prevent errors.
-   * @param {number} index of the image to check if it's active or not
-   * @returns {boolean} true if is active (and input params are valid), false otherwise
+   * @param number index of the image to check if it's active or not
+   * @returns boolean true if is active (and input params are valid), false otherwise
    */
   isActive(index: number): boolean {
     if (!this.currentImage || !this.images || this.images.length === 0) {
@@ -107,8 +107,8 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
 
   /**
    * Method called by events from keyboard and mouse.
-   * @param {number} index of the dot
-   * @param {KeyboardEvent | MouseEvent} event payload
+   * @param number index of the dot
+   * @param KeyboardEvent | MouseEvent event payload
    */
   onDotEvent(index: number, event: KeyboardEvent | MouseEvent) {
     const result: number = super.handleImageEvent(event);
@@ -119,9 +119,9 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
 
   /**
    * Method used in the template to track ids in ngFor.
-   * @param {number} index of the array
-   * @param {Image} item of the array
-   * @returns {number} the id of the item
+   * @param number index of the array
+   * @param Image item of the array
+   * @returns number the id of the item
    */
   trackById(index: number, item: Image): number {
     return item.id;

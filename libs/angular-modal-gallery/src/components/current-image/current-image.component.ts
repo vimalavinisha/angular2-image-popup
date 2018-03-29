@@ -254,7 +254,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to handle keypress based on the `keyboardConfig` input. It gets the keyCode of
    * the key that triggered the keypress event to navigate between images or to close the modal gallery.
-   * @param {number} keyCode of the key that triggered the keypress event
+   * @param number keyCode of the key that triggered the keypress event
    */
   onKeyPress(keyCode: number) {
     const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
@@ -277,8 +277,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to get the image description based on the image object itself.
    * If you provide a full description this will be the visible description, otherwise,
+<<<<<<< HEAD
    * it will be built using the `Description` object, concatenating its fields with a specific logic.
    * @param {Image} image to get its description. If not provided it will be the current image
+=======
+   * it will be built using the `Description` object, concatenating its fields.
+   * @param Image image to get its description. If not provided it will be the current image
+>>>>>>> feat(): [BREAKING CHANGE] migrate to ng-packagr 2 and remove webpack example + remove {...} in all typedoc comments
    * @returns String description of the image (or the current image if not provided)
    * @throws an Error if description isn't available
    */
@@ -320,7 +325,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to get `alt attribute`.
    * `alt` specifies an alternate text for an image, if the image cannot be displayed.
-   * @param {Image} image to get its alt description. If not provided it will be the current image
+   * @param Image image to get its alt description. If not provided it will be the current image
    * @returns String alt description of the image (or the current image if not provided)
    */
   getAltDescriptionByImage(image: Image = this.currentImage): string {
@@ -332,7 +337,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method to get the left side preview image.
-   * @returns {Image} the image to show as size preview on the left
+   * @returns Image the image to show as size preview on the left
    */
   getLeftPreviewImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
@@ -348,7 +353,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method to get the right side preview image.
-   * @returns {Image} the image to show as size preview on the right
+   * @returns Image the image to show as size preview on the right
    */
   getRightPreviewImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
@@ -364,9 +369,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method called by events from both keyboard and mouse on an image.
+<<<<<<< HEAD
    * This will invoke the nextImage method (except for click events, because It checks also if navigateOnClick === true).
    * @param {KeyboardEvent | MouseEvent} event payload
    * @param {Action} action that triggered the event or `Action.NORMAL` if not provided
+=======
+   * This will invoke the nextImage method.
+   * @param KeyboardEvent | MouseEvent event payload
+   * @param Action action that triggered the event or `Action.NORMAL` if not provided
+>>>>>>> feat(): [BREAKING CHANGE] migrate to ng-packagr 2 and remove webpack example + remove {...} in all typedoc comments
    */
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     // check if triggered by a mouse click
@@ -384,9 +395,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method called by events from both keyboard and mouse on a navigation arrow.
-   * @param {string} direction of the navigation that can be either 'next' or 'prev'
-   * @param {KeyboardEvent | MouseEvent} event payload
-   * @param {Action} action that triggered the event or `Action.NORMAL` if not provided
+   * @param string direction of the navigation that can be either 'next' or 'prev'
+   * @param KeyboardEvent | MouseEvent event payload
+   * @param Action action that triggered the event or `Action.NORMAL` if not provided
    */
   onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL) {
     const result: number = super.handleNavigationEvent(direction, event);
@@ -430,7 +441,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to emit an event as loadImage output to say that the requested image if loaded.
    * This method is invoked by the javascript's 'load' event on an img tag.
-   * @param {Event} event that triggered the load
+   * @param Event event that triggered the load
    */
   onImageLoad(event: Event) {
     // console.log('currentImage onImageLoad', event);
@@ -469,8 +480,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method used in `modal-gallery.component` to get the index of an image to delete.
-   * @param {Image} image to get the index, or the visible image, if not passed
-   * @returns {number} the index of the image
+   * @param Image image to get the index, or the visible image, if not passed
+   * @returns number the index of the image
    */
   getIndexToDelete(image: Image = this.currentImage): number {
     return getIndex(image, this.images);
@@ -479,7 +490,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Private method to update both `isFirstImage` and `isLastImage` based on
    * the index of the current image.
-   * @param {number} currentIndex is the index of the current image
+   * @param number currentIndex is the index of the current image
    */
   private handleBoundaries(currentIndex: number) {
     if (this.images.length === 1) {
@@ -508,7 +519,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Private method to manage boundary arrows and sliding.
    * This is based on the slideConfig input to enable/disable 'infinite sliding'.
-   * @param {number} index of the visible image
+   * @param number index of the visible image
    */
   private manageSlideConfig(index: number) {
     if (!this.slideConfig || this.slideConfig.infinite === true) {
@@ -524,9 +535,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Private method to check if next/prev actions should be blocked.
    * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
    * If yes, it returns true to say that sliding should be blocked, otherwise not.
-   * @param {number} boundaryIndex that could be either the beginning index (0) or the last index
+   * @param number boundaryIndex that could be either the beginning index (0) or the last index
    *  of images (this.images.length - 1).
-   * @returns {boolean} true if slideConfig.infinite === false and the current index is
+   * @returns boolean true if slideConfig.infinite === false and the current index is
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {

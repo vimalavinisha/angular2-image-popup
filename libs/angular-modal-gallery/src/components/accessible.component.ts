@@ -39,9 +39,9 @@ import { DIRECTION_RIGHT, ENTER_KEY, MOUSE_MAIN_BUTTON_CLICK, NEXT, NOTHING, PRE
 export class AccessibleComponent {
   /**
    * Method to handle navigation events with both Keyboard and Mouse.
-   * @param {string} direction of the navigation that can be either 'next' or 'prev'
-   * @param {KeyboardEvent | MouseEvent} event payload
-   * @returns {number} -1 for PREV, 1 for NEXT and 0 for NOTHING
+   * @param string direction of the navigation that can be either 'next' or 'prev'
+   * @param KeyboardEvent | MouseEvent event payload
+   * @returns number -1 for PREV, 1 for NEXT and 0 for NOTHING
    */
   handleNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent): number {
     if (!event) {
@@ -57,8 +57,8 @@ export class AccessibleComponent {
 
   /**
    * Method to handle events over an image, for instance a keypress with the Keyboard or a Mouse click.
-   * @param {KeyboardEvent | MouseEvent} event payload
-   * @returns {number} 1 for NEXT and 0 for NOTHING
+   * @param KeyboardEvent | MouseEvent event payload
+   * @returns number 1 for NEXT and 0 for NOTHING
    */
   handleImageEvent(event: KeyboardEvent | MouseEvent): number {
     if (!event) {
@@ -74,8 +74,8 @@ export class AccessibleComponent {
 
   /**
    * Private method to handle keyboard events over an image.
-   * @param {KeyboardEvent} event payload
-   * @returns {number} 1 for NEXT and 0 for NOTHING
+   * @param KeyboardEvent event payload
+   * @returns number 1 for NEXT and 0 for NOTHING
    */
   private handleImageKeyboardEvent(event: KeyboardEvent): number {
     const key: number = event.keyCode;
@@ -87,8 +87,8 @@ export class AccessibleComponent {
 
   /**
    * Private method to handle mouse events over an image.
-   * @param {MouseEvent} event payload
-   * @returns {number} 1 for NEXT and 0 for NOTHING
+   * @param MouseEvent event payload
+   * @returns number 1 for NEXT and 0 for NOTHING
    */
   private handleImageMouseEvent(event: MouseEvent): number {
     const mouseBtn: number = event.button;
@@ -100,9 +100,9 @@ export class AccessibleComponent {
 
   /**
    * Method to handle events over an image, for instance a keypress with the Keyboard or a Mouse click.
-   * @param {string} direction of the navigation that can be either 'next' or 'prev'
-   * @param {KeyboardEvent} event payload
-   * @returns {number} -1 for PREV, 1 for NEXT and 0 for NOTHING
+   * @param string direction of the navigation that can be either 'next' or 'prev'
+   * @param KeyboardEvent event payload
+   * @returns number -1 for PREV, 1 for NEXT and 0 for NOTHING
    */
   private handleKeyboardNavigationEvent(direction: string, event: KeyboardEvent): number {
     const key: number = event.keyCode;
@@ -114,9 +114,9 @@ export class AccessibleComponent {
 
   /**
    * Method to handle events over an image, for instance a keypress with the Keyboard or a Mouse click.
-   * @param {string} direction of the navigation that can be either 'next' or 'prev'
-   * @param {MouseEvent} event payload
-   * @returns {number} -1 for PREV, 1 for NEXT and 0 for NOTHING
+   * @param string direction of the navigation that can be either 'next' or 'prev'
+   * @param MouseEvent event payload
+   * @returns number -1 for PREV, 1 for NEXT and 0 for NOTHING
    */
   private handleMouseNavigationEvent(direction: string, event: MouseEvent): number {
     const mouseBtn: number = event.button;

@@ -44,7 +44,7 @@ export class ClickOutsideDirective {
 
   /**
    * Method called by Angular itself every click thanks to `@HostListener`.
-   * @param {MouseEvent} event payload received evey click
+   * @param MouseEvent event payload received evey click
    */
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {

@@ -159,7 +159,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   /**
    * Method called when you click on an image of the plain (or inline) gallery.
    * This will emit the show event with the index number as payload.
-   * @param {number} index of the clicked image
+   * @param number index of the clicked image
    */
   showModalGallery(index: number) {
     this.show.emit(index);
@@ -168,7 +168,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   /**
    * Method called when you click on an image of the plain (or inline) gallery.
    * This will emit the show event with the image as payload.
-   * @param {Image} img is the Image to show
+   * @param Image img is the Image to show
    */
   showModalGalleryByImage(img: Image) {
     const index: number = this.images.findIndex((val: Image) => val && img && val.id === img.id);
@@ -178,8 +178,8 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   /**
    * Method to get `alt attribute`.
    * `alt` specifies an alternate text for an image, if the image cannot be displayed.
-   * @param {Image} image to get its alt description.
-   * @returns {string} alt description of the image
+   * @param Image image to get its alt description.
+   * @returns string alt description of the image
    */
   getAltPlainDescriptionByImage(image: Image): string {
     if (!image) {
@@ -190,8 +190,8 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
 
   /**
    * Method to get the title for an image.
-   * @param {Image} image to get its title
-   * @returns {string} the title of the input image
+   * @param Image image to get its title
+   * @returns string the title of the input image
    */
   getTitleDisplay(image: Image): string {
     let description = '';
@@ -214,9 +214,9 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
 
   /**
    * Method used in the template to track ids in ngFor.
-   * @param {number} index of the array
-   * @param {Image} item of the array
-   * @returns {number} the id of the item
+   * @param number index of the array
+   * @param Image item of the array
+   * @returns number the id of the item
    */
   trackById(index: number, item: Image): number {
     return item.id;
@@ -224,7 +224,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
 
   /**
    * Private method to build and return a `PlainGalleryConfig` object, proving also default values.
-   * @returns {PlainGalleryConfig} the plain gallery configuration
+   * @returns PlainGalleryConfig the plain gallery configuration
    * @throws an Error if layout and strategy aren't compatible
    */
   private initPlainGalleryConfig(): PlainGalleryConfig {
