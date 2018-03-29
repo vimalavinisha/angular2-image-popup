@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/@nrwl/schematics/src/schema.json",
   "project": {
-    "name": "ks89",
-    "npmScope": "ks89",
+    "name": "angular-modal-gallery",
+    "npmScope": "angular-modal-gallery",
     "latestMigration": "20180313-add-tags"
   },
   "apps": [
@@ -37,7 +37,6 @@
       "root": "libs/angular-modal-gallery/src",
       "test": "../../../test.js",
       "appRoot": "",
-      "tsconfig": "tsconfig.app.json",
       "tags": []
     },
     {

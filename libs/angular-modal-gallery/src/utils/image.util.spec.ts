@@ -23,7 +23,7 @@
  */
 
 import { Image } from '../model/image.class';
-import { getIndex } from 'angular-modal-gallery/angular-modal-gallery/src/utils/image.util';
+import { getIndex } from '../utils/image.util';
 
 const imagesMock: Image[] = [
   new Image(0, {

@@ -36,8 +36,7 @@ import { SizeDirective } from '../../directives/size.directive';
 import { WrapDirective } from '../../directives/wrap.directive';
 import { DirectionDirective } from '../../directives/direction.directive';
 import { ATagBgImageDirective } from '../../directives/a-tag-bg-image.directive';
-import { LineLayout, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
-import { GridLayout } from 'angular-modal-gallery/angular-modal-gallery';
+import { LineLayout, GridLayout, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
 let comp: PlainGalleryComponent;
 let fixture: ComponentFixture<PlainGalleryComponent>;

@@ -40,9 +40,7 @@ import { KeyboardServiceConfig } from '../../model/keyboard-service-config.inter
 import { Action } from '../../model/action.enum';
 import { ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
 import { ImageModalEvent } from '../../model/image.class';
-import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
-import { LineLayout, PlainGalleryStrategy } from 'angular-modal-gallery/angular-modal-gallery/src/model/plain-gallery-config.interface';
-import { AdvancedLayout } from 'angular-modal-gallery/angular-modal-gallery';
+import { LineLayout, AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { getIndex } from '../../utils/image.util';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { GalleryService } from '../../services/gallery.service';
