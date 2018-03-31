@@ -186,7 +186,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         bgColor: 'rgba(0, 0, 0, .5)',
         textColor: 'white',
         marginTop: '0px',
-        marginBottom: '5px',
+        marginBottom: '0px',
         marginLeft: '0px',
         marginRight: '0px'
       }
