@@ -1,3 +1,8 @@
+# 5.5.0
+### Features
+- add new spinners https://codepen.io/WebSonata/pen/bRaONB, https://codepen.io/nikhil8krishnan/pen/dMEzGx, https://codepen.io/devilishalchemist/pen/emOVYQ #117
+
+
 # 5.4.0
 ### Features
 - add background, text color, position, size and margin properties to Description interface #133 (requested by @tobi-or-not-tobi)
