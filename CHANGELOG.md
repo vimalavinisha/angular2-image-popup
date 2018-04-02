@@ -7,6 +7,17 @@
 - new official example with angular-cli 6.0.0-beta.5 and angular 6.0.0-rc.0
 
 
+# 5.4.0-beta.3
+### Features
+- add Angular 6 and angular-cli 6 experimental support
+
+### Bugfixes
+- apply default values to description #
+
+### Demos
+- new official example with angular-cli 6.0.0-beta.5 and angular 6.0.0-rc.0
+
+
 # 5.4.0-beta.2
 ### Features
 - flatten description's style property adding also other inputs #133 (requested by @tobi-or-not-tobi)

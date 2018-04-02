@@ -177,7 +177,17 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       }
     };
     this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
-    this.description = Object.assign({}, defaultDescription, this.descriptionConfig);
+    const description: Description = Object.assign({}, defaultDescription, this.descriptionConfig);
+
+    // TODO Improve this terrible to code to apply default values
+    description.style.bgColor = description.style.bgColor || defaultDescription.style.bgColor;
+    description.style.textColor = description.style.textColor || defaultDescription.style.textColor;
+    description.style.marginTop = description.style.marginTop || defaultDescription.style.marginTop;
+    description.style.marginBottom = description.style.marginBottom || defaultDescription.style.marginBottom;
+    description.style.marginLeft = description.style.marginLeft || defaultDescription.style.marginLeft;
+    description.style.marginRight = description.style.marginRight || defaultDescription.style.marginRight;
+
+    this.description = description;
   }
 
   /**
