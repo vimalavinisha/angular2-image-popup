@@ -242,27 +242,45 @@
   <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 4}"></ks-modal-gallery>
 </section>
+<section>
+  <h3>B15 - Simple demo - loading spinner of type Cube Flipping</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+                    [loadingConfig]="{enable: true, type: 5}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>B16 - Simple demo - loading spinner of type Circles</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+                    [loadingConfig]="{enable: true, type: 6}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>B17 - Simple demo - loading spinner of type Explosing Squares</h3>
+  <br>
+  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+                    [loadingConfig]="{enable: true, type: 7}"></ks-modal-gallery>
+</section>
 
 <section>
-  <h3>B15 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
+  <h3>B18 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B16 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
+  <h3>B19 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B17 - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current tab)</h3>
+  <h3>B20 - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current tab)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B18 - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
+  <h3>B21 - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
     buttonAfterHook (mandatory to handle delete events)</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
@@ -272,14 +290,14 @@
                     (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B19 - Simple demo - buttons config CUSTOM strategy with exturl in ANOTHER TAB ('_blank')</h3>
+  <h3>B22 - Simple demo - buttons config CUSTOM strategy with exturl in ANOTHER TAB ('_blank')</h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="customButtonsConfigExtUrlNewTab"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B20 - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome 5</a></h3>
+  <h3>B23 - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome 5</a></h3>
   <br>
   <ks-modal-gallery [modalImages]="images"
                     [downloadable]="true"
@@ -409,5 +427,11 @@
       href="https://github.com/lukehaas/css-loaders">lukehaas/css-loaders</a></li>
     <li><a href="https://github.com/martinvd">Martin van Driel (@martinvd)</a> - <a
       href="https://codepen.io/martinvd/pen/xbQJom">martinvd example on codepen.io</a></li>
+    <li><a href="https://devalchemist.com/">Devilish Alchemist</a> - <a
+      href="https://codepen.io/devilishalchemist/pen/emOVYQ">devilishalchemist example on codepen.io</a></li>
+    <li><a href="https://github.com/nikhil8krishnan">Nikhil Krishnan</a> - <a
+      href="https://codepen.io/nikhil8krishnan/pen/dMEzGx">nikhil8krishnan example on codepen.io</a></li>
+    <li><a href="https://codepen.io/WebSonata/">Anastasiya Kuligina</a> - <a
+      href="https://codepen.io/WebSonata/pen/bRaONB">Anastasiya Kuligina example on codepen.io</a></li>
   </ul>
 </section>
