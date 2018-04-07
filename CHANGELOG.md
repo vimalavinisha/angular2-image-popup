@@ -2,6 +2,7 @@
 ### Bugfixes
 - Fix modal-gallery layout on small screens when there is one image in the array #136 (thanks to @pieterdegraeuwe)
 
+
 # 5.5.0
 ### Features
 - add new spinners https://codepen.io/WebSonata/pen/bRaONB, https://codepen.io/nikhil8krishnan/pen/dMEzGx, https://codepen.io/devilishalchemist/pen/emOVYQ #117
