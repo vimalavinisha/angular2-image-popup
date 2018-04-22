@@ -49,7 +49,7 @@ import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
-import { GalleryService } from '../../services/gallery.service';
+import { GalleryService, InternalGalleryPayload } from '../../services/gallery.service';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { InternalLibImage } from '../../model/image-internal.class';
@@ -72,6 +72,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
   @Input() modalImages: Image[];
+
+  /**
+   * Unique id (>=0) of the current instance of this library. This is useful when you are using
+   * the service to call modal gallery without open it manually.
+   * Right now is optional, but in upcoming major releases will be mandatory!!!
+   */
+  @Input() id = undefined;
 
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
@@ -195,10 +202,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     // call initImages to init images and to emit `hasData` event
     this.initImages();
 
-    this.galleryServiceSubscription = this.galleryService.navigate.subscribe((index: number) => {
-      this.currentImage = this.images[index];
-      // emit a new ImageModalEvent with the index of the current image
-      this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
+    this.galleryServiceSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
+      if (payload && payload.galleryId && payload.galleryId !== this.id) {
+        // console.log('cannot open another gallery with a different id');
+        return;
+      }
+      this.currentImage = this.images[payload.index];
+      this.showModalGallery(payload.index);
     });
   }
 

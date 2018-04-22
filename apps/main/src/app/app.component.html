@@ -3,6 +3,9 @@
 <p>If you want, you can <b>add a random image</b> to every example
   <button (click)="addRandomImage()"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
 </p>
+<p>To open modal gallery with id <input type="number" min="1" [(ngModel)]="galleryId"> at index <input type="number" min="0" max="{{images.length - 1}}" [(ngModel)]="imageIndex">, click here:
+  <button (click)="openModalViaService(galleryId, imageIndex)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open id={{galleryId}} at index={{imageIndex}}</button>
+</p>
 <br>
 <hr>
 
@@ -10,31 +13,31 @@
 <section>
   <h3>Z1 - row plain gallery layout (limit 2) and custom size</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="1" [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryRow"></ks-modal-gallery>
 </section>
 <section>
   <h3>Z1bis - row plain gallery layout space around (limit 2)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="2" [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryRowSpaceAround"></ks-modal-gallery>
 </section>
 <section>
   <h3>Z1tris - row plain gallery layout with a tags and custom rectangular sizes (limit 4)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesRect"
+  <ks-modal-gallery [id]="3" [modalImages]="imagesRect"
                     [plainGalleryConfig]="plainGalleryRowATags"></ks-modal-gallery>
 </section>
 <section>
   <h3>Z2 - column plain gallery layout (limit 3)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="4" [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryColumn"></ks-modal-gallery>
 </section>
 <section>
   <h3>Z3 - grid plain gallery layout and custom size</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="5" [modalImages]="images"
                     [plainGalleryConfig]="plainGalleryGrid"></ks-modal-gallery>
 </section>
 <section>
@@ -59,7 +62,7 @@
       </div>
     </ng-container>
   </div>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="6" [modalImages]="images"
                     [plainGalleryConfig]="customPlainGalleryRowConfig"></ks-modal-gallery>
 </section>
 <section>
@@ -84,7 +87,7 @@
       </div>
     </ng-container>
   </div>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="7" [modalImages]="images"
                     [plainGalleryConfig]="customPlainGalleryColumnConfig"></ks-modal-gallery>
 </section>
 <section>
@@ -100,7 +103,7 @@
       </figure>
     </ng-container>
   </div>
-  <ks-modal-gallery [modalImages]="imagesRect"
+  <ks-modal-gallery [id]="8" [modalImages]="imagesRect"
                     [plainGalleryConfig]="customPlainGalleryRowDescConfig"></ks-modal-gallery>
 </section>
 <br>
@@ -110,22 +113,22 @@
 <section>
   <h3>A1 - Minimal demo - all defaults</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"></ks-modal-gallery>
+  <ks-modal-gallery [id]="9" [modalImages]="images" (show)="onVisibleIndex($event)"></ks-modal-gallery>
 </section>
 <section>
   <h3>A1bis - Minimal demo - all defaults with rect images</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesRect"></ks-modal-gallery>
+  <ks-modal-gallery [id]="9" [modalImages]="imagesRect"></ks-modal-gallery>
 </section>
 <section>
   <h3>A1tris - Minimal demo - all defaults with images of different sizes</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesMixedSizes"></ks-modal-gallery>
+  <ks-modal-gallery [id]="10" [modalImages]="imagesMixedSizes"></ks-modal-gallery>
 </section>
 <section>
   <h3>A2 - Minimal demo - listen for events</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="11" [modalImages]="images"
                     (hasData)="onImageLoaded($event)"
                     (close)="onCloseImageModal($event)"
                     (show)="onVisibleIndex($event)"
@@ -137,7 +140,7 @@
 <section>
   <h3>A3 - Minimal demo - single image</h3>
   <br>
-  <ks-modal-gallery [modalImages]="singleImage"></ks-modal-gallery>
+  <ks-modal-gallery [id]="12" [modalImages]="singleImage"></ks-modal-gallery>
 </section>
 <br>
 <hr>
@@ -146,14 +149,14 @@
 <section>
   <h3>B1 - Simple demo - only current image and buttons (previews and dots are hidden)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="13" [modalImages]="images"
                     [previewConfig]="{visible: false}"
                     [dotsConfig]="{visible: false}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B2 - Simple demo - only current image (buttons, previews and dots are hidden)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="14" [modalImages]="images"
                     [buttonsConfig]="{visible: false, strategy: 1}"
                     [previewConfig]="{visible: false}"
                     [dotsConfig]="{visible: false}"></ks-modal-gallery>
@@ -161,7 +164,7 @@
 <section>
   <h3>B3 - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="15" [modalImages]="images"
                     [slideConfig]="{infinite: false, sidePreviews: {show: false}}"
                     [buttonsConfig]="{visible: false, strategy: 1}"
                     [previewConfig]="{visible: false}"
@@ -170,120 +173,120 @@
 <section>
   <h3>B3bis - Simple demo - custom preview size</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="16" [modalImages]="images"
                     [previewConfig]="{visible: true, size: {width: '90px', height: 'auto'}}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B4 - Simple demo - disable closeOutside</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="17" [modalImages]="images"
                     [enableCloseOutside]="false"></ks-modal-gallery>
 </section>
 <section>
   <h3>B5 - Simple demo - no downloadable at all</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="18" [modalImages]="images"
                     [downloadable]="false"
                     [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
 </section>
 <section>
   <h3>B6 - Simple demo - no download button (only with keyboard)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="19" [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
 </section>
 <section>
   <h3>B7 - Simple demo - download with both button and keyboard</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="20" [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 <section>
   <h3>B8 - Simple demo - infinite sliding but NO side previews</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="21" [modalImages]="images"
                     [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B9 - Simple demo - infinite sliding and side previews</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="22" [modalImages]="images"
                     [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B10 - Simple demo - disable loading spinner</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="23" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: false, type: 1}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B11 - Simple demo - loading spinner of type Standard</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="24" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 1}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B12 - Simple demo - loading spinner of type Circular</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="25" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 2}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B13 - Simple demo - loading spinner of type Bars</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="26" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 3}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B14 - Simple demo - loading spinner of type Dots</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="27" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 4}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B15 - Simple demo - loading spinner of type Cube Flipping</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="28" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 5}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B16 - Simple demo - loading spinner of type Circles</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="29" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 6}"></ks-modal-gallery>
 </section>
 <section>
   <h3>B17 - Simple demo - loading spinner of type Explosing Squares</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesForLoadingSpinner"
+  <ks-modal-gallery [id]="30" [modalImages]="imagesForLoadingSpinner"
                     [loadingConfig]="{enable: true, type: 7}"></ks-modal-gallery>
 </section>
 
 <section>
   <h3>B18 - Simple demo - buttons config DEFAULT strategy (only close)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="31" [modalImages]="images"
                     [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>
 </section>
 <section>
   <h3>B19 - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="32" [modalImages]="images"
                     [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 <section>
   <h3>B20 - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current tab)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="33" [modalImages]="images"
                     [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
 </section>
 <section>
   <h3>B21 - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
     buttonAfterHook (mandatory to handle delete events)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="34" [modalImages]="images"
                     [buttonsConfig]="buttonsConfigFull"
                     (show)="onVisibleIndex($event)"
                     (buttonBeforeHook)="onButtonBeforeHook($event)"
@@ -292,14 +295,14 @@
 <section>
   <h3>B22 - Simple demo - buttons config CUSTOM strategy with exturl in ANOTHER TAB ('_blank')</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="35" [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="customButtonsConfigExtUrlNewTab"></ks-modal-gallery>
 </section>
 <section>
   <h3>B23 - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome 5</a></h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="36" [modalImages]="images"
                     [downloadable]="true"
                     [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (show)="onVisibleIndex($event)"
@@ -313,62 +316,62 @@
 <section>
   <h3>C1 - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="37" [modalImages]="images"
                     [keyboardConfig]="{esc: 81, left: 40, right: 38}"></ks-modal-gallery>
 </section>
 <section>
   <h3>C2 - Advanced demo - custom description always visible</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="38" [modalImages]="images"
                     [description]="customDescription"></ks-modal-gallery>
 </section>
 <section>
   <h3>C3 - Advanced demo - custom description hide if empty</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="39" [modalImages]="images"
                     [description]="customDescriptionHideIfEmpty"></ks-modal-gallery>
 </section>
 <section>
   <h3>C4 - Advanced demo - custom description always hidden</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="40" [modalImages]="images"
                     [description]="customFullDescriptionHidden"></ks-modal-gallery>
 </section>
 <section>
   <h3>C5 - Advanced demo - custom FULL description always visible</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="41" [modalImages]="images"
                     [description]="customFullDescription"></ks-modal-gallery>
 </section>
 <section>
   <h3>C6 - Advanced demo - custom HTML description always visible</h3>
   <br>
-  <ks-modal-gallery [modalImages]="imagesHtmlDescriptions"
+  <ks-modal-gallery [id]="42" [modalImages]="imagesHtmlDescriptions"
                     [description]="customDescription"></ks-modal-gallery>
 </section>
 <section>
   <h3>C7 - Advanced demo - custom description style (always visible)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="43" [modalImages]="images"
                     [description]="customDescriptionStyle"></ks-modal-gallery>
 </section>
 
 <section>
   <h3>C8 - Advanced demo - preview custom configuration with 1 image (clickable)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="44" [modalImages]="images"
                     [previewConfig]="previewConfigOneImage"></ks-modal-gallery>
 </section>
 <section>
   <h3>C9 - Advanced demo - preview custom configuration without arrows (clickable)</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="45" [modalImages]="images"
                     [previewConfig]="previewConfigNoArrows"></ks-modal-gallery>
 </section>
 <section>
   <h3>C10 - Advanced demo - preview custom configuration not clickable</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="46" [modalImages]="images"
                     [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
 </section>
 <!--<section>-->
@@ -381,14 +384,14 @@
 <section>
   <h3>C11 - Advanced demo - preview custom configuration with custom size</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="47" [modalImages]="images"
                     [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
 </section>
 
 <section>
   <h3>C12 - Advanced demo - accessibility config</h3>
   <br>
-  <ks-modal-gallery [modalImages]="images"
+  <ks-modal-gallery [id]="48" [modalImages]="images"
                     [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
 </section>
 

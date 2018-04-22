@@ -24,14 +24,22 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 
+export interface InternalGalleryPayload {
+  galleryId: number | undefined;
+  index: number;
+}
+
 @Injectable()
 export class GalleryService {
-  navigate: EventEmitter<number> = new EventEmitter<number>();
+  navigate: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
 
-  openGallery(index: number) {
-    if (index < 0) {
-      return;
+  openGallery(galleryId: number | undefined, index: number): void {
+    if (galleryId === undefined || galleryId < 0 || index < 0) {
+      throw new Error('Cannot open gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
     }
-    this.navigate.emit(index);
+    this.navigate.emit({
+      galleryId: galleryId,
+      index: index
+    });
   }
 }

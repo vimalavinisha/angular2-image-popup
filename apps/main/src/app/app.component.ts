@@ -51,6 +51,9 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  imageIndex = 0;
+  galleryId = 1;
+
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -521,7 +524,7 @@ export class AppComponent {
       this.addRandomImage();
 
       setTimeout(() => {
-        this.galleryService.openGallery(this.images.length - 1);
+        this.galleryService.openGallery(0, this.images.length - 1);
       }, 0);
     }
   }
@@ -568,6 +571,11 @@ export class AppComponent {
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
+  }
+
+  openModalViaService(id: number | undefined, index: number) {
+    console.log('opening gallery with index ' + index);
+    this.galleryService.openGallery(id, index);
   }
 
   trackById(index: number, item: Image) {
