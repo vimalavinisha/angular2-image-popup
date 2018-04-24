@@ -51,7 +51,7 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  imageIndex = 0;
+  imageIndex = 1;
   galleryId = 1;
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {

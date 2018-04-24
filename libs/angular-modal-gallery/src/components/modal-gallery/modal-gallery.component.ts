@@ -24,6 +24,7 @@
 
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Inject,
@@ -78,7 +79,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * the service to call modal gallery without open it manually.
    * Right now is optional, but in upcoming major releases will be mandatory!!!
    */
-  @Input() id = undefined;
+  @Input() id: number | undefined;
 
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
@@ -191,7 +192,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
    */
-  constructor(private keyboardService: KeyboardService, private galleryService: GalleryService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private keyboardService: KeyboardService,
+    private galleryService: GalleryService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private ref: ChangeDetectorRef
+  ) {}
 
   /**
    * Method ´ngOnInit´ to init images calling `initImages()`.
@@ -203,11 +209,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.initImages();
 
     this.galleryServiceSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
+      console.log('galleryService.navigate payload: ', payload);
       if (payload && payload.galleryId && payload.galleryId !== this.id) {
         // console.log('cannot open another gallery with a different id');
         return;
       }
-      this.currentImage = this.images[payload.index];
       this.showModalGallery(payload.index);
     });
   }
@@ -384,6 +390,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param {number} index of the image to show
    */
   showModalGallery(index: number) {
+    console.log('--- showModalGallery called with index ' + index);
+
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
@@ -400,8 +408,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.opened = true;
     this.currentImage = this.images[index];
 
+    console.log('--- showModalGallery this.opened', this.opened);
+    console.log('--- showModalGallery this.currentImage', this.currentImage);
+
     // emit a new ImageModalEvent with the index of the current image
     this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
+
+    // the following is required, otherwise the view will not be updated
+    this.ref.markForCheck();
   }
 
   /**
