@@ -10,8 +10,8 @@
     "url": "git+https://github.com/Ks89/angular-modal-gallery.git"
   },
   "engines": {
-    "node": ">=9.3.0",
-    "npm": ">=5.6.0"
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
   },
   "scripts": {
     "ng": "ng",
