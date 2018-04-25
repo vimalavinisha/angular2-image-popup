@@ -209,7 +209,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.initImages();
 
     this.galleryServiceSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
-      console.log('galleryService.navigate payload: ', payload);
       if (payload && payload.galleryId && payload.galleryId !== this.id) {
         // console.log('cannot open another gallery with a different id');
         return;
@@ -390,8 +389,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param {number} index of the image to show
    */
   showModalGallery(index: number) {
-    console.log('--- showModalGallery called with index ' + index);
-
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
@@ -407,9 +404,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
     this.opened = true;
     this.currentImage = this.images[index];
-
-    console.log('--- showModalGallery this.opened', this.opened);
-    console.log('--- showModalGallery this.currentImage', this.currentImage);
 
     // emit a new ImageModalEvent with the index of the current image
     this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
