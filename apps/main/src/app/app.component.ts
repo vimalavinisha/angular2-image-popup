@@ -511,8 +511,8 @@ export class AppComponent {
     // will be really closed.
   }
 
-  onCustomButtonBeforeHook(event: ButtonEvent) {
-    console.log('onCustomButtonBeforeHook ', event);
+  onCustomButtonBeforeHook(event: ButtonEvent, galleryId: number | undefined) {
+    console.log('onCustomButtonBeforeHook with galleryId=' + galleryId + ' and event: ', event);
     if (!event || !event.button) {
       return;
     }
@@ -524,13 +524,13 @@ export class AppComponent {
       this.addRandomImage();
 
       setTimeout(() => {
-        this.galleryService.openGallery(0, this.images.length - 1);
+        this.galleryService.openGallery(galleryId, this.images.length - 1);
       }, 0);
     }
   }
 
-  onCustomButtonAfterHook(event: ButtonEvent) {
-    console.log('onCustomButtonAfterHook ', event);
+  onCustomButtonAfterHook(event: ButtonEvent, galleryId: number | undefined) {
+    console.log('onCustomButtonAfterHook with galleryId=' + galleryId + ' and event: ', event);
     if (!event || !event.button) {
       return;
     }
