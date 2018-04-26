@@ -70,17 +70,15 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
-   */
-  @Input() modalImages: Image[];
-
-  /**
    * Unique id (>=0) of the current instance of this library. This is useful when you are using
    * the service to call modal gallery without open it manually.
    * Right now is optional, but in upcoming major releases will be mandatory!!!
    */
   @Input() id: number | undefined;
-
+  /**
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   */
+  @Input() modalImages: Image[];
   /**
    * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
    * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
@@ -196,7 +194,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     private keyboardService: KeyboardService,
     private galleryService: GalleryService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private ref: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   /**
@@ -209,11 +207,18 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.initImages();
 
     this.galleryServiceSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
-      if (payload && payload.galleryId && payload.galleryId !== this.id) {
-        // console.log('cannot open another gallery with a different id');
+      if (!payload) {
         return;
       }
-      this.showModalGallery(payload.index);
+      // if galleryId is not valid OR galleryId is relasted to another instance and not this one
+      if (payload.galleryId < 0 || payload.galleryId !== this.id) {
+        return;
+      }
+      // if image index is not valid
+      if (payload.index < 0 || payload.index > this.images.length) {
+        return;
+      }
+      this.showModalGallery(payload.index, true);
     });
   }
 
@@ -387,8 +392,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
    * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
    * @param {number} index of the image to show
+   * @param {boolean} isCalledByService is true if called by gallery.service, otherwise false
    */
-  showModalGallery(index: number) {
+  showModalGallery(index: number, isCalledByService: boolean = false) {
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
@@ -408,8 +414,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     // emit a new ImageModalEvent with the index of the current image
     this.show.emit(new ImageModalEvent(Action.LOAD, index + 1));
 
-    // the following is required, otherwise the view will not be updated
-    this.ref.markForCheck();
+    if (isCalledByService) {
+      // the following is required, otherwise the view will not be updated
+      // this happens only if called by gallery.service
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   /**
