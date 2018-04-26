@@ -50,6 +50,9 @@ import {
   styleUrls: ['home.scss']
 })
 export class HomeComponent {
+  imageIndex = 1;
+  galleryId = 1;
+
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -452,6 +455,8 @@ export class HomeComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
+  constructor(private galleryService: GalleryService) {}
+
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
@@ -505,17 +510,26 @@ export class HomeComponent {
     // will be really closed.
   }
 
-  onCustomButtonBeforeHook(event: ButtonEvent) {
-    console.log('onCustomButtonBeforeHook ', event);
+  onCustomButtonBeforeHook(event: ButtonEvent, galleryId: number | undefined) {
+    console.log('onCustomButtonBeforeHook with galleryId=' + galleryId + ' and event: ', event);
     if (!event || !event.button) {
       return;
     }
     // Invoked after a click on a button, but before that the related
     // action is applied.
+
+    if (event.button.type === ButtonType.CUSTOM) {
+      console.log('adding a new random image at the end');
+      this.addRandomImage();
+
+      setTimeout(() => {
+        this.galleryService.openGallery(galleryId, this.images.length - 1);
+      }, 0);
+    }
   }
 
-  onCustomButtonAfterHook(event: ButtonEvent) {
-    console.log('onCustomButtonAfterHook ', event);
+  onCustomButtonAfterHook(event: ButtonEvent, galleryId: number | undefined) {
+    console.log('onCustomButtonAfterHook with galleryId=' + galleryId + ' and event: ', event);
     if (!event || !event.button) {
       return;
     }
@@ -556,6 +570,11 @@ export class HomeComponent {
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
+  }
+
+  openModalViaService(id: number | undefined, index: number) {
+    console.log('opening gallery with index ' + index);
+    this.galleryService.openGallery(id, index);
   }
 
   trackById(index: number, item: Image) {

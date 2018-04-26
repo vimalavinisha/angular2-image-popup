@@ -46,6 +46,7 @@ import { AppComponent } from './app.component';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+
     FormsModule,
     HttpClientModule,
     ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
