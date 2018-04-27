@@ -1,3 +1,10 @@
+# 5.6.0-beta.1
+### Features
+- add gallery.service to call modal-gallery methods without plain gallery.
+  In this way you are able to open modal gallery to an image by its index, without clicking on a thumb, but via Component's code.
+  This feature closes these two feature requests #127 (@pieterdegraeuwe) and #131 (@tobi-or-not-tobi)
+  
+
 # 5.5.1
 ### Bugfixes
 - Fix modal-gallery layout on small screens when there is one image in the array #136 (thanks to @pieterdegraeuwe)
