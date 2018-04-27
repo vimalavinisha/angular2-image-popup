@@ -36,6 +36,7 @@ import {
   DescriptionStrategy,
   DotsConfig,
   GridLayout,
+  GalleryService,
   Image,
   ImageModalEvent,
   LineLayout,

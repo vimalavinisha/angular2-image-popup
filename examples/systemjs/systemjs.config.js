@@ -41,7 +41,7 @@
     mousetrap: { main: 'mousetrap.js' },
     'angular-modal-gallery': { main: 'angular-modal-gallery.umd.js' }
   };
-  let ngPackageNames = ['common', 'compiler', 'core', 'platform-browser', 'platform-browser-dynamic'];
+  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic'];
   // Individual files (~300 requests):
   function packIndex(pkgName) {
     packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
