@@ -290,7 +290,8 @@ describe('DotsComponent', () => {
 
     it(`shouldn't display active dot when the currentImage is invalid, because 'isActive' method throws a managed error and return false`, () => {
       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.currentImage = new InternalLibImage(-1, null);
+      // create a fake image not available in comp.images array
+      comp.currentImage = new InternalLibImage(99, IMAGES[0].modal);
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();

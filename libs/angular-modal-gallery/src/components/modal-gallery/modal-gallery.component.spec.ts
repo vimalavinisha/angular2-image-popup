@@ -45,6 +45,7 @@ import { LineLayout, PlainGalleryStrategy } from 'angular-modal-gallery/angular-
 import { AdvancedLayout } from 'angular-modal-gallery/angular-modal-gallery';
 import { getIndex } from '../../utils/image.util';
 import { DescriptionDirective } from '../../directives/description.directive';
+import { GalleryService } from '../../services/gallery.service';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -120,6 +121,10 @@ function initTestBed() {
           provide: KeyboardService,
           useFactory: (injector: KeyboardServiceConfig) => new KeyboardService(injector),
           deps: [KEYBOARD_CONFIGURATION]
+        },
+        {
+          provide: GalleryService,
+          useClass: GalleryService
         },
         {
           provide: KEYBOARD_CONFIGURATION,
