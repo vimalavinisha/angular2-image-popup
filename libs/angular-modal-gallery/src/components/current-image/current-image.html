@@ -2,7 +2,7 @@
       ksKeyboardNavigation [isOpen]="isOpen" (keyPress)="onKeyPress($event)"
       [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel" [title]="accessibilityConfig.mainContainerTitle">
 
-  <a class="nav-left" *ngIf="images?.length > 1"
+  <a class="nav-left"
      [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
      [tabindex]="isFirstImage && !slideConfig?.infinite ? -1 : 0" role="button"
      (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
@@ -29,6 +29,8 @@
       </ng-template>
     </ng-container>
   </ng-container>
+
+
   <figure id="current-figure" [hidden]="loading">
     <img id="current-image"
          class="inside"
@@ -74,7 +76,7 @@
                         [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
   </ng-container>
 
-  <a class="nav-right" *ngIf="images?.length > 1"
+  <a class="nav-right"
      [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
      [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
      (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
