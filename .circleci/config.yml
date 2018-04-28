@@ -11,6 +11,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: npm-install-npm-latest
+          command: sudo npm install -g npm@latest
+      - run:
           name: npm-install-global
           command: sudo npm install -g codeclimate-test-reporter @angular/cli@1.7.4
       - restore_cache:
