@@ -101,9 +101,9 @@ install:
   # install nodejs and dependencies both global and local
   # use appveyor-retry to retry if npm install fails
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
-  - npm install -g npm@5.6.0
+  - npm install -g npm@5.8.0
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g codeclimate-test-reporter @angular/cli@1.6.0
+  - npm install -g codeclimate-test-reporter @angular/cli@1.7.4
   - npm install
   # rebuild again node-sass
   - npm rebuild node-sass --force
