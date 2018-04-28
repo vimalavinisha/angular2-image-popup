@@ -230,7 +230,8 @@ deploy_script:
 # on successful build
 on_success:
   - npm run docs:typedoc
-  - npm run docs:compodoc
+  # TODO restore compodoc
+#  - npm run docs:compodoc
   - codeclimate-test-reporter < .\coverage\lcov.info
   - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info
 
