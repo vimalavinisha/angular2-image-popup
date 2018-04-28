@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: npm-install-npm-latest
-          command: sudo npm install -g npm@6.0.0
+          command: sudo npm install -g npm@5.8.0
       - run:
           name: npm-install-global
           command: sudo npm install -g codeclimate-test-reporter
