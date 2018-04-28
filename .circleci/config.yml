@@ -15,7 +15,7 @@ jobs:
           command: sudo npm install -g npm@6.0.0
       - run:
           name: npm-install-global
-          command: sudo npm install -g codeclimate-test-reporter @angular/cli@1.7.4
+          command: sudo npm install -g codeclimate-test-reporter
 #      - restore_cache:
 #          key: my-project-{{ .Branch }}-{{ checksum "package.json" }}
 #      - run:
