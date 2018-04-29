@@ -320,7 +320,7 @@ describe('ModalGalleryComponent', () => {
         }
       };
 
-      const currentImage: InternalLibImage = IMAGES[IMAGES.length - 1 ];
+      const currentImage: InternalLibImage = IMAGES[IMAGES.length - 1];
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -610,9 +610,46 @@ describe('ModalGalleryComponent', () => {
 
 
     });
+
+
+    const mockGalleryServiceInputs: any = [
+      {id: 0, index: 0},
+      {id: 1, index: 1},
+      {id: 100, index: 2},
+      {id: 2000, index: 3}
+    ];
+
+    mockGalleryServiceInputs.forEach((val: any, index: number) => {
+      it(`should listen for gallery service's navigate events. Test i=${index}`, () => {
+        comp.modalImages = IMAGES;
+        comp.id = val.id;
+        comp.show.subscribe((result: ImageModalEvent) => {
+          // console.log('***-------------------------------------', result);
+          expect(result.action).toBe(Action.LOAD);
+          expect(result.result).toBe(val.index + 1);
+        });
+
+        const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
+        galleryService.openGallery(val.id, val.index);
+      });
+    });
+
   });
 
   describe('------NO------', () => {
+
+    [{id: 1, index: IMAGES.length + 5}, {id: 1, index: IMAGES.length + 100}].forEach((val: any, index: number) => {
+      it(`shouldn't listen for gallery service's navigate events if index is greater then length. Test i=${index}`, () => {
+        comp.modalImages = IMAGES;
+        comp.id = val.id;
+        comp.show.subscribe(() => {
+          fail(`Shouldn't call this, because input params are not valid`);
+        });
+        const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
+        galleryService.openGallery(val.id, val.index);
+      });
+    });
+
     it(`should call onDownload but image is not downloadable`, () => {
       const mockButtonEvent: ButtonEvent = {
         button: <InternalButtonConfig>{type: ButtonType.DOWNLOAD, id: 1},
