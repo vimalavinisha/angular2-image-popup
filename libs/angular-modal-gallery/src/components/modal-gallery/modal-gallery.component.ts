@@ -57,6 +57,7 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { Subscription } from 'rxjs/Subscription';
+import { CurrentImageConfig } from '../../model/current-image-config.interface';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -80,11 +81,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Input() modalImages: Image[];
   /**
-   * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
-   * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
-   */
-  @Input() downloadable = false;
-  /**
    * Object of type `ButtonsConfig` to show/hide buttons.
    */
   @Input() buttonsConfig: ButtonsConfig;
@@ -93,6 +89,28 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * on the semi-transparent background. Enabled by default.
    */
   @Input() enableCloseOutside = true;
+  /**
+   * Interface to configure current image in modal-gallery.
+   * For instance you can disable navigation on click on current image (enabled by default).
+   */
+  @Input() currentImageConfig: CurrentImageConfig;
+  /**
+   * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
+   * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
+   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
+   */
+  @Input() downloadable = false;
+  /**
+   * Object of type `LoadingConfig` that contains fields like enable/disable
+   * and a way to choose a loading spinner.
+   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
+   */
+  @Input() loadingConfig: LoadingConfig;
+  /**
+   * Object of type `Description` to configure and show image descriptions.
+   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
+   */
+  @Input() description: Description;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide dots.
@@ -103,11 +121,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * For instance, it contains a param to show/hide previews.
    */
   @Input() previewConfig: PreviewConfig;
-  /**
-   * Object of type `LoadingConfig` that contains fields like enable/disable
-   * and a way to choose a loading spinner.
-   */
-  @Input() loadingConfig: LoadingConfig;
   /**
    * Object of type `SlideConfig` to init side previews and `infinite sliding`.
    */
@@ -121,10 +134,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
   @Input() accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-  /**
-   * Object of type `Description` to configure and show image descriptions.
-   */
-  @Input() description: Description;
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */

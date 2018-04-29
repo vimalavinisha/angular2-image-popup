@@ -1,3 +1,8 @@
+# 5.7.0
+### Features
+- Add optional param to disable click events on the current image #135 (@iss936)
+
+
 # 5.6.0
 ### Features
 - add gallery.service to call modal-gallery methods without plain gallery.
@@ -6,6 +11,9 @@
 
 ### Testing
 - add unit testing for both component and service
+
+### CI
+- improve CI configs
 
 
 # 5.6.0-beta.1

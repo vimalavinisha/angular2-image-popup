@@ -3,10 +3,14 @@
 <p>If you want, you can <b>add a random image</b> to every example
   <button (click)="addRandomImage()"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
 </p>
-<p>To open modal gallery with id <input type="number" min="1" max="49" [(ngModel)]="galleryId"> at index <input type="number" min="1" [(ngModel)]="imageIndex">, click here:
-  <button (click)="openModalViaService(galleryId, imageIndex - 1)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open id={{galleryId}} at index={{imageIndex}}</button>
+<p>To open modal gallery with id <input type="number" min="1" max="49" [(ngModel)]="galleryId"> at index <input
+  type="number" min="1" [(ngModel)]="imageIndex">, click here:
+  <button (click)="openModalViaService(galleryId, imageIndex - 1)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open
+    id={{galleryId}} at index={{imageIndex}}
+  </button>
 </p>
-<p><i>You cannot use all indexes above for every ids, because some galleries in this page have different number of images!</i></p>
+<p><i>You cannot use all indexes above for every ids, because some galleries in this page have different number of
+  images!</i></p>
 <br>
 <hr>
 
@@ -278,7 +282,8 @@
                     [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B20 - (id=34) - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current tab)</h3>
+  <h3>B20 - (id=34) - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current
+    tab)</h3>
   <br>
   <ks-modal-gallery [id]="34" [modalImages]="images"
                     [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>
@@ -301,8 +306,10 @@
                     [buttonsConfig]="customButtonsConfigExtUrlNewTab"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B23 - (id=37) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome 5</a></h3>
-  <p><i>Be careful to use the id=37 also in the Component. This is necessary here, because I have many instances of angular-modal-gallery in a single page</i></p>
+  <h3>B23 - (id=37) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
+    5</a></h3>
+  <p><i>Be careful to use the id=37 also in the Component. This is necessary here, because I have many instances of
+    angular-modal-gallery in a single page</i></p>
   <br>
   <ks-modal-gallery [id]="37" [modalImages]="images"
                     [downloadable]="true"
@@ -395,6 +402,12 @@
   <br>
   <ks-modal-gallery [id]="49" [modalImages]="images"
                     [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
+</section>
+
+<section>
+  <h3>C13 - (id=50) - Advanced demo - disable clicks on current image in modal-image</h3>
+  <br>
+  <ks-modal-gallery [id]="50" [modalImages]="images" [currentImageConfig]="{navigateOnClick: false}"></ks-modal-gallery>
 </section>
 
 <br><br>

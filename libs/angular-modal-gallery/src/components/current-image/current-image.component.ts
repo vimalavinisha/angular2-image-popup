@@ -38,6 +38,7 @@ import { SlideConfig } from '../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
+import { CurrentImageConfig } from '../../model/current-image-config.interface';
 
 /**
  * Interface to describe the Load Event, used to
@@ -74,10 +75,21 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input() isOpen: boolean;
   /**
+   * Interface to configure current image in modal-gallery.
+   * For instance you can disable navigation on click on current image (enabled by default).
+   */
+  @Input() currentImageConfig: CurrentImageConfig;
+  /**
    * Object of type `LoadingConfig` that contains fields like enable/disable
    * and a way to choose a loading spinner.
+   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
    */
   @Input() loadingConfig: LoadingConfig;
+  /**
+   * Object of type `Description` to configure and show image descriptions.
+   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
+   */
+  @Input() descriptionConfig: Description;
   /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
@@ -87,10 +99,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
   @Input() accessibilityConfig: AccessibilityConfig;
-  /**
-   * Object of type `Description` to configure and show image descriptions.
-   */
-  @Input() descriptionConfig: Description;
   /**
    * Object of type `KeyboardConfig` to assign custom keys to both ESC, RIGHT and LEFT keyboard's actions.
    */
@@ -135,13 +143,20 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   loading = true;
   /**
+   * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configCurrentImage: CurrentImageConfig;
+  /**
    * Object of type `LoadingConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
+   * TODO: this will be removed in version 6.0.0 because it will be into configCurrentImage
    */
   configLoading: LoadingConfig;
   /**
    * `Description` object initialized applying transformations, default values
    * and so on to the input of the same type.
+   * TODO: this will be removed in version 6.0.0 because it will be into configCurrentImage
    */
   description: Description;
 
@@ -176,10 +191,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         marginRight: '0px'
       }
     };
+    const defaultCurrentImageConfig: CurrentImageConfig = { navigateOnClick: true };
+
     this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
     const description: Description = Object.assign({}, defaultDescription, this.descriptionConfig);
 
-    // TODO Improve this terrible to code to apply default values
+    // TODO Improve this terrible code to apply default values
     description.style.bgColor = description.style.bgColor || defaultDescription.style.bgColor;
     description.style.textColor = description.style.textColor || defaultDescription.style.textColor;
     description.style.marginTop = description.style.marginTop || defaultDescription.style.marginTop;
@@ -188,6 +205,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     description.style.marginRight = description.style.marginRight || defaultDescription.style.marginRight;
 
     this.description = description;
+
+    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
   }
 
   /**
@@ -348,11 +367,18 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method called by events from both keyboard and mouse on an image.
-   * This will invoke the nextImage method.
+   * This will invoke the nextImage method (except for click events, because It checks also if navigateOnClick === true).
    * @param {KeyboardEvent | MouseEvent} event payload
    * @param {Action} action that triggered the event or `Action.NORMAL` if not provided
    */
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+    // check if triggered by a mouse click
+    // If yes, It should block navigation when navigateOnClick is false
+    if (action === Action.CLICK && !this.configCurrentImage.navigateOnClick) {
+      // a user has requested to block navigation via configCurrentImage.navigateOnClick property
+      return;
+    }
+
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
       this.nextImage(action);
