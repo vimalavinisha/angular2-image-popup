@@ -85,7 +85,7 @@ matrix:
   fast_finish: true     # set this flag to immediately finish build once one of the jobs fails.
 
 # build cache to preserve files/folders between builds
-cache: node_modules -> package.json
+#cache: node_modules -> package.json
 
 # enable service required for build/tests
 #services:
