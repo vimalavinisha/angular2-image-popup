@@ -56,8 +56,7 @@ Thumbs.db
 # Examples
 /examples/systemjs/app/*.js
 /examples/systemjs/app/*.map
-/examples/webpack/docs/
-/examples/webpack/dist/
 /examples/angular-cli/dist/
 /examples/angular-cli-material/dist/
+/examples/angular-cli-6/dist/
 /examples/universal-starter/dist/

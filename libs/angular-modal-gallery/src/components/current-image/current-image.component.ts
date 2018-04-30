@@ -28,7 +28,7 @@ import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { Action } from '../../model/action.enum';
-import { Description, DescriptionStrategy } from '../../model/description.interface';
+import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { Image, ImageModalEvent } from '../../model/image.class';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { Keyboard } from '../../model/keyboard.enum';
@@ -177,36 +177,46 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   ngOnInit() {
     const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
+    this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
+
+    const defaultCurrentImageConfig: CurrentImageConfig = { navigateOnClick: true };
+    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
+
+    const defaultDescriptionStyle: DescriptionStyle = {
+      bgColor: 'rgba(0, 0, 0, .5)',
+      textColor: 'white',
+      marginTop: '0px',
+      marginBottom: '0px',
+      marginLeft: '0px',
+      marginRight: '0px'
+    };
     const defaultDescription: Description = {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
       imageText: 'Image ',
       numberSeparator: '/',
       beforeTextDescription: ' - ',
-      style: {
-        bgColor: 'rgba(0, 0, 0, .5)',
-        textColor: 'white',
-        marginTop: '0px',
-        marginBottom: '0px',
-        marginLeft: '0px',
-        marginRight: '0px'
-      }
+      style: defaultDescriptionStyle
     };
-    const defaultCurrentImageConfig: CurrentImageConfig = { navigateOnClick: true };
 
-    this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
+    const descriptionStyle: DescriptionStyle = Object.assign({}, defaultDescriptionStyle, this.descriptionConfig.style);
     const description: Description = Object.assign({}, defaultDescription, this.descriptionConfig);
-
-    // TODO Improve this terrible code to apply default values
-    description.style.bgColor = description.style.bgColor || defaultDescription.style.bgColor;
-    description.style.textColor = description.style.textColor || defaultDescription.style.textColor;
-    description.style.marginTop = description.style.marginTop || defaultDescription.style.marginTop;
-    description.style.marginBottom = description.style.marginBottom || defaultDescription.style.marginBottom;
-    description.style.marginLeft = description.style.marginLeft || defaultDescription.style.marginLeft;
-    description.style.marginRight = description.style.marginRight || defaultDescription.style.marginRight;
-
+    this.description.style = descriptionStyle;
     this.description = description;
 
-    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
+    // // TODO Improve this terrible code to apply default values
+    // if (description.style) {
+    //   const descriptionStyle: DescriptionStyle = {
+    //     bgColor: defaultDescription.style.bgColor,
+    //     textColor: defaultDescription.style.textColor,
+    //     marginTop: defaultDescription.style.marginTop,
+    //     marginBottom: defaultDescription.style.marginBottom,
+    //     marginLeft: defaultDescription.style.marginLeft,
+    //     marginRight: defaultDescription.style.marginRight
+    //   };
+    //   description.style = descriptionStyle;
+    // } else {
+    //   description.style = defaultDescription.style;
+    // }
   }
 
   /**
@@ -369,15 +379,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method called by events from both keyboard and mouse on an image.
-<<<<<<< HEAD
-   * This will invoke the nextImage method (except for click events, because It checks also if navigateOnClick === true).
-   * @param {KeyboardEvent | MouseEvent} event payload
-   * @param {Action} action that triggered the event or `Action.NORMAL` if not provided
-=======
    * This will invoke the nextImage method.
    * @param KeyboardEvent | MouseEvent event payload
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
->>>>>>> feat(): [BREAKING CHANGE] migrate to ng-packagr 2 and remove webpack example + remove {...} in all typedoc comments
    */
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     // check if triggered by a mouse click

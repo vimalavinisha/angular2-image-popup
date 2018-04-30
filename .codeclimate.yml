@@ -28,6 +28,7 @@ ratings:
   - "**.css"
   - "**.scss"
 exclude_paths:
+- "@ks89"
 - "node_modules/"
 - ".circleci/"
 - ".github/"
@@ -42,8 +43,6 @@ exclude_paths:
 - "Jenkinsfile"
 - "Jenkinsfile-local-macOS"
 - "sonar-project.properties"
-- "angular-modal-gallery/"
-- "@ks89"
 - "*.ngfactory.ts"
 - "*.ngsummary.json"
 - "examples/"

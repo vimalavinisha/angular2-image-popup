@@ -219,8 +219,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       if (!payload) {
         return;
       }
-      // if galleryId is not valid OR galleryId is relasted to another instance and not this one
-      if (payload.galleryId < 0 || payload.galleryId !== this.id) {
+      // if galleryId is not valid OR galleryId is related to another instance and not this one
+      if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
         return;
       }
       // if image index is not valid
@@ -400,12 +400,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * It will also register a new `keyboardService` to catch keyboard's events to download the current
    * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
    * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
-<<<<<<< HEAD
-   * @param {number} index of the image to show
-   * @param {boolean} isCalledByService is true if called by gallery.service, otherwise false
-=======
    * @param number index of the image to show
->>>>>>> feat(): [BREAKING CHANGE] migrate to ng-packagr 2 and remove webpack example + remove {...} in all typedoc comments
+   * @param boolean isCalledByService is true if called by gallery.service, otherwise false
    */
   showModalGallery(index: number, isCalledByService: boolean = false) {
     // hides scrollbar
