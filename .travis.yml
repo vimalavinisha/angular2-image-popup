@@ -58,5 +58,5 @@ cache:
   apt: true
   bundler: true
   directories:
-    - "$HOME/.npm"
+    - ./node_modules
     - '$HOME/.sonar/cache'

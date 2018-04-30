@@ -5,19 +5,19 @@ echo "preparing build on $TRAVIS_OS_NAME"
 npm run clean:all
 
 cd examples/systemjs
-npm ci
+npm install
 cd ../..
 cd examples/webpack
-npm ci
+npm install
 cd ../..
 cd examples/angular-cli
-npm ci
+npm install
 cd ../..
 cd examples/angular-cli-material
-npm ci
+npm install
 cd ../..
 cd examples/universal
-npm ci
+npm install
 cd ../..
 
 echo "npm run build library on $TRAVIS_OS_NAME"
