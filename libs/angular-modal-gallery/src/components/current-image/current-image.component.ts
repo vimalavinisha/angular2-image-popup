@@ -177,11 +177,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   ngOnInit() {
     const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
-    this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
-
-    const defaultCurrentImageConfig: CurrentImageConfig = { navigateOnClick: true };
-    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
-
     const defaultDescriptionStyle: DescriptionStyle = {
       bgColor: 'rgba(0, 0, 0, .5)',
       textColor: 'white',
@@ -197,26 +192,28 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       beforeTextDescription: ' - ',
       style: defaultDescriptionStyle
     };
+    const defaultCurrentImageConfig: CurrentImageConfig = { navigateOnClick: true };
 
-    const descriptionStyle: DescriptionStyle = Object.assign({}, defaultDescriptionStyle, this.descriptionConfig.style);
+    this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
     const description: Description = Object.assign({}, defaultDescription, this.descriptionConfig);
-    this.description.style = descriptionStyle;
+
+    // TODO Improve this terrible code to apply default values
+    if (description.style) {
+      description.style = {
+        bgColor: description.style.bgColor || defaultDescriptionStyle.bgColor,
+        textColor: description.style.textColor || defaultDescriptionStyle.textColor,
+        marginTop: description.style.marginTop || defaultDescriptionStyle.marginTop,
+        marginBottom: description.style.marginBottom || defaultDescriptionStyle.marginBottom,
+        marginLeft: description.style.marginLeft || defaultDescriptionStyle.marginLeft,
+        marginRight: description.style.marginRight || defaultDescriptionStyle.marginRight
+      };
+    } else {
+      description.style = defaultDescriptionStyle;
+    }
+
     this.description = description;
 
-    // // TODO Improve this terrible code to apply default values
-    // if (description.style) {
-    //   const descriptionStyle: DescriptionStyle = {
-    //     bgColor: defaultDescription.style.bgColor,
-    //     textColor: defaultDescription.style.textColor,
-    //     marginTop: defaultDescription.style.marginTop,
-    //     marginBottom: defaultDescription.style.marginBottom,
-    //     marginLeft: defaultDescription.style.marginLeft,
-    //     marginRight: defaultDescription.style.marginRight
-    //   };
-    //   description.style = descriptionStyle;
-    // } else {
-    //   description.style = defaultDescription.style;
-    // }
+    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
   }
 
   /**
