@@ -80,17 +80,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input() currentImageConfig: CurrentImageConfig;
   /**
-   * Object of type `LoadingConfig` that contains fields like enable/disable
-   * and a way to choose a loading spinner.
-   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
-   */
-  @Input() loadingConfig: LoadingConfig;
-  /**
-   * Object of type `Description` to configure and show image descriptions.
-   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
-   */
-  @Input() descriptionConfig: Description;
-  /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
   @Input() slideConfig: SlideConfig;
@@ -147,18 +136,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * applying transformations, default values and so on to the input of the same type.
    */
   configCurrentImage: CurrentImageConfig;
-  /**
-   * Object of type `LoadingConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   * TODO: this will be removed in version 6.0.0 because it will be into configCurrentImage
-   */
-  configLoading: LoadingConfig;
-  /**
-   * `Description` object initialized applying transformations, default values
-   * and so on to the input of the same type.
-   * TODO: this will be removed in version 6.0.0 because it will be into configCurrentImage
-   */
-  description: Description;
 
   /**
    * Private object without type to define all swipe actions used by hammerjs.
@@ -171,7 +148,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   };
 
   /**
-   * Method ´ngOnInit´ to build both `defaultLoading` and `defaultDescription` applying default values.
+   * Method ´ngOnInit´ to build `configCurrentImage` applying default values.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
@@ -192,28 +169,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       beforeTextDescription: ' - ',
       style: defaultDescriptionStyle
     };
-    const defaultCurrentImageConfig: CurrentImageConfig = { navigateOnClick: true };
-
-    this.configLoading = Object.assign({}, defaultLoading, this.loadingConfig);
-    const description: Description = Object.assign({}, defaultDescription, this.descriptionConfig);
-
-    // TODO Improve this terrible code to apply default values
-    if (description.style) {
-      description.style = {
-        bgColor: description.style.bgColor || defaultDescriptionStyle.bgColor,
-        textColor: description.style.textColor || defaultDescriptionStyle.textColor,
-        marginTop: description.style.marginTop || defaultDescriptionStyle.marginTop,
-        marginBottom: description.style.marginBottom || defaultDescriptionStyle.marginBottom,
-        marginLeft: description.style.marginLeft || defaultDescriptionStyle.marginLeft,
-        marginRight: description.style.marginRight || defaultDescriptionStyle.marginRight
-      };
-    } else {
-      description.style = defaultDescriptionStyle;
-    }
-
-    this.description = description;
+    const defaultCurrentImageConfig: CurrentImageConfig = {
+      navigateOnClick: true,
+      loadingConfig: defaultLoading,
+      description: defaultDescription,
+      downloadable: false
+    };
 
     this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
+    this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
   }
 
   /**
@@ -223,8 +187,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
-    // console.log('currentImage onChanges loading before', this.loading);
-
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
       return;
@@ -239,19 +201,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       console.error('Cannot get the current image index in current-image');
       throw err;
     }
-
-    // TODO why I was using this 'this.changeImage.emit(new ImageModalEvent(Action.LOAD, index))' ???
-    // if not currently loaded
-    // console.log('currentImage onChanges current', current);
-    // if (current && !current.previouslyLoaded) {
-    //   console.log('currentImage onChanges changing loading');
-    //   // this.loading = !current.previouslyLoaded;
-    //   this.changeImage.emit(new ImageModalEvent(Action.LOAD, index));
-    //   // this.loading = false;
-    //   console.log('currentImage onChanges loading changed');
-    // }
-
-    // console.log('currentImage onChanges loading after', this.loading);
 
     if (this.isOpen) {
       this.manageSlideConfig(index);
@@ -284,24 +233,19 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to get the image description based on the image object itself.
    * If you provide a full description this will be the visible description, otherwise,
-<<<<<<< HEAD
-   * it will be built using the `Description` object, concatenating its fields with a specific logic.
-   * @param {Image} image to get its description. If not provided it will be the current image
-=======
    * it will be built using the `Description` object, concatenating its fields.
    * @param Image image to get its description. If not provided it will be the current image
->>>>>>> feat(): [BREAKING CHANGE] migrate to ng-packagr 2 and remove webpack example + remove {...} in all typedoc comments
    * @returns String description of the image (or the current image if not provided)
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    if (!this.description) {
-      throw new Error('To show image descriptions, description input must be a valid object implementing the Description interface');
+    if (!this.configCurrentImage.description) {
+      throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
 
-    switch (this.description.strategy) {
+    switch (this.configCurrentImage.description.strategy) {
       case DescriptionStrategy.HIDE_IF_EMPTY:
         return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
@@ -445,8 +389,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param Event event that triggered the load
    */
   onImageLoad(event: Event) {
-    // console.log('currentImage onImageLoad', event);
-
     const loadImageData: ImageLoadEvent = {
       status: true,
       index: getIndex(this.currentImage, this.images),
@@ -454,8 +396,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     };
 
     this.loadImage.emit(loadImageData);
-
-    // console.log('currentImage onImageLoad loadImageData', loadImageData);
 
     this.loading = false;
   }

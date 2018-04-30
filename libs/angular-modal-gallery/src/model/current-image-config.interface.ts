@@ -22,13 +22,15 @@
  SOFTWARE.
  */
 
+import { LoadingConfig } from './loading-config.interface';
+import { Description } from './description.interface';
+
 /**
  * Interface `CurrentImageConfig` to change current image behaviour in modal-gallery.
  */
 export interface CurrentImageConfig {
   navigateOnClick?: boolean;
-  // TODO move here these inputs from version 6.0.0
-  // downloadable: boolean;
-  // loadingConfig: LoadingConfig;
-  // description: Description
+  downloadable?: boolean;
+  loadingConfig?: LoadingConfig;
+  description?: Description;
 }

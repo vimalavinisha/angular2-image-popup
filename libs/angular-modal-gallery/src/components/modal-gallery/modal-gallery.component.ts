@@ -43,9 +43,7 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
-import { Description } from '../../model/description.interface';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
-import { LoadingConfig } from '../../model/loading-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
@@ -94,23 +92,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * For instance you can disable navigation on click on current image (enabled by default).
    */
   @Input() currentImageConfig: CurrentImageConfig;
-  /**
-   * Boolean required to enable image download with both ctrl+s/cmd+s and download button.
-   * If you want to show enable button, this is not enough. You have to use also `buttonsConfig`.
-   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
-   */
-  @Input() downloadable = false;
-  /**
-   * Object of type `LoadingConfig` that contains fields like enable/disable
-   * and a way to choose a loading spinner.
-   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
-   */
-  @Input() loadingConfig: LoadingConfig;
-  /**
-   * Object of type `Description` to configure and show image descriptions.
-   * TODO: this will be removed in version 6.0.0 because it will be into currentImageConfig
-   */
-  @Input() description: Description;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide dots.
@@ -509,7 +490,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * It contains also a logic to enable downloading features also for IE11.
    */
   downloadImage() {
-    if (!this.downloadable) {
+    if (this.currentImageConfig && !this.currentImageConfig.downloadable) {
       return;
     }
     // If IE11 or Microsoft Edge use msSaveBlob(...)
