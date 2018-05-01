@@ -691,7 +691,7 @@ describe('ModalGalleryComponent', () => {
       const currentImage: InternalLibImage = IMAGES[0];
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
-      comp.downloadable = false; // images aren't downloadable
+      comp.currentImageConfig = {downloadable: false}; // images aren't downloadable
 
       comp.ngOnChanges(getSimpleChangesMock());
 
