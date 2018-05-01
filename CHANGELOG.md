@@ -1,3 +1,9 @@
+# 5.7.1
+### Bugfixes
+- getDescriptionToDisplay is used in current-image.html also for titles. So, when strategy is ALWAYS_HIDDEN,
+  titles will be always ‘’. That’s wrong, because I should hide only descriptions not titles (useful for accessibility purposes)!
+
+
 # 5.7.0
 ### Features
 - Add optional param to disable click events on the current image #135 (@iss936)

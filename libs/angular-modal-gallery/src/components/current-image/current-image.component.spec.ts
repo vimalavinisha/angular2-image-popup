@@ -146,33 +146,25 @@ const TEST_MODEL_INFINITE: TestModel[] = [
   }
 ];
 
-const TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS: TestModel[] = [
-  Object.assign({}, TEST_MODEL[0], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[1], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[2], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[3], {leftPreviewTitle: '', rightPreviewTitle: ''}),
-  Object.assign({}, TEST_MODEL[4], {leftPreviewTitle: '', rightPreviewTitle: ''})
-];
-
 const TEST_MODEL_HIDEEMPTY_DESCRIPTIONS: TestModel[] = [
   Object.assign({}, TEST_MODEL[0], {
-    currentImgTitle: '', leftPreviewTitle: '',
-    rightPreviewTitle: 'Description 2', currentDescription: 'Image 1/5'
+    currentImgTitle: 'Image 1/5', leftPreviewTitle: '',
+    rightPreviewTitle: 'Image 2/5 - Description 2', currentDescription: 'Image 1/5'
   }),
   Object.assign({}, TEST_MODEL[1], {
-    currentImgTitle: 'Description 2', leftPreviewTitle: '',
-    rightPreviewTitle: 'Description 3', currentDescription: 'Description 2'
+    currentImgTitle: 'Image 2/5 - Description 2', leftPreviewTitle: 'Image 1/5',
+    rightPreviewTitle: 'Image 3/5 - Description 3', currentDescription: 'Description 2'
   }),
   Object.assign({}, TEST_MODEL[2], {
-    currentImgTitle: 'Description 3', leftPreviewTitle: 'Description 2',
-    rightPreviewTitle: 'Description 4', currentDescription: 'Description 3'
+    currentImgTitle: 'Image 3/5 - Description 3', leftPreviewTitle: 'Image 2/5 - Description 2',
+    rightPreviewTitle: 'Image 4/5 - Description 4', currentDescription: 'Description 3'
   }),
   Object.assign({}, TEST_MODEL[3], {
-    currentImgTitle: 'Description 4', leftPreviewTitle: 'Description 3',
-    rightPreviewTitle: '', currentDescription: 'Description 4'
+    currentImgTitle: 'Image 4/5 - Description 4', leftPreviewTitle: 'Image 3/5 - Description 3',
+    rightPreviewTitle: 'Image 5/5', currentDescription: 'Description 4'
   }),
   Object.assign({}, TEST_MODEL[4], {
-    currentImgTitle: '', leftPreviewTitle: 'Description 4',
+    currentImgTitle: 'Image 5/5', leftPreviewTitle: 'Image 4/5 - Description 4',
     rightPreviewTitle: '', currentDescription: 'Image 5/5'
   })
 ];
@@ -277,7 +269,9 @@ function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withD
   expect(currentImageElement.attributes['class']).toBe('inside');
   expect(currentImageElement.attributes['role']).toBe('img');
   expect(currentImageElement.properties['src']).toBe(currentImage.modal.img);
-  expect(currentImageElement.properties['title']).toBe(withDescription ? val.currentImgTitle : '');
+  console.log('****-----------checkCurrentImage', val);
+  console.log('****-----------checkCurrentImage title', currentImageElement.properties['title']);
+  expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
   expect(currentImageElement.properties['alt']).toBe(val.currentAlt);
   expect(currentImageElement.properties['tabIndex']).toBe(0);
 
@@ -539,7 +533,7 @@ describe('CurrentImageComponent', () => {
       });
     });
 
-    TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
