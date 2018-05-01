@@ -7,8 +7,6 @@
 ### Testing
 - add unit testing for both component and service
 
-### 
-
 
 # 5.6.0-beta.1
 ### Features
