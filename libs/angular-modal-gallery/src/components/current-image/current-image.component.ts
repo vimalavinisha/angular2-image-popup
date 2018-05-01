@@ -275,16 +275,16 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method to get the image description based on input params.
+   * Method to get the image description based on the image object itself.
    * If you provide a full description this will be the visible description, otherwise,
-   * it will be built using the `Description` object, concatenating its fields.
+   * it will be built using the `Description` object, concatenating its fields with a specific logic.
    * @param {Image} image to get its description. If not provided it will be the current image
    * @returns String description of the image (or the current image if not provided)
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
     if (!this.description) {
-      throw new Error('Description input must be a valid object implementing the Description interface');
+      throw new Error('To show image descriptions, description input must be a valid object implementing the Description interface');
     }
 
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
@@ -294,30 +294,27 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
         return '';
+      default:
+        // ----------- DescriptionStrategy.ALWAYS_VISIBLE -----------------
+        return this.buildTextDescription(image, imageWithoutDescription);
     }
+  }
 
-    // ----------- DescriptionStrategy.ALWAYS_VISIBLE -----------------
-
-    // If customFullDescription use it, otherwise proceed to build a description
-    if (this.description.customFullDescription && this.description.customFullDescription !== '') {
-      return this.description.customFullDescription;
+  /**
+   * Method to get the title attributes based on descriptions.
+   * This is useful to prevent accessibility issues, because if DescriptionStrategy is ALWAYS_HIDDEN,
+   * it prevents an empty string as title.
+   * @param {Image} image to get its description. If not provided it will be the current image
+   * @returns String title of the image based on descriptions
+   * @throws an Error if description isn't available
+   */
+  getTitleToDisplay(image: Image = this.currentImage): string {
+    if (!this.description) {
+      throw new Error('To show image titles, description input must be a valid object implementing the Description interface');
     }
-
-    const currentIndex: number = getIndex(image, this.images);
-    // If the current image hasn't a description,
-    // prevent to write the ' - ' (or this.description.beforeTextDescription)
-
-    const prevDescription: string = this.description.imageText ? this.description.imageText : '';
-    const midSeparator: string = this.description.numberSeparator ? this.description.numberSeparator : '';
-    const middleDescription: string = currentIndex + 1 + midSeparator + this.images.length;
-
-    if (imageWithoutDescription) {
-      return prevDescription + middleDescription;
-    }
-
-    const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
-    const endDescription: string = this.description.beforeTextDescription + currImgDescription;
-    return prevDescription + middleDescription + endDescription;
+    const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
+    const description: string = this.buildTextDescription(image, imageWithoutDescription);
+    return description;
   }
 
   /**
@@ -566,5 +563,35 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       newIndex = this.images.length - 1; // start from the last index
     }
     return this.images[newIndex];
+  }
+
+  /**
+   * Private method to build a text description.
+   * This is used also to create titles.
+   * @param {Image} image to get its description. If not provided it will be the current image.
+   * @param {boolean} imageWithoutDescription is a boolean that it's true if the image hasn't a 'modal' description.
+   * @returns String description built concatenating image fields with a specific logic.
+   */
+  private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
+    // If customFullDescription use it, otherwise proceed to build a description
+    if (this.description.customFullDescription && this.description.customFullDescription !== '') {
+      return this.description.customFullDescription;
+    }
+
+    const currentIndex: number = getIndex(image, this.images);
+    // If the current image hasn't a description,
+    // prevent to write the ' - ' (or this.description.beforeTextDescription)
+
+    const prevDescription: string = this.description.imageText ? this.description.imageText : '';
+    const midSeparator: string = this.description.numberSeparator ? this.description.numberSeparator : '';
+    const middleDescription: string = currentIndex + 1 + midSeparator + this.images.length;
+
+    if (imageWithoutDescription) {
+      return prevDescription + middleDescription;
+    }
+
+    const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
+    const endDescription: string = this.description.beforeTextDescription + currImgDescription;
+    return prevDescription + middleDescription + endDescription;
   }
 }

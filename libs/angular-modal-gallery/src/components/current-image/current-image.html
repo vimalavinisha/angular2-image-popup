@@ -1,6 +1,7 @@
 <main class="main-image-container"
       ksKeyboardNavigation [isOpen]="isOpen" (keyPress)="onKeyPress($event)"
-      [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel" [title]="accessibilityConfig.mainContainerTitle">
+      [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel"
+      [title]="accessibilityConfig.mainContainerTitle">
 
   <a class="nav-left"
      [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
@@ -19,7 +20,7 @@
            [hidden]="loading"
            ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
            [attr.aria-label]="leftPreview.modal.ariaLabel"
-           [title]="leftPreview.modal.title ? leftPreview.modal.title : getDescriptionToDisplay(leftPreview)"
+           [title]="leftPreview.modal.title ? leftPreview.modal.title : getTitleToDisplay(leftPreview)"
            alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
            [tabindex]="0" role="img"
            (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)"/>
@@ -36,7 +37,7 @@
          class="inside"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
-         [title]="currentImage.modal.title ? currentImage.modal.title : getDescriptionToDisplay()"
+         [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
          alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
          [tabindex]="0" role="img"
          (load)="onImageLoad($event)"
@@ -59,7 +60,7 @@
            [hidden]="loading"
            ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
            [attr.aria-label]="rightPreview.modal.ariaLabel"
-           [title]="rightPreview.modal.title ? rightPreview.modal.title : getDescriptionToDisplay(rightPreview)"
+           [title]="rightPreview.modal.title ? rightPreview.modal.title : getTitleToDisplay(rightPreview)"
            alt="{{rightPreview.modal.alt ? rightPreview.modal.alt : getAltDescriptionByImage(rightPreview)}}"
            [tabindex]="0" role="img"
            (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)"/>
