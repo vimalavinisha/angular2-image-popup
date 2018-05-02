@@ -59,3 +59,14 @@ export const KS_DEFAULT_BTN_DELETE: ButtonConfig = {
   title: 'Delete the current image',
   ariaLabel: 'Delete the current image'
 };
+
+/**
+ * Default full-screen button object
+ */
+export const KS_DEFAULT_BTN_FULL_SCREEN: ButtonConfig = {
+  className: 'fullscreen-image',
+  size: KS_DEFAULT_SIZE,
+  type: ButtonType.FULLSCREEN,
+  title: 'Switch to full-screen',
+  ariaLabel: 'Switch to full-screen'
+};

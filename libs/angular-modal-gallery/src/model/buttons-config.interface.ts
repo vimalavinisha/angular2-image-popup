@@ -81,7 +81,8 @@ export enum ButtonType {
   EXTURL,
   DOWNLOAD,
   CLOSE,
-  CUSTOM
+  CUSTOM,
+  FULLSCREEN
 }
 
 /**
@@ -89,6 +90,7 @@ export enum ButtonType {
  */
 export const WHITELIST_BUTTON_TYPES: ButtonType[] = [
   // ButtonType.REFRESH,
+  ButtonType.FULLSCREEN,
   ButtonType.DELETE,
   ButtonType.EXTURL,
   ButtonType.DOWNLOAD,

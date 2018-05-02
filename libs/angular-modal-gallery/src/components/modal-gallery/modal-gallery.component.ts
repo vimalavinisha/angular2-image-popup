@@ -286,6 +286,39 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   //   this.buttonAfterHook.emit(eventToEmit);
   // }
 
+  onFullScreen(event: ButtonEvent) {
+    const doc: any = <any>document;
+    const el: any = <any>document.documentElement;
+
+    console.log('onFullScreen fullscreenEnabled', doc.fullscreenEnabled);
+    console.log('onFullScreen webkitFullscreenEnabled', doc.webkitFullscreenEnabled);
+    console.log('onFullScreen mozFullScreenEnabled', doc.mozFullScreenEnabled);
+    console.log('onFullScreen msFullscreenEnabled', doc.msFullscreenEnabled);
+
+    // full-screen available
+    if (doc.fullscreenEnabled || doc.webkitFullscreenEnabled || doc.mozFullScreenEnabled || doc.msFullscreenEnabled) {
+      if (el.requestFullscreen) {
+        el.requestFullscreen();
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+      } else if (el.mozRequestFullScreen) {
+        el.mozRequestFullScreen();
+      } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+      }
+    } else {
+      if (doc.exitFullscreen) {
+        doc.exitFullscreen();
+      } else if (doc.msExitFullscreen) {
+        doc.msExitFullscreen();
+      } else if (doc.mozCancelFullScreen) {
+        doc.mozCancelFullScreen();
+      } else if (doc.webkitExitFullscreen) {
+        doc.webkitExitFullscreen();
+      }
+    }
+  }
+
   /**
    * Method called by the delete upper button.
    * @param ButtonEvent event payload

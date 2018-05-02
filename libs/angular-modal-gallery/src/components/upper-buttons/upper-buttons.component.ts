@@ -34,8 +34,8 @@ import {
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,
   KS_DEFAULT_BTN_DOWNLOAD,
-  KS_DEFAULT_BTN_EXTURL
-  // KS_DEFAULT_BTN_REFRESH
+  KS_DEFAULT_BTN_EXTURL,
+  KS_DEFAULT_BTN_FULL_SCREEN
 } from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
@@ -89,6 +89,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   @Output() close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
+   * Output to emit clicks on full-screen button. The payload contains a `ButtonEvent`.
+   */
+  @Output() fullscreen: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
    * Output to emit clicks on all custom buttons. The payload contains a `ButtonEvent`.
    */
   @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
@@ -119,7 +123,12 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Default buttons array for full configuration
    */
-  private fullButtonsDefault: ButtonConfig[] = [/*KS_DEFAULT_BTN_REFRESH, */ KS_DEFAULT_BTN_DELETE, ...this.advancedButtonsDefault];
+  private fullButtonsDefault: ButtonConfig[] = [
+    /*KS_DEFAULT_BTN_REFRESH, */
+    KS_DEFAULT_BTN_FULL_SCREEN,
+    KS_DEFAULT_BTN_DELETE,
+    ...this.advancedButtonsDefault
+  ];
 
   /**
    * Method ´ngOnInit´ to build `configButtons` applying a default value and also to
@@ -190,6 +199,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         break;
       case ButtonType.CUSTOM:
         this.triggerOnMouseAndKeyboard(this.customEmit, event, dataToEmit);
+        break;
+      case ButtonType.FULLSCREEN:
+        this.triggerOnMouseAndKeyboard(this.fullscreen, event, dataToEmit);
         break;
       default:
         throw new Error(`Unknown button's type into ButtonConfig`);
