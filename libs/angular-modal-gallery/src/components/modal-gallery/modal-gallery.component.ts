@@ -286,25 +286,33 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   //   this.buttonAfterHook.emit(eventToEmit);
   // }
 
+  /**
+   * Method called by the full-screen upper button.
+   * @param ButtonEvent event payload
+   */
   onFullScreen(event: ButtonEvent) {
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+    this.buttonBeforeHook.emit(eventToEmit);
+
     const doc: any = <any>document;
-    const el: any = <any>document.documentElement;
+    const docEl: any = <any>document.documentElement;
 
-    console.log('onFullScreen fullscreenEnabled', doc.fullscreenEnabled);
-    console.log('onFullScreen webkitFullscreenEnabled', doc.webkitFullscreenEnabled);
-    console.log('onFullScreen mozFullScreenEnabled', doc.mozFullScreenEnabled);
-    console.log('onFullScreen msFullscreenEnabled', doc.msFullscreenEnabled);
+    console.log('onFullScreen fullscreenElement', doc.fullscreenElement);
+    console.log('onFullScreen webkitFullscreenElement', doc.webkitFullscreenElement);
+    console.log('onFullScreen msFullscreenElement', doc.msFullscreenElement);
+    console.log('onFullScreen mozFullscreenElement', doc.mozFullScreen);
 
-    // full-screen available
-    if (doc.fullscreenEnabled || doc.webkitFullscreenEnabled || doc.mozFullScreenEnabled || doc.msFullscreenEnabled) {
-      if (el.requestFullscreen) {
-        el.requestFullscreen();
-      } else if (el.webkitRequestFullscreen) {
-        el.webkitRequestFullscreen();
-      } else if (el.mozRequestFullScreen) {
-        el.mozRequestFullScreen();
-      } else if (el.msRequestFullscreen) {
-        el.msRequestFullscreen();
+    const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement && !doc.mozFullScreenElement && !doc.msFullscreenElement;
+
+    if (fullscreenDisabled) {
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen();
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
       }
     } else {
       if (doc.exitFullscreen) {
@@ -317,6 +325,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
         doc.webkitExitFullscreen();
       }
     }
+
+    this.buttonAfterHook.emit(eventToEmit);
   }
 
   /**
@@ -485,8 +495,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param ImageLoadEvent event payload
    */
   onImageLoad(event: ImageLoadEvent) {
-    // console.log('modal-image onImageLoad', event);
-    // console.log('modal-image onImageLoad images before', this.images);
+    console.log('modal-image onImageLoad', event);
+    console.log('modal-image onImageLoad images before', this.images);
 
     // sets as previously loaded the image with index specified by `event.status`
     this.images = this.images.map((img: InternalLibImage) => {
@@ -496,7 +506,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       return img;
     });
 
-    // console.log('modal-image onImageLoad images after', this.images);
+    console.log('modal-image onImageLoad images after', this.images);
   }
 
   /**
