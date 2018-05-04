@@ -490,8 +490,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param ImageLoadEvent event payload
    */
   onImageLoad(event: ImageLoadEvent) {
-    console.log('modal-image onImageLoad', event);
-    console.log('modal-image onImageLoad images before', this.images);
+    // console.log('modal-image onImageLoad', event);
+    // console.log('modal-image onImageLoad images before', this.images);
 
     // sets as previously loaded the image with index specified by `event.status`
     this.images = this.images.map((img: InternalLibImage) => {
@@ -501,7 +501,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       return img;
     });
 
-    console.log('modal-image onImageLoad images after', this.images);
+    // console.log('modal-image onImageLoad images after', this.images);
   }
 
   /**

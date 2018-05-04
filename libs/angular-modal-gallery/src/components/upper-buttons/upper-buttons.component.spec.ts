@@ -27,7 +27,8 @@ import { SizeDirective } from '../../directives/size.directive';
 import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType } from '../../model/buttons-config.interface';
 import { Action } from '../../model/action.enum';
 import { Size } from '../../model/size.interface';
-import { KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_SIZE } from './upper-buttons-default';
+import { KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_DOWNLOAD,
+  KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_FULL_SCREEN, KS_DEFAULT_SIZE } from './upper-buttons-default';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;
@@ -232,6 +233,8 @@ function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
       return Object.assign({}, KS_DEFAULT_BTN_DELETE, {size: size});
     // case ButtonType.REFRESH:
     //   return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size: size});
+    case ButtonType.FULLSCREEN:
+      return Object.assign({}, KS_DEFAULT_BTN_FULL_SCREEN, {size: size});
     case ButtonType.CUSTOM:
       return Object.assign({}, CUSTOM_BTN, {size: size});
     default:
@@ -286,7 +289,7 @@ function testBtnNumberByStrategy(strategy: ButtonsStrategy, btnDebugElementsCoun
       expect(btnDebugElementsCount).toBe(3);
       break;
     case ButtonsStrategy.FULL:
-      expect(btnDebugElementsCount).toBe(4); // with refresh this must be 5
+      expect(btnDebugElementsCount).toBe(5); // with refresh this must be 5
       break;
     case ButtonsStrategy.CUSTOM:
       // no constraints with custom strategy
@@ -344,6 +347,9 @@ describe('UpperButtonsComponent', () => {
         comp.download.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
         });
+        comp.fullscreen.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
+        });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
         // testing html elements, attributes and properties
@@ -385,6 +391,9 @@ describe('UpperButtonsComponent', () => {
         });
         comp.download.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
+        });
+        comp.fullscreen.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
         });
 
         // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -428,6 +437,9 @@ describe('UpperButtonsComponent', () => {
           });
           comp.download.subscribe((res: ButtonEvent) => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DOWNLOAD));
+          });
+          comp.fullscreen.subscribe((res: ButtonEvent) => {
+            expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
           });
 
           // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
@@ -473,6 +485,9 @@ describe('UpperButtonsComponent', () => {
         comp.customEmit.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_BTN));
         });
+        comp.fullscreen.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
+        });
 
         // iterate over all buttons from LEFT TO RIGHT
         // testing html elements, attributes and properties
@@ -515,6 +530,9 @@ describe('UpperButtonsComponent', () => {
         });
         comp.customEmit.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_BTN));
+        });
+        comp.fullscreen.subscribe((res: ButtonEvent) => {
+          expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
         });
 
         // iterate over all buttons from LEFT TO RIGHT
