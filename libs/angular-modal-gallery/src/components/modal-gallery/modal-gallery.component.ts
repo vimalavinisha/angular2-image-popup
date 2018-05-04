@@ -297,11 +297,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     const doc: any = <any>document;
     const docEl: any = <any>document.documentElement;
 
-    console.log('onFullScreen fullscreenElement', doc.fullscreenElement);
-    console.log('onFullScreen webkitFullscreenElement', doc.webkitFullscreenElement);
-    console.log('onFullScreen msFullscreenElement', doc.msFullscreenElement);
-    console.log('onFullScreen mozFullscreenElement', doc.mozFullScreen);
-
     const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement && !doc.mozFullScreenElement && !doc.msFullscreenElement;
 
     if (fullscreenDisabled) {
