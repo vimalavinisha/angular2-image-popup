@@ -269,8 +269,6 @@ function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withD
   expect(currentImageElement.attributes['class']).toBe('inside');
   expect(currentImageElement.attributes['role']).toBe('img');
   expect(currentImageElement.properties['src']).toBe(currentImage.modal.img);
-  console.log('****-----------checkCurrentImage', val);
-  console.log('****-----------checkCurrentImage title', currentImageElement.properties['title']);
   expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
   expect(currentImageElement.properties['alt']).toBe(val.currentAlt);
   expect(currentImageElement.properties['tabIndex']).toBe(0);
