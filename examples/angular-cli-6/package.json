@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:dev": "ng build --dev --aot",
+    "build:dev": "ng build --aot",
     "build:prod": "ng build --prod --aot --build-optimizer=true",
     "test": "karma start --watch=false --code-coverage=true",
     "test:watch": "karma start --watch=true --code-coverage=true",
@@ -44,19 +44,19 @@
     "@types/jasmine": "^2.8.7",
     "@types/jasminewd2": "~2.0.3",
     "@types/mousetrap": "^1.6.0",
-    "@types/node": "~8.9.4",
-    "codelyzer": "~4.2.1",
+    "@types/node": "^10.0.4",
+    "codelyzer": "^4.3.0",
     "cross-env": "^5.1.3",
-    "jasmine-core": "~2.99.1",
+    "jasmine-core": "^3.1.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~1.7.1",
+    "karma": "^2.0.2",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~1.4.2",
     "karma-jasmine": "^1.1.2",
-    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-jasmine-html-reporter": "^1.0.0",
     "protractor": "~5.3.0",
-    "ts-node": "~5.0.1",
-    "tslint": "~5.9.1",
-    "typescript": "=2.7.2"
+    "ts-node": "^6.0.2",
+    "tslint": "^5.10.0",
+    "typescript": "~2.7.2"
   }
 }
