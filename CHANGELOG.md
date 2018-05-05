@@ -10,6 +10,11 @@
 - add angular-modal-gallery 6.0.0 warning in README.md (release scheduled for May 2018)
 
 
+# 6.0.0-alpha.4
+### Features
+- add full-screen button in FULL strategy
+
+
 # 6.0.0-alpha.3
 ### Features
 - move loadingConfig, description and downloadble into CurrentImageConfig

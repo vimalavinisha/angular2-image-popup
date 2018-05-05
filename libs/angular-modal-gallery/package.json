@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "@ks89/angular-modal-gallery",
-  "version": "6.0.0-alpha.3",
+  "version": "6.0.0-alpha.4",
   "ngPackage": {
     "lib": {
       "entryFile": "index.ts"
