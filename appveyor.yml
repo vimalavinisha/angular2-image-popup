@@ -31,7 +31,6 @@ skip_commits:
      - .travis.yml
      - Jenkinsfile
      - Jenkinsfile-local-macOS
-     - .bithoundrc
      - .codeclimate.yml
      - .editorconfig
      - .prettierignore

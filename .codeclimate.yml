@@ -35,7 +35,6 @@ exclude_paths:
 - ".travis.yml"
 - "appveyor.yml"
 - ".sass-lint.yml"
-- ".bithoundrc"
 - ".editorconfig"
 - ".npmignore"
 - ".prettierignore"
