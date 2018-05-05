@@ -193,6 +193,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
+    // id is a mandatory input and must a number > 0
+    if (!this.id || this.id < 0) {
+      throw new Error(
+        `'[id]="a number >= 0"' is a mandatory input from 6.0.0 in angular-modal-gallery.` +
+          `If you are using multiple instances of this library, please be sure to use different ids`
+      );
+    }
+
     // call initImages to init images and to emit `hasData` event
     this.initImages();
 
