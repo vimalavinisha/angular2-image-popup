@@ -13,6 +13,17 @@
 # 6.0.0-alpha.4
 ### Features
 - add full-screen button in FULL strategy
+- new 6.0.0 logo red/orange
+
+### Testing
+- update full-screen button
+- update for the new loadingConfig api
+
+### Bugfixes
+- fix an issue when strictNullChecks and aot are enabled together
+
+### Internal library changes
+- force AOT builds with all strict options in ng-packagr tsconfig file used in `npm run build:lib`
 
 
 # 6.0.0-alpha.3
