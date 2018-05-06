@@ -3,8 +3,11 @@
 - getDescriptionToDisplay is used in current-image.html also for titles. So, when strategy is ALWAYS_HIDDEN,
   titles will be always ‘’. That’s wrong, because I should hide only descriptions not titles (useful for accessibility purposes)!
 
-# Examples
+### Examples
 - update angular-cli-6 example to angular 6.0.0 final and angular-cli 6.0.0 final
+
+### Others
+- add angular-modal-gallery 6.0.0 warning in README.md (release scheduled for May 2018)
 
 
 # 5.7.0
