@@ -73,7 +73,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * the service to call modal gallery without open it manually.
    * Right now is optional, but in upcoming major releases will be mandatory!!!
    */
-  @Input() id: number | undefined;
+  @Input() id: number;
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */

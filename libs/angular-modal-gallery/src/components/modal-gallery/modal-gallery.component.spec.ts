@@ -148,6 +148,7 @@ describe('ModalGalleryComponent', () => {
   describe('---YES---', () => {
 
     it(`should display plain gallery, but not modal gallery`, () => {
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.ngOnChanges(getSimpleChangesMock());
@@ -162,6 +163,7 @@ describe('ModalGalleryComponent', () => {
     });
 
     it(`should display modal gallery`, () => {
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.ngOnChanges(getSimpleChangesMock());
@@ -189,6 +191,7 @@ describe('ModalGalleryComponent', () => {
         action: Action.CLICK
       };
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -270,6 +273,7 @@ describe('ModalGalleryComponent', () => {
       };
 
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -319,6 +323,7 @@ describe('ModalGalleryComponent', () => {
       };
 
       const currentImage: InternalLibImage = IMAGES[IMAGES.length - 1];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -368,6 +373,7 @@ describe('ModalGalleryComponent', () => {
       };
 
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES.slice(0, 1); // only one image
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -474,6 +480,7 @@ describe('ModalGalleryComponent', () => {
         action: Action.CLICK
       };
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
 
@@ -507,6 +514,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call closeOutside and subscribe to its events`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.enableCloseOutside = true;
@@ -521,6 +529,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call onClickDot to change the current image`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -531,6 +540,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call onClickPreview to change the current image`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -541,6 +551,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call onImageLoad`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -566,6 +577,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call ngOnChanges with different inputs, to re-init images`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
 
@@ -587,6 +599,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call ngOnChanges with advancedPlainLayout to open modal gallery`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
 
@@ -620,6 +633,7 @@ describe('ModalGalleryComponent', () => {
     mockGalleryServiceInputs.forEach((val: any, index: number) => {
       it(`should listen for gallery service's navigate events. Test i=${index}`, () => {
         comp.modalImages = IMAGES;
+        comp.id = 0;
         comp.id = val.id;
         comp.show.subscribe((result: ImageModalEvent) => {
           // console.log('***-------------------------------------', result);
@@ -655,6 +669,7 @@ describe('ModalGalleryComponent', () => {
         action: Action.CLICK
       };
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
@@ -664,6 +679,7 @@ describe('ModalGalleryComponent', () => {
 
     it(`should call onClickPreview but with a wrong Image id, so currentImage won't change`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.enableCloseOutside = true;
@@ -689,6 +705,7 @@ describe('ModalGalleryComponent', () => {
         action: Action.CLICK
       };
       const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
       comp.modalImages = IMAGES;
       comp.currentImage = currentImage;
       comp.currentImageConfig = {downloadable: false}; // images aren't downloadable
