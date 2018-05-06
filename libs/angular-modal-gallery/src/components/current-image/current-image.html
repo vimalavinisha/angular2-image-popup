@@ -46,7 +46,7 @@
          (swiperight)="swipe($event.type)"/>
     <figcaption *ngIf="getDescriptionToDisplay() !== ''"
                 class="inside description"
-                ksDescription [description]="configCurrentImage.description"
+                ksDescription [description]="configCurrentImage?.description"
                 [innerHTML]="getDescriptionToDisplay()">
     </figcaption>
   </figure>
@@ -72,8 +72,8 @@
     </ng-container>
   </ng-container>
 
-  <ng-container *ngIf="loading && configCurrentImage.loadingConfig.enable">
-    <ks-loading-spinner [loadingConfig]="configCurrentImage.loadingConfig"
+  <ng-container *ngIf="loading && configCurrentImage?.loadingConfig?.enable">
+    <ks-loading-spinner [loadingConfig]="configCurrentImage?.loadingConfig"
                         [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
   </ng-container>
 

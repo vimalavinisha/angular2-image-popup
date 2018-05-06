@@ -239,7 +239,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImage.description) {
+    if (!this.configCurrentImage || !this.configCurrentImage.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
