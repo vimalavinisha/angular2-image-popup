@@ -47,6 +47,7 @@ export { CurrentImageConfig } from './src/model/current-image-config.interface';
 
 export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './src/components/accessibility-default';
 export {
+  KS_DEFAULT_BTN_FULL_SCREEN,
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,
   KS_DEFAULT_BTN_DOWNLOAD,
