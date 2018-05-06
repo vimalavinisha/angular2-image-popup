@@ -194,7 +194,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   ngOnInit() {
     // id is a mandatory input and must a number > 0
-    if (!this.id || this.id < 0) {
+    if ((!this.id && this.id !== 0) || this.id < 0) {
       throw new Error(
         `'[id]="a number >= 0"' is a mandatory input from 6.0.0 in angular-modal-gallery.` +
           `If you are using multiple instances of this library, please be sure to use different ids`
