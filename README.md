@@ -26,6 +26,16 @@ Modal view is composed by **buttons**, the **current image** and optionally, als
 <br>
 It's also possible to navigate between these modal images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
 
+<br>
+
+## Major release 6.0.0 in coming on May 2018!!!
+**New package name `@ks89/angular-modal-gallery`** as suggested by npmjs with scoping, so starting from version 6, you'll have to uninstall 'angular-modal-gallery' and install this new package.
+There will be **some breaking changes** (obviously), but don't be scared, It won't be like version 5.0.0.
+I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and and some new features.
+
+<br>
+<br>
+
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
 **angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 4**
