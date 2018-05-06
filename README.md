@@ -16,7 +16,7 @@
 
 <br>
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/develop/amg5.png?raw=true)
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/nwrlnx-090-ngpackagr2/amg6.png?raw=true)
 
 <br>
 
@@ -98,6 +98,13 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 - 06/05/2018 - 5.7.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/05/2018 - 5.7.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/05/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+
+- 07/05/2018 - 6.0.0-alpha.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 02/05/2018 - 6.0.0-alpha.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 03/31/2018 - 6.0.0-alpha.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 03/30/2018 - 6.0.0-alpha.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+
+- 04/30/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/27/2018 - 5.6.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/27/2018 - 5.5.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/07/2018 - 5.5.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
