@@ -1,12 +1,16 @@
 # angular-modal-gallery stackblitz.com demo
 
-angular-modal-gallery 4.x.x official stackblitz demo
-- full size live demo [HERE](https://angular-modal-gallery-v4.stackblitz.io) 
-- editor view [HERE](https://stackblitz.com/edit/angular-modal-gallery-v4)
+angular-modal-gallery 6.x.x official stackblitz demo
+- full size live demo [HERE](https://angular-modal-gallery-v6.stackblitz.io) 
+- editor view [HERE](https://stackblitz.com/edit/angular-modal-gallery-v6)
 
 angular-modal-gallery 5.x.x official stackblitz demo
 - full size live demo [HERE](https://angular-modal-gallery-v5.stackblitz.io) 
 - editor view [HERE](https://stackblitz.com/edit/angular-modal-gallery-v5)
+
+angular-modal-gallery 4.x.x official stackblitz demo
+- full size live demo [HERE](https://angular-modal-gallery-v4.stackblitz.io) 
+- editor view [HERE](https://stackblitz.com/edit/angular-modal-gallery-v4)
 
 
 ```
