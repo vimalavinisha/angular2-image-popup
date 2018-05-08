@@ -44,19 +44,19 @@ Thumbs.db
 **/@ks89/
 
 # Docs
-/docs/
+docs/
 
 # Tests
 **/coverage/
 
 # SonarQube
 .scannerwork/
-/reports/
+reports/
 
 # Examples
-/examples/systemjs/app/*.js
-/examples/systemjs/app/*.map
-/examples/angular-cli/dist/
-/examples/angular-cli-material/dist/
-/examples/angular-cli-6/dist/
-/examples/universal-starter/dist/
+examples/systemjs/app/*.js
+examples/systemjs/app/*.map
+examples/angular-cli/dist/
+examples/angular-cli-material/dist/
+examples/angular-cli-6/dist/
+examples/universal-starter/dist/
