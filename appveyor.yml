@@ -137,10 +137,10 @@ build_script:
   - cd examples/systemjs
   - npm install
   - cd ../..
-  - cd examples/webpack
+  - cd examples/angular-cli
   - npm install
   - cd ../..
-  - cd examples/angular-cli
+  - cd examples/angular-cli-5
   - npm install
   - cd ../..
   - cd examples/angular-cli-material
@@ -156,14 +156,13 @@ build_script:
   # build main angular-cli with ng-packagr
   - npm run build:main:dev
   - npm run build:main:prod
-  # build official webpack example
-  - cd examples/webpack
-  - npm run build:dev
-  - npm run build:prod
-  - npm run build:prod:aot
-  - cd ../..
   # build official angular-cli example
   - cd examples/angular-cli
+  - npm run build:dev
+  - npm run build:prod
+  - cd ../..
+  # build official angular-cli-5 example
+  - cd examples/angular-cli-5
   - npm run build:dev
   - npm run build:prod
   - cd ../..
@@ -229,7 +228,7 @@ deploy_script:
 # on successful build
 on_success:
   - npm run docs:typedoc
-  # TODO restore compodoc
+  # TODO restore compodoc - why on appveyor isn't working???
 #  - npm run docs:compodoc
   - codeclimate-test-reporter < .\coverage\lcov.info
   - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info

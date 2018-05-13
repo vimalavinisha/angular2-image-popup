@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 5.7.1
 ### Bugfixes
 - getDescriptionToDisplay is used in current-image.html also for titles. So, when strategy is ALWAYS_HIDDEN,
@@ -8,6 +9,15 @@
 
 ### Others
 - add angular-modal-gallery 6.0.0 warning in README.md (release scheduled for May 2018)
+=======
+# 6.0.0-beta.1
+# Docs
+- release documentation website beta.1
+
+### Demos
+- Update all examples to Angular 6 (also universal)
+- Add an example with Angular 5.x.x and angular-cli 1.7.x
+>>>>>>> chore(): prepare for 6.0.0-beta.1
 
 
 # 6.0.0-alpha.4
