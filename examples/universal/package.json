@@ -8,7 +8,7 @@
     "build": "ng build",
     "build:dev": "ng build --dev --aot",
     "build:prod": "ng build --prod --aot --build-optimizer=true",
-    "build:client-and-server-bundles": "ng build --prod --aot --build-optimizer=true && ng run ng-universal-demo:server --prod --aot --build-optimizer=true",
+    "build:client-and-server-bundles": "npm run build:prod && ng run ng-universal-demo:server",
     "build:prerender": "npm run build:client-and-server-bundles && npm run webpack:server && npm run generate:prerender",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "generate:prerender": "cd dist && node prerender",
@@ -41,7 +41,6 @@
     "mousetrap": "^1.6.1",
     "rxjs": "6.0.0",
     "rxjs-compat": "^6.1.0",
-    "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14",
     "zone.js": "^0.8.26"
   },
