@@ -29,10 +29,10 @@ jobs:
           paths:
             - "node_modules"
             - "examples/angular-cli/node_modules"
+            - "examples/angular-cli-5/node_modules"
             - "examples/angular-cli-material/node_modules"
             - "examples/universal/node_modules"
             - "examples/systemjs/node_modules"
-            - "examples/webpack/node_modules"
       - run:
           name: Install Chromedriver latest version
           command: |
@@ -52,7 +52,7 @@ jobs:
           command: cd examples/systemjs && npm install
       - run:
           name: run-install-demo-angular-cli
-          command: cd examples/webpack && npm install
+          command: cd examples/angular-cli && npm install
       - run:
           name: run-install-demo-angular-cli-5
           command: cd examples/angular-cli-5 && npm install

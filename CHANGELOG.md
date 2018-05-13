@@ -11,7 +11,7 @@
 
 
 # 6.0.0-beta.1
-# Docs
+### Docs
 - release documentation website beta.1
 
 ### Demos
