@@ -15,7 +15,7 @@
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
-  "homepage": "https://ks89.github.io/angular-modal-gallery-2018.github.io/",
+  "homepage": "https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/",
   "peerDependencies": {
     "@angular/common": ">=5.0.0",
     "@angular/core": ">=5.0.0",
