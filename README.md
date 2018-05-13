@@ -60,14 +60,14 @@ I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and an
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
-- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/))
+- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/))
 
 
 ## **Documentation**
 
 *Image loading could be slow, because this website is hosted on Github pages*
 
-[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/)
+[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018.github.io/)
 
 
 ## **Live demo**
@@ -80,7 +80,7 @@ I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and an
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 
-From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/).
+From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018.github.io/).
 
 
 ## Which version should I use?
@@ -95,14 +95,11 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 
 ## News
-<<<<<<< HEAD
 - 06/05/2018 - 5.7.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/05/2018 - 5.7.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 01/05/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 
-=======
 - 13/05/2018 - 6.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
->>>>>>> chore(): prepare for 6.0.0-beta.1
 - 07/05/2018 - 6.0.0-alpha.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 02/05/2018 - 6.0.0-alpha.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/31/2018 - 6.0.0-alpha.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -151,12 +148,12 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
 2. Question: **I have this error: `Error: No provider for KeyboardService`. What can I do?**<br>
-   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/gettingStarted).
+   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/gettingStarted).
    This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
 3. Question: **How can I remove images using DELETE button without issues?**<br>
    **Answer**: **You cannot change the input image array. Instead, you should reassign it with a newer array** without the deleted element.
    In other words, **you must think in a functional way**, without changing the input array of images.
-   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/demo/buttons-strategies).
+   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018.github.io/demo/buttons-strategies).
 
 
 ## Contributing
