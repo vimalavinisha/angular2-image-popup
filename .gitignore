@@ -57,6 +57,6 @@ reports/
 examples/systemjs/app/*.js
 examples/systemjs/app/*.map
 examples/angular-cli/dist/
+examples/angular-cli-5/dist/
 examples/angular-cli-material/dist/
-examples/angular-cli-6/dist/
 examples/universal-starter/dist/

@@ -567,6 +567,16 @@ export class HomeComponent {
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(-1, true) });
   }
 
+  onShowAutoCloseExample(event: ImageModalEvent, galleryId: number) {
+    console.log(`onShowAutoCloseExample with id=${galleryId} action: ` + Action[event.action]);
+    console.log('onShowAutoCloseExample result:' + event.result);
+    console.log('Starting timeout of 3 second to close modal gallery automatically');
+    setTimeout(() => {
+      console.log('setTimeout end - closing gallery with id=' + galleryId);
+      this.galleryService.closeGallery(galleryId);
+    }, 3000);
+  }
+
   addRandomImage() {
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
