@@ -224,7 +224,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       if (galleryId < 0 || this.id !== galleryId) {
         return;
       }
-      this.closeGallery();
+      this.closeGallery(Action.NORMAL, true);
     });
   }
 
@@ -411,14 +411,21 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Method to close the modal gallery specifying the action.
    * It also reset the `keyboardService` to prevent multiple listeners.
    * @param Action action type. `Action.NORMAL` by default
+   * @param boolean isCalledByService is true if called by gallery.service, otherwise false
    */
-  closeGallery(action: Action = Action.NORMAL) {
+  closeGallery(action: Action = Action.NORMAL, isCalledByService: boolean = false) {
     this.close.emit(new ImageModalEvent(action, true));
     this.opened = false;
     this.keyboardService.reset();
 
     // shows scrollbar
     document.body.style.overflow = 'visible';
+
+    if (isCalledByService) {
+      // the following is required, otherwise the view will not be updated
+      // this happens only if called by gallery.service
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   /**
