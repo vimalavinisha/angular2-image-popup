@@ -175,7 +175,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   currentImage: InternalLibImage;
 
-  private galleryServiceSubscription: Subscription;
+  private galleryServiceNavigateSubscription: Subscription;
+  private galleryServiceCloseSubscription: Subscription;
 
   /**
    * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
@@ -204,7 +205,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     // call initImages to init images and to emit `hasData` event
     this.initImages();
 
-    this.galleryServiceSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
+    this.galleryServiceNavigateSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
       if (!payload) {
         return;
       }
@@ -217,6 +218,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
         return;
       }
       this.showModalGallery(payload.index, true);
+    });
+
+    this.galleryServiceCloseSubscription = this.galleryService.close.subscribe((galleryId: number) => {
+      if (galleryId < 0 || this.id !== galleryId) {
+        return;
+      }
+      this.closeGallery();
     });
   }
 
@@ -557,8 +565,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy() {
     this.keyboardService.reset();
 
-    if (this.galleryServiceSubscription) {
-      this.galleryServiceSubscription.unsubscribe();
+    if (this.galleryServiceNavigateSubscription) {
+      this.galleryServiceNavigateSubscription.unsubscribe();
+    }
+    if (this.galleryServiceCloseSubscription) {
+      this.galleryServiceCloseSubscription.unsubscribe();
     }
   }
 

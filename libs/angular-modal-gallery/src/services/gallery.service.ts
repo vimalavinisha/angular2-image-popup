@@ -25,13 +25,14 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
 export interface InternalGalleryPayload {
-  galleryId: number | undefined;
+  galleryId: number;
   index: number;
 }
 
 @Injectable()
 export class GalleryService {
   navigate: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
+  close: EventEmitter<number> = new EventEmitter<number>();
 
   openGallery(galleryId: number | undefined, index: number): void {
     if (galleryId === undefined || galleryId < 0 || index < 0) {
@@ -41,5 +42,12 @@ export class GalleryService {
       galleryId: galleryId,
       index: index
     });
+  }
+
+  closeGallery(galleryId: number | undefined): void {
+    if (galleryId === undefined || galleryId < 0) {
+      throw new Error('Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined');
+    }
+    this.close.emit(galleryId);
   }
 }

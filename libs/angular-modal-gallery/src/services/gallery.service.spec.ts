@@ -83,4 +83,25 @@ describe('GalleryService', () => {
       );
     });
   });
+
+  describe('#closeGallery()', () => {
+    expectedValidNums.forEach((val, index) => {
+      it(`should call closeGallery expecting a 'close' event with valid id. Test i=${index}`,
+        inject([GalleryService], (service: GalleryService) => {
+          service.close.subscribe(result => {
+            expect(result).toBe(val.id);
+          });
+          service.closeGallery(val.id);
+        })
+      );
+    });
+
+    badInputs.forEach((val, index) => {
+      it(`should throw an error because input params aren't valid. Test i=${index}`,
+        inject([GalleryService], (service: GalleryService) => {
+          expect(() => service.openGallery(val.id, val.index)).toThrow(new Error(errorMessage));
+        })
+      );
+    });
+  });
 });
