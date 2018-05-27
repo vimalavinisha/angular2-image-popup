@@ -10,6 +10,17 @@
 - add angular-modal-gallery 6.0.0 warning in README.md (release scheduled for May 2018)
 
 
+# 6.0.0-beta.2
+### Features
+- add close method inside gallery.service (requested by @Enngage)
+
+### Docs
+- release documentation website beta.2
+
+### Demos
+- Update all examples with the usage of close method
+
+
 # 6.0.0-beta.1
 ### Docs
 - release documentation website beta.1
