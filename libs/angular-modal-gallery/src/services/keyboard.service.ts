@@ -24,11 +24,6 @@
 
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 
-// To prevent issues with angular-universal on server-side
-if (typeof window !== 'undefined') {
-  require('mousetrap');
-}
-
 import { KeyboardServiceConfig } from '../model/keyboard-service-config.interface';
 
 export const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
@@ -52,11 +47,18 @@ export class KeyboardService {
    * @param KeyboardServiceConfig config object received by the `forRoot()` function to init custom shortcuts
    */
   constructor(@Inject(KEYBOARD_CONFIGURATION) private config: KeyboardServiceConfig) {
+    // this.config is always defined, because forced by forRoot inside the module
+    // when empty, it's simply an empty object: {}
+
     this.shortcuts = this.config && this.config.shortcuts ? this.config.shortcuts : ['ctrl+s', 'meta+s'];
 
-    // To prevent issues with angular-universal on server-side
-    if (typeof window !== 'undefined') {
-      this.mousetrap = new (<any>Mousetrap)();
+    // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
+    if (this.config && !this.config.disableSsrWorkaround) {
+      // To prevent issues with angular-universal on server-side
+      if (typeof window !== 'undefined') {
+        require('mousetrap');
+        this.mousetrap = new (<any>Mousetrap)();
+      }
     }
   }
 
@@ -65,17 +67,20 @@ export class KeyboardService {
    * @param (e: ExtendedKeyboardEvent, combo: string) => any onBind callback function to add shortcuts
    */
   add(onBind: (e: ExtendedKeyboardEvent, combo: string) => any) {
-    // To prevent issues with angular-universal on server-side
-    if (typeof window !== 'undefined') {
-      this.mousetrap.bind(this.shortcuts, (event: KeyboardEvent, combo: string) => {
-        if (event.preventDefault) {
-          event.preventDefault();
-        } else {
-          // internet explorer
-          event.returnValue = false;
-        }
-        onBind(event, combo);
-      });
+    // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
+    if (this.config && !this.config.disableSsrWorkaround) {
+      // To prevent issues with angular-universal on server-side
+      if (typeof window !== 'undefined') {
+        this.mousetrap.bind(this.shortcuts, (event: KeyboardEvent, combo: string) => {
+          if (event.preventDefault) {
+            event.preventDefault();
+          } else {
+            // internet explorer
+            event.returnValue = false;
+          }
+          onBind(event, combo);
+        });
+      }
     }
   }
 
@@ -84,9 +89,12 @@ export class KeyboardService {
    * to free resources ad prevent leaks.
    */
   reset() {
-    // To prevent issues with angular-universal on server-side
-    if (typeof window !== 'undefined') {
-      this.mousetrap.reset();
+    // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
+    if (this.config && !this.config.disableSsrWorkaround) {
+      // To prevent issues with angular-universal on server-side
+      if (typeof window !== 'undefined') {
+        this.mousetrap.reset();
+      }
     }
   }
 }
