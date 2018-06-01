@@ -3,33 +3,35 @@
       [attr.aria-label]="accessibilityConfig.mainContainerAriaLabel"
       [title]="accessibilityConfig.mainContainerTitle">
 
-  <a class="nav-left"
-     [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
-     [tabindex]="isFirstImage && !slideConfig?.infinite ? -1 : 0" role="button"
-     (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
-    <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
-         aria-hidden="true"
-         [title]="accessibilityConfig.mainPrevImageTitle"></div>
-  </a>
+  <div class="left-sub-container">
+    <a class="nav-left"
+       [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
+       [tabindex]="isFirstImage && !slideConfig?.infinite ? -1 : 0" role="button"
+       (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
+      <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
+           aria-hidden="true"
+           [title]="accessibilityConfig.mainPrevImageTitle"></div>
+    </a>
 
-  <ng-container *ngIf="slideConfig?.sidePreviews?.show">
-    <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
-      <img *ngIf="!isFirstImage || slideConfig?.infinite; else firstImage"
-           class="inside current-image-previous"
-           [src]="leftPreview.plain?.img ? leftPreview.plain.img : leftPreview.modal.img"
-           [hidden]="loading"
-           ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
-           [attr.aria-label]="leftPreview.modal.ariaLabel"
-           [title]="leftPreview.modal.title ? leftPreview.modal.title : getTitleToDisplay(leftPreview)"
-           alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
-           [tabindex]="0" role="img"
-           (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)"/>
-      <ng-template #firstImage>
-        <div class="current-image-previous hidden"
-             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"></div>
-      </ng-template>
+    <ng-container *ngIf="slideConfig?.sidePreviews?.show">
+      <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
+        <img *ngIf="!isFirstImage || slideConfig?.infinite; else firstImage"
+             class="inside current-image-previous"
+             [src]="leftPreview.plain?.img ? leftPreview.plain.img : leftPreview.modal.img"
+             [hidden]="loading"
+             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
+             [attr.aria-label]="leftPreview.modal.ariaLabel"
+             [title]="leftPreview.modal.title ? leftPreview.modal.title : getDescriptionToDisplay(leftPreview)"
+             alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
+             [tabindex]="0" role="img"
+             (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)"/>
+        <ng-template #firstImage>
+          <div class="current-image-previous hidden"
+               ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"></div>
+        </ng-template>
+      </ng-container>
     </ng-container>
-  </ng-container>
+  </div>
 
 
   <figure id="current-figure" [hidden]="loading">
@@ -50,39 +52,40 @@
                 [innerHTML]="getDescriptionToDisplay()">
     </figcaption>
   </figure>
-
-
-  <ng-container *ngIf="slideConfig?.sidePreviews?.show">
-    <ng-container *ngIf="getRightPreviewImage() as rightPreview">
-      <img *ngIf="!isLastImage || slideConfig?.infinite; else lastImage"
-           class="inside current-image-next"
-           [src]="rightPreview.plain?.img ? rightPreview.plain.img : rightPreview.modal.img"
-           [hidden]="loading"
-           ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
-           [attr.aria-label]="rightPreview.modal.ariaLabel"
-           [title]="rightPreview.modal.title ? rightPreview.modal.title : getTitleToDisplay(rightPreview)"
-           alt="{{rightPreview.modal.alt ? rightPreview.modal.alt : getAltDescriptionByImage(rightPreview)}}"
-           [tabindex]="0" role="img"
-           (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)"/>
-      <ng-template #lastImage>
-        <div class="current-image-next hidden"
-             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}">
-        </div>
-      </ng-template>
+  
+  <div class="right-sub-container">
+    <ng-container *ngIf="slideConfig?.sidePreviews?.show">
+      <ng-container *ngIf="getRightPreviewImage() as rightPreview">
+        <img *ngIf="!isLastImage || slideConfig?.infinite; else lastImage"
+             class="inside current-image-next"
+             [src]="rightPreview.plain?.img ? rightPreview.plain.img : rightPreview.modal.img"
+             [hidden]="loading"
+             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
+             [attr.aria-label]="rightPreview.modal.ariaLabel"
+             [title]="rightPreview.modal.title ? rightPreview.modal.title : getDescriptionToDisplay(rightPreview)"
+             alt="{{rightPreview.modal.alt ? rightPreview.modal.alt : getAltDescriptionByImage(rightPreview)}}"
+             [tabindex]="0" role="img"
+             (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)"/>
+        <ng-template #lastImage>
+          <div class="current-image-next hidden"
+               ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}">
+          </div>
+        </ng-template>
+      </ng-container>
     </ng-container>
-  </ng-container>
 
-  <ng-container *ngIf="loading && configCurrentImage?.loadingConfig?.enable">
-    <ks-loading-spinner [loadingConfig]="configCurrentImage?.loadingConfig"
-                        [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
-  </ng-container>
+    <ng-container *ngIf="loading && configCurrentImage?.loadingConfig?.enable">
+      <ks-loading-spinner [loadingConfig]="configCurrentImage?.loadingConfig"
+                          [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
+    </ng-container>
 
-  <a class="nav-right"
-     [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
-     [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
-     (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
-    <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
-         aria-hidden="true"
-         [title]="accessibilityConfig.mainNextImageTitle"></div>
-  </a>
+    <a class="nav-right"
+       [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
+       [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
+       (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
+      <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
+           aria-hidden="true"
+           [title]="accessibilityConfig.mainNextImageTitle"></div>
+    </a>
+  </div>
 </main>

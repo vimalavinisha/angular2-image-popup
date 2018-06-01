@@ -66,15 +66,32 @@ $description-color: white;
     }
   }
 
-  .nav-left {
-    @extend .nav;
-    margin-left: $nav-side-margin;
+  > .left-sub-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    > .nav-left {
+      @extend .nav;
+      margin-right: 5px;
+      margin-left: $nav-side-margin;
+    }
   }
 
-  .nav-right {
-    @extend .nav;
-    margin-right: $nav-side-margin;
+  > .right-sub-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    > .nav-right {
+      @extend .nav;
+      margin-right: $nav-side-margin;
+      margin-left: 5px;
+    }
   }
+
 }
 
 #current-image {

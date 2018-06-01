@@ -54,10 +54,14 @@ $preview-img-hover-opacity: 1;
 
   .current-image-previous {
     @extend .current-image-preview;
+    margin-left: 10px;
+    margin-right: 5px;
   }
 
   .current-image-next {
     @extend .current-image-preview;
+    margin-right: 10px;
+    margin-left: 5px;
   }
 }
 
