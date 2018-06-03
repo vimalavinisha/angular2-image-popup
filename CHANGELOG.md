@@ -13,6 +13,7 @@
 # 6.0.0-beta.2
 ### Features
 - add close method inside gallery.service (requested by @Enngage)
+- force side previews at the margins, because they was moving with current images of different sizes (rectangular) (requested by @Enngage)
 - add workaround to support SystemJS + AOT #142 - requested by @mlc-mlapis (**BREAKING CHANGE FOR ALL SYSTEMJS USERS**)
 
 ### Docs
