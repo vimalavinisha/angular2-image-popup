@@ -45,7 +45,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
+    ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }) // <-------------------------------------------- angular-modal-gallery module import
   ],
   providers: [],
   bootstrap: [AppComponent]
