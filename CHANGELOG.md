@@ -13,6 +13,7 @@
 # 6.0.0-beta.2
 ### Features
 - add close method inside gallery.service (requested by @Enngage)
+- add workaround to support SystemJS + AOT #142 - requested by @mlc-mlapis (**BREAKING CHANGE FOR ALL SYSTEMJS USERS**)
 
 ### Docs
 - release documentation website beta.2
