@@ -12,6 +12,7 @@
 
 # 6.0.0
 ### Features
+- id is now a mandatory input parameter (BREAKING CHANGE)
 - **new package name `@ks89/angular-modal-gallery`** (to install use `npm i  --save @ks89/angular-modal-gallery@next`) (BREAKING CHANGE)
 - Support Angular Package Format specification v5 (BREAKING CHANGE)
 - Remove Angular 4 support (BREAKING CHANGE)
