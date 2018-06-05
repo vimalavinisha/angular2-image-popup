@@ -10,6 +10,42 @@
 - add angular-modal-gallery 6.0.0 warning in README.md (release scheduled for May 2018)
 
 
+# 6.0.0
+### Features
+- **new package name `@ks89/angular-modal-gallery`** (to install use `npm i  --save @ks89/angular-modal-gallery@next`) (BREAKING CHANGE)
+- Support Angular Package Format specification v5 (BREAKING CHANGE)
+- Remove Angular 4 support (BREAKING CHANGE)
+- Add close method inside gallery.service (requested by @Enngage)
+- Force side previews at the margins, because they was moving with current images of different sizes (rectangular) (requested by @Enngage) (BREAKING CHANGE)
+- Add workaround to support SystemJS + AOT #142 - requested by @mlc-mlapis (**BREAKING CHANGE FOR ALL SYSTEMJS USERS**)
+- Add full-screen button in FULL strategy
+- Move loadingConfig, description and downloadble into CurrentImageConfig  (BREAKING CHANGE)
+
+### Bugfixes
+- Fix an issue when strictNullChecks and AOT are enabled together
+
+### Internal library changes
+- Force AOT builds with all strict options in ng-packagr tsconfig file used in `npm run build:lib`
+- Migrate to nwrl/nx 0.9.0
+- Migrate to ng-packagr 2
+
+### Testing
+- Update full-screen button
+- Update for the new loadingConfig api
+- Update unit testing with the new CurrentImageConfig
+
+### Chores
+- New 6.0.0 logo red/orange
+
+### Docs
+- Release [the new documentation website 6.0.0](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/)
+
+### Demos
+- Add an example with Angular 5.x.x and angular-cli 1.7.x
+- Update all examples to the new APIs
+- Remove webpack example
+
+
 # 6.0.0-beta.2
 ### Features
 - add close method inside gallery.service (requested by @Enngage)
@@ -107,7 +143,7 @@
 - add gallery.service to call modal-gallery methods without plain gallery.
   In this way you are able to open modal gallery to an image by its index, without clicking on a thumb, but via Component's code.
   This feature closes these two feature requests #127 (@pieterdegraeuwe) and #131 (@tobi-or-not-tobi)
-  
+
 
 # 5.5.1
 ### Bugfixes
@@ -244,7 +280,7 @@
 - add onpush strategy also to modal-gallery.component
 
 ### Bugfixes
-- Fix a bug on Microsoft Edge Desktop #108 
+- Fix a bug on Microsoft Edge Desktop #108
 
 ### Chores
 - add credits and licenses to all images, icons and so on
@@ -256,7 +292,7 @@
 - Update systemjs example to 5.0.0
 - Update webpack example to 5.0.0
 - Update angular-cli example to 5.0.0
-- Add new universal example to use SSR 
+- Add new universal example to use SSR
 - Add new angular-cli-material example with Angular Material
 - switch from plnkr.co to stackblitz.com
 - Support "https://github.com/mgechev/angular-seed" #56 (it's also working with angular-modal-gallery >= 4.0.0)
@@ -271,7 +307,7 @@
 ### Internal lib changes
 - General refactoring reorganizing the structure of this project and splitting some components #42 (BREAKING CHANGE)
 - Update unit testing to 5.0.0
-- choose which are the right entry points in package.json as described by angular package format 5 specifications 
+- choose which are the right entry points in package.json as described by angular package format 5 specifications
 
 
 # 5.0.0-rc.3
@@ -376,28 +412,28 @@
       aTags: boolean // images will be shown as <a> tags with background instead of <img>
     }
   }
-  
+
   Size = {
     width: string, // it can be '50px', percentage, 'auto' and so on
     height: string // the same for width
   }
-  
+
   BreakConfig = {
     length: number,  //  number of images to show
     wrap: boolean // refers to the [wrap property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-4)
   }
-  
+
   LineLayout = {
     breakConfig: BreakConfig;
     justify: string; string // refers to the [justify property of flex-box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#article-header-id-6)
     size: Size;
   }
-  
+
   GridLayout = {
     breakConfig: BreakConfig;
     size: Size;
   }
-    
+
   AdvancedLayout = {
     modalOpenerByIndex: number, // index of the image to open
     hideDefaultPlainGallery: boolean  // set to true to hide the defaut gallery (prevent multiple plain galleries)
@@ -435,7 +471,7 @@
 # 5.0.0-alpha.2
 ### Bug fixes
 - emit show output event every time the current image changes
-- fix to add images updating the internal model (this bug is caused by OnPush strategy into modal-gallery.component) 
+- fix to add images updating the internal model (this bug is caused by OnPush strategy into modal-gallery.component)
 
 ### Chores
 - upgrade CI config files to 5.0.0-alpha.2
@@ -474,7 +510,7 @@
 - Remove Angular 2 support (for instance replace Renderer with Renderer2) #70 (**BREAKING CHANGE**)
 - General refactoring reorganizing the structure of this project and splitting some components #42 (**BREAKING CHANGE**)
 - remove Observable<Image[]> as input. I decided to switch to Image[] to simplify the sourcecode #105 (**BREAKING CHANGE**)
-- choose which are the right entry points in package.json as described by angular package format 5 specifications 
+- choose which are the right entry points in package.json as described by angular package format 5 specifications
 
 
 # 4.0.1
