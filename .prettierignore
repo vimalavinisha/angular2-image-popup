@@ -57,6 +57,8 @@
 **/.gitignore
 **/.prettierignore
 **/.snyk
+**/.npmignore
+**/.snyk
 
 **/.DS_Store
 **/Thumbs.db
