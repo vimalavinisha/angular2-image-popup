@@ -30,14 +30,6 @@ It's also possible to navigate between these modal images with both **keyboard a
 
 <br>
 
-## Major release 6.0.0 in coming on May 2018!!!
-**New package name `@ks89/angular-modal-gallery`** as suggested by npmjs with scoping, so starting from version 6, you'll have to uninstall 'angular-modal-gallery' and install this new package.
-There will be **some breaking changes** (obviously), but don't be scared, It won't be like version 5.0.0.
-I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and and some new features.
-
-<br>
-<br>
-
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
 **angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 5**
@@ -49,7 +41,7 @@ I want to fix some APIs, cleanup the code, remove Angular 4 compatibility and an
 - AOT support
 - Angular >= 5
 - compliant to Angular Package Format v5 specifications
-- official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
+- official examples with `angular-cli`, `angular-cli-5`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
 - **Server Side Rendering** support with angular-universal (from version 5.2.0)
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
