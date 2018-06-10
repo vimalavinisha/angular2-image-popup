@@ -1,3 +1,8 @@
+# 6.0.1
+### Bugfixes
+- fix readme published on npmjs
+
+
 # 6.0.0
 ### Features
 - id is now a mandatory input parameter (BREAKING CHANGE)

@@ -18,7 +18,7 @@ Old package <=5: [![npm](https://img.shields.io/npm/dw/angular-modal-gallery.svg
 
 <br>
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/nwrlnx-090-ngpackagr2/amg6.png?raw=true)
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/master/amg6.png?raw=true)
 
 <br>
 
@@ -90,6 +90,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 ## News
 
+- 06/10/2018 - 6.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/10/2018 - 6.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/03/2018 - 6.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/14/2018 - 6.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
