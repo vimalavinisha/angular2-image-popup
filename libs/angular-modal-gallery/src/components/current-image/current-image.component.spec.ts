@@ -147,6 +147,14 @@ const TEST_MODEL_INFINITE: TestModel[] = [
   }
 ];
 
+const TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS: TestModel[] = [
+  Object.assign({}, TEST_MODEL[0], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[1], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[2], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[3], {leftPreviewTitle: '', rightPreviewTitle: ''}),
+  Object.assign({}, TEST_MODEL[4], {leftPreviewTitle: '', rightPreviewTitle: ''})
+];
+
 const TEST_MODEL_HIDEEMPTY_DESCRIPTIONS: TestModel[] = [
   Object.assign({}, TEST_MODEL[0], {
     currentImgTitle: 'Image 1/5', leftPreviewTitle: '',
