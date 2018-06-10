@@ -1,6 +1,6 @@
-[![npm@latest](https://img.shields.io/npm/v/angular-modal-gallery.svg?style=flat-square)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm@beta](https://img.shields.io/npm/v/angular-modal-gallery/beta.svg?style=flat-square)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm@next](https://img.shields.io/npm/v/angular-modal-gallery/next.svg?style=flat-square)](https://www.npmjs.com/package/angular-modal-gallery)
+[![npm@latest](https://img.shields.io/npm/v/@ks89/angular-modal-gallery.svg?style=flat-square)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)   [![npm@beta](https://img.shields.io/npm/v/@ks89/angular-modal-gallery/beta.svg?style=flat-square)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)   [![npm@next](https://img.shields.io/npm/v/@ks89/angular-modal-gallery/next.svg?style=flat-square)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)
 
-[![npm](https://img.shields.io/npm/dw/angular-modal-gallery.svg)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dm/angular-modal-gallery.svg)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dy/angular-modal-gallery.svg)](https://www.npmjs.com/package/angular-modal-gallery)
+[![npm](https://img.shields.io/npm/dw/@ks89/angular-modal-gallery.svg)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dm/@ks89/angular-modal-gallery.svg)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)
 
 [![Travis Build](https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master)](https://travis-ci.org/Ks89/angular-modal-gallery)   [![Appveyor Build](https://ci.appveyor.com/api/projects/status/ikp5qqr9aci2s0ae/branch/master?svg=true)](https://ci.appveyor.com/project/Ks89/angular-modal-gallery/branch/master)   [![CircleCI Build](https://circleci.com/gh/Ks89/angular-modal-gallery.svg?style=svg)](https://circleci.com/gh/Ks89/angular-modal-gallery)   [![Known Vulnerabilities](https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg)](https://snyk.io/test/github/ks89/angular-modal-gallery)   [![david-dm Dependencies](https://david-dm.org/Ks89/angular-modal-gallery.svg)](https://david-dm.org/Ks89/angular-modal-gallery)   [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery?ref=badge_shield)   [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)   [![Code Climate](https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/gpa.svg)](https://codeclimate.com/github/Ks89/angular-modal-gallery)   [![Code Climate Coverage](https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/coverage.svg)](https://codeclimate.com/github/Ks89/angular-modal-gallery/coverage)   [![Coveralls Coverage](https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master)](https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master)
 
@@ -95,24 +95,22 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 
 ## News
-- 06/05/2018 - 5.7.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/05/2018 - 5.7.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/05/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 
 - 06/10/2018 - 6.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/03/2018 - 6.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/14/2018 - 6.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/07/2018 - 6.0.0-alpha.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 05/06/2018 - 5.7.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 05/05/2018 - 5.7.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/02/2018 - 6.0.0-alpha.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/31/2018 - 6.0.0-alpha.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/30/2018 - 6.0.0-alpha.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-
-- 04/30/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 01/05/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/27/2018 - 5.6.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/27/2018 - 5.5.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/07/2018 - 5.5.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/03/2018 - 5.4.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/03/2018 - 5.4.0-beta.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 03/31/2018 - 6.0.0-alpha.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 03/30/2018 - 6.0.0-alpha.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/28/2018 - 5.4.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/28/2018 - 5.4.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 03/24/2018 - 5.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
