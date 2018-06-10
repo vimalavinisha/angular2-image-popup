@@ -49,11 +49,11 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 1. `cd examples/angular-cli`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
-4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-5. `cd ..`
+4. `cd dist/angular-cli && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+5. `cd ../..`
 6. `npm run build:prod`
-7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-8. `cd ../../..`
+7. `cd dist/angular-cli && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+8. `cd ../../../..`
 
 # E. Run angular-cli-5 example
 1. `cd examples/angular-cli-5`
@@ -76,17 +76,17 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 8. `cd ../..`
 9. `npm run build:ssr && npm run serve:ssr` => if everything is ok (also in browser's console), kill the process and go to the next step
 10. `npm run build:prerender && npm run serve:prerender` => if everything is ok (also in browser's console), kill the process and go to the next step
-11. `cd ../../..`
+11. `cd ../..`
 
 # G. Run angular-cli-material example
 1. `cd examples/angular-cli-material`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
-4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-5. `cd ..`
+4. `cd dist/angular-cli-material && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+5. `cd ../..`
 6. `npm run build:prod`
-7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-8. `cd ../../..`
+7. `cd dist/angular-cli-material && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
+8. `cd ../../../..`
 
 # H. Create your pull request
 1. **If it is ok, create your pull request specifying all the details**
