@@ -1,6 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -9,16 +11,9 @@
     "target": "es5",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
-    "baseUrl": ".",
     "paths": {
-      "@ks89/*": ["libs/*"]
+      "@ks89/angular-modal-gallery": ["dist/ks89/angular-modal-gallery"],
+      "@ks89/angular-modal-gallery/*": ["dist/ks89/angular-modal-gallery/*"]
     }
-  },
-  "exclude": ["node_modules", "tmp"],
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "preserveWhiteSpace": false,
-    "strictInjectionParameters": true,
-    "strictNullChecks": true
   }
 }

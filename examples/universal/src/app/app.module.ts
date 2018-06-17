@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { TransferHttpCacheModule } from '@nguniversal/common';
 
 // ********************** angular-modal-gallery *****************************
-import { ModalGalleryModule } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+import { GalleryModule } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
 // ************************ optional font-awesome 5 ************************
@@ -30,7 +30,7 @@ fontawesome.library.add(faExternalLinkAlt, faPlus, faTimes, faDownload);
     ]),
     TransferHttpCacheModule,
 
-    ModalGalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
+    GalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
   ],
   providers: [],
   bootstrap: [AppComponent]

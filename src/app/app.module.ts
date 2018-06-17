@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017-2018 Stefano Cappa (Ks89)
+ Copyright (c) 2017 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,12 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
@@ -42,30 +43,17 @@ import * as fontawesome from '@fortawesome/fontawesome';
 fontawesome.library.add(faExternalLinkAlt, faPlus, faTimes, faDownload);
 // *************************************************************************
 
-import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
-
-import { AppComponent, DialogOverviewExampleDialog } from './app.component';
-
 @NgModule({
-  declarations: [AppComponent, DialogOverviewExampleDialog],
+  declarations: [AppComponent],
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
+    AppRoutingModule,
+
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
-
-    MatButtonModule,
-    MatCheckboxModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-
     GalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
   ],
   providers: [],
-  entryComponents: [AppComponent, DialogOverviewExampleDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

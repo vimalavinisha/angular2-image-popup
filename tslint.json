@@ -1,7 +1,6 @@
 {
   "rulesDirectory": [
-    "node_modules/codelyzer",
-    "node_modules/@nrwl/schematics/src/tslint"
+    "node_modules/codelyzer"
   ],
   "rules": {
     "arrow-return-shorthand": true,
@@ -19,7 +18,6 @@
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs",
       "rxjs/Rx"
     ],
     "import-spacing": true,
@@ -31,7 +29,7 @@
     "label-position": true,
     "max-line-length": [
       true,
-      155
+      200
     ],
     "member-access": false,
     "member-ordering": [
@@ -59,7 +57,7 @@
     "no-debugger": true,
     "no-duplicate-super": true,
     "no-empty": false,
-    "no-empty-interface": false,
+    "no-empty-interface": true,
     "no-eval": true,
     "no-inferrable-types": [
       true,
@@ -110,17 +108,13 @@
     ],
     "unified-signatures": true,
     "variable-name": false,
-    "directive-selector": [
+    "whitespace": [
       true,
-      "attribute",
-      "ks",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "ks",
-      "kebab-case"
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
     ],
     "no-output-on-prefix": false,
     "use-input-property-decorator": true,

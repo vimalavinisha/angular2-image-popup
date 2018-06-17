@@ -1,0 +1,40 @@
+<div *ngIf="showGallery"
+     class="plain-container"
+     ksWrap [wrap]="wrapStyle" [width]="widthStyle"
+     ksDirection [direction]="directionStyle" [justify]="justifyStyle"
+     [attr.aria-label]="accessibilityConfig?.plainGalleryContentAriaLabel"
+     [title]="accessibilityConfig?.plainGalleryContentTitle">
+
+  <ng-container *ngFor="let imgRow of imageGrid; let i = index">
+    <ng-container *ngFor="let imgCol of imgRow; let j = index">
+
+      <ng-container *ngIf="!configPlainGallery.advanced?.aTags; else aTags">
+        <img *ngIf="imgCol?.modal?.img"
+             [src]="imgCol.plain?.img ? imgCol.plain.img : imgCol.modal.img"
+             class="image"
+             ksSize [sizeConfig]="{width: size?.width, height: size?.height}"
+             [attr.aria-label]="imgCol.plain?.ariaLabel"
+             [title]="imgCol.plain?.title ? imgCol.plain.title : getTitleDisplay(imgCol)"
+             alt="{{imgCol.plain?.alt ? imgCol.plain.alt : getAltPlainDescriptionByImage(imgCol)}}"
+             [tabindex]="0" role="img"
+             (click)="showModalGalleryByImage(imgCol)" (keyup)="showModalGalleryByImage(imgCol)"/>
+      </ng-container>
+
+      <!-- Add directive to set background with the image url as param to pass thumb or img-->
+      <!-- to do something like this <a style="background: url('path to image') 50% 50%/cover">.-->
+      <ng-template #aTags>
+        <a *ngIf="imgCol?.modal?.img"
+           class="a-tag-image"
+           ksATagBgImage [image]="imgCol" [style]="configPlainGallery.advanced?.additionalBackground"
+           ksSize [sizeConfig]="{width: size?.width, height: size?.height}"
+           [attr.aria-label]="imgCol.plain?.ariaLabel"
+           [title]="imgCol.plain?.title ? imgCol.plain.title : getTitleDisplay(imgCol)"
+           [tabindex]="0"
+           (click)="showModalGallery(j)" (keyup)="showModalGallery(j)"></a>
+      </ng-template>
+
+    </ng-container>
+  </ng-container>
+
+</div>
+
