@@ -13,6 +13,13 @@
 *Do you like angular-modal-gallery? Please, add a 'star' to support this library*
 
 <br>
+<br>
+
+**angular-modal-gallery 7.0.0 WORK IN PROGRESS**
+It will be released this autumn with some great improvements and new features. Also I want to support Angular 7 Ivy Renderer (aka Renderer3)
+For more info, watch this issue: [7.0.0 major release](https://github.com/Ks89/angular-modal-gallery/issues/144)
+
+<br><br><br>
 
 # angular-modal-gallery
 
