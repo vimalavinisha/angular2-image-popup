@@ -49,6 +49,7 @@ export { LoadingConfig, LoadingType } from './src/model/loading-config.interface
 
 export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './src/components/accessibility-default';
 export {
+  KS_DEFAULT_BTN_ROTATE,
   KS_DEFAULT_BTN_FULL_SCREEN,
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,

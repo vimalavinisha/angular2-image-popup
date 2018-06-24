@@ -324,12 +324,19 @@
                     [buttonsConfig]="customButtonsConfigExtUrlNewTab"></ks-modal-gallery>
 </section>
 <section>
-  <h3>B23 - (id=37) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
+  <h3>B23 - (id=37) - Simple demo - buttons config CUSTOM but with all default buttons already included in the library</h3>
+  <br>
+  <ks-modal-gallery [id]="37" [modalImages]="images"
+                    [currentImageConfig]="{downloadable: true}"
+                    [buttonsConfig]="buttonsConfigCustom"></ks-modal-gallery>
+</section>
+<section>
+  <h3>B24 - (id=38) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
     5</a></h3>
   <p><i>Be careful to use the id=37 also in the Component. This is necessary here, because I have many instances of
     angular-modal-gallery in a single page</i></p>
   <br>
-  <ks-modal-gallery [id]="37" [modalImages]="images"
+  <ks-modal-gallery [id]="38" [modalImages]="images"
                     [currentImageConfig]="{downloadable: true}"
                     [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (show)="onVisibleIndex($event)"
@@ -341,64 +348,64 @@
 <br>
 <h2>Advanced examples</h2>
 <section>
-  <h3>C1 - (id=38) - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>
+  <h3>C1 - (id=39) - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>
   <br>
   <ks-modal-gallery [id]="38" [modalImages]="images"
                     [keyboardConfig]="{esc: 81, left: 40, right: 38}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C2 - (id=39) - Advanced demo - custom description always visible</h3>
+  <h3>C2 - (id=40) - Advanced demo - custom description always visible</h3>
   <br>
-  <ks-modal-gallery [id]="39" [modalImages]="images"
+  <ks-modal-gallery [id]="40" [modalImages]="images"
                     [currentImageConfig]="{description: customDescription}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C3 - (id=40) - Advanced demo - custom description hide if empty</h3>
+  <h3>C3 - (id=41) - Advanced demo - custom description hide if empty</h3>
   <br>
-  <ks-modal-gallery [id]="40" [modalImages]="images"
+  <ks-modal-gallery [id]="41" [modalImages]="images"
                     [currentImageConfig]="{description: customDescriptionHideIfEmpty}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C4 - (id=41) - Advanced demo - custom description always hidden</h3>
+  <h3>C4 - (id=42) - Advanced demo - custom description always hidden</h3>
   <br>
-  <ks-modal-gallery [id]="41" [modalImages]="images"
+  <ks-modal-gallery [id]="42" [modalImages]="images"
                     [currentImageConfig]="{description: customFullDescriptionHidden}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C5 - (id=42) - Advanced demo - custom FULL description always visible</h3>
+  <h3>C5 - (id=43) - Advanced demo - custom FULL description always visible</h3>
   <br>
-  <ks-modal-gallery [id]="42" [modalImages]="images"
+  <ks-modal-gallery [id]="43" [modalImages]="images"
                     [currentImageConfig]="{description: customFullDescription}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C6 - (id=43) - Advanced demo - custom HTML description always visible</h3>
+  <h3>C6 - (id=44) - Advanced demo - custom HTML description always visible</h3>
   <br>
-  <ks-modal-gallery [id]="43" [modalImages]="imagesHtmlDescriptions"
+  <ks-modal-gallery [id]="44" [modalImages]="imagesHtmlDescriptions"
                     [currentImageConfig]="{description: customDescription}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C7 - (id=44) - Advanced demo - custom description style (always visible)</h3>
+  <h3>C7 - (id=45) - Advanced demo - custom description style (always visible)</h3>
   <br>
-  <ks-modal-gallery [id]="44" [modalImages]="images"
+  <ks-modal-gallery [id]="45" [modalImages]="images"
                     [currentImageConfig]="{description: customDescriptionStyle}"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C8 - (id=45) - Advanced demo - preview custom configuration with 1 image (clickable)</h3>
+  <h3>C8 - (id=46) - Advanced demo - preview custom configuration with 1 image (clickable)</h3>
   <br>
-  <ks-modal-gallery [id]="45" [modalImages]="images"
+  <ks-modal-gallery [id]="46" [modalImages]="images"
                     [previewConfig]="previewConfigOneImage"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C9 - (id=46) - Advanced demo - preview custom configuration without arrows (clickable)</h3>
+  <h3>C9 - (id=47) - Advanced demo - preview custom configuration without arrows (clickable)</h3>
   <br>
-  <ks-modal-gallery [id]="46" [modalImages]="images"
+  <ks-modal-gallery [id]="47" [modalImages]="images"
                     [previewConfig]="previewConfigNoArrows"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C10 - (id=47) - Advanced demo - preview custom configuration not clickable</h3>
+  <h3>C10 - (id=48) - Advanced demo - preview custom configuration not clickable</h3>
   <br>
-  <ks-modal-gallery [id]="47" [modalImages]="images"
+  <ks-modal-gallery [id]="48" [modalImages]="images"
                     [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
 </section>
 <!--<section>-->
@@ -409,30 +416,30 @@
 <!--[previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>-->
 <!--</section>-->
 <section>
-  <h3>C11 - (id=48) - Advanced demo - preview custom configuration with custom size</h3>
+  <h3>C11 - (id=49) - Advanced demo - preview custom configuration with custom size</h3>
   <br>
-  <ks-modal-gallery [id]="48" [modalImages]="images"
+  <ks-modal-gallery [id]="49" [modalImages]="images"
                     [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C12 - (id=49) - Advanced demo - accessibility config</h3>
+  <h3>C12 - (id=50) - Advanced demo - accessibility config</h3>
   <br>
-  <ks-modal-gallery [id]="49" [modalImages]="images"
+  <ks-modal-gallery [id]="50" [modalImages]="images"
                     [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C13 - (id=50) - Advanced demo - disable clicks on current image in modal-image</h3>
+  <h3>C13 - (id=51) - Advanced demo - disable clicks on current image in modal-image</h3>
   <br>
-  <ks-modal-gallery [id]="50" [modalImages]="images" [currentImageConfig]="{navigateOnClick: false}"></ks-modal-gallery>
+  <ks-modal-gallery [id]="51" [modalImages]="images" [currentImageConfig]="{navigateOnClick: false}"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C14 - (id=51) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>
+  <h3>C14 - (id=52) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>
   <p>Attention: please check the console to understand what it's happening!</p>
   <br>
-  <ks-modal-gallery [id]="51" [modalImages]="images" (show)="onShowAutoCloseExample($event, 51)"></ks-modal-gallery>
+  <ks-modal-gallery [id]="52" [modalImages]="images" (show)="onShowAutoCloseExample($event, 51)"></ks-modal-gallery>
 </section>
 <br>
 <hr>
@@ -515,6 +522,10 @@
     <li>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from
       <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
       href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+    </li>
+    <li>Icons made by <a href="https://www.flaticon.com/authors/dario-ferrando" title="Dario Ferrando">Dario Ferrando</a> from
+      <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+        href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </li>
   </ul>
 </section>

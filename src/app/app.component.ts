@@ -40,6 +40,12 @@ import {
   GridLayout,
   Image,
   ImageModalEvent,
+  KS_DEFAULT_BTN_CLOSE,
+  KS_DEFAULT_BTN_DELETE,
+  KS_DEFAULT_BTN_DOWNLOAD,
+  KS_DEFAULT_BTN_EXTURL,
+  KS_DEFAULT_BTN_FULL_SCREEN,
+  KS_DEFAULT_BTN_ROTATE,
   LineLayout,
   PlainGalleryConfig,
   PlainGalleryStrategy,
@@ -415,6 +421,18 @@ export class AppComponent {
   buttonsConfigFull: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.FULL
+  };
+  buttonsConfigCustom: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      KS_DEFAULT_BTN_ROTATE,
+      KS_DEFAULT_BTN_FULL_SCREEN,
+      KS_DEFAULT_BTN_DELETE,
+      KS_DEFAULT_BTN_EXTURL,
+      KS_DEFAULT_BTN_DOWNLOAD,
+      KS_DEFAULT_BTN_CLOSE
+    ]
   };
 
   // default buttons but extUrl will open the link in a new tab instead of the current one

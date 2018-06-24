@@ -359,6 +359,19 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   // }
 
   /**
+   * Method called by the rotate upper button.
+   * @param ButtonEvent event payload
+   */
+  onRotate(event: ButtonEvent) {
+    const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
+    this.buttonBeforeHook.emit(eventToEmit);
+
+    // TODO implement rotation logic
+
+    this.buttonAfterHook.emit(eventToEmit);
+  }
+
+  /**
    * Method called by the full-screen upper button.
    * @param ButtonEvent event payload
    */

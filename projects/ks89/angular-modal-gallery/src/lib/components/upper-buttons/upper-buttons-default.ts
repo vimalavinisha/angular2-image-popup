@@ -70,3 +70,13 @@ export const KS_DEFAULT_BTN_FULL_SCREEN: ButtonConfig = {
   title: 'Switch to full-screen',
   ariaLabel: 'Switch to full-screen'
 };
+/**
+ * Default rotate button object
+ */
+export const KS_DEFAULT_BTN_ROTATE: ButtonConfig = {
+  className: 'rotate-image',
+  size: KS_DEFAULT_SIZE,
+  type: ButtonType.ROTATE,
+  title: 'Rotate clockwise of 90 degrees the current image',
+  ariaLabel: 'Rotate clockwise of 90 degrees the current image'
+};

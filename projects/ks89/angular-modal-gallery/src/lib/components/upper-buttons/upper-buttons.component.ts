@@ -93,6 +93,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   @Output() fullscreen: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
+   * Output to emit clicks on rotate button. The payload contains a `ButtonEvent`.
+   */
+  @Output() rotate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
    * Output to emit clicks on all custom buttons. The payload contains a `ButtonEvent`.
    */
   @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
@@ -202,6 +206,9 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         break;
       case ButtonType.FULLSCREEN:
         this.triggerOnMouseAndKeyboard(this.fullscreen, event, dataToEmit);
+        break;
+      case ButtonType.ROTATE:
+        this.triggerOnMouseAndKeyboard(this.rotate, event, dataToEmit);
         break;
       default:
         throw new Error(`Unknown button's type into ButtonConfig`);
