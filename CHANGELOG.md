@@ -1,3 +1,13 @@
+# 6.0.2
+### Bugfixes
+- fix current-image visibility on Microsoft Edge for Desktop #146
+
+
+# 6.0.2-beta.1
+### Bugfixes
+- fix current-image visibility on Microsoft Edge for Desktop #146
+
+
 # 6.0.1
 ### Bugfixes
 - fix readme published on npmjs
