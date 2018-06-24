@@ -37,6 +37,7 @@
   <figure id="current-figure" [style.display]="loading ? 'none' : ''">
     <img id="current-image"
          class="inside"
+         [ngClass]="'rotate' + currentImage.modal.angle ? currentImage.modal.angle : '0'"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"

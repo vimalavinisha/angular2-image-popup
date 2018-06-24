@@ -92,6 +92,37 @@ $description-color: white;
     }
   }
 
+  #current-figure {
+    animation: fadein-visible .8s;
+    text-align: center;
+
+    & figure {
+      margin: 0; // => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones
+      position: relative;
+
+      img {
+        // display: block;
+        // don't use this
+        // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+
+    & figcaption {
+      padding: $figcaption-padding;
+      position: $figcaption-position;
+      bottom: $figcaption-bottom;
+      left: $figcaption-left;
+      right: $figcaption-right;
+
+      .description {
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
 }
 
 #current-image {
@@ -100,50 +131,27 @@ $description-color: white;
   max-width: $curr-img-max-width;
   max-height: $curr-img-max-height;
   cursor: pointer;
-}
 
-// trick found here https://stackoverflow.com/a/37600130/3590376
-// Using a media query I can set a max width
-@media screen and (min-width: $curr-img-max-width-trick) {
-  #current-image {
-    height: auto;
+  // trick found here https://stackoverflow.com/a/37600130/3590376
+  // Using a media query I can set a max width
+  @media screen and (min-width: $curr-img-max-width-trick) {
     // Thanks to vh ad vw I can resize the image when reducing browser's window both vertically and horizontally
     max-width: $curr-img-max-width-trick;
-    max-height: $curr-img-max-height;
-    cursor: pointer;
   }
-}
 
-#current-figure {
-  animation: fadein-visible .8s;
-  text-align: center;
-}
-
-figure {
-  margin: 0; // => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones
-  position: relative;
-
-  img {
-    // display: block;
-    // don't use this
-    // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
-    max-width: 100%;
-    height: auto;
-    display: block;
+  &.rotate0,
+  &.rotate360 {
+    transform-origin: top left;
   }
-}
-
-figcaption {
-  padding: $figcaption-padding;
-  position: $figcaption-position;
-  bottom: $figcaption-bottom;
-  left: $figcaption-left;
-  right: $figcaption-right;
-}
-
-.description {
-  font-weight: bold;
-  text-align: center;
+  &.rotate90 {
+    transform: rotate(90deg) translateY(-100%);
+  }
+  &.rotate180 {
+    transform: rotate(180deg) translate(-100%, -100%);
+  }
+  &.rotate270 {
+    transform: rotate(270deg) translateX(-100%);
+  }
 }
 
 @mixin fadein($opacity-from, $opacity-to) {
