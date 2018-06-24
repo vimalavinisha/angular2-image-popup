@@ -34,7 +34,7 @@
   </div>
 
 
-  <figure id="current-figure" [hidden]="loading">
+  <figure id="current-figure" [style.display]="loading ? 'none' : 'inherit'">
     <img id="current-image"
          class="inside"
          [src]="currentImage.modal.img"

@@ -37,6 +37,8 @@ import { DIRECTION_RIGHT, ENTER_KEY, MOUSE_MAIN_BUTTON_CLICK, NEXT, NOTHING, PRE
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AccessibleComponent {
+  constructor() {}
+
   /**
    * Method to handle navigation events with both Keyboard and Mouse.
    * @param string direction of the navigation that can be either 'next' or 'prev'
