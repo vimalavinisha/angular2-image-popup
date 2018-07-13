@@ -338,6 +338,32 @@ export class AppComponent {
     )
   ];
 
+  imagesRotated: Image[] = [
+    new Image(0, {
+      img: '../assets/images/gallery/pexels-photo-135230.png',
+      description: 'Description 1',
+      angle: 180
+    }),
+    new Image(1, {
+      img: '../assets/images/gallery/pexels-photo-547115.jpeg',
+      angle: 90
+    }),
+    new Image(2, {
+      img: '../assets/images/gallery/pexels-photo-556664.jpeg',
+      description: 'Description 3',
+      angle: 270
+    }),
+    new Image(3, {
+      img: '../assets/images/gallery/pexels-photo-787594.jpeg',
+      description: 'Description 4',
+      angle: 0
+    }),
+    new Image(4, {
+      img: '../assets/images/gallery/pexels-photo-803105.jpeg',
+      angle: 90
+    })
+  ];
+
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
