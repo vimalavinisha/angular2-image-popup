@@ -25,6 +25,7 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2 } from '@angular/core';
 
 import { Image } from '../model/image.class';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 /**
  * Directive to add an image to an `<a>` tag with some additional custom properties.
@@ -71,7 +72,7 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
       return;
     }
 
-    const imgPath: string = this.image.plain && this.image.plain.img ? this.image.plain.img : this.image.modal.img;
+    const imgPath: string | SafeResourceUrl = this.image.plain && this.image.plain.img ? this.image.plain.img : this.image.modal.img;
     this.renderer.setStyle(this.el.nativeElement, 'background', `url("${imgPath}") ${this.style}`);
   }
 }

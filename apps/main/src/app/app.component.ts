@@ -23,6 +23,7 @@
  */
 
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import {
   AccessibilityConfig,
@@ -44,6 +45,7 @@ import {
   PlainGalleryStrategy,
   PreviewConfig
 } from '@ks89/angular-modal-gallery';
+import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 @Component({
   selector: 'ks-root',
@@ -124,6 +126,56 @@ export class AppComponent {
       extUrl: 'http://www.google.com'
     }),
     new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
+  ];
+
+  // example of a png converted into base64 using https://www.base64-image.de/ or other similar websites
+  base64ImageString =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABN0lEQV' +
+    'R4nO3SQQ2AQBDAwAVlaMEhCkAV' +
+    'b2RcQmcU9NEZAAAAAOD/tvN675k5VoewxLOvLmAtA8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0C' +
+    'cAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4g' +
+    'wQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGQAAAAAA4Pc+8asEoPPGq' +
+    'xUAAAAASUVORK5CYII';
+
+  base64Image: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.base64ImageString);
+
+  imagesBase64: Image[] = [
+    new Image(0, {
+      img: this.base64Image,
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(1, {
+      img: this.base64Image,
+      description: 'Description 2'
+    }),
+    new Image(
+      2,
+      {
+        img: this.base64Image,
+        description: 'Description 3',
+        extUrl: 'http://www.google.com'
+      },
+      {
+        img: this.base64Image,
+        title: 'custom title 2',
+        alt: 'custom alt 2',
+        ariaLabel: 'arial label 2'
+      }
+    ),
+    new Image(3, {
+      img: this.base64Image,
+      description: 'Description 4',
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(
+      4,
+      {
+        img: this.base64Image
+      },
+      {
+        img: this.base64Image
+      }
+    )
   ];
 
   imagesHtmlDescriptions: Image[] = [
@@ -456,7 +508,7 @@ export class AppComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
-  constructor(private galleryService: GalleryService) {}
+  constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
 
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);

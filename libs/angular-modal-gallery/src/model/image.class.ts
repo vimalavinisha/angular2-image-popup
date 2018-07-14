@@ -24,6 +24,7 @@
 
 import { Action } from './action.enum';
 import { Size } from './size.interface';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 /**
  * Class `Image` that represents an image with both `modal` and `plain` configurations.
@@ -47,7 +48,7 @@ export class Image {
  * Please, refers to `PlainImage` or `ModalImage`.
  */
 export interface ImageData {
-  img: string;
+  img: string | SafeResourceUrl;
   description?: string;
   title?: string;
   alt?: string;

@@ -585,8 +585,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   private downloadImageAllBrowsers() {
     const link = document.createElement('a');
-    link.href = this.currentImage.modal.img;
-    link.setAttribute('download', this.getFileName(this.currentImage.modal.img));
+    link.href = <string>this.currentImage.modal.img;
+    link.setAttribute('download', this.getFileName(<string>this.currentImage.modal.img));
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -599,11 +599,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   private downloadImageOnlyIEorEdge() {
     if (isPlatformBrowser(this.platformId)) {
       const req = new XMLHttpRequest();
-      req.open('GET', this.currentImage.modal.img, true);
+      req.open('GET', <string>this.currentImage.modal.img, true);
       req.responseType = 'arraybuffer';
       req.onload = event => {
         const blob = new Blob([req.response], { type: 'image/png' });
-        window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage.modal.img));
+        window.navigator.msSaveBlob(blob, this.getFileName(<string>this.currentImage.modal.img));
       };
       req.send();
     }
