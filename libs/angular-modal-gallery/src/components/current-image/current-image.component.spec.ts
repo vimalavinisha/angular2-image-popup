@@ -19,7 +19,7 @@ import 'mousetrap';
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { By, SafeResourceUrl } from '@angular/platform-browser';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../components/accessibility-default';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { CurrentImageComponent } from './current-image.component';
@@ -260,6 +260,52 @@ const IMAGES: InternalLibImage[] = [
   )
 ];
 
+const IMAGES_BASE64: InternalLibImage[] = [
+  new InternalLibImage(0, {
+    // modal
+    img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+    extUrl: 'http://www.google.com'
+  }),
+  new InternalLibImage(1, {
+    // modal
+    img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+    description: 'Description 2'
+  }),
+  new InternalLibImage(
+    2,
+    {
+      // modal
+      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+      description: 'Description 3',
+      extUrl: 'http://www.google.com'
+    },
+    {
+      // plain
+      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+      title: 'custom title 2',
+      alt: 'custom alt 2',
+      ariaLabel: 'arial label 2'
+    }
+  ),
+  new InternalLibImage(3, {
+    // modal
+    img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+    description: 'Description 4',
+    extUrl: 'http://www.google.com'
+  }),
+  new InternalLibImage(
+    4,
+    {
+      // modal
+      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG='
+    },
+    {
+      // plain
+      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG='
+    }
+  )
+];
+
 function checkMainContainer() {
   const element: DebugElement = fixture.debugElement;
   const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
@@ -388,6 +434,33 @@ describe('CurrentImageComponent', () => {
         fixture.detectChanges();
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
+      });
+    });
+
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
+      it(`should display current image as base64 with arrows and side previews. Test i=${index}`, () => {
+        comp.images = IMAGES_BASE64;
+        comp.currentImage = IMAGES_BASE64[index];
+        comp.isOpen = true;
+        comp.currentImageConfig = <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        };
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES_BASE64[index],
+            currentValue: IMAGES_BASE64[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES_BASE64[index], val);
       });
     });
 
