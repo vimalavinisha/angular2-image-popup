@@ -60,6 +60,7 @@ export interface ImageData {
  */
 export interface ModalImage extends ImageData {
   extUrl?: string;
+  downloadFileName?: string;
 }
 
 /**

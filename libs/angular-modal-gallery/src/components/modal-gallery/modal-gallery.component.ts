@@ -586,7 +586,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   private downloadImageAllBrowsers() {
     const link = document.createElement('a');
     link.href = <string>this.currentImage.modal.img;
-    link.setAttribute('download', this.getFileName(<string>this.currentImage.modal.img));
+    link.setAttribute('download', this.getFileName(this.currentImage));
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -603,7 +603,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       req.responseType = 'arraybuffer';
       req.onload = event => {
         const blob = new Blob([req.response], { type: 'image/png' });
-        window.navigator.msSaveBlob(blob, this.getFileName(<string>this.currentImage.modal.img));
+        window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage));
       };
       req.send();
     }
@@ -620,13 +620,18 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Private method to get the filename from an input path.
-   * This is used to get the image's name from its path.
-   * @param string path that represents the path of the image
-   * @returns string string filename from the input path
+   * Private method to get the file name from an input path.
+   * This is used either to get the image's name from its path or from the Image itself,
+   * if specified as 'downloadFileName' by the user.
+   * @param Image image to extract its file name
+   * @returns string string file name of the input image.
    */
-  private getFileName(path: string): string {
-    return path.replace(/^.*[\\\/]/, '');
+  private getFileName(image: Image): string {
+    if (!image.modal.downloadFileName || image.modal.downloadFileName.length === 0) {
+      return (<string>this.currentImage.modal.img).replace(/^.*[\\\/]/, '');
+    } else {
+      return image.modal.downloadFileName;
+    }
   }
 
   /**

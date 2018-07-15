@@ -314,6 +314,17 @@ export class AppComponent {
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
+  imagesCustomDownloadFileName: Image[] = [
+    new Image(0, {
+      img: '../assets/images/gallery/img1.jpg',
+      downloadFileName: 'first-img.jpg'
+    }),
+    new Image(1, {
+      img: this.base64Image,
+      downloadFileName: 'second-img-base64.jpg'
+    })
+  ];
+
   dotsConfig: DotsConfig = {
     visible: false
   };
