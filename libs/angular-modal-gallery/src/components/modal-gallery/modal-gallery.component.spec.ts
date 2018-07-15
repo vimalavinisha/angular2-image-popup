@@ -40,7 +40,7 @@ import { KeyboardServiceConfig } from '../../model/keyboard-service-config.inter
 import { Action } from '../../model/action.enum';
 import { ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
 import { ImageModalEvent } from '../../model/image.class';
-import { LineLayout, AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { AdvancedLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { getIndex } from '../../utils/image.util';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { GalleryService } from '../../services/gallery.service';
@@ -512,6 +512,86 @@ describe('ModalGalleryComponent', () => {
       comp.onCloseGallery(mockButtonEvent);
     });
 
+    it(`should call closeGallery (emulating galleryService) and subscribe to its events`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.ngOnChanges(getSimpleChangesMock());
+
+      comp.hasData.subscribe(val => {
+        expect(val).toBeTruthy();
+      });
+
+      comp.close.subscribe(val => {
+        expect(val.action).toBe(Action.NORMAL);
+        expect(val.result).toBeTruthy();
+      });
+
+      comp.ngOnInit();
+
+      comp.closeGallery(Action.NORMAL, true);
+    });
+
+    it(`should trigger galleryService's events and subscribe to its events in modal-gallery.component`, () => {
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+
+      comp.show.subscribe((val: ImageModalEvent) => {
+        expect(val.result).toBe(1);
+        expect(val.action).toBe(Action.LOAD);
+      });
+
+      comp.close.subscribe((val: ImageModalEvent) => {
+        expect(val.action).toBe(0);
+        expect(val.result).toBeTruthy();
+      });
+
+      const galleryService = fixture.debugElement.injector.get(GalleryService);
+      galleryService.closeGallery(0);
+      galleryService.openGallery(0, 0);
+    });
+
+    it(`shouldn't trigger 'show' event, because galleryService's openGallery has a an index out of range as input`, () => {
+      const outOfRangeIndex: number = IMAGES.length + 10; // out of range
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+
+      comp.show.subscribe(() => fail(`Shouldn't get show event, because index is out of range`));
+
+      const galleryService = fixture.debugElement.injector.get(GalleryService);
+      galleryService.openGallery(0, outOfRangeIndex);
+    });
+
+    it(`shouldn't trigger galleryService's events because galleryId is different`, () => {
+      const differentGalleryId = 1;
+      const currentImage: InternalLibImage = IMAGES[0];
+      comp.id = 0;
+      comp.modalImages = IMAGES;
+      comp.currentImage = currentImage;
+
+      comp.ngOnChanges(getSimpleChangesMock());
+      comp.ngOnInit();
+
+      comp.show.subscribe(() => fail(`Shouldn't get show event, because galleryId is different`));
+      comp.close.subscribe(() => fail(`Shouldn't get close event, because galleryId is different`));
+
+      const galleryService = fixture.debugElement.injector.get(GalleryService);
+      galleryService.closeGallery(differentGalleryId);
+      galleryService.openGallery(differentGalleryId, 0);
+    });
+
     it(`should call closeOutside and subscribe to its events`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
       comp.id = 0;
@@ -618,8 +698,6 @@ describe('ModalGalleryComponent', () => {
           isFirstChange: () => false // not important for this test
         }
       });
-
-
     });
 
 
@@ -649,6 +727,17 @@ describe('ModalGalleryComponent', () => {
   });
 
   describe('------NO------', () => {
+
+    it(`shouldn't display the gallery, because id is a mandatory parameter`, () => {
+      comp.id = undefined;
+      comp.modalImages = IMAGES;
+      comp.currentImage = IMAGES[0];
+
+      const error = new Error(`'[id]="a number >= 0"' is a mandatory input from 6.0.0 in angular-modal-gallery.` +
+        `If you are using multiple instances of this library, please be sure to use different ids`);
+
+      expect(() => comp.ngOnInit()).toThrow(error);
+    });
 
     [{id: 1, index: IMAGES.length + 5}, {id: 1, index: IMAGES.length + 100}].forEach((val: any, index: number) => {
       it(`shouldn't listen for gallery service's navigate events if index is greater then length. Test i=${index}`, () => {
@@ -731,6 +820,44 @@ describe('ModalGalleryComponent', () => {
       });
 
       comp.onDownload(mockButtonEvent);
+    });
+
+    [{galleryId: undefined},{galleryId: -1}].forEach((item, index) => {
+      it(`should catch an error calling galleryService closeGallery's method with wrong input data. Test index=${index}`, () => {
+        const currentImage: InternalLibImage = IMAGES[0];
+        comp.id = 0;
+        comp.modalImages = IMAGES;
+        comp.currentImage = currentImage;
+
+        comp.ngOnChanges(getSimpleChangesMock());
+        comp.ngOnInit();
+
+        comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
+        comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
+
+        const expectedError = new Error('Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined');
+        const galleryService = fixture.debugElement.injector.get(GalleryService);
+        expect(() => galleryService.closeGallery(item.galleryId)).toThrow(expectedError);
+      });
+    });
+
+    [{galleryId: undefined, index:0 }, {galleryId:-1, index:0 }, {galleryId:0, index:-1 }].forEach((item, index) => {
+      it(`should catch an error calling galleryService openGallery's method with wrong input data. Test index=${index}`, () => {
+        const currentImage: InternalLibImage = IMAGES[0];
+        comp.id = 0;
+        comp.modalImages = IMAGES;
+        comp.currentImage = currentImage;
+
+        comp.ngOnChanges(getSimpleChangesMock());
+        comp.ngOnInit();
+
+        comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
+        comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
+
+        const expectedError = new Error('Cannot open gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
+        const galleryService = fixture.debugElement.injector.get(GalleryService);
+        expect(() => galleryService.openGallery(item.galleryId, item.index)).toThrow(expectedError);
+      });
     });
   });
 });

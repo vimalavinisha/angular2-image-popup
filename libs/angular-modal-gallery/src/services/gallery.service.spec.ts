@@ -103,5 +103,12 @@ describe('GalleryService', () => {
         })
       );
     });
+
+    it(`should call closeGallery with an undefined galleryId expecting an error`,
+      inject([GalleryService], (service: GalleryService) => {
+        const error = new Error('Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined');
+        expect(() => service.closeGallery(undefined)).toThrow(error);
+      })
+    );
   });
 });
