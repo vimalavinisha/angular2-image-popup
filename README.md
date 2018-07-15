@@ -97,6 +97,7 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 
 ## News
 
+- 07/15/2018 - 6.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/24/2018 - 6.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/24/2018 - 6.0.2-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/10/2018 - 6.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

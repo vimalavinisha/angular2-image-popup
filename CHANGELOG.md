@@ -1,3 +1,13 @@
+# 6.1.0
+### Features
+- add base64 support as image path #147
+- add new Image property to choose a file name for download #146
+
+### Testing
+- add other tests to cover some missing scenarios
+- add unit testing for all new features
+
+
 # 6.0.2
 ### Bugfixes
 - fix current-image visibility on Microsoft Edge for Desktop #146
