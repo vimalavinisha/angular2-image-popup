@@ -7,6 +7,10 @@
 - add other tests to cover some missing scenarios
 - add unit testing for all new features
 
+### Demos
+- add base64 demo to all examples
+- add custom file name for download demo to all examples
+
 
 # 6.0.2
 ### Bugfixes
