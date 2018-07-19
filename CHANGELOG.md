@@ -1,3 +1,8 @@
+# 6.1.1
+### Bugfixes
+- modal image loses proportions on mobile when resized (caused by version 6.0.2 #145) fixed with #153
+
+
 # 6.1.0
 ### Features
 - add base64 support as image path #147
