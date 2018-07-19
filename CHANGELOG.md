@@ -1,3 +1,8 @@
+# 6.1.2
+### Bugfixes
+- fix readme.md on npmjs with the url to stackblitz v6, instead of v5
+
+
 # 6.1.1
 ### Bugfixes
 - modal image loses proportions on mobile when resized (caused by version 6.0.2 #145) fixed with #153
