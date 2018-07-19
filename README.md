@@ -73,7 +73,7 @@ It's also possible to navigate between these modal images with both **keyboard a
 
 ## **Live demo**
 
-[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v5/)
+[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v6/)
 
 
 ## Installation
