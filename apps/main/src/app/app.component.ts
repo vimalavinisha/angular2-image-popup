@@ -23,7 +23,7 @@
  */
 
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 import {
   AccessibilityConfig,
@@ -45,7 +45,6 @@ import {
   PlainGalleryStrategy,
   PreviewConfig
 } from '@ks89/angular-modal-gallery';
-import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'ks-root',
