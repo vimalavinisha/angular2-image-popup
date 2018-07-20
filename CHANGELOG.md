@@ -1,3 +1,8 @@
+# 6.2.0
+### Features
+- add a new config property to invert swipe direction (requested by @anacatarinasousaaa #154)
+
+
 # 6.1.2
 ### Bugfixes
 - fix readme.md on npmjs with the url to stackblitz v6, instead of v5

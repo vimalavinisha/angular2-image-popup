@@ -173,7 +173,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       navigateOnClick: true,
       loadingConfig: defaultLoading,
       description: defaultDescription,
-      downloadable: false
+      downloadable: false,
+      invertSwipe: false
     };
 
     this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
@@ -401,16 +402,24 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method used by Hammerjs to support touch gestures.
+   * Method used by Hammerjs to support touch gestures (you can also invert the swipe direction with configCurrentImage.invertSwipe).
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
   swipe(action = this.SWIPE_ACTION.RIGHT) {
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
-        this.nextImage(Action.SWIPE);
+        if (this.configCurrentImage.invertSwipe) {
+          this.prevImage(Action.SWIPE);
+        } else {
+          this.nextImage(Action.SWIPE);
+        }
         break;
       case this.SWIPE_ACTION.LEFT:
-        this.prevImage(Action.SWIPE);
+        if (this.configCurrentImage.invertSwipe) {
+          this.nextImage(Action.SWIPE);
+        } else {
+          this.prevImage(Action.SWIPE);
+        }
         break;
       // case this.SWIPE_ACTION.UP:
       //   break;
