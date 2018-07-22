@@ -623,34 +623,198 @@ describe('CurrentImageComponent', () => {
       });
     });
 
-      TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
-        it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
-          comp.images = IMAGES;
-          comp.currentImage = IMAGES[index];
-          comp.isOpen = true;
-          comp.currentImageConfig = <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN}
-          };
-          comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-          comp.keyboardConfig = null;
-          comp.ngOnChanges(<SimpleChanges>{
-            currentImage: {
-              previousValue: IMAGES[index],
-              currentValue: IMAGES[index],
-              firstChange: false,
-              isFirstChange: () => false
-            }
-          });
-          comp.ngOnInit();
-          fixture.detectChanges();
-          checkMainContainer();
-          checkCurrentImage(IMAGES[index], val, false);
-          checkArrows(index === 0, index === IMAGES.length - 1);
-          checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
+      it(`should navigate between images to the right using swipe gestures. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.currentImageConfig = <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        };
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
         });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+
+        if (index !== IMAGES.length - 1) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(index + 1);
+            expect(res.action).toBe(Action.SWIPE);
+          });
+
+          spyOn(comp, 'onNavigationEvent').and.callThrough();
+
+          comp.swipe('swiperight');
+        }
       });
+    });
+
+    [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
+      it(`should navigate between images to the left using swipe gestures. Test i=${index}`, () => {
+        const currentIndex: number = IMAGES.length - 1 - index;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[currentIndex];
+        comp.isOpen = true;
+        comp.currentImageConfig = <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        };
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[currentIndex],
+            currentValue: IMAGES[currentIndex],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[currentIndex], val);
+        checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[currentIndex - 1], IMAGES[currentIndex + 1], currentIndex === 0, currentIndex === IMAGES.length - 1, val);
+
+        if (currentIndex !== 0) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(currentIndex - 1);
+            expect(res.action).toBe(Action.SWIPE);
+          });
+
+          spyOn(comp, 'onNavigationEvent').and.callThrough();
+
+          comp.swipe('swipeleft');
+        }
+      });
+    });
+
+    TEST_MODEL.forEach((val: TestModel, index: number) => {
+      it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the left. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.currentImageConfig = <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
+          invertSwipe: true
+        };
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+
+        if (index !== IMAGES.length - 1) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(index + 1);
+            expect(res.action).toBe(Action.SWIPE);
+          });
+
+          spyOn(comp, 'onNavigationEvent').and.callThrough();
+
+          comp.swipe('swipeleft');
+        }
+      });
+    });
+
+    [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
+      it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the right. Test i=${index}`, () => {
+        const currentIndex: number = IMAGES.length - 1 - index;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[currentIndex];
+        comp.isOpen = true;
+        comp.currentImageConfig = <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
+          invertSwipe: true
+        };
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[currentIndex],
+            currentValue: IMAGES[currentIndex],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[currentIndex], val);
+        checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[currentIndex - 1], IMAGES[currentIndex + 1], currentIndex === 0, currentIndex === IMAGES.length - 1, val);
+
+        if (currentIndex !== 0) {
+          comp.changeImage.subscribe((res: ImageModalEvent) => {
+            expect(res.result).toBe(currentIndex - 1);
+            expect(res.action).toBe(Action.SWIPE);
+          });
+
+          spyOn(comp, 'onNavigationEvent').and.callThrough();
+
+          comp.swipe('swiperight');
+        }
+      });
+    });
+
+    TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
+      it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+        comp.currentImageConfig = <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN}
+        };
+        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.keyboardConfig = null;
+        comp.ngOnChanges(<SimpleChanges>{
+          currentImage: {
+            previousValue: IMAGES[index],
+            currentValue: IMAGES[index],
+            firstChange: false,
+            isFirstChange: () => false
+          }
+        });
+        comp.ngOnInit();
+        fixture.detectChanges();
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val, false);
+        checkArrows(index === 0, index === IMAGES.length - 1);
+        checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
+      });
+    });
 
     TEST_MODEL_HIDEEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is HIDE_IF_EMPTY. Test i=${index}`, () => {
