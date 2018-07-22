@@ -1,6 +1,6 @@
 # 6.2.0
 ### Features
-- add a new config property to invert swipe direction (requested by @anacatarinasousaaa #154)
+- add a new config property ('invertSwipe') inside CurrentImageConfig to invert swipe direction (requested by @anacatarinasousaaa #154)
 
 
 # 6.1.2
