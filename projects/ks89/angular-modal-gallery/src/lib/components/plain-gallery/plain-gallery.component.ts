@@ -48,25 +48,30 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
-  @Input() images: Image[];
+  @Input()
+  images: Image[];
   /**
    * Boolean to show/hide plain gallery. If true the plain gallery will be visible, false otherwise.
    */
-  @Input() showGallery: boolean;
+  @Input()
+  showGallery: boolean;
   /**
    * Object of type `PlainGalleryConfig` to configure the plain gallery.
    */
-  @Input() plainGalleryConfig: PlainGalleryConfig;
+  @Input()
+  plainGalleryConfig: PlainGalleryConfig;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input() accessibilityConfig: AccessibilityConfig;
+  @Input()
+  accessibilityConfig: AccessibilityConfig;
 
   /**
    * Output to emit an event when an image is changed.
    */
-  @Output() show: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  show: EventEmitter<number> = new EventEmitter<number>();
 
   /**
    * Object of type `PlainGalleryConfig` to configure this component.

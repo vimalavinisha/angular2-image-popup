@@ -61,45 +61,55 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   /**
    * Object of type `Image` that represent the visible image.
    */
-  @Input() currentImage: Image;
+  @Input()
+  currentImage: Image;
   /**
    * Object of type `ButtonsConfig` to init UpperButtonsComponent's features.
    * For instance, it contains an array of buttons.
    */
-  @Input() buttonsConfig: ButtonsConfig;
+  @Input()
+  buttonsConfig: ButtonsConfig;
 
   /**
    * Output to emit clicks on refresh button. The payload contains a `ButtonEvent`.
    */
-  @Output() refresh: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  refresh: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on delete button. The payload contains a `ButtonEvent`.
    */
-  @Output() delete: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  delete: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on navigate button. The payload contains a `ButtonEvent`.
    */
-  @Output() navigate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  navigate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on download button. The payload contains a `ButtonEvent`.
    */
-  @Output() download: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  download: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on close button. The payload contains a `ButtonEvent`.
    */
-  @Output() close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on full-screen button. The payload contains a `ButtonEvent`.
    */
-  @Output() fullscreen: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  fullscreen: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on rotate button. The payload contains a `ButtonEvent`.
    */
-  @Output() rotate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  rotate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on all custom buttons. The payload contains a `ButtonEvent`.
    */
-  @Output() customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
    * Array of `InternalButtonConfig` exposed to the template. This field is initialized

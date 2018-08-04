@@ -35,7 +35,8 @@ export class DescriptionDirective implements OnInit, OnChanges {
   /**
    * Object of type `Description` to resize the element.
    */
-  @Input() description: Description;
+  @Input()
+  description: Description;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 

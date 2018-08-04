@@ -28,9 +28,11 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
   selector: '[ksKeyboardNavigation]'
 })
 export class KeyboardNavigationDirective {
-  @Input() isOpen: boolean;
+  @Input()
+  isOpen: boolean;
 
-  @Output() keyPress: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  keyPress: EventEmitter<number> = new EventEmitter<number>();
 
   /**
    * Listener to catch keyboard's events and call the right method based on the key.

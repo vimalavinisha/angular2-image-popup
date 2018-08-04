@@ -35,7 +35,8 @@ export class SizeDirective implements OnInit, OnChanges {
   /**
    * Object of type `Size` to resize the element.
    */
-  @Input() sizeConfig: Size;
+  @Input()
+  sizeConfig: Size;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 

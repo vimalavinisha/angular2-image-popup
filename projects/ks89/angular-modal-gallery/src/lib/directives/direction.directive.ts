@@ -34,11 +34,13 @@ export class DirectionDirective implements OnInit, OnChanges {
   /**
    * String input to set the css flex-direction of an element.
    */
-  @Input() direction: string;
+  @Input()
+  direction: string;
   /**
    * String input to set the css justify-content of an element.
    */
-  @Input() justify: string;
+  @Input()
+  justify: string;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 

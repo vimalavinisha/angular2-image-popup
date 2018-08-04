@@ -34,11 +34,13 @@ export class WrapDirective implements OnInit, OnChanges {
   /**
    * Boolean input that it's true to add 'flex-wrap: wrap', 'flex-wrap: nowrap' otherwise.
    */
-  @Input() wrap: boolean;
+  @Input()
+  wrap: boolean;
   /**
    * String input to force the width of the element to be able to see wrapping.
    */
-  @Input() width: string;
+  @Input()
+  width: string;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 

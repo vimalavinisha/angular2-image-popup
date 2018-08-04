@@ -36,10 +36,11 @@ import { GalleryModule } from '@ks89/angular-modal-gallery'; // <---------------
 // **************************************************************************
 
 // ************************ optional font-awesome 5 ************************
-// to install use both `npm i --save @fortawesome/fontawesome` and `npm i --save @fortawesome/fontawesome-free-solid`
-import { faExternalLinkAlt, faPlus, faTimes, faDownload } from '@fortawesome/fontawesome-free-solid';
-import * as fontawesome from '@fortawesome/fontawesome';
-fontawesome.library.add(faExternalLinkAlt, faPlus, faTimes, faDownload);
+// to install use both `npm i --save @fortawesome/fontawesome-svg-core` and `npm i --save @fortawesome/free-solid-svg-icons`
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faExternalLinkAlt, faPlus, faTimes, faDownload } from '@fortawesome/free-solid-svg-icons';
+library.add(faExternalLinkAlt, faPlus, faTimes, faDownload);
+dom.watch(); // Kicks off the process of finding <i> tags and replacing with <svg>
 // *************************************************************************
 
 import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';

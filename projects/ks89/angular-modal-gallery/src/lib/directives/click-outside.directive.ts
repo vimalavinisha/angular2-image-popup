@@ -36,11 +36,13 @@ export class ClickOutsideDirective {
   /**
    * Boolean to enable this directive.
    */
-  @Input() clickOutsideEnable: boolean;
+  @Input()
+  clickOutsideEnable: boolean;
   /**
    * Output to emit an event if the clicked element class doesn't contain 'inside' or it is 'hidden'. The payload is a boolean.
    */
-  @Output() clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  clickOutside: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /**
    * Method called by Angular itself every click thanks to `@HostListener`.

@@ -47,27 +47,32 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
-  @Input() currentImage: InternalLibImage;
+  @Input()
+  currentImage: InternalLibImage;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
-  @Input() images: InternalLibImage[];
+  @Input()
+  images: InternalLibImage[];
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
-  @Input() dotsConfig: DotsConfig = { visible: true };
+  @Input()
+  dotsConfig: DotsConfig = { visible: true };
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input() accessibilityConfig: AccessibilityConfig;
+  @Input()
+  accessibilityConfig: AccessibilityConfig;
   /**
    * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
    */
-  @Output() clickDot: EventEmitter<number> = new EventEmitter<number>();
+  @Output()
+  clickDot: EventEmitter<number> = new EventEmitter<number>();
 
   /**
    * Object of type `DotsConfig` exposed to the template. This field is initialized
