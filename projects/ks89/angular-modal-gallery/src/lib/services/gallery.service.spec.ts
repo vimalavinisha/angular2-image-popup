@@ -51,7 +51,18 @@ const badInputs: any[] = [
   {id: 12, index: -2}
 ];
 
+const badCloseInputs: any[] = [
+  {id: undefined, index: 0},
+  {id: undefined, index: 10},
+  {id: undefined, index: -1},
+  {id: undefined, index: -2},
+  {id: -1, index: 0},
+  {id: -5, index: 4}
+];
+
 const errorMessage = 'Cannot open gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined';
+const errorCloseMessage = 'Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined';
+const errorNavigateMessage = 'Cannot navigate via GalleryService with either index<0 or galleryId<0 or galleryId===undefined';
 
 describe('GalleryService', () => {
 
@@ -91,6 +102,28 @@ describe('GalleryService', () => {
     });
   });
 
+  describe('#navigateGallery()', () => {
+    expectedValidNums.forEach((val, index) => {
+      it(`should call navigateGallery expecting a 'navigate' event with valid numeric parameters. Test i=${index}`,
+        inject([GalleryService], (service: GalleryService) => {
+          service.navigate.subscribe(result => {
+            expect(result.galleryId).toBe(val.id);
+            expect(result.index).toBe(val.index);
+          });
+          service.navigateGallery(val.id, val.index);
+        })
+      );
+    });
+
+    badInputs.forEach((val, index) => {
+      it(`should throw an error because input params aren't valid. Test i=${index}`,
+        inject([GalleryService], (service: GalleryService) => {
+          expect(() => service.navigateGallery(val.id, val.index)).toThrow(new Error(errorNavigateMessage));
+        })
+      );
+    });
+  });
+
   describe('#closeGallery()', () => {
     expectedValidNums.forEach((val, index) => {
       it(`should call closeGallery expecting a 'close' event with valid id. Test i=${index}`,
@@ -103,10 +136,10 @@ describe('GalleryService', () => {
       );
     });
 
-    badInputs.forEach((val, index) => {
+    badCloseInputs.forEach((val, index) => {
       it(`should throw an error because input params aren't valid. Test i=${index}`,
         inject([GalleryService], (service: GalleryService) => {
-          expect(() => service.openGallery(val.id, val.index)).toThrow(new Error(errorMessage));
+          expect(() => service.closeGallery(val.id)).toThrow(new Error(errorCloseMessage));
         })
       );
     });

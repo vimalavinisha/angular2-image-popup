@@ -47,6 +47,16 @@ export class GalleryService {
     });
   }
 
+  navigateGallery(galleryId: number | undefined, index: number): void {
+    if (galleryId === undefined || galleryId < 0 || index < 0) {
+      throw new Error('Cannot navigate via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
+    }
+    this.navigate.emit({
+      galleryId: galleryId,
+      index: index
+    });
+  }
+
   closeGallery(galleryId: number | undefined): void {
     if (galleryId === undefined || galleryId < 0) {
       throw new Error('Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined');

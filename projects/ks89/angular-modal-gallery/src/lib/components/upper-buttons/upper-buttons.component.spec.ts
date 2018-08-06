@@ -52,7 +52,7 @@ const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '40px'};
 const CUSTOM_SIZE_AUTO_WIDTH: Size = {height: '40px', width: 'auto'};
 
 const UNKNOWN_STRATEGY = 6;
-const UNKNOWN_BUTTON_TYPE = 7;
+const UNKNOWN_BUTTON_TYPE = 99;
 
 
 const CUSTOM_BTN: ButtonConfig = {

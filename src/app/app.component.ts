@@ -578,6 +578,8 @@ export class AppComponent {
   private count = 0;
 
   constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
+  // this variable is used only for example of auto navigation
+  isShownAutoNavigate = false;
 
   openImageModalRow(image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
@@ -695,6 +697,32 @@ export class AppComponent {
     setTimeout(() => {
       console.log('setTimeout end - closing gallery with id=' + galleryId);
       this.galleryService.closeGallery(galleryId);
+    }, 3000);
+  }
+
+  onShowAutoNavigateExample(event: ImageModalEvent, galleryId: number) {
+    if (this.isShownAutoNavigate) {
+      // this prevent multiple triggers of this method
+      // this is only an example and shouldn't be done in this way in a real app
+      return;
+    }
+    console.log(`onShowAutoNavigateExample with id=${galleryId} action: ` + Action[event.action]);
+    console.log('onShowAutoNavigateExample result:' + event.result);
+    console.log('Starting timeout of 3 second to navigate to image 0 and then to the next every second automatically');
+    setTimeout(() => {
+      this.isShownAutoNavigate = true;
+      console.log('setTimeout end - navigating to index 0, gallery with id=' + galleryId);
+      this.galleryService.navigateGallery(galleryId, 0);
+
+      setTimeout(() => {
+        console.log('setTimeout end - navigating to index 1, gallery with id=' + galleryId);
+        this.galleryService.navigateGallery(galleryId, 1);
+
+        setTimeout(() => {
+          console.log('setTimeout end - navigating to index 2 (finished :) !), gallery with id=' + galleryId);
+          this.galleryService.navigateGallery(galleryId, 2);
+        }, 3000);
+      }, 3000);
     }, 3000);
   }
 
