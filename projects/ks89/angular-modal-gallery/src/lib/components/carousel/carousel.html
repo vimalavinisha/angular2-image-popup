@@ -1,0 +1,22 @@
+<main id="carousel-container">
+  <figure id="current-figure">
+
+    <a class="nav-left" (click)="onNavigationEvent('left', $event)">
+      <div class="inside left-arrow-image"></div>
+    </a>
+    <img id="current-image" [src]="currentImage.modal.img"/>
+    <figcaption class="description">this is a description</figcaption>
+
+    <a class="nav-right" (click)="onNavigationEvent('right', $event)">
+      <div class="inside right-arrow-image"></div>
+    </a>
+
+    <div id="dots">
+      <ks-dots [currentImage]="currentImage"
+               [images]="images"
+               (clickDot)="onClickDot($event)"></ks-dots>
+    </div>
+
+  </figure>
+</main>
+

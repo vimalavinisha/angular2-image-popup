@@ -26,7 +26,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DIRECTIVES } from './directives/directives';
-import { COMPONENTS, ModalGalleryComponent } from './components/components';
+import { COMPONENTS, ModalGalleryComponent, CarouselComponent } from './components/components';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 import { GalleryService } from './services/gallery.service';
@@ -37,7 +37,7 @@ import { GalleryService } from './services/gallery.service';
 @NgModule({
   imports: [CommonModule],
   declarations: [COMPONENTS, DIRECTIVES],
-  exports: [ModalGalleryComponent]
+  exports: [ModalGalleryComponent, CarouselComponent]
 })
 export class GalleryModule {
   static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {

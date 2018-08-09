@@ -10,6 +10,7 @@
   },
   "homepage": "https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/",
   "peerDependencies": {
+    "@angular/platform-browser": ">=5.0.0",
     "@angular/common": ">=5.0.0",
     "@angular/core": ">=5.0.0",
     "hammerjs": ">=2.0.0",

@@ -24,6 +24,7 @@
 
 import { BackgroundComponent } from './background/background.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
+import { CarouselComponent } from './carousel/carousel.component';
 import { UpperButtonsComponent } from './upper-buttons/upper-buttons.component';
 import { DotsComponent } from './dots/dots.component';
 import { PreviewsComponent } from './previews/previews.component';
@@ -34,6 +35,7 @@ import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
 import { DynamicPlainGalleryComponent } from './dynamic-plain-gallery/dynamic-plain-gallery.component';
 
 export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
+export { CarouselComponent } from './carousel/carousel.component';
 
 /**
  * Array of all components.
@@ -43,6 +45,7 @@ export const COMPONENTS = [
   PlainGalleryComponent,
   DynamicPlainGalleryComponent,
   ModalGalleryComponent,
+  CarouselComponent,
   UpperButtonsComponent,
   DotsComponent,
   PreviewsComponent,
