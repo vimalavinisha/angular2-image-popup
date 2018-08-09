@@ -4,6 +4,9 @@
     <a class="nav-left" (click)="onNavigationEvent('left', $event)">
       <div class="inside left-arrow-image"></div>
     </a>
+
+    <ng-content></ng-content>
+
     <img id="current-image" [src]="currentImage.modal.img"/>
     <figcaption class="description">this is a description</figcaption>
 
@@ -18,5 +21,6 @@
     </div>
 
   </figure>
+
 </main>
 
