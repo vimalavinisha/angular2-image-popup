@@ -22,7 +22,21 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  SimpleChange,
+  SimpleChanges
+} from '@angular/core';
 
 import { AccessibleComponent } from '../accessible.component';
 
@@ -32,6 +46,7 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -42,7 +57,7 @@ import { NEXT, PREV } from '../../utils/user-input.util';
   templateUrl: 'carousel.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselComponent extends AccessibleComponent implements OnInit {
+export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -54,6 +69,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit {
    */
   @Input()
   images: InternalLibImage[];
+
+  @Input()
+  autoPlay = false;
+
+  @Input()
+  intervalTime = 5000;
+
+  private interval;
+
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
@@ -61,12 +85,38 @@ export class CarouselComponent extends AccessibleComponent implements OnInit {
   @Input()
   accessibilityConfig: AccessibilityConfig;
 
-  /**
-   * Method ´ngOnInit´ to build `configDots` applying a default value.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
-   * In particular, it's called only one time!!!
-   */
-  ngOnInit() {}
+  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
+    super();
+  }
+
+  ngOnInit() {
+    console.log('ngOnInit');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const simpleChange: SimpleChange = changes.autoPlay;
+    if (!simpleChange) {
+      return;
+    }
+    const prev: boolean = simpleChange.previousValue;
+    const current: boolean = simpleChange.currentValue;
+
+    if (prev === current) {
+      return;
+    }
+    if (current) {
+      this.playCarousel();
+    } else {
+      this.stopCarousel();
+    }
+  }
+
+  ngAfterContentInit() {
+    // setInterval() doesn't play well with SSR and protractor,
+    // so we should run it in the browser and outside Angular
+    console.log('ngAfterContentInit');
+    // this.playCarousel();
+  }
 
   /**
    * Method called when a dot is clicked and used to update the current image.
@@ -151,5 +201,33 @@ export class CarouselComponent extends AccessibleComponent implements OnInit {
    */
   trackById(index: number, item: Image): number {
     return item.id;
+  }
+
+  ngOnDestroy() {
+    this.stopCarousel();
+  }
+
+  private playCarousel() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._ngZone.runOutsideAngular(() => {
+        this.interval = setInterval(() => {
+          console.log('ciaoooo');
+          this._ngZone.run(() => {
+            this.nextImage();
+            this.ref.markForCheck();
+          });
+        }, this.intervalTime);
+      });
+    }
+  }
+
+  private stopCarousel() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._ngZone.runOutsideAngular(() => {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+      });
+    }
   }
 }

@@ -16,9 +16,10 @@
 
 <h2>Carousel examples</h2>
 <section>
-  <h3>X1 - carousel example</h3>
+  <h3>X1 - carousel example. Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></h3>
+  autoPlay={{autoPlay}}
   <br>
-  <ks-carousel [currentImage]="images[0]" [images]="images">
+  <ks-carousel [currentImage]="images[0]" [images]="images" [autoPlay]="autoPlay" [intervalTime]="3000">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>
