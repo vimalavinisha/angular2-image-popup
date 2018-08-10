@@ -60,6 +60,13 @@ import { SlideConfig } from '../../model/slide-config.interface';
   selector: 'ks-carousel',
   styleUrls: ['carousel.scss'],
   templateUrl: 'carousel.html',
+  host: {
+    tabIndex: '0',
+    '(mouseenter)': 'pauseOnHover && stopCarousel()',
+    '(mouseleave)': 'pauseOnHover && playCarousel()',
+    '(keydown.arrowLeft)': 'prevImage()',
+    '(keydown.arrowRight)': 'nextImage()'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
@@ -89,6 +96,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @Input()
   isShowArrows = true;
+
+  @Input()
+  pauseOnHover = false;
 
   /**
    * Interface to configure current image in modal-gallery.
@@ -387,7 +397,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.isShowArrows = state;
   }
 
-  private playCarousel() {
+  playCarousel() {
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
         this.interval = setInterval(() => {
@@ -401,7 +411,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
-  private stopCarousel() {
+  stopCarousel() {
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
         if (this.interval) {
