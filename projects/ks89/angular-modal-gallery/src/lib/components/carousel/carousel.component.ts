@@ -411,6 +411,19 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
+  restartCarousel() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._ngZone.runOutsideAngular(() => {
+        this.interval = setInterval(() => {
+          this._ngZone.run(() => {
+            this.currentImage = this.images[0];
+            this.ref.markForCheck();
+          });
+        }, this.intervalTime);
+      });
+    }
+  }
+
   stopCarousel() {
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
