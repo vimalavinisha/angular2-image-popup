@@ -16,10 +16,15 @@
 
 <h2>Carousel examples</h2>
 <section>
-  <h3>X1 - carousel example. Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></h3>
-  autoPlay={{autoPlay}}
+  <h3>X1 - carousel example.</h3>
+  <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
+  <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
-  <ks-carousel [currentImage]="images[0]" [images]="images" [autoPlay]="autoPlay" [intervalTime]="3000">
+  <ks-carousel [currentImage]="images[0]" [images]="images"
+               [isShowArrows]="showArrows"
+               [dotsConfig]="{visible: true}"
+               [slideConfig]="{infinite: false}"
+               [autoPlay]="autoPlay" [intervalTime]="3000">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>

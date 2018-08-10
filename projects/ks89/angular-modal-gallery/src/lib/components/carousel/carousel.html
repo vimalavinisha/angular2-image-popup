@@ -1,21 +1,30 @@
 <main id="carousel-container">
   <figure id="current-figure">
 
-    <a class="nav-left" (click)="onNavigationEvent('left', $event)">
+    <a class="nav-left" *ngIf="isShowArrows"
+       (click)="onNavigationEvent('left', $event)">
       <div class="inside left-arrow-image"></div>
     </a>
 
     <ng-content></ng-content>
 
-    <img id="current-image" [src]="currentImage.modal.img"/>
-    <figcaption class="description">this is a description</figcaption>
+    <img id="current-image"
+         [src]="currentImage.modal.img"
+         (swipeleft)="swipe($event.type)"
+         (swiperight)="swipe($event.type)"/>
 
-    <a class="nav-right" (click)="onNavigationEvent('right', $event)">
+    <figcaption class="description"
+                ksDescription [description]="configCurrentImage?.description"
+                [innerHTML]="getDescriptionToDisplay()"></figcaption>
+
+    <a class="nav-right" *ngIf="isShowArrows"
+       (click)="onNavigationEvent('right', $event)">
       <div class="inside right-arrow-image"></div>
     </a>
 
     <div id="dots">
       <ks-dots [currentImage]="currentImage"
+               [dotsConfig]="configDots"
                [images]="images"
                (clickDot)="onClickDot($event)"></ks-dots>
     </div>

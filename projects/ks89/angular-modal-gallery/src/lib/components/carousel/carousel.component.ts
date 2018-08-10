@@ -47,6 +47,11 @@ import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { isPlatformBrowser } from '@angular/common';
+import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
+import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
+import { DotsConfig } from '../../model/dots-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -58,6 +63,12 @@ import { isPlatformBrowser } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
+  /**
+   * Object of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide this component.
+   */
+  @Input()
+  dotsConfig: DotsConfig = { visible: true };
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -76,7 +87,21 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   intervalTime = 5000;
 
-  private interval;
+  @Input()
+  isShowArrows = true;
+
+  /**
+   * Interface to configure current image in modal-gallery.
+   * For instance you can disable navigation on click on current image (enabled by default).
+   */
+  @Input()
+  currentImageConfig: CurrentImageConfig;
+
+  /**
+   * Object of type `SlideConfig` to get `infinite sliding`.
+   */
+  @Input()
+  slideConfig: SlideConfig;
 
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
@@ -85,30 +110,120 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   accessibilityConfig: AccessibilityConfig;
 
+  /**
+   * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configCurrentImage: CurrentImageConfig;
+  /**
+   * Boolean that it's true when you are watching the first image (currently visible).
+   * False by default
+   */
+  isFirstImage = false;
+  /**
+   * Boolean that it's true when you are watching the last image (currently visible).
+   * False by default
+   */
+  isLastImage = false;
+
+  /**
+   * Object of type `DotsConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configDots: DotsConfig;
+
+  private interval;
+
+  /**
+   * Private object without type to define all swipe actions used by hammerjs.
+   */
+  private SWIPE_ACTION = {
+    LEFT: 'swipeleft',
+    RIGHT: 'swiperight',
+    UP: 'swipeup',
+    DOWN: 'swipedown'
+  };
+
   constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
+    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
+    const defaultDescriptionStyle: DescriptionStyle = {
+      bgColor: 'rgba(0, 0, 0, .5)',
+      textColor: 'white',
+      marginTop: '0px',
+      marginBottom: '0px',
+      marginLeft: '0px',
+      marginRight: '0px'
+    };
+    const defaultDescription: Description = {
+      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      imageText: 'Image ',
+      numberSeparator: '/',
+      beforeTextDescription: ' - ',
+      style: defaultDescriptionStyle
+    };
+    const defaultCurrentImageConfig: CurrentImageConfig = {
+      navigateOnClick: true,
+      loadingConfig: defaultLoading,
+      description: defaultDescription,
+      downloadable: false,
+      invertSwipe: false
+    };
+
+    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
+    this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
+
+    const defaultConfig: DotsConfig = { visible: true };
+    this.configDots = Object.assign(defaultConfig, this.dotsConfig);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const simpleChange: SimpleChange = changes.autoPlay;
-    if (!simpleChange) {
+    const autoPlay: SimpleChange = changes.autoPlay;
+    const isShowArrows: SimpleChange = changes.isShowArrows;
+    if (!autoPlay || !isShowArrows) {
       return;
     }
-    const prev: boolean = simpleChange.previousValue;
-    const current: boolean = simpleChange.currentValue;
+    const prevAutoPlay: boolean = autoPlay.previousValue;
+    const currentAutoPlay: boolean = autoPlay.currentValue;
+    const prevShowArrows: boolean = isShowArrows.previousValue;
+    const currentShowArrows: boolean = isShowArrows.currentValue;
 
-    if (prev === current) {
+    if (prevAutoPlay !== currentAutoPlay) {
+      if (currentAutoPlay) {
+        this.playCarousel();
+      } else {
+        this.stopCarousel();
+      }
+    }
+
+    if (prevShowArrows !== currentShowArrows) {
+      if (currentShowArrows) {
+        this.showArrows(true);
+      } else {
+        this.showArrows(false);
+      }
+    }
+
+    const currentImage: SimpleChange = changes.currentImage;
+    console.log('ngOnChanges currentImage', currentImage);
+    if (!currentImage) {
       return;
     }
-    if (current) {
-      this.playCarousel();
-    } else {
-      this.stopCarousel();
+
+    let index: number;
+    try {
+      index = getIndex(this.currentImage, this.images);
+    } catch (err) {
+      console.error('Cannot get the current image index in current-image');
+      throw err;
     }
+
+    console.log('ngOnChanges index', index);
+
+    this.manageSlideConfig(index);
   }
 
   ngAfterContentInit() {
@@ -142,11 +257,68 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   /**
+   * Method to get the image description based on input params.
+   * If you provide a full description this will be the visible description, otherwise,
+   * it will be built using the `Description` object, concatenating its fields.
+   * @param Image image to get its description. If not provided it will be the current image
+   * @returns String description of the image (or the current image if not provided)
+   * @throws an Error if description isn't available
+   */
+  getDescriptionToDisplay(image: Image = this.currentImage): string {
+    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+      throw new Error('Description input must be a valid object implementing the Description interface');
+    }
+
+    const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
+
+    switch (this.configCurrentImage.description.strategy) {
+      case DescriptionStrategy.HIDE_IF_EMPTY:
+        return imageWithoutDescription ? '' : image.modal.description + '';
+      case DescriptionStrategy.ALWAYS_HIDDEN:
+        return '';
+      default:
+        // ----------- DescriptionStrategy.ALWAYS_VISIBLE -----------------
+        return this.buildTextDescription(image, imageWithoutDescription);
+    }
+  }
+
+  /**
+   * Method used by Hammerjs to support touch gestures (you can also invert the swipe direction with configCurrentImage.invertSwipe).
+   * @param action String that represent the direction of the swipe action. 'swiperight' by default.
+   */
+  swipe(action = this.SWIPE_ACTION.RIGHT) {
+    switch (action) {
+      case this.SWIPE_ACTION.RIGHT:
+        if (this.configCurrentImage.invertSwipe) {
+          this.prevImage(Action.SWIPE);
+        } else {
+          this.nextImage(Action.SWIPE);
+        }
+        break;
+      case this.SWIPE_ACTION.LEFT:
+        if (this.configCurrentImage.invertSwipe) {
+          this.nextImage(Action.SWIPE);
+        } else {
+          this.prevImage(Action.SWIPE);
+        }
+        break;
+      // case this.SWIPE_ACTION.UP:
+      //   break;
+      // case this.SWIPE_ACTION.DOWN:
+      //   break;
+    }
+  }
+
+  /**
    * Method to go back to the previous image.
    * @param action Enum of type `Action` that represents the source
    *  action that moved back to the previous image. `Action.NORMAL` by default.
    */
   prevImage(action: Action = Action.NORMAL) {
+    // check if prevImage should be blocked
+    if (this.isPreventSliding(0)) {
+      return;
+    }
     const prevImage: InternalLibImage = this.getPrevImage();
     this.currentImage = prevImage;
   }
@@ -157,6 +329,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    *  action that moved to the next image. `Action.NORMAL` by default.
    */
   nextImage(action: Action = Action.NORMAL) {
+    // check if nextImage should be blocked
+    if (this.isPreventSliding(this.images.length - 1)) {
+      return;
+    }
     const nextImage: InternalLibImage = this.getNextImage();
     this.currentImage = nextImage;
   }
@@ -207,6 +383,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.stopCarousel();
   }
 
+  private showArrows(state: boolean) {
+    this.isShowArrows = state;
+  }
+
   private playCarousel() {
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
@@ -229,5 +409,96 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         }
       });
     }
+  }
+
+  /**
+   * Private method to build a text description.
+   * This is used also to create titles.
+   * @param Image image to get its description. If not provided it will be the current image.
+   * @param boolean imageWithoutDescription is a boolean that it's true if the image hasn't a 'modal' description.
+   * @returns String description built concatenating image fields with a specific logic.
+   */
+  private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
+    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+      throw new Error('Description input must be a valid object implementing the Description interface');
+    }
+
+    // If customFullDescription use it, otherwise proceed to build a description
+    if (this.configCurrentImage.description.customFullDescription && this.configCurrentImage.description.customFullDescription !== '') {
+      return this.configCurrentImage.description.customFullDescription;
+    }
+
+    const currentIndex: number = getIndex(image, this.images);
+    // If the current image hasn't a description,
+    // prevent to write the ' - ' (or this.description.beforeTextDescription)
+
+    const prevDescription: string = this.configCurrentImage.description.imageText ? this.configCurrentImage.description.imageText : '';
+    const midSeparator: string = this.configCurrentImage.description.numberSeparator ? this.configCurrentImage.description.numberSeparator : '';
+    const middleDescription: string = currentIndex + 1 + midSeparator + this.images.length;
+
+    if (imageWithoutDescription) {
+      return prevDescription + middleDescription;
+    }
+
+    const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
+    const endDescription: string = this.configCurrentImage.description.beforeTextDescription + currImgDescription;
+    return prevDescription + middleDescription + endDescription;
+  }
+
+  /**
+   * Private method to update both `isFirstImage` and `isLastImage` based on
+   * the index of the current image.
+   * @param number currentIndex is the index of the current image
+   */
+  private handleBoundaries(currentIndex: number) {
+    if (this.images.length === 1) {
+      this.isFirstImage = true;
+      this.isLastImage = true;
+      return;
+    }
+    switch (currentIndex) {
+      case 0:
+        // execute this only if infinite sliding is disabled
+        this.isFirstImage = true;
+        this.isLastImage = false;
+        break;
+      case this.images.length - 1:
+        // execute this only if infinite sliding is disabled
+        this.isFirstImage = false;
+        this.isLastImage = true;
+        break;
+      default:
+        this.isFirstImage = false;
+        this.isLastImage = false;
+        break;
+    }
+  }
+
+  /**
+   * Private method to manage boundary arrows and sliding.
+   * This is based on the slideConfig input to enable/disable 'infinite sliding'.
+   * @param number index of the visible image
+   */
+  private manageSlideConfig(index: number) {
+    if (!this.slideConfig || this.slideConfig.infinite === true) {
+      // enable infinite sliding
+      this.isFirstImage = false;
+      this.isLastImage = false;
+    } else {
+      this.handleBoundaries(index);
+    }
+  }
+
+  /**
+   * Private method to check if next/prev actions should be blocked.
+   * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
+   * If yes, it returns true to say that sliding should be blocked, otherwise not.
+   * @param number boundaryIndex that could be either the beginning index (0) or the last index
+   *  of images (this.images.length - 1).
+   * @returns boolean true if slideConfig.infinite === false and the current index is
+   *  either the first or the last one.
+   */
+  private isPreventSliding(boundaryIndex: number): boolean {
+    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }

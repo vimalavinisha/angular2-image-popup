@@ -64,6 +64,7 @@ export class AppComponent {
   imageIndex = 1;
   galleryId = 1;
   autoPlay = true;
+  showArrows = true;
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -767,6 +768,9 @@ export class AppComponent {
 
   onChangeAutoPlay() {
     this.autoPlay = !this.autoPlay;
+  }
+  onChangeShowArrows() {
+    this.showArrows = !this.showArrows;
   }
 
   trackById(index: number, item: Image) {
