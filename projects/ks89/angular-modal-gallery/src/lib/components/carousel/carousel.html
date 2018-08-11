@@ -1,6 +1,6 @@
 <main id="carousel-container">
   <figure id="current-figure">
-    
+
     <a class="nav-left" *ngIf="isShowArrows"
        (click)="onNavigationEvent('left', $event)">
       <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"></div>

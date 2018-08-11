@@ -78,11 +78,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @Input()
   dotsConfig: DotsConfig = { visible: true };
-  /**
-   * Object of type `InternalLibImage` that represent the visible image.
-   */
-  @Input()
-  currentImage: InternalLibImage;
+
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
@@ -94,7 +90,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   autoPlay = false;
 
   @Input()
-  intervalTime = 5000;
+  interval = 5000;
 
   @Input()
   isShowArrows = true;
@@ -125,9 +121,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   accessibilityConfig: AccessibilityConfig;
 
-  private _start$ = new Subject<void>();
-  private _stop$ = new Subject<void>();
-
+  currentImage: InternalLibImage;
   /**
    * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
@@ -150,7 +144,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   configDots: DotsConfig;
 
-  private interval;
+  private _start$ = new Subject<void>();
+  private _stop$ = new Subject<void>();
 
   /**
    * Private object without type to define all swipe actions used by hammerjs.
@@ -167,6 +162,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnInit() {
+    this.currentImage = this.images[0];
+
     const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
     const defaultDescriptionStyle: DescriptionStyle = {
       bgColor: 'rgba(0, 0, 0, .5)',
@@ -250,9 +247,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         console.log('ngAfterContentInit 2');
         this._start$
           .pipe(
-            map(() => this.intervalTime),
-            filter(intervalTime => intervalTime > 0),
-            switchMap(intervalTime => timer(intervalTime).pipe(takeUntil(this._stop$)))
+            map(() => this.interval),
+            filter(interval => interval > 0),
+            switchMap(interval => timer(interval).pipe(takeUntil(this._stop$)))
           )
           .subscribe(() =>
             this._ngZone.run(() => {
@@ -445,7 +442,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     //     //       this.nextImage();
     //     //       this.ref.markForCheck();
     //     //     });
-    //     //   }, this.intervalTime);
+    //     //   }, this.interval);
     //     // });
     //   }
   }
@@ -458,7 +455,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   //           this.currentImage = this.images[0];
   //           this.ref.markForCheck();
   //         });
-  //       }, this.intervalTime);
+  //       }, this.interval);
   //     });
   //   }
   // }
