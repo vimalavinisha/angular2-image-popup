@@ -65,9 +65,9 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
   host: {
     //   tabIndex: '0',
     '(mouseenter)': 'pauseOnHover && stopCarousel()',
-    '(mouseleave)': 'pauseOnHover && playCarousel()',
-    '(keydown.arrowLeft)': 'prevImage()',
-    '(keydown.arrowRight)': 'nextImage()'
+    '(mouseleave)': 'pauseOnHover && autoPlay && playCarousel()',
+    '(keydown.arrowLeft)': 'keyboardNavigation && prevImage()',
+    '(keydown.arrowRight)': 'keyboardNavigation && nextImage()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -101,6 +101,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @Input()
   pauseOnHover = false;
+
+  @Input()
+  keyboardNavigation = false;
 
   /**
    * Interface to configure current image in modal-gallery.
@@ -193,6 +196,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
     const defaultConfig: DotsConfig = { visible: true };
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
+
+    this.manageSlideConfig();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -233,24 +238,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         this.stopCarousel();
       }
     }
-
-    // const currentImage: SimpleChange = changes.currentImage;
-    // console.log('ngOnChanges currentImage', currentImage);
-    // if (!currentImage) {
-    //   return;
-    // }
-    //
-    // let index: number;
-    // try {
-    //   index = getIndex(this.currentImage, this.images);
-    // } catch (err) {
-    //   console.error('Cannot get the current image index in current-image');
-    //   throw err;
-    // }
-    //
-    // console.log('ngOnChanges index', index);
-
-    // this.manageSlideConfig(index);
   }
 
   ngAfterContentInit() {
@@ -365,8 +352,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     if (this.isPreventSliding(0)) {
       return;
     }
-    const prevImage: InternalLibImage = this.getPrevImage();
-    this.currentImage = prevImage;
+    this.currentImage = this.getPrevImage();
+
+    this.manageSlideConfig();
+
     this._start$.next();
   }
 
@@ -380,8 +369,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
     }
-    const nextImage: InternalLibImage = this.getNextImage();
-    this.currentImage = nextImage;
+    this.currentImage = this.getNextImage();
+
+    this.manageSlideConfig();
+
     this._start$.next();
   }
 
@@ -548,7 +539,16 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * This is based on the slideConfig input to enable/disable 'infinite sliding'.
    * @param number index of the visible image
    */
-  private manageSlideConfig(index: number) {
+  private manageSlideConfig() {
+    let index: number;
+    try {
+      index = getIndex(this.currentImage, this.images);
+    } catch (err) {
+      console.error('Cannot get the current image index in current-image');
+      throw err;
+    }
+    console.log('next index', index);
+
     if (!this.slideConfig || this.slideConfig.infinite === true) {
       // enable infinite sliding
       this.isFirstImage = false;

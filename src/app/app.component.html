@@ -23,8 +23,9 @@
   <ks-carousel [currentImage]="images[0]" [images]="images"
                [isShowArrows]="showArrows"
                [pauseOnHover]="true"
+               [keyboardNavigation]="true"
                [dotsConfig]="{visible: true}"
-               [slideConfig]="{infinite: false}"
+               [slideConfig]="{infinite: true}"
                [autoPlay]="autoPlay" [intervalTime]="3000">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>

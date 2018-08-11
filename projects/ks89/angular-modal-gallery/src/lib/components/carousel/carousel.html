@@ -1,9 +1,9 @@
 <main id="carousel-container">
   <figure id="current-figure">
-
+    
     <a class="nav-left" *ngIf="isShowArrows"
        (click)="onNavigationEvent('left', $event)">
-      <div class="inside left-arrow-image"></div>
+      <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"></div>
     </a>
 
     <ng-content></ng-content>
@@ -19,7 +19,7 @@
 
     <a class="nav-right" *ngIf="isShowArrows"
        (click)="onNavigationEvent('right', $event)">
-      <div class="inside right-arrow-image"></div>
+      <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"></div>
     </a>
 
     <div id="dots">
