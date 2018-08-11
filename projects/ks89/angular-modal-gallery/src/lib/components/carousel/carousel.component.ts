@@ -52,6 +52,8 @@ import { LoadingConfig, LoadingType } from '../../model/loading-config.interface
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
+import { Subject, timer } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -61,7 +63,7 @@ import { SlideConfig } from '../../model/slide-config.interface';
   styleUrls: ['carousel.scss'],
   templateUrl: 'carousel.html',
   host: {
-    tabIndex: '0',
+    //   tabIndex: '0',
     '(mouseenter)': 'pauseOnHover && stopCarousel()',
     '(mouseleave)': 'pauseOnHover && playCarousel()',
     '(keydown.arrowLeft)': 'prevImage()',
@@ -119,6 +121,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @Input()
   accessibilityConfig: AccessibilityConfig;
+
+  private _start$ = new Subject<void>();
+  private _stop$ = new Subject<void>();
 
   /**
    * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
@@ -191,56 +196,87 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges');
     const autoPlay: SimpleChange = changes.autoPlay;
-    const isShowArrows: SimpleChange = changes.isShowArrows;
-    if (!autoPlay || !isShowArrows) {
+    // const isShowArrows: SimpleChange = changes.isShowArrows;
+    console.log('ngOnchanges autoPlay', autoPlay);
+    // console.log('ngOnchanges isShowArrows', isShowArrows);
+
+    if (!autoPlay) {
       return;
     }
+
     const prevAutoPlay: boolean = autoPlay.previousValue;
     const currentAutoPlay: boolean = autoPlay.currentValue;
-    const prevShowArrows: boolean = isShowArrows.previousValue;
-    const currentShowArrows: boolean = isShowArrows.currentValue;
+
+    // if (isShowArrows) {
+    //   const prevShowArrows: boolean = isShowArrows.previousValue;
+    //   const currentShowArrows: boolean = isShowArrows.currentValue;
+    //
+    //   if (prevShowArrows !== currentShowArrows) {
+    //     if (currentShowArrows) {
+    //       this.showArrows(true);
+    //     } else {
+    //       this.showArrows(false);
+    //     }
+    //   }
+    // }
 
     if (prevAutoPlay !== currentAutoPlay) {
-      if (currentAutoPlay) {
-        this.playCarousel();
+      console.log('prevAutoPlay !== currentAutoPlay');
+      if (currentAutoPlay && !autoPlay.isFirstChange()) {
+        console.log('currentAutoPlay');
+        this._start$.next();
+        // this.playCarousel();
       } else {
+        console.log('currentAutoPlay false, so stopping...');
         this.stopCarousel();
       }
     }
 
-    if (prevShowArrows !== currentShowArrows) {
-      if (currentShowArrows) {
-        this.showArrows(true);
-      } else {
-        this.showArrows(false);
-      }
-    }
+    // const currentImage: SimpleChange = changes.currentImage;
+    // console.log('ngOnChanges currentImage', currentImage);
+    // if (!currentImage) {
+    //   return;
+    // }
+    //
+    // let index: number;
+    // try {
+    //   index = getIndex(this.currentImage, this.images);
+    // } catch (err) {
+    //   console.error('Cannot get the current image index in current-image');
+    //   throw err;
+    // }
+    //
+    // console.log('ngOnChanges index', index);
 
-    const currentImage: SimpleChange = changes.currentImage;
-    console.log('ngOnChanges currentImage', currentImage);
-    if (!currentImage) {
-      return;
-    }
-
-    let index: number;
-    try {
-      index = getIndex(this.currentImage, this.images);
-    } catch (err) {
-      console.error('Cannot get the current image index in current-image');
-      throw err;
-    }
-
-    console.log('ngOnChanges index', index);
-
-    this.manageSlideConfig(index);
+    // this.manageSlideConfig(index);
   }
 
   ngAfterContentInit() {
     // setInterval() doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
     console.log('ngAfterContentInit');
-    // this.playCarousel();
+
+    if (isPlatformBrowser(this._platformId)) {
+      this._ngZone.runOutsideAngular(() => {
+        console.log('ngAfterContentInit 2');
+        this._start$
+          .pipe(
+            map(() => this.intervalTime),
+            filter(intervalTime => intervalTime > 0),
+            switchMap(intervalTime => timer(intervalTime).pipe(takeUntil(this._stop$)))
+          )
+          .subscribe(() =>
+            this._ngZone.run(() => {
+              this.nextImage();
+              this.ref.markForCheck();
+            })
+          );
+
+        this._start$.next();
+      });
+    }
   }
 
   /**
@@ -331,6 +367,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     const prevImage: InternalLibImage = this.getPrevImage();
     this.currentImage = prevImage;
+    this._start$.next();
   }
 
   /**
@@ -345,6 +382,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     const nextImage: InternalLibImage = this.getNextImage();
     this.currentImage = nextImage;
+    this._start$.next();
   }
 
   /**
@@ -398,40 +436,48 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   playCarousel() {
-    if (isPlatformBrowser(this._platformId)) {
-      this._ngZone.runOutsideAngular(() => {
-        this.interval = setInterval(() => {
-          console.log('ciaoooo');
-          this._ngZone.run(() => {
-            this.nextImage();
-            this.ref.markForCheck();
-          });
-        }, this.intervalTime);
-      });
-    }
+    this._start$.next();
+    //   if (isPlatformBrowser(this._platformId)) {
+    //     this._ngZone.runOutsideAngular(() => {
+    //       this._start$
+    //         .pipe(
+    //           map(() => this.interval), filter(interval => interval > 0),
+    //           switchMap(interval => timer(interval).pipe(takeUntil(this._stop$))))
+    //         .subscribe(() => this._ngZone.run(() => this.nextImage()));
+    //
+    //       this._start$.next();
+    //     });
+    //     // this._ngZone.runOutsideAngular(() => {
+    //     //   this.interval = setInterval(() => {
+    //     //     console.log('ciaoooo');
+    //     //     this._ngZone.run(() => {
+    //     //       this.nextImage();
+    //     //       this.ref.markForCheck();
+    //     //     });
+    //     //   }, this.intervalTime);
+    //     // });
+    //   }
   }
 
-  restartCarousel() {
-    if (isPlatformBrowser(this._platformId)) {
-      this._ngZone.runOutsideAngular(() => {
-        this.interval = setInterval(() => {
-          this._ngZone.run(() => {
-            this.currentImage = this.images[0];
-            this.ref.markForCheck();
-          });
-        }, this.intervalTime);
-      });
-    }
-  }
+  // restartCarousel() {
+  //   if (isPlatformBrowser(this._platformId)) {
+  //     this._ngZone.runOutsideAngular(() => {
+  //       this.interval = setInterval(() => {
+  //         this._ngZone.run(() => {
+  //           this.currentImage = this.images[0];
+  //           this.ref.markForCheck();
+  //         });
+  //       }, this.intervalTime);
+  //     });
+  //   }
+  // }
 
+  /**
+   * Stops the carousel from cycling through items.
+   */
   stopCarousel() {
-    if (isPlatformBrowser(this._platformId)) {
-      this._ngZone.runOutsideAngular(() => {
-        if (this.interval) {
-          clearInterval(this.interval);
-        }
-      });
-    }
+    console.log('stoCarousel called');
+    this._stop$.next();
   }
 
   /**
