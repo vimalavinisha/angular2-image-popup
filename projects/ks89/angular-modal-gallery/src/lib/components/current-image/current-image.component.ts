@@ -55,7 +55,7 @@ export interface ImageLoadEvent {
  */
 @Component({
   selector: 'ks-current-image',
-  styleUrls: ['current-image.scss', 'current-image-arrows.scss', 'current-image-previews.scss'],
+  styleUrls: ['current-image.scss', '../image-arrows.scss', 'current-image-previews.scss'],
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

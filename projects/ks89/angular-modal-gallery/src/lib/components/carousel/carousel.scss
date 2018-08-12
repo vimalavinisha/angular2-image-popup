@@ -1,131 +1,100 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2017-2018 Stefano Cappa (Ks89)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+$curr-img-margin: 0;
+$curr-img-animation-time: .8s;
+
+$dots-bottom-position: 20px;
+
+$nav-animation-time: 1s;
+$nav-transition-time: .5s;
+$nav-side-margin: 15px;
+$nav-right-position: 5px;
+$nav-left-position: 5px;
+
+$figcaption-padding: 10px;
+$figcaption-position: absolute;
+$figcaption-bottom: 0;
+$figcaption-left: 0;
+$figcaption-right: 0;
+
 #carousel-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
 
-#carousel-container #current-figure {
-  animation: fadein-visible 0.8s;
-  text-align: center;
-}
+  > #current-figure {
+    animation: fadein-visible $curr-img-animation-time;
+    text-align: center;
+    margin: $curr-img-margin;
+    position: relative;
 
-#carousel-container #current-figure {
-  margin: 0;
-  position: relative;
-}
+    .nav {
+      animation: animatezoom $nav-animation-time;
+      cursor: pointer;
+      transition: all $nav-transition-time;
+      top: 50%;
+      position: absolute;
 
-#carousel-container #current-figure img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
 
-#carousel-container #current-figure figcaption {
-  padding: 10px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+    > .nav-left {
+      @extend .nav;
+      left: $nav-left-position;
 
-#carousel-container #current-figure figcaption .description {
-  font-weight: bold;
-  text-align: center;
-}
+    }
 
-#carousel-container .nav-left {
-  position: absolute;
-  left: 5px;
-  top: 50%;
-}
+    > .nav-right {
+      @extend .nav;
+      right: $nav-right-position;
+    }
 
-#carousel-container .nav-right {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-}
+    > img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
 
-.arrow-image, .right-arrow-image, .left-arrow-image, .empty-arrow-image {
-  width: 30px;
-  height: 30px;
-  background-size: 30px;
-}
+    > figcaption {
+      padding: $figcaption-padding;
+      position: $figcaption-position;
+      bottom: $figcaption-bottom;
+      left: $figcaption-left;
+      right: $figcaption-right;
 
-.empty-arrow-image {
-  background: black;
-  opacity: 0;
-}
+      & .description {
+        font-weight: bold;
+        text-align: center;
+      }
+    }
 
-.left-arrow-image {
-  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ3Ny4xNzUgNDc3LjE3NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDc3LjE3NSA0NzcuMTc1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij48Zz48cGF0aCBkPSJNMTQ1LjE4OCwyMzguNTc1bDIxNS41LTIxNS41YzUuMy01LjMsNS4zLTEzLjgsMC0xOS4xcy0xMy44LTUuMy0xOS4xLDBsLTIyNS4xLDIyNS4xYy01LjMsNS4zLTUuMywxMy44LDAsMTkuMWwyMjUuMSwyMjUgICBjMi42LDIuNiw2LjEsNCw5LjUsNHM2LjktMS4zLDkuNS00YzUuMy01LjMsNS4zLTEzLjgsMC0xOS4xTDE0NS4xODgsMjM4LjU3NXoiIGZpbGw9IiNGRkZGRkYiLz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PC9zdmc+");
-  opacity: 0.8;
-  transition: all 0.5s;
-}
-
-.left-arrow-image:hover {
-  transform: scale(1.2);
-}
-
-.right-arrow-image {
-  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ3Ny4xNzUgNDc3LjE3NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDc3LjE3NSA0NzcuMTc1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij48Zz48cGF0aCBkPSJNMzYwLjczMSwyMjkuMDc1bC0yMjUuMS0yMjUuMWMtNS4zLTUuMy0xMy44LTUuMy0xOS4xLDBzLTUuMywxMy44LDAsMTkuMWwyMTUuNSwyMTUuNWwtMjE1LjUsMjE1LjUgICBjLTUuMyw1LjMtNS4zLDEzLjgsMCwxOS4xYzIuNiwyLjYsNi4xLDQsOS41LDRjMy40LDAsNi45LTEuMyw5LjUtNGwyMjUuMS0yMjUuMUMzNjUuOTMxLDI0Mi44NzUsMzY1LjkzMSwyMzQuMjc1LDM2MC43MzEsMjI5LjA3NXogICAiIGZpbGw9IiNGRkZGRkYiLz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PC9zdmc+");
-  opacity: 0.8;
-  transition: all 0.5s;
-}
-
-.right-arrow-image:hover {
-  transform: scale(1.2);
-}
-
-#dots {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-}
-
-.dots-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.dots-container > .dot {
-  background: #fff;
-  border-radius: 5px;
-  height: 10px;
-  margin-left: 4px;
-  margin-right: 4px;
-  width: 10px;
-  cursor: pointer;
-  opacity: 0.5;
-}
-
-.dots-container > .dot:hover {
-  opacity: 0.9;
-  transition: all 0.5s ease;
-  transition-property: opacity;
-}
-
-.dots-container > .dot.active {
-  cursor: pointer;
-  opacity: 0.9;
-}
-
-@keyframes fadein-semi-visible05 {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.5;
-  }
-}
-
-@keyframes fadein-semi-visible09 {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.9;
+    > #dots {
+      position: absolute;
+      bottom: $dots-bottom-position;
+      width: 100%;
+    }
   }
 }

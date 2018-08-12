@@ -41,7 +41,7 @@ import { getIndex } from '../../utils/image.util';
  */
 @Component({
   selector: 'ks-previews',
-  styleUrls: ['previews.scss', 'previews-arrows.scss'],
+  styleUrls: ['previews.scss', '../previews-arrows.scss'],
   templateUrl: 'previews.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -22,11 +22,16 @@
  SOFTWARE.
  */
 
+// The idea to create a carousel with two Subjects came from ng-bootstrap
+// So a big thank you to the ng-bootstrap team for the interesting implementation that I used here with some customizations.
+
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostBinding,
+  HostListener,
   Inject,
   Input,
   NgZone,
@@ -37,6 +42,10 @@ import {
   SimpleChange,
   SimpleChanges
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+import { Subject, timer } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AccessibleComponent } from '../accessible.component';
 
@@ -46,32 +55,53 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { isPlatformBrowser } from '@angular/common';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
 import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
-import { Subject, timer } from 'rxjs';
-import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 /**
- * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
+ * Component with configurable inline/plain carousel.
  */
 @Component({
   selector: 'ks-carousel',
-  styleUrls: ['carousel.scss'],
+  styleUrls: ['carousel.scss', '../image-arrows.scss'],
   templateUrl: 'carousel.html',
-  host: {
-    //   tabIndex: '0',
-    '(mouseenter)': 'pauseOnHover && stopCarousel()',
-    '(mouseleave)': 'pauseOnHover && autoPlay && playCarousel()',
-    '(keydown.arrowLeft)': 'keyboardNavigation && prevImage()',
-    '(keydown.arrowRight)': 'keyboardNavigation && nextImage()'
-  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
+  // @HostBinding('tabindex') tabindex = 0;
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    if (!this.pauseOnHover) {
+      return;
+    }
+    this.stopCarousel();
+  }
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    if (!this.pauseOnHover || !this.autoPlay) {
+      return;
+    }
+    this.playCarousel();
+  }
+  @HostListener('keydown.arrowLeft')
+  onKeyDownLeft() {
+    if (!this.keyboardNavigation) {
+      return;
+    }
+    this.prevImage();
+  }
+  @HostListener('keydown.arrowRight')
+  onKeyDownLRight() {
+    if (!this.keyboardNavigation) {
+      return;
+    }
+    this.nextImage();
+  }
+
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
