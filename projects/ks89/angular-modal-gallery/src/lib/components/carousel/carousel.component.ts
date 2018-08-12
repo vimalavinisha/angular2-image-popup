@@ -30,7 +30,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  HostBinding,
   HostListener,
   Inject,
   Input,
@@ -72,35 +71,6 @@ import { SlideConfig } from '../../model/slide-config.interface';
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
   // @HostBinding('tabindex') tabindex = 0;
-
-  @HostListener('mouseenter')
-  onMouseEnter() {
-    if (!this.pauseOnHover) {
-      return;
-    }
-    this.stopCarousel();
-  }
-  @HostListener('mouseleave')
-  onMouseLeave() {
-    if (!this.pauseOnHover || !this.autoPlay) {
-      return;
-    }
-    this.playCarousel();
-  }
-  @HostListener('keydown.arrowLeft')
-  onKeyDownLeft() {
-    if (!this.keyboardNavigation) {
-      return;
-    }
-    this.prevImage();
-  }
-  @HostListener('keydown.arrowRight')
-  onKeyDownLRight() {
-    if (!this.keyboardNavigation) {
-      return;
-    }
-    this.nextImage();
-  }
 
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
@@ -186,6 +156,38 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     UP: 'swipeup',
     DOWN: 'swipedown'
   };
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    if (!this.pauseOnHover) {
+      return;
+    }
+    this.stopCarousel();
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    if (!this.pauseOnHover || !this.autoPlay) {
+      return;
+    }
+    this.playCarousel();
+  }
+
+  @HostListener('keydown.arrowLeft')
+  onKeyDownLeft() {
+    if (!this.keyboardNavigation) {
+      return;
+    }
+    this.prevImage();
+  }
+
+  @HostListener('keydown.arrowRight')
+  onKeyDownLRight() {
+    if (!this.keyboardNavigation) {
+      return;
+    }
+    this.nextImage();
+  }
 
   constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
     super();

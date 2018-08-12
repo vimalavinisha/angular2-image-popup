@@ -822,7 +822,7 @@ describe('ModalGalleryComponent', () => {
       comp.onDownload(mockButtonEvent);
     });
 
-    [{galleryId: undefined},{galleryId: -1}].forEach((item, index) => {
+    [{galleryId: undefined}, {galleryId: -1}].forEach((item, index) => {
       it(`should catch an error calling galleryService closeGallery's method with wrong input data. Test index=${index}`, () => {
         const currentImage: InternalLibImage = IMAGES[0];
         comp.id = 0;
@@ -841,7 +841,7 @@ describe('ModalGalleryComponent', () => {
       });
     });
 
-    [{galleryId: undefined, index:0 }, {galleryId:-1, index:0 }, {galleryId:0, index:-1 }].forEach((item, index) => {
+    [{galleryId: undefined, index: 0}, {galleryId: -1, index: 0}, {galleryId: 0, index: -1}].forEach((item, index) => {
       it(`should catch an error calling galleryService openGallery's method with wrong input data. Test index=${index}`, () => {
         const currentImage: InternalLibImage = IMAGES[0];
         comp.id = 0;

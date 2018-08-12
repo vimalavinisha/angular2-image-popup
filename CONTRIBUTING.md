@@ -6,7 +6,7 @@ If you want to help me, modify the source code, but **before to create a pull re
 Every time you'll run `npm install` inside a demo's folder, you must rebuild all with `npm run build:all`
 
 # A. Cleanup and initialization
-1. `npm install -g lite-server @angular/cli@1.6.0`
+1. `npm install -g lite-server @angular/cli@latest`
 2. remove all `node_modules` and temp folders with compiled files (if necessary)
 3. `npm install` (from the root of this project)
 4. `npm run clean:all`
@@ -16,20 +16,17 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 8. `cd examples/angular-cli`
 9. `npm install`
 10. `cd ../../..`
-11. `cd examples/angular-cli-5`
+11. `cd examples/universal`
 12. `npm install`
 13. `cd ../../..`
-14. `cd examples/universal`
+14. `cd examples/angular-cli-material`
 15. `npm install`
 16. `cd ../../..`
-17. `cd examples/angular-cli-material`
-18. `npm install`
-19. `cd ../../..`
-20. `npm run build:all`
-21. `npm run docs:typedoc` => try to open `./docs/typedoc/index.html` with the `internal library documentation`
-22. `npm run docs:compodoc` => try to open `./docs/compodoc/index.html` with the `internal library documentation`
-23. `npm test`
-24. `npm run e2e`
+17. `npm run build:all`
+18. `npm run docs:typedoc` => try to open `./docs/typedoc/index.html` with the `internal library documentation`
+19. `npm run docs:compodoc` => try to open `./docs/compodoc/index.html` with the `internal library documentation`
+20. `npm test`
+21. `npm run e2e`
 
 # B. Run main angular-cli example
 1. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
@@ -55,17 +52,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 7. `cd dist/angular-cli && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
 8. `cd ../../../..`
 
-# E. Run angular-cli-5 example
-1. `cd examples/angular-cli-5`
-2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
-3. `npm run build:dev`
-4. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-5. `cd ..`
-6. `npm run build:prod`
-7. `cd dist && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
-8. `cd ../../..`
-
-# F. Run universal example
+# E. Run universal example
 1. `cd examples/universal`
 2. `npm run start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
@@ -78,7 +65,7 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 10. `npm run build:prerender && npm run serve:prerender` => if everything is ok (also in browser's console), kill the process and go to the next step
 11. `cd ../..`
 
-# G. Run angular-cli-material example
+# F. Run angular-cli-material example
 1. `cd examples/angular-cli-material`
 2. `npm start` => if everything is ok (also in browser's console), kill the process and go to the next step
 3. `npm run build:dev`
@@ -88,9 +75,8 @@ Every time you'll run `npm install` inside a demo's folder, you must rebuild all
 7. `cd dist/angular-cli-material && lite-server` => if everything is ok (also in browser's console), kill the process and go to the next step
 8. `cd ../../../..`
 
-# H. Create your pull request
+# G. Create your pull request
 1. **If it is ok, create your pull request specifying all the details**
-
 
 <br/>
 <br/>
