@@ -10,70 +10,77 @@
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/stefanocappa)
 
-*Do you like angular-modal-gallery? Please, add a 'star' to support this library*
+*Do you like @ks89/angular-modal-gallery? Please, add a 'star' to support this library*
 
 <br>
 <br>
 
-**angular-modal-gallery 7.0.0 WORK IN PROGRESS**
-It will be released this autumn with some great improvements and new features. Also I want to support Angular 7 Ivy Renderer (aka Renderer3)
+**@ks89/angular-modal-gallery 7.0.0 WORK IN PROGRESS**
+It will be released this autumn with some great improvements like carousel and new features. Also I want to support Angular 7 Ivy Renderer (aka Renderer3)
 For more info, watch this issue: [7.0.0 major release](https://github.com/Ks89/angular-modal-gallery/issues/144)
 
 <br><br><br>
 
-# angular-modal-gallery
+# @ks89/angular-modal-gallery
 
 <br>
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/master/amg6.png?raw=true)
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/master/amg.png?raw=true)
 
 <br>
 
-**angular-modal-gallery** is an Angular library (SSR compatible) to create image galleries of **clickable thumbnails**.
-After a click, it will display a **modal window with full screen images**.
-Modal view is composed by **buttons**, the **current image** and optionally, also navigation **dots** and **previews**.
+**@ks89/angular-modal-gallery** is an Angular library (**SSR compatible**) to create image galleries.
 <br>
-It's also possible to navigate between these modal images with both **keyboard arrows**, **swipe gestures** and **mouse** clicks and close it pressing **`esc`**.
+Despite its name, this library is more than for modal galleries, because I'm introducing new features every major release.
+In fact, It's composed by 3 main parts
+
+- **plain-gallery**: shows either a row, a column or a grid of **clickable thumbnails** using pure flexbox
+- **modal-gallery**: is the core part of this project and display a **modal window with full screen images**, **buttons**, the **current image** and optionally, also navigation **dots** and **previews**
+- **carousel**: is the new feature introduced in 7.0.0 to show a configurable plain carousel (not modal) with auto-play and other cool features
+
+**@ks89/angular-modal-gallery** supports also **keyboard shortcuts**, **swipe gestures** and **mouse events**.
 
 <br>
 
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
 
-**angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 5**
+**@ks89/angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 6.x.x**
 
 
 ## Features
-- Angular module to import this library
+- Angular Module to import this library
 - works with IE >= 11
-- AOT support
-- Angular >= 5
-- compliant to Angular Package Format v5 specifications
-- official examples with `angular-cli`, `angular-cli-5`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
+- works with both JIT and AOT compilers
+- supports all **recommended Angular Compiler Options**
+- Angular >= 6
+- compliant to Angular Package Format v6 specifications
+- official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
-- **Server Side Rendering** support with angular-universal (from version 5.2.0)
+- **Server Side Rendering** support with angular-universal
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
 - image **download** with buttons or keyboard shortcuts
 - advanced **keyboard shortcuts** with `mousetrap` (both local and global)
-- fully configurable default buttons to either close, download, navigate to an external url or delete images
+- fully configurable default buttons to either close, download, navigate to an external url or delete images and so on
 - support custom buttons with both pre and after hooks
 - **click outside feature** to close the modal gallery clicking on the background
 - configurable plain gallery
+- configurable carousel
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
-- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/))
+- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/))
 
 
 ## **Documentation**
 
 *Image loading could be slow, because this website is hosted on Github pages*
 
-[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/)
+[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/)
 
 
 ## **Live demo**
 
-[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v6/)
+[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v7/)
 
 
 ## Installation
@@ -81,78 +88,35 @@ It's also possible to navigate between these modal images with both **keyboard a
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 
-From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/).
+From version @ks89/angular-modal-gallery >= 5.0.0, **font-awesome isn't a mandatory dependency**.
+You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/).
 
 
 ## Which version should I use?
 
-|            | angular-modal-gallery | font-awesome |
-| ---------- | :---:                 | :---:        |
-| AngularJS  | NOT SUPPORTED         |              |
-| Angular 2  | &lt;= 3.3.5           | &gt;= 4.0.0  |
-| Angular 4  | &lt;= 5.5.0           | optional     |
-| Angular 5  | &gt;= 5.0.0           | optional     |
-| Angular 6  | &gt;= 5.4.0           | optional     |
+|            | @ks89/angular-modal-gallery | font-awesome |
+| ---------- | :---:                       | :---:        |
+| AngularJS  | NOT SUPPORTED               |              |
+| Angular 2  | &lt;= 3.3.5                 | &gt;= 4.0.0  |
+| Angular 4  | &lt;= 5.5.0                 | optional     |
+| Angular 5  | &gt;= 5.0.0                 | optional     |
+| Angular 6  | &gt;= 5.4.0                 | optional     |
+| Angular 7  | &gt;= 7.0.0                 | optional     |
 
 
 ## News
 
 - 10/11/2018 - 6.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/15/2018 - 6.2.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/24/2018 - 6.2.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/22/2018 - 6.2.2-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/17/2018 - 6.2.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 07/22/2018 - 6.2.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 07/19/2018 - 6.1.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 07/19/2018 - 6.1.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 07/16/2018 - 6.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/24/2018 - 6.0.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/24/2018 - 6.0.2-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/10/2018 - 6.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/10/2018 - 6.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/03/2018 - 6.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/14/2018 - 6.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/07/2018 - 6.0.0-alpha.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/06/2018 - 5.7.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/05/2018 - 5.7.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/02/2018 - 6.0.0-alpha.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/05/2018 - 5.6.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 04/27/2018 - 5.6.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 04/27/2018 - 5.5.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 04/07/2018 - 5.5.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 04/03/2018 - 5.4.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 04/03/2018 - 5.4.0-beta.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/31/2018 - 6.0.0-alpha.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/30/2018 - 6.0.0-alpha.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/28/2018 - 5.4.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/28/2018 - 5.4.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/24/2018 - 5.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/18/2018 - 5.3.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/18/2018 - 5.2.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/15/2018 - 5.2.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/08/2018 - 5.2.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/05/2018 - 5.2.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/04/2018 - 5.1.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/04/2018 - 5.1.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 03/01/2018 - 5.1.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 02/27/2018 - 5.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- ... (many minor 6.x.x versions)
+- 06/10/2018 - 6.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- ... (many minor 5.x.x versions)
 - 02/27/2018 - 5.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 02/24/2018 - 5.0.0-rc.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 02/24/2018 - 5.0.0-rc.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 02/17/2018 - 5.0.0-rc.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 02/10/2018 - 5.0.0-beta.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/24/2018 - 5.0.0-beta.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 01/14/2018 - 5.0.0-alpha.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 12/24/2017 - 5.0.0-alpha.4 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 12/09/2017 - 5.0.0-alpha.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 12/03/2017 - 5.0.0-alpha.2 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 12/03/2017 - 5.0.0-alpha.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 11/05/2017 - 4.0.1 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- ... (many minor 4.x.x versions)
 - 11/05/2017 - 4.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 10/11/2017 - 3.3.5 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- ...
+- ... (many minor 3.x.x versions)
 - 03/20/2017 - 3.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- ...
+- ... (many minor 2.x.x versions)
 - 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 
 
@@ -161,12 +125,12 @@ From version 5.0.0, **font-awesome isn't a mandatory dependency**. You can use a
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
 2. Question: **I have this error: `Error: No provider for KeyboardService`. What can I do?**<br>
-   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/gettingStarted).
+   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/gettingStarted).
    This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
 3. Question: **How can I remove images using DELETE button without issues?**<br>
    **Answer**: **You cannot change the input image array. Instead, you should reassign it with a newer array** without the deleted element.
    In other words, **you must think in a functional way**, without changing the input array of images.
-   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018-v6.github.io/demo/buttons-strategies).
+   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/demo/buttons-strategies).
 
 
 ## Contributing
