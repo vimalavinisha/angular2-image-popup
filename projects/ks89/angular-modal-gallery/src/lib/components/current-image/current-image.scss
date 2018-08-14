@@ -93,20 +93,18 @@ $figcaption-right: 0;
   #current-figure {
     animation: fadein-visible .8s;
     text-align: center;
+    margin: 0; // => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones
+    position: relative;
 
-    & figure {
-      margin: 0; // => Removes margin from every figure to prevent problem when resizing horizontally on tablets and smartphones
-      position: relative;
-
-      img {
-        // display: block;
-        // don't use this
-        // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
-        max-width: 100%;
-        height: auto;
-        display: block;
-      }
+    > #current-image {
+      // display: block;
+      // don't use this
+      // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
+
 
     & figcaption {
       padding: $figcaption-padding;
