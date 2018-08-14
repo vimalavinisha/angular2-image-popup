@@ -36,7 +36,7 @@ $nav-transition-time: .5s;
 $nav-side-margin: 10px;
 
 :host {
-  width: 100%;
+  position: relative;
   margin-top: $preview-image-top-margin;
   margin-bottom: $preview-image-bottom-margin;
 }
@@ -61,6 +61,8 @@ $nav-side-margin: 10px;
   }
 
   .nav {
+    position: absolute;
+    top: calc( 50% - 7px);
     color: $nav-color;
     //animation: animatezoom $nav-animation-time;
     cursor: pointer;
@@ -74,10 +76,20 @@ $nav-side-margin: 10px;
   > .nav-left {
     @extend .nav;
     margin-right: $nav-side-margin;
+    left: 10px;
+
+    > .left-arrow-preview-image {
+      opacity: 1;
+    }
   }
 
   > .nav-right {
     @extend .nav;
     margin-left: $nav-side-margin;
+    right: 10px;
+
+    > .right-arrow-preview-image {
+      opacity: 1;
+    }
   }
 }
