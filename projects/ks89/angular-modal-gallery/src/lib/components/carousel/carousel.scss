@@ -37,6 +37,13 @@ $figcaption-bottom: 0;
 $figcaption-left: 0;
 $figcaption-right: 0;
 
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 #carousel-container {
   display: flex;
   flex-direction: row;
@@ -73,7 +80,9 @@ $figcaption-right: 0;
     }
 
     > img {
-      max-width: 100%;
+      // max width is applied via Angular
+      width: 100%;
+      // max-width: 100%;
       height: auto;
       display: block;
     }

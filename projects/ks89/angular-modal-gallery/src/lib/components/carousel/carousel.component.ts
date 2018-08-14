@@ -101,6 +101,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   keyboardNavigation = false;
 
+  @Input()
+  maxWidth = '100%';
+
   /**
    * Interface to configure current image in modal-gallery.
    * For instance you can disable navigation on click on current image (enabled by default).
@@ -445,6 +448,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   trackById(index: number, item: Image): number {
     return item.id;
+  }
+
+  /**
+   * Method called when an image preview is clicked and used to update the current image.
+   * @param Image preview image
+   */
+  onClickPreview(preview: Image) {
+    const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
+    if (!!imageFound) {
+      this.currentImage = <InternalLibImage>imageFound;
+    }
   }
 
   ngOnDestroy() {

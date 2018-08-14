@@ -25,6 +25,7 @@
 import { BackgroundComponent } from './background/background.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { CarouselPreviewsComponent } from './carousel/carousel-previews/carousel-previews.component';
 import { UpperButtonsComponent } from './upper-buttons/upper-buttons.component';
 import { DotsComponent } from './dots/dots.component';
 import { PreviewsComponent } from './previews/previews.component';
@@ -46,6 +47,7 @@ export const COMPONENTS = [
   DynamicPlainGalleryComponent,
   ModalGalleryComponent,
   CarouselComponent,
+  CarouselPreviewsComponent,
   UpperButtonsComponent,
   DotsComponent,
   PreviewsComponent,
