@@ -30,6 +30,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
+import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
@@ -46,7 +49,7 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 // *************************************************************************
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CarouselComponent, PlainGalleryComponent, ModalGalleryComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -20,119 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-$text-color: #fff;
-$background: rgba(0, 0, 0, .7);
-
-.my-app-custom-plain-container-row {
-  align-items: center;
+.menu {
   display: flex;
-  flex-direction: row;
   justify-content: flex-start;
-
-  .my-app-custom-image-row {
-    cursor: pointer;
-    height: auto;
-    margin-right: 2px;
-    width: 50px;
-
-    &.after {
-      border-top: 2px;
-      cursor: pointer;
-      display: none;
-      height: 100%;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    }
-  }
-}
-
-.my-app-custom-plain-container-column {
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
 
-  .my-app-custom-image-column {
-    cursor: pointer;
-    height: auto;
-    margin-right: 2px;
-    width: 50px;
-
-    &.after {
-      border-top: 2px;
-      cursor: pointer;
-      display: none;
-      height: 100%;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    }
+  > .menu-item {
+    margin-left: 10px;
   }
-}
-
-.my-app-custom-plain-container-with-desc {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-
-  figure {
-    margin: 0;
-    position: relative;
-
-    img {
-      max-width: 100%;
-      height: auto;
-      cursor: pointer;
-    }
-
-    figcaption {
-      background: rgba(0, 0, 0, .5);
-      color: #fff;
-      font-size: 85%;
-      padding: 5px;
-      position: absolute;
-      bottom: 3px;
-      left: 0;
-      right: 0;
-    }
-  }
-
-  .description {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .my-app-custom-image-with-desc {
-    height: auto;
-    margin-right: 2px;
-    width: 200px;
-    align-self: start;
-  }
-}
-
-.more {
-  background: $background;
-  cursor: pointer;
-  color: $text-color;
-  padding-top: 4px;
-  height: 46px;
-  position: absolute;
-  text-align: center;
-  width: 50px;
-}
-
-
-.transcluded {
-  color: white;
-  font-weight: 600;
-  font-size: 24px;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  pointer-events: none;
 }
