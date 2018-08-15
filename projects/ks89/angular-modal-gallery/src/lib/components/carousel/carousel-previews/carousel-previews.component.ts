@@ -103,17 +103,16 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Default preview's size object, also used in the template to apply default sizes to ksSize's directive.
    */
-  defaultPreviewSize: Size = { height: '50px', width: 'auto' };
+  defaultPreviewSize: Size = { height: 'auto', width: 'calc(100% / 4 - 4px)' };
 
   /**
    * Default preview's config object
    */
   private defaultPreviewConfig: PreviewConfig = {
     visible: true,
-    number: 3,
+    number: 4,
     arrows: true,
     clickable: true,
-    // alwaysCenter: false, // TODO still not implemented
     size: this.defaultPreviewSize
   };
 

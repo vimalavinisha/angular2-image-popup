@@ -38,6 +38,6 @@
 
 <ks-carousel-previews [images]="images"
                       [currentImage]="currentImage"
-                      [previewConfig]="{visible: true, number: 4, arrows: true, clickable:true, size: {width: 'calc(100% / 4 - 4px)', height: 'auto'}}"
+                      [previewConfig]="previewConfig"
                       [slideConfig]="{infinite: false}"
                       (clickPreview)="onClickPreview($event)"></ks-carousel-previews>

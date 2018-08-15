@@ -59,6 +59,7 @@ import { LoadingConfig, LoadingType } from '../../model/loading-config.interface
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
+import { PreviewConfig } from '../../model/preview-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -107,6 +108,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   maxHeight: string;
   @Input()
   objectFit: string;
+
+  @Input()
+  previewConfig: PreviewConfig;
 
   /**
    * Interface to configure current image in modal-gallery.
