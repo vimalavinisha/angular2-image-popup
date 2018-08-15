@@ -9,8 +9,10 @@
     <ng-content></ng-content>
 
     <img id="current-image"
+         [style.object-fit]="objectFit ? objectFit : null"
          [src]="currentImage.modal.img"
          [style.max-width]="maxWidth"
+         [style.height]="maxHeight ? maxHeight : null"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
 
@@ -36,6 +38,6 @@
 
 <ks-carousel-previews [images]="images"
                       [currentImage]="currentImage"
-                      [previewConfig]="{visible: true, number: 5, arrows: true, clickable:true, size: {width: 'auto', height: '100px'}}"
+                      [previewConfig]="{visible: true, number: 4, arrows: true, clickable:true, size: {width: 'calc(100% / 4 - 4px)', height: 'auto'}}"
                       [slideConfig]="{infinite: false}"
                       (clickPreview)="onClickPreview($event)"></ks-carousel-previews>

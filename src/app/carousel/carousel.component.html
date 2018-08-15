@@ -22,9 +22,10 @@
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>
-
+<br>
 <section>
-  <h3>X2 - carousel example with full (100%) width</h3>
+  <h3>X2 - carousel example with full (100%) width<sup>*</sup></h3>
+  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
   <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
@@ -35,7 +36,9 @@
                [dotsConfig]="{visible: true}"
                [slideConfig]="{infinite: false}"
                [autoPlay]="autoPlay"
-               [maxWidth]="'766px'"
+               [maxWidth]="'100%'"
+               [maxHeight]="'300px'"
+               [objectFit]="'cover'"
                [interval]="3000">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>

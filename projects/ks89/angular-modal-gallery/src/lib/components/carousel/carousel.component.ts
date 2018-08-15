@@ -103,6 +103,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @Input()
   maxWidth = '100%';
+  @Input()
+  maxHeight: string;
+  @Input()
+  objectFit: string;
 
   /**
    * Interface to configure current image in modal-gallery.
@@ -457,6 +461,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   onClickPreview(preview: Image) {
     const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
     if (!!imageFound) {
+      this.manageSlideConfig();
       this.currentImage = <InternalLibImage>imageFound;
     }
   }
