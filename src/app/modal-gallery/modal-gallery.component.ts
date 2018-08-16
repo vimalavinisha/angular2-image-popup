@@ -467,6 +467,11 @@ export class ModalGalleryComponent {
     number: 1
   };
 
+  previewConfigFiveImages: PreviewConfig = {
+    visible: true,
+    number: 5
+  };
+
   previewConfigNoArrows: PreviewConfig = {
     visible: true,
     arrows: false

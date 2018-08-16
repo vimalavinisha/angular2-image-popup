@@ -599,7 +599,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       console.error('Cannot get the current image index in current-image');
       throw err;
     }
-    console.log('next index', index);
 
     if (!this.slideConfig || this.slideConfig.infinite === true) {
       // enable infinite sliding

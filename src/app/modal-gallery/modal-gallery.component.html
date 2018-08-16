@@ -277,16 +277,24 @@
   <ks-modal-gallery [id]="46" [modalImages]="images"
                     [previewConfig]="previewConfigOneImage"></ks-modal-gallery>
 </section>
+
 <section>
-  <h3>C9 - (id=47) - Advanced demo - preview custom configuration without arrows (clickable)</h3>
+  <h3>C9 - (id=47) - Advanced demo - preview custom configuration with 5 images (clickable)</h3>
   <br>
-  <ks-modal-gallery [id]="47" [modalImages]="images"
+  <ks-modal-gallery [id]="47" [modalImages]="imagesRect"
+                    [previewConfig]="previewConfigFiveImages"></ks-modal-gallery>
+</section>
+
+<section>
+  <h3>C10 - (id=48) - Advanced demo - preview custom configuration without arrows (clickable)</h3>
+  <br>
+  <ks-modal-gallery [id]="48" [modalImages]="images"
                     [previewConfig]="previewConfigNoArrows"></ks-modal-gallery>
 </section>
 <section>
-  <h3>C10 - (id=48) - Advanced demo - preview custom configuration not clickable</h3>
+  <h3>C11 - (id=49) - Advanced demo - preview custom configuration not clickable</h3>
   <br>
-  <ks-modal-gallery [id]="48" [modalImages]="images"
+  <ks-modal-gallery [id]="49" [modalImages]="images"
                     [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>
 </section>
 <!--<section>-->
@@ -297,62 +305,62 @@
 <!--[previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>-->
 <!--</section>-->
 <section>
-  <h3>C11 - (id=49) - Advanced demo - preview custom configuration with custom size</h3>
+  <h3>C12 - (id=50) - Advanced demo - preview custom configuration with custom size</h3>
   <br>
-  <ks-modal-gallery [id]="49" [modalImages]="images"
+  <ks-modal-gallery [id]="50" [modalImages]="images"
                     [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C12 - (id=50) - Advanced demo - accessibility config</h3>
+  <h3>C13 - (id=51) - Advanced demo - accessibility config</h3>
   <br>
-  <ks-modal-gallery [id]="50" [modalImages]="images"
+  <ks-modal-gallery [id]="51" [modalImages]="images"
                     [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C13 - (id=51) - Advanced demo - disable clicks on current image in modal-image</h3>
+  <h3>C14 - (id=52) - Advanced demo - disable clicks on current image in modal-image</h3>
   <br>
-  <ks-modal-gallery [id]="51" [modalImages]="images" [currentImageConfig]="{navigateOnClick: false}"></ks-modal-gallery>
+  <ks-modal-gallery [id]="52" [modalImages]="images" [currentImageConfig]="{navigateOnClick: false}"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C14 - (id=52) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>
+  <h3>C15 - (id=53) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>
   <p>Attention: please check the console to understand what it's happening!</p>
   <br>
-  <ks-modal-gallery [id]="52" [modalImages]="images" (show)="onShowAutoCloseExample($event, 52)"></ks-modal-gallery>
+  <ks-modal-gallery [id]="53" [modalImages]="images" (show)="onShowAutoCloseExample($event, 52)"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>C15 - (id=53) - Advanced demo - after 3 seconds navigate to image 0 and go next every other second</h3>
+  <h3>C16 - (id=54) - Advanced demo - after 3 seconds navigate to image 0 and go next every other second</h3>
   <p>Attention: please check the console to understand what it's happening!</p>
   <br>
-  <ks-modal-gallery [id]="53" [modalImages]="images" (show)="onShowAutoNavigateExample($event, 53)"></ks-modal-gallery>
+  <ks-modal-gallery [id]="54" [modalImages]="images" (show)="onShowAutoNavigateExample($event, 53)"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>D1 - (id=54) - Other demo - base64 images</h3>
+  <h3>D1 - (id=55) - Other demo - base64 images</h3>
   <br>
-  <ks-modal-gallery [id]="54" [modalImages]="imagesBase64"></ks-modal-gallery>
+  <ks-modal-gallery [id]="55" [modalImages]="imagesBase64"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>D2 - (id=55) - Other demo - custom file name, used when downloaded</h3>
+  <h3>D2 - (id=56) - Other demo - custom file name, used when downloaded</h3>
   <br>
-  <ks-modal-gallery [id]="55" [modalImages]="imagesCustomDownloadFileName"
+  <ks-modal-gallery [id]="56" [modalImages]="imagesCustomDownloadFileName"
                     [currentImageConfig]="{downloadable: true}"
                     [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>D3 - (id=56) - Other demo - invert touchscreen swipe direction</h3>
+  <h3>D3 - (id=57) - Other demo - invert touchscreen swipe direction</h3>
   <br>
-  <ks-modal-gallery [id]="56" [modalImages]="images"
+  <ks-modal-gallery [id]="57" [modalImages]="images"
                     [currentImageConfig]="{invertSwipe: true}"></ks-modal-gallery>
 </section>
 
 <section>
-  <h3>D4 - (id=57) - Other demo - load images already rotated</h3>
+  <h3>D4 - (id=58) - Other demo - load images already rotated</h3>
   <br>
-  <ks-modal-gallery [id]="57" [modalImages]="imagesRotated"></ks-modal-gallery>
+  <ks-modal-gallery [id]="58" [modalImages]="imagesRotated"></ks-modal-gallery>
 </section>

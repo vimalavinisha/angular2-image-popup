@@ -154,6 +154,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges');
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
       return;
@@ -166,6 +167,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
       // I'm in this if statement, if input images are changed (for instance, because I removed one of them with the 'delete button',
       // or because users changed the images array while modal gallery is still open).
       // In this case, I have to re-init previews, because the input array of images is changed.
+      console.log('changes - re init images');
       this.initPreviews(current, changes.images.currentValue);
     }
 
@@ -182,26 +184,69 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
         console.error('Cannot get previous and current image indexes in previews');
         throw err;
       }
-      if (prevIndex === this.images.length - 1 && currentIndex === 0) {
-        // first image
-        this.setBeginningIndexesPreviews();
-        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-        return;
-      }
-      // the same for the opposite case, when you navigate back from the fist image to go to the last one.
-      if (prevIndex === 0 && currentIndex === this.images.length - 1) {
-        // last image
-        this.setEndIndexesPreviews();
-        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-        return;
+
+      console.log('changes - n', this.configPreview.number);
+
+      console.log('changes - prevIndex', prevIndex);
+      console.log('changes - currentIndex', currentIndex);
+
+      console.log('changes - this.start', this.start);
+      console.log('changes - this.end', this.end);
+
+      const calc = Math.floor((this.end - this.start) / 2) + this.start;
+
+      console.log('changes - 1 => ', this.end - this.start);
+      console.log('changes - 2 => ', calc);
+
+      console.log('changes - check => ' + calc + ' > ' + currentIndex);
+
+      if (this.configPreview.number % 2 === 0) {
+        if (calc > currentIndex) {
+          console.log('I should call previous');
+          this.previous();
+        } else {
+          console.log('I should call next');
+          this.next();
+        }
+      } else {
+        if (calc > currentIndex) {
+          console.log('I should call previous');
+          this.previous();
+        }
+        if (calc < currentIndex) {
+          console.log('I should call next');
+          this.next();
+        }
+        if (calc === currentIndex) {
+          console.log(`I shouldn't call anything`);
+        }
       }
 
-      // otherwise manage standard scenarios
-      if (prevIndex > currentIndex) {
-        this.previous();
-      } else if (prevIndex < currentIndex) {
-        this.next();
-      }
+      // if (prevIndex === this.images.length - 1 && currentIndex === 0) {
+      //   console.log('changes - first');
+      //   // first image
+      //   this.setBeginningIndexesPreviews();
+      //   this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+      //   return;
+      // }
+      // // the same for the opposite case, when you navigate back from the fist image to go to the last one.
+      // if (prevIndex === 0 && currentIndex === this.images.length - 1) {
+      //   console.log('changes - last');
+      //   // last image
+      //   this.setEndIndexesPreviews();
+      //   this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+      //   return;
+      // }
+      //
+      //
+      // // otherwise manage standard scenarios
+      // if (prevIndex > currentIndex) {
+      //   console.log('changes - prevIndex > currentIndex');
+      //   this.previous();
+      // } else if (prevIndex < currentIndex) {
+      //   console.log('changes - prevIndex < currentIndex');
+      //   this.next();
+      // }
     }
   }
 
@@ -345,6 +390,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @returns boolean if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.previews) === boundaryIndex;
+    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }
