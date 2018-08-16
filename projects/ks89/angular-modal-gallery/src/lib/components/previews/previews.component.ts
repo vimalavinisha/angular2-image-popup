@@ -320,7 +320,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @returns boolean if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.previews) === boundaryIndex;
+    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 
   /**
