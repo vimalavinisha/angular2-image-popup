@@ -2,8 +2,12 @@
   <figure id="current-figure">
 
     <a class="nav-left" *ngIf="isShowArrows"
-       (click)="onNavigationEvent('left', $event)">
-      <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"></div>
+       [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
+       [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
+       (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
+      <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
+           aria-hidden="true"
+           [title]="accessibilityConfig.mainNextImageTitle"></div>
     </a>
 
     <ng-content></ng-content>
@@ -21,8 +25,12 @@
                 [innerHTML]="getDescriptionToDisplay()"></figcaption>
 
     <a class="nav-right" *ngIf="isShowArrows"
-       (click)="onNavigationEvent('right', $event)">
-      <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"></div>
+       [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
+       [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
+       (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
+      <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
+           aria-hidden="true"
+           [title]="accessibilityConfig.mainNextImageTitle"></div>
     </a>
 
     <div id="dots">

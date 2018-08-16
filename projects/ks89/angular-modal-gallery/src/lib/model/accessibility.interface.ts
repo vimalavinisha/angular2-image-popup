@@ -55,4 +55,20 @@ export interface AccessibilityConfig {
   previewScrollPrevTitle: string;
   previewScrollNextAriaLabel: string;
   previewScrollNextTitle: string;
+
+  carouselContainerAriaLabel: string;
+  carouselContainerTitle: string;
+  carouselPrevImageAriaLabel: string;
+  carouselPrevImageTitle: string;
+  carouselNextImageAriaLabel: string;
+  carouselNextImageTitle: string;
+  carouselDotsContainerAriaLabel: string;
+  carouselDotsContainerTitle: string;
+  carouselDotAriaLabel: string;
+  carouselPreviewsContainerAriaLabel: string;
+  carouselPreviewsContainerTitle: string;
+  carouselPreviewScrollPrevAriaLabel: string;
+  carouselPreviewScrollPrevTitle: string;
+  carouselPreviewScrollNextAriaLabel: string;
+  carouselPreviewScrollNextTitle: string;
 }
