@@ -146,7 +146,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     return preview.id === this.currentImage.id;
   }
 
-  // TODO improve this method to simplify the sourcecode + remove duplicated codelines
   /**
    * Method ´ngOnChanges´ to update `previews` array.
    * Also, both `start` and `end` local variables will be updated accordingly.
@@ -167,7 +166,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
       // I'm in this if statement, if input images are changed (for instance, because I removed one of them with the 'delete button',
       // or because users changed the images array while modal gallery is still open).
       // In this case, I have to re-init previews, because the input array of images is changed.
-      console.log('changes - re init images');
       this.initPreviews(current, changes.images.currentValue);
     }
 
@@ -185,68 +183,39 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
         throw err;
       }
 
-      console.log('changes - n', this.configPreview.number);
-
-      console.log('changes - prevIndex', prevIndex);
-      console.log('changes - currentIndex', currentIndex);
-
-      console.log('changes - this.start', this.start);
-      console.log('changes - this.end', this.end);
-
+      // apply a formula to get a values to be used to decide if go next, return back or stay without doing anything
       const calc = Math.floor((this.end - this.start) / 2) + this.start;
 
-      console.log('changes - 1 => ', this.end - this.start);
-      console.log('changes - 2 => ', calc);
-
-      console.log('changes - check => ' + calc + ' > ' + currentIndex);
+      if (prevIndex === this.images.length - 1 && currentIndex === 0) {
+        // first image
+        this.setBeginningIndexesPreviews();
+        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+        return;
+      }
+      // the same for the opposite case, when you navigate back from the fist image to go to the last one.
+      if (prevIndex === 0 && currentIndex === this.images.length - 1) {
+        // last image
+        this.setEndIndexesPreviews();
+        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+        return;
+      }
 
       if (this.configPreview.number % 2 === 0) {
         if (calc > currentIndex) {
-          console.log('I should call previous');
           this.previous();
         } else {
-          console.log('I should call next');
           this.next();
         }
       } else {
         if (calc > currentIndex) {
-          console.log('I should call previous');
           this.previous();
         }
         if (calc < currentIndex) {
-          console.log('I should call next');
           this.next();
         }
         if (calc === currentIndex) {
-          console.log(`I shouldn't call anything`);
         }
       }
-
-      // if (prevIndex === this.images.length - 1 && currentIndex === 0) {
-      //   console.log('changes - first');
-      //   // first image
-      //   this.setBeginningIndexesPreviews();
-      //   this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-      //   return;
-      // }
-      // // the same for the opposite case, when you navigate back from the fist image to go to the last one.
-      // if (prevIndex === 0 && currentIndex === this.images.length - 1) {
-      //   console.log('changes - last');
-      //   // last image
-      //   this.setEndIndexesPreviews();
-      //   this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-      //   return;
-      // }
-      //
-      //
-      // // otherwise manage standard scenarios
-      // if (prevIndex > currentIndex) {
-      //   console.log('changes - prevIndex > currentIndex');
-      //   this.previous();
-      // } else if (prevIndex < currentIndex) {
-      //   console.log('changes - prevIndex < currentIndex');
-      //   this.next();
-      // }
     }
   }
 
