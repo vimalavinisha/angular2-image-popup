@@ -10,15 +10,16 @@
   },
   "homepage": "https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/",
   "peerDependencies": {
-    "@angular/platform-browser": ">=5.0.0",
-    "@angular/common": ">=5.0.0",
-    "@angular/core": ">=5.0.0",
+    "@angular/platform-browser": ">=6.0.0",
+    "@angular/common": ">=6.0.0",
+    "@angular/core": ">=6.0.0",
     "hammerjs": ">=2.0.0",
     "mousetrap": ">=1.6.1",
     "rxjs": ">=6.0.0"
   },
   "keywords": [
     "angular-modal-gallery",
+    "ngx-gallery",
     "angular2-gallery",
     "angular2-modal-gallery",
     "angular2-modal",
@@ -30,6 +31,7 @@
     "plain",
     "plain-gallery",
     "gallery",
+    "carousel",
     "modal",
     "angular2-modal-popup",
     "angular-modal-popup",

@@ -55,9 +55,10 @@ import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-
 import { InternalLibImage } from '../../model/image-internal.class';
 import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
-import { Subscription } from 'rxjs/Subscription';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
 import { getIndex } from '../../utils/image.util';
+
+import { Subscription } from 'rxjs';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
