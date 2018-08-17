@@ -1,3 +1,8 @@
+# 6.2.1
+### Bugfixes
+- if infinite sliding is enabled and there is only one image, navigation arrows should be hidden (reported by @rezo-evodion #156)
+
+
 # 6.2.0
 ### Features
 - add a new config property ('invertSwipe') inside CurrentImageConfig to invert swipe direction (requested by @anacatarinasousaaa #154)
