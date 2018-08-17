@@ -474,29 +474,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Private method to manage boundary arrows and sliding.
-   * This is based on the slideConfig input to enable/disable 'infinite sliding'.
-   * @param number index of the visible image
-   */
-  // private manageSlideConfig(index: number) {
-  //   console.log('manageSlideConfig');
-  //   if (!this.slideConfig || this.slideConfig.infinite === true) {
-  //     // enable infinite sliding
-  //     if (this.images.length <= 1) {
-  //       console.log('manageSlideConfig 1');
-  //       this.isFirstImage = true;
-  //       this.isLastImage = true;
-  //     } else {
-  //       console.log('manageSlideConfig > 1 or 0');
-  //       this.isFirstImage = false;
-  //       this.isLastImage = false;
-  //     }
-  //   } else {
-  //     this.handleBoundaries(index);
-  //   }
-  // }
-
-  /**
    * Private method to check if next/prev actions should be blocked.
    * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
    * If yes, it returns true to say that sliding should be blocked, otherwise not.
