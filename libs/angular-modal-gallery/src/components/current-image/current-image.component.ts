@@ -153,7 +153,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
+    const defaultLoading: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
     const defaultDescriptionStyle: DescriptionStyle = {
       bgColor: 'rgba(0, 0, 0, .5)',
       textColor: 'white',
@@ -204,7 +204,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
 
     if (this.isOpen) {
-      this.manageSlideConfig(index);
+      // this.manageSlideConfig(index);
+      this.handleBoundaries(index);
     }
   }
 
@@ -448,21 +449,27 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this.isLastImage = true;
       return;
     }
-    switch (currentIndex) {
-      case 0:
-        // execute this only if infinite sliding is disabled
-        this.isFirstImage = true;
-        this.isLastImage = false;
-        break;
-      case this.images.length - 1:
-        // execute this only if infinite sliding is disabled
-        this.isFirstImage = false;
-        this.isLastImage = true;
-        break;
-      default:
-        this.isFirstImage = false;
-        this.isLastImage = false;
-        break;
+    if (!this.slideConfig || this.slideConfig.infinite === true) {
+      // infinite sliding enabled
+      this.isFirstImage = false;
+      this.isLastImage = false;
+    } else {
+      switch (currentIndex) {
+        case 0:
+          // execute this only if infinite sliding is disabled
+          this.isFirstImage = true;
+          this.isLastImage = false;
+          break;
+        case this.images.length - 1:
+          // execute this only if infinite sliding is disabled
+          this.isFirstImage = false;
+          this.isLastImage = true;
+          break;
+        default:
+          this.isFirstImage = false;
+          this.isLastImage = false;
+          break;
+      }
     }
   }
 
@@ -471,15 +478,23 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * This is based on the slideConfig input to enable/disable 'infinite sliding'.
    * @param number index of the visible image
    */
-  private manageSlideConfig(index: number) {
-    if (!this.slideConfig || this.slideConfig.infinite === true) {
-      // enable infinite sliding
-      this.isFirstImage = false;
-      this.isLastImage = false;
-    } else {
-      this.handleBoundaries(index);
-    }
-  }
+  // private manageSlideConfig(index: number) {
+  //   console.log('manageSlideConfig');
+  //   if (!this.slideConfig || this.slideConfig.infinite === true) {
+  //     // enable infinite sliding
+  //     if (this.images.length <= 1) {
+  //       console.log('manageSlideConfig 1');
+  //       this.isFirstImage = true;
+  //       this.isLastImage = true;
+  //     } else {
+  //       console.log('manageSlideConfig > 1 or 0');
+  //       this.isFirstImage = false;
+  //       this.isLastImage = false;
+  //     }
+  //   } else {
+  //     this.handleBoundaries(index);
+  //   }
+  // }
 
   /**
    * Private method to check if next/prev actions should be blocked.
