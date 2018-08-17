@@ -46,6 +46,24 @@
   <br>
   <ks-modal-gallery [id]="13" [modalImages]="singleImage"></ks-modal-gallery>
 </section>
+<section>
+  <h3>A4 - (id=88) - Minimal demo - single image with infinite sliding enabled (to fix issue #156)</h3>
+  <br>
+  <ks-modal-gallery [id]="88" [modalImages]="singleImage"
+                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>A5 - (id=89) - Minimal demo - two images with infinite sliding enabled (to fix issue #156)</h3>
+  <br>
+  <ks-modal-gallery [id]="89" [modalImages]="[images[0], images[1]]"
+                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>A6 - (id=90) - Minimal demo - three image with infinite sliding enabled (to fix issue #156)</h3>
+  <br>
+  <ks-modal-gallery [id]="90" [modalImages]="[images[0], images[1], images[2]]"
+                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>
+</section>
 <br>
 <hr>
 <br>
