@@ -1,36 +1,45 @@
-<main id="carousel-container">
+<main id="carousel-container"
+      [attr.aria-label]="accessibilityConfig.carouselContainerAriaLabel"
+      [title]="accessibilityConfig.carouselContainerTitle">
+
   <figure id="current-figure">
 
     <a class="nav-left" *ngIf="isShowArrows"
-       [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
+       [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
        [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
       <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.mainNextImageTitle"></div>
+           [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>
 
     <ng-content></ng-content>
 
     <img id="current-image"
          [style.object-fit]="objectFit ? objectFit : null"
-         [src]="currentImage.modal.img"
          [style.max-width]="maxWidth"
          [style.height]="maxHeight ? maxHeight : null"
+         [src]="currentImage.modal.img"
+         [attr.aria-label]="currentImage.modal.ariaLabel"
+         [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
+         alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
+         [tabindex]="0" role="img"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
 
-    <figcaption class="description"
+    <figcaption *ngIf="getDescriptionToDisplay() !== ''"
+                class="description"
                 ksDescription [description]="configCurrentImage?.description"
-                [innerHTML]="getDescriptionToDisplay()"></figcaption>
+                [innerHTML]="getDescriptionToDisplay()">
+    </figcaption>
 
     <a class="nav-right" *ngIf="isShowArrows"
-       [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
+       [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
        [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
       <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.mainNextImageTitle"></div>
+           [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>
 
     <div id="dots">

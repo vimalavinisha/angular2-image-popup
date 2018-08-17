@@ -60,6 +60,7 @@ import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/
 import { DotsConfig } from '../../model/dots-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
+import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -130,7 +131,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * For instance, it contains a param to show/hide this component.
    */
   @Input()
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
 
   currentImage: InternalLibImage;
   /**
@@ -521,6 +522,38 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   stopCarousel() {
     console.log('stoCarousel called');
     this._stop$.next();
+  }
+
+  // TODO remove this because duplicated
+  /**
+   * Method to get `alt attribute`.
+   * `alt` specifies an alternate text for an image, if the image cannot be displayed.
+   * @param Image image to get its alt description. If not provided it will be the current image
+   * @returns String alt description of the image (or the current image if not provided)
+   */
+  getAltDescriptionByImage(image: Image = this.currentImage): string {
+    if (!image) {
+      return '';
+    }
+    return image.modal && image.modal.description ? image.modal.description : `Image ${getIndex(image, this.images) + 1}`;
+  }
+
+  // TODO remove this because duplicated
+  /**
+   * Method to get the title attributes based on descriptions.
+   * This is useful to prevent accessibility issues, because if DescriptionStrategy is ALWAYS_HIDDEN,
+   * it prevents an empty string as title.
+   * @param Image image to get its description. If not provided it will be the current image
+   * @returns String title of the image based on descriptions
+   * @throws an Error if description isn't available
+   */
+  getTitleToDisplay(image: Image = this.currentImage): string {
+    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+      throw new Error('Description input must be a valid object implementing the Description interface');
+    }
+    const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
+    const description: string = this.buildTextDescription(image, imageWithoutDescription);
+    return description;
   }
 
   /**
