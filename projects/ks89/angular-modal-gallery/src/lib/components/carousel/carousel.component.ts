@@ -64,6 +64,8 @@ import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { CarouselPlay } from '../../model/carousel-play.interface';
+import { CarouselConfig } from '../../model/carousel-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -77,76 +79,74 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel`;
-
   /**
-   * TODO: still not used
+   * Unique id (>=0) of the current instance of the carousel. This is useful when you are using
+   * the carousel's feature to open modal gallery.
    */
   @Input()
   id: number;
-
   /**
-   * Object of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide this component.
+   * Object of type `CarouselConfig` to init CarouselComponent's features.
+   * For instance, it contains parameters to change the style, how it navigates and so on.
    */
   @Input()
-  dotsConfig: DotsConfig = { visible: true };
-
+  carouselConfig: CarouselConfig;
+  /**
+   * Object of type `CarouselPlay` to init CarouselComponent's features about auto-play.
+   * For instance, it contains parameters to enable/disable autoPlay, interval and so on.
+   */
+  @Input()
+  carouselPlay: CarouselPlay;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
   images: InternalLibImage[];
-
-  @Input()
-  autoPlay = false;
-
-  @Input()
-  interval = 5000;
-
-  @Input()
-  isShowArrows = true;
-
-  @Input()
-  pauseOnHover = false;
-
-  @Input()
-  keyboardNavigation = false;
-
-  @Input()
-  maxWidth = '100%';
-  @Input()
-  maxHeight: string;
-  @Input()
-  objectFit: string;
-
-  @Input()
-  openModalOnClick: false;
-
-  @Input()
-  previewConfig: PreviewConfig;
-
   /**
    * Interface to configure current image in modal-gallery.
    * For instance you can disable navigation on click on current image (enabled by default).
    */
   @Input()
   currentImageConfig: CurrentImageConfig;
-
-  /**
-   * Object of type `SlideConfig` to get `infinite sliding`.
-   */
-  @Input()
-  slideConfig: SlideConfig;
-
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
   @Input()
+  dotsConfig: DotsConfig = { visible: true };
+  /**
+   * Object of type `PreviewConfig` to init PreviewsComponent's features.
+   * For instance, it contains a param to show/hide previews.
+   */
+  @Input()
+  previewConfig: PreviewConfig;
+  /**
+   * Object of type `SlideConfig` to init side previews and `infinite sliding`.
+   */
+  @Input()
+  slideConfig: SlideConfig;
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  @Input()
   accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
 
+  /**
+   * `Image` that is visible right now.
+   */
   currentImage: InternalLibImage;
+  /**
+   * Object of type `CarouselConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configCarousel: CarouselConfig;
+  /**
+   * Object of type `CarouselPlay` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  playCarouselConfig: CarouselPlay;
   /**
    * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
@@ -162,12 +162,18 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * False by default
    */
   isLastImage = false;
-
   /**
    * Object of type `DotsConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
   configDots: DotsConfig;
+  /**
+   * Object of type `PlainGalleryConfig` to force ks-modal-gallery to hide plain-gallery
+   */
+  plainGalleryHidden: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
 
   private _start$ = new Subject<void>();
   private _stop$ = new Subject<void>();
@@ -184,7 +190,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.pauseOnHover) {
+    if (!this.playCarouselConfig.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -192,7 +198,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @HostListener('mouseleave')
   onMouseLeave() {
-    if (!this.pauseOnHover || !this.autoPlay) {
+    if (!this.playCarouselConfig.pauseOnHover || !this.playCarouselConfig.autoPlay) {
       return;
     }
     this.playCarousel();
@@ -200,7 +206,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @HostListener('keydown.arrowLeft')
   onKeyDownLeft() {
-    if (!this.keyboardNavigation) {
+    if (!this.configCarousel.keyboardEnable) {
       return;
     }
     this.prevImage();
@@ -208,7 +214,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @HostListener('keydown.arrowRight')
   onKeyDownLRight() {
-    if (!this.keyboardNavigation) {
+    if (!this.configCarousel.keyboardEnable) {
       return;
     }
     this.nextImage();
@@ -245,11 +251,28 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       invertSwipe: false
     };
 
+    const defaultCurrentCarouselConfig: CarouselConfig = {
+      maxWidth: '100%',
+      maxHeight: null,
+      showArrows: true,
+      objectFit: null,
+      keyboardEnable: false,
+      modalGalleryEnable: false
+    };
+    const defaultCurrentCarouselPlay: CarouselPlay = {
+      autoPlay: false,
+      interval: 5000,
+      pauseOnHover: false
+    };
+
     this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
     this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
 
     const defaultConfig: DotsConfig = { visible: true };
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
+
+    this.configCarousel = Object.assign({}, defaultCurrentCarouselConfig, this.carouselConfig);
+    this.playCarouselConfig = Object.assign({}, defaultCurrentCarouselPlay, this.carouselPlay);
 
     this.manageSlideConfig();
   }
@@ -304,7 +327,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         console.log('ngAfterContentInit 2');
         this._start$
           .pipe(
-            map(() => this.interval),
+            map(() => this.playCarouselConfig.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this._stop$)))
           )
@@ -344,7 +367,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   onClickCurrentImage() {
-    if (!this.openModalOnClick) {
+    if (!this.configCarousel.modalGalleryEnable) {
       return;
     }
     const index = getIndex(this.currentImage, this.images);
@@ -497,7 +520,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   private showArrows(state: boolean) {
-    this.isShowArrows = state;
+    this.configCarousel.showArrows = state;
   }
 
   playCarousel() {
@@ -576,11 +599,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     const description: string = this.buildTextDescription(image, imageWithoutDescription);
     return description;
   }
-
-  plainGalleryHidden: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
 
   /**
    * Private method to build a text description.

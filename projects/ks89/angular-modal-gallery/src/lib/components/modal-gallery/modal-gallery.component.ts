@@ -74,7 +74,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Unique id (>=0) of the current instance of this library. This is useful when you are using
    * the service to call modal gallery without open it manually.
-   * Right now is optional, but in upcoming major releases will be mandatory!!!
    */
   @Input()
   id: number;

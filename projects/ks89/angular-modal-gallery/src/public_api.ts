@@ -37,6 +37,9 @@ export { DotsConfig } from './lib/model/dots-config.interface';
 export { PreviewConfig } from './lib/model/preview-config.interface';
 export { AccessibilityConfig } from './lib/model/accessibility.interface';
 
+export { CarouselConfig } from './lib/model/carousel-config.interface';
+export { CarouselPlay } from './lib/model/carousel-play.interface';
+
 export { Size } from './lib/model/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './lib/model/buttons-config.interface';

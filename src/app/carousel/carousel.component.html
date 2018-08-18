@@ -11,15 +11,11 @@
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
   <ks-carousel [id]="1" [images]="imagesRect"
-               [isShowArrows]="showArrows"
-               [pauseOnHover]="true"
-               [keyboardNavigation]="true"
+               [carouselConfig]="{maxWidth: '766px', keyboardEnable: true, showArrows: showArrows}"
+               [carouselPlay]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
                [dotsConfig]="{visible: true}"
                [slideConfig]="{infinite: false}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}"
-               [autoPlay]="autoPlay"
-               [maxWidth]="'766px'"
-               [interval]="3000">
+               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>
@@ -31,17 +27,11 @@
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
   <ks-carousel [id]="2" [images]="imagesRect"
-               [isShowArrows]="showArrows"
-               [pauseOnHover]="true"
-               [keyboardNavigation]="true"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', objectFit: 'cover', keyboardEnable: true, showArrows: showArrows}"
+               [carouselPlay]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
                [dotsConfig]="{visible: true}"
                [slideConfig]="{infinite: false}"
-               [previewConfig]="{visible: false}"
-               [autoPlay]="autoPlay"
-               [maxWidth]="'100%'"
-               [maxHeight]="'400px'"
-               [objectFit]="'cover'"
-               [interval]="3000">
+               [previewConfig]="{visible: false}">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>
@@ -53,16 +43,10 @@
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
   <ks-carousel [id]="3" [images]="imagesRect"
-               [isShowArrows]="showArrows"
-               [pauseOnHover]="true"
-               [keyboardNavigation]="true"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', keyboardEnable: true, showArrows: showArrows}"
+               [carouselPlay]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
                [dotsConfig]="{visible: true}"
-               [slideConfig]="{infinite: false}"
-               [autoPlay]="autoPlay"
-               [maxWidth]="'100%'"
-               [maxHeight]="'300px'"
-               [objectFit]="'cover'"
-               [interval]="3000">
+               [slideConfig]="{infinite: false}">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>
@@ -72,15 +56,11 @@
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
   <ks-carousel [id]="4" [images]="imagesRect"
-               [isShowArrows]="showArrows"
-               [pauseOnHover]="true"
-               [keyboardNavigation]="true"
+               [carouselConfig]="{maxWidth: '766px', keyboardEnable: true, showArrows: showArrows}"
+               [carouselPlay]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
                [dotsConfig]="{visible: true}"
                [slideConfig]="{infinite: true}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}"
-               [autoPlay]="autoPlay"
-               [maxWidth]="'766px'"
-               [interval]="3000">
+               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>
@@ -91,16 +71,11 @@
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
   <ks-carousel [id]="5" [images]="imagesRect"
-               [isShowArrows]="showArrows"
-               [openModalOnClick]="true"
-               [pauseOnHover]="true"
-               [keyboardNavigation]="true"
+               [carouselConfig]="{maxWidth: '766px', keyboardEnable: true, showArrows: showArrows, modalGalleryEnable: true}"
+               [carouselPlay]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
                [dotsConfig]="{visible: true}"
                [slideConfig]="{infinite: false}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}"
-               [autoPlay]="autoPlay"
-               [maxWidth]="'766px'"
-               [interval]="3000">
+               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
     <div class="transcluded">This is my transcluded content!</div>
   </ks-carousel>
 </section>

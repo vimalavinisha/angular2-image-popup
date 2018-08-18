@@ -4,7 +4,7 @@
 
   <figure id="current-figure">
 
-    <a class="nav-left" *ngIf="isShowArrows"
+    <a class="nav-left" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
        [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
@@ -16,9 +16,9 @@
     <ng-content></ng-content>
 
     <img id="current-image"
-         [style.object-fit]="objectFit ? objectFit : null"
-         [style.max-width]="maxWidth"
-         [style.height]="maxHeight ? maxHeight : null"
+         [style.object-fit]="configCarousel?.objectFit"
+         [style.max-width]="configCarousel?.maxWidth"
+         [style.height]="configCarousel?.maxHeight"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
@@ -34,7 +34,7 @@
                 [innerHTML]="getDescriptionToDisplay()">
     </figcaption>
 
-    <a class="nav-right" *ngIf="isShowArrows"
+    <a class="nav-right" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
        [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
