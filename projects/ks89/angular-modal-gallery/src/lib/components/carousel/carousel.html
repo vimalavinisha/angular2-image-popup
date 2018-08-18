@@ -6,9 +6,9 @@
 
     <a class="nav-left" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
-       [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
+       [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
-      <div class="inside {{isFirstImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
+      <div class="inside {{isFirstImage && !infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
            [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>
@@ -36,9 +36,9 @@
 
     <a class="nav-right" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
-       [tabindex]="isLastImage && !slideConfig?.infinite ? -1 : 0" role="button"
+       [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
-      <div class="inside {{isLastImage && !slideConfig?.infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
+      <div class="inside {{isLastImage && !infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
            [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>
@@ -59,7 +59,7 @@
                       [currentImage]="currentImage"
                       [previewConfig]="previewConfig"
                       [accessibilityConfig]="accessibilityConfig"
-                      [slideConfig]="{infinite: false}"
+                      [infinite]="false"
                       (clickPreview)="onClickPreview($event)"></ks-carousel-previews>
 
 <ks-modal-gallery [id]="id" [modalImages]="images" [plainGalleryConfig]="plainGalleryHidden"></ks-modal-gallery>

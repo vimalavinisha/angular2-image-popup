@@ -59,7 +59,6 @@ import { CurrentImageConfig } from '../../model/current-image-config.interface';
 import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
-import { SlideConfig } from '../../model/slide-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
@@ -122,10 +121,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   previewConfig: PreviewConfig;
   /**
-   * Object of type `SlideConfig` to init side previews and `infinite sliding`.
+   * boolean to enable/disable infinite sliding. Enabled by default.
    */
   @Input()
-  slideConfig: SlideConfig;
+  infinite = true;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
@@ -250,19 +249,18 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       downloadable: false,
       invertSwipe: false
     };
-
     const defaultCurrentCarouselConfig: CarouselConfig = {
       maxWidth: '100%',
-      maxHeight: null,
+      maxHeight: '400px',
       showArrows: true,
-      objectFit: null,
-      keyboardEnable: false,
+      objectFit: 'cover',
+      keyboardEnable: true,
       modalGalleryEnable: false
     };
     const defaultCurrentCarouselPlay: CarouselPlay = {
-      autoPlay: false,
+      autoPlay: true,
       interval: 5000,
-      pauseOnHover: false
+      pauseOnHover: true
     };
 
     this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
@@ -278,12 +276,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('ngOnChanges');
     const autoPlay: SimpleChange = changes.autoPlay;
-    // const isShowArrows: SimpleChange = changes.isShowArrows;
-    console.log('ngOnchanges autoPlay', autoPlay);
-    // console.log('ngOnchanges isShowArrows', isShowArrows);
-
     if (!autoPlay) {
       return;
     }
@@ -291,27 +284,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     const prevAutoPlay: boolean = autoPlay.previousValue;
     const currentAutoPlay: boolean = autoPlay.currentValue;
 
-    // if (isShowArrows) {
-    //   const prevShowArrows: boolean = isShowArrows.previousValue;
-    //   const currentShowArrows: boolean = isShowArrows.currentValue;
-    //
-    //   if (prevShowArrows !== currentShowArrows) {
-    //     if (currentShowArrows) {
-    //       this.showArrows(true);
-    //     } else {
-    //       this.showArrows(false);
-    //     }
-    //   }
-    // }
-
     if (prevAutoPlay !== currentAutoPlay) {
-      console.log('prevAutoPlay !== currentAutoPlay');
       if (currentAutoPlay && !autoPlay.isFirstChange()) {
-        console.log('currentAutoPlay');
         this._start$.next();
-        // this.playCarousel();
       } else {
-        console.log('currentAutoPlay false, so stopping...');
         this.stopCarousel();
       }
     }
@@ -320,11 +296,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   ngAfterContentInit() {
     // setInterval() doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
-    console.log('ngAfterContentInit');
-
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
-        console.log('ngAfterContentInit 2');
         this._start$
           .pipe(
             map(() => this.playCarouselConfig.interval),
@@ -677,7 +650,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       throw err;
     }
 
-    if (!this.slideConfig || this.slideConfig.infinite === true) {
+    if (this.infinite === true) {
       // enable infinite sliding
       this.isFirstImage = false;
       this.isLastImage = false;
@@ -696,6 +669,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
+    return !this.infinite && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }

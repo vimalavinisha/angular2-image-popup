@@ -42,7 +42,6 @@ import { Image } from '../../../model/image.class';
 import { InternalLibImage } from '../../../model/image-internal.class';
 import { Size } from '../../../model/size.interface';
 import { PreviewConfig } from '../../../model/preview-config.interface';
-import { SlideConfig } from '../../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
@@ -72,10 +71,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   @Input()
   images: InternalLibImage[];
   /**
-   * Object of type `SlideConfig` to get `infinite sliding`.
+   * boolean to enable/disable infinite sliding.
    */
   @Input()
-  slideConfig: SlideConfig;
+  infinite: boolean;
   /**
    * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
@@ -373,6 +372,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @returns boolean if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
+    return !this.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }
