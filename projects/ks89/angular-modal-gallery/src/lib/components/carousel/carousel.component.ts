@@ -62,6 +62,8 @@ import { DotsConfig } from '../../model/dots-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
+import { GalleryService } from '../../services/gallery.service';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -117,6 +119,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   maxHeight: string;
   @Input()
   objectFit: string;
+
+  @Input()
+  openModalOnClick: false;
 
   @Input()
   previewConfig: PreviewConfig;
@@ -209,7 +214,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.nextImage();
   }
 
-  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
+  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private galleryService: GalleryService, private ref: ChangeDetectorRef) {
     super();
   }
 
@@ -336,6 +341,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     } else if (result === PREV) {
       this.prevImage(action);
     }
+  }
+
+  onClickCurrentImage() {
+    if (!this.openModalOnClick) {
+      return;
+    }
+    const index = getIndex(this.currentImage, this.images);
+    this.galleryService.openGallery(this.id, index);
   }
 
   /**
@@ -563,6 +576,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     const description: string = this.buildTextDescription(image, imageWithoutDescription);
     return description;
   }
+
+  plainGalleryHidden: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
 
   /**
    * Private method to build a text description.

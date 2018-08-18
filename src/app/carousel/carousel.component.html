@@ -85,3 +85,23 @@
   </ks-carousel>
 </section>
 <br>
+<section>
+  <h3>X5 - (id=5) - carousel example with limited width and open modal on click</h3>
+  <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
+  <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
+  <br>
+  <ks-carousel [id]="5" [images]="imagesRect"
+               [isShowArrows]="showArrows"
+               [openModalOnClick]="true"
+               [pauseOnHover]="true"
+               [keyboardNavigation]="true"
+               [dotsConfig]="{visible: true}"
+               [slideConfig]="{infinite: false}"
+               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}"
+               [autoPlay]="autoPlay"
+               [maxWidth]="'766px'"
+               [interval]="3000">
+    <div class="transcluded">This is my transcluded content!</div>
+  </ks-carousel>
+</section>
+<br>

@@ -24,6 +24,7 @@
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
          alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
          [tabindex]="0" role="img"
+         (click)="onClickCurrentImage()"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
 
@@ -60,3 +61,5 @@
                       [accessibilityConfig]="accessibilityConfig"
                       [slideConfig]="{infinite: false}"
                       (clickPreview)="onClickPreview($event)"></ks-carousel-previews>
+
+<ks-modal-gallery [id]="id" [modalImages]="images" [plainGalleryConfig]="plainGalleryHidden"></ks-modal-gallery>
