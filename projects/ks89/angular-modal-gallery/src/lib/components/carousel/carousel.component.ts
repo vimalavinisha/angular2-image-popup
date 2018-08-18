@@ -80,7 +80,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * TODO: still not used
    */
   @Input()
-  id = number;
+  id: number;
 
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
