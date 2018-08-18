@@ -23,9 +23,9 @@
  */
 
 /**
- * Interface `CarouselPlay` to change carousel's behaviour about auto-navigation.
+ * Interface `PlayConfig` to change the behaviour about auto-navigation for both modal gallery and carousel.
  */
-export interface CarouselPlay {
+export interface PlayConfig {
   autoPlay: boolean;
   interval: number;
   pauseOnHover: boolean;

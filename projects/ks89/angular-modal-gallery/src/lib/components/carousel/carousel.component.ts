@@ -63,8 +63,9 @@ import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
-import { CarouselPlay } from '../../model/carousel-play.interface';
+import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
+import { CarouselImageConfig } from '../../model/current-carousel-image-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -85,29 +86,29 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   id: number;
   /**
-   * Object of type `CarouselConfig` to init CarouselComponent's features.
-   * For instance, it contains parameters to change the style, how it navigates and so on.
-   */
-  @Input()
-  carouselConfig: CarouselConfig;
-  /**
-   * Object of type `CarouselPlay` to init CarouselComponent's features about auto-play.
-   * For instance, it contains parameters to enable/disable autoPlay, interval and so on.
-   */
-  @Input()
-  carouselPlay: CarouselPlay;
-  /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
   images: InternalLibImage[];
   /**
-   * Interface to configure current image in modal-gallery.
-   * For instance you can disable navigation on click on current image (enabled by default).
+   * Object of type `CarouselConfig` to init CarouselComponent's features.
+   * For instance, it contains parameters to change the style, how it navigates and so on.
    */
   @Input()
-  currentImageConfig: CurrentImageConfig;
+  carouselConfig: CarouselConfig;
+  /**
+   * Object of type `PlayConfig` to init CarouselComponent's features about auto-play.
+   * For instance, it contains parameters to enable/disable autoPlay, interval and so on.
+   */
+  @Input()
+  playConfig: PlayConfig;
+  /**
+   * Interface to configure current image in carousel.
+   * For instance you can change the description.
+   */
+  @Input()
+  currentCarouselImageConfig: CarouselImageConfig;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
@@ -142,15 +143,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   configCarousel: CarouselConfig;
   /**
-   * Object of type `CarouselPlay` exposed to the template. This field is initialized
+   * Object of type `PlayConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
-  playCarouselConfig: CarouselPlay;
+  configPlay: PlayConfig;
   /**
-   * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
+   * Object of type `CarouselImageConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
-  configCurrentImage: CurrentImageConfig;
+  configCurrentImageCarousel: CarouselImageConfig;
   /**
    * Boolean that it's true when you are watching the first image (currently visible).
    * False by default
@@ -189,7 +190,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.playCarouselConfig.pauseOnHover) {
+    if (!this.configPlay.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -197,7 +198,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   @HostListener('mouseleave')
   onMouseLeave() {
-    if (!this.playCarouselConfig.pauseOnHover || !this.playCarouselConfig.autoPlay) {
+    if (!this.configPlay.pauseOnHover || !this.configPlay.autoPlay) {
       return;
     }
     this.playCarousel();
@@ -236,7 +237,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       marginRight: '0px'
     };
     const defaultDescription: Description = {
-      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
+      strategy: DescriptionStrategy.ALWAYS_HIDDEN,
       imageText: 'Image ',
       numberSeparator: '/',
       beforeTextDescription: ' - ',
@@ -257,20 +258,20 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       keyboardEnable: true,
       modalGalleryEnable: false
     };
-    const defaultCurrentCarouselPlay: CarouselPlay = {
+    const defaultCurrentCarouselPlay: PlayConfig = {
       autoPlay: true,
       interval: 5000,
       pauseOnHover: true
     };
 
-    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
-    this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
+    this.configCurrentImageCarousel = Object.assign({}, defaultCurrentImageConfig, this.currentCarouselImageConfig);
+    this.configCurrentImageCarousel.description = Object.assign({}, defaultDescription, this.configCurrentImageCarousel.description);
 
     const defaultConfig: DotsConfig = { visible: true };
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
 
     this.configCarousel = Object.assign({}, defaultCurrentCarouselConfig, this.carouselConfig);
-    this.playCarouselConfig = Object.assign({}, defaultCurrentCarouselPlay, this.carouselPlay);
+    this.configPlay = Object.assign({}, defaultCurrentCarouselPlay, this.playConfig);
 
     this.manageSlideConfig();
   }
@@ -300,7 +301,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this._ngZone.runOutsideAngular(() => {
         this._start$
           .pipe(
-            map(() => this.playCarouselConfig.interval),
+            map(() => this.configPlay.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this._stop$)))
           )
@@ -356,13 +357,13 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+    if (!this.configCurrentImageCarousel || !this.configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
 
-    switch (this.configCurrentImage.description.strategy) {
+    switch (this.configCurrentImageCarousel.description.strategy) {
       case DescriptionStrategy.HIDE_IF_EMPTY:
         return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
@@ -380,14 +381,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   swipe(action = this.SWIPE_ACTION.RIGHT) {
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
-        if (this.configCurrentImage.invertSwipe) {
+        if (this.configCurrentImageCarousel.invertSwipe) {
           this.prevImage(Action.SWIPE);
         } else {
           this.nextImage(Action.SWIPE);
         }
         break;
       case this.SWIPE_ACTION.LEFT:
-        if (this.configCurrentImage.invertSwipe) {
+        if (this.configCurrentImageCarousel.invertSwipe) {
           this.nextImage(Action.SWIPE);
         } else {
           this.prevImage(Action.SWIPE);
@@ -492,46 +493,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.stopCarousel();
   }
 
-  private showArrows(state: boolean) {
-    this.configCarousel.showArrows = state;
-  }
-
   playCarousel() {
     this._start$.next();
-    //   if (isPlatformBrowser(this._platformId)) {
-    //     this._ngZone.runOutsideAngular(() => {
-    //       this._start$
-    //         .pipe(
-    //           map(() => this.interval), filter(interval => interval > 0),
-    //           switchMap(interval => timer(interval).pipe(takeUntil(this._stop$))))
-    //         .subscribe(() => this._ngZone.run(() => this.nextImage()));
-    //
-    //       this._start$.next();
-    //     });
-    //     // this._ngZone.runOutsideAngular(() => {
-    //     //   this.interval = setInterval(() => {
-    //     //     console.log('ciaoooo');
-    //     //     this._ngZone.run(() => {
-    //     //       this.nextImage();
-    //     //       this.ref.markForCheck();
-    //     //     });
-    //     //   }, this.interval);
-    //     // });
-    //   }
   }
-
-  // restartCarousel() {
-  //   if (isPlatformBrowser(this._platformId)) {
-  //     this._ngZone.runOutsideAngular(() => {
-  //       this.interval = setInterval(() => {
-  //         this._ngZone.run(() => {
-  //           this.currentImage = this.images[0];
-  //           this.ref.markForCheck();
-  //         });
-  //       }, this.interval);
-  //     });
-  //   }
-  // }
 
   /**
    * Stops the carousel from cycling through items.
@@ -565,7 +529,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getTitleToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+    if (!this.configCurrentImageCarousel || !this.configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
@@ -581,21 +545,23 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @returns String description built concatenating image fields with a specific logic.
    */
   private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
-    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+    if (!this.configCurrentImageCarousel || !this.configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     // If customFullDescription use it, otherwise proceed to build a description
-    if (this.configCurrentImage.description.customFullDescription && this.configCurrentImage.description.customFullDescription !== '') {
-      return this.configCurrentImage.description.customFullDescription;
+    if (this.configCurrentImageCarousel.description.customFullDescription && this.configCurrentImageCarousel.description.customFullDescription !== '') {
+      return this.configCurrentImageCarousel.description.customFullDescription;
     }
 
     const currentIndex: number = getIndex(image, this.images);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
 
-    const prevDescription: string = this.configCurrentImage.description.imageText ? this.configCurrentImage.description.imageText : '';
-    const midSeparator: string = this.configCurrentImage.description.numberSeparator ? this.configCurrentImage.description.numberSeparator : '';
+    const prevDescription: string = this.configCurrentImageCarousel.description.imageText ? this.configCurrentImageCarousel.description.imageText : '';
+    const midSeparator: string = this.configCurrentImageCarousel.description.numberSeparator
+      ? this.configCurrentImageCarousel.description.numberSeparator
+      : '';
     const middleDescription: string = currentIndex + 1 + midSeparator + this.images.length;
 
     if (imageWithoutDescription) {
@@ -603,7 +569,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
 
     const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
-    const endDescription: string = this.configCurrentImage.description.beforeTextDescription + currImgDescription;
+    const endDescription: string = this.configCurrentImageCarousel.description.beforeTextDescription + currImgDescription;
     return prevDescription + middleDescription + endDescription;
   }
 

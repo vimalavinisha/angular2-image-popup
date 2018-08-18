@@ -38,7 +38,8 @@ export { PreviewConfig } from './lib/model/preview-config.interface';
 export { AccessibilityConfig } from './lib/model/accessibility.interface';
 
 export { CarouselConfig } from './lib/model/carousel-config.interface';
-export { CarouselPlay } from './lib/model/carousel-play.interface';
+export { PlayConfig } from './lib/model/play-config.interface';
+export { CarouselImageConfig } from './lib/model/current-carousel-image-config.interface';
 
 export { Size } from './lib/model/size.interface';
 
