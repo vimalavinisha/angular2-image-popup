@@ -77,6 +77,12 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   ariaLabel = `Carousel`;
 
   /**
+   * TODO: still not used
+   */
+  @Input()
+  id = number;
+
+  /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */

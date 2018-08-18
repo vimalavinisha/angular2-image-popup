@@ -6,11 +6,11 @@
 <hr>
 
 <section>
-  <h3>X1 - carousel example with limited width</h3>
+  <h3>X1 - (id=1) - carousel example with limited width</h3>
   <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
-  <ks-carousel [images]="imagesRect"
+  <ks-carousel [id]="1" [images]="imagesRect"
                [isShowArrows]="showArrows"
                [pauseOnHover]="true"
                [keyboardNavigation]="true"
@@ -25,12 +25,12 @@
 </section>
 <br>
 <section>
-  <h3>X2 - carousel example with full (100%) width but not previews<sup>*</sup></h3>
+  <h3>X2 - (id=2) - carousel example with full (100%) width but not previews<sup>*</sup></h3>
   <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
   <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
-  <ks-carousel [images]="imagesRect"
+  <ks-carousel [id]="2" [images]="imagesRect"
                [isShowArrows]="showArrows"
                [pauseOnHover]="true"
                [keyboardNavigation]="true"
@@ -47,12 +47,12 @@
 </section>
 <br>
 <section>
-  <h3>X3 - carousel example with full (100%) width<sup>*</sup></h3>
+  <h3>X3 - (id=3) - carousel example with full (100%) width<sup>*</sup></h3>
   <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
   <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
-  <ks-carousel [images]="imagesRect"
+  <ks-carousel [id]="3" [images]="imagesRect"
                [isShowArrows]="showArrows"
                [pauseOnHover]="true"
                [keyboardNavigation]="true"
@@ -67,11 +67,11 @@
   </ks-carousel>
 </section>
 <section>
-  <h3>X4 - carousel example with limited width and infinite sliding</h3>
+  <h3>X4 - (id=4) - carousel example with limited width and infinite sliding</h3>
   <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <br>
-  <ks-carousel [images]="imagesRect"
+  <ks-carousel [id]="4" [images]="imagesRect"
                [isShowArrows]="showArrows"
                [pauseOnHover]="true"
                [keyboardNavigation]="true"
