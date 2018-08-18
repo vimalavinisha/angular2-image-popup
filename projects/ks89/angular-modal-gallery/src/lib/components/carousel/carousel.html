@@ -45,6 +45,7 @@
     <div id="dots">
       <ks-dots [currentImage]="currentImage"
                [dotsConfig]="configDots"
+               [accessibilityConfig]="accessibilityConfig"
                [images]="images"
                (clickDot)="onClickDot($event)"></ks-dots>
     </div>
@@ -56,5 +57,6 @@
 <ks-carousel-previews [images]="images"
                       [currentImage]="currentImage"
                       [previewConfig]="previewConfig"
+                      [accessibilityConfig]="accessibilityConfig"
                       [slideConfig]="{infinite: false}"
                       (clickPreview)="onClickPreview($event)"></ks-carousel-previews>

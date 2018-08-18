@@ -22,7 +22,18 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+  SimpleChanges
+} from '@angular/core';
 
 import { AccessibleComponent } from '../../accessible.component';
 
@@ -46,6 +57,9 @@ import { getIndex } from '../../../utils/image.util';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
+  @HostBinding('attr.aria-label')
+  ariaLabel = `Carousel previews`;
+
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */

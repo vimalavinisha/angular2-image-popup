@@ -81,6 +81,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.1",
+    "@angular/cli": "^6.2.0-beta.3",
     "@angular/common": "^6.1.1",
     "@angular/compiler": "^6.1.1",
     "@angular/core": "^6.1.1",
@@ -100,7 +101,6 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.7.2",
     "@angular-devkit/build-ng-packagr": "^0.7.2",
-    "@angular/cli": "^6.2.0-beta.1",
     "@angular/compiler-cli": "^6.1.1",
     "@angular/language-service": "^6.1.1",
     "@compodoc/compodoc": "^1.1.3",

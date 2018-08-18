@@ -30,6 +30,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostBinding,
   HostListener,
   Inject,
   Input,
@@ -72,7 +73,8 @@ import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
-  // @HostBinding('tabindex') tabindex = 0;
+  @HostBinding('attr.aria-label')
+  ariaLabel = `Carousel`;
 
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.

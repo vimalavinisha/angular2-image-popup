@@ -42,7 +42,7 @@ export const KS_DEFAULT_ACCESSIBILITY_CONFIG: AccessibilityConfig = {
   carouselNextImageTitle: 'Next image',
   carouselDotsContainerAriaLabel: 'Image navigation dots',
   carouselDotsContainerTitle: '',
-  carouselDotAriaLabel: 'Navigate to image number',
+  carouselDotAriaLabel: 'Show image number',
   carouselPreviewsContainerAriaLabel: 'Image previews',
   carouselPreviewsContainerTitle: '',
   carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
