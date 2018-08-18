@@ -15,7 +15,7 @@
 <br>
 <br>
 
-**@ks89/angular-modal-gallery 7.0.0 WORK IN PROGRESS**
+:rocket: **@ks89/angular-modal-gallery 7.0.0 WORK IN PROGRESS** :rocket:
 It will be released this autumn with some great improvements like carousel and new features. Also I want to support Angular 7 Ivy Renderer (aka Renderer3)
 For more info, watch this issue: [7.0.0 major release](https://github.com/Ks89/angular-modal-gallery/issues/144)
 
@@ -47,7 +47,7 @@ In fact, It's composed by 3 main parts
 **@ks89/angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 6.x.x**
 
 
-## Features
+## :boom: Features :boom:
 - Angular Module to import this library
 - works with IE >= 11
 - works with both JIT and AOT compilers
@@ -71,19 +71,19 @@ In fact, It's composed by 3 main parts
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/))
 
 
-## **Documentation**
+## :book: **Documentation** :book:
 
 *Image loading could be slow, because this website is hosted on Github pages*
 
 [OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/)
 
 
-## **Live demo**
+## :microphone: **Live demo** :microphone:
 
 [OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v7/)
 
 
-## Installation
+## :package: Installation :package:
 - `npm install --save @ks89/angular-modal-gallery`
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
@@ -92,7 +92,7 @@ From version @ks89/angular-modal-gallery >= 5.0.0, **font-awesome isn't a mandat
 You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/).
 
 
-## Which version should I use?
+## :warning: Which version should I use? :warning:
 
 |            | @ks89/angular-modal-gallery | font-awesome |
 | ---------- | :---:                       | :---:        |
@@ -104,7 +104,7 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 7  | &gt;= 7.0.0                 | optional     |
 
 
-## News
+## :fire: News :fire:
 
 - 10/11/2018 - 6.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/15/2018 - 6.2.3 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -120,7 +120,7 @@ You can use all default features without font-awesome. For more info, check offi
 - 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 
 
-## FAQS
+## :question: FAQS :question:
 
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
@@ -133,14 +133,14 @@ You can use all default features without font-awesome. For more info, check offi
    For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/demo/buttons-strategies).
 
 
-## Contributing
+## :computer: Contributing :computer:
 
 Check `CONTRIBUTING.md` in this repository
 
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
 
 
-## A big thank you to
+## :sparkling_heart: A big thank you to :sparkling_heart:
 
 ##### all authors of icons used in this library:
 - Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
@@ -158,7 +158,7 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 - <a href="https://github.com/nikhil8krishnan">Nikhil Krishnan</a> - <a href="https://codepen.io/nikhil8krishnan/pen/dMEzGx">nikhil8krishnan example on codepen.io</a></li>
 - <a href="https://codepen.io/WebSonata/">Anastasiya Kuligina</a> - <a href="https://codepen.io/WebSonata/pen/bRaONB">Anastasiya Kuligina example on codepen.io</a></li>
 
-## License
+## :copyright: License :copyright:
 
 The MIT License (MIT)
 
