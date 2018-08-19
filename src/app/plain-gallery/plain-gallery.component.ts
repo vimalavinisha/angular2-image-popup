@@ -43,7 +43,7 @@ import {
 })
 export class PlainGalleryComponent {
   imageIndex = 1;
-  galleryId = 1;
+  galleryId = 200;
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,

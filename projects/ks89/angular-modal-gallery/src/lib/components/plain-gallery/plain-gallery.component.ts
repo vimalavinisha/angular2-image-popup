@@ -128,17 +128,6 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   };
 
   /**
-   * Method ´ngOnInit´ to init both `configPlainGallery` calling `initPlainGalleryConfig()`
-   * and `imageGrid invoking `initImageGrid()`.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
-   * In particular, it's called only one time!!!
-   */
-  ngOnInit() {
-    this.configPlainGallery = this.initPlainGalleryConfig();
-    this.initImageGrid();
-  }
-
-  /**
    * Method ´ngOnChanges´ to update both `imageGrid` and`configPlainGallery`.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
@@ -159,6 +148,17 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
       this.initImageGrid();
     }
+  }
+
+  /**
+   * Method ´ngOnInit´ to init both `configPlainGallery` calling `initPlainGalleryConfig()`
+   * and `imageGrid invoking `initImageGrid()`.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
+   */
+  ngOnInit() {
+    this.configPlainGallery = this.initPlainGalleryConfig();
+    this.initImageGrid();
   }
 
   /**

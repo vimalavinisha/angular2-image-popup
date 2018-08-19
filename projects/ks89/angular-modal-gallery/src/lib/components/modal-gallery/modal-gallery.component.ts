@@ -59,6 +59,7 @@ import { CurrentImageConfig } from '../../model/current-image-config.interface';
 import { getIndex } from '../../utils/image.util';
 
 import { Subscription } from 'rxjs';
+import { IdValidatorService } from '../../services/id-validator.service';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -210,14 +211,43 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /**
-   * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
+   * Constructor with the injection of ´KeyboardService´, an object to support Server-Side Rendering and other useful services.
    */
   constructor(
     private keyboardService: KeyboardService,
     private galleryService: GalleryService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private idValidatorService: IdValidatorService
   ) {}
+
+  /**
+   * Method ´ngOnChanges´ to re-init images if input is changed.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called before `ngOnInit()` and whenever one or more data-bound input properties change.
+   * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    const imagesChange: SimpleChange = changes.modalImages;
+    const plainGalleryConfigChange: SimpleChange = changes.plainGalleryConfig;
+
+    if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
+      this.initImages();
+    }
+
+    if (plainGalleryConfigChange) {
+      // const prevPlainGalleryConfigChange: any = plainGalleryConfigChange.previousValue;
+      const currPlainGalleryConfigChange: PlainGalleryConfig = plainGalleryConfigChange.currentValue;
+      if (
+        currPlainGalleryConfigChange.layout &&
+        currPlainGalleryConfigChange.layout instanceof AdvancedLayout &&
+        currPlainGalleryConfigChange.layout.modalOpenerByIndex !== -1
+      ) {
+        // console.log('opening modal gallery from custom plain gallery, index: ', currPlainGalleryConfigChange);
+        this.showModalGallery(currPlainGalleryConfigChange.layout.modalOpenerByIndex);
+      }
+    }
+  }
 
   /**
    * Method ´ngOnInit´ to init images calling `initImages()`.
@@ -225,6 +255,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
+    this.idValidatorService.checkAndAdd(this.id);
+
     // id is a mandatory input and must a number > 0
     if ((!this.id && this.id !== 0) || this.id < 0) {
       throw new Error(
@@ -282,34 +314,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       }
       this.changeDetectorRef.markForCheck();
     });
-  }
-
-  /**
-   * Method ´ngOnChanges´ to re-init images if input is changed.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
-   * In particular, it's called before `ngOnInit()` and whenever one or more data-bound input properties change.
-   * @param changes `SimpleChanges` object of current and previous property values provided by Angular.
-   */
-  ngOnChanges(changes: SimpleChanges) {
-    const imagesChange: SimpleChange = changes.modalImages;
-    const plainGalleryConfigChange: SimpleChange = changes.plainGalleryConfig;
-
-    if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
-      this.initImages();
-    }
-
-    if (plainGalleryConfigChange) {
-      // const prevPlainGalleryConfigChange: any = plainGalleryConfigChange.previousValue;
-      const currPlainGalleryConfigChange: PlainGalleryConfig = plainGalleryConfigChange.currentValue;
-      if (
-        currPlainGalleryConfigChange.layout &&
-        currPlainGalleryConfigChange.layout instanceof AdvancedLayout &&
-        currPlainGalleryConfigChange.layout.modalOpenerByIndex !== -1
-      ) {
-        // console.log('opening modal gallery from custom plain gallery, index: ', currPlainGalleryConfigChange);
-        this.showModalGallery(currPlainGalleryConfigChange.layout.modalOpenerByIndex);
-      }
-    }
   }
 
   /**
@@ -640,6 +644,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   ngOnDestroy() {
     this.keyboardService.reset();
+
+    this.idValidatorService.remove(this.id);
 
     if (this.galleryServiceNavigateSubscription) {
       this.galleryServiceNavigateSubscription.unsubscribe();

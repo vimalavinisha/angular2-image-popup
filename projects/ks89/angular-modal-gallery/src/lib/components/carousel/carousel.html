@@ -31,8 +31,7 @@
     <figcaption *ngIf="getDescriptionToDisplay() !== ''"
                 class="description"
                 ksDescription [description]="configCurrentImageCarousel?.description"
-                [innerHTML]="getDescriptionToDisplay()">
-    </figcaption>
+                [innerHTML]="getDescriptionToDisplay()"></figcaption>
 
     <a class="nav-right" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"

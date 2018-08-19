@@ -66,6 +66,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/current-carousel-image-config.interface';
+import { IdValidatorService } from '../../services/id-validator.service';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -220,8 +221,32 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.nextImage();
   }
 
-  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private galleryService: GalleryService, private ref: ChangeDetectorRef) {
+  constructor(
+    @Inject(PLATFORM_ID) private _platformId,
+    private _ngZone: NgZone,
+    private galleryService: GalleryService,
+    private ref: ChangeDetectorRef,
+    private idValidatorService: IdValidatorService
+  ) {
     super();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const autoPlay: SimpleChange = changes.autoPlay;
+    if (!autoPlay) {
+      return;
+    }
+
+    const prevAutoPlay: boolean = autoPlay.previousValue;
+    const currentAutoPlay: boolean = autoPlay.currentValue;
+
+    if (prevAutoPlay !== currentAutoPlay) {
+      if (currentAutoPlay && !autoPlay.isFirstChange()) {
+        this._start$.next();
+      } else {
+        this.stopCarousel();
+      }
+    }
   }
 
   ngOnInit() {
@@ -274,24 +299,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.configPlay = Object.assign({}, defaultCurrentCarouselPlay, this.playConfig);
 
     this.manageSlideConfig();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    const autoPlay: SimpleChange = changes.autoPlay;
-    if (!autoPlay) {
-      return;
-    }
-
-    const prevAutoPlay: boolean = autoPlay.previousValue;
-    const currentAutoPlay: boolean = autoPlay.currentValue;
-
-    if (prevAutoPlay !== currentAutoPlay) {
-      if (currentAutoPlay && !autoPlay.isFirstChange()) {
-        this._start$.next();
-      } else {
-        this.stopCarousel();
-      }
-    }
   }
 
   ngAfterContentInit() {
@@ -501,7 +508,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Stops the carousel from cycling through items.
    */
   stopCarousel() {
-    console.log('stoCarousel called');
     this._stop$.next();
   }
 

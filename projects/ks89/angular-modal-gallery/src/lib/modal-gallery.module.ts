@@ -30,6 +30,7 @@ import { COMPONENTS, ModalGalleryComponent, CarouselComponent } from './componen
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 import { GalleryService } from './services/gallery.service';
+import { IdValidatorService } from './services/id-validator.service';
 
 /**
  * Module with `forRoot` method to import it in the root module of your application.
@@ -56,6 +57,10 @@ export class GalleryModule {
         {
           provide: GalleryService,
           useFactory: setupGalleryService
+        },
+        {
+          provide: IdValidatorService,
+          useFactory: setupIdValidatorService
         }
       ]
     };
@@ -73,4 +78,8 @@ export function setupKeyboardService(injector: KeyboardServiceConfig): KeyboardS
 
 export function setupGalleryService(): GalleryService {
   return new GalleryService();
+}
+
+export function setupIdValidatorService(): IdValidatorService {
+  return new IdValidatorService();
 }
