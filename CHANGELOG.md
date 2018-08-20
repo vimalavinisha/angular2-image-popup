@@ -1,3 +1,8 @@
+# 6.2.2
+### Bugfixes
+- when you add images asynchronously with the modal gallery already opened, infinite sliding, the arrows, images and previews are managed in the wrong way (reported by @rezo-evodion #157)
+
+
 # 6.2.1
 ### Bugfixes
 - if infinite sliding is enabled and there is only one image, navigation arrows should be hidden (reported by @rezo-evodion #156)
