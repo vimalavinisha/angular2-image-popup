@@ -63,48 +63,58 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
-  @Input() currentImage: InternalLibImage;
+  @Input()
+  currentImage: InternalLibImage;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
-  @Input() images: InternalLibImage[];
+  @Input()
+  images: InternalLibImage[];
   /**
    * Boolean that it is true if the modal gallery is visible.
    * If yes, also this component should be visible.
    */
-  @Input() isOpen: boolean;
+  @Input()
+  isOpen: boolean;
   /**
    * Interface to configure current image in modal-gallery.
    * For instance you can disable navigation on click on current image (enabled by default).
    */
-  @Input() currentImageConfig: CurrentImageConfig;
+  @Input()
+  currentImageConfig: CurrentImageConfig;
   /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
-  @Input() slideConfig: SlideConfig;
+  @Input()
+  slideConfig: SlideConfig;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input() accessibilityConfig: AccessibilityConfig;
+  @Input()
+  accessibilityConfig: AccessibilityConfig;
   /**
    * Object of type `KeyboardConfig` to assign custom keys to both ESC, RIGHT and LEFT keyboard's actions.
    */
-  @Input() keyboardConfig: KeyboardConfig;
+  @Input()
+  keyboardConfig: KeyboardConfig;
 
   /**
    * Output to emit an event when images are loaded. The payload contains an `ImageLoadEvent`.
    */
-  @Output() loadImage: EventEmitter<ImageLoadEvent> = new EventEmitter<ImageLoadEvent>();
+  @Output()
+  loadImage: EventEmitter<ImageLoadEvent> = new EventEmitter<ImageLoadEvent>();
   /**
    * Output to emit any changes of the current image. The payload contains an `ImageModalEvent`.
    */
-  @Output() changeImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  changeImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when the modal gallery is closed. The payload contains an `ImageModalEvent`.
    */
-  @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
    * Enum of type `Action` that represents a mouse click on a button.
@@ -153,7 +163,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultLoading: LoadingConfig = {enable: true, type: LoadingType.STANDARD};
+    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
     const defaultDescriptionStyle: DescriptionStyle = {
       bgColor: 'rgba(0, 0, 0, .5)',
       textColor: 'white',
@@ -188,24 +198,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
-    const simpleChange: SimpleChange = changes.currentImage;
-    if (!simpleChange) {
-      return;
-    }
-    // const prev: InternalLibImage = simpleChange.previousValue;
-    const current: InternalLibImage = simpleChange.currentValue;
+    const images: SimpleChange = changes.images;
+    const currentImage: SimpleChange = changes.currentImage;
 
-    let index: number;
-    try {
-      index = getIndex(this.currentImage, this.images);
-    } catch (err) {
-      console.error('Cannot get the current image index in current-image');
-      throw err;
-    }
-
-    if (this.isOpen) {
-      // this.manageSlideConfig(index);
-      this.handleBoundaries(index);
+    if (currentImage && currentImage.previousValue !== currentImage.currentValue) {
+      this.updateIndexes();
+    } else if (images && images.previousValue !== images.currentValue) {
+      this.updateIndexes();
     }
   }
 
@@ -550,5 +549,21 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
     const endDescription: string = this.configCurrentImage.description.beforeTextDescription + currImgDescription;
     return prevDescription + middleDescription + endDescription;
+  }
+
+  /**
+   * Private method to call handleBoundaries when ngOnChanges is called.
+   */
+  private updateIndexes() {
+    let index: number;
+    try {
+      index = getIndex(this.currentImage, this.images);
+    } catch (err) {
+      console.error('Cannot get the current image index in current-image');
+      throw err;
+    }
+    if (this.isOpen) {
+      this.handleBoundaries(index);
+    }
   }
 }

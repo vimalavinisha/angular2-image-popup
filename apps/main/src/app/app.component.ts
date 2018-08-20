@@ -327,6 +327,8 @@ export class AppComponent {
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
+  imagesInfiniteAutoAdd: Image[] = [this.images[0]];
+
   dotsConfig: DotsConfig = {
     visible: false
   };
@@ -521,6 +523,8 @@ export class AppComponent {
     previewScrollNextTitle: 'CUSTOM Scroll next previews'
   };
 
+  private count = 0;
+
   constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
 
   openImageModalRow(image: Image) {
@@ -646,6 +650,21 @@ export class AppComponent {
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
+  }
+
+  autoAddImage() {
+    if (this.count !== 0) {
+      return;
+    }
+    const interval = setInterval(() => {
+      const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+      const newImage: Image = new Image(this.imagesInfiniteAutoAdd.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
+      this.imagesInfiniteAutoAdd = [...this.imagesInfiniteAutoAdd, newImage];
+      this.count++;
+      if (this.count === 4) {
+        clearInterval(interval);
+      }
+    }, 2000);
   }
 
   openModalViaService(id: number | undefined, index: number) {

@@ -49,30 +49,36 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
-  @Input() currentImage: InternalLibImage;
+  @Input()
+  currentImage: InternalLibImage;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
-  @Input() images: InternalLibImage[];
+  @Input()
+  images: InternalLibImage[];
   /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
-  @Input() slideConfig: SlideConfig;
+  @Input()
+  slideConfig: SlideConfig;
   /**
    * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
    */
-  @Input() previewConfig: PreviewConfig;
+  @Input()
+  previewConfig: PreviewConfig;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input() accessibilityConfig: AccessibilityConfig;
+  @Input()
+  accessibilityConfig: AccessibilityConfig;
   /**
    * Output to emit the clicked preview. The payload contains the `InternalLibImage` associated to the clicked preview.
    */
-  @Output() clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
+  @Output()
+  clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
 
   /**
    * Array of `InternalLibImage` exposed to the template. This field is initialized
@@ -149,54 +155,28 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
-    const simpleChange: SimpleChange = changes.currentImage;
-    if (!simpleChange) {
-      return;
+    const images: SimpleChange = changes.images;
+    const currentImage: SimpleChange = changes.currentImage;
+
+    let prev;
+    let current;
+
+    if (currentImage) {
+      prev = currentImage.previousValue;
+      current = currentImage.currentValue;
+    } else {
+      current = this.currentImage;
     }
 
-    const prev: InternalLibImage = simpleChange.previousValue;
-    const current: InternalLibImage = simpleChange.currentValue;
-
-    if (current && changes.images && changes.images.previousValue && changes.images.currentValue) {
+    if (current && images && images.previousValue && images.currentValue) {
       // I'm in this if statement, if input images are changed (for instance, because I removed one of them with the 'delete button',
       // or because users changed the images array while modal gallery is still open).
       // In this case, I have to re-init previews, because the input array of images is changed.
-      this.initPreviews(current, changes.images.currentValue);
+      this.initPreviews(current, images.currentValue);
     }
 
     if (prev && current && prev.id !== current.id) {
-      // to manage infinite sliding I have to reset both `start` and `end` at the beginning
-      // to show again previews from the first image.
-      // This happens when you navigate over the last image to return to the first one
-      let prevIndex: number;
-      let currentIndex: number;
-      try {
-        prevIndex = getIndex(prev, this.images);
-        currentIndex = getIndex(current, this.images);
-      } catch (err) {
-        console.error('Cannot get previous and current image indexes in previews');
-        throw err;
-      }
-      if (prevIndex === this.images.length - 1 && currentIndex === 0) {
-        // first image
-        this.setBeginningIndexesPreviews();
-        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-        return;
-      }
-      // the same for the opposite case, when you navigate back from the fist image to go to the last one.
-      if (prevIndex === 0 && currentIndex === this.images.length - 1) {
-        // last image
-        this.setEndIndexesPreviews();
-        this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
-        return;
-      }
-
-      // otherwise manage standard scenarios
-      if (prevIndex > currentIndex) {
-        this.previous();
-      } else if (prevIndex < currentIndex) {
-        this.next();
-      }
+      this.updatePreviews(prev, current);
     }
   }
 
@@ -341,5 +321,43 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   private isPreventSliding(boundaryIndex: number): boolean {
     return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.previews) === boundaryIndex;
+  }
+
+  /**
+   * Private method to handle navigation changing the previews array and other variables.
+   */
+  private updatePreviews(prev: InternalLibImage, current: InternalLibImage) {
+    // to manage infinite sliding I have to reset both `start` and `end` at the beginning
+    // to show again previews from the first image.
+    // This happens when you navigate over the last image to return to the first one
+    let prevIndex: number;
+    let currentIndex: number;
+    try {
+      prevIndex = getIndex(prev, this.images);
+      currentIndex = getIndex(current, this.images);
+    } catch (err) {
+      console.error('Cannot get previous and current image indexes in previews');
+      throw err;
+    }
+    if (prevIndex === this.images.length - 1 && currentIndex === 0) {
+      // first image
+      this.setBeginningIndexesPreviews();
+      this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+      return;
+    }
+    // the same for the opposite case, when you navigate back from the fist image to go to the last one.
+    if (prevIndex === 0 && currentIndex === this.images.length - 1) {
+      // last image
+      this.setEndIndexesPreviews();
+      this.previews = this.images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
+      return;
+    }
+
+    // otherwise manage standard scenarios
+    if (prevIndex > currentIndex) {
+      this.previous();
+    } else if (prevIndex < currentIndex) {
+      this.next();
+    }
   }
 }
