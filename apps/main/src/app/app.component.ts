@@ -43,7 +43,10 @@ import {
   LineLayout,
   PlainGalleryConfig,
   PlainGalleryStrategy,
-  PreviewConfig
+  PreviewConfig,
+  CurrentImageConfig,
+  LoadingConfig,
+  LoadingType
 } from '@ks89/angular-modal-gallery';
 
 @Component({
@@ -94,6 +97,11 @@ export class AppComponent {
   plainGalleryGrid: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.GRID,
     layout: new GridLayout({ width: '80px', height: '80px' }, { length: 3, wrap: true })
+  };
+
+  currentImageConfigExperimental = <CurrentImageConfig>{
+    loadingConfig: <LoadingConfig>{ enable: true, type: LoadingType.STANDARD },
+    description: <Description>{ strategy: DescriptionStrategy.ALWAYS_VISIBLE }
   };
 
   images: Image[] = [

@@ -434,7 +434,10 @@
   <br>
   <ks-modal-gallery [id]="51" [modalImages]="images" (show)="onShowAutoCloseExample($event, 51)"></ks-modal-gallery>
 </section>
-
+<br>
+<hr>
+<br>
+<h2>Other examples</h2>
 <section>
   <h3>D1 - (id=52) - Other demo - base64 images</h3>
   <br>
@@ -462,6 +465,19 @@
   <ks-modal-gallery [id]="55" [modalImages]="imagesInfiniteAutoAdd"
                     [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"
                     (show)="autoAddImage()"></ks-modal-gallery>
+</section>
+<br>
+<hr>
+<br>
+<h2>Experimental examples<sup>*</sup></h2>
+<p><sup>*</sup> these will be either improved or removed in next versions</p>
+<section>
+  <h3>E1 - (id=56) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
+  <br>
+  <ks-modal-gallery [id]="56" [modalImages]="[images[0]]"
+                    [keyboardConfig]="null"
+                    [currentImageConfig]="currentImageConfigExperimental"
+                    [slideConfig]="{infinite: false}"></ks-modal-gallery>
 </section>
 
 <br><br>
