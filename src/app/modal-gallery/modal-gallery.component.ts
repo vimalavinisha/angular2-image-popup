@@ -44,7 +44,10 @@ import {
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
   KS_DEFAULT_BTN_ROTATE,
-  PreviewConfig
+  PreviewConfig,
+  LoadingConfig,
+  LoadingType,
+  CurrentImageConfig
 } from '@ks89/angular-modal-gallery';
 
 @Component({
@@ -313,6 +316,8 @@ export class ModalGalleryComponent {
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
+  imagesInfiniteAutoAdd: Image[] = [this.images[0]];
+
   dotsConfig: DotsConfig = {
     visible: false
   };
@@ -492,6 +497,11 @@ export class ModalGalleryComponent {
     size: { width: '30px', height: '30px' }
   };
 
+  currentImageConfigExperimental = <CurrentImageConfig>{
+    loadingConfig: <LoadingConfig>{ enable: true, type: LoadingType.STANDARD },
+    description: <Description>{ strategy: DescriptionStrategy.ALWAYS_VISIBLE }
+  };
+
   accessibilityConfig: AccessibilityConfig = {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
     backgroundTitle: 'CUSTOM background title',
@@ -539,6 +549,8 @@ export class ModalGalleryComponent {
     carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
     carouselPreviewScrollNextTitle: 'Scroll next previews'
   };
+
+  private count = 0;
 
   constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
 
@@ -677,6 +689,21 @@ export class ModalGalleryComponent {
   openModalViaService(id: number | undefined, index: number) {
     console.log('opening gallery with index ' + index);
     this.galleryService.openGallery(id, index);
+  }
+
+  autoAddImage() {
+    if (this.count !== 0) {
+      return;
+    }
+    const interval = setInterval(() => {
+      const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+      const newImage: Image = new Image(this.imagesInfiniteAutoAdd.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
+      this.imagesInfiniteAutoAdd = [...this.imagesInfiniteAutoAdd, newImage];
+      this.count++;
+      if (this.count === 4) {
+        clearInterval(interval);
+      }
+    }, 2000);
   }
 
   trackById(index: number, item: Image) {

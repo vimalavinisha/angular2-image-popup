@@ -49,9 +49,9 @@ export { GalleryService } from './lib/services/gallery.service';
 
 export { CurrentImageConfig } from './lib/model/current-image-config.interface';
 
-export { LoadingConfig, LoadingType } from './src/model/loading-config.interface';
+export { LoadingConfig, LoadingType } from './lib/model/loading-config.interface';
 
-export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './src/components/accessibility-default';
+export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './lib/components/accessibility-default';
 export {
   KS_DEFAULT_BTN_ROTATE,
   KS_DEFAULT_BTN_FULL_SCREEN,

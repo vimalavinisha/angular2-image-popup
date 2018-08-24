@@ -1,7 +1,16 @@
-# 6.3.0
+# 7.0.0-alpha.1
 ### Features
-- add a new method called 'update' into GalleryService to be able to update an image of the gallery calling this method, also when modal-gallery is already opened #161 
-  (requested and partially implemented by @smardine (see pull request https://github.com/Ks89/angular-modal-gallery/pull/162))
+- add (plain) carousel
+- new method in GalleryService called 'navigateGallery'
+
+### Internal library changes
+- migrate to the official ng lib features in angular-cli >= 6
+
+### Demos
+- update all examples
+
+### Documentations
+- new documentation website https://github.com/Ks89/angular-modal-gallery-2018-v7.github.io
 
 
 # 6.2.3
