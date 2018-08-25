@@ -20,12 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-.menu {
+
+#main-title {
+  text-align: center;
+  width: 100%;
+}
+
+#menu {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 
   > .menu-item {
     margin-left: 10px;
   }
+}
+
+.copyright {
+  text-align: center;
 }

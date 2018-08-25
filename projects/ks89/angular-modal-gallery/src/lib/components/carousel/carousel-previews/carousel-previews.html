@@ -12,19 +12,22 @@
            [title]="accessibilityConfig?.carouselPreviewScrollPrevTitle"></div>
     </a>
 
-    <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
-      <img *ngIf="preview?.modal?.img"
-           class="inside preview-image {{isActive(preview) ? 'active' : ''}}{{!configPreview.clickable ? ' unclickable' : ''}}"
-           [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
-           ksSize [sizeConfig]="{width: configPreview.size ? configPreview.size.width : defaultPreviewSize.width,
-                                 height: configPreview.size ? configPreview.size.height : defaultPreviewSize.height}"
-           [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
-           [title]="preview.modal.title ? preview.modal.title : ''"
-           alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
-           [tabindex]="0" role="img"
-           (click)="onImageEvent(preview, $event)" (keyup)="onImageEvent(preview, $event)"/>
-    </ng-container>
-
+    <div class="preview-inner-container"
+         ksSize [sizeConfig]="{width: carouselConfig && carouselConfig.maxWidth ? carouselConfig.maxWidth : '100%',
+                               height: configPreview.size ? configPreview.size.height : defaultPreviewSize.height}">
+      <ng-container *ngFor="let preview of images; trackBy: trackById; let index = index">
+        <img *ngIf="preview?.modal?.img"
+             class="inside preview-image {{isActive(preview) ? 'active' : ''}}{{!configPreview.clickable ? ' unclickable' : ''}}"
+             [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
+             ksSize [sizeConfig]="{width: configPreview.size ? configPreview.size.width : defaultPreviewSize.width,
+                                   height: configPreview.size ? configPreview.size.height : defaultPreviewSize.height}"
+             [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
+             [title]="preview.modal.title ? preview.modal.title : ''"
+             alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
+             [tabindex]="0" role="img"
+             (click)="onImageEvent(preview, $event)" (keyup)="onImageEvent(preview, $event)"/>
+      </ng-container>
+    </div>
 
     <a class="nav-right"
        [attr.aria-label]="accessibilityConfig?.carouselPreviewScrollNextAriaLabel"

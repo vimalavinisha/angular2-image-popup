@@ -42,6 +42,7 @@ import { Image } from '../../../model/image.class';
 import { InternalLibImage } from '../../../model/image-internal.class';
 import { Size } from '../../../model/size.interface';
 import { PreviewConfig } from '../../../model/preview-config.interface';
+import { CarouselConfig } from '../../../model/carousel-config.interface';
 
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
@@ -58,7 +59,12 @@ import { getIndex } from '../../../utils/image.util';
 export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel previews`;
-
+  /**
+   * Object of type `CarouselConfig` to init CarouselComponent's features.
+   * For instance, it contains parameters to change the style, how it navigates and so on.
+   */
+  @Input()
+  carouselConfig: CarouselConfig;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
