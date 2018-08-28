@@ -50,22 +50,30 @@ $nav-side-margin: 10px;
   justify-content: center;
   margin-bottom: $container-margin-bottom;
 
-  > .preview-inner-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
+  > .preview-outer-container {
     overflow-x: hidden;
 
-    > .preview-image {
-      cursor: pointer;
-      margin-left: $preview-image-side-margin;
-      margin-right: $preview-image-side-margin;
-      height: $preview-image-height;
+    > .preview-inner-container {
+      position: relative;
+      transition: left .5s;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      width: 766px;
+      height: 100px;
 
-      &.unclickable {
-        cursor: not-allowed;
+      > .preview-image {
+        cursor: pointer;
+        margin-left: $preview-image-side-margin;
+        margin-right: $preview-image-side-margin;
+        height: $preview-image-height;
+
+        &.unclickable {
+          cursor: not-allowed;
+        }
       }
     }
   }

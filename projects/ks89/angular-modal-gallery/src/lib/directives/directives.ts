@@ -29,6 +29,7 @@ import { WrapDirective } from './wrap.directive';
 import { DirectionDirective } from './direction.directive';
 import { ATagBgImageDirective } from './a-tag-bg-image.directive';
 import { DescriptionDirective } from './description.directive';
+import { ScrollHorizontalDirective } from './scroll-horizontal.directive';
 
 /**
  * Array of all directives.
@@ -40,5 +41,6 @@ export const DIRECTIVES = [
   WrapDirective,
   DirectionDirective,
   ATagBgImageDirective,
-  DescriptionDirective
+  DescriptionDirective,
+  ScrollHorizontalDirective
 ];

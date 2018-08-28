@@ -25,6 +25,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
@@ -32,7 +33,8 @@ import {
   OnInit,
   Output,
   SimpleChange,
-  SimpleChanges
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 
 import { AccessibleComponent } from '../../accessible.component';
@@ -57,6 +59,11 @@ import { getIndex } from '../../../utils/image.util';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
+  @ViewChild('slidableMenu')
+  slidableMenu: ElementRef;
+  @ViewChild('slidableContainer')
+  slidableContainer: ElementRef;
+
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel previews`;
   /**
@@ -264,10 +271,23 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
-      this.next();
+      this.onPrev();
     } else if (result === PREV) {
-      this.previous();
+      this.onNext();
     }
+  }
+
+  onPrev() {
+    const widthContainer: number = this.slidableContainer.nativeElement.clientWidth;
+    const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
+    this.slidableMenu.nativeElement.style.left =
+      (currentLeft - 400 < -this.images.length * 110 + widthContainer ? -this.images.length * 110 + widthContainer : currentLeft - 400) + 'px';
+  }
+
+  onNext() {
+    const widthContainer: number = this.slidableContainer.nativeElement.clientWidth;
+    const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
+    this.slidableMenu.nativeElement.style.left = (currentLeft + 400 > 0 ? 0 : currentLeft + 400) + 'px';
   }
 
   /**
