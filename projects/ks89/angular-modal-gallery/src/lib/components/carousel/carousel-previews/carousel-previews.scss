@@ -28,7 +28,7 @@ $preview-image-side-margin: 2px;
 $preview-image-top-margin: 3px;
 $preview-image-bottom-margin: 3px;
 $preview-container-fade-in-time: .8s;
-$preview-image-height: calc(25% - 10px);
+$preview-image-height: 150px;
 
 $nav-color: #919191;
 $nav-animation-time: 1s;
@@ -64,6 +64,7 @@ $nav-side-margin: 10px;
       white-space: nowrap;
       width: 766px;
       height: 100px;
+      left: 0;
 
       > .preview-image {
         cursor: pointer;
@@ -82,6 +83,7 @@ $nav-side-margin: 10px;
     position: absolute;
     top: calc(50% - 7px);
     color: $nav-color;
+    z-index: 1000;
     //animation: animatezoom $nav-animation-time;
     cursor: pointer;
     transition: all $nav-transition-time;

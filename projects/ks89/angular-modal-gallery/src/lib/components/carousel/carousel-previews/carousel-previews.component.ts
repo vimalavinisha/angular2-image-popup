@@ -129,7 +129,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Default preview's size object, also used in the template to apply default sizes to ksSize's directive.
    */
-  defaultPreviewSize: Size = { height: 'auto', width: 'calc(100% / 4 - 4px)' };
+  defaultPreviewSize: Size = { height: '150px', width: 'auto' };
 
   /**
    * Default preview's config object
@@ -179,7 +179,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges) {
-    console.log('ngOnChanges');
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
       return;
@@ -271,23 +270,103 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
+      console.log('---next but calling prev');
       this.onPrev();
     } else if (result === PREV) {
+      console.log('---prev but calling next');
       this.onNext();
     }
   }
 
   onPrev() {
-    const widthContainer: number = this.slidableContainer.nativeElement.clientWidth;
     const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
-    this.slidableMenu.nativeElement.style.left =
-      (currentLeft - 400 < -this.images.length * 110 + widthContainer ? -this.images.length * 110 + widthContainer : currentLeft - 400) + 'px';
+    console.log('onPrev currentLeft', currentLeft);
+
+    const containerWidth = this.getContainerWidth();
+    const numVisible = this.getNumOfVisibleImages();
+    const numHiddenLeft = this.getNumOfHiddenImgLeft();
+    const numHiddenRight = this.getNumOfHiddenImgRight();
+    const firstHiddenRightIndex = numHiddenLeft + numVisible;
+
+    console.log('=================== getContainerWidth ', containerWidth);
+    console.log('=================== numVisible ', numVisible);
+    console.log('=================== numHiddenLeft ', numHiddenLeft);
+    console.log('=================== numHiddenRight ', numHiddenRight);
+    console.log('=================== firstHiddenRightIndex ', firstHiddenRightIndex);
+
+    if (numHiddenRight === 0) {
+      return;
+    }
+
+    this.slidableMenu.nativeElement.style.left = currentLeft - this.slidableMenu.nativeElement.children[firstHiddenRightIndex].width - 4 + 'px';
+    console.log('onPrev this.slidableMenu.nativeElement.style.left', this.slidableMenu.nativeElement.style.left);
   }
 
   onNext() {
-    const widthContainer: number = this.slidableContainer.nativeElement.clientWidth;
     const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
-    this.slidableMenu.nativeElement.style.left = (currentLeft + 400 > 0 ? 0 : currentLeft + 400) + 'px';
+    console.log('onNext currentLeft', currentLeft);
+
+    const containerWidth = this.getContainerWidth();
+    const numVisible = this.getNumOfVisibleImages();
+    const numHiddenLeft = this.getNumOfHiddenImgLeft();
+    const numHiddenRight = this.getNumOfHiddenImgRight();
+    const firstHiddenLeftIndex = numHiddenLeft - 1;
+
+    console.log('=================== getContainerWidth ', containerWidth);
+    console.log('=================== numVisible ', numVisible);
+    console.log('=================== numHiddenLeft ', numHiddenLeft);
+    console.log('=================== numHiddenRight ', numHiddenRight);
+    console.log('=================== firstHiddenLeftIndex ', firstHiddenLeftIndex);
+
+    if (numHiddenLeft === 0) {
+      return;
+    }
+
+    this.slidableMenu.nativeElement.style.left = currentLeft + this.slidableMenu.nativeElement.children[firstHiddenLeftIndex].width + 4 + 'px';
+    console.log('onNext this.slidableMenu.nativeElement.style.left', this.slidableMenu.nativeElement.style.left);
+  }
+
+  private getContainerWidth(): number {
+    let sumAllWidths = 0;
+    // I'm not using reduce or forEach, because .children returns an HTMLCollection, that it' isn't iterable
+    for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
+      sumAllWidths += this.slidableMenu.nativeElement.children[i].width + 4; // 2 + 2 = margins
+    }
+    return sumAllWidths;
+  }
+
+  private getNumOfHiddenImgLeft() {
+    const slidableLeft: number = Math.abs(<number>this.slidableMenu.nativeElement.style.left.replace('px', ''));
+    let tempSum = 0;
+    let count = 0;
+    for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
+      if (tempSum >= slidableLeft) {
+        return count;
+      }
+      count++;
+      tempSum += this.slidableMenu.nativeElement.children[i].width + 4; // 2 + 2 = margins
+    }
+    return count + 1;
+  }
+
+  private getNumOfVisibleImages(): number {
+    let tempSum = 0;
+    const windowWidth = window.innerWidth;
+    let count = 0;
+    for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
+      count++;
+      tempSum += this.slidableMenu.nativeElement.children[i].width + 4; // 2 + 2 = margins
+      if (tempSum > windowWidth) {
+        tempSum -= this.slidableMenu.nativeElement.children[i].width + 4;
+        count--;
+        break;
+      }
+    }
+    return count;
+  }
+
+  private getNumOfHiddenImgRight() {
+    return Math.min(Math.max(this.images.length - this.getNumOfHiddenImgLeft() - this.getNumOfVisibleImages(), 0), this.images.length);
   }
 
   /**
