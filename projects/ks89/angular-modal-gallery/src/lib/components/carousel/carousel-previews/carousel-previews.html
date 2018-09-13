@@ -14,7 +14,7 @@
 
     <div #slidableContainer class="preview-outer-container">
       <div #slidableMenu class="preview-inner-container"
-           ksSize [sizeConfig]="{width: carouselConfig && carouselConfig.maxWidth ? carouselConfig.maxWidth : '100%',
+           ksSize [sizeConfig]="{width: carouselConfig && carouselConfig.maxWidth ? carouselConfig.maxWidth : '100vw',
                                height: configPreview.size ? configPreview.size.height : defaultPreviewSize.height}">
         <ng-container *ngFor="let preview of images; trackBy: trackById; let index = index">
           <img #img *ngIf="preview?.modal?.img"

@@ -129,7 +129,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Default preview's size object, also used in the template to apply default sizes to ksSize's directive.
    */
-  defaultPreviewSize: Size = { height: '150px', width: 'auto' };
+  defaultPreviewSize: Size = { height: '250px', width: 'auto' };
 
   /**
    * Default preview's config object
@@ -282,19 +282,22 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
     console.log('onPrev currentLeft', currentLeft);
 
+    // calc values before to scroll
     const containerWidth = this.getContainerWidth();
     const numVisible = this.getNumOfVisibleImages();
     const numHiddenLeft = this.getNumOfHiddenImgLeft();
     const numHiddenRight = this.getNumOfHiddenImgRight();
     const firstHiddenRightIndex = numHiddenLeft + numVisible;
+    const firstHiddenLeftIndex = numHiddenLeft - 1;
 
     console.log('=================== getContainerWidth ', containerWidth);
     console.log('=================== numVisible ', numVisible);
     console.log('=================== numHiddenLeft ', numHiddenLeft);
     console.log('=================== numHiddenRight ', numHiddenRight);
     console.log('=================== firstHiddenRightIndex ', firstHiddenRightIndex);
+    console.log('=================== firstHiddenLeftIndex ', firstHiddenLeftIndex);
 
-    if (numHiddenRight === 0) {
+    if (numHiddenRight <= 0) {
       return;
     }
 
@@ -306,19 +309,22 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
     console.log('onNext currentLeft', currentLeft);
 
+    // calc values before to scroll
     const containerWidth = this.getContainerWidth();
     const numVisible = this.getNumOfVisibleImages();
-    const numHiddenLeft = this.getNumOfHiddenImgLeft();
-    const numHiddenRight = this.getNumOfHiddenImgRight();
-    const firstHiddenLeftIndex = numHiddenLeft - 1;
+    const numHiddenLeft = this.getNumOfHiddenImgLeft() - 1;
+    const numHiddenRight = this.getNumOfHiddenImgRight() + 1;
+    const firstHiddenRightIndex = numHiddenLeft + numVisible;
+    const firstHiddenLeftIndex = numHiddenLeft;
 
     console.log('=================== getContainerWidth ', containerWidth);
     console.log('=================== numVisible ', numVisible);
     console.log('=================== numHiddenLeft ', numHiddenLeft);
     console.log('=================== numHiddenRight ', numHiddenRight);
     console.log('=================== firstHiddenLeftIndex ', firstHiddenLeftIndex);
+    console.log('=================== firstHiddenRightIndex ', firstHiddenRightIndex);
 
-    if (numHiddenLeft === 0) {
+    if (numHiddenLeft <= 0) {
       return;
     }
 
@@ -336,32 +342,46 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   }
 
   private getNumOfHiddenImgLeft() {
+    console.log(`getNumOfHiddenImgLeft - init - left=${this.slidableMenu.nativeElement.style.left}`);
     const slidableLeft: number = Math.abs(<number>this.slidableMenu.nativeElement.style.left.replace('px', ''));
+    // slidableLeft += this.slidableMenu.nativeElement.children[0].width + 4;
+    console.log(`getNumOfHiddenImgLeft - init - slidableLeft=${slidableLeft}`);
     let tempSum = 0;
     let count = 0;
     for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
+      console.log(`getNumOfHiddenImgLeft - before - i={i} count=${count} tempSum=${tempSum}`);
       if (tempSum >= slidableLeft) {
+        console.log(`getNumOfHiddenImgLeft - inside if - i={i} count=${count} tempSum=${tempSum} slidableLeft=${slidableLeft}`);
         return count;
       }
       count++;
       tempSum += this.slidableMenu.nativeElement.children[i].width + 4; // 2 + 2 = margins
+      console.log(`getNumOfHiddenImgLeft - after - i={i} count=${count} tempSum=${tempSum}`);
     }
+    console.log(`getNumOfHiddenImgLeft - finish - count+1=${count + 1}`);
     return count + 1;
   }
 
   private getNumOfVisibleImages(): number {
     let tempSum = 0;
     const windowWidth = window.innerWidth;
+    console.log('getNumOfVisibleImages - windowWidth', windowWidth);
     let count = 0;
     for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
+      console.log(`getNumOfVisibleImages - before - i={i} count=${count} tempSum=${tempSum}`);
       count++;
       tempSum += this.slidableMenu.nativeElement.children[i].width + 4; // 2 + 2 = margins
+      console.log(`getNumOfVisibleImages - after - i={i} count=${count} tempSum=${tempSum}`);
       if (tempSum > windowWidth) {
+        console.log(`getNumOfVisibleImages - inside if before - i={i} count=${count} tempSum=${tempSum}`);
         tempSum -= this.slidableMenu.nativeElement.children[i].width + 4;
         count--;
+        console.log(`getNumOfVisibleImages - inside if after - i={i} count=${count} tempSum=${tempSum}`);
         break;
       }
+      console.log(`getNumOfVisibleImages - after the if - i={i} count=${count} tempSum=${tempSum}`);
     }
+    console.log('getNumOfVisibleImages - finish - count', count);
     return count;
   }
 
