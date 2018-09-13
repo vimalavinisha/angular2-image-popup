@@ -27,6 +27,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  HostListener,
   Inject,
   Input,
   OnChanges,
@@ -177,6 +178,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   private galleryServiceNavigateSubscription: Subscription;
   private galleryServiceCloseSubscription: Subscription;
+
+  /**
+   * HostListener to catch browser's back button and destroy the gallery.
+   * This prevents weired behaviour about scrolling.
+   * Added to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/159
+   */
+  @HostListener('window:popstate', ['$event'])
+  onPopState() {
+    this.closeGallery();
+  }
 
   /**
    * Constructor with the injection of ´KeyboardService´ and an object to support Server-Side Rendering.
