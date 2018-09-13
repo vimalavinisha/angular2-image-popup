@@ -185,7 +185,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Added to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/159
    */
   @HostListener('window:popstate', ['$event'])
-  onPopState() {
+  onPopState(e: Event) {
     this.closeGallery();
   }
 
