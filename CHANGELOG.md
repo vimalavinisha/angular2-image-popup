@@ -1,3 +1,8 @@
+# 6.2.3
+### Bugfixes
+- when you press the back button, page scroll will be blocked, because the modal gallery isn't completely closed (reported by @srtab #159)
+
+
 # 6.2.2
 ### Bugfixes
 - when you add images asynchronously with the modal gallery already opened, infinite sliding, the arrows, images and previews are managed in the wrong way (reported by @rezo-evodion #157)
