@@ -1,6 +1,6 @@
 # 6.2.3
 ### Bugfixes
-- when you press the back button, page scroll will be blocked, because the modal gallery isn't completely closed (reported by @srtab #159)
+- when you press the back button, page scroll remains blocked, because the modal gallery isn't completely closed (reported by @srtab #159)
 
 
 # 6.2.2
