@@ -10,138 +10,145 @@
   <ks-carousel [id]="100" [images]="imagesRect"></ks-carousel>
 </section>
 <br>
-<section>
-  <h3>A2 - (id=101) - carousel example (minimal with all defaults)</h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="101" [images]="imagesRect">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A3 - (id=102) - carousel example without previews<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="102" [images]="imagesRect" [previewConfig]="{visible: false}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A4 - (id=103) - carousel example without infinite sliding<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="103" [images]="imagesRect" [infinite]="false">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A5 - (id=104) - carousel example without dots<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="104" [images]="imagesRect" [dotsConfig]="{visible: true}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A6 - (id=105) - carousel example without auto-play<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="105" [images]="imagesRect"
-               [playConfig]="{autoPlay: false}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A7 - (id=106) - carousel example with a custom playConfig (10s of interval and pauseOnHover disabled)<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="106" [images]="imagesRect" [playConfig]="{autoPlay: true, interval: 10000, pauseOnHover: false}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A8 - (id=107) - carousel example with a custom previewConfig (7 previews with 'auto' width and 100px of height)<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="107" [images]="imagesRect" [previewConfig]="{number: 7, size: {width: 'auto', height: '100px'}}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>A9 - (id=108) - carousel example with buttons to enable/disable autoplay, arrows and other properties<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>
-  <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
-  <p>Show Dots: <button class="btn btn-primary" (click)="onChangeShowDots()">{{showDots ? 'Hide Dots' : 'Show Dots'}}</button></p>
-  <br>
-  <ks-carousel [id]="108" [images]="imagesRect"
-               [playConfig]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
-               [dotsConfig]="{visible: showDots}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<br>
+<!--<section>-->
+  <!--<h3>A2 - (id=101) - carousel example (minimal with all defaults)</h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="101" [images]="imagesRect">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A3 - (id=102) - carousel example without previews<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="102" [images]="imagesRect" [previewConfig]="{visible: false}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A4 - (id=103) - carousel example without infinite sliding<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="103" [images]="imagesRect" [infinite]="false">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A5 - (id=104) - carousel example without dots<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="104" [images]="imagesRect" [dotsConfig]="{visible: true}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A6 - (id=105) - carousel example without auto-play<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="105" [images]="imagesRect"-->
+               <!--[playConfig]="{autoPlay: false}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A7 - (id=106) - carousel example with a custom playConfig (10s of interval and pauseOnHover disabled)<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="106" [images]="imagesRect" [playConfig]="{autoPlay: true, interval: 10000, pauseOnHover: false}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A8 - (id=107) - carousel example with a custom previewConfig (7 previews with 'auto' width and 100px of height)<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="107" [images]="imagesRect" [previewConfig]="{number: 7, size: {width: 'auto', height: '100px'}}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>A9 - (id=108) - carousel example with buttons to enable/disable autoplay, arrows and other properties<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<p>Autoplay: <button class="btn btn-primary" (click)="onChangeAutoPlay()">{{autoPlay ? 'disable autoplay' : 'enable autoplay'}}</button></p>-->
+  <!--<p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>-->
+  <!--<p>Show Dots: <button class="btn btn-primary" (click)="onChangeShowDots()">{{showDots ? 'Hide Dots' : 'Show Dots'}}</button></p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="108" [images]="imagesRect"-->
+               <!--[playConfig]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"-->
+               <!--[dotsConfig]="{visible: showDots}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<br>-->
 
-<h3>Examples with custom style</h3>
-<section>
-  <h3>B1 - (id=109) - carousel example with fixed maxWidth (766px) and custom previews<sup>*</sup></h3>
-  <br>
-  <ks-carousel [id]="109" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px'}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>B2 - (id=110) - carousel example with fixed maxWidth (766px), custom previews and open modal on click</h3>
-  <br>
-  <ks-carousel [id]="110" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', modalGalleryEnable: true}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>B3 - (id=111) - carousel example with fixed maxWidth (766px), custom previews and keyboard navigation disabled</h3>
-  <br>
-  <ks-carousel [id]="111" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', keyboardEnable: false}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<br>
+<!--<h3>Examples with custom style</h3>-->
+<!--<section>-->
+  <!--<h3>B1 - (id=109) - carousel example with fixed maxWidth (766px) and custom previews<sup>*</sup></h3>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="109" [images]="imagesRect"-->
+               <!--[carouselConfig]="{maxWidth: '766px'}"-->
+               <!--[previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>B2 - (id=110) - carousel example with fixed maxWidth (766px), custom previews and open modal on click</h3>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="110" [images]="imagesRect"-->
+               <!--[carouselConfig]="{maxWidth: '766px', modalGalleryEnable: true}"-->
+               <!--[previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>B3 - (id=111) - carousel example with fixed maxWidth (766px), custom previews and keyboard navigation disabled</h3>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="111" [images]="imagesRect"-->
+               <!--[carouselConfig]="{maxWidth: '766px', keyboardEnable: false}"-->
+               <!--[previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<br>-->
 
-<h3>Examples with custom current image</h3>
-<section>
-  <h3>C1 - (id=112) - carousel example with invert swipe on touchscreen devices<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="112" [images]="imagesRect" [currentCarouselImageConfig]="{invertSwipe: true}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
-<section>
-  <h3>C2- (id=113) - carousel example with description<sup>*</sup></h3>
-  <p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>
-  <br>
-  <ks-carousel [id]="113" [images]="imagesRect" [currentCarouselImageConfig]="{description: {strategy: 2}}">
-    <div class="transcluded">This is my transcluded content!</div>
-  </ks-carousel>
-</section>
-<br>
+<!--<h3>Examples with custom current image</h3>-->
+<!--<section>-->
+  <!--<h3>C1 - (id=112) - carousel example with invert swipe on touchscreen devices<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="112" [images]="imagesRect" [currentCarouselImageConfig]="{invertSwipe: true}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+<!--<section>-->
+  <!--<h3>C2- (id=113) - carousel example with description<sup>*</sup></h3>-->
+  <!--<p><span class="red-text"><sup>*</sup>ATTENTION: this example doesn't work on IE 11</span>, because it doesn't support css property 'object-fit' (for more info <a href="https://caniuse.com/#search=object-fit">check here</a>)</p>-->
+  <!--<br>-->
+  <!--<ks-carousel [id]="113" [images]="imagesRect" [currentCarouselImageConfig]="{description: {strategy: 2}}">-->
+    <!--<div class="transcluded">This is my transcluded content!</div>-->
+  <!--</ks-carousel>-->
+<!--</section>-->
+<!--<br>-->
+
+
+
+
+
+
+<!-- what is this example? -->
 <!--<section>-->
   <!--<h3>C3- (id=114) - carousel example with custom description<sup>*</sup></h3>-->
   <!--<br>-->
