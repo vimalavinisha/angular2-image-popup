@@ -127,40 +127,32 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   end: number;
 
   /**
-   * Default preview's size object, also used in the template to apply default sizes to ksSize's directive.
-   */
-  defaultPreviewSize: Size = { height: '250px', width: 'auto' };
-
-  /**
-   * Default preview's config object
-   */
-  private defaultPreviewConfig: PreviewConfig = {
-    visible: true,
-    number: 4,
-    arrows: true,
-    clickable: true,
-    size: this.defaultPreviewSize
-  };
-
-  private margin = 0;
-  private scrolledWidth = 0;
-  private scrolledIndex = 0;
-  private isFirst = true;
-  private isLast = false;
-
-  /**
    * Method ´ngOnInit´ to build `configPreview` applying a default value and also to
    * init the `previews` array.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.configPreview = Object.assign({}, this.defaultPreviewConfig, this.previewConfig);
+    const defaultPreviewSize: Size = { height: '200px', width: 100 / 4 + '%' };
+    const defaultPreviewConfig: PreviewConfig = {
+      visible: true,
+      number: 4,
+      arrows: true,
+      clickable: true,
+      size: defaultPreviewSize
+    };
+
+    this.configPreview = Object.assign({}, defaultPreviewConfig, this.previewConfig);
 
     // if number is <= 0 reset to default
     if (this.configPreview && this.configPreview.number && this.configPreview.number <= 0) {
-      this.configPreview.number = this.defaultPreviewConfig.number;
+      this.configPreview.number = defaultPreviewConfig.number;
     }
+
+    // Init preview image width based on the number of previews in PreviewConfig
+    // Don't move this line above, because I need to be sure that both configPreview.number
+    // and configPreview.size are initialized
+    this.configPreview.size.width = 100 / this.configPreview.number + '%';
 
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);
@@ -276,236 +268,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
-      this.onPrev();
+      this.next();
     } else if (result === PREV) {
-      this.onNext();
+      this.previous();
     }
-  }
-
-  onPrev() {
-    this.isFirst = false;
-
-    if (this.isLast) {
-      return;
-    }
-
-    // calc values before to scroll
-    const containerWidth = this.getContainerWidth();
-    const numVisible = this.getNumOfVisibleImages();
-    const numHiddenLeft = this.getNumOfHiddenImgLeft();
-    const numHiddenRight = this.getNumOfHiddenImgRight();
-    const firstHiddenRightIndex = numHiddenLeft + numVisible;
-    const firstHiddenLeftIndex = numHiddenLeft; // numHiddenLeft - 1;
-    const isPartialImage = this.isPartialImage();
-
-    console.log('=================== getContainerWidth ', containerWidth);
-    // console.log('=================== numVisible ', numVisible);
-    // console.log('=================== numHiddenLeft ', numHiddenLeft);
-    // console.log('=================== numHiddenRight ', numHiddenRight);
-    // console.log('=================== firstHiddenRightIndex ', firstHiddenRightIndex);
-    // console.log('=================== firstHiddenLeftIndex ', firstHiddenLeftIndex);
-    //
-    // console.log('>>>>>>>>>>>>>>>> numpixels', (numVisible + numHiddenLeft + 1) * (this.slidableMenu.nativeElement.children[0].width + this.margin));
-    // console.log('>>>>>>>>>>>>>> slidableContainer', this.slidableContainer);
-    // console.log('>>>>>>>>>>>>>> slidableMenu.scrollWidth', this.slidableMenu.nativeElement.scrollWidth);
-
-    console.log('<<<<<<<<<<<<<<<<<<<<<< this.scrolledIndex ', this.scrolledIndex);
-
-    // calc width of all visible images
-    let visibleWidth = 0;
-    for (let i = this.scrolledIndex; i < this.scrolledIndex + numVisible; i++) {
-      console.log(`for ${i} width=${this.slidableMenu.nativeElement.children[i].width}`);
-      console.log(`for ${i}`, this.slidableMenu.nativeElement.children[i]);
-      visibleWidth += this.slidableMenu.nativeElement.children[i].width;
-      console.log(`for ${i} partialvisibleWidth=${visibleWidth}`);
-    }
-
-    console.log('_____________________-------- visibleWidth', visibleWidth);
-
-    const amountToScroll = this.slidableMenu.nativeElement.children[this.scrolledIndex].width + this.margin;
-    const partialImgWidth = this.slidableMenu.nativeElement.clientWidth - visibleWidth;
-    console.log('<<<<<<<<<<<<<<<<<<<<<< this.slidableMenu.nativeElement.clientWidth ', this.slidableMenu.nativeElement.clientWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< scrolledWidth before ', this.scrolledWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< partialImgWidth ', partialImgWidth);
-
-    this.scrolledIndex++;
-    this.scrolledWidth += amountToScroll;
-
-    console.log('<<<<<<<<<<<<<<<<<<<<<< amountToScroll ', amountToScroll);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< value containerWidth ', containerWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< value visibleWidth ', visibleWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< value this.scrolledWidth ', this.scrolledWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< value this.scrolledWidth+visibleWidth ', this.scrolledWidth + visibleWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< value container-this.scrolledWidth-visibleWidth ', containerWidth - (this.scrolledWidth + visibleWidth));
-    console.log(`<<<<<<<<<<<<<<<<<<<<<< value ${containerWidth - (this.scrolledWidth + visibleWidth)} <= ${amountToScroll}`);
-
-    // errorMargin to handle approximations. 2px for every image
-    const errorMargin = 3 * this.images.length;
-
-    if (containerWidth - (this.scrolledWidth + visibleWidth) + errorMargin < amountToScroll) {
-      console.log('last image!!');
-      // this.scrolledWidth = containerWidth;
-      this.scrolledWidth = this.scrolledWidth - amountToScroll + partialImgWidth;
-      this.isLast = true;
-    }
-
-    this.slidableMenu.nativeElement.style.left = -this.scrolledWidth + 'px';
-
-    console.log('<<<<<<<<<<<<<<<<<<<<<< this.scrolledIndex after', this.scrolledIndex);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< scrolledWidth after ', this.scrolledWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< isLast after', this.isLast);
-    console.log('--------------------------------------');
-
-    // if (firstHiddenRightIndex >= 6) {
-    //   console.log('>>>>>>>>>>>>>> currentLeft ', currentLeft);
-    //   console.log('>>>>>>>>>>>>>> width ', this.slidableMenu.nativeElement.children[firstHiddenRightIndex].width - this.margin);
-    //   console.log('>>>>>>>>>>>>>> last image', this.slidableMenu.nativeElement.children[firstHiddenRightIndex]);
-    //   this.slidableMenu.nativeElement.style.left = currentLeft - partialImgWidth + 'px';
-    //   this.scrolledWidth += partialImgWidth < 0 ? 0 : partialImgWidth;
-    //   console.log('onPrev this.slidableMenu.nativeElement.style.left', this.slidableMenu.nativeElement.style.left);
-    // } else {
-    //   this.slidableMenu.nativeElement.style.left = currentLeft - amountToScroll + 'px';
-    //   this.scrolledWidth += amountToScroll > containerWidth ? containerWidth : amountToScroll;
-    //   console.log('onPrev this.slidableMenu.nativeElement.style.left', this.slidableMenu.nativeElement.style.left);
-    // }
-  }
-
-  onNext() {
-    const currentLeft: number = +this.slidableMenu.nativeElement.style.left.replace('px', '');
-    console.log('onNext currentLeft', currentLeft);
-
-    // calc values before to scroll
-    const containerWidth = this.getContainerWidth();
-    const numVisible = this.getNumOfVisibleImages();
-    const numHiddenLeft = this.getNumOfHiddenImgLeft();
-    const numHiddenRight = this.getNumOfHiddenImgRight();
-    const firstHiddenRightIndex = numHiddenLeft + numVisible;
-    const firstHiddenLeftIndex = numHiddenLeft;
-    const isPartialImage = this.isPartialImage();
-
-    console.log('=================== getContainerWidth ', containerWidth);
-    console.log('=================== numVisible ', numVisible);
-    console.log('=================== numHiddenLeft ', numHiddenLeft);
-    console.log('=================== numHiddenRight ', numHiddenRight);
-    console.log('=================== firstHiddenLeftIndex ', firstHiddenLeftIndex);
-    console.log('=================== firstHiddenRightIndex ', firstHiddenRightIndex);
-    console.log('=================== isPartialImage ', isPartialImage);
-
-    // if (numHiddenLeft === 0) {
-    //   console.log('numHiddenLeft <= -1, returning');
-    //   return;
-    // }
-
-    // console.log('>>>>>>>>>>>>>>>> numpixels', (numVisible + numHiddenLeft + 1) * (this.slidableMenu.nativeElement.children[0].width + this.margin));
-    console.log('>>>>>>>>>>>>>> slidableContainer', this.slidableContainer);
-    console.log('>>>>>>>>>>>>>> slidableMenu.scrollWidth', this.slidableMenu.nativeElement.scrollWidth);
-
-    const amountToScroll = this.slidableMenu.nativeElement.children[firstHiddenLeftIndex].width + this.margin;
-    const partialImgWidth = this.slidableMenu.nativeElement.clientWidth - amountToScroll * numVisible;
-    console.log('<<<<<<<<<<<<<<<<<<<<<< amountToScroll ', amountToScroll);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< scrolledWidth before ', this.scrolledWidth);
-    console.log('<<<<<<<<<<<<<<<<<<<<<< partialImgWidth ', partialImgWidth);
-
-    if (firstHiddenLeftIndex === 0) {
-      console.log('>>>>>>>>>>>>>> currentLeft ', currentLeft);
-      console.log('>>>>>>>>>>>>>> width ', this.slidableMenu.nativeElement.children[firstHiddenLeftIndex].width - this.margin);
-      console.log('>>>>>>>>>>>>>> last image', this.slidableMenu.nativeElement.children[firstHiddenLeftIndex]);
-      this.slidableMenu.nativeElement.style.left = currentLeft + partialImgWidth + 'px';
-      this.scrolledWidth -= this.scrolledWidth <= 0 ? 0 : partialImgWidth;
-      console.log('onNext this.slidableMenu.nativeElement.style.left', this.slidableMenu.nativeElement.style.left);
-    } else {
-      this.slidableMenu.nativeElement.style.left = currentLeft + amountToScroll + 'px';
-      console.log('----------------> this.scrolledWidth', this.scrolledWidth);
-      console.log('----------------> amountToScroll', amountToScroll);
-      console.log('----------------> this.scrolledWidth <= amountToScroll', this.scrolledWidth <= amountToScroll);
-      this.scrolledWidth -= this.scrolledWidth <= amountToScroll ? 0 : amountToScroll;
-      console.log('onNext this.slidableMenu.nativeElement.style.left', this.slidableMenu.nativeElement.style.left);
-    }
-    console.log('<<<<<<<<<<<<<<<<<<<<<< scrolledWidth', this.scrolledWidth);
-  }
-
-  private getContainerWidth(): number {
-    let sumAllWidths = 0;
-    // I'm not using reduce or forEach, because .children returns an HTMLCollection, that it' isn't iterable
-    for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
-      sumAllWidths += this.slidableMenu.nativeElement.children[i].width + this.margin; // 2 + 2 = margins
-    }
-    return sumAllWidths;
-  }
-
-  private getNumOfHiddenImgLeft() {
-    // console.log(`getNumOfHiddenImgLeft - init - left=${this.slidableMenu.nativeElement.style.left}`);
-    const slidableLeft: number = Math.abs(<number>this.slidableMenu.nativeElement.style.left.replace('px', ''));
-    // slidableLeft += this.slidableMenu.nativeElement.children[0].width + 4;
-    // console.log(`getNumOfHiddenImgLeft - init - slidableLeft=${slidableLeft}`);
-    // console.log('this.slidableMenu.nativeElement.children.length', this.slidableMenu.nativeElement.children.length);
-    let tempSum = 0;
-    let count = 0;
-    if (slidableLeft === 0) {
-      return 0;
-    }
-    for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
-      // console.log(`getNumOfHiddenImgLeft - before - i=${i} count=${count} tempSum=${tempSum}`);
-      if (tempSum >= slidableLeft) {
-        // console.log(`getNumOfHiddenImgLeft - inside if - i=${i} count=${count} tempSum=${tempSum} slidableLeft=${slidableLeft}`);
-        return count;
-      }
-      count++;
-      tempSum += this.slidableMenu.nativeElement.children[i].width + this.margin; // 2 + 2 = margins
-      // console.log(`getNumOfHiddenImgLeft - after - i=${i} count=${count} tempSum=${tempSum}`);
-    }
-    // console.log(`getNumOfHiddenImgLeft - finish - count+1=${count + 1}`);
-    return count + 1;
-  }
-
-  private isPartialImage() {
-    const windowWidth = window.innerWidth;
-    const numVisible = this.getNumOfVisibleImages();
-    const numHiddenLeft = this.getNumOfHiddenImgLeft();
-    const numHiddenRight = this.getNumOfHiddenImgRight();
-    const firstHiddenRightIndex = numHiddenLeft + numVisible;
-    const firstHiddenLeftIndex = numHiddenLeft;
-    let temp = windowWidth;
-
-    // for (let i = firstHiddenLeftIndex; i < firstHiddenRightIndex + 1; i++) {
-    //   console.log('this.slidableMenu.nativeElement.children[i]', this.slidableMenu.nativeElement.children[i]);
-    //   console.log(`isPartialImage - iterating - i=${i} current width=${this.slidableMenu.nativeElement.children[i].width + 4}`);
-    //   temp -= this.slidableMenu.nativeElement.children[i].width + 4; // 2 + 2 = margins
-    // }
-
-    return temp > 0;
-  }
-
-  private getNumOfVisibleImages(): number {
-    let tempSum = 0;
-    const windowWidth = window.innerWidth;
-    // console.log('getNumOfVisibleImages - windowWidth', windowWidth);
-    let count = 0;
-    for (let i = 0; i < this.slidableMenu.nativeElement.children.length; i++) {
-      // console.log(`getNumOfVisibleImages - before - i={i} count=${count} tempSum=${tempSum}`);
-      count++;
-      tempSum += this.slidableMenu.nativeElement.children[i].width + this.margin; // 2 + 2 = margins
-      // console.log(`getNumOfVisibleImages - after - i={i} count=${count} tempSum=${tempSum}`);
-      if (tempSum > windowWidth) {
-        // console.log(`getNumOfVisibleImages - inside if before - i={i} count=${count} tempSum=${tempSum}`);
-        tempSum -= this.slidableMenu.nativeElement.children[i].width + this.margin;
-        count--;
-        // console.log(`getNumOfVisibleImages - inside if after - i={i} count=${count} tempSum=${tempSum}`);
-        break;
-      }
-      // console.log(`getNumOfVisibleImages - after the if - i={i} count=${count} tempSum=${tempSum}`);
-    }
-    // console.log('getNumOfVisibleImages - finish - count', count);
-    return count;
-  }
-
-  private getNumOfHiddenImgRight() {
-    // console.log('getNumOfHiddenImgRight - this.images.length ', this.images.length);
-    // console.log('getNumOfHiddenImgRight - this.getNumOfHiddenImgLeft() ', this.getNumOfHiddenImgLeft());
-    // console.log('getNumOfHiddenImgRight - this.getNumOfVisibleImages() ', this.getNumOfVisibleImages());
-    // console.log('getNumOfHiddenImgRight - max ', Math.max(this.images.length - this.getNumOfHiddenImgLeft() - this.getNumOfVisibleImages(), 0));
-    // console.log('getNumOfHiddenImgRight - min ', Math.min(Math.max(this.images.length - this.getNumOfHiddenImgLeft() - this.getNumOfVisibleImages(), 0), this.images.length));
-    return Math.min(Math.max(this.images.length - this.getNumOfHiddenImgLeft() - this.getNumOfVisibleImages(), 0), this.images.length);
   }
 
   /**

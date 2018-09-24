@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 
 import { AccessibleComponent } from '../accessible.component';
 
@@ -43,7 +43,7 @@ import { getIndex } from '../../utils/image.util';
   templateUrl: 'dots.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DotsComponent extends AccessibleComponent implements OnInit {
+export class DotsComponent extends AccessibleComponent implements OnInit, OnChanges {
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -88,6 +88,17 @@ export class DotsComponent extends AccessibleComponent implements OnInit {
   ngOnInit() {
     const defaultConfig: DotsConfig = { visible: true };
     this.configDots = Object.assign(defaultConfig, this.dotsConfig);
+  }
+
+  /**
+   * Method ´ngOnChanges´ to change `configDots` if the input dotsConfig is changed.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    const dotsConfigChanges: SimpleChange = changes.dotsConfig;
+    if (dotsConfigChanges && dotsConfigChanges.currentValue !== dotsConfigChanges.previousValue) {
+      this.configDots = dotsConfigChanges.currentValue;
+    }
   }
 
   /**

@@ -8,7 +8,7 @@
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
        [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
-      <div class="inside {{isFirstImage && !infinite ? 'empty-arrow-image' : 'left-arrow-image'}}"
+      <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
            [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>
@@ -37,7 +37,7 @@
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
        [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
-      <div class="inside {{isLastImage && !infinite ? 'empty-arrow-image' : 'right-arrow-image'}}"
+      <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
            [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>

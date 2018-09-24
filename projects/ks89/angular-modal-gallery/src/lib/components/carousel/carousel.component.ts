@@ -232,6 +232,19 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    const configDotsChange: SimpleChange = changes.dotsConfig;
+    if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
+      this.configDots = configDotsChange.currentValue;
+    }
+    const carouselConfigChange: SimpleChange = changes.carouselConfig;
+    if (carouselConfigChange && carouselConfigChange.currentValue !== carouselConfigChange.previousValue) {
+      this.configCarousel = carouselConfigChange.currentValue;
+    }
+    const playConfigChange: SimpleChange = changes.playConfig;
+    if (playConfigChange && playConfigChange.currentValue !== playConfigChange.previousValue) {
+      this.configPlay = playConfigChange.currentValue;
+    }
+
     const autoPlay: SimpleChange = changes.autoPlay;
     if (!autoPlay) {
       return;

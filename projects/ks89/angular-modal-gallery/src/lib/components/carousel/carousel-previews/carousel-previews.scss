@@ -23,12 +23,10 @@
 // all svgs are converted to base 64 with this website http://b64.io/
 
 $container-margin-bottom: 0;
-$preview-image-fade-in-time: .8s;
-$preview-image-side-margin: 0px; // originnaly was 2px
+$preview-image-side-margin: 2px;
 $preview-image-top-margin: 3px;
 $preview-image-bottom-margin: 3px;
 $preview-container-fade-in-time: .8s;
-$preview-image-height: 150px;
 
 $nav-color: #919191;
 $nav-animation-time: 1s;
@@ -39,7 +37,7 @@ $nav-side-margin: 10px;
   position: relative;
   margin-top: $preview-image-top-margin;
   margin-bottom: $preview-image-bottom-margin;
-  //width: 100%; // issue with arrows
+  width: 100%;
 }
 
 .previews-container {
@@ -50,31 +48,21 @@ $nav-side-margin: 10px;
   justify-content: center;
   margin-bottom: $container-margin-bottom;
 
-  > .preview-outer-container {
-    overflow-x: hidden;
+  > .preview-inner-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
 
-    > .preview-inner-container {
-      position: relative;
-      transition: left .5s;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      width: 766px;
-      height: 100px;
-      left: 0;
+    > .preview-image {
+      cursor: pointer;
+      margin-left: $preview-image-side-margin;
+      margin-right: $preview-image-side-margin;
+      object-fit: cover;
 
-      > .preview-image {
-        cursor: pointer;
-        margin-left: $preview-image-side-margin;
-        margin-right: $preview-image-side-margin;
-        height: $preview-image-height;
-
-        &.unclickable {
-          cursor: not-allowed;
-        }
+      &.unclickable {
+        cursor: not-allowed;
       }
     }
   }
