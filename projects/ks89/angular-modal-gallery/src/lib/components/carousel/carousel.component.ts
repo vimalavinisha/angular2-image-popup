@@ -232,32 +232,30 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // handle changes of dotsConfig
     const configDotsChange: SimpleChange = changes.dotsConfig;
     if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
       this.configDots = configDotsChange.currentValue;
     }
+    // handle changes of carouselConfig
     const carouselConfigChange: SimpleChange = changes.carouselConfig;
     if (carouselConfigChange && carouselConfigChange.currentValue !== carouselConfigChange.previousValue) {
       this.configCarousel = carouselConfigChange.currentValue;
     }
+    // handle changes of playConfig starting/stopping the carousel accordingly
     const playConfigChange: SimpleChange = changes.playConfig;
-    if (playConfigChange && playConfigChange.currentValue !== playConfigChange.previousValue) {
-      this.configPlay = playConfigChange.currentValue;
-    }
-
-    const autoPlay: SimpleChange = changes.autoPlay;
-    if (!autoPlay) {
-      return;
-    }
-
-    const prevAutoPlay: boolean = autoPlay.previousValue;
-    const currentAutoPlay: boolean = autoPlay.currentValue;
-
-    if (prevAutoPlay !== currentAutoPlay) {
-      if (currentAutoPlay && !autoPlay.isFirstChange()) {
-        this._start$.next();
-      } else {
-        this.stopCarousel();
+    if (playConfigChange) {
+      const playConfigChangePrev: PlayConfig = playConfigChange.previousValue;
+      const playConfigChangeCurr: PlayConfig = playConfigChange.currentValue;
+      if (playConfigChangePrev !== playConfigChangeCurr) {
+        this.configPlay = playConfigChange.currentValue;
+        // if autoplay is enabled, and this is not the
+        // first change (to prevent multiple starts at the beginning)
+        if (playConfigChangeCurr.autoPlay && !playConfigChange.isFirstChange()) {
+          this._start$.next();
+        } else {
+          this.stopCarousel();
+        }
       }
     }
   }
