@@ -30,6 +30,7 @@ import { DirectionDirective } from './direction.directive';
 import { ATagBgImageDirective } from './a-tag-bg-image.directive';
 import { DescriptionDirective } from './description.directive';
 import { ScrollHorizontalDirective } from './scroll-horizontal.directive';
+import { MarginDirective } from './margin.directive';
 
 /**
  * Array of all directives.
@@ -42,5 +43,6 @@ export const DIRECTIVES = [
   DirectionDirective,
   ATagBgImageDirective,
   DescriptionDirective,
-  ScrollHorizontalDirective
+  ScrollHorizontalDirective,
+  MarginDirective
 ];

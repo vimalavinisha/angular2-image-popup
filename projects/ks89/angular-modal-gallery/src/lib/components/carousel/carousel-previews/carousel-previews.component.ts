@@ -64,6 +64,9 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   @ViewChild('slidableContainer')
   slidableContainer: ElementRef;
 
+  @HostBinding('style.width')
+  hostWidth = '100%';
+
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel previews`;
   /**
@@ -153,6 +156,12 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     // Don't move this line above, because I need to be sure that both configPreview.number
     // and configPreview.size are initialized
     this.configPreview.size.width = 100 / this.configPreview.number + '%';
+
+    // change the width of this component if there is a specified width !== 100% in carouselConfig
+    if (this.carouselConfig && this.carouselConfig.maxWidth !== '100%') {
+      console.log('changing hostWidth ', this.carouselConfig.maxWidth);
+      this.hostWidth = this.carouselConfig.maxWidth;
+    }
 
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);

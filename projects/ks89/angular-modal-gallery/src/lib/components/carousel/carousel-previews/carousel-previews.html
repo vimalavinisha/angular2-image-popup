@@ -1,6 +1,8 @@
 <nav class="previews-container"
      [attr.aria-label]="accessibilityConfig?.carouselPreviewsContainerAriaLabel"
-     [title]="accessibilityConfig?.carouselPreviewsContainerTitle">
+     [title]="accessibilityConfig?.carouselPreviewsContainerTitle"
+     ksSize [sizeConfig]="{width:  carouselConfig?.maxWidth ? carouselConfig.maxWidth : '100%',
+                           height: configPreview?.size?.height}">
 
   <ng-container *ngIf="configPreview?.visible">
     <a class="nav-left"
@@ -13,7 +15,7 @@
     </a>
 
     <div class="preview-inner-container"
-         ksSize [sizeConfig]="{width: carouselConfig && carouselConfig.maxWidth ? carouselConfig.maxWidth : '100%',
+         ksSize [sizeConfig]="{width:  carouselConfig?.maxWidth ? carouselConfig.maxWidth : '100%',
                                height: configPreview?.size?.height}">
       <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
         <img *ngIf="preview?.modal?.img"
@@ -21,6 +23,8 @@
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
              ksSize [sizeConfig]="{width: configPreview?.size?.width,
                                    height: configPreview?.size?.height}"
+             ksMargin [marginLeft]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
+                      [marginRight]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
              [title]="preview.modal.title ? preview.modal.title : ''"
              alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
