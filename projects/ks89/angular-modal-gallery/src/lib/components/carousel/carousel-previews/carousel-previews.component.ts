@@ -61,6 +61,7 @@ import { getIndex } from '../../../utils/image.util';
 export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
   @ViewChild('slidableMenu')
   slidableMenu: ElementRef;
+
   @ViewChild('slidableContainer')
   slidableContainer: ElementRef;
 
@@ -69,6 +70,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
 
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel previews`;
+
   /**
    * Object of type `CarouselConfig` to init CarouselComponent's features.
    * For instance, it contains parameters to change the style, how it navigates and so on.
@@ -159,7 +161,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
 
     // change the width of this component if there is a specified width !== 100% in carouselConfig
     if (this.carouselConfig && this.carouselConfig.maxWidth !== '100%') {
-      console.log('changing hostWidth ', this.carouselConfig.maxWidth);
       this.hostWidth = this.carouselConfig.maxWidth;
     }
 

@@ -23,7 +23,6 @@
 // all svgs are converted to base 64 with this website http://b64.io/
 
 $container-margin-bottom: 0;
-$preview-image-side-margin: 2px;
 $preview-image-top-margin: 3px;
 $preview-image-bottom-margin: 3px;
 $preview-container-fade-in-time: .8s;
@@ -57,8 +56,6 @@ $nav-side-margin: 10px;
 
     > .preview-image {
       cursor: pointer;
-      margin-left: $preview-image-side-margin;
-      margin-right: $preview-image-side-margin;
       object-fit: cover;
 
       &.unclickable {

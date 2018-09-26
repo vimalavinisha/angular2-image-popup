@@ -66,7 +66,6 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/current-carousel-image-config.interface';
-import { IdValidatorService } from '../../services/id-validator.service';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -221,13 +220,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.nextImage();
   }
 
-  constructor(
-    @Inject(PLATFORM_ID) private _platformId,
-    private _ngZone: NgZone,
-    private galleryService: GalleryService,
-    private ref: ChangeDetectorRef,
-    private idValidatorService: IdValidatorService
-  ) {
+  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private galleryService: GalleryService, private ref: ChangeDetectorRef) {
     super();
   }
 
