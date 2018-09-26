@@ -45,12 +45,12 @@ export class MarginDirective implements OnInit, OnChanges {
    * String to set the margin of an element.
    */
   @Input()
-  marginUp: string;
+  marginTop: string;
   /**
    * String to set the margin of an element.
    */
   @Input()
-  marginDown: string;
+  marginBottom: string;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -82,11 +82,11 @@ export class MarginDirective implements OnInit, OnChanges {
     if (this.marginRight) {
       this.renderer.setStyle(this.el.nativeElement, 'margin-right', this.marginRight);
     }
-    if (this.marginUp) {
-      this.renderer.setStyle(this.el.nativeElement, 'margin-up', this.marginUp);
+    if (this.marginTop) {
+      this.renderer.setStyle(this.el.nativeElement, 'margin-top', this.marginTop);
     }
-    if (this.marginDown) {
-      this.renderer.setStyle(this.el.nativeElement, 'margin-down', this.marginDown);
+    if (this.marginBottom) {
+      this.renderer.setStyle(this.el.nativeElement, 'margin-bottom', this.marginBottom);
     }
   }
 }
