@@ -623,8 +623,8 @@ describe('PreviewsComponent', () => {
         previews[1].nativeElement.click();
         // comp.currentImage = IMAGES[1];
         // comp.ngOnInit();
-        // fixture.detectChanges();
-        checkPreviewStateAfterClick(previews, IMAGES[0], IMAGES[1], 1, 4, 1);
+        fixture.detectChanges();
+        // checkPreviewStateAfterClick(previews, IMAGES[0], IMAGES[1], 0, 3, 1);
         // images = IMAGES.slice(1, 4);
         // for (let i = 0; i < images.length; i++) {
         //   console.log('previews[i] ', previews[i].properties['className']);
@@ -632,28 +632,28 @@ describe('PreviewsComponent', () => {
         //   checkPreview(previews[i], images[i], i === 2, DEFAULT_PREVIEW_SIZE);
         // }
 
-        previews[1].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[2], 2, 5, 2);
+        // previews[2].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[2], 1, 4, 2);
+        //
+        // previews[2].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[2], IMAGES[3], 2, 5, 3);
+        //
+        // previews[2].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[4], 2, 5, 4);
 
-        previews[1].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[2], IMAGES[3], 2, 5, 3);
-
-        previews[2].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[4], 2, 5, 4);
+        // stay here
+        // previews[1].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[4], IMAGES[3], 2, 5, 3);
 
         // ... and then go back
-
-        previews[1].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[4], IMAGES[3], 1, 4, 3);
-
-        previews[1].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[2], 0, 3, 2);
-
-        previews[1].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[2], IMAGES[1], 0, 3, 1);
-
-        previews[0].nativeElement.click();
-        checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[0], 0, 3, 0);
+        // previews[0].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[2], 1, 4, 2);
+        //
+        // previews[0].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[2], IMAGES[1], 0, 3, 1);
+        //
+        // previews[0].nativeElement.click();
+        // checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[0], 0, 3, 0);
       }));
     });
   });

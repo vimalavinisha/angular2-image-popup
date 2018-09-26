@@ -44,6 +44,7 @@ import { AdvancedLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } 
 import { getIndex } from '../../utils/image.util';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { GalleryService } from '../../services/gallery.service';
+import { IdValidatorService } from '../../services/id-validator.service';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -127,6 +128,10 @@ function initTestBed() {
         {
           provide: KEYBOARD_CONFIGURATION,
           useValue: {}
+        },
+        {
+          provide: IdValidatorService,
+          useClass: IdValidatorService
         }
       ]
     }
@@ -733,8 +738,7 @@ describe('ModalGalleryComponent', () => {
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
 
-      const error = new Error(`'[id]="a number >= 0"' is a mandatory input from 6.0.0 in angular-modal-gallery.` +
-        `If you are using multiple instances of this library, please be sure to use different ids`);
+      const error = new Error(`You must provide a [id]="unique number here" to the gallery/carousel in your template`);
 
       expect(() => comp.ngOnInit()).toThrow(error);
     });

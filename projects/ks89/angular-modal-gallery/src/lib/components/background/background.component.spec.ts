@@ -56,7 +56,23 @@ const DEFAULT_ACCESSIBILITY: AccessibilityConfig = {
   previewScrollPrevAriaLabel: 'Scroll previous previews',
   previewScrollPrevTitle: 'Scroll previous previews',
   previewScrollNextAriaLabel: 'Scroll next previews',
-  previewScrollNextTitle: 'Scroll next previews'
+  previewScrollNextTitle: 'Scroll next previews',
+
+  carouselContainerAriaLabel: 'Current image and navigation',
+  carouselContainerTitle: '',
+  carouselPrevImageAriaLabel: 'Previous image',
+  carouselPrevImageTitle: 'Previous image',
+  carouselNextImageAriaLabel: 'Next image',
+  carouselNextImageTitle: 'Next image',
+  carouselDotsContainerAriaLabel: 'Image navigation dots',
+  carouselDotsContainerTitle: '',
+  carouselDotAriaLabel: 'Show image number',
+  carouselPreviewsContainerAriaLabel: 'Image previews',
+  carouselPreviewsContainerTitle: '',
+  carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
+  carouselPreviewScrollPrevTitle: 'Scroll previous previews',
+  carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
+  carouselPreviewScrollNextTitle: 'Scroll next previews'
 };
 
 function initTestBed() {
