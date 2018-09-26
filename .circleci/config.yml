@@ -29,7 +29,6 @@ jobs:
           paths:
             - "node_modules"
             - "examples/angular-cli/node_modules"
-            - "examples/angular-cli-5/node_modules"
             - "examples/angular-cli-material/node_modules"
             - "examples/universal/node_modules"
             - "examples/systemjs/node_modules"
@@ -54,9 +53,6 @@ jobs:
           name: run-install-demo-angular-cli
           command: cd examples/angular-cli && npm install
       - run:
-          name: run-install-demo-angular-cli-5
-          command: cd examples/angular-cli-5 && npm install
-      - run:
           name: run-install-demo-angular-cli-material
           command: cd examples/angular-cli-material && npm install
       - run:
@@ -80,13 +76,6 @@ jobs:
       - run:
           name: run-build-prod-aot-demo-angular-cli
           command: cd examples/angular-cli && npm run build:prod
-      # angular-cli
-      - run:
-          name: run-build-dev-demo-angular-cli-5
-          command: cd examples/angular-cli-5 && npm run build:dev
-      - run:
-          name: run-build-prod-aot-demo-angular-cli-5
-          command: cd examples/angular-cli-5 && npm run build:prod
       # angular-cli-material
       - run:
           name: run-build-dev-demo-angular-cli-material

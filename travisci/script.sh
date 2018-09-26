@@ -10,9 +10,6 @@ cd ../..
 cd examples/angular-cli
 npm install
 cd ../..
-cd examples/angular-cli-5
-npm install
-cd ../..
 cd examples/angular-cli-material
 npm install
 cd ../..
@@ -29,13 +26,6 @@ npm run build:main:prod
 
 echo "building official angular-cli example on $TRAVIS_OS_NAME"
 cd examples/angular-cli
-npm run build:dev
-npm run build:prod
-cd ../..
-
-
-echo "building official angular-cli-5 example on $TRAVIS_OS_NAME"
-cd examples/angular-cli-5
 npm run build:dev
 npm run build:prod
 cd ../..
