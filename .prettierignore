@@ -15,15 +15,12 @@
 **/node_modules/
 /reports/
 
-/examples/universal/dist/
-/examples/webpack/.awcache/
-/examples/webpack/aot/
-/examples/webpack/coverage/
-/examples/angular-cli-material/coverage/
-/examples/angular-cli-material/dist/
 /examples/angular-cli/dist/
-
+/examples/angular-cli-material/dist/
+/examples/universal/dist/
 /examples/universal/server.ts
+/examples/systemjs/app/*.js
+/examples/systemjs/app/*.js.map
 
 **/*.spec.ts
 **/e2e/
