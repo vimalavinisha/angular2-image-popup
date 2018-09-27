@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017-2018 Stefano Cappa (Ks89)
+ Copyright (c) 2017 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,15 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent, DialogOverviewExampleDialog } from './app.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
+import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
@@ -45,15 +50,13 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 
 import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatGridListModule, MatInputModule } from '@angular/material';
 
-import { AppComponent, DialogOverviewExampleDialog } from './app.component';
-
 @NgModule({
-  declarations: [AppComponent, DialogOverviewExampleDialog],
+  declarations: [AppComponent, DialogOverviewExampleDialog, CarouselComponent, PlainGalleryComponent, ModalGalleryComponent],
   imports: [
-    BrowserAnimationsModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
 
     MatButtonModule,

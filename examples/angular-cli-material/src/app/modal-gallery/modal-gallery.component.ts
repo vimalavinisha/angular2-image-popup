@@ -23,11 +23,11 @@
  */
 
 import { Component } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {
   AccessibilityConfig,
   Action,
-  AdvancedLayout,
   ButtonEvent,
   ButtonsConfig,
   ButtonsStrategy,
@@ -35,66 +35,29 @@ import {
   Description,
   DescriptionStrategy,
   DotsConfig,
-  GridLayout,
   GalleryService,
   Image,
   ImageModalEvent,
-  LineLayout,
-  PlainGalleryConfig,
-  PlainGalleryStrategy,
-  PreviewConfig
+  KS_DEFAULT_BTN_CLOSE,
+  KS_DEFAULT_BTN_DELETE,
+  KS_DEFAULT_BTN_DOWNLOAD,
+  KS_DEFAULT_BTN_EXTURL,
+  KS_DEFAULT_BTN_FULL_SCREEN,
+  KS_DEFAULT_BTN_ROTATE,
+  PreviewConfig,
+  LoadingConfig,
+  LoadingType,
+  CurrentImageConfig
 } from '@ks89/angular-modal-gallery';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'ks-home-page',
-  templateUrl: 'home.html',
-  styleUrls: ['home.scss']
+  selector: 'app-modal-gallery-page',
+  templateUrl: './modal-gallery.component.html',
+  styleUrls: ['./modal-gallery.component.scss']
 })
-export class HomeComponent {
+export class ModalGalleryComponent {
   imageIndex = 1;
   galleryId = 1;
-
-  customPlainGalleryRowConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-
-  customPlainGalleryColumnConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-
-  customPlainGalleryRowDescConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-
-  plainGalleryRow: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({ width: '80px', height: '80px' }, { length: 2, wrap: true }, 'flex-start')
-  };
-  plainGalleryRowSpaceAround: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({ width: '50px', height: '50px' }, { length: 2, wrap: true }, 'space-around')
-  };
-  plainGalleryRowATags: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.ROW,
-    layout: new LineLayout({ width: '95px', height: '63px' }, { length: 4, wrap: true }, 'flex-start'),
-    // when advanced is defined, additionalBackground: '50% 50%/cover' will be used by default.
-    // I added this here, to be more explicit.
-    advanced: { aTags: true, additionalBackground: '50% 50%/cover' }
-  };
-
-  plainGalleryColumn: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.COLUMN,
-    layout: new LineLayout({ width: '50px', height: '50px' }, { length: 3, wrap: true }, 'flex-start')
-  };
-
-  plainGalleryGrid: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.GRID,
-    layout: new GridLayout({ width: '80px', height: '80px' }, { length: 3, wrap: true })
-  };
 
   images: Image[] = [
     new Image(0, {
@@ -324,8 +287,36 @@ export class HomeComponent {
     )
   ];
 
+  imagesRotated: Image[] = [
+    new Image(0, {
+      img: '../assets/images/gallery/pexels-photo-135230.png',
+      description: 'Description 1',
+      angle: 180
+    }),
+    new Image(1, {
+      img: '../assets/images/gallery/pexels-photo-547115.jpeg',
+      angle: 90
+    }),
+    new Image(2, {
+      img: '../assets/images/gallery/pexels-photo-556664.jpeg',
+      description: 'Description 3',
+      angle: 270
+    }),
+    new Image(3, {
+      img: '../assets/images/gallery/pexels-photo-787594.jpeg',
+      description: 'Description 4',
+      angle: 0
+    }),
+    new Image(4, {
+      img: '../assets/images/gallery/pexels-photo-803105.jpeg',
+      angle: 90
+    })
+  ];
+
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
+
+  imagesInfiniteAutoAdd: Image[] = [this.images[0]];
 
   dotsConfig: DotsConfig = {
     visible: false
@@ -406,6 +397,18 @@ export class HomeComponent {
     visible: true,
     strategy: ButtonsStrategy.FULL
   };
+  buttonsConfigCustom: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      KS_DEFAULT_BTN_ROTATE,
+      KS_DEFAULT_BTN_FULL_SCREEN,
+      KS_DEFAULT_BTN_DELETE,
+      KS_DEFAULT_BTN_EXTURL,
+      KS_DEFAULT_BTN_DOWNLOAD,
+      KS_DEFAULT_BTN_CLOSE
+    ]
+  };
 
   // default buttons but extUrl will open the link in a new tab instead of the current one
   // this requires to specify all buttons manually (also if they are not really custom)
@@ -469,6 +472,11 @@ export class HomeComponent {
     number: 1
   };
 
+  previewConfigFiveImages: PreviewConfig = {
+    visible: true,
+    number: 5
+  };
+
   previewConfigNoArrows: PreviewConfig = {
     visible: true,
     arrows: false
@@ -487,6 +495,11 @@ export class HomeComponent {
   previewConfigCustomSize: PreviewConfig = {
     visible: true,
     size: { width: '30px', height: '30px' }
+  };
+
+  currentImageConfigExperimental = <CurrentImageConfig>{
+    loadingConfig: <LoadingConfig>{ enable: true, type: LoadingType.STANDARD },
+    description: <Description>{ strategy: DescriptionStrategy.ALWAYS_VISIBLE }
   };
 
   accessibilityConfig: AccessibilityConfig = {
@@ -518,28 +531,31 @@ export class HomeComponent {
     previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
     previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
     previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
-    previewScrollNextTitle: 'CUSTOM Scroll next previews'
+    previewScrollNextTitle: 'CUSTOM Scroll next previews',
+
+    carouselContainerAriaLabel: 'Current image and navigation',
+    carouselContainerTitle: '',
+    carouselPrevImageAriaLabel: 'Previous image',
+    carouselPrevImageTitle: 'Previous image',
+    carouselNextImageAriaLabel: 'Next image',
+    carouselNextImageTitle: 'Next image',
+    carouselDotsContainerAriaLabel: 'Image navigation dots',
+    carouselDotsContainerTitle: '',
+    carouselDotAriaLabel: 'Navigate to image number',
+    carouselPreviewsContainerAriaLabel: 'Image previews',
+    carouselPreviewsContainerTitle: '',
+    carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
+    carouselPreviewScrollPrevTitle: 'Scroll previous previews',
+    carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
+    carouselPreviewScrollNextTitle: 'Scroll next previews'
   };
+
+  private count = 0;
 
   constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
 
-  openImageModalRow(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
-    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-
-  openImageModalColumn(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
-    const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
-  }
-
-  openImageModalRowDescription(image: Image) {
-    console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
-    const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
-  }
+  // this variable is used only for example of auto navigation
+  isShownAutoNavigate = false;
 
   onButtonBeforeHook(event: ButtonEvent) {
     console.log('onButtonBeforeHook ', event);
@@ -626,10 +642,6 @@ export class HomeComponent {
   onCloseImageModal(event: ImageModalEvent) {
     console.log('onClose action: ' + Action[event.action]);
     console.log('onClose result:' + event.result);
-    // reset custom plain gallery config
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(-1, true) });
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(-1, true) });
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(-1, true) });
   }
 
   onShowAutoCloseExample(event: ImageModalEvent, galleryId: number) {
@@ -639,6 +651,32 @@ export class HomeComponent {
     setTimeout(() => {
       console.log('setTimeout end - closing gallery with id=' + galleryId);
       this.galleryService.closeGallery(galleryId);
+    }, 3000);
+  }
+
+  onShowAutoNavigateExample(event: ImageModalEvent, galleryId: number) {
+    if (this.isShownAutoNavigate) {
+      // this prevent multiple triggers of this method
+      // this is only an example and shouldn't be done in this way in a real app
+      return;
+    }
+    console.log(`onShowAutoNavigateExample with id=${galleryId} action: ` + Action[event.action]);
+    console.log('onShowAutoNavigateExample result:' + event.result);
+    console.log('Starting timeout of 3 second to navigate to image 0 and then to the next every second automatically');
+    setTimeout(() => {
+      this.isShownAutoNavigate = true;
+      console.log('setTimeout end - navigating to index 0, gallery with id=' + galleryId);
+      this.galleryService.navigateGallery(galleryId, 0);
+
+      setTimeout(() => {
+        console.log('setTimeout end - navigating to index 1, gallery with id=' + galleryId);
+        this.galleryService.navigateGallery(galleryId, 1);
+
+        setTimeout(() => {
+          console.log('setTimeout end - navigating to index 2 (finished :) !), gallery with id=' + galleryId);
+          this.galleryService.navigateGallery(galleryId, 2);
+        }, 3000);
+      }, 3000);
     }, 3000);
   }
 
@@ -653,11 +691,22 @@ export class HomeComponent {
     this.galleryService.openGallery(id, index);
   }
 
-  trackById(index: number, item: Image) {
-    return item.id;
+  autoAddImage() {
+    if (this.count !== 0) {
+      return;
+    }
+    const interval = setInterval(() => {
+      const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+      const newImage: Image = new Image(this.imagesInfiniteAutoAdd.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
+      this.imagesInfiniteAutoAdd = [...this.imagesInfiniteAutoAdd, newImage];
+      this.count++;
+      if (this.count === 4) {
+        clearInterval(interval);
+      }
+    }, 2000);
   }
 
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
+  trackById(index: number, item: Image) {
+    return item.id;
   }
 }

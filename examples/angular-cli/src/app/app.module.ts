@@ -23,8 +23,10 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -50,10 +52,12 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
   declarations: [AppComponent, CarouselComponent, PlainGalleryComponent, ModalGalleryComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
 
     FormsModule,
-    GalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }) // <-------------------------------------------- angular-modal-gallery module import
+    HttpClientModule,
+    GalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
   ],
   providers: [],
   bootstrap: [AppComponent]

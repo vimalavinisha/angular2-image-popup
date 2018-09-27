@@ -4,7 +4,7 @@
  Copyright (c) 2017-2018 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
+ of this software and associated documentation files (the 'Software'), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
@@ -13,7 +13,7 @@
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -35,15 +35,27 @@
   };
   // packages tells the System loader how to load when no filename and/or no extension
   let packages = {
-    app: { main: 'main' },
+    app: {
+      main: 'main',
+      // The only modules that will contain template or styles URLs are the
+      // component directives. And, by convention, these files will all end
+      // with the suffix, ".component.js". The rest of the modules can be
+      // loaded without any in-browser translation.
+      meta: {
+        '*.component.js': {
+          loader: 'system.component-loader.js'
+        }
+      }
+    },
     rxjs: { main: 'Rx' },
     hammerjs: { main: 'hammer.js' },
     mousetrap: { main: 'mousetrap.js' },
-    '@fortawesome/fontawesome': { main: 'index.js', defaultExtension: 'js' },
-    '@fortawesome/fontawesome-free-solid': { main: 'index.js', defaultExtension: 'js' },
+    '@fortawesome/fontawesome-svg-core': { main: 'index.js', defaultExtension: 'js' },
+    '@fortawesome/free-solid-svg-icons': { main: 'index.js', defaultExtension: 'js' },
     '@ks89/angular-modal-gallery': { main: 'bundles/ks89-angular-modal-gallery.umd.min.js', defaultExtension: 'js' }
   };
-  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic'];
+
+  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'http', 'platform-browser', 'platform-browser-dynamic', 'router'];
 
   // Individual files (~300 requests):
   function packIndex(pkgName) {

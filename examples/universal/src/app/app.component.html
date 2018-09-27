@@ -4,40 +4,9 @@
   <a class="menu-item" routerLink="/carousel"><h2><u>carousel examples</u></h2></a>
   <a class="menu-item" routerLink="/modal"><h2><u>modal-gallery examples</u></h2></a>
   <a class="menu-item" routerLink="/plain"><h2><u>plain-gallery examples</u></h2></a>
+  <a class="menu-item" routerLink="/lazy"><h2><u>lazy module route</u></h2></a>
 </nav>
 <hr>
-
-<br>
-<br>
-<br>
-<hr>
-<h2>Example of Angular Material</h2>
-<mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile
-    *ngFor="let tile of tiles"
-    [colspan]="tile.cols"
-    [rowspan]="tile.rows"
-    [style.background]="tile.color">
-    {{tile.text}}
-  </mat-grid-tile>
-</mat-grid-list>
-<ol>
-  <li>
-    <mat-form-field>
-      <input matInput [(ngModel)]="name" placeholder="What's your name?">
-    </mat-form-field>
-  </li>
-  <li>
-    <button mat-raised-button (click)="openDialog()">Pick one</button>
-  </li>
-  <li *ngIf="animal">
-    You chose: <i>{{animal}}</i>
-  </li>
-</ol>
-<hr>
-<br>
-<br>
-<br>
 
 <router-outlet></router-outlet>
 
@@ -69,7 +38,7 @@
     </li>
     <li>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from
       <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
-        href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+      href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
     </li>
     <li>Icons made by <a href="https://www.flaticon.com/authors/dario-ferrando" title="Dario Ferrando">Dario Ferrando</a> from
       <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
