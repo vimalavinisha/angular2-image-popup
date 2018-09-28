@@ -13,7 +13,7 @@ import { ROUTES } from './static.paths';
 enableProdMode();
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
 
 const BROWSER_FOLDER = join(process.cwd(), 'browser');
 
@@ -24,7 +24,7 @@ let previousRender = Promise.resolve();
 
 // Iterate each route path
 ROUTES.forEach(route => {
-  var fullPath = join(BROWSER_FOLDER, route);
+  const fullPath = join(BROWSER_FOLDER, route);
 
   // Make sure the directory structure is there
   if (!existsSync(fullPath)) {
