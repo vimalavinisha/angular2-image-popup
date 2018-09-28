@@ -1,13 +1,18 @@
 # 7.0.0-alpha.1
 ### Features
-- add (plain) carousel
+- add (plain) carousel with previews
 - new method in GalleryService called 'navigateGallery'
+- gallery ids must be unique across the whole application **(BREAKING CHANGE)**
+- requires rxjs >= 6 **(BREAKING CHANGE)**
+- requires angular >= 6 **(BREAKING CHANGE)**
+- change preview's sliding behaviour (simple and cleaner then before, taken from carousel's previews) **(BREAKING CHANGE)**
 
 ### Internal library changes
-- migrate to the official ng lib features in angular-cli >= 6
+- migrate to the official ng lib features in angular-cli >= 6.2
 
 ### Demos
-- update all examples
+- update main example with multiple pages
+- upgrade all examples with multiple pages
 
 ### Documentations
 - new documentation website https://github.com/Ks89/angular-modal-gallery-2018-v7.github.io
