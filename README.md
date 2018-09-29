@@ -15,17 +15,11 @@
 <br>
 <br>
 
-:rocket: **@ks89/angular-modal-gallery 7.0.0 WORK IN PROGRESS** :rocket:
-It will be released this autumn with some great improvements like carousel and new features. Also I want to support Angular 7 Ivy Renderer (aka Renderer3)
-For more info, watch this issue: [7.0.0 major release](https://github.com/Ks89/angular-modal-gallery/issues/144)
-
-<br><br><br>
-
 # @ks89/angular-modal-gallery
 
 <br>
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/master/amg.png?raw=true)
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/amg.png?raw=true)
 
 <br>
 
@@ -41,18 +35,40 @@ In fact, It's composed by 3 main parts
 **@ks89/angular-modal-gallery** supports also **keyboard shortcuts**, **swipe gestures** and **mouse events**.
 
 <br>
-
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
+<br>
 
-**@ks89/angular-modal-gallery requires Internet Explorer >= 11 and Angular >= 6.x.x**
+## :rocket: Main parts :rocket:
+
+### Carousel
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/carousel-full.png?raw=true)
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/carousel-fix.png?raw=true)
+
+
+### Modal Gallery
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/modal1.png?raw=true)
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/modal2.png?raw=true)
+
+
+### Plain Gallery
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-row.png?raw=true)
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-col.png?raw=true)
+
+![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-grid.png?raw=true)
+
 
 
 ## :boom: Features :boom:
 - Angular Module to import this library
-- works with IE >= 11
+- requires IE >= 11 and Angular >= 6
 - works with both JIT and AOT compilers
 - supports all **recommended Angular Compiler Options**
-- Angular >= 6
 - compliant to Angular Package Format v6 specifications
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
