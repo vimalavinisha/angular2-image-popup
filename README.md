@@ -35,7 +35,9 @@ In fact, It's composed by 3 main parts
 **@ks89/angular-modal-gallery** supports also **keyboard shortcuts**, **swipe gestures** and **mouse events**.
 
 <br>
+
 **This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
+
 <br>
 
 ## :rocket: Main parts :rocket:
@@ -62,7 +64,7 @@ In fact, It's composed by 3 main parts
 
 ![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-grid.png?raw=true)
 
-
+<br>
 
 ## :boom: Features :boom:
 - Angular Module to import this library
@@ -86,18 +88,7 @@ In fact, It's composed by 3 main parts
 - configurable previews (visible only on bigger screen)
 - and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/))
 
-
-## :book: **Documentation** :book:
-
-*Image loading could be slow, because this website is hosted on Github pages*
-
-[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/)
-
-
-## :microphone: **Live demo** :microphone:
-
-[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v7/)
-
+<br>
 
 ## :package: Installation :package:
 - `npm install --save @ks89/angular-modal-gallery`
@@ -107,6 +98,21 @@ In fact, It's composed by 3 main parts
 From version @ks89/angular-modal-gallery >= 5.0.0, **font-awesome isn't a mandatory dependency**.
 You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/).
 
+<br>
+
+## :book: **Documentation** :book:
+
+*Image loading could be slow, because this website is hosted on Github pages*
+
+[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/)
+
+<br>
+
+## :microphone: **Live demo** :microphone:
+
+[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v7/)
+
+<br>
 
 ## :warning: Which version should I use? :warning:
 
@@ -119,6 +125,7 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 6  | &gt;= 5.4.0                 | optional     |
 | Angular 7  | &gt;= 7.0.0                 | optional     |
 
+<br>
 
 ## :fire: News :fire:
 
@@ -137,6 +144,7 @@ You can use all default features without font-awesome. For more info, check offi
 - ... (many minor 2.x.x versions)
 - 01/29/2017 - 2.0.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 
+<br>
 
 ## :question: FAQS :question:
 
@@ -150,6 +158,7 @@ You can use all default features without font-awesome. For more info, check offi
    In other words, **you must think in a functional way**, without changing the input array of images.
    For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/demo/buttons-strategies).
 
+<br>
 
 ## :computer: Contributing :computer:
 
@@ -157,6 +166,7 @@ Check `CONTRIBUTING.md` in this repository
 
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
 
+<br>
 
 ## :sparkling_heart: A big thank you to :sparkling_heart:
 
@@ -175,6 +185,8 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 - <a href="https://devalchemist.com/">Devilish Alchemist</a> - <a href="https://codepen.io/devilishalchemist/pen/emOVYQ">devilishalchemist example on codepen.io</a></li>
 - <a href="https://github.com/nikhil8krishnan">Nikhil Krishnan</a> - <a href="https://codepen.io/nikhil8krishnan/pen/dMEzGx">nikhil8krishnan example on codepen.io</a></li>
 - <a href="https://codepen.io/WebSonata/">Anastasiya Kuligina</a> - <a href="https://codepen.io/WebSonata/pen/bRaONB">Anastasiya Kuligina example on codepen.io</a></li>
+
+<br>
 
 ## :copyright: License :copyright:
 
