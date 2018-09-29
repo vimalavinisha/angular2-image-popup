@@ -196,3 +196,5 @@ If you like my projects you can do a free donation here [![Donate](https://img.s
 <br/>
 
 **Created by Stefano Cappa**
+
+**[⬆ back to top](#table-of-contents)**
