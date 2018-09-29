@@ -55,7 +55,7 @@
     "test:ci:jenkins": "cross-env-shell CI=true JENKINS=true ng test @ks89/angular-modal-gallery --watch=false --no-progress --code-coverage=true",
     "e2e": "ng e2e",
     "e2e:ee": "npm run e2e -- --element-explorer=true",
-    "e2e:ci": "npm run e2e -- --no-progress --config=protractor-ci.conf.js",
+    "e2e:ci": "npm run e2e -- --protractor-config=protractor-ci.conf.js",
     "lint": "ng lint",
     "docs": "npm run docs:typedoc && npm run docs:compodoc",
     "docs:typedoc": "typedoc --out ./docs/typedoc --mode file --target ES6 --exclude **/*.spec.ts ./projects/ks89/angular-modal-gallery",
