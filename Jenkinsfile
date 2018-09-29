@@ -1,5 +1,5 @@
 node {
-    def nodeHome = tool name: 'node-9.3.0', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+    def nodeHome = tool name: 'node-10.11.0', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${nodeHome}:${nodeHome}/bin:${env.PATH}"
 
     stage('check tools') {
@@ -16,23 +16,22 @@ node {
     }
 
     stage('npm install @angular/cli globally') {
-        sh "npm install -g @angular/cli@1.6.0"
+        sh "npm install -g @angular/cli@latest"
     }
 
-    stage('npm install') {
-        sh "npm install"
+    stage('npm ci') {
+        sh "npm ci"
     }
 
     stage('npm clean') {
         sh "npm run clean:all"
     }
 
-    stage('npm install examples') {
-        sh "cd examples/systemjs && npm install"
-        sh "cd examples/webpack && npm install"
-        sh "cd examples/angular-cli && npm install"
-        sh "cd examples/angular-cli-material && npm install"
-        sh "cd examples/universal && npm install"
+    stage('npm ci examples') {
+        sh "cd examples/systemjs && npm ci"
+        sh "cd examples/angular-cli && npm ci"
+        sh "cd examples/angular-cli-material && npm ci"
+        sh "cd examples/universal && npm ci"
     }
 
     stage('npm run build lib') {
@@ -42,13 +41,6 @@ node {
     stage('main example') {
         sh "npm run build:main:dev"
         sh "npm run build:main:prod"
-    }
-
-    stage('webpack example') {
-        sh "cd examples/webpack && npm run build:dev"
-        sh "cd examples/webpack && npm run build:prod"
-        sh "cd examples/webpack && npm run clean && npm run build:prod:aot"
-        sh "cd examples/webpack && xvfb-run npm run test:ci:jenkins"
     }
 
     stage('angular-cli example') {
