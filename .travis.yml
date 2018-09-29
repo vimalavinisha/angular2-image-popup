@@ -1,13 +1,12 @@
 language: node_js
 node_js:
   - "10"
-  - "8"
 
 os:
   - linux
 dist: trusty # to use Ubuntu 14.04
 
-# temporary fix to prevent an issue related to chrome headless. I should restore this to false as soon as possibile.
+# temporary fix to prevent an issue related to chrome headless. I should restore this to false as soon as possible.
 # also I should remove these 2 commands from before_script
 # 1. sudo chown root /opt/google/chrome/chrome-sandbox
 # 2. sudo chmod 4755 /opt/google/chrome/chrome-sandbox

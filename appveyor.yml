@@ -69,7 +69,6 @@ clone_depth: 5  # clone entire repository history if not defined
 # environment variables
 environment:
   matrix:
-    - nodejs_version: "8"
     - nodejs_version: "10"
   NODE_ENV: test
   CI: yes
@@ -98,12 +97,12 @@ install:
   # batch commands start from cmd:
   - cmd: echo Start install in cmd
   # install nodejs and dependencies both global and local
-  # use appveyor-retry to retry if npm install fails
+  # use appveyor-retry to retry if npm ci fails
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
-  - npm install -g npm@5.8.0
+  - npm install -g npm@6.4.1
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g codeclimate-test-reporter @angular/cli@1.7.4
-  - npm install
+  - npm install -g codeclimate-test-reporter @angular/cli@7.0.0-beta.4
+  - npm ci
   # rebuild again node-sass
   - npm rebuild node-sass --force
 
@@ -135,16 +134,16 @@ build_script:
   # prepare
   - npm run clean:all
   - cd examples/systemjs
-  - npm install
+  - npm ci
   - cd ../..
   - cd examples/angular-cli
-  - npm install
+  - npm ci
   - cd ../..
   - cd examples/angular-cli-material
-  - npm install
+  - npm ci
   - cd ../..
   - cd examples/universal
-  - npm install
+  - npm ci
   - cd ../..
   # build
   - npm run build:all
@@ -188,8 +187,8 @@ test_script:
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
   # run tests
   - npm run test:ci
-  # TODO restore e2e test
-#  - npm run e2e:ci
+  # run e2e tests
+  - npm run e2e:ci
 
 #---------------------------------#
 #      artifacts configuration    #

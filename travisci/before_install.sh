@@ -3,7 +3,7 @@
 echo "Before install - OS is $TRAVIS_OS_NAME"
 
 # switch to npm 5
-npm install -g npm@5.8.0
+npm install -g npm@6.4.1
 npm cache verify
 npm prune
 npm update
@@ -29,9 +29,9 @@ echo "Installing global dependencies"
 # install global dependencies
 if [[ $TRAVIS_OS_NAME = 'osx' ]]; then
     echo "Installing $TRAVIS_OS_NAME global dependencies"
-    sudo npm install -g codeclimate-test-reporter @angular/cli@1.7.4
+    sudo npm install -g codeclimate-test-reporter @angular/cli@7.0.0-beta.4
 else
     echo "Installing $TRAVIS_OS_NAME global dependencies"
     # to fix a problem with nodejs 6 on linux
-    npm install -g codeclimate-test-reporter @angular/cli@1.7.4
+    npm install -g codeclimate-test-reporter @angular/cli@7.0.0-beta.4
 fi

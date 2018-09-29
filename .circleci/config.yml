@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/my-project
     docker:
-      - image: circleci/node:8-stretch-browsers # to use the latest version switch to node:latest-browsers
+      - image: circleci/node:10-stretch-browsers # to use the latest version switch to node:latest-browsers
       # Environment variable for all commands executed in the primary container
         environment:
           NODE_ENV: test
@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run:
           name: npm-install-npm-latest
-          command: sudo npm install -g npm@5.8.0
+          command: sudo npm install -g npm@6.4.1
       - run:
           name: npm-install-global
-          command: sudo npm install -g codeclimate-test-reporter
+          command: sudo npm install -g codeclimate-test-reporter @angular/cli@7.0.0-beta.4
       - restore_cache:
           key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
@@ -23,7 +23,7 @@ jobs:
           command: npm rebuild node-sass --force
       - run:
           name: npm-install
-          command: npm install
+          command: npm ci
       - save_cache:
           key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
@@ -48,16 +48,16 @@ jobs:
           command: npm run clean:all
       - run:
           name: run-install-demo-systemjs
-          command: cd examples/systemjs && npm install
+          command: cd examples/systemjs && npm ci
       - run:
           name: run-install-demo-angular-cli
-          command: cd examples/angular-cli && npm install
+          command: cd examples/angular-cli && npm ci
       - run:
           name: run-install-demo-angular-cli-material
-          command: cd examples/angular-cli-material && npm install
+          command: cd examples/angular-cli-material && npm ci
       - run:
           name: run-install-demo-universal
-          command: cd examples/universal && npm install
+          command: cd examples/universal && npm ci
       # build the library and copy it in all examples
       - run:
           name: run-build-all-libray
