@@ -13,7 +13,7 @@
 /docs/
 **/dist/
 **/node_modules/
-/reports/
+reports/
 
 /examples/angular-cli/dist/
 /examples/angular-cli-material/dist/

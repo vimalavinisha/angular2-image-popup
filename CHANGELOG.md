@@ -15,6 +15,10 @@
 - update to Angular 7 and angular-cli 7
 - add first examples with Carousel
 
+### Unit testing
+- restore code coverage for library's unit testing
+- restore multiple browsers to run tests
+
 
 # 7.0.0-alpha.1
 ### Features
