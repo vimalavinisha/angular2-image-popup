@@ -18,6 +18,7 @@
 ### Unit testing
 - restore code coverage for library's unit testing
 - restore multiple browsers to run tests
+- add unit testing for id-validator service and improve it forcing **integer** id values **> 0** **(BREAKING CHANGE)**
 
 
 # 7.0.0-alpha.1
