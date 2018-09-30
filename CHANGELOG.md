@@ -1,3 +1,21 @@
+# 7.0.0-alpha.2
+### Bugfixes
+- fix responsive issue for carousel with fixed width
+
+### Internal library changes
+- upgrade to angular-cli 7 and Angular 7
+- add new MaxDirective to change max-height and max-width fully tested
+
+### Documentations
+- improve documentation website with a new Font
+- improve performance with service workers, external fonts and optimized images and SVGs
+- fix SEO issues about H1-H6
+- fix SEO issues about page titles and best practices about icons, themes, manifest.json and so on
+- add Google Analytics
+- update to Angular 7 and angular-cli 7
+- add first examples with Carousel
+
+
 # 7.0.0-alpha.1
 ### Features
 - add (plain) carousel with previews
@@ -16,6 +34,9 @@
 
 ### Documentations
 - new documentation website https://github.com/Ks89/angular-modal-gallery-2018-v7.github.io
+
+### CI
+- upgrade CI config files to Node 10
 
 
 # 6.2.3

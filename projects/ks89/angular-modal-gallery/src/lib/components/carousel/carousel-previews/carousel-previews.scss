@@ -36,6 +36,7 @@ $nav-side-margin: 10px;
   position: relative;
   margin-top: $preview-image-top-margin;
   margin-bottom: $preview-image-bottom-margin;
+  // default width
   width: 100%;
 }
 
@@ -50,9 +51,11 @@ $nav-side-margin: 10px;
   > .preview-inner-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
+    // default width
+    width: 100%;
 
     > .preview-image {
       cursor: pointer;

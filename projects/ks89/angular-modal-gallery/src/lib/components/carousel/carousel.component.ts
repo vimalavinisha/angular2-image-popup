@@ -306,7 +306,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngAfterContentInit() {
-    // setInterval() doesn't play well with SSR and protractor,
+    // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
