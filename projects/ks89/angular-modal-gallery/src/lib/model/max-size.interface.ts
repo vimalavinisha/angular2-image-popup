@@ -22,29 +22,11 @@
  SOFTWARE.
  */
 
-import { ClickOutsideDirective } from './click-outside.directive';
-import { SizeDirective } from './size.directive';
-import { KeyboardNavigationDirective } from './keyboard-navigation.directive';
-import { WrapDirective } from './wrap.directive';
-import { DirectionDirective } from './direction.directive';
-import { ATagBgImageDirective } from './a-tag-bg-image.directive';
-import { DescriptionDirective } from './description.directive';
-import { ScrollHorizontalDirective } from './scroll-horizontal.directive';
-import { MarginDirective } from './margin.directive';
-import { MaxSizeDirective } from './max-size.directive';
-
 /**
- * Array of all directives.
+ * Interface `MaxSize` to configure the size based on max-width and max-height.
+ * They can be pixels, percentages.
  */
-export const DIRECTIVES = [
-  ClickOutsideDirective,
-  SizeDirective,
-  KeyboardNavigationDirective,
-  WrapDirective,
-  DirectionDirective,
-  ATagBgImageDirective,
-  DescriptionDirective,
-  ScrollHorizontalDirective,
-  MarginDirective,
-  MaxSizeDirective
-];
+export interface MaxSize {
+  maxWidth?: string;
+  maxHeight?: string;
+}
