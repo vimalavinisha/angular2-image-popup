@@ -738,9 +738,9 @@ describe('ModalGalleryComponent', () => {
       comp.modalImages = IMAGES;
       comp.currentImage = IMAGES[0];
 
-      const error = new Error(`You must provide a [id]="unique number here" to the gallery/carousel in your template`);
+      const errorMessage = 'You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template';
 
-      expect(() => comp.ngOnInit()).toThrow(error);
+      expect(() => comp.ngOnInit()).toThrow(new Error(errorMessage));
     });
 
     [{id: 1, index: IMAGES.length + 5}, {id: 1, index: IMAGES.length + 100}].forEach((val: any, index: number) => {

@@ -32,19 +32,19 @@ export class IdValidatorService {
   ids = new Map();
 
   checkAndAdd(galleryId: number | undefined): boolean {
-    if (galleryId === undefined || galleryId < 0) {
-      throw new Error('You must provide a [id]="unique number here" to the gallery/carousel in your template');
+    if (!Number.isInteger(galleryId) || galleryId < 0) {
+      throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');
     }
     if (this.ids.get(galleryId)) {
-      throw new Error(`Cannot create gallery with id=${galleryId} because already used in your application. This must be a unique number >= 0.`);
+      throw new Error(`Cannot create gallery with id=${galleryId} because already used in your application. This must be a unique integer >= 0`);
     }
     this.ids.set(galleryId, galleryId);
     return true;
   }
 
   remove(galleryId: number | undefined): boolean {
-    if (galleryId === undefined || galleryId < 0) {
-      throw new Error('You must provide a [id]="unique number here" to the gallery/carousel in your template');
+    if (!Number.isInteger(galleryId) || galleryId < 0) {
+      throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');
     }
     // if (this.ids.find(id => id === galleryId)) {
     //   throw new Error(`Cannot create gallery with id=${galleryId} because already used in your application. This must be a unique number >= 0.`);
