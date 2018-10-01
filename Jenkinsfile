@@ -30,6 +30,7 @@ node {
     stage('npm ci examples') {
         sh "cd examples/systemjs && npm ci"
         sh "cd examples/angular-cli && npm ci"
+        sh "cd examples/angular-cli-6 && npm ci"
         sh "cd examples/angular-cli-material && npm ci"
         sh "cd examples/universal && npm ci"
     }

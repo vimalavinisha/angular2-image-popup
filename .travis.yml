@@ -59,6 +59,7 @@ cache:
   directories:
     - ./node_modules
     - ./examples/angular-cli/node_modules
+    - ./examples/angular-cli-6/node_modules
     - ./examples/angular-cli-material/node_modules
     - ./examples/systemjs/node_modules
     - ./examples/universal/node_modules

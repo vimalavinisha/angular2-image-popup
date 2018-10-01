@@ -29,6 +29,7 @@ node {
      stage('npm ci examples') {
          sh "cd examples/systemjs && npm ci"
          sh "cd examples/angular-cli && npm ci"
+         sh "cd examples/angular-cli-6 && npm ci"
          sh "cd examples/angular-cli-material && npm ci"
          sh "cd examples/universal && npm ci"
      }
@@ -47,6 +48,12 @@ node {
         sh "cd examples/angular-cli && npm run build:prod"
         sh "cd examples/angular-cli && npm run test:ci"
     }
+
+    stage('angular-cli-6 example') {
+            sh "cd examples/angular-cli-6 && npm run build:dev"
+            sh "cd examples/angular-cli-6 && npm run build:prod"
+            sh "cd examples/angular-cli-6 && npm run test:ci"
+        }
 
     stage('angular-cli-material example') {
         sh "cd examples/angular-cli-material && npm run build:dev"

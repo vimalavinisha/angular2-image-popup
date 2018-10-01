@@ -2,15 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "baseUrl": "./",
     "module": "es2015",
     "types": ["node"]
   },
-  "exclude": ["test.ts", "**/*.spec.ts"],
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "preserveWhiteSpace": false,
-    "strictInjectionParameters": true,
-    "strictNullChecks": true
-  }
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

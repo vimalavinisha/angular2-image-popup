@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-cli": {
+    "angular-cli-6": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-cli",
+            "outputPath": "dist/angular-cli-6",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -49,18 +49,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-cli:build"
+            "browserTarget": "angular-cli-6:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-cli:build:production"
+              "browserTarget": "angular-cli-6:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-cli:build"
+            "browserTarget": "angular-cli-6:build"
           }
         },
         "test": {
@@ -84,7 +84,7 @@
         }
       }
     },
-    "angular-cli-e2e": {
+    "angular-cli-6-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -92,7 +92,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-cli:serve"
+            "devServerTarget": "angular-cli-6:serve"
           }
         },
         "lint": {
@@ -105,5 +105,5 @@
       }
     }
   },
-  "defaultProject": "angular-cli"
+  "defaultProject": "angular-cli-6"
 }

@@ -157,6 +157,11 @@ build_script:
   - npm run build:dev
   - npm run build:prod
   - cd ../..
+  - # build official angular-cli-6 example
+  - cd examples/angular-cli-6
+  - npm run build:dev
+  - npm run build:prod
+  - cd ../..
   # build official angular-cli-material example
   - cd examples/angular-cli-material
   - npm run build:dev
