@@ -7,6 +7,10 @@
 - upgrade to angular-cli 7 and Angular 7
 - add new MaxDirective to change max-height and max-width fully tested
 
+### Demos
+- add new demo angular-cli-6 to test this library also on angular 6
+- upgrade both angular-cli, universal and angular-cli-material to angular 7, angular-cli 7 and angular-material 7
+
 ### Documentations
 - improve documentation website with a new Font
 - improve performance with service workers, external fonts and optimized images and SVGs
@@ -14,7 +18,10 @@
 - fix SEO issues about page titles and best practices about icons, themes, manifest.json and so on
 - add Google Analytics
 - update to Angular 7 and angular-cli 7
-- add first examples with Carousel
+- improve SSR and prerender
+- remove unused libs like ng-bootstrap, jquery, popper and others
+- first implementation of app-shell (still no working because of some incompatibilities with third party libs)
+- add some examples of Carousel
 
 ### Unit testing
 - restore code coverage for library's unit testing
