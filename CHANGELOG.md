@@ -1,6 +1,7 @@
 # 7.0.0-alpha.2
 ### Bugfixes
 - fix responsive issue for carousel with fixed width
+- fix wrong height of carousel's previews when hidden
 
 ### Internal library changes
 - upgrade to angular-cli 7 and Angular 7
