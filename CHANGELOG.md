@@ -22,6 +22,8 @@
 - remove unused libs like ng-bootstrap, jquery, popper and others
 - first implementation of app-shell (still no working because of some incompatibilities with third party libs)
 - add some examples of Carousel
+- remove sidebar for all pages except for demo and features
+- add accordion to demo sidebar, also saved in local storage
 
 ### Unit testing
 - restore code coverage for library's unit testing
