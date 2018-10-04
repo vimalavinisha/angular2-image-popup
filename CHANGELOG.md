@@ -5,7 +5,9 @@
 
 ### Internal library changes
 - upgrade to angular-cli 7 and Angular 7
+- upgrade to Typescript 3.1.1
 - add new MaxDirective to change max-height and max-width fully tested
+- fix build internal docs with typedoc, using the latest @nect release to support typescript 3.1.1
 
 ### Demos
 - add new demo angular-cli-6 to test this library also on angular 6
