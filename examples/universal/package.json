@@ -9,14 +9,14 @@
     "build:dev": "ng build --aot",
     "build:prod": "ng build --prod --aot --build-optimizer=true",
     "lint": "ng lint",
-    "build:client-and-server-bundles": "npm run build:prod && ng run ng-universal-demo:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run ng-universal-demo:server:production",
     "build:prerender": "npm run build:client-and-server-bundles && npm run compile:server && npm run generate:prerender",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "compile:server": "tsc -p src/tsconfig.server.json",
+    "compile:server": "tsc -p server.tsconfig.json",
     "generate:prerender": "cd dist && node prerender",
     "serve:prerender": "cd dist/browser && http-server",
     "serve:ssr": "node dist/server"
-  },
+    },
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.0.0-rc.0",
@@ -38,7 +38,6 @@
     "core-js": "^2.5.7",
     "hammerjs": "^2.0.8",
     "mousetrap": "^1.6.2",
-    "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3",
     "zone.js": "^0.8.26"
   },
@@ -54,11 +53,10 @@
     "cpy-cli": "^2.0.0",
     "express": "^4.15.2",
     "http-server": "^0.11.1",
+    "reflect-metadata": "^0.1.12",
     "regexp-replace-loader": "^1.0.1",
     "ts-loader": "^4.4.2",
-    "ts-node": "~7.0.0",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.1",
-    "webpack-cli": "^3.1.2"
+    "typescript": "~3.1.1"
   }
 }

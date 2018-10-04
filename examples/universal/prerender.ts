@@ -26,23 +26,28 @@
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
-import { renderModuleFactory } from '@angular/platform-server';
-import { enableProdMode } from '@angular/core';
-
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
+import { enableProdMode } from '@angular/core';
+import { renderModuleFactory } from '@angular/platform-server';
 // Import module map for lazy loading
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import { ROUTES } from './static.paths';
-
-const domino = require('domino');
-
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
+// * NOTE :: leave this as require() since this file is built Dynamically from webpack
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
+
+const BROWSER_FOLDER = join(process.cwd(), 'browser');
+
 // Load the index.html file containing referances to your application bundle.
 const index = readFileSync(join('browser', 'index.html'), 'utf8');
+const domino = require('domino');
 const win = domino.createWindow(index);
+
+let previousRender = Promise.resolve();
 
 global['window'] = win;
 Object.defineProperty(win.document.body.style, 'transform', {
@@ -59,15 +64,6 @@ global['CSS'] = null;
 global['Mousetrap'] = function() {
   this.reset = function() {};
 };
-
-const BROWSER_FOLDER = join(process.cwd(), 'browser');
-
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
-
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
-
-let previousRender = Promise.resolve();
 
 // Iterate each route path
 ROUTES.forEach(route => {

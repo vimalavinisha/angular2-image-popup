@@ -15,14 +15,14 @@
 **/node_modules/
 reports/
 
-/examples/angular-cli/dist/
-/examples/angular-cli-6/dist/
-/examples/angular-cli-material/dist/
-/examples/universal/dist/
-/examples/universal/server.ts
+examples/angular-cli/dist/
+examples/angular-cli-6/dist/
+examples/angular-cli-material/dist/
+examples/universal/dist/
+examples/universal/server.ts
 examples/universal/out-tsc/
-/examples/systemjs/app/*.js
-/examples/systemjs/app/*.js.map
+examples/systemjs/app/*.js
+examples/systemjs/app/*.js.map
 
 **/*.spec.ts
 **/e2e/
