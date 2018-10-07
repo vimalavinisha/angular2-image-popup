@@ -82,8 +82,8 @@ export enum ButtonType {
   DOWNLOAD,
   CLOSE,
   CUSTOM,
-  FULLSCREEN,
-  ROTATE
+  FULLSCREEN
+  // ROTATE
 }
 
 /**
@@ -96,6 +96,6 @@ export const WHITELIST_BUTTON_TYPES: ButtonType[] = [
   ButtonType.EXTURL,
   ButtonType.DOWNLOAD,
   ButtonType.CLOSE,
-  ButtonType.CUSTOM,
-  ButtonType.ROTATE
+  ButtonType.CUSTOM
+  // ButtonType.ROTATE
 ];

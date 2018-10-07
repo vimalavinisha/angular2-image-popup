@@ -39,7 +39,7 @@ export { AccessibilityConfig } from './lib/model/accessibility.interface';
 
 export { CarouselConfig } from './lib/model/carousel-config.interface';
 export { PlayConfig } from './lib/model/play-config.interface';
-export { CarouselImageConfig } from './lib/model/current-carousel-image-config.interface';
+export { CarouselImageConfig } from './lib/model/carousel-image-config.interface';
 
 export { Size } from './lib/model/size.interface';
 
@@ -53,7 +53,7 @@ export { LoadingConfig, LoadingType } from './lib/model/loading-config.interface
 
 export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './lib/components/accessibility-default';
 export {
-  KS_DEFAULT_BTN_ROTATE,
+  // KS_DEFAULT_BTN_ROTATE,
   KS_DEFAULT_BTN_FULL_SCREEN,
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,

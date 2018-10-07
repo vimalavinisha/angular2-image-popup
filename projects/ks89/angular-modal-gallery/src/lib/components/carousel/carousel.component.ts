@@ -51,21 +51,17 @@ import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { Image } from '../../model/image.class';
-import { InternalLibImage } from '../../model/image-internal.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
-import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
-import { CarouselImageConfig } from '../../model/current-carousel-image-config.interface';
+import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -90,8 +86,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * thumbs and so on.
    */
   @Input()
-  images: InternalLibImage[];
-  /**
+  images: Image[];
+  /**∑
    * Object of type `CarouselConfig` to init CarouselComponent's features.
    * For instance, it contains parameters to change the style, how it navigates and so on.
    */
@@ -108,7 +104,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * For instance you can change the description.
    */
   @Input()
-  currentCarouselImageConfig: CarouselImageConfig;
+  carouselImageConfig: CarouselImageConfig;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
@@ -136,7 +132,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   /**
    * `Image` that is visible right now.
    */
-  currentImage: InternalLibImage;
+  currentImage: Image;
   /**
    * Object of type `CarouselConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
@@ -167,13 +163,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * applying transformations, default values and so on to the input of the same type.
    */
   configDots: DotsConfig;
-  /**
-   * Object of type `PlainGalleryConfig` to force ks-modal-gallery to hide plain-gallery
-   */
-  plainGalleryHidden: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
 
   private _start$ = new Subject<void>();
   private _stop$ = new Subject<void>();
@@ -256,7 +245,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   ngOnInit() {
     this.currentImage = this.images[0];
 
-    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
     const defaultDescriptionStyle: DescriptionStyle = {
       bgColor: 'rgba(0, 0, 0, .5)',
       textColor: 'white',
@@ -272,11 +260,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       beforeTextDescription: ' - ',
       style: defaultDescriptionStyle
     };
-    const defaultCurrentImageConfig: CurrentImageConfig = {
-      navigateOnClick: true,
-      loadingConfig: defaultLoading,
+    const defaultCurrentImageConfig: CarouselImageConfig = {
       description: defaultDescription,
-      downloadable: false,
       invertSwipe: false
     };
     const defaultCurrentCarouselConfig: CarouselConfig = {
@@ -293,7 +278,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       pauseOnHover: true
     };
 
-    this.configCurrentImageCarousel = Object.assign({}, defaultCurrentImageConfig, this.currentCarouselImageConfig);
+    this.configCurrentImageCarousel = Object.assign({}, defaultCurrentImageConfig, this.carouselImageConfig);
     this.configCurrentImageCarousel.description = Object.assign({}, defaultDescription, this.configCurrentImageCarousel.description);
 
     const defaultConfig: DotsConfig = { visible: true };
@@ -451,7 +436,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * This is necessary because at the end, when you call next again, you'll go to the first image.
    * That happens because all modal images are shown like in a circle.
    */
-  private getNextImage(): InternalLibImage {
+  private getNextImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
@@ -467,7 +452,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * This is necessary because at index 0, when you call prev again, you'll go to the last image.
    * That happens because all modal images are shown like in a circle.
    */
-  private getPrevImage(): InternalLibImage {
+  private getPrevImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
@@ -493,10 +478,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param Image preview image
    */
   onClickPreview(preview: Image) {
-    const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
+    const imageFound: Image | undefined = this.images.find((img: Image) => img.id === preview.id);
     if (!!imageFound) {
       this.manageSlideConfig();
-      this.currentImage = <InternalLibImage>imageFound;
+      this.currentImage = <Image>imageFound;
     }
   }
 

@@ -35,13 +35,11 @@ export class Image {
 
   modal: ModalImage;
   plain?: PlainImage;
-  carousel?: CarouselImage;
 
-  constructor(id: number, modal: ModalImage, plain?: PlainImage, carousel?: CarouselImage) {
+  constructor(id: number, modal: ModalImage, plain?: PlainImage) {
     this.id = id;
     this.modal = modal;
     this.plain = plain;
-    this.carousel = carousel;
   }
 }
 
@@ -71,13 +69,6 @@ export interface ModalImage extends ImageData {
  */
 export interface PlainImage extends ImageData {
   size?: Size;
-}
-
-/**
- * Interface `CarouselImage` to add additional configuration to the image used is carousel
- */
-export interface CarouselImage {
-  size: Size;
 }
 
 /**

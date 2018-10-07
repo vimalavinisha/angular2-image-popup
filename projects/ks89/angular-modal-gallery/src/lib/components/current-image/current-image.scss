@@ -135,19 +135,19 @@ $figcaption-right: 0;
     max-width: $curr-img-max-width-trick;
   }
 
-  &.rotate0,
-  &.rotate360 {
-    transform-origin: top left;
-  }
-  &.rotate90 {
-    transform: rotate(90deg); // translateY(-100%);
-  }
-  &.rotate180 {
-    transform: rotate(180deg); // translate(-100%, -100%);
-  }
-  &.rotate270 {
-    transform: rotate(270deg); // translateX(-100%);
-  }
+  //&.rotate0,
+  //&.rotate360 {
+  //  transform-origin: top left;
+  //}
+  //&.rotate90 {
+  //  transform: rotate(90deg); // translateY(-100%);
+  //}
+  //&.rotate180 {
+  //  transform: rotate(180deg); // translate(-100%, -100%);
+  //}
+  //&.rotate270 {
+  //  transform: rotate(270deg); // translateX(-100%);
+  //}
 }
 
 @mixin fadein($opacity-from, $opacity-to) {

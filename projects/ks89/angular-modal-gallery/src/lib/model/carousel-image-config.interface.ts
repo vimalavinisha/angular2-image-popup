@@ -28,8 +28,6 @@ import { Description } from './description.interface';
  * Interface `CarouselImageConfig` to change current image behaviour in carousel.
  */
 export interface CarouselImageConfig {
-  // loadingConfig?: LoadingConfig;
   description?: Description;
-  // option to invert swipe direction (because for some users it's more natural)
   invertSwipe?: boolean;
 }
