@@ -43,7 +43,7 @@ import {
   KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
-  KS_DEFAULT_BTN_ROTATE,
+  // KS_DEFAULT_BTN_ROTATE,
   PreviewConfig,
   LoadingConfig,
   LoadingType,
@@ -401,7 +401,7 @@ export class ModalGalleryComponent {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
     buttons: [
-      KS_DEFAULT_BTN_ROTATE,
+      // KS_DEFAULT_BTN_ROTATE,
       KS_DEFAULT_BTN_FULL_SCREEN,
       KS_DEFAULT_BTN_DELETE,
       KS_DEFAULT_BTN_EXTURL,

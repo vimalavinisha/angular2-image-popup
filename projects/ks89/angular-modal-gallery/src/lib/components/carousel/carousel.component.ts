@@ -59,6 +59,7 @@ import { DotsConfig } from '../../model/dots-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
@@ -163,6 +164,13 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * applying transformations, default values and so on to the input of the same type.
    */
   configDots: DotsConfig;
+  /**
+   * Object of type `PlainGalleryConfig` to force ks-modal-gallery to hide plain-gallery
+   */
+  plainGalleryHidden: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
 
   private _start$ = new Subject<void>();
   private _stop$ = new Subject<void>();

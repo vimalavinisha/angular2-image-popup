@@ -84,23 +84,19 @@ module.exports = function(config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-
-    // if code coverage is enabled
-    reporters: ['mocha', 'coverage', 'coverage-istanbul', 'sonarqubeUnit'],
-    // otherwise, without coverage use this:
+    coverageIstanbulReporter: {
+      dir: require('path').join(__dirname, '../../../coverage'),
+      reports: ['html', 'lcovonly'],
+      fixWebpackSourcePaths: true
+    },
     // reporters: ['progress', 'kjhtml'],
+    reporters: ['mocha', 'coverage', 'coverage-istanbul', 'sonarqubeUnit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: getBrowsers(),
     singleRun: false,
-
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../../../coverage'),
-      reports: ['html', 'lcovonly'],
-      fixWebpackSourcePaths: true
-    },
 
     // required by karma-coverage to show code coverage in console
     coverageReporter: {
@@ -110,7 +106,7 @@ module.exports = function(config) {
     // required by karma-sonarqube-unit-reporter
     sonarQubeUnitReporter: {
       sonarQubeVersion: '5.x',
-      outputFile: 'reports/ut_report.xml',
+      outputFile: '/reports/ut_report.xml',
       overrideTestDescription: true,
       testPath: 'projects/ks89/angular-modal-gallery/src',
       testFilePattern: '.spec.ts',
