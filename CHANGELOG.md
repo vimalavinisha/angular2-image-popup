@@ -1,6 +1,7 @@
 # 7.0.0-alpha.3
 ### Features
-- update api removing unused stuff and change some names to simplify it 
+- remove unused stuff and change some names to simplify apis
+- add @Outputs (show, isLastimage and isFirstImage) to catch navigation events like for modal-gallery
 
 ### Unit testing
 - improve unit testing

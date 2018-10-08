@@ -25,6 +25,7 @@
 import { Component } from '@angular/core';
 
 import { AccessibilityConfig, Image } from '@ks89/angular-modal-gallery';
+import { ImageEvent } from '../../../projects/ks89/angular-modal-gallery/src/lib/model/image.class';
 
 @Component({
   selector: 'ks-carousel-page',
@@ -143,5 +144,18 @@ export class CarouselComponent {
 
   onChangeShowDots() {
     this.showDots = !this.showDots;
+  }
+
+  // output evets
+  onShow(event: ImageEvent) {
+    console.log('show', event);
+  }
+
+  onFirstImage(event: ImageEvent) {
+    console.log('firstImage', event);
+  }
+
+  onLastImage(event: ImageEvent) {
+    console.log('lastImage', event);
   }
 }

@@ -30,6 +30,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   HostBinding,
   HostListener,
   Inject,
@@ -38,6 +39,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   PLATFORM_ID,
   SimpleChange,
   SimpleChanges
@@ -50,7 +52,7 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
-import { Image } from '../../model/image.class';
+import { Image, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
@@ -129,6 +131,22 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @Input()
   accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+
+  /**
+   * Output to emit an event when an image is changed.
+   */
+  @Output()
+  show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when the current image is the first one.
+   */
+  @Output()
+  firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  /**
+   * Output to emit an event when the current image is the last one.
+   */
+  @Output()
+  lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
    * `Image` that is visible right now.
@@ -326,7 +344,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param number index of the clicked dot
    */
   onClickDot(index: number) {
-    this.currentImage = this.images[index];
+    this.changeCurrentImage(this.images[index], Action.NORMAL);
   }
 
   /**
@@ -415,7 +433,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     if (this.isPreventSliding(0)) {
       return;
     }
-    this.currentImage = this.getPrevImage();
+    this.changeCurrentImage(this.getPrevImage(), action);
 
     this.manageSlideConfig();
 
@@ -432,11 +450,23 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
     }
-    this.currentImage = this.getNextImage();
+    this.changeCurrentImage(this.getNextImage(), action);
 
     this.manageSlideConfig();
 
     this._start$.next();
+  }
+
+  // TODO add docs
+  private changeCurrentImage(image: Image, action: Action) {
+    this.currentImage = image;
+    const index: number = getIndex(image, this.images);
+
+    // emit first/last event based on newIndex value
+    this.emitBoundaryEvent(action, index);
+
+    // emit current visible image index
+    this.show.emit(new ImageModalEvent(action, index + 1));
   }
 
   /**
@@ -489,7 +519,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     const imageFound: Image | undefined = this.images.find((img: Image) => img.id === preview.id);
     if (!!imageFound) {
       this.manageSlideConfig();
-      this.currentImage = <Image>imageFound;
+      this.changeCurrentImage(<Image>imageFound, Action.NORMAL);
     }
   }
 
@@ -625,6 +655,24 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this.isLastImage = false;
     } else {
       this.handleBoundaries(index);
+    }
+  }
+
+  /**
+   * Private method to emit events when either the last or the first image are visible.
+   * @param action Enum of type Action that represents the source of the event that changed the
+   *  current image to the first one or the last one.
+   * @param indexToCheck is the index number of the image (the first or the last one).
+   */
+  private emitBoundaryEvent(action: Action, indexToCheck: number) {
+    // to emit first/last event
+    switch (indexToCheck) {
+      case 0:
+        this.firstImage.emit(new ImageModalEvent(action, true));
+        break;
+      case this.images.length - 1:
+        this.lastImage.emit(new ImageModalEvent(action, true));
+        break;
     }
   }
 

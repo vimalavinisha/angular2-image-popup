@@ -30,7 +30,7 @@
 export { GalleryModule } from './lib/modal-gallery.module';
 
 export { Action } from './lib/model/action.enum';
-export { Image, PlainImage, ModalImage, ImageModalEvent } from './lib/model/image.class';
+export { Image, PlainImage, ModalImage, ImageEvent, ImageModalEvent } from './lib/model/image.class';
 export { Description, DescriptionStrategy } from './lib/model/description.interface';
 export { KeyboardConfig } from './lib/model/keyboard-config.interface';
 export { DotsConfig } from './lib/model/dots-config.interface';

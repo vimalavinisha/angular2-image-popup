@@ -72,14 +72,23 @@ export interface PlainImage extends ImageData {
 }
 
 /**
- * Class `ImageModalEvent` that represents the event payload with the result and the triggered action.
+ * Class `ImageEvent` that represents the event payload with the result and the triggered action.
  */
-export class ImageModalEvent {
+export class ImageEvent {
   action: Action;
   result: number | boolean;
 
   constructor(action: Action, result: number | boolean) {
     this.action = action;
     this.result = result;
+  }
+}
+
+/**
+ * Class `ImageModalEvent` that represents the event payload with the result and the triggered action.
+ */
+export class ImageModalEvent extends ImageEvent {
+  constructor(action: Action, result: number | boolean) {
+    super(action, result);
   }
 }
