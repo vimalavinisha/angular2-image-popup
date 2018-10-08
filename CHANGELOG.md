@@ -1,3 +1,20 @@
+# 7.0.0-alpha.3
+### Features
+- update api removing unused stuff and change some names to simplify it 
+
+### Unit testing
+- improve unit testing
+
+### Documentations
+- rewrite navbar without bootstrap
+- improve sidebar for both features and demo
+- upgrade to the latest alpha version of angular-modal-gallery
+- improve all carousel examples (updating input tables)
+- improve colors and accessibility
+- fix compatibility table in homepage
+- update default values page
+
+
 # 7.0.0-alpha.2
 ### Bugfixes
 - fix responsive issue for carousel with fixed width
