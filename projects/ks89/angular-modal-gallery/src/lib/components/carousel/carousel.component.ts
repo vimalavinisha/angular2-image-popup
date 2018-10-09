@@ -52,7 +52,7 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
-import { Image, ImageModalEvent } from '../../model/image.class';
+import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
@@ -148,6 +148,16 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Output()
   lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
+  /**
+   * Enum of type `Action` that represents a mouse click on a button.
+   * Declared here to be used inside the template.
+   */
+  clickAction: Action = Action.CLICK;
+  /**
+   * Enum of type `Action` that represents a keyboard action.
+   * Declared here to be used inside the template.
+   */
+  keyboardAction: Action = Action.KEYBOARD;
   /**
    * `Image` that is visible right now.
    */
@@ -515,11 +525,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Method called when an image preview is clicked and used to update the current image.
    * @param Image preview image
    */
-  onClickPreview(preview: Image) {
-    const imageFound: Image | undefined = this.images.find((img: Image) => img.id === preview.id);
+  onClickPreview(event: ImageEvent) {
+    const imageFound: Image = this.images[<number>event.result];
     if (!!imageFound) {
       this.manageSlideConfig();
-      this.changeCurrentImage(<Image>imageFound, Action.NORMAL);
+      this.changeCurrentImage(<Image>imageFound, event.action);
     }
   }
 

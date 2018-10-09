@@ -40,7 +40,7 @@ import {
 import { AccessibleComponent } from '../../accessible.component';
 
 import { AccessibilityConfig } from '../../../model/accessibility.interface';
-import { Image } from '../../../model/image.class';
+import { Image, ImageEvent } from '../../../model/image.class';
 import { InternalLibImage } from '../../../model/image-internal.class';
 import { Size } from '../../../model/size.interface';
 import { PreviewConfig } from '../../../model/preview-config.interface';
@@ -48,6 +48,7 @@ import { CarouselConfig } from '../../../model/carousel-config.interface';
 
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
+import { Action } from '../../../model/action.enum';
 
 /**
  * Component with image previews
@@ -109,8 +110,18 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * Output to emit the clicked preview. The payload contains the `InternalLibImage` associated to the clicked preview.
    */
   @Output()
-  clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
+  clickPreview: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
 
+  /**
+   * Enum of type `Action` that represents a mouse click on a button.
+   * Declared here to be used inside the template.
+   */
+  clickAction: Action = Action.CLICK;
+  /**
+   * Enum of type `Action` that represents a keyboard action.
+   * Declared here to be used inside the template.
+   */
+  keyboardAction: Action = Action.KEYBOARD;
   /**
    * Array of `InternalLibImage` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
@@ -258,15 +269,16 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param InternalLibImage preview that triggered this method
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent) {
+  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     if (!this.configPreview || !this.configPreview.clickable) {
       return;
     }
+    const clickedImageIndex: number = this.images.indexOf(preview);
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
-      this.clickPreview.emit(preview);
+      this.clickPreview.emit(<ImageEvent>{ action: action, result: clickedImageIndex });
     } else if (result === PREV) {
-      this.clickPreview.emit(preview);
+      this.clickPreview.emit(<ImageEvent>{ action: action, result: clickedImageIndex });
     }
   }
 
