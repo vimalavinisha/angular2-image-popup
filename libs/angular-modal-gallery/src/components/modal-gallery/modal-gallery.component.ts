@@ -49,7 +49,7 @@ import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
-import { GalleryService, InternalGalleryPayload, InternalGalleryRefresh } from '../../services/gallery.service';
+import { GalleryService, InternalGalleryPayload } from '../../services/gallery.service';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { InternalLibImage } from '../../model/image-internal.class';
@@ -74,35 +74,42 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * the service to call modal gallery without open it manually.
    * Right now is optional, but in upcoming major releases will be mandatory!!!
    */
-  @Input() id: number|string;
+  @Input()
+  id: number;
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
-  @Input() modalImages: Image[];
+  @Input()
+  modalImages: Image[];
   /**
    * Object of type `ButtonsConfig` to show/hide buttons.
    */
-  @Input() buttonsConfig: ButtonsConfig;
+  @Input()
+  buttonsConfig: ButtonsConfig;
   /**
    * Boolean to enable modal-gallery close behaviour when clicking
    * on the semi-transparent background. Enabled by default.
    */
-  @Input() enableCloseOutside = true;
+  @Input()
+  enableCloseOutside = true;
   /**
    * Interface to configure current image in modal-gallery.
    * For instance you can disable navigation on click on current image (enabled by default).
    */
-  @Input() currentImageConfig: CurrentImageConfig;
+  @Input()
+  currentImageConfig: CurrentImageConfig;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide dots.
    */
-  @Input() dotsConfig: DotsConfig;
+  @Input()
+  dotsConfig: DotsConfig;
   /**
    * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide previews.
    */
-  @Input() previewConfig: PreviewConfig;
+  @Input()
+  previewConfig: PreviewConfig;
   /**
    * Object of type `SlideConfig` to init side previews and `infinite sliding`.
    */
@@ -115,49 +122,60 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input() accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+  @Input()
+  accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
-  @Input() keyboardConfig: KeyboardConfig;
+  @Input()
+  keyboardConfig: KeyboardConfig;
   /**
    * Object of type `PlainGalleryConfig` to configure the plain gallery.
    */
-  @Input() plainGalleryConfig: PlainGalleryConfig;
+  @Input()
+  plainGalleryConfig: PlainGalleryConfig;
 
   /**
    * Output to emit an event when the modal gallery is closed.
    */
-  @Output() close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when an image is changed.
    */
-  @Output() show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when the current image is the first one.
    */
-  @Output() firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when the current image is the last one.
    */
-  @Output() lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when the modal gallery is closed.
    */
-  @Output() hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  @Output()
+  hasData: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when a button is clicked, but before that the action is triggered.
    */
-  @Output() buttonBeforeHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  buttonBeforeHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit an event when a button is clicked, but after that the action is triggered.
    */
-  @Output() buttonAfterHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  @Output()
+  buttonAfterHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
    * Reference to the CurrentImageComponent to invoke methods on it.
    */
-  @ViewChild(CurrentImageComponent) currentImageComponent;
+  @ViewChild(CurrentImageComponent)
+  currentImageComponent;
 
   /**
    * Boolean that it is true if the modal gallery is visible. False by default.
@@ -178,7 +196,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   private galleryServiceNavigateSubscription: Subscription;
   private galleryServiceCloseSubscription: Subscription;
-  private galleryServiceRefreshSubscription:Subscription;
+  private galleryServiceUpdateSubscription: Subscription;
 
   /**
    * HostListener to catch browser's back button and destroy the gallery.
@@ -239,29 +257,21 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       this.closeGallery(Action.NORMAL, true);
     });
 
-    this.galleryServiceRefreshSubscription = this.galleryService.refresh.subscribe((payload:InternalGalleryRefresh)=>{
-      if (!payload){
+    this.galleryServiceUpdateSubscription = this.galleryService.update.subscribe((payload: InternalGalleryPayload) => {
+      if (!payload) {
         return;
       }
       // if galleryId is not valid OR galleryId is related to another instance and not this one
       if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
         return;
       }
-      // if image index is not valid
-      if (payload.imageIndex < 0 || payload.imageIndex > this.images.length) {
+      // if either image index or image are not valid
+      if (payload.index < 0 || payload.index > this.images.length || !payload.image) {
         return;
       }
-      
-      
-      this.modalImages = payload.images;
-      this.initImages();
-     
-      this.onChangeCurrentImage(new ImageModalEvent(Action.NORMAL, payload.imageIndex))
-    
-      
-
-
-    })
+      // TODO add validation
+      this.currentImage = this.images[payload.index];
+    });
   }
 
   /**
@@ -614,8 +624,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     if (this.galleryServiceCloseSubscription) {
       this.galleryServiceCloseSubscription.unsubscribe();
     }
-    if (this.galleryServiceRefreshSubscription){
-      this.galleryServiceRefreshSubscription.unsubscribe();
+    if (this.galleryServiceUpdateSubscription) {
+      this.galleryServiceUpdateSubscription.unsubscribe();
     }
   }
 
