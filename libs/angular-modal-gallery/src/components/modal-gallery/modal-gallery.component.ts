@@ -57,6 +57,7 @@ import { AdvancedLayout, PlainGalleryConfig } from '../../model/plain-gallery-co
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { Subscription } from 'rxjs/Subscription';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { getIndex } from '../../utils/image.util';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -269,8 +270,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       if (payload.index < 0 || payload.index > this.images.length || !payload.image) {
         return;
       }
-      // TODO add validation
-      this.currentImage = this.images[payload.index];
+      const currentIndex: number = getIndex(payload.image, this.images);
+      this.images = this.images.map((image: InternalLibImage, index: number) => {
+        if (index === payload.index) {
+          return <InternalLibImage>payload.image;
+        }
+        return image;
+      });
+      if (currentIndex === payload.index) {
+        this.currentImage = this.images[payload.index];
+      }
+      this.changeDetectorRef.markForCheck();
     });
   }
 
