@@ -383,6 +383,11 @@
                     (show)="autoAddImage()"></ks-modal-gallery>
 </section>
 
+<section>
+  <h3>D5 - (id=53) - Other demo - automatic update of the second image via gallery service (open the second image and wait some seconds to see the result)</h3>
+  <br>
+  <ks-modal-gallery [id]="53" [modalImages]="images" (show)="autoUpdateImage(53, 1)"></ks-modal-gallery>
+</section>
 
 <br>
 <hr>
@@ -390,15 +395,15 @@
 <h2>Experimental examples<sup>*</sup></h2>
 <p><sup>*</sup> these will be either improved or removed in next versions</p>
 <section>
-  <h3>E1 - (id=53) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
+  <h3>E1 - (id=54) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
   <br>
-  <ks-modal-gallery [id]="53" [modalImages]="[images[0]]"
+  <ks-modal-gallery [id]="54" [modalImages]="[images[0]]"
                     [keyboardConfig]="null"
                     [currentImageConfig]="currentImageConfigExperimental"
                     [slideConfig]="{infinite: false}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>E2 - (id=54) - Other demo - load images already rotated</h3>
+  <h3>E2 - (id=55) - Other demo - load images already rotated</h3>
   <br>
-  <ks-modal-gallery [id]="54" [modalImages]="imagesRotated"></ks-modal-gallery>
+  <ks-modal-gallery [id]="55" [modalImages]="imagesRotated"></ks-modal-gallery>
 </section>
