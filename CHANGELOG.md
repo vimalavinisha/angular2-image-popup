@@ -2,6 +2,7 @@
 ### Features
 - remove unused stuff and change some names to simplify apis
 - add @Outputs (show, isLastimage and isFirstImage) to catch navigation events like for modal-gallery
+- merge the feature 'add a new method called update into GalleryService' from version 6.3.0
 
 ### Unit testing
 - improve unit testing
@@ -14,6 +15,9 @@
 - improve colors and accessibility
 - fix compatibility table in homepage
 - update default values page
+
+### Chores
+- update readme with a better layout (table of contents, images and so on)
 
 
 # 7.0.0-alpha.2
