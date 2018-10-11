@@ -51,7 +51,9 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://www.paypal.me/stefanocappa"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate"></a>
 </p>
 
-*Do you like @ks89/angular-modal-gallery? Please, add a :star: to support this library*
+<h5 align="center">
+<b>Do you like @ks89/angular-modal-gallery? Please, add a :star: to support this library</b>
+</h5>
 
 <br>
 <br>
