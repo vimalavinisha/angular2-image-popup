@@ -1,43 +1,66 @@
-![npm@latest](https://badge.fury.io/js/%40ks89%2Fangular-modal-gallery.svg)
+<h1 align="center">
+  <br>
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/amg.png" alt="@ks89/angular-modal-gallery" width="520">
+  <br>
+  <br>
+@ks89/angular-modal-gallery
+  <br>
+</h1>
 
-[New package](https://www.npmjs.com/package/@ks89/angular-modal-gallery) >=6: [![npm](https://img.shields.io/npm/dw/@ks89/angular-modal-gallery.svg)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dm/@ks89/angular-modal-gallery.svg)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg)](https://www.npmjs.com/package/@ks89/angular-modal-gallery)
-
-[Old package](https://www.npmjs.com/package/angular-modal-gallery) <=5: [![npm](https://img.shields.io/npm/dw/angular-modal-gallery.svg)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dm/angular-modal-gallery.svg)](https://www.npmjs.com/package/angular-modal-gallery)   [![npm](https://img.shields.io/npm/dy/angular-modal-gallery.svg)](https://www.npmjs.com/package/angular-modal-gallery)
-
-[![Travis Build](https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master)](https://travis-ci.org/Ks89/angular-modal-gallery)   [![Appveyor Build](https://ci.appveyor.com/api/projects/status/ikp5qqr9aci2s0ae/branch/master?svg=true)](https://ci.appveyor.com/project/Ks89/angular-modal-gallery/branch/master)   [![CircleCI Build](https://circleci.com/gh/Ks89/angular-modal-gallery.svg?style=svg)](https://circleci.com/gh/Ks89/angular-modal-gallery)   [![Known Vulnerabilities](https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg)](https://snyk.io/test/github/ks89/angular-modal-gallery)   [![david-dm Dependencies](https://david-dm.org/Ks89/angular-modal-gallery.svg)](https://david-dm.org/Ks89/angular-modal-gallery)   [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery?ref=badge_shield)   [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)   [![Code Climate](https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/gpa.svg)](https://codeclimate.com/github/Ks89/angular-modal-gallery)   [![Code Climate Coverage](https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/coverage.svg)](https://codeclimate.com/github/Ks89/angular-modal-gallery/coverage)   [![Coveralls Coverage](https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master)](https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master)
-
-[![GitHub release](https://img.shields.io/github/release/Ks89/angular-modal-gallery.svg?style=flat-square)](https://github.com/Ks89/angular-modal-gallery)   [![GitHub (pre-)release](https://img.shields.io/github/release/Ks89/angular-modal-gallery/all.svg?style=flat-square)](https://github.com/Ks89/angular-modal-gallery)
-
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/stefanocappa)
-
-*Do you like @ks89/angular-modal-gallery? Please, add a 'star' to support this library*
-
+<h3 align="center"><b>@ks89/angular-modal-gallery</b> is an Angular library (<b>SSR compatible</b>) to create image galleries.</h3>
 <br>
-<br>
-
-# @ks89/angular-modal-gallery
-
-<br>
-
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/amg.png?raw=true)
-
+<p align="center">
+Despite its name, this library is more than for modal galleries, because I'm introducing new features every major release. In fact, It's composed by 3 main parts:</p>
+<ul>
+  <li><b>plain-gallery</b>: shows either a row, a column or a grid of <b>clickable thumbnails</b> using pure flexbox</li>
+<li><b>modal-gallery</b>: is the core part of this project and display a <b>modal window with full screen images</b>, <b>buttons</b>, the <b>current image</b> and optionally, also navigation <b>dots</b> and <b>previews</b></li>
+<li><b>carousel</b>: is the new feature introduced in 7.0.0 to show a configurable plain carousel (not modal) with auto-play and other cool features</li>
+</ul>
+<p><b>@ks89/angular-modal-gallery</b> supports also <b>keyboard shortcuts</b>, <b>swipe gestures</b> and <b>mouse events</b>.</p>
 <br>
 
-**@ks89/angular-modal-gallery** is an Angular library (**SSR compatible**) to create image galleries.
+<p align="center">
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery">
+    <img src="https://badge.fury.io/js/%40ks89%2Fangular-modal-gallery.svg" alt="npm@latest">
+  </a>
+</p>
+<p align="center">
+  New package >= 6
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dw/@ks89/angular-modal-gallery.svg" alt="Downloads/week"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dm/@ks89/angular-modal-gallery.svg" alt="Downloads/month"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg" alt="Downloads/year"></a>
+</p>
+<p align="center">
+  Old package <= 5
+  <a href="https://www.npmjs.com/package/angular-modal-gallery"><img src="https://img.shields.io/npm/dw/angular-modal-gallery.svg" alt="Downloads/week"></a>
+  <a href="https://www.npmjs.com/package/angular-modal-gallery"><img src="https://img.shields.io/npm/dm/angular-modal-gallery.svg" alt="Downloads/month"></a>
+  <a href="https://www.npmjs.com/package/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/angular-modal-gallery.svg" alt="Downloads/year"></a>
+</p>
+<p align="center">
+  <a href="https://travis-ci.org/Ks89/angular-modal-gallery"><img src="https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master" alt=""></a>
+  <a href="https://ci.appveyor.com/project/Ks89/angular-modal-gallery/branch/master"><img src="https://ci.appveyor.com/api/projects/status/ikp5qqr9aci2s0ae/branch/master?svg=true" alt=""></a>
+  <a href="https://circleci.com/gh/Ks89/angular-modal-gallery"><img src="https://circleci.com/gh/Ks89/angular-modal-gallery.svg?style=svg" alt=""></a>
+</p>
+<p align="center">
+  <a href="https://snyk.io/test/github/ks89/angular-modal-gallery"><img src="https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg" alt="Known Vulnerabilities"></a>
+  <a href="https://david-dm.org/Ks89/angular-modal-gallery"><img src="https://david-dm.org/Ks89/angular-modal-gallery.svg" alt="david-dm Dependencies"></a>
+  <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery.svg?type=shield" alt="FOSSA Status"></a>
+  <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a>
+  <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/gpa.svg" alt="Code Climate"></a>
+  <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery/coverage"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/coverage.svg" alt="ode Climate Coverage"></a>
+  <a href="https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master"><img src="https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master" alt="Coveralls Coverage"></a>
+</p>
+<p align="center">
+  <a href="https://github.com/Ks89/angular-modal-gallery"><img src="https://img.shields.io/github/release/Ks89/angular-modal-gallery.svg?style=flat-square" alt="GitHub release"></a>
+  <a href="https://github.com/Ks89/angular-modal-gallery"><img src="https://img.shields.io/github/release/Ks89/angular-modal-gallery/all.svg?style=flat-square" alt="GitHub (pre-)release"></a>
+</p>
+<p align="center">
+  <a href="https://www.paypal.me/stefanocappa"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate"></a>
+</p>
+
+*Do you like @ks89/angular-modal-gallery? Please, add a :star: to support this library*
+
 <br>
-Despite its name, this library is more than for modal galleries, because I'm introducing new features every major release.
-In fact, It's composed by 3 main parts
-
-- **plain-gallery**: shows either a row, a column or a grid of **clickable thumbnails** using pure flexbox
-- **modal-gallery**: is the core part of this project and display a **modal window with full screen images**, **buttons**, the **current image** and optionally, also navigation **dots** and **previews**
-- **carousel**: is the new feature introduced in 7.0.0 to show a configurable plain carousel (not modal) with auto-play and other cool features
-
-**@ks89/angular-modal-gallery** supports also **keyboard shortcuts**, **swipe gestures** and **mouse events**.
-
-<br>
-
-**This library uses [Semantic versioning 2.0.0](http://semver.org/) also known as 'semver'**
-
 <br>
 
 
@@ -89,6 +112,7 @@ In fact, It's composed by 3 main parts
 - works with both JIT and AOT compilers
 - supports all **recommended Angular Compiler Options**
 - compliant to Angular Package Format v6 specifications
+- **use [Semantic versioning 2.0.0](http://semver.org/)** also known as 'semver'
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
 - **Server Side Rendering** support with angular-universal
@@ -103,11 +127,12 @@ In fact, It's composed by 3 main parts
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
-- and so on... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/))
+- and many more... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/))
 
 <br>
 
 ## :package: Installation :package:
+
 - `npm install --save @ks89/angular-modal-gallery`
 - `npm install --save hammerjs mousetrap`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
@@ -136,10 +161,10 @@ You can use all default features without font-awesome. For more info, check offi
 |            | @ks89/angular-modal-gallery | font-awesome |
 | ---------- | :---:                       | :---:        |
 | AngularJS  | NOT SUPPORTED               |              |
-| Angular 2  | &lt;= 3.3.5                 | &gt;= 4.0.0  |
-| Angular 4  | &lt;= 5.5.0                 | optional     |
-| Angular 5  | &gt;= 5.0.0                 | optional     |
-| Angular 6  | &gt;= 5.4.0                 | optional     |
+| Angular 2  | = 3.3.5                     | &gt;= 4.0.0  |
+| Angular 4  | = 5.7.1                     | optional     |
+| Angular 5  | = 6.3.0                     | optional     |
+| Angular 6  | &gt;= 7.0.0                 | optional     |
 | Angular 7  | &gt;= 7.0.0                 | optional     |
 
 <br>
@@ -148,6 +173,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 80 releases in two years**, and more to come... :)
 
+- 10/15/2018 - 7.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/11/2018 - 6.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/09/2018 - 7.0.0-alpha.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/04/2018 - 7.0.0-alpha.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
