@@ -48,12 +48,12 @@ In fact, It's composed by 3 main parts
 2. **[Features](#boom-features-boom)**
 3. **[Installation](#package-installation-package)**
 4. **[Documentation](#book-documentation-book)**
-5. **[Live demo](#microphone-live-microphone)**
+5. **[Live demo](#microphone-live-demo-microphone)**
 6. **[Choose the version](#warning-choose-the-version-warning)**
 7. **[News](#fire-news-fire)**
 8. **[FAQS](#question-faqs-question)**
 9. **[Contributing](#computer-contributing-computer)**
-10. **[A big thank you to](#sparkling-heart-a-big-thank-you-to-sparkling-heart)**
+10. **[A big thank you to](#sparkling_heart-a-big-thank-you-to-sparkling_heart)**
 11. **[License](#copyright-license-copyright)**
 
 
