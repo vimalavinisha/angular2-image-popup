@@ -40,6 +40,25 @@ In fact, It's composed by 3 main parts
 
 <br>
 
+
+
+## Table of Contents
+
+1. **[Main parts](#main-parts)**
+2. **[Features](#features)**
+3. **[Installation](#installation)**
+4. **[Documentation](#documentation)**
+5. **[Live demo](#live)**
+6. **[Choose the version](#choose-the-version)**
+7. **[News](#news)**
+8. **[FAQS](#faqs)**
+9. **[Contributing](#contributing)**
+10. **[A big thank you to](#a-big-thank-you-to)**
+11. **[License](#license)**
+10. **[A big thank you tu](#a-big-thank-you-tu)**
+
+
+
 ## :rocket: Main parts :rocket:
 
 ### Carousel
@@ -114,7 +133,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 <br>
 
-## :warning: Which version should I use? :warning:
+## :warning: Choose the version :warning:
 
 |            | @ks89/angular-modal-gallery | font-awesome |
 | ---------- | :---:                       | :---:        |
@@ -165,11 +184,14 @@ You can use all default features without font-awesome. For more info, check offi
 
 ## :computer: Contributing :computer:
 
-Check `CONTRIBUTING.md` in this repository
+Check `CONTRIBUTING.md` in this repository.
+To understand how to contribute to an open source project, [HERE](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) you can find useful information.
 
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
 
 <br>
+
+## A big thank you tu
 
 ## :sparkling_heart: A big thank you to :sparkling_heart:
 
