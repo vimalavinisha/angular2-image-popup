@@ -309,7 +309,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
         }
         return image;
       });
-      if (currentIndex === payload.index) {
+      if (currentIndex === payload.index) {
         this.currentImage = this.images[payload.index];
       }
       this.changeDetectorRef.markForCheck();
