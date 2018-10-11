@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/amg.png" alt="@ks89/angular-modal-gallery" width="520">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/amg.png" alt="@ks89/angular-modal-gallery" width="200">
   <br>
   <br>
 @ks89/angular-modal-gallery
