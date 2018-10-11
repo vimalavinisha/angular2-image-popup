@@ -55,8 +55,6 @@ In fact, It's composed by 3 main parts
 9. **[Contributing](#contributing)**
 10. **[A big thank you to](#a-big-thank-you-to)**
 11. **[License](#license)**
-10. **[A big thank you tu](#a-big-thank-you-tu)**
-
 
 
 ## :rocket: Main parts :rocket:
@@ -191,9 +189,7 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 
 <br>
 
-## A big thank you tu
-
-## :sparkling_heart: A big thank you to :sparkling_heart:
+:sparkling_heart: ## A big thank you to
 
 ##### all authors of icons used in this library:
 - Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
