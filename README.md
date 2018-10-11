@@ -189,7 +189,7 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 
 <br>
 
-:sparkling_heart: ## A big thank you to
+## A big thank you to :sparkling_heart:
 
 ##### all authors of icons used in this library:
 - Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
