@@ -44,17 +44,17 @@ In fact, It's composed by 3 main parts
 
 ## Table of Contents
 
-1. **[Main parts](#main-parts)**
-2. **[Features](#features)**
-3. **[Installation](#installation)**
-4. **[Documentation](#documentation)**
-5. **[Live demo](#live)**
-6. **[Choose the version](#choose-the-version)**
-7. **[News](#news)**
-8. **[FAQS](#faqs)**
-9. **[Contributing](#contributing)**
-10. **[A big thank you to](#a-big-thank-you-to)**
-11. **[License](#license)**
+1. **[Main parts](#rocket-main-parts-rocket)**
+2. **[Features](#boom-features-boom)**
+3. **[Installation](#package-installation-package)**
+4. **[Documentation](#book-documentation-book)**
+5. **[Live demo](#microphone-live-microphone)**
+6. **[Choose the version](#warning-choose-the-version-warning)**
+7. **[News](#fire-news-fire)**
+8. **[FAQS](#question-faqs-question)**
+9. **[Contributing](#computer-contributing-computer)**
+10. **[A big thank you to](#sparkling-heart-a-big-thank-you-to-sparkling-heart)**
+11. **[License](#copyright-license-copyright)**
 
 
 ## :rocket: Main parts :rocket:
@@ -189,7 +189,7 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 
 <br>
 
-## A big thank you to :sparkling_heart:
+## :sparkling_heart: A big thank you to :sparkling_heart:
 
 ##### all authors of icons used in this library:
 - Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
