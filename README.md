@@ -36,8 +36,6 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://snyk.io/test/github/ks89/angular-modal-gallery"><img src="https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg" alt="Known Vulnerabilities"></a>
   <a href="https://david-dm.org/Ks89/angular-modal-gallery"><img src="https://david-dm.org/Ks89/angular-modal-gallery.svg" alt="david-dm Dependencies"></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery.svg?type=shield" alt="FOSSA Status"></a>
-</p>
-<p align="center">
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a>
   <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/gpa.svg" alt="Code Climate"></a>
   <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery/coverage"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/coverage.svg" alt="ode Climate Coverage"></a>
@@ -51,14 +49,10 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://www.paypal.me/stefanocappa"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate"></a>
 </p>
 
-<h5 align="center">
-<b>Do you like @ks89/angular-modal-gallery? Please, add a :star: to support this library</b>
-</h5>
+*Do you like @ks89/angular-modal-gallery? Please, add a :star: to support this library*
 
 <br>
 <br>
-
-
 
 ## Table of Contents
 
@@ -74,30 +68,40 @@ Despite its name, this library is more than for modal galleries, because I'm int
 10. **[A big thank you to](#sparkling_heart-a-big-thank-you-to-sparkling_heart)**
 11. **[License](#copyright-license-copyright)**
 
+<br>
+
 
 ## :rocket: Main parts :rocket:
 
 ### Carousel
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/carousel-full.png?raw=true)
-
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/carousel-fix.png?raw=true)
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/carousel-full.png" alt="Carousel full width">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/carousel-fix.png" alt="Carousel fixed width">
+</p>
 
 ### Modal Gallery
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/modal1.png?raw=true)
-
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/modal2.png?raw=true)
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/modal1.png" alt="Modal gallery">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/modal2.png" alt="Modal gallery with buttons">
+</p>
 
 ### Plain Gallery
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-row.png?raw=true)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/plain-row.png" alt="Plain gallery row">
+</p>
 
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-col.png?raw=true)
-
-![angular-modal-gallery image](https://github.com/Ks89/angular-modal-gallery/blob/700/readme-images/plain-grid.png?raw=true)
+<p align="center">
+  <img width="80" src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/plain-col.png" alt="Plain gallery column">
+  &nbsp;&nbsp;&nbsp;
+  <img width="300" src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/plain-grid.png" alt="Plain gallery grid">
+</p>
 
 <br>
 
@@ -117,8 +121,8 @@ Despite its name, this library is more than for modal galleries, because I'm int
 - fully configurable default buttons to either close, download, navigate to an external url or delete images and so on
 - support custom buttons with both pre and after hooks
 - **click outside feature** to close the modal gallery clicking on the background
-- configurable plain gallery
-- configurable carousel
+- configurable **plain gallery**
+- configurable **carousel**
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
