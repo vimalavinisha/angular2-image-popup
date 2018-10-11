@@ -23,18 +23,9 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery">
     <img src="https://badge.fury.io/js/%40ks89%2Fangular-modal-gallery.svg" alt="npm@latest">
   </a>
-</p>
-<p align="center">
-  New package >= 6
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dw/@ks89/angular-modal-gallery.svg" alt="Downloads/week"></a>
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dm/@ks89/angular-modal-gallery.svg" alt="Downloads/month"></a>
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg" alt="Downloads/year"></a>
-</p>
-<p align="center">
-  Old package <= 5
-  <a href="https://www.npmjs.com/package/angular-modal-gallery"><img src="https://img.shields.io/npm/dw/angular-modal-gallery.svg" alt="Downloads/week"></a>
-  <a href="https://www.npmjs.com/package/angular-modal-gallery"><img src="https://img.shields.io/npm/dm/angular-modal-gallery.svg" alt="Downloads/month"></a>
-  <a href="https://www.npmjs.com/package/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/angular-modal-gallery.svg" alt="Downloads/year"></a>
 </p>
 <p align="center">
   <a href="https://travis-ci.org/Ks89/angular-modal-gallery"><img src="https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master" alt=""></a>
