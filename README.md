@@ -58,6 +58,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 <p align="center">
   <a href="https://www.paypal.me/stefanocappa"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square" alt="Donate"></a>
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/l/@ks89/angular-modal-gallery.svg?style=flat-square" alt="NPMLicense"></a>
+  <a href="https://semver.org/"><img src="https://img.shields.io/badge/semver-2.0-ff69b4.svg?style=flat-square" alt="Semver"></a>
 </p>
 
 <h5 align="center">
