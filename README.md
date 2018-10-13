@@ -248,6 +248,9 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 - <a href="https://github.com/nikhil8krishnan">Nikhil Krishnan</a> - <a href="https://codepen.io/nikhil8krishnan/pen/dMEzGx">nikhil8krishnan example on codepen.io</a></li>
 - <a href="https://codepen.io/WebSonata/">Anastasiya Kuligina</a> - <a href="https://codepen.io/WebSonata/pen/bRaONB">Anastasiya Kuligina example on codepen.io</a></li>
 
+#### all authors of these projects
+- <a href="https://github.com/prettier/prettier">Prettier</a> for the style of its icon
+
 <br>
 
 ## :copyright: License :copyright:
