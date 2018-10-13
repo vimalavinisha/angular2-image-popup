@@ -45,6 +45,8 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://david-dm.org/Ks89/angular-modal-gallery"><img src="https://david-dm.org/Ks89/angular-modal-gallery.svg" alt="david-dm Dependencies"></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FKs89%2Fangular-modal-gallery.svg?type=shield" alt="FOSSA Status"></a>
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a>
+</p>
+<p align="center">
   <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/gpa.svg" alt="Code Climate"></a>
   <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery/coverage"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/coverage.svg" alt="ode Climate Coverage"></a>
   <a href="https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master"><img src="https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master" alt="Coveralls Coverage"></a>
