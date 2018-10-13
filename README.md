@@ -21,11 +21,19 @@ Despite its name, this library is more than for modal galleries, because I'm int
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery">
-    <img src="https://badge.fury.io/js/%40ks89%2Fangular-modal-gallery.svg" alt="npm@latest">
+    <img src="https://img.shields.io/npm/v/@ks89/angular-modal-gallery.svg?style=flat-square" alt="npm@latest">
   </a>
-  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dw/@ks89/angular-modal-gallery.svg" alt="Downloads/week"></a>
-  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dm/@ks89/angular-modal-gallery.svg" alt="Downloads/month"></a>
-  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg" alt="Downloads/year"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery">
+      <img src="https://img.shields.io/npm/v/@ks89/angular-modal-gallery/beta.svg?style=flat-square" alt="npm@beta">
+    </a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery">
+    <img src="https://img.shields.io/npm/v/@ks89/angular-modal-gallery/next.svg?style=flat-square" alt="npm@next">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dw/@ks89/angular-modal-gallery.svg?style=flat-square" alt="Downloads/week"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dm/@ks89/angular-modal-gallery.svg?style=flat-square" alt="Downloads/month"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg?style=flat-square" alt="Downloads/year"></a>
 </p>
 <p align="center">
   <a href="https://travis-ci.org/Ks89/angular-modal-gallery"><img src="https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master" alt=""></a>
@@ -46,7 +54,12 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://github.com/Ks89/angular-modal-gallery"><img src="https://img.shields.io/github/release/Ks89/angular-modal-gallery/all.svg?style=flat-square" alt="GitHub (pre-)release"></a>
 </p>
 <p align="center">
-  <a href="https://www.paypal.me/stefanocappa"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate"></a>
+  <a href="https://stackblitz.com/edit/angular-modal-gallery-v7"><img src="https://img.shields.io/badge/stackblitz-available-orange.svg" alt="Stackblitz"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/badge/angular--style--guide-compliant-brightgreen.svg" alt="AngularStyleGuide"></a>
+</p>
+<p align="center">
+  <a href="https://www.paypal.me/stefanocappa"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square" alt="Donate"></a>
+  <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/l/@ks89/angular-modal-gallery.svg?style=flat-square" alt="NPMLicense"></a>
 </p>
 
 <h5 align="center">
@@ -172,7 +185,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 80 releases in two years**, and more to come... :)
 
-- 10/15/2018 - 7.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 10/14/2018 - 7.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/11/2018 - 6.3.0 - angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/09/2018 - 7.0.0-alpha.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/04/2018 - 7.0.0-alpha.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
