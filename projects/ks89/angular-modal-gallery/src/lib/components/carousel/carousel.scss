@@ -49,12 +49,14 @@ $figcaption-right: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  //width: 100%; // required by Firefox
 
   > #current-figure {
     animation: fadein-visible $curr-img-animation-time;
     text-align: center;
     margin: $curr-img-margin;
     position: relative;
+    //width: 100%; // required by Firefox
 
     .nav {
       animation: animatezoom $nav-animation-time;
