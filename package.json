@@ -69,13 +69,13 @@
     "analyze:sonar:ci": "npm run clean && npm run test:ci && sonar-scanner -Dsonar.projectKey=angular-modal-gallery -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=ks89-github",
     "check:licenses": "license-checker --exclude 'MIT, MIT OR X11, BSD, ISC, Apache-2.0'",
     "coveralls": "coveralls < coverage/lcov.info",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
-    "prettier": "prettier --list-different --write \"**/*.*\"",
-    "prettier:nowrite": "prettier --list-different \"**/*.*\""
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   },
-  "pre-commit": [
-    "prettier"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged --verbose"
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~7.0.0-rc.1",
@@ -112,6 +112,7 @@
     "coveralls": "^3.0.1",
     "cpr": "^3.0.1",
     "cross-env": "^5.2.0",
+    "husky": "^1.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
@@ -130,7 +131,8 @@
     "lite-server": "^2.3.0",
     "ng-packagr": "^4.2.0",
     "pre-commit": "^1.2.2",
-    "prettier": "^1.14.3",
+    "prettier": "=1.14.3",
+    "pretty-quick": "=1.8.0",
     "protractor": "~5.4.1",
     "rimraf": "^2.6.2",
     "sass-lint": "^1.12.1",
