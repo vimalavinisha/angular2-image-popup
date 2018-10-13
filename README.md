@@ -52,10 +52,6 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master"><img src="https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master" alt="Coveralls Coverage"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/Ks89/angular-modal-gallery"><img src="https://img.shields.io/github/release/Ks89/angular-modal-gallery.svg?style=flat-square" alt="GitHub release"></a>
-  <a href="https://github.com/Ks89/angular-modal-gallery"><img src="https://img.shields.io/github/release/Ks89/angular-modal-gallery/all.svg?style=flat-square" alt="GitHub (pre-)release"></a>
-</p>
-<p align="center">
   <a href="https://stackblitz.com/edit/angular-modal-gallery-v7"><img src="https://img.shields.io/badge/stackblitz-available-orange.svg" alt="Stackblitz"></a>
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/badge/angular--style--guide-compliant-brightgreen.svg" alt="AngularStyleGuide"></a>
 </p>
