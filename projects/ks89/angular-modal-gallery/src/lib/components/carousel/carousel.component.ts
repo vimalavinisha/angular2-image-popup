@@ -200,8 +200,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     layout: new AdvancedLayout(-1, true)
   };
 
-  private _start$ = new Subject<void>();
-  private _stop$ = new Subject<void>();
+  private start$ = new Subject<void>();
+  private stop$ = new Subject<void>();
 
   /**
    * Private object without type to define all swipe actions used by hammerjs.
@@ -270,7 +270,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         // if autoplay is enabled, and this is not the
         // first change (to prevent multiple starts at the beginning)
         if (playConfigChangeCurr.autoPlay && !playConfigChange.isFirstChange()) {
-          this._start$.next();
+          this.start$.next();
         } else {
           this.stopCarousel();
         }
@@ -331,11 +331,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     // so we should run it in the browser and outside Angular
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
-        this._start$
+        this.start$
           .pipe(
             map(() => this.configPlay.interval),
             filter(interval => interval > 0),
-            switchMap(interval => timer(interval).pipe(takeUntil(this._stop$)))
+            switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
           .subscribe(() =>
             this._ngZone.run(() => {
@@ -344,7 +344,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
             })
           );
 
-        this._start$.next();
+        this.start$.next();
       });
     }
   }
@@ -447,7 +447,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
     this.manageSlideConfig();
 
-    this._start$.next();
+    this.start$.next();
   }
 
   /**
@@ -464,7 +464,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
     this.manageSlideConfig();
 
-    this._start$.next();
+    this.start$.next();
   }
 
   // TODO add docs
@@ -538,14 +538,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   playCarousel() {
-    this._start$.next();
+    this.start$.next();
   }
 
   /**
    * Stops the carousel from cycling through items.
    */
   stopCarousel() {
-    this._stop$.next();
+    this.stop$.next();
   }
 
   // TODO remove this because duplicated
