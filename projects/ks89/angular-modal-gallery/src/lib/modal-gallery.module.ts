@@ -29,8 +29,6 @@ import { DIRECTIVES } from './directives/directives';
 import { COMPONENTS, ModalGalleryComponent, CarouselComponent } from './components/components';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
-import { GalleryService } from './services/gallery.service';
-import { IdValidatorService } from './services/id-validator.service';
 
 /**
  * Module with `forRoot` method to import it in the root module of your application.
@@ -41,6 +39,12 @@ import { IdValidatorService } from './services/id-validator.service';
   exports: [ModalGalleryComponent, CarouselComponent]
 })
 export class GalleryModule {
+  /**
+   * Importing with '.forRoot()' is no longer necessary, you can simply import the module.
+   * Will be removed in 8.0.0.
+   *
+   * @deprecated 7.0.0
+   */
   static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {
     return {
       ngModule: GalleryModule,
@@ -53,14 +57,6 @@ export class GalleryModule {
           provide: KeyboardService,
           useFactory: setupKeyboardService,
           deps: [KEYBOARD_CONFIGURATION]
-        },
-        {
-          provide: GalleryService,
-          useFactory: setupGalleryService
-        },
-        {
-          provide: IdValidatorService,
-          useFactory: setupIdValidatorService
         }
       ]
     };
@@ -74,12 +70,4 @@ export class GalleryModule {
  */
 export function setupKeyboardService(injector: KeyboardServiceConfig): KeyboardService {
   return new KeyboardService(injector);
-}
-
-export function setupGalleryService(): GalleryService {
-  return new GalleryService();
-}
-
-export function setupIdValidatorService(): IdValidatorService {
-  return new IdValidatorService();
 }

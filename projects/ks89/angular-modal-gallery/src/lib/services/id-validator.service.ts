@@ -27,7 +27,7 @@ import { Injectable } from '@angular/core';
 /**
  * Service to check if the provided id is unique
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IdValidatorService {
   ids = new Map();
 

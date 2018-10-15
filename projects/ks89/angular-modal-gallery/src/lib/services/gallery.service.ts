@@ -31,7 +31,7 @@ export interface InternalGalleryPayload {
   image?: Image;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GalleryService {
   navigate: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
   close: EventEmitter<number> = new EventEmitter<number>();
@@ -64,6 +64,11 @@ export class GalleryService {
     this.close.emit(galleryId);
   }
 
+  /**
+   * Service to update an image with a new object
+   *
+   * @since 6.3.0
+   */
   updateGallery(galleryId: number | undefined, index: number, image: Image): void {
     if (galleryId === undefined || galleryId < 0 || index < 0) {
       throw new Error('Cannot update gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
