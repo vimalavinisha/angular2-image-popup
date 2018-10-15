@@ -1,17 +1,20 @@
 # 7.0.0-beta.2
 ### Features
-- deprecate forRoot() in favour of `@Injectable(provideIn: 'root')`
+- use `@Injectable(provideIn: 'root')` in galleryService and idValidatorService
+- add deprecation to `forRoot()` method. Probably I'll remove it in version 8.x.x
+- new library logo
 
 ### Bugfixes
 - fix wrong carousel's width on both Firefox, IE11 and Edge (IE11 still stretches carousel images)
+
+### Refactor
+- use internal ksSize and ksMaxSize directives when possible in carousel.html
 
 ### Documentations
 - add new logo
 - replace navbar brand text with the new logo
 - replace github iframes with badges
-
-### Chores
-- new library logo
+- add migration guide
 
 
 # 7.0.0-beta.1

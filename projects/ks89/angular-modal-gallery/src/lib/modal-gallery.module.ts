@@ -41,7 +41,7 @@ import { KeyboardServiceConfig } from './model/keyboard-service-config.interface
 export class GalleryModule {
   /**
    * Importing with '.forRoot()' is no longer necessary, you can simply import the module.
-   * Will be removed in 8.0.0.
+   * Will be removed in 8.0.0
    *
    * @deprecated 7.0.0
    */
