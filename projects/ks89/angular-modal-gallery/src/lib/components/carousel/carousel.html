@@ -1,10 +1,12 @@
 <main id="carousel-container"
       [attr.aria-label]="accessibilityConfig.carouselContainerAriaLabel"
       [title]="accessibilityConfig.carouselContainerTitle"
-      [style.width]="configCarousel?.maxWidth">
+      ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
+                                height: ''}">
 
   <figure id="current-figure"
-          [style.width]="configCarousel?.maxWidth">
+          ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
+                                height: ''}">
 
     <a class="nav-left" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
@@ -19,8 +21,8 @@
 
     <img id="current-image"
          [style.object-fit]="configCarousel?.objectFit"
-         [style.max-width]="configCarousel?.maxWidth"
-         [style.max-height]="configCarousel?.maxHeight"
+         ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
+                                  maxHeight: configCarousel?.maxHeight}"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
