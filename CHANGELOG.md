@@ -1,3 +1,19 @@
+# 7.0.0-beta.2
+### Features
+- deprecate forRoot() in favour of `@Injectable(provideIn: 'root')`
+
+### Bugfixes
+- fix wrong carousel's width on both Firefox, IE11 and Edge (IE11 still stretches carousel images)
+
+### Documentations
+- add new logo
+- replace navbar brand text with the new logo
+- replace github iframes with badges
+
+### Chores
+- new library logo
+
+
 # 7.0.0-beta.1
 ### Features
 - remove unused stuff and change some names to simplify apis
