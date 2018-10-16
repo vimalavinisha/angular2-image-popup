@@ -49,14 +49,13 @@ $figcaption-right: 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  //width: 100%; // required by Firefox
+  width: 100%;
 
-  > #current-figure {
+  > .current-figure {
     animation: fadein-visible $curr-img-animation-time;
     text-align: center;
     margin: $curr-img-margin;
     position: relative;
-    //width: 100%; // required by Firefox
 
     .nav {
       animation: animatezoom $nav-animation-time;
@@ -81,7 +80,8 @@ $figcaption-right: 0;
       right: $nav-right-position;
     }
 
-    > img {
+    > .current-image,
+    > .current-image {
       // max width is applied via Angular
       width: 100%;
       // max-width: 100%;

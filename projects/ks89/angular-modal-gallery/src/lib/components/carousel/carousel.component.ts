@@ -65,6 +65,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -245,7 +246,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.nextImage();
   }
 
-  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private galleryService: GalleryService, private ref: ChangeDetectorRef) {
+  constructor(
+    @Inject(PLATFORM_ID) private _platformId,
+    private _ngZone: NgZone,
+    private galleryService: GalleryService,
+    private ref: ChangeDetectorRef,
+    // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
+    private sanitizer: DomSanitizer
+  ) {
     super();
   }
 
@@ -306,7 +314,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       showArrows: true,
       objectFit: 'cover',
       keyboardEnable: true,
-      modalGalleryEnable: false
+      modalGalleryEnable: false,
+      legacyIE11Mode: false
     };
     const defaultCurrentCarouselPlay: PlayConfig = {
       autoPlay: true,
@@ -347,6 +356,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         this.start$.next();
       });
     }
+  }
+
+  sanitizeStyle(unsafeStyle: string): SafeStyle {
+    // Method used only  to sanitize style before add it to background property when legacyIE11Mode is enabled
+    return this.sanitizer.bypassSecurityTrustStyle(unsafeStyle);
   }
 
   /**

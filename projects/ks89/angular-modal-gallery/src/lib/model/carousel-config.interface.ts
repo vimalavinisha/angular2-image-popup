@@ -32,4 +32,5 @@ export interface CarouselConfig {
   objectFit: string;
   keyboardEnable: boolean;
   modalGalleryEnable: boolean;
+  legacyIE11Mode: boolean;
 }
