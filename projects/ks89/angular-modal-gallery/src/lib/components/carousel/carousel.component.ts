@@ -358,9 +358,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
-  sanitizeStyle(unsafeStyle: string): SafeStyle {
-    // Method used only  to sanitize style before add it to background property when legacyIE11Mode is enabled
-    return this.sanitizer.bypassSecurityTrustStyle(unsafeStyle);
+  sanitizeUrlBgStyle(unsafeStyle: string): SafeStyle {
+    // Method used only to sanitize background-image style before add it to background property when legacyIE11Mode is enabled
+    return this.sanitizer.bypassSecurityTrustStyle('url(' + unsafeStyle + ')');
   }
 
   /**

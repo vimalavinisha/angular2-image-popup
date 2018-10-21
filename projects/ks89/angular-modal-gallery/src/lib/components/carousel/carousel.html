@@ -78,7 +78,7 @@
 
       <div id="current-image-legacy"
            [style.background-color]="'transparent'"
-           [style.background-image]="sanitizeStyle('url(' + currentImage.modal.img + ')')"
+           [style.background-image]="sanitizeUrlBgStyle(currentImage.modal.img + '')"
            [style.background-position]="'center center'"
            [style.background-size]="configCarousel?.maxWidth + ' ' + (configCarousel?.maxWidth === '100%' ? 'auto' : configCarousel?.maxHeight)"
            [style.background-repeat]="'no-repeat'"
