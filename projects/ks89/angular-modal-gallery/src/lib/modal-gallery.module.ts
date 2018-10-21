@@ -31,7 +31,7 @@ import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.ser
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 
 /**
- * Module with `forRoot` method to import it in the root module of your application.
+ * Module to import it in the root module of your application.
  */
 @NgModule({
   imports: [CommonModule],
@@ -40,8 +40,8 @@ import { KeyboardServiceConfig } from './model/keyboard-service-config.interface
 })
 export class GalleryModule {
   /**
-   * Importing with '.forRoot()' is no longer necessary, you can simply import the module.
-   * Will be removed in 8.0.0
+   * Importing with '.forRoot()' is deprecated. I'll provide a new way to do this in next releases.
+   * Will be removed in 8.0.0 or 9.0.0
    *
    * @deprecated 7.0.0
    */

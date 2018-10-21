@@ -7,6 +7,9 @@
 ### Bugfixes
 - fix wrong carousel's width on both Firefox, IE11 and Edge (IE11 still stretches carousel images)
 
+### Internal library changes
+- upgrade to angular-cli 7 final and Angular 7 final
+
 ### Refactor
 - use internal ksSize and ksMaxSize directives when possible in carousel.html
 

@@ -52,8 +52,8 @@ import {
 
 @Component({
   selector: 'ks-modal-gallery-page',
-  templateUrl: './modal-gallery.component.html',
-  styleUrls: ['./modal-gallery.component.scss']
+  templateUrl: './modal-gallery.html',
+  styleUrls: ['./modal-gallery.scss']
 })
 export class ModalGalleryComponent {
   imageIndex = 1;

@@ -29,8 +29,8 @@ import { ImageEvent } from '../../../projects/ks89/angular-modal-gallery/src/lib
 
 @Component({
   selector: 'ks-carousel-page',
-  templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss']
+  templateUrl: './carousel.html',
+  styleUrls: ['./carousel.scss']
 })
 export class CarouselComponent {
   imageIndex = 1;
