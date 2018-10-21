@@ -21,7 +21,7 @@
 
     <ng-content></ng-content>
 
-    <img class="current-image"
+    <img id="current-image"
          [style.object-fit]="configCarousel?.objectFit"
          ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
                                   maxHeight: configCarousel?.maxHeight}"
@@ -77,8 +77,12 @@
       <ng-content></ng-content>
 
       <div id="current-image-legacy"
-           [style.background]="sanitizeStyle('transparent url(' + currentImage.modal.img + ') no-repeat center center scroll')"
-           [style.background-size]="'cover'"
+           [style.background-color]="'transparent'"
+           [style.background-image]="sanitizeStyle('url(' + currentImage.modal.img + ')')"
+           [style.background-position]="'center center'"
+           [style.background-size]="configCarousel?.maxWidth + ' ' + (configCarousel?.maxWidth === '100%' ? 'auto' : configCarousel?.maxHeight)"
+           [style.background-repeat]="'no-repeat'"
+           [style.background-attachment]="'scroll'"
            ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
                                  height: configCarousel?.maxHeight}"
            [attr.aria-label]="currentImage.modal.ariaLabel"
@@ -86,12 +90,13 @@
            [tabindex]="0" role="img"
            (click)="onClickCurrentImage()"
            (swipeleft)="swipe($event.type)"
-           (swiperight)="swipe($event.type)"></div>
+           (swiperight)="swipe($event.type)">
 
-      <!--<figcaption *ngIf="getDescriptionToDisplay() !== ''"-->
-      <!--class="description"-->
-      <!--ksDescription [description]="configCurrentImageCarousel?.description"-->
-      <!--[innerHTML]="getDescriptionToDisplay()"></figcaption>-->
+        <div *ngIf="getDescriptionToDisplay() !== ''"
+             class="description-ie11"
+             ksDescription [description]="configCurrentImageCarousel?.description"
+             [innerHTML]="getDescriptionToDisplay()"></div>
+      </div>
 
       <a class="nav-right" *ngIf="configCarousel?.showArrows"
          [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"

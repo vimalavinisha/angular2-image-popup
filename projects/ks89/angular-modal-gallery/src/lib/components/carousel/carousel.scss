@@ -80,13 +80,28 @@ $figcaption-right: 0;
       right: $nav-right-position;
     }
 
-    > .current-image,
-    > .current-image {
+    > #current-image {
       // max width is applied via Angular
       width: 100%;
       // max-width: 100%;
       height: auto;
       display: block;
+    }
+
+    > #current-image-legacy {
+      // max width is applied via Angular
+      width: 100%;
+      // max-width: 100%;
+      height: auto;
+      display: block;
+
+      > .description-ie11 {
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
     }
 
     > figcaption {

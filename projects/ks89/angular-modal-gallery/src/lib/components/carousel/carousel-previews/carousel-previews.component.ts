@@ -49,6 +49,7 @@ import { CarouselConfig } from '../../../model/carousel-config.interface';
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
 import { Action } from '../../../model/action.enum';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 /**
  * Component with image previews
@@ -141,6 +142,13 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * End index of the input images used to display previews.
    */
   end: number;
+
+  constructor(
+    // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
+    private sanitizer: DomSanitizer
+  ) {
+    super();
+  }
 
   /**
    * Method ´ngOnInit´ to build `configPreview` applying a default value and also to
@@ -304,6 +312,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   trackById(index: number, item: Image): number {
     return item.id;
+  }
+
+  sanitizeStyle(unsafeStyle: string): SafeStyle {
+    // Method used only  to sanitize style before add it to background property when legacyIE11Mode is enabled
+    return this.sanitizer.bypassSecurityTrustStyle(unsafeStyle);
   }
 
   /**
