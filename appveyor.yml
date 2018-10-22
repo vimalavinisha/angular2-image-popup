@@ -101,7 +101,7 @@ install:
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
   - npm install -g npm@6.4.1
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g codeclimate-test-reporter @angular/cli@7.0.0-beta.4
+  - npm install -g codeclimate-test-reporter @angular/cli@7.0.2
   - npm ci
   # rebuild again node-sass
   - npm rebuild node-sass --force
