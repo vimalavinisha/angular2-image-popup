@@ -130,7 +130,6 @@
     "karma-sonarqube-unit-reporter": "0.0.18",
     "lite-server": "^2.3.0",
     "ng-packagr": "^4.4.0",
-    "pre-commit": "^1.2.2",
     "prettier": "=1.14.3",
     "pretty-quick": "=1.8.0",
     "protractor": "~5.4.1",
