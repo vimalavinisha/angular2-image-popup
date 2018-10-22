@@ -39,10 +39,11 @@ import {
   Image,
   ImageModalEvent,
   KS_DEFAULT_BTN_CLOSE,
-  KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_DELETE,
+  KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
+  // KS_DEFAULT_BTN_ROTATE,
   PreviewConfig,
   LoadingConfig,
   LoadingType,
@@ -50,9 +51,9 @@ import {
 } from '@ks89/angular-modal-gallery';
 
 @Component({
-  selector: 'app-modal-gallery-page',
-  templateUrl: './modal-gallery.component.html',
-  styleUrls: ['./modal-gallery.component.scss']
+  selector: 'ks-modal-gallery-page',
+  templateUrl: './modal-gallery.html',
+  styleUrls: ['./modal-gallery.scss']
 })
 export class ModalGalleryComponent {
   imageIndex = 1;
@@ -286,32 +287,6 @@ export class ModalGalleryComponent {
     )
   ];
 
-  imagesRotated: Image[] = [
-    new Image(0, {
-      img: '../assets/images/gallery/pexels-photo-135230.png',
-      description: 'Description 1',
-      angle: 180
-    }),
-    new Image(1, {
-      img: '../assets/images/gallery/pexels-photo-547115.jpeg',
-      angle: 90
-    }),
-    new Image(2, {
-      img: '../assets/images/gallery/pexels-photo-556664.jpeg',
-      description: 'Description 3',
-      angle: 270
-    }),
-    new Image(3, {
-      img: '../assets/images/gallery/pexels-photo-787594.jpeg',
-      description: 'Description 4',
-      angle: 0
-    }),
-    new Image(4, {
-      img: '../assets/images/gallery/pexels-photo-803105.jpeg',
-      angle: 90
-    })
-  ];
-
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
@@ -399,7 +374,14 @@ export class ModalGalleryComponent {
   buttonsConfigCustom: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
-    buttons: [KS_DEFAULT_BTN_FULL_SCREEN, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE]
+    buttons: [
+      // KS_DEFAULT_BTN_ROTATE,
+      KS_DEFAULT_BTN_FULL_SCREEN,
+      KS_DEFAULT_BTN_DELETE,
+      KS_DEFAULT_BTN_EXTURL,
+      KS_DEFAULT_BTN_DOWNLOAD,
+      KS_DEFAULT_BTN_CLOSE
+    ]
   };
 
   // default buttons but extUrl will open the link in a new tab instead of the current one

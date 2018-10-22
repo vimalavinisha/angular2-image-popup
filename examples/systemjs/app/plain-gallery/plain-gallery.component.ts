@@ -38,8 +38,8 @@ import {
 
 @Component({
   selector: 'ks-plain-gallery-page',
-  templateUrl: './plain-gallery.component.html',
-  styleUrls: ['./plain-gallery.component.css']
+  templateUrl: './plain-gallery.html',
+  styleUrls: ['./plain-gallery.css']
 })
 export class PlainGalleryComponent {
   imageIndex = 1;

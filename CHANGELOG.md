@@ -1,17 +1,23 @@
 # 7.0.0-beta.2
 ### Features
-- use `@Injectable(provideIn: 'root')` in galleryService and idValidatorService
+- add new input param to enable legacyIE11Mode. This is required only to support IE11. If you don't need this stupid obsolete browser, you shouldn't use it.
 - add deprecation to `forRoot()` method. Probably I'll remove it in version 8.x.x
 - new library logo
 
 ### Bugfixes
 - fix wrong carousel's width on both Firefox, IE11 and Edge (IE11 still stretches carousel images)
+- fix many issues on IE11
 
 ### Internal library changes
 - upgrade to angular-cli 7 final and Angular 7 final
+- use `@Injectable(provideIn: 'root')` in galleryService and idValidatorService
 
 ### Refactor
 - use internal ksSize and ksMaxSize directives when possible in carousel.html
+
+### Demos
+- upgrade all examples to Angular 7 and cli 7 if necessary
+- add new carousel ie11 page to all examples
 
 ### Documentations
 - add new logo

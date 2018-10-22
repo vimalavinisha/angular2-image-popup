@@ -37,9 +37,9 @@ import {
 } from '@ks89/angular-modal-gallery';
 
 @Component({
-  selector: 'app-plain-gallery-page',
-  templateUrl: './plain-gallery.component.html',
-  styleUrls: ['./plain-gallery.component.scss']
+  selector: 'ks-plain-gallery-page',
+  templateUrl: './plain-gallery.html',
+  styleUrls: ['./plain-gallery.scss']
 })
 export class PlainGalleryComponent {
   imageIndex = 1;

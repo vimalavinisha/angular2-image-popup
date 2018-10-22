@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+
+.red-text {
+  color: red;
+}
+
+.title {
+  text-align: center;
+  color: red;
+}
+
+.center-text {
+  text-align: center;
+}

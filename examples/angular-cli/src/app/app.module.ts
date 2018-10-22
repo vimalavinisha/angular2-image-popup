@@ -31,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { CarouselIe11Component } from './carousel-ie11/carousel-ie11.component';
 import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 
@@ -49,7 +50,11 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 // *************************************************************************
 
 @NgModule({
-  declarations: [AppComponent, CarouselComponent, PlainGalleryComponent, ModalGalleryComponent],
+  declarations: [AppComponent,
+    CarouselComponent,
+    CarouselIe11Component,
+    PlainGalleryComponent,
+    ModalGalleryComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -57,7 +62,7 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 
     FormsModule,
     HttpClientModule,
-    GalleryModule.forRoot() // <-------------------------------------------- angular-modal-gallery module import
+    GalleryModule.forRoot() // <-------------------------------------------- @ks89/angular-modal-gallery module import
   ],
   providers: [],
   bootstrap: [AppComponent]

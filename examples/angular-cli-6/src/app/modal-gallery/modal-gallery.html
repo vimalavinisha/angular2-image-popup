@@ -364,23 +364,23 @@
   <h3>D2 - (id=50) - Other demo - custom file name, used when downloaded</h3>
   <br>
   <ks-modal-gallery [id]="50" [modalImages]="imagesCustomDownloadFileName"
-    [currentImageConfig]="{downloadable: true}"
-    [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
+                    [currentImageConfig]="{downloadable: true}"
+                    [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>
 </section>
 
 <section>
   <h3>D3 - (id=51) - Other demo - invert touchscreen swipe direction</h3>
   <br>
   <ks-modal-gallery [id]="51" [modalImages]="images"
-    [currentImageConfig]="{invertSwipe: true}"></ks-modal-gallery>
+                    [currentImageConfig]="{invertSwipe: true}"></ks-modal-gallery>
 </section>
 
 <section>
   <h3>D4 - (id=52) - Other demo - infinite sliding and automatic add of images when the gallery is visible</h3>
   <br>
   <ks-modal-gallery [id]="52" [modalImages]="imagesInfiniteAutoAdd"
-    [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"
-    (show)="autoAddImage()"></ks-modal-gallery>
+                    [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"
+                    (show)="autoAddImage()"></ks-modal-gallery>
 </section>
 
 <section>
@@ -398,12 +398,7 @@
   <h3>E1 - (id=54) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
   <br>
   <ks-modal-gallery [id]="54" [modalImages]="[images[0]]"
-    [keyboardConfig]="null"
-    [currentImageConfig]="currentImageConfigExperimental"
-    [slideConfig]="{infinite: false}"></ks-modal-gallery>
-</section>
-<section>
-  <h3>E2 - (id=55) - Other demo - load images already rotated</h3>
-  <br>
-  <ks-modal-gallery [id]="55" [modalImages]="imagesRotated"></ks-modal-gallery>
+                    [keyboardConfig]="null"
+                    [currentImageConfig]="currentImageConfigExperimental"
+                    [slideConfig]="{infinite: false}"></ks-modal-gallery>
 </section>

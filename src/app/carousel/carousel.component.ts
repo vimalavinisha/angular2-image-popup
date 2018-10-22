@@ -24,8 +24,7 @@
 
 import { Component } from '@angular/core';
 
-import { AccessibilityConfig, Image } from '@ks89/angular-modal-gallery';
-import { ImageEvent } from '../../../projects/ks89/angular-modal-gallery/src/lib/model/image.class';
+import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'ks-carousel-page',

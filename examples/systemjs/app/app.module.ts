@@ -31,6 +31,7 @@ import { AppComponent } from './app.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
+import { CarouselIe11Component } from './carousel-ie11/carousel-ie11.component';
 
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
@@ -47,13 +48,13 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 // *************************************************************************
 
 @NgModule({
-  declarations: [AppComponent, CarouselComponent, PlainGalleryComponent, ModalGalleryComponent],
+  declarations: [AppComponent, CarouselComponent, CarouselIe11Component, PlainGalleryComponent, ModalGalleryComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
 
     FormsModule,
-    GalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }) // <-------------------------------------------- angular-modal-gallery module import
+    GalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }) // <------------------- @ks89/angular-modal-gallery module import
   ],
   providers: [],
   bootstrap: [AppComponent]

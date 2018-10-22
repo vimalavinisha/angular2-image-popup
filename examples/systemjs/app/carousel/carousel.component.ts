@@ -28,8 +28,8 @@ import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gall
 
 @Component({
   selector: 'ks-carousel-page',
-  templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.css']
+  templateUrl: './carousel.html',
+  styleUrls: ['./carousel.css']
 })
 export class CarouselComponent {
   imageIndex = 1;
@@ -42,41 +42,41 @@ export class CarouselComponent {
     new Image(
       0,
       {
-        img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg',
+        img: '/assets/images/gallery/milan-pegasus-gallery-statue.jpg',
         description: 'Description 1'
       },
-      { img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg' }
+      { img: '/assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg' }
     ),
-    new Image(1, { img: '../assets/images/gallery/pexels-photo-47223.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg' }),
+    new Image(1, { img: '/assets/images/gallery/pexels-photo-47223.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-47223.jpg' }),
     new Image(
       2,
       {
-        img: '../assets/images/gallery/pexels-photo-52062.jpeg',
+        img: '/assets/images/gallery/pexels-photo-52062.jpeg',
         description: 'Description 3'
       },
       {
-        img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
+        img: '/assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
         description: 'Description 3'
       }
     ),
     new Image(
       3,
       {
-        img: '../assets/images/gallery/pexels-photo-66943.jpeg',
+        img: '/assets/images/gallery/pexels-photo-66943.jpeg',
         description: 'Description 4'
       },
-      { img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg' }
+      { img: '/assets/images/gallery/thumbs/t-pexels-photo-66943.jpg' }
     ),
-    new Image(4, { img: '../assets/images/gallery/pexels-photo-93750.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg' }),
+    new Image(4, { img: '/assets/images/gallery/pexels-photo-93750.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-93750.jpg' }),
     new Image(
       5,
       {
-        img: '../assets/images/gallery/pexels-photo-94420.jpeg',
+        img: '/assets/images/gallery/pexels-photo-94420.jpeg',
         description: 'Description 6'
       },
-      { img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg' }
+      { img: '/assets/images/gallery/thumbs/t-pexels-photo-94420.jpg' }
     ),
-    new Image(6, { img: '../assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
+    new Image(6, { img: '/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
 
   accessibilityConfig: AccessibilityConfig = {
