@@ -6,33 +6,48 @@
 
 <h3>Examples with legacy mode enabled</h3>
 <section>
-  <h3>D1 - (id=115) - carousel example for IE11 (minimal with all defaults, but legacyMode enabled)</h3>
+  <h3>D1 - (id=300) - carousel example for IE11 (minimal with all defaults, but legacyMode enabled)</h3>
   <p>Obviously, objectFit is ignored when legacyIE11Mode is enabled</p>
   <br>
-  <ks-carousel [id]="115" [images]="imagesRect"
-    [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
+  <ks-carousel [id]="300" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
 <br>
 <section>
-  <h3>D2 - (id=116) - carousel example for IE11 with fixed maxWidth (766px), legacyMode enabled and custom previews</h3>
+  <h3>D2 - (id=301) - carousel example for IE11 with fixed maxWidth (766px), legacyMode enabled and custom previews</h3>
   <br>
-  <ks-carousel [id]="116" [images]="imagesRect"
-    [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
-    [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
+  <ks-carousel [id]="301" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
 <br>
 <section>
-  <h3>D3 - (id=117) - carousel example for IE11 with description and legacyMode enabled</h3>
+  <h3>D3 - (id=302) - carousel example for IE11 with description and legacyMode enabled</h3>
   <br>
-  <ks-carousel [id]="117" [images]="imagesRect"
-    [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
-    [carouselImageConfig]="{description: {strategy: 2}}">
+  <ks-carousel [id]="302" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+               [carouselImageConfig]="{description: {strategy: 2}}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
 <br>
+<section>
+  <h3>D4 - (id=303) - carousel example for IE11 (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180)</h3>
+  <br>
+  <ks-carousel [id]="303" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+               [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}}"></ks-carousel>
+</section>
+<br>
+<section>
+  <h3>D5 - (id=304) - carousel example for IE11 with fixed maxWidth (500px) (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100)</h3>
+  <br>
+  <ks-carousel [id]="304" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '500px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+               [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
+</section>
 <br>

@@ -64,7 +64,7 @@
 <section>
   <h3>A8 - (id=107) - carousel example with a custom previewConfig (7 previews with 'auto' width and 100px of height)</h3>
   <br>
-  <ks-carousel [id]="107" [images]="imagesRect" [previewConfig]="{number: 7, size: {width: 'auto', height: '100px'}}">
+  <ks-carousel [id]="107" [images]="imagesRect" [previewConfig]="{visible: true, number: 7, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -100,7 +100,7 @@
   <br>
   <ks-carousel [id]="110" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '766px'}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
+               [previewConfig]="{visible: true, number: 5}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -110,7 +110,7 @@
   <br>
   <ks-carousel [id]="111" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '766px', modalGalleryEnable: true}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
+               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -120,7 +120,7 @@
   <br>
   <ks-carousel [id]="112" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '766px', keyboardEnable: false}"
-               [previewConfig]="{number: 5, size: {width: 'auto', height: '100px'}}">
+               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -142,6 +142,52 @@
   <ks-carousel [id]="114" [images]="imagesRect" [carouselImageConfig]="{description: {strategy: 2}}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
+</section>
+<br>
+
+
+<h3>Examples with custom previews height</h3>
+<p>I know that these examples look bad, but the purpose is to show only how the library handles heights.
+  In both examples I didn't set breakpoints, so it will be used default values, but with the maxHeight specified</p>
+<p>If F1, the maxHeight is 200px, but also the default breakpoints has 200px as maximum size, so the result will be very bad on bigger screen.
+  In F2, I'm using a smaller maxHeight, so previews won't be taller than 150px, despite the default breakpoints on bigger screens (200px).</p>
+<section>
+  <h3>F1 - (id=115) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 200px)</h3>
+  <br>
+  <ks-carousel [id]="115" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '766px'}"
+               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '200px'}">
+    <div class="projected">This is my projected content!</div>
+  </ks-carousel>
+</section>
+<br>
+<section>
+  <h3>F2 - (id=116) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 150px)</h3>
+  <br>
+  <ks-carousel [id]="116" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '766px'}"
+               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '150px'}">
+    <div class="projected">This is my projected content!</div>
+  </ks-carousel>
+</section>
+<br>
+
+
+<h3>Examples with custom heights for previews (to try responsiveness)</h3>
+<br>
+<section>
+  <h3>G1 - (id=117) - carousel example (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180)</h3>
+  <br>
+  <ks-carousel [id]="117" [images]="imagesRect"
+               [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}}"></ks-carousel>
+</section>
+<br>
+<section>
+  <h3>G2 - (id=118) - carousel example with fixed maxWidth (500px) (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100)</h3>
+  <br>
+  <ks-carousel [id]="118" [images]="imagesRect"
+               [carouselConfig]="{maxWidth: '500px'}"
+               [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
 </section>
 <br>
 <br>
