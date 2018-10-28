@@ -10,7 +10,7 @@
 - write full internal documentation (npm run docs)
 
 ### Demos
-- update all examples, adding @angular/cdk, because it was missing
+- update all examples, adding @angular/cdk (also to SystemJS example), because it was missing
 
 
 # 7.0.0-beta.3
