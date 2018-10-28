@@ -376,6 +376,39 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   }
 
   /**
+   * Method to get aria-label text for a preview image.
+   * @param Image is the preview
+   */
+  getAriaLabel(preview: Image): string {
+    if (!preview.plain) {
+      return preview.modal.ariaLabel || '';
+    }
+    return preview.plain.ariaLabel || preview.modal.ariaLabel || '';
+  }
+
+  /**
+   * Method to get title text for a preview image.
+   * @param Image is the preview
+   */
+  getTitle(preview: Image): string {
+    if (!preview.plain) {
+      return preview.modal.title || '';
+    }
+    return preview.plain.title || preview.modal.title || '';
+  }
+
+  /**
+   * Method to get alt text for a preview image.
+   * @param Image is the preview
+   */
+  getAlt(preview: Image): string {
+    if (!preview.plain) {
+      return preview.modal.alt || '';
+    }
+    return preview.plain.alt || preview.modal.alt || '';
+  }
+
+  /**
    * Method used in the template to track ids in ngFor.
    * @param number index of the array
    * @param Image item of the array

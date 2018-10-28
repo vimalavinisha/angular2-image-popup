@@ -20,9 +20,9 @@
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
              ksSize [sizeConfig]="{width: configPreview?.width,
                                  height: configPreview?.maxHeight}"
-             [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
-             [title]="preview.modal.title ? preview.modal.title : ''"
-             alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
+             [attr.aria-label]="getAriaLabel(preview)"
+             [title]="getTitle(preview)"
+             alt="{{getAlt(preview)}}"
              [tabindex]="0" role="img"
              (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"/>
       </ng-container>
@@ -37,8 +37,8 @@
              [style.background-attachment]="'scroll'"
              ksSize [sizeConfig]="{width: configPreview?.width,
                                  height: configPreview?.maxHeight}"
-             [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
-             [title]="preview.modal.title ? preview.modal.title : ''"
+             [attr.aria-label]="getAriaLabel(preview)"
+             [title]="getTitle(preview)"
              [tabindex]="0" role="img"
              (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"></div>
       </ng-template>
