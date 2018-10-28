@@ -45,14 +45,22 @@ export class CarouselComponent {
         img: '/assets/images/gallery/milan-pegasus-gallery-statue.jpg',
         description: 'Description 1'
       },
-      { img: '/assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg' }
+      {
+        img: '/assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg',
+        title: 'First image title',
+        alt: 'First image alt',
+        ariaLabel: 'First image aria-label'
+      }
     ),
     new Image(1, { img: '/assets/images/gallery/pexels-photo-47223.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-47223.jpg' }),
     new Image(
       2,
       {
         img: '/assets/images/gallery/pexels-photo-52062.jpeg',
-        description: 'Description 3'
+        description: 'Description 3',
+        title: 'Third image title',
+        alt: 'Third image alt',
+        ariaLabel: 'Third image aria-label'
       },
       {
         img: '/assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
@@ -63,9 +71,17 @@ export class CarouselComponent {
       3,
       {
         img: '/assets/images/gallery/pexels-photo-66943.jpeg',
-        description: 'Description 4'
+        description: 'Description 4',
+        title: 'Fourth image title (modal obj)',
+        alt: 'Fourth image alt (modal obj)',
+        ariaLabel: 'Fourth image aria-label (modal obj)'
       },
-      { img: '/assets/images/gallery/thumbs/t-pexels-photo-66943.jpg' }
+      {
+        img: '/assets/images/gallery/thumbs/t-pexels-photo-66943.jpg',
+        title: 'Fourth image title (plain obj)',
+        alt: 'Fourth image alt (plain obj)',
+        ariaLabel: 'Fourth image aria-label (plain obj)'
+      }
     ),
     new Image(4, { img: '/assets/images/gallery/pexels-photo-93750.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-93750.jpg' }),
     new Image(

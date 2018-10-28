@@ -72,7 +72,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 1. **[Main parts](#rocket-main-parts-rocket)**
 2. **[Features](#boom-features-boom)**
 3. **[Installation](#package-installation-package)**
-4. **[Documentation](#book-documentation-book)**
+4. **[OFFICIAL DOCUMENTATION](#book-documentation-book)**
 5. **[Live demo](#microphone-live-demo-microphone)**
 6. **[Choose the version](#warning-choose-the-version-warning)**
 7. **[News](#fire-news-fire)**
@@ -145,7 +145,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 ## :package: Installation :package:
 
 - `npm install --save @ks89/angular-modal-gallery`
-- `npm install --save hammerjs mousetrap`
+- `npm install --save hammerjs mousetrap @angular/cdk`
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 
 From version @ks89/angular-modal-gallery >= 5.0.0, **font-awesome isn't a mandatory dependency**.
@@ -184,6 +184,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 90 releases in two years**, and more to come... :)
 
+- 10/??/2018 - 7.0.0-beta.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/28/2018 - 7.0.0-beta.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/22/2018 - 7.0.0-beta.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 10/14/2018 - 7.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

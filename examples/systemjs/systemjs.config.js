@@ -27,6 +27,26 @@
   let map = {
     app: 'app',
     '@angular': 'node_modules/@angular',
+
+    '@angular/cdk': 'node_modules/@angular/cdk/bundles/cdk.umd.js',
+    '@angular/cdk/a11y': 'node_modules/@angular/cdk/bundles/cdk-a11y.umd.js',
+    '@angular/cdk/accordion': 'node_modules/@angular/cdk/bundles/cdk-accordion.umd.js',
+    '@angular/cdk/bidi': 'node_modules/@angular/cdk/bundles/cdk-bidi.umd.js',
+    '@angular/cdk/coercion': 'node_modules/@angular/cdk/bundles/cdk-coercion.umd.js',
+    '@angular/cdk/collections': 'node_modules/@angular/cdk/bundles/cdk-collections.umd.js',
+    '@angular/cdk/drag-drop': 'node_modules/@angular/cdk/bundles/cdk-drag-drop.umd.js',
+    '@angular/cdk/keycodes': 'node_modules/@angular/cdk/bundles/cdk-keycodes.umd.js',
+    '@angular/cdk/layout': 'node_modules/@angular/cdk/bundles/cdk-layout.umd.js',
+    '@angular/cdk/observers': 'node_modules/@angular/cdk/bundles/cdk-observers.umd.js',
+    '@angular/cdk/overlay': 'node_modules/@angular/cdk/bundles/cdk-overlay.umd.js',
+    '@angular/cdk/platform': 'node_modules/@angular/cdk/bundles/cdk-platform.umd.js',
+    '@angular/cdk/portal': 'node_modules/@angular/cdk/bundles/cdk-portal.umd.js',
+    '@angular/cdk/scrolling': 'node_modules/@angular/cdk/bundles/cdk-scrolling.umd.js',
+    '@angular/cdk/stepper': 'node_modules/@angular/cdk/bundles/cdk-stepper.umd.js',
+    '@angular/cdk/table': 'node_modules/@angular/cdk/bundles/cdk-table.umd.js',
+    '@angular/cdk/text-field': 'node_modules/@angular/cdk/bundles/cdk-text-field.umd.js',
+    '@angular/cdk/tree': 'node_modules/@angular/cdk/bundles/cdk-tree.umd.js',
+
     rxjs: 'node_modules/rxjs',
     'rxjs/internal-compatibility': 'node_modules/rxjs/internal-compatibility',
     'rxjs/testing': 'node_modules/rxjs/testing',
@@ -74,7 +94,7 @@
 
   // Bundled (~40 requests):
   function packUmd(pkgName) {
-    packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+    packages['@angular/' + pkgName] = { main: 'bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
   }
 
   // Most environments should use UMD; some (Karma) need the individual index files
