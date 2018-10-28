@@ -1,7 +1,7 @@
 # 7.0.0-beta.3
 ### Features
 - add top and bottom margins to thumbs in plain gallery #169 (requested by @MiaAlSaif)
-- add new api to configure the height of carousel's previews based on breakpoints
+- add new api to configure the height of carousel's previews based on breakpoints #144
 
 ### Bugfixes
 - fix content projection bug (it was working only with legacy mode enabled)
