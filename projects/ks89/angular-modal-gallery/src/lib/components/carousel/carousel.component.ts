@@ -77,6 +77,9 @@ import { CarouselPreviewConfig } from '../../model/carousel-preview-config.inter
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
+  /**
+   * Attribute to set ariaLabel of the host component
+   */
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel`;
   /**
@@ -91,7 +94,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @Input()
   images: Image[];
-  /**∑
+  /**
    * Object of type `CarouselConfig` to init CarouselComponent's features.
    * For instance, it contains parameters to change the style, how it navigates and so on.
    */
@@ -117,7 +120,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   dotsConfig: DotsConfig = { visible: true };
   /**
    * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
-   * For instance, it contains a param to show/hide previews.
+   * For instance, it contains a param to show/hide previews, change sizes and so on.
    */
   @Input()
   previewConfig: CarouselPreviewConfig;
@@ -179,6 +182,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   configCurrentImageCarousel: CarouselImageConfig;
   /**
+   * Object of type `DotsConfig` exposed to the template. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configDots: DotsConfig;
+  /**
    * Boolean that it's true when you are watching the first image (currently visible).
    * False by default
    */
@@ -189,11 +197,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   isLastImage = false;
   /**
-   * Object of type `DotsConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configDots: DotsConfig;
-  /**
    * Object of type `PlainGalleryConfig` to force ks-modal-gallery to hide plain-gallery
    */
   plainGalleryHidden: PlainGalleryConfig = {
@@ -201,7 +204,13 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     layout: new AdvancedLayout(-1, true)
   };
 
+  /**
+   * Subject to play the carousel.
+   */
   private start$ = new Subject<void>();
+  /**
+   * Subject to stop the carousel.
+   */
   private stop$ = new Subject<void>();
 
   /**
@@ -214,6 +223,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     DOWN: 'swipedown'
   };
 
+  /**
+   * Listener to stop the gallery when the mouse pointer is over the current image.
+   */
   @HostListener('mouseenter')
   onMouseEnter() {
     if (!this.configPlay.pauseOnHover) {
@@ -222,6 +234,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.stopCarousel();
   }
 
+  /**
+   * Listener to play the gallery when the mouse pointer leave the current image.
+   */
   @HostListener('mouseleave')
   onMouseLeave() {
     if (!this.configPlay.pauseOnHover || !this.configPlay.autoPlay) {
@@ -229,7 +244,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     this.playCarousel();
   }
-
+  /**
+   * Listener to navigate carousel images with keyboard (left).
+   */
   @HostListener('keydown.arrowLeft')
   onKeyDownLeft() {
     if (!this.configCarousel.keyboardEnable) {
@@ -237,7 +254,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     this.prevImage();
   }
-
+  /**
+   * Listener to navigate carousel images with keyboard (right).
+   */
   @HostListener('keydown.arrowRight')
   onKeyDownLRight() {
     if (!this.configCarousel.keyboardEnable) {
@@ -358,6 +377,12 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
+  /**
+   * Method used in template to sanitize an url when you need legacyIE11Mode.
+   * In this way you can set an url as background of a div.
+   * @param unsafeStyle is a string and represents the url to sanitize.
+   * @returns a SafeStyle object that can be used in template without problems.
+   */
   sanitizeUrlBgStyle(unsafeStyle: string): SafeStyle {
     // Method used only to sanitize background-image style before add it to background property when legacyIE11Mode is enabled
     return this.sanitizer.bypassSecurityTrustStyle('url(' + unsafeStyle + ')');
@@ -386,6 +411,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
+  /**
+   * Method triggered when you click on the current image.
+   * Also, if modalGalleryEnable is true, you can open the modal-gallery.
+   */
   onClickCurrentImage() {
     if (!this.configCarousel.modalGalleryEnable) {
       return;
@@ -481,7 +510,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.start$.next();
   }
 
-  // TODO add docs
+  /**
+   * Method to change the current image, receiving the new image as input the relative action.
+   * @param image an Image object that represents the new image to set as current.
+   * @param action Enum of type `Action` that represents the source action that triggered the change.
+   */
   private changeCurrentImage(image: Image, action: Action) {
     this.currentImage = image;
     const index: number = getIndex(image, this.images);
@@ -537,7 +570,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   /**
    * Method called when an image preview is clicked and used to update the current image.
-   * @param Image preview image
+   * @param event an ImageEvent object with the relative action and the index of the clicked preview.
    */
   onClickPreview(event: ImageEvent) {
     const imageFound: Image = this.images[<number>event.result];
@@ -547,10 +580,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
+  /**
+   * Method to cleanup resources. In fact, this will stop the carousel.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
+   */
   ngOnDestroy() {
     this.stopCarousel();
   }
 
+  /**
+   * Method to play carousel.
+   */
   playCarousel() {
     this.start$.next();
   }

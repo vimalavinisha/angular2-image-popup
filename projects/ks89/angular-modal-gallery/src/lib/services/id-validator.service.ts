@@ -31,6 +31,13 @@ import { Injectable } from '@angular/core';
 export class IdValidatorService {
   ids = new Map();
 
+  /**
+   * Method to check and reserve an id for the current instance of the library.
+   * In this way, no other instances can use the same id.
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @return boolean true if success. false is never returned, instead an exception is thrown
+   * @throws a error with a message if galleryId is neither unique, < 0 or an integer
+   */
   checkAndAdd(galleryId: number | undefined): boolean {
     if (!Number.isInteger(galleryId) || galleryId < 0) {
       throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');
@@ -42,6 +49,12 @@ export class IdValidatorService {
     return true;
   }
 
+  /**
+   * Method to remove a reserved id. In this way you are able to use the id again for another instance of the library.
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @return boolean true if success. false is never returned, instead an exception is thrown
+   * @throws a error with a message if galleryId is neither integer or < 0
+   */
   remove(galleryId: number | undefined): boolean {
     if (!Number.isInteger(galleryId) || galleryId < 0) {
       throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');

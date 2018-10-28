@@ -1,6 +1,11 @@
+# 7.0.0-beta.4
+### Features
+- add @angular/cdk as required dependency (mandatory also in beta-4, but I forgot to add it :)) **BREAKING CHANGE**
+
+
 # 7.0.0-beta.3
 ### Features
-- add top and bottom margins to thumbs in plain gallery #169 (requested by @MiaAlSaif)
+- add top and bottom margins to thumbs in plain gallery #169 (requested by @MiaAlSaif) **BREAKING CHANGE**
 - add new api to configure the height of carousel's previews based on breakpoints #144
 
 ### Bugfixes

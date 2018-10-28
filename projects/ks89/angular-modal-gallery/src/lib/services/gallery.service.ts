@@ -31,12 +31,22 @@ export interface InternalGalleryPayload {
   image?: Image;
 }
 
+/**
+ * Service to call methods on a gallery by its galleryId.
+ */
 @Injectable({ providedIn: 'root' })
 export class GalleryService {
   navigate: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
   close: EventEmitter<number> = new EventEmitter<number>();
   update: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
 
+  /**
+   * Method to open the modal gallery with the galleryId passed as parameter.
+   * It will automatically shows the image at position index.
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @param index number of the image that you want to open.
+   * @throws a error with a message if galleryId is either undefined, < 0 or index is < 0
+   */
   openGallery(galleryId: number | undefined, index: number): void {
     if (galleryId === undefined || galleryId < 0 || index < 0) {
       throw new Error('Cannot open gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
@@ -47,6 +57,13 @@ export class GalleryService {
     });
   }
 
+  /**
+   * Method to navigate to a specific index of the modal gallery with the galleryId passed as parameter.
+   * At the moment, it's like openGallery, but in upcoming releases it will change the behaviour.
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @param index number of the image that you want to open.
+   * @throws a error with a message if galleryId is either undefined, < 0 or index is < 0
+   */
   navigateGallery(galleryId: number | undefined, index: number): void {
     if (galleryId === undefined || galleryId < 0 || index < 0) {
       throw new Error('Cannot navigate via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
@@ -57,6 +74,11 @@ export class GalleryService {
     });
   }
 
+  /**
+   * Method to close the modal gallery with the galleryId passed as parameter.
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @throws a error with a message if galleryId is either undefined or < 0
+   */
   closeGallery(galleryId: number | undefined): void {
     if (galleryId === undefined || galleryId < 0) {
       throw new Error('Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined');

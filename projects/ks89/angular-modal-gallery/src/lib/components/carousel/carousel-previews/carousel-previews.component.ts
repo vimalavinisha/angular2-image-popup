@@ -26,7 +26,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
@@ -35,8 +34,7 @@ import {
   OnInit,
   Output,
   SimpleChange,
-  SimpleChanges,
-  ViewChild
+  SimpleChanges
 } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -56,7 +54,7 @@ import { getIndex } from '../../../utils/image.util';
 import { Action } from '../../../model/action.enum';
 
 /**
- * Component with image previews
+ * Component with image previews for carousel
  */
 @Component({
   selector: 'ks-carousel-previews',
@@ -65,15 +63,15 @@ import { Action } from '../../../model/action.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges, OnDestroy {
-  @ViewChild('slidableMenu')
-  slidableMenu: ElementRef;
-
-  @ViewChild('slidableContainer')
-  slidableContainer: ElementRef;
-
+  /**
+   * Variable to change the max-width of the host component
+   */
   @HostBinding('style.max-width')
   hostMaxWidth = '100%';
 
+  /**
+   * Variable to set aria-label of the host component
+   */
   @HostBinding('attr.aria-label')
   ariaLabel = `Carousel previews`;
 
@@ -147,6 +145,9 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   end: number;
 
+  /**
+   * Private property with the default max height of previews.
+   */
   private defaultMaxHeight = '200px';
 
   private breakpointSubscription: Subscription;
@@ -159,6 +160,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   ) {
     super();
 
+    // listen for width changes and update preview heights accordingly
     this.breakpointSubscription = breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
       .subscribe((result: BreakpointState) => {
@@ -179,6 +181,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
       });
   }
 
+  /**
+   * Method to update the height of previews, passing the desired height as input.
+   * @param configBreakpointHeight is a number that represent the desired height to set.
+   */
   private updateHeight(configBreakpointHeight: number) {
     const newConfigPreview = Object.assign({}, this.configPreview);
     if (this.previewConfig && this.previewConfig.maxHeight) {
@@ -230,6 +236,9 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);
 
+    // apply custom height based on responsive breakpoints
+    // This is required, because the breakpointSubscription is not triggered at creation,
+    // but only when the width changes
     const isXsmallScreen = this.breakpointObserver.isMatched(Breakpoints.XSmall);
     const isSmallScreen = this.breakpointObserver.isMatched(Breakpoints.Small);
     const isMediumScreen = this.breakpointObserver.isMatched(Breakpoints.Medium);
@@ -337,6 +346,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * This will trigger the `clickpreview` output with the input preview as its payload.
    * @param InternalLibImage preview that triggered this method
    * @param KeyboardEvent | MouseEvent event payload
+   * @param Action that triggered this event (Action.NORMAL by default)
    */
   onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     if (!this.configPreview || !this.configPreview.clickable) {
@@ -375,11 +385,21 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     return item.id;
   }
 
+  /**
+   * Method used in template to sanitize an url when you need legacyIE11Mode.
+   * In this way you can set an url as background of a div.
+   * @param unsafeStyle is a string and represents the url to sanitize.
+   * @returns a SafeStyle object that can be used in template without problems.
+   */
   sanitizeUrlBgStyle(unsafeStyle: string): SafeStyle {
     // Method used only to sanitize background-image style before add it to background property when legacyIE11Mode is enabled
     return this.sanitizer.bypassSecurityTrustStyle('url(' + unsafeStyle + ')');
   }
 
+  /**
+   * Method to cleanup resources. In fact, it cleans breakpointSubscription.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
+   */
   ngOnDestroy(): void {
     if (this.breakpointSubscription) {
       this.breakpointSubscription.unsubscribe();
