@@ -26,6 +26,8 @@ $plain-image-width: 50px;
 
 $plain-a-tag-image-margin-left: 2px;
 $plain-a-tag-image-margin-right: 2px;
+$plain-a-tag-image-margin-top: 2px;
+$plain-a-tag-image-margin-bottom: 2px;
 
 .plain-container {
   align-items: center;
@@ -38,6 +40,8 @@ $plain-a-tag-image-margin-right: 2px;
   .image {
     cursor: pointer;
     height: auto;
+    margin-top: $plain-a-tag-image-margin-top;
+    margin-bottom: $plain-a-tag-image-margin-bottom;
     margin-left: $plain-image-margin-left;
     margin-right: $plain-image-margin-right;
     width: $plain-image-width;
@@ -47,6 +51,8 @@ $plain-a-tag-image-margin-right: 2px;
     cursor: pointer;
     //width: 50px;
     //height: auto;
+    margin-top: $plain-a-tag-image-margin-top;
+    margin-bottom: $plain-a-tag-image-margin-bottom;
     margin-left: $plain-a-tag-image-margin-left;
     margin-right: $plain-a-tag-image-margin-right;
   }
