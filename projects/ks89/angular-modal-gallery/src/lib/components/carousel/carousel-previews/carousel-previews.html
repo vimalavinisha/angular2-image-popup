@@ -20,8 +20,6 @@
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
              ksSize [sizeConfig]="{width: configPreview?.width,
                                  height: configPreview?.maxHeight}"
-             ksMargin [marginLeft]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
-             [marginRight]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
              [title]="preview.modal.title ? preview.modal.title : ''"
              alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
@@ -30,6 +28,7 @@
       </ng-container>
       <ng-template #legacyMode>
         <div *ngIf="preview?.modal?.img"
+             class="inside preview-ie11-image {{isActive(preview) ? 'active' : ''}}{{!configPreview.clickable ? ' unclickable' : ''}}"
              [style.background-color]="'transparent'"
              [style.background-image]="sanitizeUrlBgStyle(preview.plain?.img ? preview.plain.img : preview.modal.img)"
              [style.background-position]="'center center'"
@@ -38,8 +37,6 @@
              [style.background-attachment]="'scroll'"
              ksSize [sizeConfig]="{width: configPreview?.width,
                                  height: configPreview?.maxHeight}"
-             ksMargin [marginLeft]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
-             [marginRight]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
              [title]="preview.modal.title ? preview.modal.title : ''"
              [tabindex]="0" role="img"
