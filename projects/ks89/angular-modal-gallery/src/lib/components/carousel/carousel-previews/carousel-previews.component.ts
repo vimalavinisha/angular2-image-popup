@@ -162,26 +162,18 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     this.breakpointSubscription = breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
       .subscribe((result: BreakpointState) => {
-        console.log('configPreview', this.configPreview);
-        console.log('previewConfig', this.previewConfig);
-
         if (!this.configPreview) {
           return;
         }
         if (result.breakpoints[Breakpoints.XSmall]) {
-          console.log('XSmall');
           this.updateHeight(this.configPreview.breakpoints.xSmall);
         } else if (result.breakpoints[Breakpoints.Small]) {
-          console.log('Small');
           this.updateHeight(this.configPreview.breakpoints.small);
         } else if (result.breakpoints[Breakpoints.Medium]) {
-          console.log('Medium');
           this.updateHeight(this.configPreview.breakpoints.medium);
         } else if (result.breakpoints[Breakpoints.Large]) {
-          console.log('Large');
           this.updateHeight(this.configPreview.breakpoints.large);
         } else if (result.breakpoints[Breakpoints.XLarge]) {
-          console.log('XLarge');
           this.updateHeight(this.configPreview.breakpoints.xLarge);
         }
       });
@@ -189,13 +181,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
 
   private updateHeight(configBreakpointHeight: number) {
     const newConfigPreview = Object.assign({}, this.configPreview);
-    console.log('updateHeight this.previewConfig ', this.previewConfig);
     if (this.previewConfig && this.previewConfig.maxHeight) {
       const heightNum: number = +this.previewConfig.maxHeight.replace('px', '').replace('%', '');
       newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     } else {
       const heightNum: number = +this.defaultMaxHeight.replace('px', '').replace('%', '');
-      console.log('no preview configm but this.configPreview', this.configPreview);
       newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     }
     this.configPreview = newConfigPreview;
@@ -245,25 +235,15 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     const isMediumScreen = this.breakpointObserver.isMatched(Breakpoints.Medium);
     const isLargeScreen = this.breakpointObserver.isMatched(Breakpoints.Large);
     const isxLargeScreen = this.breakpointObserver.isMatched(Breakpoints.XLarge);
-    console.log('>>>>>>>>>>> ', isXsmallScreen);
-    console.log('>>>>>>>>>>> ', isSmallScreen);
-    console.log('>>>>>>>>>>> ', isMediumScreen);
-    console.log('>>>>>>>>>>> ', isLargeScreen);
-    console.log('>>>>>>>>>>> ', isxLargeScreen);
     if (isXsmallScreen) {
-      console.log('isXsmallScreen', this.configPreview);
       this.updateHeight(this.configPreview.breakpoints.xSmall);
     } else if (isSmallScreen) {
-      console.log('isSmallScreen', this.configPreview);
       this.updateHeight(this.configPreview.breakpoints.small);
     } else if (isMediumScreen) {
-      console.log('isMediumScreen', this.configPreview);
       this.updateHeight(this.configPreview.breakpoints.medium);
     } else if (isLargeScreen) {
-      console.log('isLargeScreen', this.configPreview);
       this.updateHeight(this.configPreview.breakpoints.large);
     } else if (isxLargeScreen) {
-      console.log('isxLargeScreen', this.configPreview);
       this.updateHeight(this.configPreview.breakpoints.xLarge);
     }
   }
