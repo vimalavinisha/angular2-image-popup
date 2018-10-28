@@ -18,8 +18,8 @@
         <img *ngIf="preview?.modal?.img"
              class="inside preview-image {{isActive(preview) ? 'active' : ''}}{{!configPreview.clickable ? ' unclickable' : ''}}"
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
-             ksSize [sizeConfig]="{width: configPreview?.size?.width,
-                                 height: configPreview?.size?.height}"
+             ksSize [sizeConfig]="{width: configPreview?.width,
+                                 height: configPreview?.maxHeight}"
              ksMargin [marginLeft]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [marginRight]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
@@ -36,8 +36,8 @@
              [style.background-size]="carouselConfig?.maxWidth + ' ' + (carouselConfig?.maxWidth === '100%' ? 'auto' : carouselConfig?.maxHeight)"
              [style.background-repeat]="'no-repeat'"
              [style.background-attachment]="'scroll'"
-             ksSize [sizeConfig]="{width: configPreview?.size?.width,
-                                 height: configPreview?.size?.height}"
+             ksSize [sizeConfig]="{width: configPreview?.width,
+                                 height: configPreview?.maxHeight}"
              ksMargin [marginLeft]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [marginRight]="carouselConfig?.maxWidth !== '100%' ? '0px' : '2px'"
              [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"

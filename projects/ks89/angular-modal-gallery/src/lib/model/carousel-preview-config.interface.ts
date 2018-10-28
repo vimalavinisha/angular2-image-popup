@@ -22,15 +22,28 @@
  SOFTWARE.
  */
 
-import { Size } from './size.interface';
+/**
+ * Interface `BreakpointsConfig` to configure responsive breakpoints as numbers to express pixels
+ */
+export interface BreakpointsConfig {
+  xSmall: number;
+  small: number;
+  medium: number;
+  large: number;
+  xLarge: number;
+}
 
 /**
- * Interface `PreviewConfig` to configure previews in modal gallery.
+ * Interface `CarouselPreviewConfig` to configure carousel's previews
  */
-export interface PreviewConfig {
+export interface CarouselPreviewConfig {
   visible: boolean;
   number?: number;
   arrows?: boolean;
   clickable?: boolean;
-  size?: Size;
+  width?: string;
+  // maxHeight is called in this way because it represents the maxHeight for users, however inside the code it's the height
+  // I called maxHeight because it's handled in a complex way also with Breakpoints and I'm using Math.min like is it's the maxHeight instead of the height
+  maxHeight?: string;
+  breakpoints?: BreakpointsConfig;
 }

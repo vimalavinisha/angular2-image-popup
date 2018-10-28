@@ -37,6 +37,7 @@ export { DotsConfig } from './lib/model/dots-config.interface';
 export { PreviewConfig } from './lib/model/preview-config.interface';
 export { AccessibilityConfig } from './lib/model/accessibility.interface';
 
+export { BreakpointsConfig, CarouselPreviewConfig } from './lib/model/carousel-preview-config.interface';
 export { CarouselConfig } from './lib/model/carousel-config.interface';
 export { PlayConfig } from './lib/model/play-config.interface';
 export { CarouselImageConfig } from './lib/model/carousel-image-config.interface';

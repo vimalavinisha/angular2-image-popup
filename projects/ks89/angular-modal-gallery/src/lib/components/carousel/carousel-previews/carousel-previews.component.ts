@@ -24,32 +24,36 @@
 
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   HostBinding,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChange,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+
+import { Subscription } from 'rxjs';
 
 import { AccessibleComponent } from '../../accessible.component';
 
 import { AccessibilityConfig } from '../../../model/accessibility.interface';
 import { Image, ImageEvent } from '../../../model/image.class';
 import { InternalLibImage } from '../../../model/image-internal.class';
-import { Size } from '../../../model/size.interface';
-import { PreviewConfig } from '../../../model/preview-config.interface';
+import { BreakpointsConfig, CarouselPreviewConfig } from '../../../model/carousel-preview-config.interface';
 import { CarouselConfig } from '../../../model/carousel-config.interface';
 
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
 import { Action } from '../../../model/action.enum';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 /**
  * Component with image previews
@@ -60,7 +64,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
   templateUrl: 'carousel-previews.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
+export class CarouselPreviewsComponent extends AccessibleComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('slidableMenu')
   slidableMenu: ElementRef;
 
@@ -96,11 +100,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   @Input()
   infinite: boolean;
   /**
-   * Object of type `PreviewConfig` to init PreviewsComponent's features.
+   * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
    */
   @Input()
-  previewConfig: PreviewConfig;
+  previewConfig: CarouselPreviewConfig;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
@@ -129,10 +133,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   previews: InternalLibImage[] = [];
   /**
-   * Object of type `PreviewConfig` exposed to the template. This field is initialized
+   * Object of type `CarouselPreviewConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
-  configPreview: PreviewConfig;
+  configPreview: CarouselPreviewConfig;
 
   /**
    * Start index of the input images used to display previews.
@@ -143,11 +147,59 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   end: number;
 
+  private defaultMaxHeight = '200px';
+
+  private breakpointSubscription: Subscription;
+
   constructor(
+    private ref: ChangeDetectorRef,
+    private breakpointObserver: BreakpointObserver,
     // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
     private sanitizer: DomSanitizer
   ) {
     super();
+
+    this.breakpointSubscription = breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+      .subscribe((result: BreakpointState) => {
+        console.log('configPreview', this.configPreview);
+        console.log('previewConfig', this.previewConfig);
+
+        if (!this.configPreview) {
+          return;
+        }
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          console.log('XSmall');
+          this.updateHeight(this.configPreview.breakpoints.xSmall);
+        } else if (result.breakpoints[Breakpoints.Small]) {
+          console.log('Small');
+          this.updateHeight(this.configPreview.breakpoints.small);
+        } else if (result.breakpoints[Breakpoints.Medium]) {
+          console.log('Medium');
+          this.updateHeight(this.configPreview.breakpoints.medium);
+        } else if (result.breakpoints[Breakpoints.Large]) {
+          console.log('Large');
+          this.updateHeight(this.configPreview.breakpoints.large);
+        } else if (result.breakpoints[Breakpoints.XLarge]) {
+          console.log('XLarge');
+          this.updateHeight(this.configPreview.breakpoints.xLarge);
+        }
+      });
+  }
+
+  private updateHeight(configBreakpointHeight: number) {
+    const newConfigPreview = Object.assign({}, this.configPreview);
+    console.log('updateHeight this.previewConfig ', this.previewConfig);
+    if (this.previewConfig && this.previewConfig.maxHeight) {
+      const heightNum: number = +this.previewConfig.maxHeight.replace('px', '').replace('%', '');
+      newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
+    } else {
+      const heightNum: number = +this.defaultMaxHeight.replace('px', '').replace('%', '');
+      console.log('no preview configm but this.configPreview', this.configPreview);
+      newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
+    }
+    this.configPreview = newConfigPreview;
+    this.ref.markForCheck();
   }
 
   /**
@@ -157,13 +209,15 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultPreviewSize: Size = { height: '200px', width: 100 / 4 + '%' };
-    const defaultPreviewConfig: PreviewConfig = {
+    const defaultBreakpoints: BreakpointsConfig = { xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200 };
+    const defaultPreviewConfig: CarouselPreviewConfig = {
       visible: true,
       number: 4,
       arrows: true,
       clickable: true,
-      size: defaultPreviewSize
+      width: 100 / 4 + '%',
+      maxHeight: this.defaultMaxHeight,
+      breakpoints: defaultBreakpoints
     };
 
     this.configPreview = Object.assign({}, defaultPreviewConfig, this.previewConfig);
@@ -176,7 +230,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     // Init preview image width based on the number of previews in PreviewConfig
     // Don't move this line above, because I need to be sure that both configPreview.number
     // and configPreview.size are initialized
-    this.configPreview.size.width = 100 / this.configPreview.number + '%';
+    this.configPreview.width = 100 / this.configPreview.number + '%';
 
     // change the max-width of this component if there is a specified width !== 100% in carouselConfig
     if (this.carouselConfig && this.carouselConfig.maxWidth !== '100%') {
@@ -185,6 +239,33 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
 
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);
+
+    const isXsmallScreen = this.breakpointObserver.isMatched(Breakpoints.XSmall);
+    const isSmallScreen = this.breakpointObserver.isMatched(Breakpoints.Small);
+    const isMediumScreen = this.breakpointObserver.isMatched(Breakpoints.Medium);
+    const isLargeScreen = this.breakpointObserver.isMatched(Breakpoints.Large);
+    const isxLargeScreen = this.breakpointObserver.isMatched(Breakpoints.XLarge);
+    console.log('>>>>>>>>>>> ', isXsmallScreen);
+    console.log('>>>>>>>>>>> ', isSmallScreen);
+    console.log('>>>>>>>>>>> ', isMediumScreen);
+    console.log('>>>>>>>>>>> ', isLargeScreen);
+    console.log('>>>>>>>>>>> ', isxLargeScreen);
+    if (isXsmallScreen) {
+      console.log('isXsmallScreen', this.configPreview);
+      this.updateHeight(this.configPreview.breakpoints.xSmall);
+    } else if (isSmallScreen) {
+      console.log('isSmallScreen', this.configPreview);
+      this.updateHeight(this.configPreview.breakpoints.small);
+    } else if (isMediumScreen) {
+      console.log('isMediumScreen', this.configPreview);
+      this.updateHeight(this.configPreview.breakpoints.medium);
+    } else if (isLargeScreen) {
+      console.log('isLargeScreen', this.configPreview);
+      this.updateHeight(this.configPreview.breakpoints.large);
+    } else if (isxLargeScreen) {
+      console.log('isxLargeScreen', this.configPreview);
+      this.updateHeight(this.configPreview.breakpoints.xLarge);
+    }
   }
 
   /**
@@ -317,6 +398,12 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   sanitizeUrlBgStyle(unsafeStyle: string): SafeStyle {
     // Method used only to sanitize background-image style before add it to background property when legacyIE11Mode is enabled
     return this.sanitizer.bypassSecurityTrustStyle('url(' + unsafeStyle + ')');
+  }
+
+  ngOnDestroy(): void {
+    if (this.breakpointSubscription) {
+      this.breakpointSubscription.unsubscribe();
+    }
   }
 
   /**

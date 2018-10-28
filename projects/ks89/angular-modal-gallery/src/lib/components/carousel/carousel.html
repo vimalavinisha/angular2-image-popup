@@ -4,6 +4,10 @@
       ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
                                maxHeight: ''}">
 
+
+  <!-- Workaround to support 2 ng-content in the same template in 2 ngIf (https://github.com/angular/angular/issues/22972) -->
+  <ng-template #content><ng-content></ng-content></ng-template>
+
   <!-- Normal figure used by all browsers except for IE11, because
     it doesn't support object-fit cover.-->
   <figure class="current-figure" *ngIf="configCarousel?.legacyIE11Mode === false; else legacyMode"
@@ -19,7 +23,7 @@
            [title]="accessibilityConfig.carouselNextImageTitle"></div>
     </a>
 
-    <ng-content></ng-content>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
 
     <img id="current-image"
          [style.object-fit]="configCarousel?.objectFit"
@@ -74,7 +78,7 @@
              [title]="accessibilityConfig.carouselNextImageTitle"></div>
       </a>
 
-      <ng-content></ng-content>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
 
       <div id="current-image-legacy"
            [style.background-color]="'transparent'"
