@@ -58,7 +58,6 @@ import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
-import { PreviewConfig } from '../../model/preview-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
@@ -66,6 +65,7 @@ import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -116,11 +116,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   dotsConfig: DotsConfig = { visible: true };
   /**
-   * Object of type `PreviewConfig` to init PreviewsComponent's features.
+   * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide previews.
    */
   @Input()
-  previewConfig: PreviewConfig;
+  previewConfig: CarouselPreviewConfig;
   /**
    * boolean to enable/disable infinite sliding. Enabled by default.
    */
