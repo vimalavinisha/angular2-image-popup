@@ -24,6 +24,10 @@
 
 @import "variables";
 
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
 // Not required by angular-modal-gallery. Used only in this demo
 .red-text {
   color: red;
