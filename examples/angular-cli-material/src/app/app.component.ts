@@ -27,7 +27,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ks-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

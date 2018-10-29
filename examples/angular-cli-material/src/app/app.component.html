@@ -1,17 +1,11 @@
-<h1 id="main-title">@ks89/angular-modal-gallery</h1>
-<br>
-<nav id="menu">
-  <a class="menu-item" routerLink="/carousel"><h2><u>carousel</u></h2></a>&nbsp;&nbsp;
-  <a class="menu-item" routerLink="/carousel-ie11"><h2><u>carousel legacy (IE11 support)</u></h2></a>&nbsp;&nbsp;
-  <a class="menu-item" routerLink="/modal"><h2><u>modal-gallery</u></h2></a>&nbsp;&nbsp;
-  <a class="menu-item" routerLink="/plain"><h2><u>plain-gallery</u></h2></a>
-</nav>
-<hr>
+<ks-navbar></ks-navbar>
 
-<br>
-<br>
-<br>
-<hr>
+<br><br>
+
+<router-outlet></router-outlet>
+
+
+<br><br>
 <h2>Example of Angular Material</h2>
 <mat-grid-list cols="4" rowHeight="100px">
   <mat-grid-tile
@@ -36,16 +30,12 @@
   </li>
 </ol>
 <hr>
-<br>
-<br>
-<br>
-
-<router-outlet></router-outlet>
 
 <br><br>
-<h4 class="copyright">This library and these examples are created by <a href="https://github.com/Ks89">Stefano Cappa (@Ks89)</a></h4>
+<hr>
+<h4 class="copyright margin">This library and these examples are created by <a href="https://github.com/Ks89">Stefano Cappa (@Ks89)</a></h4>
 
-<section>
+<section class="margin">
   <h4>A special thank to all authors of icons used in this library:</h4>
   <ul>
     <li>Icons made by <a href="https://www.flaticon.com/authors/smartline" title="Smartline">Smartline</a> from <a
@@ -79,7 +69,7 @@
   </ul>
 </section>
 
-<section>
+<section class="margin">
   <h4>A special thanks to all authors of spinners used in this library:</h4>
   <ul>
     <li><a href="https://github.com/lukehaas">Luke Haas (@lukehaas)</a> - <a

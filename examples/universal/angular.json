@@ -22,7 +22,7 @@
                 "output": "/assets"
               },
               {
-                "glob": "favicon.ico",
+                "glob": "favicon.png",
                 "input": "src",
                 "output": "/"
               }
@@ -83,7 +83,7 @@
                 "output": "/assets"
               },
               {
-                "glob": "favicon.ico",
+                "glob": "favicon.png",
                 "input": "src",
                 "output": "/"
               }

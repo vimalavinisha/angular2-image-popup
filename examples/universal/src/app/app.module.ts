@@ -35,6 +35,9 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 import { CarouselIe11Component } from './carousel-ie11/carousel-ie11.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
+import { IntroHeaderComponent } from './intro-header/intro-header.component';
 
 // ********************** angular-modal-gallery *****************************
 import { GalleryModule } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
@@ -49,7 +52,16 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 // *************************************************************************
 
 @NgModule({
-  declarations: [AppComponent, CarouselComponent, CarouselIe11Component, PlainGalleryComponent, ModalGalleryComponent],
+  declarations: [
+    AppComponent,
+    CarouselComponent,
+    CarouselIe11Component,
+    PlainGalleryComponent,
+    ModalGalleryComponent,
+    NavbarComponent,
+    HomeComponent,
+    IntroHeaderComponent
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'my-app' }),
     BrowserAnimationsModule,

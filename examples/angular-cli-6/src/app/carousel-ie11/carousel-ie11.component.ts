@@ -27,7 +27,7 @@ import { Component } from '@angular/core';
 import { Image } from '@ks89/angular-modal-gallery';
 
 @Component({
-  selector: 'ks-carousel-page',
+  selector: 'ks-carousel-ie11-page',
   templateUrl: './carousel-ie11.html',
   styleUrls: ['./carousel-ie11.scss']
 })

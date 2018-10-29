@@ -10,6 +10,7 @@
 - write full internal documentation (npm run docs)
 
 ### Demos
+- create a new GUI for all examples based on the official documentation website v7
 - update all examples, adding @angular/cdk (also to SystemJS example), because it was missing
 
 
