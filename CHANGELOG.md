@@ -13,6 +13,9 @@
 - create a new GUI for all examples based on the official documentation website v7
 - update all examples, adding @angular/cdk (also to SystemJS example), because it was missing
 
+### Documentations
+- swipe sidebar and content in features and examples to improve readability on smartphones
+
 
 # 7.0.0-beta.3
 ### Features
