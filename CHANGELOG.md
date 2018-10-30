@@ -2,6 +2,7 @@
 ### Features
 - **add @angular/cdk as required dependency** (mandatory also in beta-4, but I forgot to add it :)) **BREAKING CHANGE**
 - remove left and right margin of carousel's previews (probably I'll add they again in next releases with a dedicated interface to configure they)
+- updated icon
 
 ### Refactoring
 - cleanup source removing older experiments
