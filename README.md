@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/amg.png" alt="@ks89/angular-modal-gallery" width="200">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/amg.png" alt="@ks89/angular-modal-gallery" width="200">
   <br>
   <br>
 @ks89/angular-modal-gallery
@@ -88,31 +88,31 @@ Despite its name, this library is more than for modal galleries, because I'm int
 ### Carousel
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/carousel-full.png" alt="Carousel full width">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/carousel-full.png" alt="Carousel full width">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/carousel-fix.png" alt="Carousel fixed width">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/carousel-fix.png" alt="Carousel fixed width">
 </p>
 
 ### Modal Gallery
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/modal1.png" alt="Modal gallery">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/modal1.png" alt="Modal gallery">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/modal2.png" alt="Modal gallery with buttons">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/modal2.png" alt="Modal gallery with buttons">
 </p>
 
 ### Plain Gallery
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/plain-row.png" alt="Plain gallery row">
+  <img src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/plain-row.png" alt="Plain gallery row">
 </p>
 
 <p align="center">
-  <img width="80" src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/plain-col.png" alt="Plain gallery column">
+  <img width="80" src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/plain-col.png" alt="Plain gallery column">
   &nbsp;&nbsp;&nbsp;
-  <img width="300" src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/700/readme-images/plain-grid.png" alt="Plain gallery grid">
+  <img width="300" src="https://raw.githubusercontent.com/Ks89/angular-modal-gallery/develop/readme-images/plain-grid.png" alt="Plain gallery grid">
 </p>
 
 <br>
