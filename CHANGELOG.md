@@ -1,3 +1,11 @@
+# 7.0.0-rc.1
+### Bugfixes
+- fix bug when carousel's previews are small and legacy mode for IE11 is enabled #144
+
+### Documentations
+- add new example to doc website with custom breakpoints example
+
+
 # 7.0.0-beta.4
 ### Features
 - **add @angular/cdk as required dependency** (mandatory also in beta-3, but I forgot to add it :)) **BREAKING CHANGE**
@@ -16,6 +24,7 @@
 
 ### Documentations
 - swipe sidebar and content in features and examples to improve readability on smartphones
+- update icons
 
 
 # 7.0.0-beta.3
