@@ -32,7 +32,7 @@
              [style.background-color]="'transparent'"
              [style.background-image]="sanitizeUrlBgStyle(preview.plain?.img ? preview.plain.img : preview.modal.img)"
              [style.background-position]="'center center'"
-             [style.background-size]="carouselConfig?.maxWidth + ' ' + (carouselConfig?.maxWidth === '100%' ? 'auto' : carouselConfig?.maxHeight)"
+             [style.background-size]="getIE11LegacyBgSize()"
              [style.background-repeat]="'no-repeat'"
              [style.background-attachment]="'scroll'"
              ksSize [sizeConfig]="{width: configPreview?.width,
