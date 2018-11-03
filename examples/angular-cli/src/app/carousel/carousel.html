@@ -87,9 +87,9 @@
   <h3>A10 - (id=109) - carousel example (minimal with all defaults) with outputs</h3>
   <br>
   <ks-carousel [id]="109" [images]="imagesRect"
-    (show)="onShow($event)"
-    (firstImage)="onFirstImage($event)"
-    (lastImage)="onLastImage($event)"></ks-carousel>
+               (show)="onShow($event)"
+               (firstImage)="onFirstImage($event)"
+               (lastImage)="onLastImage($event)"></ks-carousel>
 </section>
 <br>
 <br>
@@ -97,6 +97,7 @@
 <h3>Examples with custom style</h3>
 <section>
   <h3>B1 - (id=110) - carousel example with fixed maxWidth (766px) and custom previews</h3>
+  <p>By default, on bigger screen, previews will have height = 200px. If you want you can customize it or also change all breakpoint widths.</p>
   <br>
   <ks-carousel [id]="110" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '766px'}"
