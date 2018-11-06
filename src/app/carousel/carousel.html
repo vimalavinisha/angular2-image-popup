@@ -45,10 +45,10 @@
 </section>
 <br>
 <section>
-  <h3>A6 - (id=105) - carousel example without auto-play</h3>
+  <h3>A6 - (id=105) - carousel example without auto-play (but all other playConfig properties have default values)</h3>
   <br>
   <ks-carousel [id]="105" [images]="imagesRect"
-               [playConfig]="{autoPlay: false}">
+               [playConfig]="{autoPlay: false, interval: 5000, pauseOnHover: true}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -100,7 +100,7 @@
   <p>By default, on bigger screen, previews will have height = 200px. If you want you can customize it or also change all breakpoint widths.</p>
   <br>
   <ks-carousel [id]="110" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px'}"
+               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
@@ -110,7 +110,7 @@
   <h3>B2 - (id=111) - carousel example with fixed maxWidth (766px), custom previews and open modal on click</h3>
   <br>
   <ks-carousel [id]="111" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', modalGalleryEnable: true}"
+               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: true, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
@@ -120,7 +120,7 @@
   <h3>B3 - (id=112) - carousel example with fixed maxWidth (766px), custom previews and keyboard navigation disabled</h3>
   <br>
   <ks-carousel [id]="112" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', keyboardEnable: false}"
+               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: false, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
@@ -156,7 +156,7 @@
   <h3>F1 - (id=115) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 200px)</h3>
   <br>
   <ks-carousel [id]="115" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px'}"
+               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '200px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
@@ -166,7 +166,7 @@
   <h3>F2 - (id=116) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 150px)</h3>
   <br>
   <ks-carousel [id]="116" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px'}"
+               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '150px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
@@ -187,7 +187,7 @@
   <h3>G2 - (id=118) - carousel example with fixed maxWidth (500px) (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100)</h3>
   <br>
   <ks-carousel [id]="118" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '500px'}"
+               [carouselConfig]="{maxWidth: '500px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
 </section>
 <br>
