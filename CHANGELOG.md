@@ -1,3 +1,8 @@
+# 7.0.0-rc.2
+### Demos
+- update all carousel's examples adding all mandatory parameters to all inputs in html without violating interfaces
+
+
 # 7.0.0-rc.1
 ### Bugfixes
 - fix bug when carousel's previews are small and legacy mode for IE11 is enabled #144
