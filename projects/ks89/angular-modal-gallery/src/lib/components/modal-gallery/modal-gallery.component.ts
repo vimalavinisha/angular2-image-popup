@@ -448,7 +448,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       if (eventToEmit.image && eventToEmit.image.modal.extUrl) {
         // where I should open this link? The current tab or another one?
         if (eventToEmit.button && eventToEmit.button.extUrlInNewTab) {
-          window.open(eventToEmit.image.modal.extUrl, '_blank'); // 'noopener,noreferrer' is not working as third param
+          // 'noopener,noreferrer' is not working as third param (it's ok only in html), so I had to use this trick
+          // https://medium.com/@jitbit/target-blank-the-most-underestimated-vulnerability-ever-96e328301f4c
+          const newWindow = window.open(eventToEmit.image.modal.extUrl, '_blank');
+          // to prevent security issues, I force opener to null
+          newWindow.opener = null;
         } else {
           window.location.href = eventToEmit.image.modal.extUrl;
         }
