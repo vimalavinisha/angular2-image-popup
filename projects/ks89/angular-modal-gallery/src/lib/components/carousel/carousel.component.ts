@@ -244,6 +244,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     this.playCarousel();
   }
+
   /**
    * Listener to navigate carousel images with keyboard (left).
    */
@@ -254,6 +255,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     this.prevImage();
   }
+
   /**
    * Listener to navigate carousel images with keyboard (right).
    */
@@ -350,6 +352,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
     this.configCarousel = Object.assign({}, defaultCurrentCarouselConfig, this.carouselConfig);
     this.configPlay = Object.assign({}, defaultCurrentCarouselPlay, this.playConfig);
+
+    // check values
+    if (this.configPlay.interval <= 0) {
+      throw new Error(`Carousel's interval must be a number >= 0`);
+    }
 
     this.manageSlideConfig();
   }
@@ -511,54 +518,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   /**
-   * Method to change the current image, receiving the new image as input the relative action.
-   * @param image an Image object that represents the new image to set as current.
-   * @param action Enum of type `Action` that represents the source action that triggered the change.
-   */
-  private changeCurrentImage(image: Image, action: Action) {
-    this.currentImage = image;
-    const index: number = getIndex(image, this.images);
-
-    // emit first/last event based on newIndex value
-    this.emitBoundaryEvent(action, index);
-
-    // emit current visible image index
-    this.show.emit(new ImageModalEvent(action, index + 1));
-  }
-
-  /**
-   * Private method to get the next index.
-   * This is necessary because at the end, when you call next again, you'll go to the first image.
-   * That happens because all modal images are shown like in a circle.
-   */
-  private getNextImage(): Image {
-    const currentIndex: number = getIndex(this.currentImage, this.images);
-    let newIndex = 0;
-    if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
-      newIndex = currentIndex + 1;
-    } else {
-      newIndex = 0; // start from the first index
-    }
-    return this.images[newIndex];
-  }
-
-  /**
-   * Private method to get the previous index.
-   * This is necessary because at index 0, when you call prev again, you'll go to the last image.
-   * That happens because all modal images are shown like in a circle.
-   */
-  private getPrevImage(): Image {
-    const currentIndex: number = getIndex(this.currentImage, this.images);
-    let newIndex = 0;
-    if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
-      newIndex = currentIndex - 1;
-    } else {
-      newIndex = this.images.length - 1; // start from the last index
-    }
-    return this.images[newIndex];
-  }
-
-  /**
    * Method used in the template to track ids in ngFor.
    * @param number index of the array
    * @param Image item of the array
@@ -578,14 +537,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this.manageSlideConfig();
       this.changeCurrentImage(<Image>imageFound, event.action);
     }
-  }
-
-  /**
-   * Method to cleanup resources. In fact, this will stop the carousel.
-   * This is an Angular's lifecycle hook that is called when this component is destroyed.
-   */
-  ngOnDestroy() {
-    this.stopCarousel();
   }
 
   /**
@@ -632,6 +583,77 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
     const description: string = this.buildTextDescription(image, imageWithoutDescription);
     return description;
+  }
+
+  /**
+   * Method to reset carousel (force image with index 0 to be the current image and re-init also previews)
+   */
+  reset() {
+    if (this.configPlay && this.configPlay.autoPlay) {
+      this.stopCarousel();
+    }
+    this.currentImage = this.images[0];
+    this.handleBoundaries(0);
+    if (this.configPlay && this.configPlay.autoPlay) {
+      this.playCarousel();
+    }
+    this.ref.markForCheck();
+  }
+
+  /**
+   * Method to cleanup resources. In fact, this will stop the carousel.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
+   */
+  ngOnDestroy() {
+    this.stopCarousel();
+  }
+
+  /**
+   * Method to change the current image, receiving the new image as input the relative action.
+   * @param image an Image object that represents the new image to set as current.
+   * @param action Enum of type `Action` that represents the source action that triggered the change.
+   */
+  private changeCurrentImage(image: Image, action: Action) {
+    this.currentImage = image;
+    const index: number = getIndex(image, this.images);
+
+    // emit first/last event based on newIndex value
+    this.emitBoundaryEvent(action, index);
+
+    // emit current visible image index
+    this.show.emit(new ImageModalEvent(action, index + 1));
+  }
+
+  /**
+   * Private method to get the next index.
+   * This is necessary because at the end, when you call next again, you'll go to the first image.
+   * That happens because all modal images are shown like in a circle.
+   */
+  private getNextImage(): Image {
+    const currentIndex: number = getIndex(this.currentImage, this.images);
+    let newIndex = 0;
+    if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
+      newIndex = currentIndex + 1;
+    } else {
+      newIndex = 0; // start from the first index
+    }
+    return this.images[newIndex];
+  }
+
+  /**
+   * Private method to get the previous index.
+   * This is necessary because at index 0, when you call prev again, you'll go to the last image.
+   * That happens because all modal images are shown like in a circle.
+   */
+  private getPrevImage(): Image {
+    const currentIndex: number = getIndex(this.currentImage, this.images);
+    let newIndex = 0;
+    if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
+      newIndex = currentIndex - 1;
+    } else {
+      newIndex = this.images.length - 1; // start from the last index
+    }
+    return this.images[newIndex];
   }
 
   /**
