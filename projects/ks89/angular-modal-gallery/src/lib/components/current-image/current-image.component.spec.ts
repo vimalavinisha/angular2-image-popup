@@ -840,6 +840,7 @@ describe('CurrentImageComponent', () => {
         fixture.detectChanges();
         checkMainContainer();
         const imageWithoutDescription: boolean = !IMAGES[index].modal || !IMAGES[index].modal.description || IMAGES[index].modal.description === '';
+         // TODO fixme
         // checkCurrentImage(IMAGES[index], val, !imageWithoutDescription);
         // checkArrows(index === 0, index === IMAGES.length - 1);
         // checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
