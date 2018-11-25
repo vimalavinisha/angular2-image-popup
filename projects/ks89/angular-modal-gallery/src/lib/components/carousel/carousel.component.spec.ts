@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -44,7 +44,7 @@ import { KEYBOARD_CONFIGURATION, KeyboardService } from '../../services/keyboard
 import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
 import { GalleryService } from '../../services/gallery.service';
 import { IdValidatorService } from '../../services/id-validator.service';
-import { Image } from '../../model/image.class';
+import { Image, ImageModalEvent } from '../../model/image.class';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { PlayConfig } from '../../model/play-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
@@ -52,6 +52,9 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
 import { getIndex } from '../../utils/image.util';
+import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
+import { Action } from '../../model/action.enum';
+import { DotsConfig } from '../../model/dots-config.interface';
 
 let comp: CarouselComponent;
 let fixture: ComponentFixture<CarouselComponent>;
@@ -174,9 +177,8 @@ CUSTOM_ACCESSIBILITY.carouselPrevImageAriaLabel = 'carouselPrevImageAriaLabel';
 CUSTOM_ACCESSIBILITY.carouselPrevImageTitle = 'carouselPrevImageTitle';
 CUSTOM_ACCESSIBILITY.carouselNextImageAriaLabel = 'carouselNextImageAriaLabel';
 CUSTOM_ACCESSIBILITY.carouselNextImageTitle = 'carouselNextImageTitle';
-CUSTOM_ACCESSIBILITY.carouselDotsContainerAriaLabel = 'carouselDotsContainerAriaLabel';
-CUSTOM_ACCESSIBILITY.carouselDotsContainerTitle = 'carouselDotsContainerTitle';
-CUSTOM_ACCESSIBILITY.carouselDotAriaLabel = 'carouselDotAriaLabel';
+CUSTOM_ACCESSIBILITY.dotsContainerAriaLabel = 'dotsContainerAriaLabel';
+CUSTOM_ACCESSIBILITY.dotsContainerTitle = 'dotsContainerTitle';
 CUSTOM_ACCESSIBILITY.carouselPreviewsContainerAriaLabel = 'carouselPreviewsContainerAriaLabel';
 CUSTOM_ACCESSIBILITY.carouselPreviewsContainerTitle = 'carouselPreviewsContainerTitle';
 CUSTOM_ACCESSIBILITY.carouselPreviewScrollPrevAriaLabel = 'carouselPreviewScrollPrevAriaLabel';
@@ -219,13 +221,13 @@ function initTestBed() {
   });
 }
 
-function checkMainContainer(maxWidth: string = '100%') {
+function checkMainContainer(maxWidth: string = '100%', accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
   const element: DebugElement = fixture.debugElement;
   const mainCarouselContainer: DebugElement = element.query(By.css('main#carousel-container'));
   expect(mainCarouselContainer.name).toBe('main');
   expect(mainCarouselContainer.attributes['ksMaxSize']).toBe('');
-  expect(mainCarouselContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselContainerTitle);
-  expect(mainCarouselContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselContainerAriaLabel);
+  expect(mainCarouselContainer.properties['title']).toBe(accessibilityConfig.carouselContainerTitle);
+  expect(mainCarouselContainer.attributes['aria-label']).toBe(accessibilityConfig.carouselContainerAriaLabel);
   // expect(mainCarouselContainer.attributes['style']).toBe('max-width: 100%;');
 
   if (maxWidth !== '100%') {
@@ -233,7 +235,7 @@ function checkMainContainer(maxWidth: string = '100%') {
   }
 }
 
-function checkCurrentImage(currentImage: Image, val: TestModel, withDots: boolean = true, withArrows: boolean = true) {
+function checkCurrentImage(currentImage: Image, val: TestModel, withDots: boolean = true, withArrows: boolean = true, accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
   const element: DebugElement = fixture.debugElement;
   const currentFigure: DebugElement = element.query(By.css('figure.current-figure'));
   expect(currentFigure.name).toBe('figure');
@@ -252,8 +254,8 @@ function checkCurrentImage(currentImage: Image, val: TestModel, withDots: boolea
     expect(dotsMainContainer.name).toBe('div');
     const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
     expect(dotsContainer.name).toBe('nav');
-    expect(dotsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselDotsContainerAriaLabel);
-    expect(dotsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselDotsContainerTitle);
+    expect(dotsContainer.attributes['aria-label']).toBe(accessibilityConfig.dotsContainerAriaLabel);
+    expect(dotsContainer.properties['title']).toBe(accessibilityConfig.dotsContainerTitle);
     const dots: DebugElement[] = dotsContainer.children;
     expect(dots.length).toBe(IMAGES.length);
 
@@ -270,19 +272,14 @@ function checkCurrentImage(currentImage: Image, val: TestModel, withDots: boolea
         expect(dot.attributes['class']).toBe('inside dot');
         // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
       }
-      expect(dot.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.dotAriaLabel + ' ' + (index + 1));
+      expect(dot.attributes['aria-label']).toBe(accessibilityConfig.dotAriaLabel + ' ' + (index + 1));
     });
   }
-  // else {
-  //   const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-  //   expect(dotsContainer).toBeUndefined();
-  // }
 }
 
 function checkDescription(currentImage: Image, carouselImageConfig: CarouselImageConfig) {
   const element: DebugElement = fixture.debugElement;
   const currentFigcaption: DebugElement = element.query(By.css('figcaption.description'));
-  console.log('????????????????????????????????', currentFigcaption);
   if (carouselImageConfig.description.strategy !== DescriptionStrategy.ALWAYS_HIDDEN) {
     // expect(currentFigure.attributes['ksDescription']).toBe('');
     expect(currentFigcaption.attributes['class']).toBe('description');
@@ -331,7 +328,7 @@ function buildTextDescription(image: Image, imageWithoutDescription: boolean, ca
   return prevDescription + middleDescription + endDescription;
 }
 
-function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
+function checkArrows(isFirstImage: boolean, isLastImage: boolean, accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
   console.log('isFirstImage', isFirstImage);
   console.log('isLastImage', isLastImage);
   const element: DebugElement = fixture.debugElement;
@@ -339,31 +336,31 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
   console.log('aNavLeft', aNavLeft);
   expect(aNavLeft.name).toBe('a');
   expect(aNavLeft.attributes['role']).toBe('button');
-  expect(aNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPrevImageAriaLabel);
+  expect(aNavLeft.attributes['aria-label']).toBe(accessibilityConfig.carouselPrevImageAriaLabel);
   expect(aNavLeft.properties['tabIndex']).toBe(isFirstImage ? -1 : 0);
   const divNavLeft: DebugElement = aNavLeft.children[0];
   expect(divNavLeft.attributes['aria-hidden']).toBe('true');
   expect(divNavLeft.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'));
-  expect(divNavLeft.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPrevImageTitle);
+  expect(divNavLeft.properties['title']).toBe(accessibilityConfig.carouselPrevImageTitle);
 
   const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
   console.log('aNavRight', aNavRight);
   expect(aNavRight.name).toBe('a');
   expect(aNavRight.attributes['role']).toBe('button');
-  expect(aNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselNextImageAriaLabel);
+  expect(aNavRight.attributes['aria-label']).toBe(accessibilityConfig.carouselNextImageAriaLabel);
   expect(aNavRight.properties['tabIndex']).toBe(isLastImage ? -1 : 0);
   const divNavRight: DebugElement = aNavRight.children[0];
   expect(divNavRight.attributes['aria-hidden']).toBe('true');
   expect(divNavRight.properties['className']).toBe('inside ' + (isLastImage ? 'empty-arrow-image' : 'right-arrow-image'));
-  expect(divNavRight.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselNextImageTitle);
+  expect(divNavRight.properties['title']).toBe(accessibilityConfig.carouselNextImageTitle);
 }
 
-function checkPreviews(numPreviews: number, isFirstImage: boolean, isLastImage: boolean, clickable: boolean) {
+function checkPreviews(numPreviews: number, isFirstImage: boolean, isLastImage: boolean, clickable: boolean, accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
   const element: DebugElement = fixture.debugElement;
   const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
   expect(previewsContainer.name).toBe('nav');
-  expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPreviewsContainerAriaLabel);
-  expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPreviewsContainerTitle);
+  expect(previewsContainer.attributes['aria-label']).toBe(accessibilityConfig.carouselPreviewsContainerAriaLabel);
+  expect(previewsContainer.properties['title']).toBe(accessibilityConfig.carouselPreviewsContainerTitle);
 
   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
   const divNavLeft: DebugElement = aNavLeft.children[0];
@@ -371,8 +368,8 @@ function checkPreviews(numPreviews: number, isFirstImage: boolean, isLastImage: 
   expect(divNavLeft.attributes['aria-hidden']).toBe('true');
   expect(divNavLeft.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'));
   // TODO fixme
-  // expect(divNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPreviewScrollPrevAriaLabel);
-  // expect(divNavLeft.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPreviewScrollPrevTitle);
+  // expect(divNavLeft.attributes['aria-label']).toBe(accessibilityConfig.carouselPreviewScrollPrevAriaLabel);
+  // expect(divNavLeft.properties['title']).toBe(accessibilityConfig.carouselPreviewScrollPrevTitle);
 
   const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
   const divNavRight: DebugElement = aNavRight.children[0];
@@ -380,8 +377,8 @@ function checkPreviews(numPreviews: number, isFirstImage: boolean, isLastImage: 
   expect(divNavRight.attributes['aria-hidden']).toBe('true');
   expect(divNavRight.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'right-arrow-image'));
   // TODO fixme
-  // expect(divNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPreviewScrollNextAriaLabel);
-  // expect(divNavRight.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.carouselPreviewScrollNextTitle);
+  // expect(divNavRight.attributes['aria-label']).toBe(accessibilityConfig.carouselPreviewScrollNextAriaLabel);
+  // expect(divNavRight.properties['title']).toBe(accessibilityConfig.carouselPreviewScrollNextTitle);
 
   const previewsInner: DebugElement = element.query(By.css('div.preview-inner-container'));
   expect(previewsInner.name).toBe('div');
@@ -415,225 +412,212 @@ describe('CarouselComponent', () => {
 
   // should navigate between images clicking on current image. Test i=0
   // should navigate between images clicking on right side preview. Test i=0
-  // should navigate between images clicking on left side preview. Test i=0
   // should navigate between images to the right using swipe gestures. Test i=0
-  // should navigate between images to the left using swipe gestures. Test i=0
-  // should display current image, arrows and side previews with custom slideConfig. Test i=0, j=0
-  // should display current image, arrows and side previews with infinite sliding. Test i=0, j=0
-  // should display current image and arrows WITHOUT side previews. Test i=0, j=0
-  // should display current image with custom accessibility
-  // cannot navigate from the last image to the first one if infinite sliding is disabled
 
   describe('---YES---', () => {
 
-    // it(`should display carousel with all defaults and auto-navigate (play enabled by default).`, fakeAsync(() => {
-    //   comp.id = 0;
-    //   comp.images = IMAGES;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //   const defaultInterval = 5000;
-    //
-    //   TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[index], val);
-    //     checkArrows(false, false);
-    //     tick(defaultInterval + 100);
-    //     fixture.detectChanges();
-    //   });
-    //
-    //   tick(defaultInterval + 100);
-    //   fixture.detectChanges();
-    //
-    //   discardPeriodicTasks();
-    // }));
+    it(`should display carousel with all defaults and auto-navigate (play enabled by default).`, fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.ngOnInit();
+      fixture.detectChanges();
+      const defaultInterval = 5000;
 
-    // it(`should display carousel with all defaults and auto-navigate (play enabled by default) trying infinite sliding.`, fakeAsync(() => {
-    //   comp.id = 0;
-    //   comp.images = IMAGES;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //   const defaultInterval = 5000;
-    //
-    //   TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[index], val);
-    //     checkArrows(false, false);
-    //     tick(defaultInterval + 100);
-    //     fixture.detectChanges();
-    //   });
-    //
-    //   // check the first image (because of infinite sliding)
-    //   checkMainContainer();
-    //   checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
-    //   checkArrows(false, false);
-    //   tick(defaultInterval + 100);
-    //   fixture.detectChanges();
-    //
-    //   discardPeriodicTasks();
-    // }));
-    //
-    // it(`should display carousel no infinite and auto-navigate.`, fakeAsync(() => {
-    //   comp.id = 0;
-    //   comp.images = IMAGES;
-    //   comp.infinite = false;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //
-    //   const defaultInterval = 5000;
-    //
-    //   TEST_MODEL.forEach((val: TestModel, index: number) => {
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[index], val);
-    //     // checkArrows(index === 0, index === 6);
-    //     tick(defaultInterval + 100);
-    //     fixture.detectChanges();
-    //   });
-    //
-    //   // infinite sliding is disabled, so after the next interval, current image must be still the last one
-    //   checkMainContainer();
-    //   checkCurrentImage(IMAGES[6], TEST_MODEL[6]);
-    //   // checkArrows(false, true);
-    //   tick(defaultInterval + 100);
-    //   fixture.detectChanges();
-    //
-    //   discardPeriodicTasks();
-    // }));
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(false, false);
+        tick(defaultInterval + 100);
+        fixture.detectChanges();
+      });
 
-    // it(`should display carousel without dots.`, () => {
-    //   comp.id = 0;
-    //   comp.images = IMAGES;
-    //   comp.dotsConfig = <DotsConfig>{visible: false};
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //
-    //   checkMainContainer();
-    //   checkCurrentImage(IMAGES[0], TEST_MODEL[0], false, false);
-    //   checkArrows(false, false);
-    // });
+      tick(defaultInterval + 100);
+      fixture.detectChanges();
 
-    // it(`should display carousel without arrows.`, fakeAsync(() => {
-    //   comp.id = 0;
-    //   comp.images = IMAGES;
-    //   comp.carouselConfig = <CarouselConfig>{showArrows: false};
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //
-    //   checkMainContainer();
-    //   checkCurrentImage(IMAGES[0], TEST_MODEL[0], false, false, false);
-    //
-    //   discardPeriodicTasks();
-    // }));
-    //
-    // const PLAY_CONFIG_AUTOPLAY: PlayConfig[] = [
-    //   {autoPlay: true, interval: 5000, pauseOnHover: true},
-    //   {autoPlay: true, interval: 1000, pauseOnHover: true},
-    //   {autoPlay: true, interval: 10000, pauseOnHover: true},
-    //   {autoPlay: true, interval: 10, pauseOnHover: true},
-    //   {autoPlay: true, interval: 1000, pauseOnHover: false}
-    // ];
-    //
-    // PLAY_CONFIG_AUTOPLAY.forEach((val: PlayConfig, index: number) => {
-    //   it(`should display carousel with autoplay enabled, but with different combinations of interval and pauseOnHover. Test i=${index}`, fakeAsync(() => {
-    //     comp.id = 0;
-    //     comp.images = IMAGES;
-    //     comp.playConfig = val;
-    //     comp.ngOnInit();
-    //     comp.reset();
-    //     comp.ngAfterContentInit();
-    //     fixture.detectChanges();
-    //
-    //     TEST_MODEL.forEach((model: TestModel, modelIndex: number) => {
-    //       checkMainContainer();
-    //       checkCurrentImage(IMAGES[modelIndex], model);
-    //       checkArrows(false, false);
-    //       tick(val.interval + 1);
-    //       fixture.detectChanges();
-    //     });
-    //
-    //     tick(val.interval + 1);
-    //     fixture.detectChanges();
-    //
-    //     discardPeriodicTasks();
-    //   }));
-    // });
-    //
-    // const PLAY_CONFIG_NO_AUTOPLAY: PlayConfig[] = [
-    //   {autoPlay: false, interval: 1000, pauseOnHover: true},
-    //   {autoPlay: false, interval: 10000, pauseOnHover: false}
-    // ];
-    //
-    // PLAY_CONFIG_NO_AUTOPLAY.forEach((val: PlayConfig, index: number) => {
-    //   it(`should display carousel without autoplay. Test i=${index}`, fakeAsync(() => {
-    //     comp.id = 0;
-    //     comp.images = IMAGES;
-    //     comp.playConfig = val;
-    //     comp.ngOnInit();
-    //     comp.reset();
-    //     comp.ngAfterContentInit();
-    //     fixture.detectChanges();
-    //
-    //     checkMainContainer();
-    //     checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
-    //     checkArrows(false, false);
-    //     tick(val.interval + 100);
-    //     fixture.detectChanges();
-    //
-    //     // after interval, the current image must be again the first image (because autoplay is disabled)
-    //     checkMainContainer();
-    //     // TODO uncomment this
-    //     // checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
-    //     checkArrows(false, false);
-    //     tick(val.interval + 100);
-    //     fixture.detectChanges();
-    //
-    //     discardPeriodicTasks();
-    //   }));
-    // });
-    //
-    // const PREVIEW_CONFIGS: CarouselPreviewConfig[] = [
-    //   {visible: true},
-    //   {visible: true, clickable: true},
-    //   {visible: true, clickable: false},
-    //   {visible: true, number: 7},
-    //   // {visible: true, number: 0},
-    //   // {visible: true, number: -1},
-    //   {visible: true, number: 4, width: 'auto', maxHeight: '100px'},
-    //   {visible: true, number: 4, width: 'auto', maxHeight: '100px'},
-    //   {visible: true, number: 4, width: '100px', maxHeight: '100px'}
-    // ];
-    //
-    // PREVIEW_CONFIGS.forEach((val: CarouselPreviewConfig, index: number) => {
-    //   it(`should display carousel with previews. Test i=${index}`, () => {
-    //     comp.id = 0;
-    //     comp.images = IMAGES;
-    //     comp.previewConfig = val;
-    //     comp.ngOnInit();
-    //     comp.reset();
-    //     comp.ngAfterContentInit();
-    //     fixture.detectChanges();
-    //
-    //     checkPreviews(val.number || 4, false, false, val.clickable === true || val.clickable === undefined);
-    //   });
-    // });
+      discardPeriodicTasks();
+    }));
 
-    // it(`should display carousel with fixed width.`, () => {
-    //   comp.id = 0;
-    //   comp.images = IMAGES;
-    //   comp.carouselConfig = <CarouselConfig>{maxWidth: '766px'};
-    //   comp.previewConfig = <CarouselPreviewConfig>{number: 5, width: 'auto', maxHeight: '100px'};
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //
-    //   checkMainContainer(comp.carouselConfig.maxWidth);
-    //   checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
-    //   checkArrows(false, false);
-    // });
+    it(`should display carousel with all defaults and auto-navigate (play enabled by default) trying infinite sliding.`, fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.ngOnInit();
+      fixture.detectChanges();
+      const defaultInterval = 5000;
 
-    const DESC_STRATEGIES: DescriptionStrategy[] = [
-      DescriptionStrategy.ALWAYS_VISIBLE,
-      DescriptionStrategy.ALWAYS_HIDDEN,
-      DescriptionStrategy.HIDE_IF_EMPTY
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(false, false);
+        tick(defaultInterval + 100);
+        fixture.detectChanges();
+      });
+
+      // check the first image (because of infinite sliding)
+      checkMainContainer();
+      checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+      checkArrows(false, false);
+      tick(defaultInterval + 100);
+      fixture.detectChanges();
+
+      discardPeriodicTasks();
+    }));
+
+    it(`should display carousel no infinite and auto-navigate.`, fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.infinite = false;
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      const defaultInterval = 5000;
+
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        // checkArrows(index === 0, index === 6);
+        tick(defaultInterval + 100);
+        fixture.detectChanges();
+      });
+
+      // infinite sliding is disabled, so after the next interval, current image must be still the last one
+      checkMainContainer();
+      checkCurrentImage(IMAGES[6], TEST_MODEL[6]);
+      // checkArrows(false, true);
+      tick(defaultInterval + 100);
+      fixture.detectChanges();
+
+      discardPeriodicTasks();
+    }));
+
+    it(`should display carousel without dots.`, () => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.dotsConfig = <DotsConfig>{visible: false};
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      checkMainContainer();
+      checkCurrentImage(IMAGES[0], TEST_MODEL[0], false, true);
+      checkArrows(false, false);
+    });
+
+    it(`should display carousel without arrows.`, fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.carouselConfig = <CarouselConfig>{showArrows: false};
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      checkMainContainer();
+      checkCurrentImage(IMAGES[0], TEST_MODEL[0], false, false);
+
+      discardPeriodicTasks();
+    }));
+
+    const PLAY_CONFIG_AUTOPLAY: PlayConfig[] = [
+      {autoPlay: true, interval: 5000, pauseOnHover: true},
+      {autoPlay: true, interval: 1000, pauseOnHover: true},
+      {autoPlay: true, interval: 10000, pauseOnHover: true},
+      {autoPlay: true, interval: 10, pauseOnHover: true},
+      {autoPlay: true, interval: 1000, pauseOnHover: false}
     ];
+
+    PLAY_CONFIG_AUTOPLAY.forEach((val: PlayConfig, index: number) => {
+      it(`should display carousel with autoplay enabled, but with different combinations of interval and pauseOnHover. Test i=${index}`, fakeAsync(() => {
+        comp.id = 0;
+        comp.images = IMAGES;
+        comp.playConfig = val;
+        comp.ngOnInit();
+        comp.reset();
+        comp.ngAfterContentInit();
+        fixture.detectChanges();
+
+        TEST_MODEL.forEach((model: TestModel, modelIndex: number) => {
+          checkMainContainer();
+          checkCurrentImage(IMAGES[modelIndex], model);
+          checkArrows(false, false);
+          tick(val.interval + 1);
+          fixture.detectChanges();
+        });
+
+        tick(val.interval + 1);
+        fixture.detectChanges();
+
+        discardPeriodicTasks();
+      }));
+    });
+
+    const PLAY_CONFIG_NO_AUTOPLAY: PlayConfig[] = [
+      {autoPlay: false, interval: 1000, pauseOnHover: true},
+      {autoPlay: false, interval: 10000, pauseOnHover: false}
+    ];
+
+    PLAY_CONFIG_NO_AUTOPLAY.forEach((val: PlayConfig, index: number) => {
+      it(`should display carousel without autoplay. Test i=${index}`, fakeAsync(() => {
+        comp.id = 0;
+        comp.images = IMAGES;
+        comp.playConfig = val;
+        comp.ngOnInit();
+        comp.reset();
+        comp.ngAfterContentInit();
+        fixture.detectChanges();
+
+        checkMainContainer();
+        checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+        checkArrows(false, false);
+        tick(val.interval + 100);
+        fixture.detectChanges();
+
+        // after interval, the current image must be again the first image (because autoplay is disabled)
+        checkMainContainer();
+        // TODO uncomment this
+        // checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+        checkArrows(false, false);
+        tick(val.interval + 100);
+        fixture.detectChanges();
+
+        discardPeriodicTasks();
+      }));
+    });
+
+    const PREVIEW_CONFIGS: CarouselPreviewConfig[] = [
+      {visible: true},
+      {visible: true, clickable: true},
+      {visible: true, clickable: false},
+      {visible: true, number: 7},
+      // {visible: true, number: 0},
+      // {visible: true, number: -1},
+      {visible: true, number: 4, width: 'auto', maxHeight: '100px'},
+      {visible: true, number: 4, width: 'auto', maxHeight: '100px'},
+      {visible: true, number: 4, width: '100px', maxHeight: '100px'}
+    ];
+
+    PREVIEW_CONFIGS.forEach((val: CarouselPreviewConfig, index: number) => {
+      it(`should display carousel with previews. Test i=${index}`, () => {
+        comp.id = 0;
+        comp.images = IMAGES;
+        comp.previewConfig = val;
+        comp.ngOnInit();
+        comp.reset();
+        comp.ngAfterContentInit();
+        fixture.detectChanges();
+
+        checkPreviews(val.number || 4, false, false, val.clickable === true || val.clickable === undefined);
+      });
+    });
+
+    it(`should display carousel with fixed width.`, () => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.carouselConfig = <CarouselConfig>{maxWidth: '766px'};
+      comp.previewConfig = <CarouselPreviewConfig>{number: 5, width: 'auto', maxHeight: '100px'};
+      comp.ngOnInit();
+      fixture.detectChanges();
+
+      checkMainContainer(comp.carouselConfig.maxWidth);
+      checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+      checkArrows(false, false);
+    });
 
     const defaultDescriptionStyle: DescriptionStyle = {
       bgColor: 'rgba(0, 0, 0, .5)',
@@ -689,31 +673,107 @@ describe('CarouselComponent', () => {
       });
     });
 
-    // const PREVIEW_CONFIGS_BREAKPOINT: CarouselPreviewConfig[] = [
-    //   {visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}},
-    //   {visible: true, breakpoints: {xSmall: 100, small: 120, medium: 150, large: 200, xLarge: 220}},
-    //   {visible: true, breakpoints: {xSmall: 200, small: 220, medium: 10, large: 50, xLarge: 100}},
-    //
-    //   {visible: true, breakpoints: {xSmall: 0, small: 0, medium: 0, large: 0, xLarge: 0}},
-    //   {visible: true, breakpoints: {xSmall: -1, small: -2, medium: -10, large: -10, xLarge: -1}}
-    // ];
-    //
-    //
-    // it(`should display carousel with custom breakpoints.`, () => {
+    const PREVIEW_CONFIGS_BREAKPOINT: CarouselPreviewConfig[] = [
+      {visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}},
+      {visible: true, breakpoints: {xSmall: 100, small: 120, medium: 150, large: 200, xLarge: 220}},
+      {visible: true, breakpoints: {xSmall: 200, small: 220, medium: 10, large: 50, xLarge: 100}},
+      // zero or negative numbers are admitted in the code, but they are completely useless for the user
+      // however, I should improve this
+      {visible: true, breakpoints: {xSmall: 0, small: 0, medium: 0, large: 0, xLarge: 0}},
+      {visible: true, breakpoints: {xSmall: -1, small: -2, medium: -10, large: -10, xLarge: -1}}
+    ];
+
+    PREVIEW_CONFIGS_BREAKPOINT.forEach((previewConfig: CarouselPreviewConfig, index: number) => {
+      it(`should display carousel with custom breakpoints.`, () => {
+        comp.id = 0;
+        comp.images = IMAGES;
+        comp.previewConfig = previewConfig;
+        comp.ngOnInit();
+        fixture.detectChanges();
+
+        checkMainContainer();
+        checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+        checkArrows(false, false);
+      });
+    });
+
+    it(`should display carousel with custom accessibility.`, () => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
+      comp.ngOnInit();
+      comp.reset();
+      comp.ngAfterContentInit();
+      fixture.detectChanges();
+
+      checkMainContainer('100%', CUSTOM_ACCESSIBILITY);
+      checkCurrentImage(IMAGES[0], TEST_MODEL[0], true, true, CUSTOM_ACCESSIBILITY);
+      checkArrows(false, false, CUSTOM_ACCESSIBILITY);
+    });
+
+    // // TODO not working, why???
+    // it(`should display carousel and open modal-gallery clicking on the current image.`, () => {
     //   comp.id = 0;
     //   comp.images = IMAGES;
-    //   comp.previewConfig = <CarouselPreviewConfig>{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}};
+    //   comp.carouselConfig = <CarouselConfig>{
+    //     maxWidth: '100%',
+    //     maxHeight: '200px',
+    //     showArrows: true,
+    //     objectFit: 'cover',
+    //     keyboardEnable: true,
+    //     modalGalleryEnable: true, // modalGalleryEnable is required in this test
+    //     legacyIE11Mode: false
+    //   };
     //   comp.ngOnInit();
     //   fixture.detectChanges();
-    // });
     //
-    // it(`should display carousel with custom accessibility.`, () => {
+    //   checkMainContainer();
+    //   checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+    //   checkArrows(false, false);
+    //   // tick(defaultInterval + 100);
+    //   // fixture.detectChanges();
+    //
+    //   // click on the current image
+    //   const element: DebugElement = fixture.debugElement;
+    //   const currentImage: DebugElement = element.query(By.css('img#current-image'));
+    //   console.log('currentImage', currentImage);
+    //
+    //   currentImage.nativeElement.click();
+    //
+    //
+    //   fixture.detectChanges();
+    //
+    //   const modalGalleryWrapper: DebugElement = element.query(By.css('#modal-gallery-wrapper'));
+    //   console.log('modalGalleryWrapper', modalGalleryWrapper);
+    //   expect(modalGalleryWrapper).not.toBeNull();
+    // });
+
+    // it(`should display carousel without autoplay and navigate between images clicking on arrows.`, fakeAsync(() => {
     //   comp.id = 0;
     //   comp.images = IMAGES;
-    //   comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
     //   comp.ngOnInit();
     //   fixture.detectChanges();
-    // });
+    //
+    //   comp.show.subscribe((res: ImageModalEvent) => {
+    //     console.log('^^^^^^^^^^^^^^^^^^^^^^ show called res', res);
+    //     // checkMainContainer();
+    //     // checkCurrentImage(IMAGES[1], TEST_MODEL[1]);
+    //     // checkArrows(false, false);
+    //     // comp.nextImage(Action.CLICK);
+    //     // tick(defaultInterval + 100);
+    //     fixture.detectChanges();
+    //   });
+    //
+    //   // TEST_MODEL.forEach((val: TestModel, index: number) => {
+    //   checkMainContainer();
+    //   checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
+    //   checkArrows(false, false);
+    //   // comp.nextImage(Action.CLICK);
+    //   // tick(defaultInterval + 100);
+    //   fixture.detectChanges();
+    //   discardPeriodicTasks();
+    //   // });
+    // }));
   });
 
   describe('---ERRORS---', () => {

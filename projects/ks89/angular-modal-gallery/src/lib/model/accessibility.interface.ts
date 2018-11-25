@@ -62,9 +62,6 @@ export interface AccessibilityConfig {
   carouselPrevImageTitle: string;
   carouselNextImageAriaLabel: string;
   carouselNextImageTitle: string;
-  carouselDotsContainerAriaLabel: string;
-  carouselDotsContainerTitle: string;
-  carouselDotAriaLabel: string;
   carouselPreviewsContainerAriaLabel: string;
   carouselPreviewsContainerTitle: string;
   carouselPreviewScrollPrevAriaLabel: string;

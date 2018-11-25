@@ -3,6 +3,9 @@
 - fix a security issue in modal-gallery when you are using the navigate button to an external url with target _blank.
   In this way I prevent "Reverse Tabnabbing"'s attacks. To fix this issue I used this standard technique: https://developer.mozilla.org/en-US/docs/Web/API/Window/open
 
+### Refactoring
+- remove carousel's dots properties from AccessibilityConfig, because unused. Instead, carousel uses the same of modal-gallery
+
 ### Bugfixes
 - fix accessibility (aria-label and title) of image arrows in carousel component
 
