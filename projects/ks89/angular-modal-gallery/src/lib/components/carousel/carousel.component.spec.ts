@@ -44,7 +44,7 @@ import { KEYBOARD_CONFIGURATION, KeyboardService } from '../../services/keyboard
 import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
 import { GalleryService } from '../../services/gallery.service';
 import { IdValidatorService } from '../../services/id-validator.service';
-import { Image, ImageModalEvent } from '../../model/image.class';
+import { Image } from '../../model/image.class';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { PlayConfig } from '../../model/play-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
@@ -53,7 +53,6 @@ import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
 import { getIndex } from '../../utils/image.util';
 import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
-import { Action } from '../../model/action.enum';
 import { DotsConfig } from '../../model/dots-config.interface';
 
 let comp: CarouselComponent;

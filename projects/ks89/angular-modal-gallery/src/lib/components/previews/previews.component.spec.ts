@@ -175,7 +175,7 @@ function checkPreview(previewElement: DebugElement, previewImage: InternalLibIma
   expect(previewElement.attributes['ksSize']).toBe('');
   expect(previewElement.styles.width).toBe(size.width);
   expect(previewElement.styles.height).toBe(size.height);
-  console.log('previewElement.properties[\'className\']', previewElement);
+  // console.log('previewElement.properties[\'className\']', previewElement);
   // expect(previewElement.properties['className']).toBe('inside preview-image ' + (isActive ? 'active' : ''));
   expect(previewElement.properties['src']).toBe(currentPlainImg && currentPlainImg.img ? currentPlainImg.img : currentModalImg.img);
   expect(previewElement.properties['title']).toBe(currentModalImg.title ? currentModalImg.title : '');
@@ -195,12 +195,12 @@ function checkPreviewStateAfterClick(previews: DebugElement[], prevValue: Intern
   //     isFirstChange: () => false
   //   }
   // });
-  console.log('[[[[[[[[[[[ s', start);
-  console.log('[[[[[[[[[[[ cs', comp.start);
-  console.log('[[[[[[[[[[[ e', end);
-  console.log('[[[[[[[[[[[ ce', comp.end);
-  console.log('[[[[[[[[[[[ activeIndex', activeIndex);
-  console.log('[[[[[[[[[[[ ???', IMAGES.slice(start, end));
+  // console.log('[[[[[[[[[[[ s', start);
+  // console.log('[[[[[[[[[[[ cs', comp.start);
+  // console.log('[[[[[[[[[[[ e', end);
+  // console.log('[[[[[[[[[[[ ce', comp.end);
+  // console.log('[[[[[[[[[[[ activeIndex', activeIndex);
+  // console.log('[[[[[[[[[[[ ???', IMAGES.slice(start, end));
   expect(comp.start).toBe(start);
   expect(comp.end).toBe(end);
   expect(comp.previews).toEqual(IMAGES.slice(start, end));

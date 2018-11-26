@@ -23,13 +23,21 @@
  */
 
 /**
- * Keycode of the keyboard's key `space`
+ * Key of the keyboard's key `space`
  */
-export const SPACE_KEY = 32;
+export const SPACE_KEY = '';
 /**
- * Keycode of the keyboard's key `enter`
+ * Key of the keyboard's key `enter`
  */
-export const ENTER_KEY = 13;
+export const ENTER_KEY = 'Enter';
+/**
+ * Code of the keyboard's key `space`
+ */
+export const SPACE_CODE = 'Space';
+/**
+ * Code of the keyboard's key `enter`
+ */
+export const ENTER_CODE = 'Enter';
 /**
  * Keycode of the main mouse button
  */

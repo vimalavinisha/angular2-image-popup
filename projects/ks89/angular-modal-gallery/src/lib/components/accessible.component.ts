@@ -24,7 +24,7 @@
 
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { DIRECTION_RIGHT, ENTER_KEY, MOUSE_MAIN_BUTTON_CLICK, NEXT, NOTHING, PREV, SPACE_KEY } from '../utils/user-input.util';
+import { DIRECTION_RIGHT, MOUSE_MAIN_BUTTON_CLICK, NEXT, NOTHING, PREV, ENTER_CODE, SPACE_CODE } from '../utils/user-input.util';
 
 /**
  * Provides some useful methods to add accessibility features to subclasses.
@@ -80,8 +80,8 @@ export class AccessibleComponent {
    * @returns number 1 for NEXT and 0 for NOTHING
    */
   private handleImageKeyboardEvent(event: KeyboardEvent): number {
-    const key: number = event.keyCode;
-    if (key === SPACE_KEY || key === ENTER_KEY) {
+    const key: string = event.code;
+    if (key === SPACE_CODE || key === ENTER_CODE) {
       return NEXT;
     }
     return NOTHING;
@@ -107,8 +107,8 @@ export class AccessibleComponent {
    * @returns number -1 for PREV, 1 for NEXT and 0 for NOTHING
    */
   private handleKeyboardNavigationEvent(direction: string, event: KeyboardEvent): number {
-    const key: number = event.keyCode;
-    if (key === SPACE_KEY || key === ENTER_KEY) {
+    const key: string = event.code;
+    if (key === SPACE_CODE || key === ENTER_CODE) {
       return direction === DIRECTION_RIGHT ? NEXT : PREV;
     }
     return NOTHING;
