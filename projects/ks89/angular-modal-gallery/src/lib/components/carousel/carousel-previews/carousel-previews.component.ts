@@ -219,7 +219,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     this.configPreview = Object.assign({}, defaultPreviewConfig, this.previewConfig);
 
     // if number is <= 0 reset to default
-    if (this.configPreview && this.configPreview.number && this.configPreview.number <= 0) {
+    if (this.configPreview && this.configPreview.number <= 0) {
       this.configPreview.number = defaultPreviewConfig.number;
     }
 

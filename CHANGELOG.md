@@ -1,3 +1,11 @@
+# 7.0.0
+### Bugfixes
+- fix issue when you pass number = 0 in CarouselPreviewConfig
+
+### Testing
+- improve carousel's tests
+
+
 # 7.0.0-rc.2
 ### Vulnerabilities
 - fix a security issue in modal-gallery when you are using the navigate button to an external url with target _blank.
