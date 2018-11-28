@@ -1,9 +1,75 @@
 # 7.0.0
-### Bugfixes
-- fix issue when you pass number = 0 in CarouselPreviewConfig
+### Features
+- new carousel component with previews (also with legacyIE11Mode to support IE11 :)) **HUGE FEATURE!!!!**
+- gallery ids must be unique across the whole application **(BREAKING CHANGE)**
+- requires rxjs >= 6 **(BREAKING CHANGE)**
+- requires angular >= 6 **(BREAKING CHANGE)**
+- add top and bottom margins to thumbs in plain gallery #169 (requested by @MiaAlSaif) **BREAKING CHANGE**
+- **add @angular/cdk as required dependency** (mandatory also in beta-3, but I forgot to add it :)) **BREAKING CHANGE**
+- new method in GalleryService called 'navigateGallery'
+- add deprecation to `forRoot()` method. Probably I'll remove it in version 8.x.x
+
+### Vulnerabilities
+- fix a security issue in modal-gallery when you are using the navigate button to an external url with target _blank.
+  In this way I prevent "Reverse Tabnabbing"'s attacks. To fix this issue I used this standard technique: https://developer.mozilla.org/en-US/docs/Web/API/Window/open
+
+### Chores
+- update readme with a better layout (table of contents, images and so on)
+
+### Demos
+- add new carousel examples to all demos
+- add new carousel ie11 examples to all demos
+- create a new GUI for all examples based on the official documentation website v7
+- add new demo angular-cli-6 to test this library also on angular 6
+- upgrade both angular-cli, universal and angular-cli-material to angular 7, angular-cli 7 and angular-material 7
+- update all examples, adding @angular/cdk
+
+### Documentations
+- add all features and examples of Carousel
+- improve documentation website with a new Font
+- improve performance with service workers, external fonts and optimized images and SVGs
+- fix SEO issues about H1-H6
+- fix SEO issues about page titles and best practices about icons, themes, manifest.json and so on
+- add Google Analytics
+- update to Angular 7 and angular-cli 7
+- improve SSR and prerender (still not possible on Github so I'll release it on a real server)
+- remove unused libs like ng-bootstrap, jquery, popper and others
+- first implementation of app-shell (still no working because of some incompatibilities with third party libs)
+- remove sidebar for all pages except for demo and features
+- add accordion to demo sidebar, also saved in local storage
+- new documentation website https://github.com/Ks89/angular-modal-gallery-2018-v7.github.io
+- rewrite navbar without bootstrap
+- improve sidebar for both features and demo
+- upgrade to the latest alpha version of angular-modal-gallery
+- improve colors and accessibility
+- fix compatibility table in homepage
+- update default values page
+- add new logo
+- replace navbar brand text with the new logo
+- replace github iframes with badges
+- add migration guide
+- update doc with new responsive breakpoints for carousel's previews
+- swipe sidebar and content in features and examples to improve readability on smartphones
+
+### Internal library changes
+- migrate to the official ng lib features in angular-cli >= 6.2
+- upgrade to angular-cli 7 final and Angular 7 final
+- use `@Injectable(provideIn: 'root')` in galleryService and idValidatorService
+- upgrade to angular-cli 7 and Angular 7
+- upgrade to Typescript 3.1.x
+- add new MaxDirective to change max-height and max-width fully tested
+- fix build internal docs with typedoc, using the latest @next release to support typescript 3.1.x
+- replace KeyboardEvent keyCode with code, because deprecated
+- update internal documentation (npm run docs)
 
 ### Testing
-- improve carousel's tests
+- fix code coverage for library's unit testing
+- add unit testing for id-validator service and improve it forcing **integer** id values **> 0** **(BREAKING CHANGE)**
+- add missing unit test for accessible.component
+- add tests for carousel and carousel-previews components
+
+### CI
+- upgrade CI config files to Node 10
 
 
 # 7.0.0-rc.2
