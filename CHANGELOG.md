@@ -71,6 +71,11 @@
 ### CI
 - upgrade CI config files to Node 10
 
+Differences from rc.2:
+- doc website with a warning to use playconfig.interval >= 0
+- some bug fixes to doc website
+- improve unit testing
+
 
 # 7.0.0-rc.2
 ### Vulnerabilities
