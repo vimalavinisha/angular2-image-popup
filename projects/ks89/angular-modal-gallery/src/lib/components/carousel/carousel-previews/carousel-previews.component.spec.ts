@@ -18,7 +18,7 @@ import 'hammerjs';
 import 'mousetrap';
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChanges } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CarouselPreviewsComponent } from './carousel-previews.component';
 import { SizeDirective } from '../../../directives/size.directive';
@@ -26,9 +26,10 @@ import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../accessibility-default';
 import { InternalLibImage } from '../../../model/image-internal.class';
 import { Size } from '../../../model/size.interface';
 import { AccessibilityConfig } from '../../../model/accessibility.interface';
-import { Image, ModalImage, PlainImage } from '../../../model/image.class';
+import { Image, ImageEvent, ModalImage, PlainImage } from '../../../model/image.class';
 import { CarouselConfig } from '../../../model/carousel-config.interface';
 import { BreakpointsConfig, CarouselPreviewConfig } from '../../../model/carousel-preview-config.interface';
+import { Action } from '../../../model/action.enum';
 
 let comp: CarouselPreviewsComponent;
 let fixture: ComponentFixture<CarouselPreviewsComponent>;
@@ -54,7 +55,7 @@ CUSTOM_ACCESSIBILITY.previewScrollNextTitle = 'custom previewScrollNextTitle';
 CUSTOM_ACCESSIBILITY.previewScrollPrevAriaLabel = 'custom previewScrollPrevAriaLabel';
 CUSTOM_ACCESSIBILITY.previewScrollPrevTitle = 'custom previewScrollPrevTitle';
 
-const DEFAULT_PREVIEW_SIZE: Size = {height: '150px', width: '25%'};
+const DEFAULT_PREVIEW_SIZE: Size = {height: '100px', width: '25%'};
 const DEFAULT_PREVIEW_SIZE_FIVEIMAGES: Size = {height: '100px', width: '20%'};
 
 const IMAGES: InternalLibImage[] = [
@@ -117,11 +118,19 @@ const IMAGES: InternalLibImage[] = [
 const NAVIGATION_NEXT_PREVIEWS: NavigationTestData[] = [
   {
     initial: {start: 0, end: 4, activeIndex: 0},
-    expected: {start: 1, end: 5, activeIndex: 0}
+    expected: {start: 1, end: 5, activeIndex: 2}
   },
   {
-    initial: {start: 1, end: 5, activeIndex: 0},
-    expected: {start: 2, end: 6, activeIndex: 0}
+    initial: {start: 0, end: 4, activeIndex: 0},
+    expected: {start: 0, end: 4, activeIndex: 0}
+  },
+  {
+    initial: {start: 0, end: 4, activeIndex: 0},
+    expected: {start: 0, end: 4, activeIndex: 1}
+  },
+  {
+    initial: {start: 0, end: 4, activeIndex: 0},
+    expected: {start: 1, end: 5, activeIndex: 3}
   }
 ];
 
@@ -186,36 +195,12 @@ function checkPreview(previewElement: DebugElement, previewImage: InternalLibIma
   expect(previewElement.attributes['aria-label']).toBe(getAriaLabel(previewImage));
   expect(previewElement.attributes['ksSize']).toBe('');
   expect(previewElement.styles.width).toBe(size.width);
-  // TODO restore this, why is not working?
-  // expect(previewElement.styles.height).toBe(size.height);
-  // expect(previewElement.properties['className']).toBe('inside preview-image ' + (isActive ? 'active' : ''));
+  expect(previewElement.styles.height).toBe(size.height);
+  expect(previewElement.properties['className']).toBe('inside preview-image' + (isActive ? ' active' : ''));
   expect(previewElement.properties['src']).toBe(currentPlainImg && currentPlainImg.img ? currentPlainImg.img : currentModalImg.img);
   expect(previewElement.properties['title']).toBe(getTitle(previewImage));
   expect(previewElement.properties['alt']).toBe(getAlt(previewImage));
   expect(previewElement.properties['tabIndex']).toBe(0);
-  // expect(previewElement.properties['className']).toBe('inside preview-image ' + (isActive ? 'active' : ''));
-}
-
-function checkPreviewStateAfterClick(previews: DebugElement[], prevValue: InternalLibImage, currValue: InternalLibImage,
-                                     start: number, end: number, activeIndex: number = 0) {
-  fixture.detectChanges();
-  // comp.ngOnChanges(<SimpleChanges>{
-  //   currentImage: {
-  //     previousValue: prevValue,
-  //     currentValue: currValue,
-  //     firstChange: false,
-  //     isFirstChange: () => false
-  //   }
-  // });
-  // console.log('[[[[[[[[[[[ s', start);
-  // console.log('[[[[[[[[[[[ cs', comp.start);
-  // console.log('[[[[[[[[[[[ e', end);
-  // console.log('[[[[[[[[[[[ ce', comp.end);
-  // console.log('[[[[[[[[[[[ activeIndex', activeIndex);
-  // console.log('[[[[[[[[[[[ ???', IMAGES.slice(start, end));
-  expect(comp.start).toBe(start);
-  expect(comp.end).toBe(end);
-  expect(comp.previews).toEqual(IMAGES.slice(start, end));
 }
 
 function initTestBed() {
@@ -223,6 +208,27 @@ function initTestBed() {
     declarations: [CarouselPreviewsComponent, SizeDirective]
   }).compileComponents();
 }
+
+const CAROUSEL_CONFIG_DEFAULT: CarouselConfig = <CarouselConfig>{
+  maxWidth: '100%',
+  maxHeight: '400px',
+  showArrows: true,
+  objectFit: 'cover',
+  keyboardEnable: true,
+  modalGalleryEnable: false,
+  legacyIE11Mode: false
+};
+
+const DEFAULT_BREAKPOINTS: BreakpointsConfig = {xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200};
+const DEFAULT_PREVIEW_CONFIG: CarouselPreviewConfig = {
+  visible: true,
+  number: 4,
+  arrows: true,
+  clickable: true,
+  width: 100 / 4 + '%',
+  maxHeight: '200px',
+  breakpoints: DEFAULT_BREAKPOINTS
+};
 
 describe('CarouselPreviewsComponent', () => {
   beforeEach(async(() => {
@@ -236,29 +242,21 @@ describe('CarouselPreviewsComponent', () => {
 
   it('should instantiate it', () => expect(comp).not.toBeNull());
 
-
   describe('---YES---', () => {
 
     it(`should display previews (first one is active) based of input images`, () => {
       const initialActiveImage = 0;
-      const numOfPreviews = 4;
-      comp.infinite = false; // forced in carousel.html and cannot be changed
-      // comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
+      const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
+      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.currentImage = IMAGES[initialActiveImage];
-      comp.carouselConfig = <CarouselConfig>{
-        maxWidth: '100%',
-        maxHeight: '400px',
-        showArrows: true,
-        objectFit: 'cover',
-        keyboardEnable: true,
-        modalGalleryEnable: false,
-        legacyIE11Mode: false
-      };
+      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       comp.images = IMAGES;
-      // comp.infinite = false;
-      comp.ngOnInit();
       fixture.detectChanges();
+
+      expect(comp.start).toBe(initialActiveImage);
+      expect(comp.end).toBe(numOfPreviews);
+      expect(comp.previews).toEqual(IMAGES.slice(initialActiveImage, numOfPreviews));
 
       const element: DebugElement = fixture.debugElement;
 
@@ -274,108 +272,99 @@ describe('CarouselPreviewsComponent', () => {
       expect(previews.length).toBe(numOfPreviews);
 
       const previewImages: InternalLibImage[] = IMAGES.slice(initialActiveImage, numOfPreviews);
-
-      for (let i = 0; i < previewImages.length; i++) {
-        checkPreview(previews[i], previewImages[i], i === 0, DEFAULT_PREVIEW_SIZE);
-      }
+      previews.forEach((preview: DebugElement, i: number) => {
+        checkPreview(preview, previewImages[i], i === initialActiveImage, DEFAULT_PREVIEW_SIZE);
+      });
     });
 
-    const defaultBreakpoints: BreakpointsConfig = {xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200};
-    const defaultPreviewConfig: CarouselPreviewConfig = {
-      visible: true,
-      number: 4,
-      arrows: true,
-      clickable: true,
-      width: 100 / 4 + '%',
-      maxHeight: '200px',
-      breakpoints: defaultBreakpoints
-    };
+    NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
+      it(`should display previews (one in the middle is active) based on input images. Test i=${index}`, () => {
+        const initialActiveImage = val.initial.activeIndex; // initial active preview
+        const newActiveImage = val.expected.activeIndex; // preview to click => so the next active preview after the click action
+        const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
+        comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
+        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        comp.currentImage = IMAGES[initialActiveImage];
+        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
+        comp.images = IMAGES;
+        fixture.detectChanges();
 
+        expect(comp.start).toBe(val.initial.start);
+        expect(comp.end).toBe(val.initial.end);
+        expect(comp.previews).toEqual(IMAGES.slice(val.initial.start, val.initial.end));
 
-    // it(`should display previews (one in the middle is active) based on input images`, () => {
-    //   // in this example I choose the third image (index = 2) as the current one
-    //   const initialActiveImage = 2; // you can use every value except for 0 and the last one
-    //   const numOfPreviews = 4;
-    //   comp.images = IMAGES;
-    //   comp.infinite = false; // forced in carousel.html and cannot be changed
-    //   comp.previewConfig = defaultPreviewConfig;
-    //   comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    //   comp.currentImage = IMAGES[0];
-    //   comp.carouselConfig = <CarouselConfig>{
-    //     maxWidth: '100%',
-    //     maxHeight: '400px',
-    //     showArrows: true,
-    //     objectFit: 'cover',
-    //     keyboardEnable: true,
-    //     modalGalleryEnable: false,
-    //     legacyIE11Mode: false
-    //   };
-    //   comp.ngOnInit();
-    //   // comp.slideConfig = SLIDE_CONFIG;
-    //   // comp.ngOnChanges(<SimpleChanges>{
-    //   //   currentImage: {
-    //   //     previousValue: IMAGES[0],
-    //   //     currentValue: IMAGES[initialActiveImage],
-    //   //     firstChange: false,
-    //   //     isFirstChange: () => false
-    //   //   },
-    //   //   images: {
-    //   //     previousValue: IMAGES,
-    //   //     currentValue: IMAGES,
-    //   //     firstChange: false,
-    //   //     isFirstChange: () => false
-    //   //   },
-    //   // });
-    //
-    //   fixture.detectChanges();
-    //
-    //   console.log('start', comp.start);
-    //   console.log('end', comp.end);
-    //
-    //   spyOn(comp, 'onImageEvent').and.callThrough();
-    //
-    //   const element: DebugElement = fixture.debugElement;
-    //
-    //   // click on the second image
-    //   const previews: DebugElement[] = element.queryAll(By.css('img'));
-    //   expect(previews.length).toBe(numOfPreviews);
-    //   // console.log('previews[initialActiveImage]', previews[initialActiveImage]);
-    //
-    //   previews[initialActiveImage].nativeElement.click();
-    //
-    //   fixture.whenStable().then(() => {
-    //     fixture.detectChanges();
-    //     expect(comp.onImageEvent).toHaveBeenCalled();
-    //     // expect(comp.start).toBe(val.expected.start);
-    //     // expect(comp.end).toBe(val.expected.end);
-    //     // expect(comp.previews).toEqual(IMAGES.slice(val.expected.start, val.expected.end));
-    //     // if (index === 0) {
-    //     //   checkArrows(arrows, false, false);
-    //     // } else {
-    //     //   checkArrows(arrows, false, false);
-    //     // }
-    //
-    //     comp.currentImage = IMAGES[initialActiveImage];
-    //
-    //     fixture.detectChanges();
-    //
-    //     // console.log('^^^^^^^^^^^^^^^^^^ ', element.query(By.css('img.inside.preview-image.active')));
-    //
-    //     const arrows: DebugElement[] = element.queryAll(By.css('a'));
-    //     checkArrows(arrows, false, false);
-    //
-    //     const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
-    //     expect(previewsContainer.name).toBe('nav');
-    //     expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-    //     expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
-    //
-    //     const previewImages: InternalLibImage[] = IMAGES.slice(initialActiveImage - 1, initialActiveImage - 1 + numOfPreviews);
-    //
-    //     for (let i = 0; i < previewImages.length; i++) {
-    //       checkPreview(previews[i], previewImages[i], i === 1, DEFAULT_PREVIEW_SIZE);
-    //     }
-    //   });
-    // });
+        spyOn(comp, 'onImageEvent').and.callThrough();
+
+        const element: DebugElement = fixture.debugElement;
+
+        let previews: DebugElement[] = element.queryAll(By.css('img'));
+        expect(previews.length).toBe(numOfPreviews);
+
+        let arrows: DebugElement[] = element.queryAll(By.css('a'));
+        checkArrows(arrows, comp.start === 0, comp.end === IMAGES.length - 1);
+
+        let previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
+        expect(previewsContainer.name).toBe('nav');
+        expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+        expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+
+        let previewImages: InternalLibImage[] = IMAGES.slice(val.initial.start, val.initial.end);
+        previews.forEach((preview: DebugElement, i: number) => {
+          checkPreview(preview, previewImages[i], i === val.initial.activeIndex - val.initial.start, DEFAULT_PREVIEW_SIZE);
+        });
+
+        comp.clickPreview.subscribe((e: ImageEvent) => {
+          // check click event payload
+          expect(e.action).toBe(Action.CLICK);
+          expect(e.result).toBe(val.expected.activeIndex);
+
+          // it's required to change the currentImage,
+          // because this operation is done by its parent GalleryComponent
+          comp.currentImage = IMAGES[newActiveImage];
+
+          comp.ngOnChanges(<SimpleChanges>{
+            currentImage: {
+              previousValue: IMAGES[initialActiveImage],
+              currentValue: IMAGES[newActiveImage],
+              firstChange: true,
+              isFirstChange: () => true
+            },
+            images: {
+              previousValue: IMAGES,
+              currentValue: IMAGES,
+              firstChange: false,
+              isFirstChange: () => false
+            }
+          });
+
+          fixture.detectChanges();
+          expect(comp.onImageEvent).toHaveBeenCalled();
+
+          previewImages = IMAGES.slice(val.expected.start, val.expected.end);
+
+          expect(comp.start).toBe(val.expected.start);
+          expect(comp.end).toBe(val.expected.end);
+          expect(comp.previews).toEqual(previewImages);
+
+          arrows = element.queryAll(By.css('a'));
+          checkArrows(arrows, comp.start === 0, comp.end === IMAGES.length - 1);
+
+          previewsContainer = element.query(By.css('nav.previews-container'));
+          expect(previewsContainer.name).toBe('nav');
+          expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+          expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+
+          previews = element.queryAll(By.css('img'));
+          expect(previews.length).toBe(numOfPreviews);
+
+          previews.forEach((preview: DebugElement, i: number) => {
+            checkPreview(preview, previewImages[i], i === val.expected.activeIndex - val.expected.start, DEFAULT_PREVIEW_SIZE);
+          });
+        });
+
+        previews[newActiveImage].nativeElement.click();
+      });
+    });
 
     // it(`should display previews (last one is active) based of input images`, () => {
     //   // in this example I choose the last image as the current one
@@ -422,7 +411,7 @@ describe('CarouselPreviewsComponent', () => {
     //   });
     //   const initialActiveImage = 0;
     //   const numOfPreviews = 4;
-    //   comp.previewConfig = defaultPreviewConfig;
+    //   comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
     //   // custom accessibility for container and arrows, but not for previews
     //   comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
     //   comp.currentImage = IMAGES_CUSTOM_ACCESSIBILITY[initialActiveImage];
@@ -491,7 +480,7 @@ describe('CarouselPreviewsComponent', () => {
     //     checkPreview(previews[i], previewImages[i], i === 0, DEFAULT_PREVIEW_SIZE_FIVEIMAGES);
     //   }
     // });
-
+    //
     // CUSTOM_SIZES.forEach((size: Size, index: number) => {
     //   it(`should display previews with custom sizes. Index i=${index}`, () => {
     //     const initialActiveImage = 0;
@@ -524,7 +513,7 @@ describe('CarouselPreviewsComponent', () => {
     //     }
     //   });
     // });
-
+    //
     // it(`should display previews (first one is active) and click on the second one`, () => {
     //   const initialActiveImage = 0;
     //   const numOfPreviews = 3;
@@ -594,14 +583,13 @@ describe('CarouselPreviewsComponent', () => {
     // //   fixture.detectChanges();
     // // });
     //
-
+    //
     // NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
     //   it(`should navigate previews clicking on left arrow. Test i=${index}`, async(() => {
-    //     comp.previewConfig = defaultPreviewConfig;
+    //     comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
     //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
     //     comp.currentImage = IMAGES[val.initial.activeIndex];
     //     comp.images = IMAGES;
-    //     comp.infinite = false; // forced in carousel.html and cannot be changed
     //     comp.carouselConfig = <CarouselConfig>{
     //       maxWidth: '100%',
     //       maxHeight: '400px',
@@ -655,7 +643,7 @@ describe('CarouselPreviewsComponent', () => {
     //     });
     //   }));
     // });
-
+    //
     //
     // // TODO
     // // NAVIGATION_PREV_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
@@ -791,49 +779,48 @@ describe('CarouselPreviewsComponent', () => {
     //   }));
     // });
 
-    [-2, -1, 0].forEach((numberOfPreviews: number, index: number) => {
-      it(`should display previews with number <= 0, so it will be forced to the default value. Test i=${index}`, () => {
-        const initialActiveImage = 0;
-        const numOfPreviews = 4;
-        comp.infinite = false; // forced in carousel.html and cannot be changed
-        comp.previewConfig = <CarouselPreviewConfig>{
-          visible: true,
-          number: numberOfPreviews,
-          arrows: true,
-          clickable: true,
-          width: 100 / 4 + '%',
-          maxHeight: '200px',
-          breakpoints: defaultBreakpoints
-        };
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.currentImage = IMAGES[initialActiveImage];
-        comp.carouselConfig = <CarouselConfig>{
-          maxWidth: '100%',
-          maxHeight: '400px',
-          showArrows: true,
-          objectFit: 'cover',
-          keyboardEnable: true,
-          modalGalleryEnable: false,
-          legacyIE11Mode: false
-        };
-        comp.images = IMAGES;
-        comp.ngOnInit();
-        fixture.detectChanges();
-
-        const element: DebugElement = fixture.debugElement;
-
-        const arrows: DebugElement[] = element.queryAll(By.css('a'));
-        checkArrows(arrows, true, false);
-
-        const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
-        expect(previewsContainer.name).toBe('nav');
-        expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-        expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
-
-        const previews: DebugElement[] = element.queryAll(By.css('img'));
-        expect(previews.length).toBe(numOfPreviews);
-      });
-    });
+    // [-2, -1, 0].forEach((numberOfPreviews: number, index: number) => {
+    //   it(`should display previews with number <= 0, so it will be forced to the default value. Test i=${index}`, () => {
+    //     const initialActiveImage = 0;
+    //     const numOfPreviews = 4;
+    //     comp.previewConfig = <CarouselPreviewConfig>{
+    //       visible: true,
+    //       number: numberOfPreviews,
+    //       arrows: true,
+    //       clickable: true,
+    //       width: 100 / 4 + '%',
+    //       maxHeight: '200px',
+    //       breakpoints: defaultBreakpoints
+    //     };
+    //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+    //     comp.currentImage = IMAGES[initialActiveImage];
+    //     comp.carouselConfig = <CarouselConfig>{
+    //       maxWidth: '100%',
+    //       maxHeight: '400px',
+    //       showArrows: true,
+    //       objectFit: 'cover',
+    //       keyboardEnable: true,
+    //       modalGalleryEnable: false,
+    //       legacyIE11Mode: false
+    //     };
+    //     comp.images = IMAGES;
+    //     comp.ngOnInit();
+    //     fixture.detectChanges();
+    //
+    //     const element: DebugElement = fixture.debugElement;
+    //
+    //     const arrows: DebugElement[] = element.queryAll(By.css('a'));
+    //     checkArrows(arrows, true, false);
+    //
+    //     const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
+    //     expect(previewsContainer.name).toBe('nav');
+    //     expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+    //     expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+    //
+    //     const previews: DebugElement[] = element.queryAll(By.css('img'));
+    //     expect(previews.length).toBe(numOfPreviews);
+    //   });
+    // });
   });
 
   // describe('---NO---', () => {
