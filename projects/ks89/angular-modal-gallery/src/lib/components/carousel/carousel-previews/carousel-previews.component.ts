@@ -93,11 +93,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   @Input()
   images: InternalLibImage[];
   /**
-   * boolean to enable/disable infinite sliding.
-   */
-  @Input()
-  infinite: boolean;
-  /**
    * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
    */
@@ -137,11 +132,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   configPreview: CarouselPreviewConfig;
 
   /**
-   * Start index of the input images used to display previews.
+   * Start index (inclusive) of the input images used to display previews.
    */
   start: number;
   /**
-   * End index of the input images used to display previews.
+   * End index (non inclusive) of the input images used to display previews.
    */
   end: number;
 
@@ -335,8 +330,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
         if (calc < currentIndex) {
           this.next();
         }
-        if (calc === currentIndex) {
-        }
       }
     }
   }
@@ -475,10 +468,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
         // last image
         this.setEndIndexesPreviews();
         break;
-      default:
-        // other images
-        this.setIndexesPreviews();
-        break;
+      // default:
+      //   // other images
+      //   // TODO unused because it starts always at image 0
+      //   this.setIndexesPreviews();
+      //   break;
     }
     this.previews = images.filter((img: InternalLibImage, i: number) => i >= this.start && i < this.end);
   }
@@ -497,14 +491,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   private setEndIndexesPreviews() {
     this.start = this.images.length - 1 - (<number>this.configPreview.number - 1);
     this.end = this.images.length;
-  }
-
-  /**
-   * Private method to update both `start` and `end` based on the currentImage.
-   */
-  private setIndexesPreviews() {
-    this.start = getIndex(this.currentImage, this.images) - Math.floor(<number>this.configPreview.number / 2);
-    this.end = getIndex(this.currentImage, this.images) + Math.floor(<number>this.configPreview.number / 2) + 1;
   }
 
   /**
@@ -551,6 +537,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @returns boolean if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !this.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
+    return getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }
