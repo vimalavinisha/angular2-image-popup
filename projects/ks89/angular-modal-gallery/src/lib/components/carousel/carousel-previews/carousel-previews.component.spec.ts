@@ -19,7 +19,7 @@ import 'mousetrap';
 
 import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { By, SafeResourceUrl } from '@angular/platform-browser';
 import { CarouselPreviewsComponent } from './carousel-previews.component';
 import { SizeDirective } from '../../../directives/size.directive';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../accessibility-default';
@@ -141,6 +141,14 @@ const NAVIGATION_PREV_PREVIEWS: NavigationTestData[] = [
   },
   {
     initial: {start: 3, end: 7, activeIndex: 6},
+    expected: {start: 3, end: 7, activeIndex: 6}
+  },
+  {
+    initial: {start: 3, end: 7, activeIndex: 6},
+    expected: {start: 3, end: 7, activeIndex: 5}
+  },
+  {
+    initial: {start: 3, end: 7, activeIndex: 6},
     expected: {start: 2, end: 6, activeIndex: 3}
   }
 ];
@@ -200,6 +208,27 @@ function checkPreview(previewElement: DebugElement, previewImage: InternalLibIma
   expect(previewElement.properties['src']).toBe(currentPlainImg && currentPlainImg.img ? currentPlainImg.img : currentModalImg.img);
   expect(previewElement.properties['title']).toBe(getTitle(previewImage));
   expect(previewElement.properties['alt']).toBe(getAlt(previewImage));
+  expect(previewElement.properties['tabIndex']).toBe(0);
+}
+
+function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: InternalLibImage, isActive: boolean, width: string = DEFAULT_WIDTH, height: string = DEFAULT_HEIGHT) {
+  const currentPlainImg: PlainImage = previewImage.plain;
+  const currentModalImg: ModalImage = previewImage.modal;
+  const imgUrl: string | SafeResourceUrl = (currentPlainImg && currentPlainImg.img) ? currentPlainImg.img : currentModalImg.img;
+  expect(previewElement.name).toBe('div');
+  expect(previewElement.attributes['role']).toBe('img');
+  expect(previewElement.attributes['aria-label']).toBe(getAriaLabel(previewImage));
+  expect(previewElement.attributes['ksSize']).toBe('');
+  expect(previewElement.styles.width).toBe(width);
+  expect(previewElement.styles.height).toBe(height);
+  expect(previewElement.properties['className']).toBe('inside preview-ie11-image' + (isActive ? ' active' : ''));
+  expect(previewElement.styles['background-color']).toBe('transparent');
+  expect(previewElement.styles['background-image']).toBe(`url(${imgUrl})`);
+  expect(previewElement.styles['background-position']).toBe('center center');
+  expect(previewElement.styles['background-size']).toBe('auto 200px');
+  expect(previewElement.styles['background-repeat']).toBe('no-repeat');
+  expect(previewElement.styles['background-attachment']).toBe('scroll');
+  expect(previewElement.properties['title']).toBe(getTitle(previewImage));
   expect(previewElement.properties['tabIndex']).toBe(0);
 }
 
@@ -512,47 +541,48 @@ describe('CarouselPreviewsComponent', () => {
       });
     }));
 
-    // it(`should display previews with custom accessibility`, () => {
-    //   const IMAGES_CUSTOM_ACCESSIBILITY: InternalLibImage[] = [...IMAGES].map((image: InternalLibImage) => {
-    //     const newImage: InternalLibImage = Object.assign({}, image);
-    //     newImage.modal.title = 'custom accessibility title';
-    //     newImage.modal.alt = 'custom accessibility alt';
-    //     newImage.modal.ariaLabel = 'custom accessibility ariaLabel';
-    //     newImage.plain.title = 'custom accessibility title';
-    //     newImage.plain.alt = 'custom accessibility alt';
-    //     newImage.plain.ariaLabel = 'custom accessibility ariaLabel';
-    //     return newImage;
-    //   });
-    //   const initialActiveImage = 0;
-    //   const numOfPreviews = 4;
-    //   comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-    //   // custom accessibility for container and arrows, but not for previews
-    //   comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
-    //   comp.currentImage = IMAGES_CUSTOM_ACCESSIBILITY[initialActiveImage];
-    //   // provide custom accessibility in ModalImage
-    //   comp.images = IMAGES_CUSTOM_ACCESSIBILITY;
-    //   comp.ngOnInit();
-    //   fixture.detectChanges();
-    //
-    //   const element: DebugElement = fixture.debugElement;
-    //
-    //   const arrows: DebugElement[] = element.queryAll(By.css('a'));
-    //   checkArrows(arrows, true, false, CUSTOM_ACCESSIBILITY);
-    //
-    //   const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
-    //   expect(previewsContainer.name).toBe('nav');
-    //   expect(previewsContainer.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.carouselPreviewsContainerAriaLabel);
-    //   expect(previewsContainer.properties['title']).toBe(CUSTOM_ACCESSIBILITY.carouselPreviewsContainerTitle);
-    //
-    //   const previews: DebugElement[] = element.queryAll(By.css('img'));
-    //   expect(previews.length).toBe(numOfPreviews);
-    //
-    //   const previewImages: InternalLibImage[] = IMAGES_CUSTOM_ACCESSIBILITY.slice(initialActiveImage, numOfPreviews);
-    //
-    //   for (let i = 0; i < previewImages.length; i++) {
-    //     checkPreview(previews[i], previewImages[i], i === 0, DEFAULT_PREVIEW_SIZE);
-    //   }
-    // });
+    it(`should display previews with custom accessibility`, () => {
+      const IMAGES_CUSTOM_ACCESSIBILITY: InternalLibImage[] = [...IMAGES].map((image: InternalLibImage) => {
+        const newImage: InternalLibImage = Object.assign({}, image);
+        newImage.modal.title = 'custom accessibility title';
+        newImage.modal.alt = 'custom accessibility alt';
+        newImage.modal.ariaLabel = 'custom accessibility ariaLabel';
+        newImage.plain.title = 'custom accessibility title';
+        newImage.plain.alt = 'custom accessibility alt';
+        newImage.plain.ariaLabel = 'custom accessibility ariaLabel';
+        return newImage;
+      });
+      const numOfPreviews = 4;
+      const initialActiveImage = 0;
+      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
+      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
+      comp.currentImage = IMAGES_CUSTOM_ACCESSIBILITY[initialActiveImage];
+      comp.images = IMAGES_CUSTOM_ACCESSIBILITY;
+      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
+      fixture.detectChanges();
+
+      const previewImages: InternalLibImage[] = IMAGES_CUSTOM_ACCESSIBILITY.slice(initialActiveImage, numOfPreviews);
+
+      expect(comp.start).toBe(initialActiveImage);
+      expect(comp.end).toBe(DEFAULT_PREVIEW_CONFIG.number);
+      expect(comp.previews).toEqual(previewImages);
+
+      const element: DebugElement = fixture.debugElement;
+
+      const arrows: DebugElement[] = element.queryAll(By.css('a'));
+      expect(arrows.length).toBe(2);
+      checkArrows(arrows, true, false, CUSTOM_ACCESSIBILITY);
+
+      const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
+      expect(previewsContainer.name).toBe('nav');
+      expect(previewsContainer.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.carouselPreviewsContainerAriaLabel);
+      expect(previewsContainer.properties['title']).toBe(CUSTOM_ACCESSIBILITY.carouselPreviewsContainerTitle);
+
+      const previews: DebugElement[] = element.queryAll(By.css('img'));
+      expect(previews.length).toBe(numOfPreviews);
+      // DEFAULT_HEIGHT because forces by breakpoints when browser is small (like in test)
+      previews.forEach((preview: DebugElement, i: number) => checkPreview(preview, previewImages[i], i === 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    });
 
     it(`should display a custom number of previews without hidden navigation arrows`, () => {
       const numOfPreviews = 5;
@@ -570,6 +600,7 @@ describe('CarouselPreviewsComponent', () => {
       comp.previewConfig = customPreviewConfigFive;
       comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.currentImage = IMAGES[initialActiveImage];
+      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       comp.images = IMAGES;
       fixture.detectChanges();
 
@@ -605,6 +636,7 @@ describe('CarouselPreviewsComponent', () => {
         comp.previewConfig = CUSTOM_PREVIEW_CONFIG;
         comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.currentImage = IMAGES[initialActiveImage];
+        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
         comp.images = IMAGES;
         fixture.detectChanges();
 
@@ -632,66 +664,59 @@ describe('CarouselPreviewsComponent', () => {
       });
     });
 
-    // // TODO
-    // // it(`should display previews (first one is active) and go to the second one with keyboard`, () => {
-    // //   const initialActivePreview = 0;
-    // //   const afterClickActivePreview = 0;
-    // //   const numberOfVisiblePreviews = 3;
-    // //   comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-    // //   comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-    // //   comp.currentImage = IMAGES[initialActivePreview];
-    // //   comp.images = IMAGES;
-    // //   comp.slideConfig = SLIDE_CONFIG;
-    // //   comp.ngOnInit();
-    // //   fixture.detectChanges();
-    // //
-    // //   comp.clickPreview.subscribe((res: InternalLibImage) => {
-    // //     console.log('----- comp.clickPreview.subscribe' + res, IMAGES[afterClickActivePreview]);
-    // //     fail('I should go here');
-    // //     expect(res).toEqual(IMAGES[afterClickActivePreview]);
-    // //   });
-    // //
-    // //   const element: DebugElement = fixture.debugElement;
-    // //
-    // //   const arrows: DebugElement[] = element.queryAll(By.css('a'));
-    // //   checkArrows(arrows, true, false);
-    // //
-    // //   const previews: DebugElement[] = element.queryAll(By.css('img'));
-    // //   expect(previews.length).toBe(numberOfVisiblePreviews);
-    // //
-    // //   previews.forEach((preview: DebugElement, index: number) => {
-    // //     checkPreviewDefault(preview, initialActivePreview, index);
-    // //   });
-    // //
-    // //   previews[afterClickActivePreview].nativeElement.focus();
-    // //   previews[afterClickActivePreview].triggerEventHandler('keyup', <KeyboardEvent>{keyCode: 32});
-    // //   fixture.detectChanges();
-    // // });
+    // TODO not working. But it isn't an issue of this test, intead it's something related to the library, because
+    // TODO I should implement keyboard navigation on the previews-container and not on single previews
+    // it(`should display previews (first one is active) and go to the second one with keyboard's right arrow`, fakeAsync(() => {
+    //   const initialActiveImage = 0;
+    //   comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
+    //   comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+    //   comp.currentImage = IMAGES[initialActiveImage];
+    //   comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
+    //   comp.images = IMAGES;
+    //   fixture.detectChanges();
+    //
+    //   spyOn(comp, 'onImageEvent').and.callThrough();
+    //
+    //   const previewImages: InternalLibImage[] = IMAGES.slice(initialActiveImage, DEFAULT_PREVIEW_CONFIG.number);
+    //
+    //   expect(comp.start).toBe(initialActiveImage);
+    //   expect(comp.end).toBe(DEFAULT_PREVIEW_CONFIG.number);
+    //   expect(comp.previews).toEqual(previewImages);
+    //
+    //   const element: DebugElement = fixture.debugElement;
+    //
+    //   const arrows: DebugElement[] = element.queryAll(By.css('a'));
+    //   expect(arrows.length).toBe(2);
+    //   checkArrows(arrows, true, false);
+    //
+    //   const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
+    //   expect(previewsContainer.name).toBe('nav');
+    //   expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+    //   expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+    //
+    //   const previews: DebugElement[] = element.queryAll(By.css('img'));
+    //   expect(previews.length).toBe(DEFAULT_PREVIEW_CONFIG.number);
+    //   // DEFAULT_HEIGHT because forces by breakpoints when browser is small (like in test)
+    //   previews.forEach((preview: DebugElement, i: number) => checkPreview(preview, previewImages[i], i === 0, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    //
+    //   previews[initialActiveImage + 1].nativeElement.focus();
+    //   previews[initialActiveImage + 1].triggerEventHandler('keyup', <KeyboardEvent>{keyCode: RIGHT_ARROW_KEYCODE});
+    //   tick(100);
+    //   flush();
+    //   fixture.detectChanges();
+    //   expect(comp.start).toBe(initialActiveImage + 1);
+    //   expect(comp.end).toBe(DEFAULT_PREVIEW_CONFIG.number + 1);
+    //   expect(comp.previews).toEqual(previewImages);
+    // }));
 
     [-2, -1, 0].forEach((numberOfPreviews: number, index: number) => {
       it(`should display previews with number <= 0, so it will be forced to the default value. Test i=${index}`, () => {
         const initialActiveImage = 0;
         const numOfPreviews = 4;
-        comp.previewConfig = <CarouselPreviewConfig>{
-          visible: true,
-          number: numberOfPreviews,
-          arrows: true,
-          clickable: true,
-          width: 100 / 4 + '%',
-          maxHeight: '200px',
-          breakpoints: DEFAULT_BREAKPOINTS
-        };
+        comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
         comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.currentImage = IMAGES[initialActiveImage];
-        comp.carouselConfig = <CarouselConfig>{
-          maxWidth: '100%',
-          maxHeight: '400px',
-          showArrows: true,
-          objectFit: 'cover',
-          keyboardEnable: true,
-          modalGalleryEnable: false,
-          legacyIE11Mode: false
-        };
+        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
         comp.images = IMAGES;
         fixture.detectChanges();
 
@@ -708,6 +733,40 @@ describe('CarouselPreviewsComponent', () => {
         expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
         const previews: DebugElement[] = element.queryAll(By.css('img'));
         expect(previews.length).toBe(numOfPreviews);
+      });
+    });
+
+    it(`should display previews (first one is active) based of input images with ie11LegacyMode enabled`, () => {
+      const initialActiveImage = 0;
+      const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
+      const LEGACY_MODE_CAROUSEL_CONFIG = Object.assign({}, CAROUSEL_CONFIG_DEFAULT, {legacyIE11Mode: true});
+      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.currentImage = IMAGES[initialActiveImage];
+      comp.carouselConfig = LEGACY_MODE_CAROUSEL_CONFIG;
+      comp.images = IMAGES;
+      fixture.detectChanges();
+
+      expect(comp.start).toBe(initialActiveImage);
+      expect(comp.end).toBe(numOfPreviews);
+      expect(comp.previews).toEqual(IMAGES.slice(initialActiveImage, numOfPreviews));
+
+      const element: DebugElement = fixture.debugElement;
+
+      const arrows: DebugElement[] = element.queryAll(By.css('a'));
+      checkArrows(arrows, true, false);
+
+      const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
+      expect(previewsContainer.name).toBe('nav');
+      expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+
+      const previews: DebugElement[] = element.queryAll(By.css('div.inside.preview-ie11-image'));
+      expect(previews.length).toBe(numOfPreviews);
+
+      const previewImages: InternalLibImage[] = IMAGES.slice(initialActiveImage, numOfPreviews);
+      previews.forEach((preview: DebugElement, i: number) => {
+        checkPreviewIe11Legacy(preview, previewImages[i], i === initialActiveImage, DEFAULT_WIDTH, DEFAULT_HEIGHT);
       });
     });
   });

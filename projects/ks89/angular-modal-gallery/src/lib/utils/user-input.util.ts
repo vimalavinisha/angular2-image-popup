@@ -23,23 +23,58 @@
  */
 
 /**
- * Key of the keyboard's key `space`
- */
-export const SPACE_KEY = '';
-/**
  * Key of the keyboard's key `enter`
  */
 export const ENTER_KEY = 'Enter';
+/**
+ * Code of the keyboard's key `enter`
+ */
+export const ENTER_CODE = 'Enter';
+
+/**
+ * Key of the keyboard's key 'right arrow'
+ */
+export const RIGHT_ARROW_KEY = 'ArrowRight';
+/**
+ * Code of the keyboard's key 'right arrow'
+ */
+export const RIGHT_ARROW_CODE = 'ArrowRight';
+/**
+ * KeyCode of the keyboard's key 'right arrow'
+ * Used in unit tests only
+ */
+export const RIGHT_ARROW_KEYCODE = 39;
+
+/**
+ * Key of the keyboard's key 'left arrow'
+ */
+export const LEFT_ARROW_KEY = 'ArrowLeft';
+/**
+ * Code of the keyboard's key 'left arrow'
+ */
+export const LEFT_ARROW_CODE = 'ArrowLeft';
+/**
+ * KeyCode of the keyboard's key 'left arrow'
+ * Used in unit tests only
+ */
+export const LEFT_ARROW_KEYCODE = 37;
+
+/**
+ * Key of the keyboard's key `space`
+ */
+export const SPACE_KEY = '';
 /**
  * Code of the keyboard's key `space`
  */
 export const SPACE_CODE = 'Space';
 /**
- * Code of the keyboard's key `enter`
+ * KeyCode of the keyboard's key 'space'
+ * Used in unit tests only
  */
-export const ENTER_CODE = 'Enter';
+export const SPACE_KEYCODE = 32;
+
 /**
- * Keycode of the main mouse button
+ * KeyCode of the main mouse button
  */
 export const MOUSE_MAIN_BUTTON_CLICK = 0;
 
