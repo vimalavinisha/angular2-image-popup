@@ -1,11 +1,11 @@
 # 7.0.0
 ### Features
-- new carousel component with previews (also with legacyIE11Mode to support IE11 :)) **HUGE FEATURE!!!!**
+- **new carousel component with previews (also with legacyIE11Mode to support IE11 :))** **HUGE FEATURE!!!!**
+- **add @angular/cdk as required dependency** **BREAKING CHANGE**
 - gallery ids must be unique across the whole application **(BREAKING CHANGE)**
 - requires rxjs >= 6 **(BREAKING CHANGE)**
 - requires angular >= 6 **(BREAKING CHANGE)**
 - add top and bottom margins to thumbs in plain gallery #169 (requested by @MiaAlSaif) **BREAKING CHANGE**
-- **add @angular/cdk as required dependency** (mandatory also in beta-3, but I forgot to add it :)) **BREAKING CHANGE**
 - new method in GalleryService called 'navigateGallery'
 
 ### Vulnerabilities
@@ -74,6 +74,7 @@ Differences from rc.2:
 - doc website with a warning to use playconfig.interval >= 0
 - some bug fixes to doc website
 - improve unit testing
+- fix other issues to support IE11
 - temporary remove deprecation warning of `forRoot()`, because I didn't implement an alternative yes
 
 
