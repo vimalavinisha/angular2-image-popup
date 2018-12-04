@@ -7,7 +7,6 @@
 - add top and bottom margins to thumbs in plain gallery #169 (requested by @MiaAlSaif) **BREAKING CHANGE**
 - **add @angular/cdk as required dependency** (mandatory also in beta-3, but I forgot to add it :)) **BREAKING CHANGE**
 - new method in GalleryService called 'navigateGallery'
-- add deprecation to `forRoot()` method. Probably I'll remove it in version 8.x.x
 
 ### Vulnerabilities
 - fix a security issue in modal-gallery when you are using the navigate button to an external url with target _blank.
@@ -75,6 +74,7 @@ Differences from rc.2:
 - doc website with a warning to use playconfig.interval >= 0
 - some bug fixes to doc website
 - improve unit testing
+- temporary remove deprecation warning of `forRoot()`, because I didn't implement an alternative yes
 
 
 # 7.0.0-rc.2
