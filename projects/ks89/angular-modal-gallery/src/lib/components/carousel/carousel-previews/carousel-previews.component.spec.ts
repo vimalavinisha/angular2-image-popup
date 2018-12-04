@@ -29,6 +29,8 @@ import { Image, ImageEvent, ModalImage, PlainImage } from '../../../model/image.
 import { CarouselConfig } from '../../../model/carousel-config.interface';
 import { BreakpointsConfig, CarouselPreviewConfig } from '../../../model/carousel-preview-config.interface';
 import { Action } from '../../../model/action.enum';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MediumMockedBreakpointObserver } from '../../../utils/breakpoint-observer-mock.spec';
 
 let comp: CarouselPreviewsComponent;
 let fixture: ComponentFixture<CarouselPreviewsComponent>;
@@ -55,7 +57,7 @@ CUSTOM_ACCESSIBILITY.previewScrollPrevAriaLabel = 'custom previewScrollPrevAriaL
 CUSTOM_ACCESSIBILITY.previewScrollPrevTitle = 'custom previewScrollPrevTitle';
 
 const DEFAULT_WIDTH = '25%';
-const DEFAULT_HEIGHT = '100px';
+const DEFAULT_HEIGHT = '150px';
 const CUSTOM_PREVIEW_HEIGHTS: string[] = ['200px', '150px', '300px'];
 
 const IMAGES: InternalLibImage[] = [
@@ -225,7 +227,7 @@ function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: Inte
   expect(previewElement.styles['background-color']).toBe('transparent');
   expect(previewElement.styles['background-image']).toBe(`url(${imgUrl})`);
   expect(previewElement.styles['background-position']).toBe('center center');
-  expect(previewElement.styles['background-size']).toBe('auto 200px');
+  expect(previewElement.styles['background-size']).toBe('auto 300px');
   expect(previewElement.styles['background-repeat']).toBe('no-repeat');
   expect(previewElement.styles['background-attachment']).toBe('scroll');
   expect(previewElement.properties['title']).toBe(getTitle(previewImage));
@@ -235,7 +237,17 @@ function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: Inte
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [CarouselPreviewsComponent, SizeDirective]
-  }).compileComponents();
+  }).overrideComponent(CarouselPreviewsComponent, {
+    set: {
+      providers: [
+        {
+          // by default inject a mocked BreakpointObserver service with Medium size by default
+          provide: BreakpointObserver,
+          useClass: MediumMockedBreakpointObserver
+        }
+      ]
+    }
+  });
 }
 
 const CAROUSEL_CONFIG_DEFAULT: CarouselConfig = <CarouselConfig>{
