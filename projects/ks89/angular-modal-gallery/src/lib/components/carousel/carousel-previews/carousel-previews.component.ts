@@ -431,7 +431,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   getIE11LegacyBgSize(): string {
     if (this.configPreview && this.configPreview.maxHeight) {
       const bgHeight: number = +this.configPreview.maxHeight.replace('px', '');
-      return 'auto ' + bgHeight * 2 + 'px';
+      return '100% ' + bgHeight * 2 + 'px';
     }
     return 'cover';
   }

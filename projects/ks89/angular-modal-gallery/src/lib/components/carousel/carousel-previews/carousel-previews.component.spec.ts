@@ -227,7 +227,7 @@ function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: Inte
   expect(previewElement.styles['background-color']).toBe('transparent');
   expect(previewElement.styles['background-image']).toBe(`url(${imgUrl})`);
   expect(previewElement.styles['background-position']).toBe('center center');
-  expect(previewElement.styles['background-size']).toBe('auto 300px');
+  expect(previewElement.styles['background-size']).toBe('100% 300px');
   expect(previewElement.styles['background-repeat']).toBe('no-repeat');
   expect(previewElement.styles['background-attachment']).toBe('scroll');
   expect(previewElement.properties['title']).toBe(getTitle(previewImage));
