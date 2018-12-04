@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -185,6 +185,17 @@ CUSTOM_ACCESSIBILITY.carouselPreviewScrollPrevTitle = 'carouselPreviewScrollPrev
 CUSTOM_ACCESSIBILITY.carouselPreviewScrollNextAriaLabel = 'carouselPreviewScrollNextAriaLabel';
 CUSTOM_ACCESSIBILITY.carouselPreviewScrollNextTitle = 'carouselPreviewScrollNextTitle';
 
+
+const DEFAULT_CAROUSEL_CONFIG: CarouselConfig = {
+  maxWidth: '100%',
+  maxHeight: '400px',
+  showArrows: true,
+  objectFit: 'cover',
+  keyboardEnable: true,
+  modalGalleryEnable: false,
+  legacyIE11Mode: false
+};
+
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [
@@ -276,6 +287,54 @@ function checkCurrentImage(currentImage: Image, val: TestModel, withDots: boolea
   }
 }
 
+function checkCurrentImageIe11Legacy(currentImage: Image, val: TestModel, withDots: boolean = true, withArrows: boolean = true,
+                                     accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
+  const element: DebugElement = fixture.debugElement;
+  const currentFigure: DebugElement = element.query(By.css('div.current-figure'));
+  expect(currentFigure.name).toBe('div');
+  expect(currentFigure.attributes['ksSize']).toBe('');
+  const currentImageElement: DebugElement = currentFigure.children[withArrows ? 1 : 0]; // 0 and 2 are the arrows
+  expect(currentImageElement.name).toBe('div');
+  expect(currentImageElement.attributes['id']).toBe('current-image-legacy');
+  expect(currentImageElement.attributes['role']).toBe('img');
+  expect(currentImageElement.styles['background-color']).toBe('transparent');
+  expect(currentImageElement.styles['background-image']).toBe(`url(${currentImage.modal.img})`);
+  expect(currentImageElement.styles['background-position']).toBe('center center');
+  expect(currentImageElement.styles['background-size']).toBe('100% auto');
+  expect(currentImageElement.styles['background-repeat']).toBe('no-repeat');
+  expect(currentImageElement.styles['background-attachment']).toBe('scroll');
+  expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
+  expect(currentImageElement.properties['tabIndex']).toBe(0);
+
+  // FIXME temporary not supported on IE11
+  // if (withDots) {
+  //   const dotsMainContainer: DebugElement = element.query(By.css('div#dots'));
+  //   expect(dotsMainContainer.name).toBe('div');
+  //   const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
+  //   expect(dotsContainer.name).toBe('nav');
+  //   expect(dotsContainer.attributes['aria-label']).toBe(accessibilityConfig.dotsContainerAriaLabel);
+  //   expect(dotsContainer.properties['title']).toBe(accessibilityConfig.dotsContainerTitle);
+  //   const dots: DebugElement[] = dotsContainer.children;
+  //   expect(dots.length).toBe(IMAGES.length);
+  //
+  //   const activeDotIndex = 0;
+  //   dots.forEach((dot: DebugElement, index: number) => {
+  //     expect(dot.name).toBe('div');
+  //     expect(dot.attributes['role']).toBe('navigation');
+  //     expect(dot.properties['tabIndex']).toBe(0);
+  //     if (index === activeDotIndex) {
+  //       // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
+  //       // TODO fix this because is not working as expected. This line is ok, but tests aren't restarting from image 0
+  //       // expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
+  //     } else {
+  //       expect(dot.attributes['class']).toBe('inside dot');
+  //       // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
+  //     }
+  //     expect(dot.attributes['aria-label']).toBe(accessibilityConfig.dotAriaLabel + ' ' + (index + 1));
+  //   });
+  // }
+}
+
 function checkDescription(currentImage: Image, carouselImageConfig: CarouselImageConfig) {
   const element: DebugElement = fixture.debugElement;
   const currentFigcaption: DebugElement = element.query(By.css('figcaption.description'));
@@ -328,11 +387,8 @@ function buildTextDescription(image: Image, imageWithoutDescription: boolean, ca
 }
 
 function checkArrows(isFirstImage: boolean, isLastImage: boolean, accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
-  console.log('isFirstImage', isFirstImage);
-  console.log('isLastImage', isLastImage);
   const element: DebugElement = fixture.debugElement;
   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
-  console.log('aNavLeft', aNavLeft);
   expect(aNavLeft.name).toBe('a');
   expect(aNavLeft.attributes['role']).toBe('button');
   expect(aNavLeft.attributes['aria-label']).toBe(accessibilityConfig.carouselPrevImageAriaLabel);
@@ -343,7 +399,6 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean, accessibilityC
   expect(divNavLeft.properties['title']).toBe(accessibilityConfig.carouselPrevImageTitle);
 
   const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
-  console.log('aNavRight', aNavRight);
   expect(aNavRight.name).toBe('a');
   expect(aNavRight.attributes['role']).toBe('button');
   expect(aNavRight.attributes['aria-label']).toBe(accessibilityConfig.carouselNextImageAriaLabel);
@@ -418,7 +473,6 @@ describe('CarouselComponent', () => {
     it(`should display carousel with all defaults and auto-navigate (play enabled by default).`, fakeAsync(() => {
       comp.id = 0;
       comp.images = IMAGES;
-      comp.ngOnInit();
       fixture.detectChanges();
       const defaultInterval = 5000;
 
@@ -427,10 +481,12 @@ describe('CarouselComponent', () => {
         checkCurrentImage(IMAGES[index], val);
         checkArrows(false, false);
         tick(defaultInterval + 100);
+        flush();
         fixture.detectChanges();
       });
 
       tick(defaultInterval + 100);
+      flush();
       fixture.detectChanges();
 
       discardPeriodicTasks();
@@ -439,7 +495,6 @@ describe('CarouselComponent', () => {
     it(`should display carousel with all defaults and auto-navigate (play enabled by default) trying infinite sliding.`, fakeAsync(() => {
       comp.id = 0;
       comp.images = IMAGES;
-      comp.ngOnInit();
       fixture.detectChanges();
       const defaultInterval = 5000;
 
@@ -448,6 +503,7 @@ describe('CarouselComponent', () => {
         checkCurrentImage(IMAGES[index], val);
         checkArrows(false, false);
         tick(defaultInterval + 100);
+        flush();
         fixture.detectChanges();
       });
 
@@ -456,6 +512,7 @@ describe('CarouselComponent', () => {
       checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
       checkArrows(false, false);
       tick(defaultInterval + 100);
+      flush();
       fixture.detectChanges();
 
       discardPeriodicTasks();
@@ -465,7 +522,6 @@ describe('CarouselComponent', () => {
       comp.id = 0;
       comp.images = IMAGES;
       comp.infinite = false;
-      comp.ngOnInit();
       fixture.detectChanges();
 
       const defaultInterval = 5000;
@@ -475,6 +531,7 @@ describe('CarouselComponent', () => {
         checkCurrentImage(IMAGES[index], val);
         // checkArrows(index === 0, index === 6);
         tick(defaultInterval + 100);
+        flush();
         fixture.detectChanges();
       });
 
@@ -483,6 +540,7 @@ describe('CarouselComponent', () => {
       checkCurrentImage(IMAGES[6], TEST_MODEL[6]);
       // checkArrows(false, true);
       tick(defaultInterval + 100);
+      flush();
       fixture.detectChanges();
 
       discardPeriodicTasks();
@@ -492,7 +550,6 @@ describe('CarouselComponent', () => {
       comp.id = 0;
       comp.images = IMAGES;
       comp.dotsConfig = <DotsConfig>{visible: false};
-      comp.ngOnInit();
       fixture.detectChanges();
 
       checkMainContainer();
@@ -503,12 +560,40 @@ describe('CarouselComponent', () => {
     it(`should display carousel without arrows.`, fakeAsync(() => {
       comp.id = 0;
       comp.images = IMAGES;
-      comp.carouselConfig = <CarouselConfig>{showArrows: false};
-      comp.ngOnInit();
+      comp.carouselConfig = Object.assign({}, DEFAULT_CAROUSEL_CONFIG, {showArrows: false});
       fixture.detectChanges();
 
       checkMainContainer();
       checkCurrentImage(IMAGES[0], TEST_MODEL[0], false, false);
+
+      discardPeriodicTasks();
+    }));
+
+    it(`should display carousel with legacyIe11Mode enabled and auto-navigate.`, fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.infinite = false;
+      comp.carouselConfig = Object.assign({}, DEFAULT_CAROUSEL_CONFIG, {legacyIE11Mode: true});
+      fixture.detectChanges();
+
+      const defaultInterval = 5000;
+
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        checkMainContainer();
+        checkCurrentImageIe11Legacy(IMAGES[index], val);
+        // checkArrows(index === 0, index === 6);
+        tick(defaultInterval + 100);
+        flush();
+        fixture.detectChanges();
+      });
+
+      // infinite sliding is disabled, so after the next interval, current image must be still the last one
+      checkMainContainer();
+      checkCurrentImageIe11Legacy(IMAGES[6], TEST_MODEL[6]);
+      // checkArrows(false, true);
+      tick(defaultInterval + 100);
+      flush();
+      fixture.detectChanges();
 
       discardPeriodicTasks();
     }));
@@ -526,9 +611,6 @@ describe('CarouselComponent', () => {
         comp.id = 0;
         comp.images = IMAGES;
         comp.playConfig = val;
-        comp.ngOnInit();
-        comp.reset();
-        comp.ngAfterContentInit();
         fixture.detectChanges();
 
         TEST_MODEL.forEach((model: TestModel, modelIndex: number) => {
@@ -536,10 +618,12 @@ describe('CarouselComponent', () => {
           checkCurrentImage(IMAGES[modelIndex], model);
           checkArrows(false, false);
           tick(val.interval + 1);
+          flush();
           fixture.detectChanges();
         });
 
         tick(val.interval + 1);
+        flush();
         fixture.detectChanges();
 
         discardPeriodicTasks();
@@ -556,15 +640,13 @@ describe('CarouselComponent', () => {
         comp.id = 0;
         comp.images = IMAGES;
         comp.playConfig = val;
-        comp.ngOnInit();
-        comp.reset();
-        comp.ngAfterContentInit();
         fixture.detectChanges();
 
         checkMainContainer();
         checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
         checkArrows(false, false);
         tick(val.interval + 100);
+        flush();
         fixture.detectChanges();
 
         // after interval, the current image must be again the first image (because autoplay is disabled)
@@ -573,6 +655,7 @@ describe('CarouselComponent', () => {
         // checkCurrentImage(IMAGES[0], TEST_MODEL[0]);
         checkArrows(false, false);
         tick(val.interval + 100);
+        flush();
         fixture.detectChanges();
 
         discardPeriodicTasks();
@@ -596,9 +679,6 @@ describe('CarouselComponent', () => {
         comp.id = 0;
         comp.images = IMAGES;
         comp.previewConfig = val;
-        comp.ngOnInit();
-        comp.reset();
-        comp.ngAfterContentInit();
         fixture.detectChanges();
 
         checkPreviews(val.number || 4, false, false, val.clickable === true || val.clickable === undefined);
@@ -608,9 +688,8 @@ describe('CarouselComponent', () => {
     it(`should display carousel with fixed width.`, () => {
       comp.id = 0;
       comp.images = IMAGES;
-      comp.carouselConfig = <CarouselConfig>{maxWidth: '766px'};
+      comp.carouselConfig =  Object.assign({}, DEFAULT_CAROUSEL_CONFIG, {maxWidth: '766px'});
       comp.previewConfig = <CarouselPreviewConfig>{number: 5, width: 'auto', maxHeight: '100px'};
-      comp.ngOnInit();
       fixture.detectChanges();
 
       checkMainContainer(comp.carouselConfig.maxWidth);
@@ -662,7 +741,6 @@ describe('CarouselComponent', () => {
         comp.id = 0;
         comp.images = IMAGES;
         comp.carouselImageConfig = val;
-        comp.ngOnInit();
         fixture.detectChanges();
 
         checkMainContainer();
@@ -687,7 +765,6 @@ describe('CarouselComponent', () => {
         comp.id = 0;
         comp.images = IMAGES;
         comp.previewConfig = previewConfig;
-        comp.ngOnInit();
         fixture.detectChanges();
 
         checkMainContainer();
@@ -700,9 +777,6 @@ describe('CarouselComponent', () => {
       comp.id = 0;
       comp.images = IMAGES;
       comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
-      comp.ngOnInit();
-      comp.reset();
-      comp.ngAfterContentInit();
       fixture.detectChanges();
 
       checkMainContainer('100%', CUSTOM_ACCESSIBILITY);
@@ -779,15 +853,7 @@ describe('CarouselComponent', () => {
     it(`should throw an error, because id is not valid.`, () => {
       comp.id = -1;
       comp.images = IMAGES;
-      comp.carouselConfig = <CarouselConfig>{
-        maxWidth: '100%',
-        maxHeight: '200px',
-        showArrows: true,
-        objectFit: 'cover',
-        keyboardEnable: true,
-        modalGalleryEnable: true, // modalGalleryEnable is required in this test
-        legacyIE11Mode: false
-      };
+      comp.carouselConfig = Object.assign({}, DEFAULT_CAROUSEL_CONFIG, {modalGalleryEnable: true});
       comp.ngOnInit();
       expect(() => comp.onClickCurrentImage()).toThrow(new Error(ID_ERROR));
     });

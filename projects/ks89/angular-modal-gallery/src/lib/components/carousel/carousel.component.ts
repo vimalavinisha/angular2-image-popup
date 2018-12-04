@@ -588,17 +588,18 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   /**
    * Method to reset carousel (force image with index 0 to be the current image and re-init also previews)
    */
-  reset() {
-    if (this.configPlay && this.configPlay.autoPlay) {
-      this.stopCarousel();
-    }
-    this.currentImage = this.images[0];
-    this.handleBoundaries(0);
-    if (this.configPlay && this.configPlay.autoPlay) {
-      this.playCarousel();
-    }
-    this.ref.markForCheck();
-  }
+  // temporary removed because never tested
+  // reset() {
+  //   if (this.configPlay && this.configPlay.autoPlay) {
+  //     this.stopCarousel();
+  //   }
+  //   this.currentImage = this.images[0];
+  //   this.handleBoundaries(0);
+  //   if (this.configPlay && this.configPlay.autoPlay) {
+  //     this.playCarousel();
+  //   }
+  //   this.ref.markForCheck();
+  // }
 
   /**
    * Method to cleanup resources. In fact, this will stop the carousel.
