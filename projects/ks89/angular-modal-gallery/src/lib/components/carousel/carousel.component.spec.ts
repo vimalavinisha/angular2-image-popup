@@ -300,7 +300,7 @@ function checkCurrentImageIe11Legacy(currentImage: Image, val: TestModel, withDo
   expect(currentImageElement.styles['background-color']).toBe('transparent');
   expect(currentImageElement.styles['background-image']).toBe(`url(${currentImage.modal.img})`);
   expect(currentImageElement.styles['background-position']).toBe('center center');
-  expect(currentImageElement.styles['background-size']).toBe('100% auto');
+  expect(currentImageElement.styles['background-size']).toBe('cover');
   expect(currentImageElement.styles['background-repeat']).toBe('no-repeat');
   expect(currentImageElement.styles['background-attachment']).toBe('scroll');
   expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
