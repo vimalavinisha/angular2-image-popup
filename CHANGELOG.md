@@ -76,6 +76,7 @@ Differences from rc.2:
 - improve unit testing
 - fix other issues to support IE11
 - temporary remove deprecation warning of `forRoot()`, because I didn't implement an alternative yes
+- fix github badges
 
 
 # 7.0.0-rc.2
