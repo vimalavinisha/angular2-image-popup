@@ -60,6 +60,7 @@ import { getIndex } from '../../utils/image.util';
 
 import { Subscription } from 'rxjs';
 import { IdValidatorService } from '../../services/id-validator.service';
+import { InteractionEvent } from '../../model/interaction-event.interface';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -172,6 +173,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   @Output()
   buttonAfterHook: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  /**
+   * Output to emit an event when someone clicks either an arrow of modal gallery or also in previews.
+   */
+  @Output()
+  arrow: EventEmitter<InteractionEvent> = new EventEmitter<InteractionEvent>();
 
   /**
    * Reference to the CurrentImageComponent to invoke methods on it.
@@ -624,6 +630,15 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     if (!!imageFound) {
       this.currentImage = <InternalLibImage>imageFound;
     }
+  }
+
+  /**
+   * Method called when a preview's arrow is clicked.
+   * @param string direction of the image to identify it
+   */
+  onClickArrow(event: InteractionEvent) {
+    // TODO validate before to emit
+    this.arrow.emit(event);
   }
 
   /**

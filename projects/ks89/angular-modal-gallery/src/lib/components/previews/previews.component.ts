@@ -33,8 +33,10 @@ import { Size } from '../../model/size.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 
-import { NEXT, PREV } from '../../utils/user-input.util';
+import { DIRECTION_LEFT, DIRECTION_RIGHT, NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
+import { InteractionEvent } from '../../model/interaction-event.interface';
+import { Action } from '../../model/action.enum';
 
 /**
  * Component with image previews
@@ -79,6 +81,11 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   @Output()
   clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
+  /**
+   * Output to emit the clicked arrow. The payload contains which arrow (left or right).
+   */
+  @Output()
+  clickArrow: EventEmitter<InteractionEvent> = new EventEmitter<InteractionEvent>();
 
   /**
    * Array of `InternalLibImage` exposed to the template. This field is initialized
@@ -200,14 +207,17 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Method called by events from both keyboard and mouse on a navigation arrow.
+   * It also emits an event to specify which arrow.
    * @param string direction of the navigation that can be either 'next' or 'prev'
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
+      this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_RIGHT, action: action });
       this.next();
     } else if (result === PREV) {
+      this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_LEFT, action: action });
       this.previous();
     }
   }
