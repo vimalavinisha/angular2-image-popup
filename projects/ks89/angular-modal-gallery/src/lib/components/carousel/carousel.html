@@ -112,6 +112,14 @@
              [title]="accessibilityConfig.carouselNextImageTitle"></div>
       </a>
 
+      <div id="dots-ie11">
+        <ks-dots [currentImage]="currentImage"
+                 [dotsConfig]="configDots"
+                 [accessibilityConfig]="accessibilityConfig"
+                 [images]="images"
+                 (clickDot)="onClickDot($event)"></ks-dots>
+      </div>
+
     </div>
   </ng-template>
 

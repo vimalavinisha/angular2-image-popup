@@ -306,33 +306,32 @@ function checkCurrentImageIe11Legacy(currentImage: Image, val: TestModel, withDo
   expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
   expect(currentImageElement.properties['tabIndex']).toBe(0);
 
-  // FIXME temporary not supported on IE11
-  // if (withDots) {
-  //   const dotsMainContainer: DebugElement = element.query(By.css('div#dots'));
-  //   expect(dotsMainContainer.name).toBe('div');
-  //   const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-  //   expect(dotsContainer.name).toBe('nav');
-  //   expect(dotsContainer.attributes['aria-label']).toBe(accessibilityConfig.dotsContainerAriaLabel);
-  //   expect(dotsContainer.properties['title']).toBe(accessibilityConfig.dotsContainerTitle);
-  //   const dots: DebugElement[] = dotsContainer.children;
-  //   expect(dots.length).toBe(IMAGES.length);
-  //
-  //   const activeDotIndex = 0;
-  //   dots.forEach((dot: DebugElement, index: number) => {
-  //     expect(dot.name).toBe('div');
-  //     expect(dot.attributes['role']).toBe('navigation');
-  //     expect(dot.properties['tabIndex']).toBe(0);
-  //     if (index === activeDotIndex) {
-  //       // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
-  //       // TODO fix this because is not working as expected. This line is ok, but tests aren't restarting from image 0
-  //       // expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
-  //     } else {
-  //       expect(dot.attributes['class']).toBe('inside dot');
-  //       // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
-  //     }
-  //     expect(dot.attributes['aria-label']).toBe(accessibilityConfig.dotAriaLabel + ' ' + (index + 1));
-  //   });
-  // }
+  if (withDots) {
+    const dotsMainContainer: DebugElement = element.query(By.css('div#dots-ie11'));
+    expect(dotsMainContainer.name).toBe('div');
+    const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
+    expect(dotsContainer.name).toBe('nav');
+    expect(dotsContainer.attributes['aria-label']).toBe(accessibilityConfig.dotsContainerAriaLabel);
+    expect(dotsContainer.properties['title']).toBe(accessibilityConfig.dotsContainerTitle);
+    const dots: DebugElement[] = dotsContainer.children;
+    expect(dots.length).toBe(IMAGES.length);
+
+    const activeDotIndex = 0;
+    dots.forEach((dot: DebugElement, index: number) => {
+      expect(dot.name).toBe('div');
+      expect(dot.attributes['role']).toBe('navigation');
+      expect(dot.properties['tabIndex']).toBe(0);
+      if (index === activeDotIndex) {
+        // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
+        // TODO fix this because is not working as expected. This line is ok, but tests aren't restarting from image 0
+        // expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
+      } else {
+        expect(dot.attributes['class']).toBe('inside dot');
+        // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
+      }
+      expect(dot.attributes['aria-label']).toBe(accessibilityConfig.dotAriaLabel + ' ' + (index + 1));
+    });
+  }
 }
 
 function checkDescription(currentImage: Image, carouselImageConfig: CarouselImageConfig) {

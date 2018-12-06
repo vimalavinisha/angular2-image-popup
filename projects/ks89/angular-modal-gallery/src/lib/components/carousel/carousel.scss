@@ -122,5 +122,11 @@ $figcaption-right: 0;
       bottom: $dots-bottom-position;
       width: 100%;
     }
+
+    > #dots-ie11 {
+      position: absolute;
+      bottom: $dots-bottom-position;
+      width: 100%;
+    }
   }
 }
