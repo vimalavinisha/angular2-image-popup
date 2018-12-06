@@ -1,3 +1,8 @@
+# 7.0.1
+### Bugfixes
+- show carousel's dots also when legacyIe11Mode is enabled
+
+
 # 7.0.0
 ### Features
 - **new carousel component with previews (also with legacyIE11Mode to support IE11 :))** **HUGE FEATURE!!!!**
