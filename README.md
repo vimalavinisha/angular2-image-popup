@@ -167,7 +167,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 <br>
 
-## :warning: Choose the version :warning:
+## :warning: Choose the right version :warning:
 
 |            | @ks89/angular-modal-gallery | font-awesome |
 | ---------- | :---:                       | :---:        |

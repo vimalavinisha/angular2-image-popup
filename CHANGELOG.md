@@ -1,7 +1,7 @@
 # 7.0.0
 ### Features
 - **new carousel component with previews (also with legacyIE11Mode to support IE11 :))** **HUGE FEATURE!!!!**
-- **add @angular/cdk as required dependency** **BREAKING CHANGE**
+- **add @angular/cdk as required dependency** **(BREAKING CHANGE)**
 - gallery ids must be unique across the whole application **(BREAKING CHANGE)**
 - requires rxjs >= 6 **(BREAKING CHANGE)**
 - requires angular >= 6 **(BREAKING CHANGE)**
