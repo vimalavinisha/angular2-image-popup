@@ -184,7 +184,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 90 releases in two years**, and more to come... :)
 
-- 12/05/2018 - 7.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 12/06/2018 - 7.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/26/2018 - 7.0.0-rc.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/03/2018 - 7.0.0-rc.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/01/2018 - 7.0.0-beta.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
