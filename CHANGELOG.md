@@ -1,3 +1,8 @@
+# 7.1.0
+### Features
+- emit events also when you click on a preview (requested by @srtab #165)
+
+
 # 7.0.1
 ### Bugfixes
 - show carousel's dots also when legacyIe11Mode is enabled
