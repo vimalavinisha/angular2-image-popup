@@ -27,7 +27,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
-import { Image } from '../../model/image.class';
+import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { Size } from '../../model/size.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
@@ -77,16 +77,26 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   @Input()
   accessibilityConfig: AccessibilityConfig;
   /**
-   * Output to emit the clicked preview. The payload contains the `InternalLibImage` associated to the clicked preview.
+   * Output to emit the clicked preview. The payload contains the `ImageEvent` associated to the clicked preview.
    */
   @Output()
-  clickPreview: EventEmitter<InternalLibImage> = new EventEmitter<InternalLibImage>();
-  /**
-   * Output to emit the clicked arrow. The payload contains which arrow (left or right).
-   */
-  @Output()
-  clickArrow: EventEmitter<InteractionEvent> = new EventEmitter<InteractionEvent>();
+  clickPreview: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
+  // /**
+  //  * Output to emit the clicked arrow. The payload contains which arrow (left or right).
+  //  */
+  // @Output()
+  // clickArrow: EventEmitter<InteractionEvent> = new EventEmitter<InteractionEvent>();
 
+  /**
+   * Enum of type `Action` that represents a mouse click on a button.
+   * Declared here to be used inside the template.
+   */
+  clickAction: Action = Action.CLICK;
+  /**
+   * Enum of type `Action` that represents a keyboard action.
+   * Declared here to be used inside the template.
+   */
+  keyboardAction: Action = Action.KEYBOARD;
   /**
    * Array of `InternalLibImage` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
@@ -193,15 +203,13 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @param InternalLibImage preview that triggered this method
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent) {
+  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     if (!this.configPreview || !this.configPreview.clickable) {
       return;
     }
     const result: number = super.handleImageEvent(event);
-    if (result === NEXT) {
-      this.clickPreview.emit(preview);
-    } else if (result === PREV) {
-      this.clickPreview.emit(preview);
+    if (result === NEXT || result === PREV) {
+      this.clickPreview.emit(new ImageModalEvent(action, getIndex(preview, this.images)));
     }
   }
 
@@ -214,10 +222,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
-      this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_RIGHT, action: action });
+      // this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_RIGHT, action: action });
       this.next();
     } else if (result === PREV) {
-      this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_LEFT, action: action });
+      // this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_LEFT, action: action });
       this.previous();
     }
   }

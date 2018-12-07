@@ -22,7 +22,7 @@
            [title]="preview.modal.title ? preview.modal.title : ''"
            alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
            [tabindex]="0" role="img"
-           (click)="onImageEvent(preview, $event)" (keyup)="onImageEvent(preview, $event)"/>
+           (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"/>
     </ng-container>
 
 

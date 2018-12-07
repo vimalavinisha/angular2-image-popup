@@ -42,7 +42,7 @@ import {
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
-import { Image, ImageModalEvent } from '../../model/image.class';
+import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
@@ -564,8 +564,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   onChangeCurrentImage(event: ImageModalEvent) {
     const newIndex: number = <number>event.result;
+    if (newIndex < 0 || newIndex >= this.images.length) {
+      return;
+    }
 
-    // TODO add validation
     this.currentImage = this.images[newIndex];
 
     // emit first/last event based on newIndex value
@@ -625,21 +627,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Method called when an image preview is clicked and used to update the current image.
    * @param Image preview image
    */
-  onClickPreview(preview: Image) {
-    const imageFound: InternalLibImage | undefined = this.images.find((img: InternalLibImage) => img.id === preview.id);
-    if (!!imageFound) {
-      this.currentImage = <InternalLibImage>imageFound;
-    }
+  onClickPreview(event: ImageModalEvent) {
+    this.onChangeCurrentImage(event);
   }
 
-  /**
-   * Method called when a preview's arrow is clicked.
-   * @param string direction of the image to identify it
-   */
-  onClickArrow(event: InteractionEvent) {
-    // TODO validate before to emit
-    this.arrow.emit(event);
-  }
+  // onClickArrow(event: InteractionEvent) {
+  //   // TODO validate before to emit
+  //   this.arrow.emit(event);
+  // }
 
   /**
    * Method to download the current image, only if `downloadable` is true.
