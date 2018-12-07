@@ -90,6 +90,23 @@ export class ModalGalleryComponent {
     new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
 
+  // array of images (obviously with different id) where paths are the same.
+  // to prevent caching issues I have to append '?index'.
+  sameImages: Image[] = [
+    new Image(0, {
+      img: '../assets/images/gallery/img1.jpg?1',
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(1, {
+      img: '../assets/images/gallery/img1.jpg?2',
+      extUrl: 'http://www.google.com'
+    }),
+    new Image(2, {
+      img: '../assets/images/gallery/img1.jpg?3',
+      extUrl: 'http://www.google.com'
+    })
+  ];
+
   // example of a png converted into base64 using https://www.base64-image.de/ or other similar websites
   base64String =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABN0lEQV' +

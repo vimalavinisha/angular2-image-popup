@@ -734,6 +734,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Also, it will emit ImageowmodaModalEvent to say that images are loaded.
    */
   private initImages() {
+    // I'm not cloning the array, but I'm doing this to cast it to an array of InternalLibImages
     this.images = <InternalLibImage[]>this.modalImages;
     this.hasData.emit(new ImageModalEvent(Action.LOAD, true));
     this.showGallery = this.images.length > 0;
