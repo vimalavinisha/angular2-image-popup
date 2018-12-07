@@ -1,3 +1,11 @@
+# 7.2.0
+### Demos
+- add a new demo to explain how to handle an image array with the same image path multiple times without caching issues (requested by @shakerica #171)
+
+### Documentation
+- update doc website with the new example (requested by @shakerica #171)
+
+
 # 7.1.0
 ### Features
 - emit events also when you click on a preview (requested by @srtab #165)
