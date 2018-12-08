@@ -28,9 +28,10 @@ import { PreviewsComponent } from './previews.component';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 import { Size } from '../../model/size.interface';
-import { ModalImage, PlainImage } from '../../model/image.class';
+import { ImageModalEvent, ModalImage, PlainImage } from '../../model/image.class';
 import { SizeDirective } from '../../directives/size.directive';
 import { KS_DEFAULT_SIZE } from '../upper-buttons/upper-buttons-default';
+import { Action } from '../../model/action.enum';
 
 interface NavigationTestData {
   initial: {
@@ -431,8 +432,9 @@ describe('PreviewsComponent', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      comp.clickPreview.subscribe((res: InternalLibImage) => {
-        expect(res).toEqual(IMAGES[afterClickActivePreview]);
+      comp.clickPreview.subscribe((res: ImageModalEvent) => {
+        const event: ImageModalEvent = new ImageModalEvent(Action.CLICK, afterClickActivePreview);
+        expect(res).toEqual(event);
       });
 
       const element: DebugElement = fixture.debugElement;

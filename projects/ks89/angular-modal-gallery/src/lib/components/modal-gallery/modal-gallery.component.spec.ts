@@ -630,7 +630,8 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = currentImage;
       comp.ngOnChanges(getSimpleChangesMock());
       comp.ngOnInit();
-      comp.onClickPreview(IMAGES[1]);
+      const event: ImageModalEvent = new ImageModalEvent(Action.CLICK, 1);
+      comp.onClickPreview(event);
       expect(comp.currentImage.id).toBe(IMAGES[1].id);
     });
 
@@ -770,7 +771,7 @@ describe('ModalGalleryComponent', () => {
       comp.onDownload(mockButtonEvent);
     });
 
-    it(`should call onClickPreview but with a wrong Image id, so currentImage won't change`, () => {
+    it(`should call onClickPreview but with a wrong Image index, so currentImage won't change`, () => {
       const currentImage: InternalLibImage = IMAGES[0];
       comp.id = 0;
       comp.modalImages = IMAGES;
@@ -778,7 +779,8 @@ describe('ModalGalleryComponent', () => {
       comp.enableCloseOutside = true;
       comp.ngOnChanges(getSimpleChangesMock());
       comp.ngOnInit();
-      comp.onClickPreview(Object.assign({}, IMAGES[1], {id: 1000}));
+      const event: ImageModalEvent = new ImageModalEvent(Action.CLICK, 300);
+      comp.onClickPreview(event);
       expect(comp.currentImage).toEqual(IMAGES[0]);
     });
 
