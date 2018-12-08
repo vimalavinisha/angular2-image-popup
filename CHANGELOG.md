@@ -2,6 +2,12 @@
 ### Features
 - emit events also when you click on a preview (requested by @srtab #165)
 
+### Testing
+- update tests
+
+### ### Internal library changes
+- clickPreview's Output emits ImageModalEvent instead of Image
+
 
 # 7.0.1
 ### Bugfixes
