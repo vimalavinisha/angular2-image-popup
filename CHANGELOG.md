@@ -5,7 +5,7 @@
 ### Testing
 - update tests
 
-### ### Internal library changes
+### Internal library changes
 - clickPreview's Output emits ImageModalEvent instead of Image
 
 
