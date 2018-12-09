@@ -46,7 +46,7 @@ import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
-import { SlideConfig } from '../../model/slide-config.interface';
+import { SidePreviewsConfig, SlideConfig } from '../../model/slide-config.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { GalleryService, InternalGalleryPayload } from '../../services/gallery.service';
@@ -61,6 +61,7 @@ import { getIndex } from '../../utils/image.util';
 import { Subscription } from 'rxjs';
 import { IdValidatorService } from '../../services/id-validator.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
+import { PlayConfig } from '../../model/play-config.interface';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -119,7 +120,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   slideConfig: SlideConfig = {
     infinite: false,
-    sidePreviews: { show: true, size: { width: '100px', height: 'auto' } }
+    playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
+    sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
   };
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.

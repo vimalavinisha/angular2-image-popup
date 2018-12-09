@@ -22,7 +22,28 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+  SimpleChange,
+  SimpleChanges
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+import { Subject, timer } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AccessibleComponent } from '../accessible.component';
 
@@ -59,7 +80,7 @@ export interface ImageLoadEvent {
   templateUrl: 'current-image.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges {
+export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges, AfterContentInit, OnDestroy {
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -117,6 +138,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
+   * Subject to play modal-gallery.
+   */
+  private start$ = new Subject<void>();
+  /**
+   * Subject to stop modal-gallery.
+   */
+  private stop$ = new Subject<void>();
+
+  /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
    */
@@ -156,6 +186,32 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     UP: 'swipeup',
     DOWN: 'swipedown'
   };
+
+  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
+    super();
+  }
+
+  /**
+   * Listener to stop the gallery when the mouse pointer is over the current image.
+   */
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    if (!this.slideConfig.playConfig.pauseOnHover) {
+      return;
+    }
+    this.stopCarousel();
+  }
+
+  /**
+   * Listener to play the gallery when the mouse pointer leave the current image.
+   */
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    if (!this.slideConfig.playConfig.pauseOnHover || !this.slideConfig.playConfig.autoPlay) {
+      return;
+    }
+    this.playCarousel();
+  }
 
   /**
    * Method ´ngOnInit´ to build `configCurrentImage` applying default values.
@@ -205,6 +261,32 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this.updateIndexes();
     } else if (images && images.previousValue !== images.currentValue) {
       this.updateIndexes();
+    }
+  }
+
+  ngAfterContentInit() {
+    console.log('--------- ngAfterContentInit called');
+    // interval doesn't play well with SSR and protractor,
+    // so we should run it in the browser and outside Angular
+    if (isPlatformBrowser(this._platformId)) {
+      this._ngZone.runOutsideAngular(() => {
+        this.start$
+          .pipe(
+            map(() => this.slideConfig.playConfig.interval),
+            filter(interval => interval > 0),
+            switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
+          )
+          .subscribe(() =>
+            this._ngZone.run(() => {
+              if (!this.isLastImage) {
+                this.nextImage(Action.AUTOPLAY);
+              }
+              this.ref.markForCheck();
+            })
+          );
+
+        this.start$.next();
+      });
     }
   }
 
@@ -367,6 +449,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const prevImage: InternalLibImage = this.getPrevImage();
     this.loading = !prevImage.previouslyLoaded;
     this.changeImage.emit(new ImageModalEvent(action, getIndex(prevImage, this.images)));
+
+    this.start$.next();
   }
 
   /**
@@ -382,6 +466,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     const nextImage: InternalLibImage = this.getNextImage();
     this.loading = !nextImage.previouslyLoaded;
     this.changeImage.emit(new ImageModalEvent(action, getIndex(nextImage, this.images)));
+
+    this.start$.next();
   }
 
   /**
@@ -435,6 +521,28 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   getIndexToDelete(image: Image = this.currentImage): number {
     return getIndex(image, this.images);
+  }
+
+  /**
+   * Method to play modal gallery.
+   */
+  playCarousel() {
+    this.start$.next();
+  }
+
+  /**
+   * Stops modal gallery from cycling through items.
+   */
+  stopCarousel() {
+    this.stop$.next();
+  }
+
+  /**
+   * Method to cleanup resources. In fact, this will stop the modal gallery.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
+   */
+  ngOnDestroy() {
+    this.stopCarousel();
   }
 
   /**

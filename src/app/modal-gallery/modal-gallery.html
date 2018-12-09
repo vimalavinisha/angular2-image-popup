@@ -4,7 +4,7 @@
 <p>If you want, you can <b>add a random image</b> to every example
   <button (click)="addRandomImage()"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
 </p>
-<p>To open modal gallery with id <input type="number" min="1" max="53" [(ngModel)]="galleryId"> at index <input
+<p>To open modal gallery with id <input type="number" min="1" max="58" [(ngModel)]="galleryId"> at index <input
   type="number" min="1" [(ngModel)]="imageIndex">, click here:
   <button (click)="openModalViaService(galleryId, imageIndex - 1)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open
     id={{galleryId}} at index={{imageIndex}}
@@ -392,18 +392,42 @@
 <br>
 <hr>
 <br>
+<h2>AutoPlay examples</h2>
+<section>
+  <h3>E1 - (id=54) - AutoPlay demo - with default interval and pauseOnHover enabled</h3>
+  <br>
+  <ks-modal-gallery [id]="54" [modalImages]="images"
+                    [slideConfig]="{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>E2 - (id=55) - AutoPlay demo - with custom interval and pauseOnHover enabled</h3>
+  <br>
+  <ks-modal-gallery [id]="55" [modalImages]="images"
+                    [slideConfig]="{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>
+</section>
+<section>
+  <h3>E3 - (id=56) - AutoPlay demo - with default interval, pauseOnHover disabled and infinite is enabled</h3>
+  <br>
+  <ks-modal-gallery [id]="56" [modalImages]="images"
+                    [slideConfig]="{infinite: true, playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>
+</section>
+
+
+<br>
+<hr>
+<br>
 <h2>Experimental examples<sup>*</sup></h2>
 <p><sup>*</sup> these will be either improved or removed in next versions</p>
 <section>
-  <h3>E1 - (id=54) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
+  <h3>F1 - (id=57) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
   <br>
-  <ks-modal-gallery [id]="54" [modalImages]="[images[0]]"
+  <ks-modal-gallery [id]="57" [modalImages]="[images[0]]"
                     [keyboardConfig]="null"
                     [currentImageConfig]="currentImageConfigExperimental"
                     [slideConfig]="{infinite: false}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>E2 - (id=55) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>
+  <h3>F2 - (id=58) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>
   <br>
-  <ks-modal-gallery [id]="55" [modalImages]="sameImages"></ks-modal-gallery>
+  <ks-modal-gallery [id]="58" [modalImages]="sameImages"></ks-modal-gallery>
 </section>

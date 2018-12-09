@@ -23,12 +23,14 @@
  */
 
 import { Size } from './size.interface';
+import { PlayConfig } from './play-config.interface';
 
 /**
  * Interface `SlideConfig` to configure sliding features of modal gallery.
  */
 export interface SlideConfig {
   infinite?: boolean;
+  playConfig?: PlayConfig;
   sidePreviews?: SidePreviewsConfig;
 }
 

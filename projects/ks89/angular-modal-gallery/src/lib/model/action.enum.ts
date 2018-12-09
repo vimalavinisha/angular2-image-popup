@@ -30,5 +30,6 @@ export enum Action {
   CLICK, // mouse click
   KEYBOARD,
   SWIPE,
-  LOAD
+  LOAD,
+  AUTOPLAY
 }
