@@ -1,9 +1,15 @@
 # 7.2.0
+### Features
+- add autoPlay to modal-gallery (requested by @hn6pot #152)
+
 ### Demos
 - add a new demo to explain how to handle an image array with the same image path multiple times without caching issues (requested by @shakerica #171)
 
 ### Documentation
 - update doc website with the new example (requested by @shakerica #171)
+
+### Testing
+- update tests
 
 
 # 7.1.0
