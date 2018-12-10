@@ -42,7 +42,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-import { Subject, timer } from 'rxjs';
+import { Subject, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AccessibleComponent } from '../accessible.component';
@@ -55,11 +55,13 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { Keyboard } from '../../model/keyboard.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
-import { SlideConfig } from '../../model/slide-config.interface';
+import { SidePreviewsConfig, SlideConfig } from '../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { GalleryService, InternalGalleryPayload } from '../../services/gallery.service';
+import { PlayConfig } from '../../model/play-config.interface';
 
 /**
  * Interface to describe the Load Event, used to
@@ -81,6 +83,12 @@ export interface ImageLoadEvent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CurrentImageComponent extends AccessibleComponent implements OnInit, OnChanges, AfterContentInit, OnDestroy {
+  /**
+   * Unique id (>=0) of the current instance of this library. This is useful when you are using
+   * the service to call modal gallery without open it manually.
+   */
+  @Input()
+  id: number;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -177,6 +185,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   configCurrentImage: CurrentImageConfig;
 
+  configSlide: SlideConfig;
+
   /**
    * Private object without type to define all swipe actions used by hammerjs.
    */
@@ -187,7 +197,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     DOWN: 'swipedown'
   };
 
-  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
+  private galleryServiceAutoPlaySubscription: Subscription;
+
+  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef, private galleryService: GalleryService) {
     super();
   }
 
@@ -196,7 +208,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.slideConfig.playConfig.pauseOnHover) {
+    if (!this.configSlide.playConfig.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -207,7 +219,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @HostListener('mouseleave')
   onMouseLeave() {
-    if (!this.slideConfig.playConfig.pauseOnHover || !this.slideConfig.playConfig.autoPlay) {
+    if (!this.configSlide.playConfig.pauseOnHover || !this.configSlide.playConfig.autoPlay) {
       return;
     }
     this.playCarousel();
@@ -242,9 +254,30 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       downloadable: false,
       invertSwipe: false
     };
+    const defaultSlideConfig: SlideConfig = {
+      infinite: false,
+      playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
+      sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
+    };
 
     this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
     this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
+
+    this.configSlide = Object.assign({}, defaultSlideConfig, this.slideConfig);
+
+    this.galleryServiceAutoPlaySubscription = this.galleryService.autoPlay.subscribe((payload: InternalGalleryPayload) => {
+      // if galleryId is not valid OR galleryId is related to another instance and not this one
+      if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
+        return;
+      }
+      if (payload.result) {
+        this.configSlide.playConfig.autoPlay = true;
+        this.playCarousel();
+      } else {
+        this.configSlide.playConfig.autoPlay = false;
+        this.stopCarousel();
+      }
+    });
   }
 
   /**
@@ -265,14 +298,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   ngAfterContentInit() {
-    console.log('--------- ngAfterContentInit called');
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
     if (isPlatformBrowser(this._platformId)) {
       this._ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => this.slideConfig.playConfig.interval),
+            map(() => this.configSlide && this.configSlide.playConfig && this.configSlide.playConfig.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
@@ -375,7 +407,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   getLeftPreviewImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
-    if (currentIndex === 0 && this.slideConfig.infinite) {
+    if (currentIndex === 0 && this.configSlide.infinite) {
       // the current image is the first one,
       // so the previous one is the last image
       // because infinite is true
@@ -391,7 +423,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   getRightPreviewImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
-    if (currentIndex === this.images.length - 1 && this.slideConfig.infinite) {
+    if (currentIndex === this.images.length - 1 && this.configSlide.infinite) {
       // the current image is the last one,
       // so the next one is the first image
       // because infinite is true
@@ -543,6 +575,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   ngOnDestroy() {
     this.stopCarousel();
+
+    if (this.galleryServiceAutoPlaySubscription) {
+      this.galleryServiceAutoPlaySubscription.unsubscribe();
+    }
   }
 
   /**
@@ -556,7 +592,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this.isLastImage = true;
       return;
     }
-    if (!this.slideConfig || this.slideConfig.infinite === true) {
+    if (!this.configSlide || this.configSlide.infinite === true) {
       // infinite sliding enabled
       this.isFirstImage = false;
       this.isLastImage = false;
@@ -582,15 +618,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Private method to check if next/prev actions should be blocked.
-   * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
+   * It checks if configSlide.infinite === false and if the image index is equals to the input parameter.
    * If yes, it returns true to say that sliding should be blocked, otherwise not.
    * @param number boundaryIndex that could be either the beginning index (0) or the last index
    *  of images (this.images.length - 1).
-   * @returns boolean true if slideConfig.infinite === false and the current index is
+   * @returns boolean true if configSlide.infinite === false and the current index is
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
+    return !!this.configSlide && this.configSlide.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 
   /**

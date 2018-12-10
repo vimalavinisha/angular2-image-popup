@@ -17,7 +17,7 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { By, SafeResourceUrl } from '@angular/platform-browser';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../components/accessibility-default';
@@ -35,6 +35,8 @@ import { ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { ModalGalleryComponent } from '../modal-gallery/modal-gallery.component';
+import { GalleryService } from '../../services/gallery.service';
 
 let comp: CurrentImageComponent;
 let fixture: ComponentFixture<CurrentImageComponent>;
@@ -393,7 +395,16 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [CurrentImageComponent, SizeDirective, LoadingSpinnerComponent, KeyboardNavigationDirective, DescriptionDirective]
-  }).compileComponents();
+  }).overrideComponent(ModalGalleryComponent, {
+    set: {
+      providers: [
+        {
+          provide: GalleryService,
+          useClass: GalleryService
+        }
+      ]
+    }
+  });
 }
 
 describe('CurrentImageComponent', () => {
@@ -840,7 +851,7 @@ describe('CurrentImageComponent', () => {
         fixture.detectChanges();
         checkMainContainer();
         const imageWithoutDescription: boolean = !IMAGES[index].modal || !IMAGES[index].modal.description || IMAGES[index].modal.description === '';
-         // TODO fixme
+        // TODO fixme
         // checkCurrentImage(IMAGES[index], val, !imageWithoutDescription);
         // checkArrows(index === 0, index === IMAGES.length - 1);
         // checkSidePreviews(IMAGES[index - 1], IMAGES[index + 1], index === 0, index === IMAGES.length - 1, val);
@@ -1057,9 +1068,153 @@ describe('CurrentImageComponent', () => {
       expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
       expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
     });
+
+    it(`should display current image with an array of images with a single element.`, () => {
+      comp.images = [IMAGES[0]];
+      comp.currentImage = IMAGES[0];
+      comp.isOpen = true;
+      comp.currentImageConfig = <CurrentImageConfig>{
+        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+      };
+      comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[0],
+          currentValue: IMAGES[0],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      checkMainContainer();
+      const model: TestModel = {
+        currentImgTitle: 'Image 1/1',
+        currentAlt: 'Image 1',
+        currentDescription: 'Image 1/1',
+        leftPreviewTitle: '',
+        leftPreviewAlt: '',
+        rightPreviewTitle: '',
+        rightPreviewAlt: ''
+      };
+      checkCurrentImage(IMAGES[0], model);
+    });
+
+    it('should enable autoPlay and call play', fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      comp.isOpen = true;
+      comp.currentImageConfig = <CurrentImageConfig>{
+        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+      };
+      comp.slideConfig = <SlideConfig>{playConfig: {autoPlay: false, interval: 5000, pauseOnHover: true}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[0],
+          currentValue: IMAGES[0],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      expect(comp.configSlide.playConfig.autoPlay).toBe(false);
+      const galleryService = fixture.debugElement.injector.get(GalleryService);
+      galleryService.play(0);
+      tick(100);
+      flush();
+      fixture.detectChanges();
+      expect(comp.configSlide.playConfig.autoPlay).toBe(true);
+      discardPeriodicTasks();
+    }));
+
+    it('should disable autoPlay and call stop', fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      comp.isOpen = true;
+      comp.currentImageConfig = <CurrentImageConfig>{
+        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+      };
+      comp.slideConfig = <SlideConfig>{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.keyboardConfig = null;
+      comp.ngOnChanges(<SimpleChanges>{
+        currentImage: {
+          previousValue: IMAGES[0],
+          currentValue: IMAGES[0],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      });
+      comp.ngOnInit();
+      fixture.detectChanges();
+      expect(comp.configSlide.playConfig.autoPlay).toBe(true);
+      const galleryService = fixture.debugElement.injector.get(GalleryService);
+      galleryService.stop(0);
+      tick(100);
+      flush();
+      fixture.detectChanges();
+      expect(comp.configSlide.playConfig.autoPlay).toBe(false);
+      discardPeriodicTasks();
+    }));
+
+    it(`should display gallery with all defaults and auto-navigate (play enabled).`, fakeAsync(() => {
+      comp.id = 0;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      comp.isOpen = true;
+      comp.currentImageConfig = <CurrentImageConfig>{
+        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+      };
+      comp.slideConfig = <SlideConfig>{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}};
+      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      comp.keyboardConfig = null;
+      fixture.detectChanges();
+      const defaultInterval = 5000;
+
+      comp.isFirstImage = true;
+      comp.isLastImage = false;
+
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        checkMainContainer();
+        // TODO FIX THIS!!!!
+        checkCurrentImage(IMAGES[index], val);
+        // checkArrows(index === 0, index === IMAGES.length - 1);
+        tick(defaultInterval + 100);
+        if (index < IMAGES.length - 1) {
+          comp.currentImage = IMAGES[index + 1];
+          comp.ngOnChanges(<SimpleChanges>{
+            currentImage: {
+              previousValue: IMAGES[index],
+              currentValue: IMAGES[index + 1],
+              firstChange: false,
+              isFirstChange: () => false
+            }
+          });
+        }
+        flush();
+        fixture.detectChanges();
+      });
+
+      tick(defaultInterval + 100);
+      flush();
+      fixture.detectChanges();
+
+      discardPeriodicTasks();
+    }));
   });
 
-  describe('---YES---', () => {
+  describe('---NO---', () => {
     it(`cannot navigate from the last image to the first one if infinite sliding is disabled`, () => {
       const index: number = IMAGES.length - 1;
       const infiniteSliding = false;

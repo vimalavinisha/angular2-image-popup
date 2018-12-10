@@ -118,11 +118,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * Object of type `SlideConfig` to init side previews and `infinite sliding`.
    */
   @Input()
-  slideConfig: SlideConfig = {
-    infinite: false,
-    playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
-    sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
-  };
+  slideConfig: SlideConfig;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.

@@ -27,8 +27,9 @@ import { Image } from '../model/image.class';
 
 export interface InternalGalleryPayload {
   galleryId: number;
-  index: number;
+  index?: number;
   image?: Image;
+  result?: boolean;
 }
 
 /**
@@ -39,6 +40,7 @@ export class GalleryService {
   navigate: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
   close: EventEmitter<number> = new EventEmitter<number>();
   update: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
+  autoPlay: EventEmitter<InternalGalleryPayload> = new EventEmitter<InternalGalleryPayload>();
 
   /**
    * Method to open the modal gallery with the galleryId passed as parameter.
@@ -88,6 +90,9 @@ export class GalleryService {
 
   /**
    * Service to update an image with a new object
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @param index number of the image that you want to update.
+   * @throws a error with a message if galleryId is either undefined, < 0 or index is < 0
    *
    * @since 6.3.0
    */
@@ -102,6 +107,40 @@ export class GalleryService {
       galleryId: galleryId,
       index: index,
       image: image
+    });
+  }
+
+  /**
+   * Service to play modal-gallery
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @throws a error with a message if galleryId is either undefined or < 0
+   *
+   * @since 7.2.0
+   */
+  play(galleryId: number | undefined): void {
+    if (galleryId === undefined || galleryId < 0) {
+      throw new Error('Cannot play gallery via GalleryService with galleryId<0 or galleryId===undefined');
+    }
+    this.autoPlay.emit({
+      galleryId: galleryId,
+      result: true
+    });
+  }
+
+  /**
+   * Service to stop modal-gallery
+   * @param galleryId number or undefined that represents the unique id of the gallery.
+   * @throws a error with a message if galleryId is either undefined or < 0
+   *
+   * @since 7.2.0
+   */
+  stop(galleryId: number | undefined): void {
+    if (galleryId === undefined || galleryId < 0) {
+      throw new Error('Cannot stop gallery via GalleryService with galleryId<0 or galleryId===undefined');
+    }
+    this.autoPlay.emit({
+      galleryId: galleryId,
+      result: false
     });
   }
 }

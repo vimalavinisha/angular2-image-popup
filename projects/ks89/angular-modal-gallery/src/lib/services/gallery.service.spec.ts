@@ -24,7 +24,7 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { GalleryService } from './gallery.service';
+import { GalleryService, InternalGalleryPayload } from './gallery.service';
 import { Image } from '@ks89/angular-modal-gallery';
 
 const IMAGE: Image = new Image(0, {
@@ -183,5 +183,47 @@ describe('GalleryService', () => {
         })
       );
     });
+  });
+
+  describe('#play()', () => {
+    expectedValidNums.forEach((val, index) => {
+      it(`should call play expecting an 'autoPlay' event with valid id and result true. Test i=${index}`,
+        inject([GalleryService], (service: GalleryService) => {
+          service.autoPlay.subscribe((result: InternalGalleryPayload) => {
+            expect(result.galleryId).toBe(val.id);
+            expect(result.result).toBe(true);
+          });
+          service.play(val.id);
+        })
+      );
+    });
+
+    it(`should call play with an undefined galleryId expecting an error`,
+      inject([GalleryService], (service: GalleryService) => {
+        const error = new Error('Cannot play gallery via GalleryService with galleryId<0 or galleryId===undefined');
+        expect(() => service.play(undefined)).toThrow(error);
+      })
+    );
+  });
+
+  describe('#stop()', () => {
+    expectedValidNums.forEach((val, index) => {
+      it(`should call stop expecting an 'autoPlay' event with valid id and result false. Test i=${index}`,
+        inject([GalleryService], (service: GalleryService) => {
+          service.autoPlay.subscribe((result: InternalGalleryPayload) => {
+            expect(result.galleryId).toBe(val.id);
+            expect(result.result).toBe(false);
+          });
+          service.stop(val.id);
+        })
+      );
+    });
+
+    it(`should call stop with an undefined galleryId expecting an error`,
+      inject([GalleryService], (service: GalleryService) => {
+        const error = new Error('Cannot stop gallery via GalleryService with galleryId<0 or galleryId===undefined');
+        expect(() => service.stop(undefined)).toThrow(error);
+      })
+    );
   });
 });
