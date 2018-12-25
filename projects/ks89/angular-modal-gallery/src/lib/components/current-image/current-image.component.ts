@@ -55,13 +55,12 @@ import { InternalLibImage } from '../../model/image-internal.class';
 import { Keyboard } from '../../model/keyboard.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
-import { SidePreviewsConfig, SlideConfig } from '../../model/slide-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { GalleryService, InternalGalleryPayload } from '../../services/gallery.service';
-import { PlayConfig } from '../../model/play-config.interface';
+import { GalleryService } from '../../services/gallery.service';
 
 /**
  * Interface to describe the Load Event, used to
@@ -254,30 +253,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       downloadable: false,
       invertSwipe: false
     };
-    const defaultSlideConfig: SlideConfig = {
-      infinite: false,
-      playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
-      sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
-    };
 
     this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
     this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
 
-    this.configSlide = Object.assign({}, defaultSlideConfig, this.slideConfig);
-
-    this.galleryServiceAutoPlaySubscription = this.galleryService.autoPlay.subscribe((payload: InternalGalleryPayload) => {
-      // if galleryId is not valid OR galleryId is related to another instance and not this one
-      if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
-        return;
-      }
-      if (payload.result) {
-        this.configSlide.playConfig.autoPlay = true;
-        this.playCarousel();
-      } else {
-        this.configSlide.playConfig.autoPlay = false;
-        this.stopCarousel();
-      }
-    });
+    this.configSlide = Object.assign({}, this.slideConfig);
   }
 
   /**
@@ -295,6 +275,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     } else if (images && images.previousValue !== images.currentValue) {
       this.updateIndexes();
     }
+
+    const slideConfig: SimpleChange = changes.slideConfig;
+    if (slideConfig && slideConfig.previousValue !== slideConfig.currentValue) {
+      this.configSlide = Object.assign({}, this.slideConfig);
+    }
   }
 
   ngAfterContentInit() {
@@ -304,7 +289,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this._ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => this.configSlide && this.configSlide.playConfig && this.configSlide.playConfig.interval),
+            map(() => this.configSlide && this.configSlide.playConfig && this.configSlide.playConfig.autoPlay && this.configSlide.playConfig.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )

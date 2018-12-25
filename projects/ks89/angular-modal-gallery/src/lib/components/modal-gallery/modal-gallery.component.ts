@@ -199,10 +199,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * `Image` that is visible right now.
    */
   currentImage: InternalLibImage;
+  /**
+   * Object of type `SlideConfig` passed to currentImage and used to handle play/stop features. This field is initialized
+   * applying transformations, default values and so on to the input of the same type.
+   */
+  configSlide: SlideConfig;
 
   private galleryServiceNavigateSubscription: Subscription;
   private galleryServiceCloseSubscription: Subscription;
   private galleryServiceUpdateSubscription: Subscription;
+  private galleryServiceAutoPlaySubscription: Subscription;
 
   /**
    * HostListener to catch browser's back button and destroy the gallery.
@@ -272,6 +278,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     // call initImages to init images and to emit `hasData` event
     this.initImages();
 
+    const defaultSlideConfig: SlideConfig = {
+      infinite: false,
+      playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
+      sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
+    };
+    this.configSlide = Object.assign({}, defaultSlideConfig, this.slideConfig);
+
     this.galleryServiceNavigateSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
       if (!payload) {
         return;
@@ -317,6 +330,20 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
         this.currentImage = this.images[payload.index];
       }
       this.changeDetectorRef.markForCheck();
+    });
+
+    this.galleryServiceAutoPlaySubscription = this.galleryService.autoPlay.subscribe((payload: InternalGalleryPayload) => {
+      // if galleryId is not valid OR galleryId is related to another instance and not this one
+      if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
+        return;
+      }
+      if (payload.result) {
+        this.configSlide.playConfig.autoPlay = true;
+        // this.currentImageComponent.playCarousel();
+      } else {
+        this.configSlide.playConfig.autoPlay = false;
+        // this.currentImageComponent.stopCarousel();
+      }
     });
   }
 
@@ -670,6 +697,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
     if (this.galleryServiceUpdateSubscription) {
       this.galleryServiceUpdateSubscription.unsubscribe();
+    }
+    if (this.galleryServiceAutoPlaySubscription) {
+      this.galleryServiceAutoPlaySubscription.unsubscribe();
     }
   }
 

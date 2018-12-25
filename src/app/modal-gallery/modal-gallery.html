@@ -411,6 +411,13 @@
   <ks-modal-gallery [id]="56" [modalImages]="images"
                     [slideConfig]="{infinite: true, playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>
 </section>
+<section>
+  <h3>E4 - (id=57) - AutoPlay demo - with interval=1000 interval and pauseOnHover disabled</h3>
+  <br>
+  <p><button (click)="autoPlayButton(57)">{{isPlaying ? 'Pause' : 'Play'}}</button></p>
+  <ks-modal-gallery [id]="57" [modalImages]="images"
+                    [slideConfig]="{playConfig: {autoPlay: true, interval: 1000, pauseOnHover: false}}"></ks-modal-gallery>
+</section>
 
 
 <br>
@@ -419,15 +426,15 @@
 <h2>Experimental examples<sup>*</sup></h2>
 <p><sup>*</sup> these will be either improved or removed in next versions</p>
 <section>
-  <h3>F1 - (id=57) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
+  <h3>F1 - (id=58) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
   <br>
-  <ks-modal-gallery [id]="57" [modalImages]="[images[0]]"
+  <ks-modal-gallery [id]="58" [modalImages]="[images[0]]"
                     [keyboardConfig]="null"
                     [currentImageConfig]="currentImageConfigExperimental"
                     [slideConfig]="{infinite: false}"></ks-modal-gallery>
 </section>
 <section>
-  <h3>F2 - (id=58) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>
+  <h3>F2 - (id=59) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>
   <br>
-  <ks-modal-gallery [id]="58" [modalImages]="sameImages"></ks-modal-gallery>
+  <ks-modal-gallery [id]="59" [modalImages]="sameImages"></ks-modal-gallery>
 </section>

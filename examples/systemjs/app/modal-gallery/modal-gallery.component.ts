@@ -58,6 +58,7 @@ import {
 export class ModalGalleryComponent {
   imageIndex = 1;
   galleryId = 1;
+  isPlaying = true;
 
   images: Image[] = [
     new Image(0, {
@@ -708,5 +709,15 @@ export class ModalGalleryComponent {
 
   trackById(index: number, item: Image) {
     return item.id;
+  }
+
+  autoPlayButton(id: number) {
+    if (this.isPlaying) {
+      this.galleryService.stop(id);
+    } else {
+      this.galleryService.play(id);
+    }
+    this.isPlaying = !this.isPlaying;
+    return this.isPlaying;
   }
 }
