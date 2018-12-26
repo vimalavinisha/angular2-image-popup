@@ -17,9 +17,8 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { ModalGalleryComponent } from './modal-gallery.component';
 import { BackgroundComponent } from '../background/background.component';
@@ -37,14 +36,17 @@ import { WrapDirective } from '../../directives/wrap.directive';
 import { DirectionDirective } from '../../directives/direction.directive';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from '../../services/keyboard.service';
 import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
-import { Action } from '../../model/action.enum';
-import { ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
-import { ImageModalEvent } from '../../model/image.class';
-import { AdvancedLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
-import { getIndex } from '../../utils/image.util';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { GalleryService } from '../../services/gallery.service';
 import { IdValidatorService } from '../../services/id-validator.service';
+import { By } from '@angular/platform-browser';
+import { ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
+import { Action } from '../../model/action.enum';
+import { ImageModalEvent } from '../../model/image.class';
+import { AdvancedLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
+import { PlayConfig } from '../../model/play-config.interface';
+import { getIndex } from '../../utils/image.util';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -647,8 +649,7 @@ describe('ModalGalleryComponent', () => {
       expect(comp.images[0].previouslyLoaded).toBeTruthy();
     });
 
-    [
-      null,
+    [null,
       {layout: null},
       {
         strategy: PlainGalleryStrategy.ROW,
@@ -708,10 +709,10 @@ describe('ModalGalleryComponent', () => {
 
 
     const mockGalleryServiceInputs: any = [
-      {id: 0, index: 0},
-      {id: 1, index: 1},
-      {id: 100, index: 2},
-      {id: 2000, index: 3}
+      {id: 0, index: 0, newImage: IMAGES[2]},
+      {id: 1, index: 1, newImage: IMAGES[2]},
+      {id: 100, index: 2, newImage: IMAGES[2]},
+      {id: 2000, index: 3, newImage: IMAGES[2]}
     ];
 
     mockGalleryServiceInputs.forEach((val: any, index: number) => {
@@ -720,29 +721,81 @@ describe('ModalGalleryComponent', () => {
         comp.id = 0;
         comp.id = val.id;
         comp.show.subscribe((result: ImageModalEvent) => {
-          // console.log('***-------------------------------------', result);
           expect(result.action).toBe(Action.LOAD);
           expect(result.result).toBe(val.index + 1);
         });
 
         const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
-        galleryService.openGallery(val.id, val.index);
+        galleryService.navigateGallery(val.id, val.index);
       });
     });
 
+    it(`should call play and verify that autoPlay is true.`, () => {
+      const defaultInterval = 5000;
+      comp.id = 0;
+      comp.modalImages = IMAGES;
+      comp.slideConfig = <SlideConfig>{playConfig: <PlayConfig>{autoPlay: false, interval: defaultInterval, pauseOnHover: false}};
+      fixture.detectChanges();
+      const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
+      spyOn(galleryService, 'autoPlay').and.callThrough();
+      galleryService.play(0);
+      expect(comp.configSlide.playConfig.autoPlay).toBeTruthy();
+    });
+
+    it(`should call stop and verify that autoPlay is false.`, () => {
+      const defaultInterval = 5000;
+      comp.id = 0;
+      comp.modalImages = IMAGES;
+      comp.slideConfig = <SlideConfig>{playConfig: <PlayConfig>{autoPlay: true, interval: defaultInterval, pauseOnHover: false}};
+      fixture.detectChanges();
+      const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
+      spyOn(galleryService, 'autoPlay').and.callThrough();
+      galleryService.stop(0);
+      expect(comp.configSlide.playConfig.autoPlay).toBeFalsy();
+    });
+
+    const NEW_IMAGE: InternalLibImage = new InternalLibImage(
+      2,
+      {
+        // modal
+        img: '../assets/images/gallery/newImage.jpg',
+        description: 'Description newImage',
+        extUrl: 'http://www.google.com'
+      },
+      {
+        // plain
+        img: '../assets/images/gallery/thumbs/newImage.png',
+        title: 'custom title newImage',
+        alt: 'custom alt newImage',
+        ariaLabel: 'arial label newImage'
+      }
+    );
+    const mockGalleryServiceUpdateInputs: any = [
+      {index: 0, newImage: Object.assign({}, NEW_IMAGE, {id: 0})},
+      {index: 1, newImage: Object.assign({}, NEW_IMAGE, {id: 1})},
+      {index: 2, newImage: Object.assign({}, NEW_IMAGE, {id: 2})},
+      {index: 3, newImage: Object.assign({}, NEW_IMAGE, {id: 3})}
+    ];
+    mockGalleryServiceUpdateInputs.forEach((val: any, index: number) => {
+      it(`should call update and verify that currentImage is changed. Test i=${index}`, fakeAsync(() => {
+        const expected: InternalLibImage = Object.assign({}, NEW_IMAGE, {id: val.index});
+        comp.id = 5; // I chose a random id, because it's not important in this test
+        comp.modalImages = IMAGES;
+        comp.currentImage = IMAGES[val.index];
+        fixture.detectChanges();
+        const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
+        spyOn(galleryService, 'update').and.callThrough();
+        galleryService.updateGallery(5, val.index, val.newImage);
+        tick(100);
+        flush();
+        fixture.detectChanges();
+        expect(comp.images[val.index].id).toBe(expected.id);
+        expect(comp.images[val.index].modal.img).toBe(expected.modal.img);
+      }));
+    });
   });
 
   describe('------NO------', () => {
-
-    it(`shouldn't display the gallery, because id is a mandatory parameter`, () => {
-      comp.id = undefined;
-      comp.modalImages = IMAGES;
-      comp.currentImage = IMAGES[0];
-
-      const errorMessage = 'You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template';
-
-      expect(() => comp.ngOnInit()).toThrow(new Error(errorMessage));
-    });
 
     [{id: 1, index: IMAGES.length + 5}, {id: 1, index: IMAGES.length + 100}].forEach((val: any, index: number) => {
       it(`shouldn't listen for gallery service's navigate events if index is greater then length. Test i=${index}`, () => {
@@ -828,19 +881,85 @@ describe('ModalGalleryComponent', () => {
       comp.onDownload(mockButtonEvent);
     });
 
+    const NEW_IMAGE: InternalLibImage = new InternalLibImage(
+      2,
+      {
+        // modal
+        img: '../assets/images/gallery/newImage.jpg',
+        description: 'Description newImage',
+        extUrl: 'http://www.google.com'
+      },
+      {
+        // plain
+        img: '../assets/images/gallery/thumbs/newImage.png',
+        title: 'custom title newImage',
+        alt: 'custom alt newImage',
+        ariaLabel: 'arial label newImage'
+      }
+    );
+    const mockGalleryServiceUpdateInputs: any = [
+      {index: 0, newImage: Object.assign({}, NEW_IMAGE, {id: 0})},
+      {index: 1, newImage: Object.assign({}, NEW_IMAGE, {id: 1})},
+      {index: 2, newImage: Object.assign({}, NEW_IMAGE, {id: 2})},
+      {index: 3, newImage: Object.assign({}, NEW_IMAGE, {id: 3})}
+    ];
+    mockGalleryServiceUpdateInputs.forEach((val: any, index: number) => {
+      it(`should call update and verify that currentImage is changed. Test i=${index}`, fakeAsync(() => {
+        const expected: InternalLibImage = Object.assign({}, NEW_IMAGE, {id: val.index});
+        comp.id = 5; // I chose a random id, because it's not important in this test
+        comp.modalImages = IMAGES;
+        comp.currentImage = IMAGES[val.index];
+        fixture.detectChanges();
+        const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
+        spyOn(galleryService, 'update').and.callThrough();
+        galleryService.updateGallery(5, val.index, val.newImage);
+        tick(100);
+        flush();
+        fixture.detectChanges();
+        expect(comp.images[val.index].id).toBe(expected.id);
+        expect(comp.images[val.index].modal.img).toBe(expected.modal.img);
+      }));
+    });
+  });
+
+  describe('------ERRORS------', () => {
+    [undefined, -1].forEach((val: any) => {
+      it(`shouldn't display the gallery, because id is a mandatory parameter`, () => {
+        comp.id = val;
+        comp.modalImages = IMAGES;
+        comp.currentImage = IMAGES[0];
+
+        const errorMessage = 'You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template';
+
+        expect(() => comp.ngOnInit()).toThrow(new Error(errorMessage));
+      });
+    });
+
+    [undefined, -1].forEach((val: any) => {
+      it(`shouldn't display the gallery, because id is a mandatory parameter. To test init code, I bypassed idValidatorService.checkAndAdd function`, () => {
+        const idValidatorService = fixture.debugElement.injector.get(IdValidatorService);
+        // bypass checkAndAdd method with empty function to prevent an error and leave the init function to throw its error
+        spyOn(idValidatorService, 'checkAndAdd').and.callFake(() => {
+        });
+        comp.id = val;
+        comp.modalImages = IMAGES;
+        comp.currentImage = IMAGES[0];
+        const errorMessage = `'[id]="a number >= 0"' is a mandatory input from 6.0.0 in angular-modal-gallery.` +
+          `If you are using multiple instances of this library, please be sure to use different ids`;
+        expect(() => comp.ngOnInit()).toThrow(new Error(errorMessage));
+      });
+    });
+
     [{galleryId: undefined}, {galleryId: -1}].forEach((item, index) => {
       it(`should catch an error calling galleryService closeGallery's method with wrong input data. Test index=${index}`, () => {
         const currentImage: InternalLibImage = IMAGES[0];
         comp.id = 0;
         comp.modalImages = IMAGES;
         comp.currentImage = currentImage;
-
         comp.ngOnChanges(getSimpleChangesMock());
         comp.ngOnInit();
-
         comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
         comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
-
         const expectedError = new Error('Cannot close gallery via GalleryService with galleryId<0 or galleryId===undefined');
         const galleryService = fixture.debugElement.injector.get(GalleryService);
         expect(() => galleryService.closeGallery(item.galleryId)).toThrow(expectedError);
@@ -853,16 +972,61 @@ describe('ModalGalleryComponent', () => {
         comp.id = 0;
         comp.modalImages = IMAGES;
         comp.currentImage = currentImage;
-
         comp.ngOnChanges(getSimpleChangesMock());
         comp.ngOnInit();
-
         comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
         comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
-
         const expectedError = new Error('Cannot open gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
         const galleryService = fixture.debugElement.injector.get(GalleryService);
         expect(() => galleryService.openGallery(item.galleryId, item.index)).toThrow(expectedError);
+      });
+    });
+
+    [{galleryId: undefined, index: 0}, {galleryId: -1, index: 0}, {galleryId: 0, index: -1}].forEach((item, index) => {
+      it(`should catch an error calling galleryService updateGallery's method with wrong input data. Test index=${index}`, () => {
+        const currentImage: InternalLibImage = IMAGES[0];
+        comp.id = 0;
+        comp.modalImages = IMAGES;
+        comp.currentImage = currentImage;
+        comp.ngOnChanges(getSimpleChangesMock());
+        comp.ngOnInit();
+        comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
+        comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
+        const expectedError = new Error('Cannot update gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
+        const galleryService = fixture.debugElement.injector.get(GalleryService);
+        expect(() => galleryService.updateGallery(item.galleryId, item.index, IMAGES[0])).toThrow(expectedError);
+      });
+    });
+
+    [{galleryId: undefined}, {galleryId: -1}].forEach((item, index) => {
+      it(`should catch an error calling galleryService playGallery's method with wrong input data. Test index=${index}`, () => {
+        const currentImage: InternalLibImage = IMAGES[0];
+        comp.id = 0;
+        comp.modalImages = IMAGES;
+        comp.currentImage = currentImage;
+        comp.ngOnChanges(getSimpleChangesMock());
+        comp.ngOnInit();
+        comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
+        comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
+        const expectedError = new Error('Cannot play gallery via GalleryService with galleryId<0 or galleryId===undefined');
+        const galleryService = fixture.debugElement.injector.get(GalleryService);
+        expect(() => galleryService.play(item.galleryId)).toThrow(expectedError);
+      });
+    });
+
+    [{galleryId: undefined}, {galleryId: -1}].forEach((item, index) => {
+      it(`should catch an error calling galleryService stopGallery's method with wrong input data. Test index=${index}`, () => {
+        const currentImage: InternalLibImage = IMAGES[0];
+        comp.id = 0;
+        comp.modalImages = IMAGES;
+        comp.currentImage = currentImage;
+        comp.ngOnChanges(getSimpleChangesMock());
+        comp.ngOnInit();
+        comp.show.subscribe(() => fail(`Shouldn't catch a show event`));
+        comp.close.subscribe(() => fail(`Shouldn't catch a close event`));
+        const expectedError = new Error('Cannot stop gallery via GalleryService with galleryId<0 or galleryId===undefined');
+        const galleryService = fixture.debugElement.injector.get(GalleryService);
+        expect(() => galleryService.stop(item.galleryId)).toThrow(expectedError);
       });
     });
   });

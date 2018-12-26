@@ -42,7 +42,7 @@ import {
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
-import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
+import { Image, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
@@ -321,7 +321,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       }
       const currentIndex: number = getIndex(payload.image, this.images);
       this.images = this.images.map((image: InternalLibImage, index: number) => {
-        if (index === payload.index) {
+        if (image.id === payload.index) {
           return <InternalLibImage>payload.image;
         }
         return image;
@@ -337,13 +337,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
         return;
       }
-      if (payload.result) {
-        this.configSlide.playConfig.autoPlay = true;
-        // this.currentImageComponent.playCarousel();
-      } else {
-        this.configSlide.playConfig.autoPlay = false;
-        // this.currentImageComponent.stopCarousel();
-      }
+      this.configSlide.playConfig.autoPlay = payload.result;
     });
   }
 
