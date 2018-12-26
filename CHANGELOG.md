@@ -4,6 +4,7 @@
 
 ### Demos
 - add a new demo to explain how to handle an image array with the same image path multiple times without caching issues (requested by @shakerica #171)
+- add demos with autoplay feature in modal-gallery (to explain the feature requested by @hn6pot #152)
 
 ### Documentation
 - update doc website with the new example (requested by @shakerica #171)

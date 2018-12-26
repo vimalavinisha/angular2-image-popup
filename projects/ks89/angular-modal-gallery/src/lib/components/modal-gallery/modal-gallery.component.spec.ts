@@ -737,7 +737,6 @@ describe('ModalGalleryComponent', () => {
       comp.slideConfig = <SlideConfig>{playConfig: <PlayConfig>{autoPlay: false, interval: defaultInterval, pauseOnHover: false}};
       fixture.detectChanges();
       const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
-      spyOn(galleryService, 'autoPlay').and.callThrough();
       galleryService.play(0);
       expect(comp.configSlide.playConfig.autoPlay).toBeTruthy();
     });
@@ -749,7 +748,6 @@ describe('ModalGalleryComponent', () => {
       comp.slideConfig = <SlideConfig>{playConfig: <PlayConfig>{autoPlay: true, interval: defaultInterval, pauseOnHover: false}};
       fixture.detectChanges();
       const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
-      spyOn(galleryService, 'autoPlay').and.callThrough();
       galleryService.stop(0);
       expect(comp.configSlide.playConfig.autoPlay).toBeFalsy();
     });
@@ -784,7 +782,6 @@ describe('ModalGalleryComponent', () => {
         comp.currentImage = IMAGES[val.index];
         fixture.detectChanges();
         const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
-        spyOn(galleryService, 'update').and.callThrough();
         galleryService.updateGallery(5, val.index, val.newImage);
         tick(100);
         flush();
@@ -879,46 +876,6 @@ describe('ModalGalleryComponent', () => {
       });
 
       comp.onDownload(mockButtonEvent);
-    });
-
-    const NEW_IMAGE: InternalLibImage = new InternalLibImage(
-      2,
-      {
-        // modal
-        img: '../assets/images/gallery/newImage.jpg',
-        description: 'Description newImage',
-        extUrl: 'http://www.google.com'
-      },
-      {
-        // plain
-        img: '../assets/images/gallery/thumbs/newImage.png',
-        title: 'custom title newImage',
-        alt: 'custom alt newImage',
-        ariaLabel: 'arial label newImage'
-      }
-    );
-    const mockGalleryServiceUpdateInputs: any = [
-      {index: 0, newImage: Object.assign({}, NEW_IMAGE, {id: 0})},
-      {index: 1, newImage: Object.assign({}, NEW_IMAGE, {id: 1})},
-      {index: 2, newImage: Object.assign({}, NEW_IMAGE, {id: 2})},
-      {index: 3, newImage: Object.assign({}, NEW_IMAGE, {id: 3})}
-    ];
-    mockGalleryServiceUpdateInputs.forEach((val: any, index: number) => {
-      it(`should call update and verify that currentImage is changed. Test i=${index}`, fakeAsync(() => {
-        const expected: InternalLibImage = Object.assign({}, NEW_IMAGE, {id: val.index});
-        comp.id = 5; // I chose a random id, because it's not important in this test
-        comp.modalImages = IMAGES;
-        comp.currentImage = IMAGES[val.index];
-        fixture.detectChanges();
-        const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
-        spyOn(galleryService, 'update').and.callThrough();
-        galleryService.updateGallery(5, val.index, val.newImage);
-        tick(100);
-        flush();
-        fixture.detectChanges();
-        expect(comp.images[val.index].id).toBe(expected.id);
-        expect(comp.images[val.index].modal.img).toBe(expected.modal.img);
-      }));
     });
   });
 
