@@ -7,7 +7,8 @@
 - add demos with autoplay feature in modal-gallery (to explain the feature requested by @hn6pot #152)
 
 ### Documentation
-- update doc website with the new example (requested by @shakerica #171)
+- update doc website with the new feature and examples (requested by @shakerica #171)
+- add warning about same image multiple times in images array (requested by @shakerica #171)
 
 ### Testing
 - update tests
