@@ -20,30 +20,30 @@
     "tsc:w": "tsc -w"
   },
   "dependencies": {
-    "@angular/cdk": "^6.4.7",
-    "@angular/common": "^6.1.10",
-    "@angular/compiler": "^6.1.10",
-    "@angular/core": "^6.1.10",
-    "@angular/forms": "^6.1.10",
-    "@angular/http": "^6.1.10",
-    "@angular/platform-browser": "^6.1.10",
-    "@angular/platform-browser-dynamic": "^6.1.10",
-    "@angular/router": "^6.1.10",
-    "@fortawesome/fontawesome-svg-core": "^1.2.8",
-    "@fortawesome/free-solid-svg-icons": "^5.5.0",
-    "@ks89/angular-modal-gallery": "^7.0.0-beta.3",
-    "core-js": "^2.5.7",
-    "hammerjs": "^2.0.8",
-    "mousetrap": "^1.6.2",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^6.3.3",
-    "systemjs": "^0.21.5",
-    "zone.js": "^0.8.20"
+    "@angular/cdk": "=6.4.7",
+    "@angular/common": "=6.1.10",
+    "@angular/compiler": "=6.1.10",
+    "@angular/core": "=6.1.10",
+    "@angular/forms": "=6.1.10",
+    "@angular/http": "=6.1.10",
+    "@angular/platform-browser": "=6.1.10",
+    "@angular/platform-browser-dynamic": "=6.1.10",
+    "@angular/router": "=6.1.10",
+    "@fortawesome/fontawesome-svg-core": "=1.2.12",
+    "@fortawesome/free-solid-svg-icons": "=5.6.3",
+    "@ks89/angular-modal-gallery": "^7.0.0",
+    "core-js": "=2.5.7",
+    "hammerjs": "=2.0.8",
+    "mousetrap": "=1.6.2",
+    "reflect-metadata": "=0.1.12",
+    "rxjs": "=6.3.3",
+    "systemjs": "=0.21.5",
+    "zone.js": "=0.8.20"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "copyfiles": "^2.1.0",
-    "lite-server": "^2.4.0",
-    "typescript": "~2.6.2"
+    "concurrently": "=4.1.0",
+    "copyfiles": "=2.1.0",
+    "lite-server": "=2.4.0",
+    "typescript": "=2.9.2"
   }
 }
