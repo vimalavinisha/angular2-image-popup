@@ -32,7 +32,7 @@ If your problem is still present, fell free to open an issue with this template.
 <!--
 For bug reports please provide the *STEPS TO REPRODUCE* and a *MINIMAL LIVE DEMO* of the problem on StackBlitz.com or plnkr.co...-->
 
-My official live example on StackBlitz (based on https://stackblitz.com/edit/angular-modal-gallery-v5) is: <!-- add your public link here -->
+My official live example on StackBlitz (based on https://stackblitz.com/edit/angular-modal-gallery-v7) is: <!-- add your public link here -->
 
 
 ## What is the motivation / use case for changing the behavior?
@@ -42,6 +42,7 @@ My official live example on StackBlitz (based on https://stackblitz.com/edit/ang
 ## Environment (the most important section to fill very carefully)
 
 <pre><code>
+- @ks89/angular-modal-gallery version: X.X.X
 - Node version: X.X.X  <!-- run `node --version` -->
 - npm version: X.X.X  <!-- run `npm --version` -->
 - Operating System and version:  <!-- Mac, Linux, Windows -->
