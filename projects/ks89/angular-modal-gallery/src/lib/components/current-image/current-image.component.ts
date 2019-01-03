@@ -204,6 +204,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @HostListener('mouseenter')
   onMouseEnter() {
+    // if carousel feature is disable, don't do anything in any case
+    if (!this.configSlide || !this.configSlide.playConfig) {
+      return;
+    }
     if (!this.configSlide.playConfig.pauseOnHover) {
       return;
     }
@@ -215,6 +219,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @HostListener('mouseleave')
   onMouseLeave() {
+    // if carousel feature is disable, don't do anything in any case
+    if (!this.configSlide || !this.configSlide.playConfig) {
+      return;
+    }
     if (!this.configSlide.playConfig.pauseOnHover || !this.configSlide.playConfig.autoPlay) {
       return;
     }
