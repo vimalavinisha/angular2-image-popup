@@ -1,3 +1,8 @@
+# 7.2.1
+### Bugfixes
+- fix issue cannot read property 'pauseOnHover' of undefined (requested by @alvinmactal #177)
+
+
 # 7.2.0
 ### Features
 - add autoPlay to modal-gallery (requested by @hn6pot #152)
