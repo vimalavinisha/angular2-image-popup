@@ -22,6 +22,17 @@
 
 // You can add global styles to this file, and also import other style files
 
+@import "~@angular/cdk/overlay-prebuilt.css";
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
+  background: #000;
+  opacity: 0.85 !important;
+}
+
+.cdk-overlay-container {
+  z-index: 90000 !important;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
   margin: 0;

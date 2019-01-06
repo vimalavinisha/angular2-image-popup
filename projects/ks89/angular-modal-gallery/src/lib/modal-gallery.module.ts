@@ -45,7 +45,7 @@ export class KsHammerGestureConfig extends HammerGestureConfig {
  * Module to import it in the root module of your application.
  */
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, OverlayModule],
   declarations: [COMPONENTS, DIRECTIVES],
   exports: [ModalGalleryComponent, CarouselComponent],
   providers: [
@@ -64,6 +64,7 @@ export class GalleryModule {
     return {
       ngModule: GalleryModule,
       providers: [
+        OverlayContainer,
         {
           provide: KEYBOARD_CONFIGURATION,
           useValue: config ? config : {}

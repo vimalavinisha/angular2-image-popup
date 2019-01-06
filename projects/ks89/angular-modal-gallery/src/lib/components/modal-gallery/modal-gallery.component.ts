@@ -64,6 +64,9 @@ import { Subscription } from 'rxjs';
 import { IdValidatorService } from '../../services/id-validator.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ConfigService, LibConfig } from '../../services/config.service';
+import { PlayConfig } from '../../model/play-config.interface';
+import { FilePreviewOverlayRef, FilePreviewOverlayService } from '../overlaycontent/file-preview-overlay.service';
+import { Overlay } from '@angular/cdk/overlay';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -73,7 +76,7 @@ import { ConfigService, LibConfig } from '../../services/config.service';
   exportAs: 'ksModalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfigService]
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
@@ -229,6 +232,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     private idValidatorService: IdValidatorService,
     private configService: ConfigService,
     private sanitizer: DomSanitizer
+    private overlay: Overlay,
+    private previewDialog: FilePreviewOverlayService
   ) {}
 
   /**
@@ -546,6 +551,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   onShowModalGallery(index: number) {
     this.showModalGallery(index);
+    // this.showPreview(index);
   }
 
   /**
@@ -698,6 +704,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       this.galleryServiceAutoPlaySubscription.unsubscribe();
     }
   }
+
+  // showPreview(index: number) {
+  //   const imageToShow: Image = this.images[index];
+  //   console.log('--imageToShow', imageToShow);
+  //   const dialogRef: FilePreviewOverlayRef = this.previewDialog.open({
+  //     image: {name: 'aaa', url: <string>imageToShow.modal.img }
+  //   });
+  // }
 
   /**
    * Method to convert a base64 to a Blob

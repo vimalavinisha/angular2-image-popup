@@ -73,3 +73,5 @@ export {
   PlainGalleryStrategy,
   BreakConfig
 } from './lib/model/plain-gallery-config.interface';
+
+export { OverlaycontentComponent } from './lib/components/overlaycontent/overlaycontent.component';

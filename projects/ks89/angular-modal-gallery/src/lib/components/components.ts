@@ -33,9 +33,9 @@ import { CurrentImageComponent } from './current-image/current-image.component';
 import { LoadingSpinnerComponent } from './current-image/loading-spinner/loading-spinner.component';
 import { AccessibleComponent } from './accessible.component';
 import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
-
 export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 export { CarouselComponent } from './carousel/carousel.component';
+import { OverlaycontentComponent } from './overlaycontent/overlaycontent.component';
 
 /**
  * Array of all components.
@@ -51,5 +51,7 @@ export const COMPONENTS = [
   PreviewsComponent,
   CurrentImageComponent,
   LoadingSpinnerComponent,
-  AccessibleComponent
+  AccessibleComponent,
+
+  OverlaycontentComponent
 ];
