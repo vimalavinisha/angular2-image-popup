@@ -46,7 +46,7 @@ import { Image, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
-import { SidePreviewsConfig, SlideConfig } from '../../model/slide-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { KeyboardService } from '../../services/keyboard.service';
 import { GalleryService, InternalGalleryPayload } from '../../services/gallery.service';
@@ -61,7 +61,7 @@ import { getIndex } from '../../utils/image.util';
 import { Subscription } from 'rxjs';
 import { IdValidatorService } from '../../services/id-validator.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
-import { PlayConfig } from '../../model/play-config.interface';
+import { ConfigService, LibConfig } from '../../services/config.service';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -71,7 +71,8 @@ import { PlayConfig } from '../../model/play-config.interface';
   exportAs: 'ksModalGallery',
   styleUrls: ['modal-gallery.scss'],
   templateUrl: 'modal-gallery.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfigService]
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
@@ -228,7 +229,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     private galleryService: GalleryService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private changeDetectorRef: ChangeDetectorRef,
-    private idValidatorService: IdValidatorService
+    private idValidatorService: IdValidatorService,
+    private configService: ConfigService
   ) {}
 
   /**
@@ -253,7 +255,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
         currPlainGalleryConfigChange.layout instanceof AdvancedLayout &&
         currPlainGalleryConfigChange.layout.modalOpenerByIndex !== -1
       ) {
-        // console.log('opening modal gallery from custom plain gallery, index: ', currPlainGalleryConfigChange);
         this.showModalGallery(currPlainGalleryConfigChange.layout.modalOpenerByIndex);
       }
     }
@@ -275,15 +276,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       );
     }
 
+    // init ligConfig with inputs
+    this.configService.set(<LibConfig>{
+      slideConfig: this.slideConfig,
+      accessibilityConfig: this.accessibilityConfig,
+      previewConfig: this.previewConfig
+    });
+
     // call initImages to init images and to emit `hasData` event
     this.initImages();
 
-    const defaultSlideConfig: SlideConfig = {
-      infinite: false,
-      playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
-      sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
-    };
-    this.configSlide = Object.assign({}, defaultSlideConfig, this.slideConfig);
+    this.configSlide = this.configService.get().slideConfig;
 
     this.galleryServiceNavigateSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
       if (!payload) {
@@ -348,7 +351,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   onCustomEmit(event: ButtonEvent) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.buttonBeforeHook.emit(eventToEmit);
-    // console.log('on onCustomEmit', eventToEmit);
     this.buttonAfterHook.emit(eventToEmit);
   }
 
@@ -620,9 +622,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param ImageLoadEvent event payload
    */
   onImageLoad(event: ImageLoadEvent) {
-    // console.log('modal-image onImageLoad', event);
-    // console.log('modal-image onImageLoad images before', this.images);
-
     // sets as previously loaded the image with index specified by `event.status`
     this.images = this.images.map((img: InternalLibImage) => {
       if (img && img.id === event.id) {
@@ -630,8 +629,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       }
       return img;
     });
-
-    // console.log('modal-image onImageLoad images after', this.images);
   }
 
   /**

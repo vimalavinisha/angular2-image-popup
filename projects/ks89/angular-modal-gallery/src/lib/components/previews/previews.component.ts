@@ -29,14 +29,14 @@ import { AccessibleComponent } from '../accessible.component';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
 import { InternalLibImage } from '../../model/image-internal.class';
-import { Size } from '../../model/size.interface';
 import { PreviewConfig } from '../../model/preview-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 
-import { DIRECTION_LEFT, DIRECTION_RIGHT, NEXT, PREV } from '../../utils/user-input.util';
+import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
-import { InteractionEvent } from '../../model/interaction-event.interface';
 import { Action } from '../../model/action.enum';
+import { ConfigService, DEFAULT_PREVIEW_SIZE } from '../../services/config.service';
+import { Size } from '../../model/size.interface';
 
 /**
  * Component with image previews
@@ -60,23 +60,6 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   @Input()
   images: InternalLibImage[];
   /**
-   * Object of type `SlideConfig` to get `infinite sliding`.
-   */
-  @Input()
-  slideConfig: SlideConfig;
-  /**
-   * Object of type `PreviewConfig` to init PreviewsComponent's features.
-   * For instance, it contains a param to show/hide this component, sizes.
-   */
-  @Input()
-  previewConfig: PreviewConfig;
-  /**
-   * Object of type `AccessibilityConfig` to init custom accessibility features.
-   * For instance, it contains titles, alt texts, aria-labels and so on.
-   */
-  @Input()
-  accessibilityConfig: AccessibilityConfig;
-  /**
    * Output to emit the clicked preview. The payload contains the `ImageEvent` associated to the clicked preview.
    */
   @Output()
@@ -87,6 +70,20 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   // @Output()
   // clickArrow: EventEmitter<InteractionEvent> = new EventEmitter<InteractionEvent>();
 
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  accessibilityConfig: AccessibilityConfig;
+  /**
+   * Object of type `SlideConfig` to get `infinite sliding`.
+   */
+  slideConfig: SlideConfig;
+  /**
+   * Object of type `PreviewConfig` to init PreviewsComponent's features.
+   * For instance, it contains a param to show/hide this component, sizes.
+   */
+  previewConfig: PreviewConfig;
   /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
@@ -103,12 +100,6 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   previews: InternalLibImage[] = [];
   /**
-   * Object of type `PreviewConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configPreview: PreviewConfig;
-
-  /**
    * Start index of the input images used to display previews.
    */
   start: number;
@@ -117,22 +108,11 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   end: number;
 
-  /**
-   * Default preview's size object, also used in the template to apply default sizes to ksSize's directive.
-   */
-  defaultPreviewSize: Size = { height: '50px', width: 'auto' };
+  defaultPreviewSize: Size = DEFAULT_PREVIEW_SIZE;
 
-  /**
-   * Default preview's config object
-   */
-  private defaultPreviewConfig: PreviewConfig = {
-    visible: true,
-    number: 3,
-    arrows: true,
-    clickable: true,
-    // alwaysCenter: false, // TODO still not implemented
-    size: this.defaultPreviewSize
-  };
+  constructor(private configService: ConfigService) {
+    super();
+  }
 
   /**
    * Method ´ngOnInit´ to build `configPreview` applying a default value and also to
@@ -141,14 +121,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.configPreview = Object.assign({}, this.defaultPreviewConfig, this.previewConfig);
-
-    // if number is <= 0 reset to default
-    if (this.configPreview && this.configPreview.number && this.configPreview.number <= 0) {
-      this.configPreview.number = this.defaultPreviewConfig.number;
-    }
-
-    // init previews based on currentImage and the full array of images
+    this.accessibilityConfig = this.configService.get().accessibilityConfig;
+    this.slideConfig = this.configService.get().slideConfig;
+    this.previewConfig = this.configService.get().previewConfig;
     this.initPreviews(this.currentImage, this.images);
   }
 
@@ -204,7 +179,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @param KeyboardEvent | MouseEvent event payload
    */
   onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
-    if (!this.configPreview || !this.configPreview.clickable) {
+    if (!this.previewConfig || !this.previewConfig.clickable) {
       return;
     }
     const result: number = super.handleImageEvent(event);
@@ -275,14 +250,14 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   private setBeginningIndexesPreviews() {
     this.start = 0;
-    this.end = Math.min(<number>this.configPreview.number, this.images.length);
+    this.end = Math.min(<number>this.previewConfig.number, this.images.length);
   }
 
   /**
    * Private method to init both `start` and `end` to the end.
    */
   private setEndIndexesPreviews() {
-    this.start = this.images.length - 1 - (<number>this.configPreview.number - 1);
+    this.start = this.images.length - 1 - (<number>this.previewConfig.number - 1);
     this.end = this.images.length;
   }
 
@@ -290,8 +265,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Private method to update both `start` and `end` based on the currentImage.
    */
   private setIndexesPreviews() {
-    this.start = getIndex(this.currentImage, this.images) - Math.floor(<number>this.configPreview.number / 2);
-    this.end = getIndex(this.currentImage, this.images) + Math.floor(<number>this.configPreview.number / 2) + 1;
+    this.start = getIndex(this.currentImage, this.images) - Math.floor(<number>this.previewConfig.number / 2);
+    this.end = getIndex(this.currentImage, this.images) + Math.floor(<number>this.previewConfig.number / 2) + 1;
   }
 
   /**

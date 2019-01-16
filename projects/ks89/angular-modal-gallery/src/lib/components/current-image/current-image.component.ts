@@ -60,6 +60,7 @@ import { SlideConfig } from '../../model/slide-config.interface';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { ConfigService, LibConfig } from '../../services/config.service';
 
 /**
  * Interface to describe the Load Event, used to
@@ -200,7 +201,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     DOWN: 'swipedown'
   };
 
-  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef) {
+  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef, private configService: ConfigService) {
     super();
   }
 
