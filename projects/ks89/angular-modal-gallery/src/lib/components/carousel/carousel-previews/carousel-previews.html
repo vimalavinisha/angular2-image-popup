@@ -5,7 +5,7 @@
 
   <a class="nav-left"
      [attr.aria-label]="accessibilityConfig?.carouselPreviewScrollPrevAriaLabel"
-     [tabindex]="configPreview.arrows && start > 0 ? 0 : -1" role="button"
+     [tabIndex]="configPreview.arrows && start > 0 ? 0 : -1" role="button"
      (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
     <div class="inside {{configPreview.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
@@ -23,7 +23,7 @@
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
              alt="{{getAlt(preview)}}"
-             [tabindex]="0" role="img"
+             [tabIndex]="0" role="img"
              (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"/>
       </ng-container>
       <ng-template #legacyMode>
@@ -39,7 +39,7 @@
                                  height: configPreview?.maxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
-             [tabindex]="0" role="img"
+             [tabIndex]="0" role="img"
              (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"></div>
       </ng-template>
     </ng-container>
@@ -47,7 +47,7 @@
 
   <a class="nav-right"
      [attr.aria-label]="accessibilityConfig?.carouselPreviewScrollNextAriaLabel"
-     [tabindex]="configPreview.arrows && end < images.length ? 0 : -1" role="button"
+     [tabIndex]="configPreview.arrows && end < images.length ? 0 : -1" role="button"
      (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
     <div class="inside {{configPreview.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"

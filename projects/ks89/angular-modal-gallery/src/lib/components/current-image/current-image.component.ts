@@ -49,12 +49,11 @@ import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { Action } from '../../model/action.enum';
-import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
+import { DescriptionStrategy } from '../../model/description.interface';
 import { Image, ImageModalEvent } from '../../model/image.class';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { Keyboard } from '../../model/keyboard.enum';
 import { KeyboardConfig } from '../../model/keyboard-config.interface';
-import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
 import { SlideConfig } from '../../model/slide-config.interface';
 
 import { NEXT, PREV } from '../../utils/user-input.util';
@@ -105,28 +104,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   @Input()
   isOpen: boolean;
-  /**
-   * Interface to configure current image in modal-gallery.
-   * For instance you can disable navigation on click on current image (enabled by default).
-   */
-  @Input()
-  currentImageConfig: CurrentImageConfig;
-  /**
-   * Object of type `SlideConfig` to get `infinite sliding`.
-   */
-  @Input()
-  slideConfig: SlideConfig;
-  /**
-   * Object of type `AccessibilityConfig` to init custom accessibility features.
-   * For instance, it contains titles, alt texts, aria-labels and so on.
-   */
-  @Input()
-  accessibilityConfig: AccessibilityConfig;
-  /**
-   * Object of type `KeyboardConfig` to assign custom keys to both ESC, RIGHT and LEFT keyboard's actions.
-   */
-  @Input()
-  keyboardConfig: KeyboardConfig;
 
   /**
    * Output to emit an event when images are loaded. The payload contains an `ImageLoadEvent`.
@@ -159,6 +136,24 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   normalAction: Action = Action.NORMAL;
   /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  accessibilityConfig: AccessibilityConfig;
+  /**
+   * Object of type `SlideConfig` to get `infinite sliding`.
+   */
+  slideConfig: SlideConfig;
+  /**
+   * Object to configure current image in modal-gallery.
+   * For instance you can disable navigation on click on current image (enabled by default).
+   */
+  currentImageConfig: CurrentImageConfig;
+  /**
+   * Object of type `KeyboardConfig` to assign custom keys to both ESC, RIGHT and LEFT keyboard's actions.
+   */
+  keyboardConfig: KeyboardConfig;
+  /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
    */
@@ -183,13 +178,6 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * True by default
    */
   loading = true;
-  /**
-   * Object of type `CurrentImageConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configCurrentImage: CurrentImageConfig;
-
-  configSlide: SlideConfig;
 
   /**
    * Private object without type to define all swipe actions used by hammerjs.
@@ -211,10 +199,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   @HostListener('mouseenter')
   onMouseEnter() {
     // if carousel feature is disable, don't do anything in any case
-    if (!this.configSlide || !this.configSlide.playConfig) {
+    if (!this.slideConfig || !this.slideConfig.playConfig) {
       return;
     }
-    if (!this.configSlide.playConfig.pauseOnHover) {
+    if (!this.slideConfig.playConfig.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -226,49 +214,25 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   @HostListener('mouseleave')
   onMouseLeave() {
     // if carousel feature is disable, don't do anything in any case
-    if (!this.configSlide || !this.configSlide.playConfig) {
+    if (!this.slideConfig || !this.slideConfig.playConfig) {
       return;
     }
-    if (!this.configSlide.playConfig.pauseOnHover || !this.configSlide.playConfig.autoPlay) {
+    if (!this.slideConfig.playConfig.pauseOnHover || !this.slideConfig.playConfig.autoPlay) {
       return;
     }
     this.playCarousel();
   }
 
   /**
-   * Method ´ngOnInit´ to build `configCurrentImage` applying default values.
+   * Method ´ngOnInit´ to init configuration.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultLoading: LoadingConfig = { enable: true, type: LoadingType.STANDARD };
-    const defaultDescriptionStyle: DescriptionStyle = {
-      bgColor: 'rgba(0, 0, 0, .5)',
-      textColor: 'white',
-      marginTop: '0px',
-      marginBottom: '0px',
-      marginLeft: '0px',
-      marginRight: '0px'
-    };
-    const defaultDescription: Description = {
-      strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      imageText: 'Image ',
-      numberSeparator: '/',
-      beforeTextDescription: ' - ',
-      style: defaultDescriptionStyle
-    };
-    const defaultCurrentImageConfig: CurrentImageConfig = {
-      navigateOnClick: true,
-      loadingConfig: defaultLoading,
-      description: defaultDescription,
-      downloadable: false,
-      invertSwipe: false
-    };
-
-    this.configCurrentImage = Object.assign({}, defaultCurrentImageConfig, this.currentImageConfig);
-    this.configCurrentImage.description = Object.assign({}, defaultDescription, this.configCurrentImage.description);
-
-    this.configSlide = Object.assign({}, this.slideConfig);
+    this.slideConfig = this.configService.get().slideConfig;
+    this.accessibilityConfig = this.configService.get().accessibilityConfig;
+    this.currentImageConfig = this.configService.get().currentImageConfig;
+    this.keyboardConfig = this.configService.get().keyboardConfig;
   }
 
   /**
@@ -289,7 +253,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
     const slideConfig: SimpleChange = changes.slideConfig;
     if (slideConfig && slideConfig.previousValue !== slideConfig.currentValue) {
-      this.configSlide = Object.assign({}, this.slideConfig);
+      this.slideConfig = this.configService.get().slideConfig;
     }
   }
 
@@ -300,7 +264,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this._ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => this.configSlide && this.configSlide.playConfig && this.configSlide.playConfig.autoPlay && this.configSlide.playConfig.interval),
+            map(() => this.slideConfig && this.slideConfig.playConfig && this.slideConfig.playConfig.autoPlay && this.slideConfig.playConfig.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
@@ -350,13 +314,13 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+    if (!this.currentImageConfig || !this.currentImageConfig.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
 
-    switch (this.configCurrentImage.description.strategy) {
+    switch (this.currentImageConfig.description.strategy) {
       case DescriptionStrategy.HIDE_IF_EMPTY:
         return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
@@ -389,7 +353,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @throws an Error if description isn't available
    */
   getTitleToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+    if (!this.currentImageConfig || !this.currentImageConfig.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
@@ -403,7 +367,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   getLeftPreviewImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
-    if (currentIndex === 0 && this.configSlide.infinite) {
+    if (currentIndex === 0 && this.slideConfig.infinite) {
       // the current image is the first one,
       // so the previous one is the last image
       // because infinite is true
@@ -419,7 +383,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    */
   getRightPreviewImage(): Image {
     const currentIndex: number = getIndex(this.currentImage, this.images);
-    if (currentIndex === this.images.length - 1 && this.configSlide.infinite) {
+    if (currentIndex === this.images.length - 1 && this.slideConfig.infinite) {
       // the current image is the last one,
       // so the next one is the first image
       // because infinite is true
@@ -438,7 +402,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
     // check if triggered by a mouse click
     // If yes, It should block navigation when navigateOnClick is false
-    if (action === Action.CLICK && !this.configCurrentImage.navigateOnClick) {
+    if (action === Action.CLICK && !this.currentImageConfig.navigateOnClick) {
       // a user has requested to block navigation via configCurrentImage.navigateOnClick property
       return;
     }
@@ -526,14 +490,14 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   swipe(action = this.SWIPE_ACTION.RIGHT) {
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
-        if (this.configCurrentImage.invertSwipe) {
+        if (this.currentImageConfig.invertSwipe) {
           this.prevImage(Action.SWIPE);
         } else {
           this.nextImage(Action.SWIPE);
         }
         break;
       case this.SWIPE_ACTION.LEFT:
-        if (this.configCurrentImage.invertSwipe) {
+        if (this.currentImageConfig.invertSwipe) {
           this.nextImage(Action.SWIPE);
         } else {
           this.prevImage(Action.SWIPE);
@@ -588,7 +552,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
       this.isLastImage = true;
       return;
     }
-    if (!this.configSlide || this.configSlide.infinite === true) {
+    if (!this.slideConfig || this.slideConfig.infinite === true) {
       // infinite sliding enabled
       this.isFirstImage = false;
       this.isLastImage = false;
@@ -622,7 +586,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
-    return !!this.configSlide && this.configSlide.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
+    return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 
   /**
@@ -665,21 +629,21 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns String description built concatenating image fields with a specific logic.
    */
   private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
-    if (!this.configCurrentImage || !this.configCurrentImage.description) {
+    if (!this.currentImageConfig || !this.currentImageConfig.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     // If customFullDescription use it, otherwise proceed to build a description
-    if (this.configCurrentImage.description.customFullDescription && this.configCurrentImage.description.customFullDescription !== '') {
-      return this.configCurrentImage.description.customFullDescription;
+    if (this.currentImageConfig.description.customFullDescription && this.currentImageConfig.description.customFullDescription !== '') {
+      return this.currentImageConfig.description.customFullDescription;
     }
 
     const currentIndex: number = getIndex(image, this.images);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
 
-    const prevDescription: string = this.configCurrentImage.description.imageText ? this.configCurrentImage.description.imageText : '';
-    const midSeparator: string = this.configCurrentImage.description.numberSeparator ? this.configCurrentImage.description.numberSeparator : '';
+    const prevDescription: string = this.currentImageConfig.description.imageText ? this.currentImageConfig.description.imageText : '';
+    const midSeparator: string = this.currentImageConfig.description.numberSeparator ? this.currentImageConfig.description.numberSeparator : '';
     const middleDescription: string = currentIndex + 1 + midSeparator + this.images.length;
 
     if (imageWithoutDescription) {
@@ -687,7 +651,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
 
     const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
-    const endDescription: string = this.configCurrentImage.description.beforeTextDescription + currImgDescription;
+    const endDescription: string = this.currentImageConfig.description.beforeTextDescription + currImgDescription;
     return prevDescription + middleDescription + endDescription;
   }
 

@@ -6,8 +6,8 @@
   <div class="left-sub-container">
     <a class="nav-left {{isFirstImage ? 'no-pointer' : ''}}"
        [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
-       [tabindex]="isFirstImage ? -1 : 0" role="button"
-       (click)="onNavigationEvent('left', $event, normalAction, isFirstImage)" (keyup)="onNavigationEvent('left', $event, normalAction, isFirstImage)">
+       [tabIndex]="isFirstImage ? -1 : 0" role="button"
+       (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
       <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
            [title]="isFirstImage ? '' : accessibilityConfig.mainPrevImageTitle"></div>
@@ -23,7 +23,7 @@
              [attr.aria-label]="leftPreview.modal.ariaLabel"
              [title]="leftPreview.modal.title ? leftPreview.modal.title : getDescriptionToDisplay(leftPreview)"
              alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
-             [tabindex]="0" role="img"
+             [tabIndex]="0" role="img"
              (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)"/>
         <ng-template #firstImage>
           <div class="current-image-previous hidden"
@@ -37,19 +37,19 @@
   <figure id="current-figure" [style.display]="loading ? 'none' : ''">
     <img id="current-image"
          class="inside"
-         [ngClass]="'rotate' + (currentImage.modal && currentImage.modal.angle ? currentImage.modal.angle : '0')"
+         [ngClass]="currentImageConfig.navigateOnClick ? '' : 'unclickable'"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
          alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
-         [tabindex]="0" role="img"
+         [tabIndex]="0" role="img"
          (load)="onImageLoad($event)"
          (click)="onImageEvent($event, clickAction)" (keyup)="onImageEvent($event, keyboardAction)"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
     <figcaption *ngIf="getDescriptionToDisplay() !== ''"
                 class="inside description"
-                ksDescription [description]="configCurrentImage?.description"
+                ksDescription [description]="currentImageConfig?.description"
                 [innerHTML]="getDescriptionToDisplay()">
     </figcaption>
   </figure>
@@ -65,7 +65,7 @@
              [attr.aria-label]="rightPreview.modal.ariaLabel"
              [title]="rightPreview.modal.title ? rightPreview.modal.title : getDescriptionToDisplay(rightPreview)"
              alt="{{rightPreview.modal.alt ? rightPreview.modal.alt : getAltDescriptionByImage(rightPreview)}}"
-             [tabindex]="0" role="img"
+             [tabIndex]="0" role="img"
              (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)"/>
         <ng-template #lastImage>
           <div class="current-image-next hidden"
@@ -75,15 +75,15 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="loading && configCurrentImage?.loadingConfig?.enable">
-      <ks-loading-spinner [loadingConfig]="configCurrentImage?.loadingConfig"
+    <ng-container *ngIf="loading && currentImageConfig?.loadingConfig?.enable">
+      <ks-loading-spinner [loadingConfig]="currentImageConfig?.loadingConfig"
                           [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
     </ng-container>
 
     <a class="nav-right {{isFirstImage ? 'no-pointer' : ''}}"
        [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
-       [tabindex]="isLastImage ? -1 : 0" role="button"
-       (click)="onNavigationEvent('right', $event, normalAction, isLastImage)" (keyup)="onNavigationEvent('right', $event, normalAction, isLastImage)">
+       [tabIndex]="isLastImage ? -1 : 0" role="button"
+       (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
       <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
            [title]="isLastImage ? '' : accessibilityConfig.mainNextImageTitle"></div>

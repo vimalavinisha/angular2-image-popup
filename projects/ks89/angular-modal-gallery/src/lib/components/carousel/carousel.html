@@ -16,7 +16,7 @@
 
     <a class="nav-left" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselPrevImageAriaLabel"
-       [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
+       [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)">
       <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
@@ -33,7 +33,7 @@
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
          alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
-         [tabindex]="0" role="img"
+         [tabIndex]="0" role="img"
          (click)="onClickCurrentImage()"
          (swipeleft)="swipe($event.type)"
          (swiperight)="swipe($event.type)"/>
@@ -45,7 +45,7 @@
 
     <a class="nav-right" *ngIf="configCarousel?.showArrows"
        [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
-       [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
+       [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)">
       <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
@@ -54,8 +54,6 @@
 
     <div id="dots">
       <ks-dots [currentImage]="currentImage"
-               [dotsConfig]="configDots"
-               [accessibilityConfig]="accessibilityConfig"
                [images]="images"
                (clickDot)="onClickDot($event)"></ks-dots>
     </div>
@@ -92,7 +90,7 @@
            ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth}"
            [attr.aria-label]="currentImage.modal.ariaLabel"
            [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
-           [tabindex]="0" role="img"
+           [tabIndex]="0" role="img"
            (click)="onClickCurrentImage()"
            (swipeleft)="swipe($event.type)"
            (swiperight)="swipe($event.type)">
@@ -105,7 +103,7 @@
 
       <a class="nav-right" *ngIf="configCarousel?.showArrows"
          [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
-         [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
+         [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
          (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)">
         <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
              aria-hidden="true"
@@ -114,8 +112,6 @@
 
       <div id="dots-ie11">
         <ks-dots [currentImage]="currentImage"
-                 [dotsConfig]="configDots"
-                 [accessibilityConfig]="accessibilityConfig"
                  [images]="images"
                  (clickDot)="onClickDot($event)"></ks-dots>
       </div>

@@ -22,9 +22,10 @@
  SOFTWARE.
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
+import { ConfigService } from '../../services/config.service';
 
 /**
  * Component with the semi-transparent background.
@@ -35,17 +36,23 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
   templateUrl: 'background.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BackgroundComponent {
+export class BackgroundComponent implements OnInit {
   /**
    * Boolean that it is true if the modal gallery is visible,
    * so also this component should be visible.
    */
   @Input()
   isOpen: boolean;
+
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  @Input()
   accessibilityConfig: AccessibilityConfig;
+
+  constructor(private configService: ConfigService) {}
+
+  ngOnInit() {
+    this.accessibilityConfig = this.configService.get().accessibilityConfig;
+  }
 }

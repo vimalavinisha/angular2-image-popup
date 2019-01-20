@@ -33,6 +33,7 @@ import { DotsConfig } from '../../model/dots-config.interface';
 
 import { NEXT } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
+import { ConfigService } from '../../services/config.service';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -56,18 +57,6 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   @Input()
   images: InternalLibImage[];
   /**
-   * Object of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide this component.
-   */
-  @Input()
-  dotsConfig: DotsConfig = { visible: true };
-  /**
-   * Object of type `AccessibilityConfig` to init custom accessibility features.
-   * For instance, it contains titles, alt texts, aria-labels and so on.
-   */
-  @Input()
-  accessibilityConfig: AccessibilityConfig;
-  /**
    * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
    */
@@ -75,19 +64,27 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   clickDot: EventEmitter<number> = new EventEmitter<number>();
 
   /**
-   * Object of type `DotsConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
+   * Object of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide this component.
    */
-  configDots: DotsConfig;
+  dotsConfig: DotsConfig = { visible: true };
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  accessibilityConfig: AccessibilityConfig;
 
+  constructor(private configService: ConfigService) {
+    super();
+  }
   /**
    * Method ´ngOnInit´ to build `configDots` applying a default value.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultConfig: DotsConfig = { visible: true };
-    this.configDots = Object.assign(defaultConfig, this.dotsConfig);
+    this.dotsConfig = this.configService.get().dotsConfig;
+    this.accessibilityConfig = this.configService.get().accessibilityConfig;
   }
 
   /**
@@ -97,7 +94,8 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   ngOnChanges(changes: SimpleChanges) {
     const dotsConfigChanges: SimpleChange = changes.dotsConfig;
     if (dotsConfigChanges && dotsConfigChanges.currentValue !== dotsConfigChanges.previousValue) {
-      this.configDots = dotsConfigChanges.currentValue;
+      this.configService.set(dotsConfigChanges.currentValue);
+      this.dotsConfig = this.configService.get().dotsConfig;
     }
   }
 

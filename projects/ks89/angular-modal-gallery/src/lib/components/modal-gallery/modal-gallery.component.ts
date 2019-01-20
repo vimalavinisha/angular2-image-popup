@@ -200,11 +200,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * `Image` that is visible right now.
    */
   currentImage: InternalLibImage;
-  /**
-   * Object of type `SlideConfig` passed to currentImage and used to handle play/stop features. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configSlide: SlideConfig;
 
   private galleryServiceNavigateSubscription: Subscription;
   private galleryServiceCloseSubscription: Subscription;
@@ -280,13 +275,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     this.configService.set(<LibConfig>{
       slideConfig: this.slideConfig,
       accessibilityConfig: this.accessibilityConfig,
-      previewConfig: this.previewConfig
+      previewConfig: this.previewConfig,
+      buttonsConfig: this.buttonsConfig,
+      dotsConfig: this.dotsConfig,
+      plainGalleryConfig: this.plainGalleryConfig,
+      keyboardConfig: this.keyboardConfig,
+      currentImageConfig: this.currentImageConfig
     });
 
     // call initImages to init images and to emit `hasData` event
     this.initImages();
-
-    this.configSlide = this.configService.get().slideConfig;
 
     this.galleryServiceNavigateSubscription = this.galleryService.navigate.subscribe((payload: InternalGalleryPayload) => {
       if (!payload) {
@@ -340,7 +338,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       if (payload.galleryId === undefined || payload.galleryId < 0 || payload.galleryId !== this.id) {
         return;
       }
-      this.configSlide.playConfig.autoPlay = payload.result;
+      const newSlideConfig: SlideConfig = Object.assign({}, this.slideConfig);
+      newSlideConfig.playConfig.autoPlay = payload.result;
+      this.configService.set({
+        slideConfig: newSlideConfig
+      });
     });
   }
 

@@ -39,6 +39,7 @@ import {
 } from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
+import { ConfigService } from '../../services/config.service';
 
 /**
  * Internal representation of `ButtonConfig` with an optional `id` field, used by trackId to improve performances.
@@ -63,12 +64,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   @Input()
   currentImage: Image;
-  /**
-   * Object of type `ButtonsConfig` to init UpperButtonsComponent's features.
-   * For instance, it contains an array of buttons.
-   */
-  @Input()
-  buttonsConfig: ButtonsConfig;
 
   /**
    * Output to emit clicks on refresh button. The payload contains a `ButtonEvent`.
@@ -112,15 +107,15 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
   customEmit: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
 
   /**
+   * Object of type `ButtonsConfig` to init UpperButtonsComponent's features.
+   * For instance, it contains an array of buttons.
+   */
+  buttonsConfig: ButtonsConfig;
+  /**
    * Array of `InternalButtonConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
   buttons: InternalButtonConfig[];
-  /**
-   * Object of type `ButtonsConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configButtons: ButtonsConfig;
 
   /**
    * Default buttons array for standard configuration
@@ -144,6 +139,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
     ...this.advancedButtonsDefault
   ];
 
+  constructor(private configService: ConfigService) {
+    super();
+  }
+
   /**
    * Method ´ngOnInit´ to build `configButtons` applying a default value and also to
    * init the `buttons` array.
@@ -151,9 +150,8 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultConfig: ButtonsConfig = { visible: true, strategy: ButtonsStrategy.DEFAULT };
-    this.configButtons = Object.assign(defaultConfig, this.buttonsConfig);
-    switch (this.configButtons.strategy) {
+    this.buttonsConfig = this.configService.get().buttonsConfig;
+    switch (this.buttonsConfig.strategy) {
       case ButtonsStrategy.SIMPLE:
         this.buttons = this.addButtonIds(this.simpleButtonsDefault);
         break;
@@ -164,7 +162,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         this.buttons = this.addButtonIds(this.fullButtonsDefault);
         break;
       case ButtonsStrategy.CUSTOM:
-        this.buttons = this.addButtonIds(this.validateCustomButtons(this.configButtons.buttons));
+        this.buttons = this.addButtonIds(this.validateCustomButtons(this.buttonsConfig.buttons));
         break;
       case ButtonsStrategy.DEFAULT:
       default:

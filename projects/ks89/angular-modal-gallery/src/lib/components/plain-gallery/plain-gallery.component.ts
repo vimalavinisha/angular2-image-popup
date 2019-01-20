@@ -30,6 +30,7 @@ import { Size } from '../../model/size.interface';
 import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
 import { getIndex } from '../../utils/image.util';
+import { ConfigService } from '../../services/config.service';
 
 /**
  * Component with the gallery of thumbs.
@@ -56,27 +57,21 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   @Input()
   showGallery: boolean;
   /**
-   * Object of type `PlainGalleryConfig` to configure the plain gallery.
-   */
-  @Input()
-  plainGalleryConfig: PlainGalleryConfig;
-  /**
-   * Object of type `AccessibilityConfig` to init custom accessibility features.
-   * For instance, it contains titles, alt texts, aria-labels and so on.
-   */
-  @Input()
-  accessibilityConfig: AccessibilityConfig;
-
-  /**
    * Output to emit an event when an image is changed.
    */
   @Output()
   show: EventEmitter<number> = new EventEmitter<number>();
 
   /**
-   * Object of type `PlainGalleryConfig` to configure this component.
+   * Object of type `PlainGalleryConfig` to configure the plain gallery.
    */
-  configPlainGallery: PlainGalleryConfig;
+  plainGalleryConfig: PlainGalleryConfig;
+
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  accessibilityConfig: AccessibilityConfig;
 
   /**
    * Bi-dimensional array of `Image` object to store images to display as plain gallery.
@@ -127,8 +122,22 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     advanced: { aTags: false, additionalBackground: '50% 50%/cover' }
   };
 
+  constructor(private configService: ConfigService) {}
+
   /**
-   * Method ´ngOnChanges´ to update both `imageGrid` and`configPlainGallery`.
+   * Method ´ngOnInit´ to init both `configPlainGallery` calling `initPlainGalleryConfig()`
+   * and `imageGrid invoking `initImageGrid()`.
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * In particular, it's called only one time!!!
+   */
+  ngOnInit() {
+    this.accessibilityConfig = this.configService.get().accessibilityConfig;
+    this.plainGalleryConfig = this.configService.get().plainGalleryConfig;
+    this.initImageGrid();
+  }
+
+  /**
+   * Method ´ngOnChanges´ to update both `imageGrid` and`plainGalleryConfig`.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
@@ -143,22 +152,12 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
       !configChange.firstChange &&
       (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))
     ) {
-      this.configPlainGallery = this.initPlainGalleryConfig();
+      this.plainGalleryConfig = this.configService.get().plainGalleryConfig;
+      // this.configPlainGallery = this.initPlainGalleryConfig();
     }
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
       this.initImageGrid();
     }
-  }
-
-  /**
-   * Method ´ngOnInit´ to init both `configPlainGallery` calling `initPlainGalleryConfig()`
-   * and `imageGrid invoking `initImageGrid()`.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
-   * In particular, it's called only one time!!!
-   */
-  ngOnInit() {
-    this.configPlainGallery = this.initPlainGalleryConfig();
-    this.initImageGrid();
   }
 
   /**
@@ -228,59 +227,21 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Private method to build and return a `PlainGalleryConfig` object, proving also default values.
-   * @returns PlainGalleryConfig the plain gallery configuration
-   * @throws an Error if layout and strategy aren't compatible
-   */
-  private initPlainGalleryConfig(): PlainGalleryConfig {
-    const config: PlainGalleryConfig = Object.assign({}, this.defaultPlainConfig, this.plainGalleryConfig);
-
-    if (config.layout instanceof LineLayout) {
-      if (config.strategy !== PlainGalleryStrategy.ROW && config.strategy !== PlainGalleryStrategy.COLUMN) {
-        throw new Error('LineLayout requires either ROW or COLUMN strategy');
-      }
-      if (!config.layout || !config.layout.breakConfig) {
-        throw new Error('Both layout and breakConfig must be valid');
-      }
-    }
-
-    if (config.layout instanceof GridLayout) {
-      if (config.strategy !== PlainGalleryStrategy.GRID) {
-        throw new Error('GridLayout requires GRID strategy');
-      }
-      if (!config.layout || !config.layout.breakConfig) {
-        throw new Error('Both layout and breakConfig must be valid');
-      }
-      // force wrap for grid layout
-      config.layout.breakConfig.wrap = true;
-    }
-
-    if (config.layout instanceof AdvancedLayout) {
-      if (config.strategy !== PlainGalleryStrategy.CUSTOM) {
-        throw new Error('AdvancedLayout requires CUSTOM strategy');
-      }
-    }
-    return config;
-  }
-
-  /**
    * Private method to init both `imageGrid` and other style variables,
    * based on the layout type.
    */
   private initImageGrid() {
-    const config: PlainGalleryConfig = this.configPlainGallery;
-
     // reset the array to prevent issues in case of GridLayout
     this.imageGrid = [];
 
-    if (config.layout instanceof LineLayout) {
-      const layout: LineLayout = config.layout;
+    if (this.plainGalleryConfig.layout instanceof LineLayout) {
+      const layout: LineLayout = this.plainGalleryConfig.layout;
       const row: Image[] = this.images.filter((val: Image, i: number) => i < layout.breakConfig.length || layout.breakConfig.length === -1);
       this.imageGrid = [row];
 
-      this.size = config.layout.size;
+      this.size = this.plainGalleryConfig.layout.size;
 
-      switch (config.strategy) {
+      switch (this.plainGalleryConfig.strategy) {
         case PlainGalleryStrategy.ROW:
           this.directionStyle = 'row';
           break;
@@ -292,8 +253,8 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
       this.justifyStyle = layout.justify;
     }
 
-    if (config.layout instanceof GridLayout) {
-      const layout: GridLayout = config.layout;
+    if (this.plainGalleryConfig.layout instanceof GridLayout) {
+      const layout: GridLayout = this.plainGalleryConfig.layout;
       const count: number = Math.ceil(this.images.length / layout.breakConfig.length);
       let start = 0;
       let end: number = layout.breakConfig.length - 1;
@@ -305,7 +266,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
         end = start + layout.breakConfig.length - 1;
       }
 
-      this.size = config.layout.size;
+      this.size = this.plainGalleryConfig.layout.size;
 
       const pixels: number = +layout.size.width.replace('px', '');
 
@@ -315,7 +276,7 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
       this.directionStyle = 'row';
     }
 
-    if (config.layout instanceof AdvancedLayout) {
+    if (this.plainGalleryConfig.layout instanceof AdvancedLayout) {
       this.imageGrid = [this.images];
     }
   }

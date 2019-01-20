@@ -1,11 +1,8 @@
 <ks-plain-gallery [images]="images"
                   [showGallery]="showGallery && isPlainGalleryVisible()"
-                  [plainGalleryConfig]="plainGalleryConfig"
-                  [accessibilityConfig]="accessibilityConfig"
                   (show)="onShowModalGallery($event)"></ks-plain-gallery>
 
-<ks-background [isOpen]="opened"
-               [accessibilityConfig]="accessibilityConfig"></ks-background>
+<ks-background [isOpen]="opened"></ks-background>
 
 <div id="modal-gallery-wrapper" *ngIf="opened"
      [attr.aria-label]="accessibilityConfig.modalGalleryContentAriaLabel"
@@ -17,23 +14,17 @@
     <div id="modal-gallery-container">
 
       <ks-upper-buttons [currentImage]="currentImage"
-                        [buttonsConfig]="buttonsConfig"
                         (delete)="onDelete($event)"
                         (navigate)="onNavigate($event)"
                         (download)="onDownload($event)"
                         (close)="onCloseGallery($event)"
                         (fullscreen)="onFullScreen($event)"
                         (customEmit)="onCustomEmit($event)"></ks-upper-buttons>
-                        <!--(rotate)="onRotate($event)"-->
 
       <ks-current-image [id]="id"
                         [images]="images"
                         [currentImage]="currentImage"
                         [isOpen]="opened"
-                        [slideConfig]="configSlide"
-                        [keyboardConfig]="keyboardConfig"
-                        [accessibilityConfig]="accessibilityConfig"
-                        [currentImageConfig]="currentImageConfig"
                         (loadImage)="onImageLoad($event)"
                         (changeImage)="onChangeCurrentImage($event)"
                         (close)="onCloseGallery($event)"></ks-current-image>
@@ -41,8 +32,6 @@
       <div>
         <ks-dots [images]="images"
                  [currentImage]="currentImage"
-                 [dotsConfig]="dotsConfig"
-                 [accessibilityConfig]="accessibilityConfig"
                  (clickDot)="onClickDot($event)"></ks-dots>
 
         <ks-previews [images]="images"

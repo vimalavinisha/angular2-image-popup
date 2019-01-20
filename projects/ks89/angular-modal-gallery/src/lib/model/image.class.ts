@@ -53,7 +53,6 @@ export interface ImageData {
   title?: string;
   alt?: string;
   ariaLabel?: string;
-  angle?: number;
 }
 
 /**
