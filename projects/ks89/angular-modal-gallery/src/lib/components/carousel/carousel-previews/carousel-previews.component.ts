@@ -52,6 +52,7 @@ import { CarouselConfig } from '../../../model/carousel-config.interface';
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
 import { Action } from '../../../model/action.enum';
+import { ConfigService } from '../../../services/config.service';
 
 /**
  * Component with image previews for carousel

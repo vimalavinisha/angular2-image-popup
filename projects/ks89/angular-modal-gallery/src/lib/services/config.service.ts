@@ -36,6 +36,8 @@ import { CurrentImageConfig } from '../model/current-image-config.interface';
 import { KeyboardConfig } from '../model/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../model/description.interface';
+import { CarouselConfig } from '../model/carousel-config.interface';
+import { CarouselImageConfig } from '../model/carousel-image-config.interface';
 
 export interface LibConfig {
   slideConfig?: SlideConfig;
@@ -46,6 +48,9 @@ export interface LibConfig {
   plainGalleryConfig?: PlainGalleryConfig;
   currentImageConfig?: CurrentImageConfig;
   keyboardConfig?: KeyboardConfig;
+  carouselConfig?: CarouselConfig;
+  carouselImageConfig?: CarouselImageConfig;
+  carouselPlayConfig?: PlayConfig;
 }
 
 export const DEFAULT_PREVIEW_SIZE: Size = { height: '50px', width: 'auto' };
@@ -71,12 +76,37 @@ export const DEFAULT_DESCRIPTION: Description = {
   beforeTextDescription: ' - ',
   style: DEFAULT_DESCRIPTION_STYLE
 };
+export const DEFAULT_CAROUSEL_DESCRIPTION: Description = {
+  strategy: DescriptionStrategy.ALWAYS_HIDDEN,
+  imageText: 'Image ',
+  numberSeparator: '/',
+  beforeTextDescription: ' - ',
+  style: DEFAULT_DESCRIPTION_STYLE
+};
 export const DEFAULT_CURRENT_IMAGE_CONFIG: CurrentImageConfig = {
   navigateOnClick: true,
   loadingConfig: DEFAULT_LOADING,
   description: DEFAULT_DESCRIPTION,
   downloadable: false,
   invertSwipe: false
+};
+export const DEFAULT_CAROUSEL_IMAGE_CONFIG: CarouselImageConfig = {
+  description: DEFAULT_CAROUSEL_DESCRIPTION,
+  invertSwipe: false
+};
+export const DEFAULT_CURRENT_CAROUSEL_CONFIG: CarouselConfig = {
+  maxWidth: '100%',
+  maxHeight: '400px',
+  showArrows: true,
+  objectFit: 'cover',
+  keyboardEnable: true,
+  modalGalleryEnable: false,
+  legacyIE11Mode: false
+};
+export const DEFAULT_CURRENT_CAROUSEL_PLAY: PlayConfig = {
+  autoPlay: true,
+  interval: 5000,
+  pauseOnHover: true
 };
 
 const DEFAULT_CONFIG: LibConfig = Object.freeze({
@@ -98,7 +128,10 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
   dotsConfig: <DotsConfig>{ visible: true },
   plainGalleryConfig: DEFAULT_PLAIN_CONFIG,
   currentImageConfig: DEFAULT_CURRENT_IMAGE_CONFIG,
-  keyboardConfig: null // by default nothing, because the library uses default buttons automatically
+  keyboardConfig: null, // by default nothing, because the library uses default buttons automatically
+  carouselConfig: DEFAULT_CURRENT_CAROUSEL_CONFIG,
+  carouselImageConfig: DEFAULT_CAROUSEL_IMAGE_CONFIG,
+  carouselPlayConfig: DEFAULT_CURRENT_CAROUSEL_PLAY
 });
 
 /**
@@ -113,21 +146,54 @@ export class ConfigService {
   }
 
   set(obj: LibConfig): void {
+    console.log('----------- set IN', obj);
     const newConfig: LibConfig = Object.assign({}, this.config);
     if (obj.slideConfig) {
-      newConfig.slideConfig = Object.assign({}, DEFAULT_CONFIG.slideConfig, obj.slideConfig);
+      let playConfig;
+      let sidePreviews;
+      let size;
+      if (obj.slideConfig.playConfig) {
+        playConfig = Object.assign({}, DEFAULT_CONFIG.slideConfig.playConfig, obj.slideConfig.playConfig);
+      } else {
+        playConfig = DEFAULT_CONFIG.slideConfig.playConfig;
+      }
+      if (obj.slideConfig.sidePreviews) {
+        if (obj.slideConfig.sidePreviews.size) {
+          size = Object.assign({}, DEFAULT_CONFIG.slideConfig.sidePreviews.size, obj.slideConfig.sidePreviews.size);
+        } else {
+          size = DEFAULT_CONFIG.slideConfig.sidePreviews.size;
+        }
+        sidePreviews = Object.assign({}, DEFAULT_CONFIG.slideConfig.sidePreviews, obj.slideConfig.sidePreviews);
+      } else {
+        sidePreviews = DEFAULT_CONFIG.slideConfig.sidePreviews;
+        size = DEFAULT_CONFIG.slideConfig.sidePreviews.size;
+      }
+      const newSlideConfig: SlideConfig = Object.assign({}, DEFAULT_CONFIG.slideConfig, obj.slideConfig);
+      newSlideConfig.playConfig = playConfig;
+      newSlideConfig.sidePreviews = sidePreviews;
+      newSlideConfig.sidePreviews.size = size;
+      newConfig.slideConfig = newSlideConfig;
     }
     if (obj.accessibilityConfig) {
       newConfig.accessibilityConfig = Object.assign({}, DEFAULT_CONFIG.accessibilityConfig, obj.accessibilityConfig);
     }
     if (obj.previewConfig) {
-      const newPreviewConfig: PreviewConfig = Object.assign({}, DEFAULT_CONFIG.previewConfig, obj.previewConfig);
+      let size;
+      let number;
+      if (obj.previewConfig.size) {
+        size = Object.assign({}, DEFAULT_CONFIG.previewConfig.size, obj.previewConfig.size);
+      } else {
+        size = DEFAULT_CONFIG.previewConfig.size;
+      }
       // if number is <= 0 reset to default
       if (obj.previewConfig && obj.previewConfig.number && obj.previewConfig.number <= 0) {
         // force default number
-        newPreviewConfig.number = DEFAULT_CONFIG.previewConfig.number;
+        number = DEFAULT_CONFIG.previewConfig.number;
       }
-      newConfig.previewConfig = Object.assign({}, DEFAULT_CONFIG.previewConfig, newPreviewConfig);
+      const newPreviewConfig: PreviewConfig = Object.assign({}, DEFAULT_CONFIG.previewConfig, obj.previewConfig);
+      newPreviewConfig.size = size;
+      newPreviewConfig.number = number;
+      newConfig.previewConfig = newPreviewConfig;
     }
     if (obj.buttonsConfig) {
       newConfig.buttonsConfig = Object.assign({}, DEFAULT_CONFIG.buttonsConfig, obj.buttonsConfig);
@@ -136,12 +202,83 @@ export class ConfigService {
       newConfig.dotsConfig = Object.assign({}, DEFAULT_CONFIG.dotsConfig, obj.dotsConfig);
     }
     if (obj.plainGalleryConfig) {
-      newConfig.plainGalleryConfig = initPlainGalleryConfig(obj.plainGalleryConfig);
+      let advanced;
+      let layout;
+      if (obj.plainGalleryConfig.advanced) {
+        advanced = Object.assign({}, DEFAULT_CONFIG.plainGalleryConfig.advanced, obj.plainGalleryConfig.advanced);
+      } else {
+        advanced = DEFAULT_CONFIG.plainGalleryConfig.advanced;
+      }
+      if (obj.plainGalleryConfig.layout) {
+        // it isn't mandatory to use assign, because obj.plainGalleryConfig.layout is an instance of class (LineaLayout, GridLayout, AdvancedLayout)
+        layout = obj.plainGalleryConfig.layout;
+      } else {
+        layout = DEFAULT_CONFIG.plainGalleryConfig.layout;
+      }
+      const newPlainGalleryConfig: PlainGalleryConfig = Object.assign({}, DEFAULT_CONFIG.plainGalleryConfig, obj.plainGalleryConfig);
+      newPlainGalleryConfig.layout = layout;
+      newPlainGalleryConfig.advanced = advanced;
+      newConfig.plainGalleryConfig = initPlainGalleryConfig(newPlainGalleryConfig);
     }
     if (obj.currentImageConfig) {
-      newConfig.currentImageConfig = Object.assign({}, DEFAULT_CONFIG.currentImageConfig, obj.currentImageConfig);
+      let loading;
+      let description;
+      let descriptionStyle;
+      if (obj.currentImageConfig.loadingConfig) {
+        loading = Object.assign({}, DEFAULT_CONFIG.currentImageConfig.loadingConfig, obj.currentImageConfig.loadingConfig);
+      } else {
+        loading = DEFAULT_CONFIG.currentImageConfig.loadingConfig;
+      }
+      if (obj.currentImageConfig.description) {
+        description = Object.assign({}, DEFAULT_CONFIG.currentImageConfig.description, obj.currentImageConfig.description);
+        if (obj.currentImageConfig.description.style) {
+          descriptionStyle = Object.assign({}, DEFAULT_CONFIG.currentImageConfig.description.style, obj.currentImageConfig.description.style);
+        } else {
+          descriptionStyle = DEFAULT_CONFIG.currentImageConfig.description.style;
+        }
+      } else {
+        description = DEFAULT_CONFIG.currentImageConfig.description;
+        descriptionStyle = DEFAULT_CONFIG.currentImageConfig.description.style;
+      }
+      const newCurrentImageConfig: CurrentImageConfig = Object.assign({}, DEFAULT_CONFIG.currentImageConfig, obj.currentImageConfig);
+      newCurrentImageConfig.loadingConfig = loading;
+      newCurrentImageConfig.description = description;
+      newCurrentImageConfig.description.style = descriptionStyle;
+      newConfig.currentImageConfig = newCurrentImageConfig;
+    }
+
+    // carousel
+    if (obj.carouselConfig) {
+      newConfig.carouselConfig = Object.assign({}, DEFAULT_CONFIG.carouselConfig, obj.carouselConfig);
+    }
+    if (obj.carouselImageConfig) {
+      let description;
+      let descriptionStyle;
+      if (obj.carouselImageConfig.description) {
+        description = Object.assign({}, DEFAULT_CONFIG.carouselImageConfig.description, obj.carouselImageConfig.description);
+        if (obj.carouselImageConfig.description.style) {
+          descriptionStyle = Object.assign({}, DEFAULT_CONFIG.carouselImageConfig.description.style, obj.carouselImageConfig.description.style);
+        } else {
+          descriptionStyle = DEFAULT_CONFIG.carouselImageConfig.description.style;
+        }
+      } else {
+        description = DEFAULT_CONFIG.carouselImageConfig.description;
+        descriptionStyle = DEFAULT_CONFIG.carouselImageConfig.description.style;
+      }
+      const newCarouselImageConfig: CarouselImageConfig = Object.assign({}, DEFAULT_CONFIG.carouselImageConfig, obj.carouselImageConfig);
+      newCarouselImageConfig.description = description;
+      newCarouselImageConfig.description.style = descriptionStyle;
+      newConfig.carouselImageConfig = newCarouselImageConfig;
+    }
+    if (obj.carouselPlayConfig) {
+      // check values
+      if (obj.carouselPlayConfig.interval <= 0) {
+        throw new Error(`Carousel's interval must be a number >= 0`);
+      }
+      newConfig.carouselPlayConfig = Object.assign({}, DEFAULT_CONFIG.carouselPlayConfig, obj.carouselPlayConfig);
     }
     this.config = newConfig;
+    console.log('----------- set OUT', this.config);
   }
 }
 

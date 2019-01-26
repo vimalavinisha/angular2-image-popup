@@ -56,7 +56,7 @@ import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
-import { Description, DescriptionStrategy, DescriptionStyle } from '../../model/description.interface';
+import { DescriptionStrategy } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { GalleryService } from '../../services/gallery.service';
@@ -66,6 +66,7 @@ import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
+import { ConfigService, LibConfig } from '../../services/config.service';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -74,7 +75,8 @@ import { CarouselPreviewConfig } from '../../model/carousel-preview-config.inter
   selector: 'ks-carousel',
   styleUrls: ['carousel.scss', '../image-arrows.scss'],
   templateUrl: 'carousel.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfigService]
 })
 export class CarouselComponent extends AccessibleComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
   /**
@@ -113,17 +115,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   carouselImageConfig: CarouselImageConfig;
   /**
-   * Object of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide this component.
-   */
-  @Input()
-  dotsConfig: DotsConfig = { visible: true };
-  /**
    * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide previews, change sizes and so on.
    */
   @Input()
   previewConfig: CarouselPreviewConfig;
+  /**
+   * Object of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide this component.
+   */
+  @Input()
+  dotsConfig: DotsConfig;
   /**
    * boolean to enable/disable infinite sliding. Enabled by default.
    */
@@ -167,26 +169,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   currentImage: Image;
   /**
-   * Object of type `CarouselConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configCarousel: CarouselConfig;
-  /**
-   * Object of type `PlayConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configPlay: PlayConfig;
-  /**
-   * Object of type `CarouselImageConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configCurrentImageCarousel: CarouselImageConfig;
-  /**
-   * Object of type `DotsConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configDots: DotsConfig;
-  /**
    * Boolean that it's true when you are watching the first image (currently visible).
    * False by default
    */
@@ -228,7 +210,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.configPlay.pauseOnHover) {
+    if (!this.configService.get().carouselPlayConfig.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -239,7 +221,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('mouseleave')
   onMouseLeave() {
-    if (!this.configPlay.pauseOnHover || !this.configPlay.autoPlay) {
+    if (!this.configService.get().carouselPlayConfig.pauseOnHover || !this.configService.get().carouselPlayConfig.autoPlay) {
       return;
     }
     this.playCarousel();
@@ -250,7 +232,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('keydown.arrowLeft')
   onKeyDownLeft() {
-    if (!this.configCarousel.keyboardEnable) {
+    if (!this.configService.get().carouselConfig.keyboardEnable) {
       return;
     }
     this.prevImage();
@@ -261,7 +243,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('keydown.arrowRight')
   onKeyDownLRight() {
-    if (!this.configCarousel.keyboardEnable) {
+    if (!this.configService.get().carouselConfig.keyboardEnable) {
       return;
     }
     this.nextImage();
@@ -271,6 +253,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     @Inject(PLATFORM_ID) private _platformId,
     private _ngZone: NgZone,
     private galleryService: GalleryService,
+    private configService: ConfigService,
     private ref: ChangeDetectorRef,
     // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
     private sanitizer: DomSanitizer
@@ -282,12 +265,18 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     // handle changes of dotsConfig
     const configDotsChange: SimpleChange = changes.dotsConfig;
     if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
-      this.configDots = configDotsChange.currentValue;
+      this.configService.set({
+        dotsConfig: configDotsChange.currentValue
+      });
+      // this.configDots = configDotsChange.currentValue;
     }
     // handle changes of carouselConfig
     const carouselConfigChange: SimpleChange = changes.carouselConfig;
     if (carouselConfigChange && carouselConfigChange.currentValue !== carouselConfigChange.previousValue) {
-      this.configCarousel = carouselConfigChange.currentValue;
+      this.configService.set({
+        carouselConfig: carouselConfigChange.currentValue
+      });
+      // this.configCarousel = carouselConfigChange.currentValue;
     }
     // handle changes of playConfig starting/stopping the carousel accordingly
     const playConfigChange: SimpleChange = changes.playConfig;
@@ -295,7 +284,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       const playConfigChangePrev: PlayConfig = playConfigChange.previousValue;
       const playConfigChangeCurr: PlayConfig = playConfigChange.currentValue;
       if (playConfigChangePrev !== playConfigChangeCurr) {
-        this.configPlay = playConfigChange.currentValue;
+        this.configService.set({
+          carouselPlayConfig: playConfigChange.currentValue
+        });
+        // this.configPlay = playConfigChange.currentValue;
         // if autoplay is enabled, and this is not the
         // first change (to prevent multiple starts at the beginning)
         if (playConfigChangeCurr.autoPlay && !playConfigChange.isFirstChange()) {
@@ -310,53 +302,23 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   ngOnInit() {
     this.currentImage = this.images[0];
 
-    const defaultDescriptionStyle: DescriptionStyle = {
-      bgColor: 'rgba(0, 0, 0, .5)',
-      textColor: 'white',
-      marginTop: '0px',
-      marginBottom: '0px',
-      marginLeft: '0px',
-      marginRight: '0px'
-    };
-    const defaultDescription: Description = {
-      strategy: DescriptionStrategy.ALWAYS_HIDDEN,
-      imageText: 'Image ',
-      numberSeparator: '/',
-      beforeTextDescription: ' - ',
-      style: defaultDescriptionStyle
-    };
-    const defaultCurrentImageConfig: CarouselImageConfig = {
-      description: defaultDescription,
-      invertSwipe: false
-    };
-    const defaultCurrentCarouselConfig: CarouselConfig = {
-      maxWidth: '100%',
-      maxHeight: '400px',
-      showArrows: true,
-      objectFit: 'cover',
-      keyboardEnable: true,
-      modalGalleryEnable: false,
-      legacyIE11Mode: false
-    };
-    const defaultCurrentCarouselPlay: PlayConfig = {
-      autoPlay: true,
-      interval: 5000,
-      pauseOnHover: true
-    };
+    this.configService.set({
+      carouselConfig: this.carouselConfig,
+      carouselImageConfig: this.carouselImageConfig,
+      carouselPlayConfig: this.playConfig,
+      previewConfig: this.previewConfig,
+      dotsConfig: this.dotsConfig,
+      accessibilityConfig: this.accessibilityConfig
+    });
+    const libConfig: LibConfig = this.configService.get();
+    this.carouselConfig = libConfig.carouselConfig;
+    this.carouselImageConfig = libConfig.carouselImageConfig;
+    this.playConfig = libConfig.carouselPlayConfig;
+    this.previewConfig = libConfig.previewConfig;
+    this.dotsConfig = libConfig.dotsConfig;
+    this.accessibilityConfig = libConfig.accessibilityConfig;
 
-    this.configCurrentImageCarousel = Object.assign({}, defaultCurrentImageConfig, this.carouselImageConfig);
-    this.configCurrentImageCarousel.description = Object.assign({}, defaultDescription, this.configCurrentImageCarousel.description);
-
-    const defaultConfig: DotsConfig = { visible: true };
-    this.configDots = Object.assign(defaultConfig, this.dotsConfig);
-
-    this.configCarousel = Object.assign({}, defaultCurrentCarouselConfig, this.carouselConfig);
-    this.configPlay = Object.assign({}, defaultCurrentCarouselPlay, this.playConfig);
-
-    // check values
-    if (this.configPlay.interval <= 0) {
-      throw new Error(`Carousel's interval must be a number >= 0`);
-    }
+    console.log('ngOnInit get', this.configService.get());
 
     this.manageSlideConfig();
   }
@@ -368,7 +330,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this._ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => this.configPlay.interval),
+            map(() => this.configService.get().carouselPlayConfig.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
@@ -425,7 +387,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Also, if modalGalleryEnable is true, you can open the modal-gallery.
    */
   onClickCurrentImage() {
-    if (!this.configCarousel.modalGalleryEnable) {
+    if (!this.configService.get().carouselConfig.modalGalleryEnable) {
       return;
     }
     const index = getIndex(this.currentImage, this.images);
@@ -441,13 +403,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImageCarousel || !this.configCurrentImageCarousel.description) {
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
 
-    switch (this.configCurrentImageCarousel.description.strategy) {
+    switch (configCurrentImageCarousel.description.strategy) {
       case DescriptionStrategy.HIDE_IF_EMPTY:
         return imageWithoutDescription ? '' : image.modal.description + '';
       case DescriptionStrategy.ALWAYS_HIDDEN:
@@ -463,16 +426,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
   swipe(action = this.SWIPE_ACTION.RIGHT) {
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
-        if (this.configCurrentImageCarousel.invertSwipe) {
+        if (configCurrentImageCarousel.invertSwipe) {
           this.prevImage(Action.SWIPE);
         } else {
           this.nextImage(Action.SWIPE);
         }
         break;
       case this.SWIPE_ACTION.LEFT:
-        if (this.configCurrentImageCarousel.invertSwipe) {
+        if (configCurrentImageCarousel.invertSwipe) {
           this.nextImage(Action.SWIPE);
         } else {
           this.prevImage(Action.SWIPE);
@@ -579,7 +543,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getTitleToDisplay(image: Image = this.currentImage): string {
-    if (!this.configCurrentImageCarousel || !this.configCurrentImageCarousel.description) {
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
     const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
@@ -667,23 +632,22 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @returns String description built concatenating image fields with a specific logic.
    */
   private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
-    if (!this.configCurrentImageCarousel || !this.configCurrentImageCarousel.description) {
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
 
     // If customFullDescription use it, otherwise proceed to build a description
-    if (this.configCurrentImageCarousel.description.customFullDescription && this.configCurrentImageCarousel.description.customFullDescription !== '') {
-      return this.configCurrentImageCarousel.description.customFullDescription;
+    if (configCurrentImageCarousel.description.customFullDescription && configCurrentImageCarousel.description.customFullDescription !== '') {
+      return configCurrentImageCarousel.description.customFullDescription;
     }
 
     const currentIndex: number = getIndex(image, this.images);
     // If the current image hasn't a description,
     // prevent to write the ' - ' (or this.description.beforeTextDescription)
 
-    const prevDescription: string = this.configCurrentImageCarousel.description.imageText ? this.configCurrentImageCarousel.description.imageText : '';
-    const midSeparator: string = this.configCurrentImageCarousel.description.numberSeparator
-      ? this.configCurrentImageCarousel.description.numberSeparator
-      : '';
+    const prevDescription: string = configCurrentImageCarousel.description.imageText ? configCurrentImageCarousel.description.imageText : '';
+    const midSeparator: string = configCurrentImageCarousel.description.numberSeparator ? configCurrentImageCarousel.description.numberSeparator : '';
     const middleDescription: string = currentIndex + 1 + midSeparator + this.images.length;
 
     if (imageWithoutDescription) {
@@ -691,7 +655,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
 
     const currImgDescription: string = image.modal && image.modal.description ? image.modal.description : '';
-    const endDescription: string = this.configCurrentImageCarousel.description.beforeTextDescription + currImgDescription;
+    const endDescription: string = configCurrentImageCarousel.description.beforeTextDescription + currImgDescription;
     return prevDescription + middleDescription + endDescription;
   }
 
