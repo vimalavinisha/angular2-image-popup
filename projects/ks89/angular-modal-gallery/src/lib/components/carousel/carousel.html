@@ -1,7 +1,7 @@
 <main id="carousel-container"
-      [attr.aria-label]="accessibilityConfig.carouselContainerAriaLabel"
-      [title]="accessibilityConfig.carouselContainerTitle"
-      ksMaxSize [sizeConfig]="{maxWidth: carouselConfig?.maxWidth,
+      [attr.aria-label]="configAccessibility.carouselContainerAriaLabel"
+      [title]="configAccessibility.carouselContainerTitle"
+      ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
                                maxHeight: ''}">
 
 
@@ -10,25 +10,25 @@
 
   <!-- Normal figure used by all browsers except for IE11, because
     it doesn't support object-fit cover.-->
-  <figure class="current-figure" *ngIf="carouselConfig?.legacyIE11Mode === false; else legacyMode"
-          ksSize [sizeConfig]="{width: carouselConfig?.maxWidth,
+  <figure class="current-figure" *ngIf="configCarousel?.legacyIE11Mode === false; else legacyMode"
+          ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
                                 height: ''}">
 
-    <a class="nav-left" *ngIf="carouselConfig?.showArrows"
-       [attr.aria-label]="accessibilityConfig.carouselPrevImageAriaLabel"
+    <a class="nav-left" *ngIf="configCarousel?.showArrows"
+       [attr.aria-label]="configAccessibility.carouselPrevImageAriaLabel"
        [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)">
-      <div class="inside {{(isFirstImage && !infinite) || !carouselConfig.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
+      <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.carouselPrevImageTitle"></div>
+           [title]="configAccessibility.carouselPrevImageTitle"></div>
     </a>
 
     <ng-container *ngTemplateOutlet="content"></ng-container>
 
     <img id="current-image"
-         [style.object-fit]="carouselConfig?.objectFit"
-         ksMaxSize [sizeConfig]="{maxWidth: carouselConfig?.maxWidth,
-                                  maxHeight: carouselConfig?.maxHeight}"
+         [style.object-fit]="configCarousel?.objectFit"
+         ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
+                                  maxHeight: configCarousel?.maxHeight}"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
@@ -40,21 +40,22 @@
 
     <figcaption *ngIf="getDescriptionToDisplay() !== ''"
                 class="description"
-                ksDescription [description]="carouselImageConfig?.description"
+                ksDescription [description]="configCarouselImage?.description"
                 [innerHTML]="getDescriptionToDisplay()"></figcaption>
 
-    <a class="nav-right" *ngIf="carouselConfig?.showArrows"
-       [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
+    <a class="nav-right" *ngIf="configCarousel?.showArrows"
+       [attr.aria-label]="configAccessibility.carouselNextImageAriaLabel"
        [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)">
-      <div class="inside {{(isLastImage && !infinite) || !carouselConfig.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
+      <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.carouselNextImageTitle"></div>
+           [title]="configAccessibility.carouselNextImageTitle"></div>
     </a>
 
     <div id="dots">
       <ks-dots [currentImage]="currentImage"
                [images]="images"
+               [dotsConfig]="dotsConfig"
                (clickDot)="onClickDot($event)"></ks-dots>
     </div>
 
@@ -64,14 +65,14 @@
     because it doesn't support natively object-fit cover. -->
   <ng-template #legacyMode>
     <div class="current-figure"
-         ksSize [sizeConfig]="{width: carouselConfig?.maxWidth,
+         ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
                                height: ''}">
 
-      <a class="nav-left" *ngIf="carouselConfig?.showArrows"
+      <a class="nav-left" *ngIf="configCarousel?.showArrows"
          [attr.aria-label]="accessibilityConfig.carouselPrevImageAriaLabel"
          [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
          (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)">
-        <div class="inside {{(isFirstImage && !infinite) || !carouselConfig.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
+        <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
              aria-hidden="true"
              [title]="accessibilityConfig.carouselPrevImageTitle"></div>
       </a>
@@ -86,8 +87,8 @@
            [style.background-repeat]="'no-repeat'"
            [style.background-attachment]="'scroll'"
            ksSize [sizeConfig]="{width: '100%',
-                                 height: carouselConfig?.maxHeight}"
-           ksMaxSize [sizeConfig]="{maxWidth: carouselConfig?.maxWidth}"
+                                 height: configCarousel?.maxHeight}"
+           ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth}"
            [attr.aria-label]="currentImage.modal.ariaLabel"
            [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
            [tabIndex]="0" role="img"
@@ -97,17 +98,17 @@
 
         <div *ngIf="getDescriptionToDisplay() !== ''"
              class="description-ie11"
-             ksDescription [description]="carouselImageConfig?.description"
+             ksDescription [description]="configCarouselImage?.description"
              [innerHTML]="getDescriptionToDisplay()"></div>
       </div>
 
-      <a class="nav-right" *ngIf="carouselConfig?.showArrows"
-         [attr.aria-label]="accessibilityConfig.carouselNextImageAriaLabel"
+      <a class="nav-right" *ngIf="configCarousel?.showArrows"
+         [attr.aria-label]="configAccessibility.carouselNextImageAriaLabel"
          [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
          (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)">
-        <div class="inside {{(isLastImage && !infinite) || !carouselConfig.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
+        <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
              aria-hidden="true"
-             [title]="accessibilityConfig.carouselNextImageTitle"></div>
+             [title]="configAccessibility.carouselNextImageTitle"></div>
       </a>
 
       <div id="dots-ie11">
@@ -121,11 +122,8 @@
 
 </main>
 
-<!--<ks-carousel-previews [images]="images"-->
-                      <!--[currentImage]="currentImage"-->
-                      <!--[carouselConfig]="carouselConfig"-->
-                      <!--[previewConfig]="previewConfig"-->
-                      <!--[accessibilityConfig]="accessibilityConfig"-->
-                      <!--(clickPreview)="onClickPreview($event)"></ks-carousel-previews>-->
+<ks-carousel-previews [images]="images"
+                      [currentImage]="currentImage"
+                      (clickPreview)="onClickPreview($event)"></ks-carousel-previews>
 
 <ks-modal-gallery [id]="id" [modalImages]="images" [plainGalleryConfig]="plainGalleryHidden"></ks-modal-gallery>

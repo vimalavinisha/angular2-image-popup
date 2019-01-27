@@ -1,13 +1,13 @@
-<nav *ngIf="configPreview?.visible"
+<nav *ngIf="previewConfig?.visible"
      class="previews-container"
      [attr.aria-label]="accessibilityConfig?.carouselPreviewsContainerAriaLabel"
      [title]="accessibilityConfig?.carouselPreviewsContainerTitle">
 
   <a class="nav-left"
      [attr.aria-label]="accessibilityConfig?.carouselPreviewScrollPrevAriaLabel"
-     [tabIndex]="configPreview.arrows && start > 0 ? 0 : -1" role="button"
+     [tabIndex]="previewConfig.arrows && start > 0 ? 0 : -1" role="button"
      (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
-    <div class="inside {{configPreview.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
+    <div class="inside {{previewConfig.arrows && start > 0 ? 'left-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig?.carouselPreviewScrollPrevTitle"></div>
   </a>
@@ -16,10 +16,10 @@
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
       <ng-container *ngIf="!carouselConfig?.legacyIE11Mode; else legacyMode">
         <img *ngIf="preview?.modal?.img"
-             class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!configPreview.clickable ? ' unclickable' : ''}}"
+             class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig.clickable ? ' unclickable' : ''}}"
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
-             ksSize [sizeConfig]="{width: configPreview?.width,
-                                 height: configPreview?.maxHeight}"
+             ksSize [sizeConfig]="{width: previewConfig?.width,
+                                 height: previewConfig?.maxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
              alt="{{getAlt(preview)}}"
@@ -28,15 +28,15 @@
       </ng-container>
       <ng-template #legacyMode>
         <div *ngIf="preview?.modal?.img"
-             class="inside preview-ie11-image{{isActive(preview) ? ' active' : ''}}{{!configPreview.clickable ? ' unclickable' : ''}}"
+             class="inside preview-ie11-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig.clickable ? ' unclickable' : ''}}"
              [style.background-color]="'transparent'"
              [style.background-image]="sanitizeUrlBgStyle(preview.plain?.img ? preview.plain.img : preview.modal.img)"
              [style.background-position]="'center center'"
              [style.background-size]="getIE11LegacyBgSize()"
              [style.background-repeat]="'no-repeat'"
              [style.background-attachment]="'scroll'"
-             ksSize [sizeConfig]="{width: configPreview?.width,
-                                 height: configPreview?.maxHeight}"
+             ksSize [sizeConfig]="{width: previewConfig?.width,
+                                 height: previewConfig?.maxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
              [tabIndex]="0" role="img"
@@ -47,9 +47,9 @@
 
   <a class="nav-right"
      [attr.aria-label]="accessibilityConfig?.carouselPreviewScrollNextAriaLabel"
-     [tabIndex]="configPreview.arrows && end < images.length ? 0 : -1" role="button"
+     [tabIndex]="previewConfig.arrows && end < images.length ? 0 : -1" role="button"
      (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
-    <div class="inside {{configPreview.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
+    <div class="inside {{previewConfig.arrows && end < images.length ? 'right-arrow-preview-image' : 'empty-arrow-preview-image'}}"
          aria-hidden="true"
          [title]="accessibilityConfig?.carouselPreviewScrollNextTitle"></div>
   </a>

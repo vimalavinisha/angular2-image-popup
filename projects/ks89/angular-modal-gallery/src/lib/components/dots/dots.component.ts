@@ -57,6 +57,12 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   @Input()
   images: InternalLibImage[];
   /**
+   * Object of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide this component.
+   */
+  @Input()
+  dotsConfig: DotsConfig;
+  /**
    * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
    */
@@ -64,10 +70,9 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   clickDot: EventEmitter<number> = new EventEmitter<number>();
 
   /**
-   * Object of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide this component.
+   * Object of type `DotsConfig` used in template.
    */
-  dotsConfig: DotsConfig = { visible: true };
+  configDots: DotsConfig;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
@@ -83,8 +88,8 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.dotsConfig = this.configService.get().dotsConfig;
     this.accessibilityConfig = this.configService.get().accessibilityConfig;
+    this.configDots = Object.assign({}, this.dotsConfig);
   }
 
   /**
@@ -95,7 +100,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
     const dotsConfigChanges: SimpleChange = changes.dotsConfig;
     if (dotsConfigChanges && dotsConfigChanges.currentValue !== dotsConfigChanges.previousValue) {
       this.configService.set(dotsConfigChanges.currentValue);
-      this.dotsConfig = this.configService.get().dotsConfig;
+      this.configDots = dotsConfigChanges.currentValue;
     }
   }
 

@@ -38,6 +38,7 @@ import { LoadingConfig, LoadingType } from '../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../model/description.interface';
 import { CarouselConfig } from '../model/carousel-config.interface';
 import { CarouselImageConfig } from '../model/carousel-image-config.interface';
+import { BreakpointsConfig, CarouselPreviewConfig } from '../model/carousel-preview-config.interface';
 
 export interface LibConfig {
   slideConfig?: SlideConfig;
@@ -50,7 +51,9 @@ export interface LibConfig {
   keyboardConfig?: KeyboardConfig;
   carouselConfig?: CarouselConfig;
   carouselImageConfig?: CarouselImageConfig;
+  carouselPreviewsConfig?: CarouselPreviewConfig;
   carouselPlayConfig?: PlayConfig;
+  carouselDotsConfig?: DotsConfig;
 }
 
 export const DEFAULT_PREVIEW_SIZE: Size = { height: '50px', width: 'auto' };
@@ -109,6 +112,17 @@ export const DEFAULT_CURRENT_CAROUSEL_PLAY: PlayConfig = {
   pauseOnHover: true
 };
 
+export const DEFAULT_CAROUSEL_BREAKPOINTS: BreakpointsConfig = { xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200 };
+export const DEFAULT_CAROUSEL_PREVIEWS_CONFIG: CarouselPreviewConfig = {
+  visible: true,
+  number: 4,
+  arrows: true,
+  clickable: true,
+  width: 100 / 4 + '%',
+  maxHeight: '200px',
+  breakpoints: DEFAULT_CAROUSEL_BREAKPOINTS
+};
+
 const DEFAULT_CONFIG: LibConfig = Object.freeze({
   slideConfig: <SlideConfig>{
     infinite: false,
@@ -131,7 +145,9 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
   keyboardConfig: null, // by default nothing, because the library uses default buttons automatically
   carouselConfig: DEFAULT_CURRENT_CAROUSEL_CONFIG,
   carouselImageConfig: DEFAULT_CAROUSEL_IMAGE_CONFIG,
-  carouselPlayConfig: DEFAULT_CURRENT_CAROUSEL_PLAY
+  carouselPreviewsConfig: DEFAULT_CAROUSEL_PREVIEWS_CONFIG,
+  carouselPlayConfig: DEFAULT_CURRENT_CAROUSEL_PLAY,
+  carouselDotsConfig: <DotsConfig>{ visible: true }
 });
 
 /**
@@ -146,7 +162,6 @@ export class ConfigService {
   }
 
   set(obj: LibConfig): void {
-    console.log('----------- set IN', obj);
     const newConfig: LibConfig = Object.assign({}, this.config);
     if (obj.slideConfig) {
       let playConfig;
@@ -277,8 +292,23 @@ export class ConfigService {
       }
       newConfig.carouselPlayConfig = Object.assign({}, DEFAULT_CONFIG.carouselPlayConfig, obj.carouselPlayConfig);
     }
+    if (obj.carouselPreviewsConfig) {
+      // check values
+      let number;
+      if (obj.carouselPreviewsConfig.number <= 0) {
+        number = DEFAULT_CAROUSEL_PREVIEWS_CONFIG.number;
+      }
+      newConfig.carouselPreviewsConfig = Object.assign({}, DEFAULT_CONFIG.carouselPreviewsConfig, obj.carouselPreviewsConfig);
+      newConfig.carouselPreviewsConfig.number = number;
+      // Init preview image width based on the number of previews in PreviewConfig
+      // Don't move this line above, because I need to be sure that both configPreview.number
+      // and configPreview.size are initialized
+      newConfig.carouselPreviewsConfig.width = 100 / newConfig.carouselPreviewsConfig.number + '%';
+    }
+    if (obj.carouselDotsConfig) {
+      newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
+    }
     this.config = newConfig;
-    console.log('----------- set OUT', this.config);
   }
 }
 

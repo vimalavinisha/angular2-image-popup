@@ -52,7 +52,6 @@ class TestClickOutsideComponent {
   @Output() clicked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   onClickOutside(event: boolean) {
-    console.log('clicked outside in comp');
     this.clicked.emit(event);
   }
 }

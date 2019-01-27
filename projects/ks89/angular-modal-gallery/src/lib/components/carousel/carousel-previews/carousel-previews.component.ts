@@ -46,13 +46,13 @@ import { AccessibleComponent } from '../../accessible.component';
 import { AccessibilityConfig } from '../../../model/accessibility.interface';
 import { Image, ImageEvent } from '../../../model/image.class';
 import { InternalLibImage } from '../../../model/image-internal.class';
-import { BreakpointsConfig, CarouselPreviewConfig } from '../../../model/carousel-preview-config.interface';
+import { CarouselPreviewConfig } from '../../../model/carousel-preview-config.interface';
 import { CarouselConfig } from '../../../model/carousel-config.interface';
 
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
 import { Action } from '../../../model/action.enum';
-import { ConfigService } from '../../../services/config.service';
+import { ConfigService, LibConfig } from '../../../services/config.service';
 
 /**
  * Component with image previews for carousel
@@ -77,12 +77,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   ariaLabel = `Carousel previews`;
 
   /**
-   * Object of type `CarouselConfig` to init CarouselComponent's features.
-   * For instance, it contains parameters to change the style, how it navigates and so on.
-   */
-  @Input()
-  carouselConfig: CarouselConfig;
-  /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
@@ -93,24 +87,28 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   @Input()
   images: InternalLibImage[];
-  /**
-   * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
-   * For instance, it contains a param to show/hide this component, sizes.
-   */
-  @Input()
-  previewConfig: CarouselPreviewConfig;
-  /**
-   * Object of type `AccessibilityConfig` to init custom accessibility features.
-   * For instance, it contains titles, alt texts, aria-labels and so on.
-   */
-  @Input()
-  accessibilityConfig: AccessibilityConfig;
+
   /**
    * Output to emit the clicked preview. The payload contains the `InternalLibImage` associated to the clicked preview.
    */
   @Output()
   clickPreview: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
 
+  /**
+   * Object of type `CarouselConfig` to init CarouselComponent's features.
+   * For instance, it contains parameters to change the style, how it navigates and so on.
+   */
+  carouselConfig: CarouselConfig;
+  /**
+   * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
+   * For instance, it contains a param to show/hide this component, sizes.
+   */
+  previewConfig: CarouselPreviewConfig;
+  /**
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
+   */
+  accessibilityConfig: AccessibilityConfig;
   /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
@@ -126,11 +124,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * applying transformations, default values and so on to the input of the same type.
    */
   previews: InternalLibImage[] = [];
-  /**
-   * Object of type `CarouselPreviewConfig` exposed to the template. This field is initialized
-   * applying transformations, default values and so on to the input of the same type.
-   */
-  configPreview: CarouselPreviewConfig;
 
   /**
    * Start index (inclusive) of the input images used to display previews.
@@ -152,7 +145,8 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     private ref: ChangeDetectorRef,
     private breakpointObserver: BreakpointObserver,
     // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private configService: ConfigService
   ) {
     super();
 
@@ -160,19 +154,19 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     this.breakpointSubscription = breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
       .subscribe((result: BreakpointState) => {
-        if (!this.configPreview) {
+        if (!this.previewConfig) {
           return;
         }
         if (result.breakpoints[Breakpoints.XSmall]) {
-          this.updateHeight(this.configPreview.breakpoints.xSmall);
+          this.updateHeight(this.previewConfig.breakpoints.xSmall);
         } else if (result.breakpoints[Breakpoints.Small]) {
-          this.updateHeight(this.configPreview.breakpoints.small);
+          this.updateHeight(this.previewConfig.breakpoints.small);
         } else if (result.breakpoints[Breakpoints.Medium]) {
-          this.updateHeight(this.configPreview.breakpoints.medium);
+          this.updateHeight(this.previewConfig.breakpoints.medium);
         } else if (result.breakpoints[Breakpoints.Large]) {
-          this.updateHeight(this.configPreview.breakpoints.large);
+          this.updateHeight(this.previewConfig.breakpoints.large);
         } else if (result.breakpoints[Breakpoints.XLarge]) {
-          this.updateHeight(this.configPreview.breakpoints.xLarge);
+          this.updateHeight(this.previewConfig.breakpoints.xLarge);
         }
       });
   }
@@ -182,7 +176,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param configBreakpointHeight is a number that represent the desired height to set.
    */
   private updateHeight(configBreakpointHeight: number) {
-    const newConfigPreview = Object.assign({}, this.configPreview);
+    const newConfigPreview = Object.assign({}, this.previewConfig);
     if (this.previewConfig && this.previewConfig.maxHeight) {
       const heightNum: number = +this.previewConfig.maxHeight.replace('px', '').replace('%', '');
       newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
@@ -190,7 +184,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
       const heightNum: number = +this.defaultMaxHeight.replace('px', '').replace('%', '');
       newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     }
-    this.configPreview = newConfigPreview;
+    this.configService.set({ carouselPreviewsConfig: newConfigPreview });
     this.ref.markForCheck();
   }
 
@@ -201,28 +195,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const defaultBreakpoints: BreakpointsConfig = { xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200 };
-    const defaultPreviewConfig: CarouselPreviewConfig = {
-      visible: true,
-      number: 4,
-      arrows: true,
-      clickable: true,
-      width: 100 / 4 + '%',
-      maxHeight: this.defaultMaxHeight,
-      breakpoints: defaultBreakpoints
-    };
-
-    this.configPreview = Object.assign({}, defaultPreviewConfig, this.previewConfig);
-
-    // if number is <= 0 reset to default
-    if (this.configPreview && this.configPreview.number <= 0) {
-      this.configPreview.number = defaultPreviewConfig.number;
-    }
-
-    // Init preview image width based on the number of previews in PreviewConfig
-    // Don't move this line above, because I need to be sure that both configPreview.number
-    // and configPreview.size are initialized
-    this.configPreview.width = 100 / this.configPreview.number + '%';
+    const libConfig: LibConfig = this.configService.get();
+    this.carouselConfig = libConfig.carouselConfig;
+    this.previewConfig = libConfig.carouselPreviewsConfig;
+    this.accessibilityConfig = libConfig.accessibilityConfig;
 
     // change the max-width of this component if there is a specified width !== 100% in carouselConfig
     if (this.carouselConfig && this.carouselConfig.maxWidth !== '100%') {
@@ -241,15 +217,15 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     const isLargeScreen = this.breakpointObserver.isMatched(Breakpoints.Large);
     const isxLargeScreen = this.breakpointObserver.isMatched(Breakpoints.XLarge);
     if (isXsmallScreen) {
-      this.updateHeight(this.configPreview.breakpoints.xSmall);
+      this.updateHeight(this.previewConfig.breakpoints.xSmall);
     } else if (isSmallScreen) {
-      this.updateHeight(this.configPreview.breakpoints.small);
+      this.updateHeight(this.previewConfig.breakpoints.small);
     } else if (isMediumScreen) {
-      this.updateHeight(this.configPreview.breakpoints.medium);
+      this.updateHeight(this.previewConfig.breakpoints.medium);
     } else if (isLargeScreen) {
-      this.updateHeight(this.configPreview.breakpoints.large);
+      this.updateHeight(this.previewConfig.breakpoints.large);
     } else if (isxLargeScreen) {
-      this.updateHeight(this.configPreview.breakpoints.xLarge);
+      this.updateHeight(this.previewConfig.breakpoints.xLarge);
     }
   }
 
@@ -318,7 +294,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
         return;
       }
 
-      if (this.configPreview.number % 2 === 0) {
+      if (this.previewConfig.number % 2 === 0) {
         if (calc > currentIndex) {
           this.previous();
         } else {
@@ -343,7 +319,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param Action that triggered this event (Action.NORMAL by default)
    */
   onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
-    if (!this.configPreview || !this.configPreview.clickable) {
+    if (!this.previewConfig || !this.previewConfig.clickable) {
       return;
     }
     const clickedImageIndex: number = this.images.indexOf(preview);
@@ -430,8 +406,8 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * After some experiments, I decided to use the double of the height and auto as width.
    */
   getIE11LegacyBgSize(): string {
-    if (this.configPreview && this.configPreview.maxHeight) {
-      const bgHeight: number = +this.configPreview.maxHeight.replace('px', '');
+    if (this.previewConfig && this.previewConfig.maxHeight) {
+      const bgHeight: number = +this.previewConfig.maxHeight.replace('px', '');
       return '100% ' + bgHeight * 2 + 'px';
     }
     return 'cover';
@@ -483,14 +459,14 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   private setBeginningIndexesPreviews() {
     this.start = 0;
-    this.end = Math.min(<number>this.configPreview.number, this.images.length);
+    this.end = Math.min(<number>this.previewConfig.number, this.images.length);
   }
 
   /**
    * Private method to init both `start` and `end` to the end.
    */
   private setEndIndexesPreviews() {
-    this.start = this.images.length - 1 - (<number>this.configPreview.number - 1);
+    this.start = this.images.length - 1 - (<number>this.previewConfig.number - 1);
     this.end = this.images.length;
   }
 

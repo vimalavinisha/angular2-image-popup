@@ -136,7 +136,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
   @Input()
-  accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+  accessibilityConfig: AccessibilityConfig;
 
   /**
    * Output to emit an event when an image is changed.
@@ -153,6 +153,31 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @Output()
   lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+
+  /**
+   * Object use in template
+   */
+  configCarousel: CarouselConfig;
+  /**
+   * Object use in template
+   */
+  configPlay: PlayConfig;
+  /**
+   * Object use in template
+   */
+  configCarouselImage: CarouselImageConfig;
+  /**
+   * Object use in template
+   */
+  configPreview: CarouselPreviewConfig;
+  /**
+   * Object use in template
+   */
+  configDots: DotsConfig;
+  /**
+   * Object use in template
+   */
+  configAccessibility: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
 
   /**
    * Enum of type `Action` that represents a mouse click on a button.
@@ -266,9 +291,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     const configDotsChange: SimpleChange = changes.dotsConfig;
     if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
       this.configService.set({
-        dotsConfig: configDotsChange.currentValue
+        carouselDotsConfig: configDotsChange.currentValue
       });
-      // this.configDots = configDotsChange.currentValue;
+      this.configDots = this.configService.get().carouselDotsConfig;
     }
     // handle changes of carouselConfig
     const carouselConfigChange: SimpleChange = changes.carouselConfig;
@@ -307,19 +332,16 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       carouselImageConfig: this.carouselImageConfig,
       carouselPlayConfig: this.playConfig,
       previewConfig: this.previewConfig,
-      dotsConfig: this.dotsConfig,
+      carouselDotsConfig: this.dotsConfig,
       accessibilityConfig: this.accessibilityConfig
     });
     const libConfig: LibConfig = this.configService.get();
-    this.carouselConfig = libConfig.carouselConfig;
-    this.carouselImageConfig = libConfig.carouselImageConfig;
-    this.playConfig = libConfig.carouselPlayConfig;
-    this.previewConfig = libConfig.previewConfig;
-    this.dotsConfig = libConfig.dotsConfig;
-    this.accessibilityConfig = libConfig.accessibilityConfig;
-
-    console.log('ngOnInit get', this.configService.get());
-
+    this.configCarousel = libConfig.carouselConfig;
+    this.configCarouselImage = libConfig.carouselImageConfig;
+    this.configPlay = libConfig.carouselPlayConfig;
+    this.configPreview = libConfig.previewConfig;
+    this.configDots = libConfig.carouselDotsConfig;
+    this.configAccessibility = libConfig.accessibilityConfig;
     this.manageSlideConfig();
   }
 
