@@ -331,7 +331,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       carouselConfig: this.carouselConfig,
       carouselImageConfig: this.carouselImageConfig,
       carouselPlayConfig: this.playConfig,
-      previewConfig: this.previewConfig,
+      carouselPreviewsConfig: this.previewConfig,
       carouselDotsConfig: this.dotsConfig,
       accessibilityConfig: this.accessibilityConfig
     });
@@ -339,7 +339,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.configCarousel = libConfig.carouselConfig;
     this.configCarouselImage = libConfig.carouselImageConfig;
     this.configPlay = libConfig.carouselPlayConfig;
-    this.configPreview = libConfig.previewConfig;
+    this.configPreview = libConfig.carouselPreviewsConfig;
     this.configDots = libConfig.carouselDotsConfig;
     this.configAccessibility = libConfig.accessibilityConfig;
     this.manageSlideConfig();

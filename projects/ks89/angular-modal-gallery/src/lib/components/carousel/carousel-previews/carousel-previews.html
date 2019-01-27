@@ -19,7 +19,7 @@
              class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig.clickable ? ' unclickable' : ''}}"
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
              ksSize [sizeConfig]="{width: previewConfig?.width,
-                                 height: previewConfig?.maxHeight}"
+                                   height: previewConfig?.maxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
              alt="{{getAlt(preview)}}"

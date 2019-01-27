@@ -295,11 +295,20 @@ export class ConfigService {
     if (obj.carouselPreviewsConfig) {
       // check values
       let number;
-      if (obj.carouselPreviewsConfig.number <= 0) {
+      let breakpoints;
+      if (obj.carouselPreviewsConfig.number <= 0 || !obj.carouselPreviewsConfig.number) {
         number = DEFAULT_CAROUSEL_PREVIEWS_CONFIG.number;
+      } else {
+        number = obj.carouselPreviewsConfig.number;
+      }
+      if (obj.carouselPreviewsConfig.breakpoints) {
+        breakpoints = Object.assign({}, DEFAULT_CONFIG.carouselPreviewsConfig.breakpoints, obj.carouselPreviewsConfig.breakpoints);
+      } else {
+        breakpoints = DEFAULT_CONFIG.carouselPreviewsConfig.breakpoints;
       }
       newConfig.carouselPreviewsConfig = Object.assign({}, DEFAULT_CONFIG.carouselPreviewsConfig, obj.carouselPreviewsConfig);
       newConfig.carouselPreviewsConfig.number = number;
+      newConfig.carouselPreviewsConfig.breakpoints = breakpoints;
       // Init preview image width based on the number of previews in PreviewConfig
       // Don't move this line above, because I need to be sure that both configPreview.number
       // and configPreview.size are initialized
@@ -308,6 +317,7 @@ export class ConfigService {
     if (obj.carouselDotsConfig) {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
     }
+    console.log('configservice - set - newConfig', newConfig);
     this.config = newConfig;
   }
 }
