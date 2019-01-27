@@ -57,6 +57,12 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   @Input()
   images: InternalLibImage[];
   /**
+   * Object of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide this component.
+   */
+  @Input()
+  dotsConfig: DotsConfig;
+  /**
    * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
    */
@@ -64,8 +70,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   clickDot: EventEmitter<number> = new EventEmitter<number>();
 
   /**
-   * Object of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide this component.
+   * Object of type `DotsConfig` used in template.
    */
   @Input()
   dotsConfig: DotsConfig;
