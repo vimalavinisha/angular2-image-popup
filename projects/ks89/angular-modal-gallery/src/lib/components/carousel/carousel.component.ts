@@ -301,7 +301,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this.configService.set({
         carouselConfig: carouselConfigChange.currentValue
       });
-      // this.configCarousel = carouselConfigChange.currentValue;
+      this.configCarousel = carouselConfigChange.currentValue;
     }
     // handle changes of playConfig starting/stopping the carousel accordingly
     const playConfigChange: SimpleChange = changes.playConfig;
