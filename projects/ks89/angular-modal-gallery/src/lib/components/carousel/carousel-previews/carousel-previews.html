@@ -19,7 +19,7 @@
              class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig.clickable ? ' unclickable' : ''}}"
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
              ksSize [sizeConfig]="{width: previewConfig?.width,
-                                   height: previewConfig?.maxHeight}"
+                                   height: previewMaxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
              alt="{{getAlt(preview)}}"
@@ -36,7 +36,7 @@
              [style.background-repeat]="'no-repeat'"
              [style.background-attachment]="'scroll'"
              ksSize [sizeConfig]="{width: previewConfig?.width,
-                                 height: previewConfig?.maxHeight}"
+                                 height: previewMaxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
              [title]="getTitle(preview)"
              [tabIndex]="0" role="img"

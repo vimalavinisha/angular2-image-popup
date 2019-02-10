@@ -55,6 +55,11 @@ import { Action } from '../../../model/action.enum';
 import { ConfigService, LibConfig } from '../../../services/config.service';
 
 /**
+ * Default max height of previews.
+ */
+const DEFAULT_MAX_HEIGHT = '200px';
+
+/**
  * Component with image previews for carousel
  */
 @Component({
@@ -124,7 +129,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * applying transformations, default values and so on to the input of the same type.
    */
   previews: InternalLibImage[] = [];
-
+  /**
+   * Variable with the preview's maxHeight
+   */
+  previewMaxHeight: string = DEFAULT_MAX_HEIGHT;
   /**
    * Start index (inclusive) of the input images used to display previews.
    */
@@ -133,11 +141,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * End index (non inclusive) of the input images used to display previews.
    */
   end: number;
-
-  /**
-   * Private property with the default max height of previews.
-   */
-  private defaultMaxHeight = '200px';
 
   private breakpointSubscription: Subscription;
 
@@ -176,16 +179,13 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param configBreakpointHeight is a number that represent the desired height to set.
    */
   private updateHeight(configBreakpointHeight: number) {
-    const newConfigPreview: CarouselPreviewConfig = Object.assign({}, this.previewConfig);
     if (this.previewConfig && this.previewConfig.maxHeight) {
       const heightNum: number = +this.previewConfig.maxHeight.replace('px', '').replace('%', '');
-      newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
+      this.previewMaxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     } else {
-      const heightNum: number = +this.defaultMaxHeight.replace('px', '').replace('%', '');
-      newConfigPreview.maxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
+      const heightNum: number = +DEFAULT_MAX_HEIGHT.replace('px', '').replace('%', '');
+      this.previewMaxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     }
-    this.configService.set({ carouselPreviewsConfig: newConfigPreview });
-    this.previewConfig = newConfigPreview;
     this.ref.markForCheck();
   }
 
@@ -205,8 +205,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     if (this.carouselConfig && this.carouselConfig.maxWidth !== '100%') {
       this.hostMaxWidth = this.carouselConfig.maxWidth;
     }
+    this.previewMaxHeight = this.previewConfig.maxHeight;
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);
+
     // apply custom height based on responsive breakpoints
     // This is required, because the breakpointSubscription is not triggered at creation,
     // but only when the width changes

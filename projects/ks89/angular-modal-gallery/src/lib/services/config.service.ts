@@ -317,7 +317,6 @@ export class ConfigService {
     if (obj.carouselDotsConfig) {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
     }
-    console.log('configservice - set - newConfig', newConfig);
     this.config = newConfig;
   }
 }
