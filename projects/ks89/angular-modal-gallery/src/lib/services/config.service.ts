@@ -200,9 +200,14 @@ export class ConfigService {
       } else {
         size = DEFAULT_CONFIG.previewConfig.size;
       }
-      // if number is <= 0 reset to default
-      if (obj.previewConfig && obj.previewConfig.number && obj.previewConfig.number <= 0) {
-        // force default number
+      if (obj.previewConfig.number) {
+        if (obj.previewConfig.number <= 0) {
+          // if number is <= 0 reset to default
+          number = DEFAULT_CONFIG.previewConfig.number;
+        } else {
+          number = obj.previewConfig.number;
+        }
+      } else {
         number = DEFAULT_CONFIG.previewConfig.number;
       }
       const newPreviewConfig: PreviewConfig = Object.assign({}, DEFAULT_CONFIG.previewConfig, obj.previewConfig);
