@@ -266,6 +266,9 @@ export class ConfigService {
       newCurrentImageConfig.description.style = descriptionStyle;
       newConfig.currentImageConfig = newCurrentImageConfig;
     }
+    if (obj.keyboardConfig) {
+      newConfig.keyboardConfig = Object.assign({}, DEFAULT_CONFIG.keyboardConfig, obj.keyboardConfig);
+    }
 
     // carousel
     if (obj.carouselConfig) {
