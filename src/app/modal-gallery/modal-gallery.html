@@ -236,15 +236,15 @@
 <section>
   <h3>B24 - (id=33) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
     5</a></h3>
-  <p><i>Be careful to use the id=37 also in the Component. This is necessary here, because I have many instances of
+  <p><i>Be careful to use the id=33 also in the Component. This is necessary here, because I have many instances of
     angular-modal-gallery in a single page</i></p>
   <br>
   <ks-modal-gallery [id]="33" [modalImages]="images"
                     [currentImageConfig]="{downloadable: true}"
                     [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (show)="onVisibleIndex($event)"
-                    (buttonBeforeHook)="onCustomButtonBeforeHook($event, 37)"
-                    (buttonAfterHook)="onCustomButtonAfterHook($event, 37)"></ks-modal-gallery>
+                    (buttonBeforeHook)="onCustomButtonBeforeHook($event, 33)"
+                    (buttonAfterHook)="onCustomButtonAfterHook($event, 33)"></ks-modal-gallery>
 </section>
 <br>
 <hr>
