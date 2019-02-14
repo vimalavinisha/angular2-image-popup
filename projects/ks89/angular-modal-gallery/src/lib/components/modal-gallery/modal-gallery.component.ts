@@ -699,19 +699,21 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  private base64toBlob(base64Data, contentType) {
-    contentType = contentType || '';
+  /**
+   * Method to convert a base64 to a Blob
+   * @param base64Data string with base64 data
+   * @param contentType string with the MIME type
+   */
+  private base64toBlob(base64Data: string, contentType: string = ''): Blob {
     const sliceSize = 1024;
-    const byteCharacters = atob(base64Data);
-    const bytesLength = byteCharacters.length;
-    const slicesCount = Math.ceil(bytesLength / sliceSize);
-    const byteArrays = new Array(slicesCount);
-
+    const byteCharacters: string = atob(base64Data);
+    const bytesLength: number = byteCharacters.length;
+    const slicesCount: number = Math.ceil(bytesLength / sliceSize);
+    const byteArrays: Array<Uint8Array> = new Array(slicesCount);
     for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-      const begin = sliceIndex * sliceSize;
-      const end = Math.min(begin + sliceSize, bytesLength);
-
-      const bytes = new Array(end - begin);
+      const begin: number = sliceIndex * sliceSize;
+      const end: number = Math.min(begin + sliceSize, bytesLength);
+      const bytes: Array<number> = new Array(end - begin);
       for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
         bytes[i] = byteCharacters[offset].charCodeAt(0);
       }
@@ -725,20 +727,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   private downloadImageAllBrowsers() {
     const link = document.createElement('a');
-
-    // const url: any = 'iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABN0lEQVR4nO3SQQ2AQBDAwAVlaMEhCkAVb2RcQmcU9NEZAAAAAOD/' +
-    //   'tvN675k5VoewxLOvLmAtA8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAH' +
-    //   'EGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQa' +
-    //   'IM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGQAAAAAA4Pc+8asEoPPGqxUAAAAASUVORK5CYII';
-    // const blob = this.base64toBlob(url, 'image/png');
-    // const url2: string = URL.createObjectURL(blob);
-    // link.href = url2;
-    // link.setAttribute('download', 'name.png');
-    // check if base64 image or not
     let isBase64 = false;
     let extension: string;
+    let img: string;
     // convert a SafeResourceUrl to a string
-    const img: string = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.currentImage.modal.img);
+    if (typeof this.currentImage.modal.img === 'string') {
+      img = <string>this.currentImage.modal.img;
+    } else {
+      // if it's a SafeResourceUrl
+      img = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.currentImage.modal.img);
+    }
     if (img.includes('data:image/') || img.includes(';base64,')) {
       extension = img.replace('data:image/', '').split(';base64,')[0];
       const pureBase64: string = img.split(';base64,')[1];
