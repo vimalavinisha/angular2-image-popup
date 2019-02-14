@@ -35,6 +35,7 @@ import {
   OnInit,
   Output,
   PLATFORM_ID,
+  SecurityContext,
   SimpleChange,
   SimpleChanges,
   ViewChild
@@ -62,6 +63,7 @@ import { Subscription } from 'rxjs';
 import { IdValidatorService } from '../../services/id-validator.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ConfigService, LibConfig } from '../../services/config.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
@@ -225,7 +227,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     @Inject(PLATFORM_ID) private platformId: Object,
     private changeDetectorRef: ChangeDetectorRef,
     private idValidatorService: IdValidatorService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private sanitizer: DomSanitizer
   ) {}
 
   /**
@@ -696,13 +699,56 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  private base64toBlob(base64Data, contentType) {
+    contentType = contentType || '';
+    const sliceSize = 1024;
+    const byteCharacters = atob(base64Data);
+    const bytesLength = byteCharacters.length;
+    const slicesCount = Math.ceil(bytesLength / sliceSize);
+    const byteArrays = new Array(slicesCount);
+
+    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+      const begin = sliceIndex * sliceSize;
+      const end = Math.min(begin + sliceSize, bytesLength);
+
+      const bytes = new Array(end - begin);
+      for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
+        bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
+    }
+    return new Blob(byteArrays, { type: contentType });
+  }
+
   /**
    * Private method to download the current image for all browsers except for IE11.
    */
   private downloadImageAllBrowsers() {
     const link = document.createElement('a');
-    link.href = <string>this.currentImage.modal.img;
-    link.setAttribute('download', this.getFileName(this.currentImage));
+
+    // const url: any = 'iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABN0lEQVR4nO3SQQ2AQBDAwAVlaMEhCkAVb2RcQmcU9NEZAAAAAOD/' +
+    //   'tvN675k5VoewxLOvLmAtA8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAH' +
+    //   'EGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQa' +
+    //   'IM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGQAAAAAA4Pc+8asEoPPGqxUAAAAASUVORK5CYII';
+    // const blob = this.base64toBlob(url, 'image/png');
+    // const url2: string = URL.createObjectURL(blob);
+    // link.href = url2;
+    // link.setAttribute('download', 'name.png');
+    // check if base64 image or not
+    let isBase64 = false;
+    let extension: string;
+    // convert a SafeResourceUrl to a string
+    const img: string = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.currentImage.modal.img);
+    if (img.includes('data:image/') || img.includes(';base64,')) {
+      extension = img.replace('data:image/', '').split(';base64,')[0];
+      const pureBase64: string = img.split(';base64,')[1];
+      const blob: Blob = this.base64toBlob(pureBase64, 'image/' + extension);
+      link.href = URL.createObjectURL(blob);
+      isBase64 = true;
+    } else {
+      link.href = img;
+    }
+    link.setAttribute('download', this.getFileName(this.currentImage, isBase64, extension));
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -740,11 +786,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * This is used either to get the image's name from its path or from the Image itself,
    * if specified as 'downloadFileName' by the user.
    * @param Image image to extract its file name
+   * @param isBase64 boolean to set if the image is a base64 file or not. False by default.
+   * @param base64Extension string to force the extension of the base64 image. Empty string by default.
    * @returns string string file name of the input image.
    */
-  private getFileName(image: Image): string {
+  private getFileName(image: Image, isBase64: boolean = false, base64Extension: string = ''): string {
     if (!image.modal.downloadFileName || image.modal.downloadFileName.length === 0) {
-      return (<string>this.currentImage.modal.img).replace(/^.*[\\\/]/, '');
+      if (isBase64) {
+        return `Image-${image.id}.${base64Extension !== '' ? base64Extension : 'png'}`;
+      } else {
+        return (<string>image.modal.img).replace(/^.*[\\\/]/, '');
+      }
     } else {
       return image.modal.downloadFileName;
     }
