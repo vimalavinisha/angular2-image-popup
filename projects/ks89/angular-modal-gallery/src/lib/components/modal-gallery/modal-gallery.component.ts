@@ -41,6 +41,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
 import { Image, ImageModalEvent } from '../../model/image.class';
@@ -63,7 +64,6 @@ import { Subscription } from 'rxjs';
 import { IdValidatorService } from '../../services/id-validator.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ConfigService, LibConfig } from '../../services/config.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 /**
  * Main Component of this library with both the plain and modal galleries.
