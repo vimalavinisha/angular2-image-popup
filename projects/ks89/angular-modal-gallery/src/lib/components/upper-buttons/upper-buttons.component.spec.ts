@@ -29,6 +29,7 @@ import { Action } from '../../model/action.enum';
 import { Size } from '../../model/size.interface';
 import { KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_FULL_SCREEN, KS_DEFAULT_SIZE } from './upper-buttons-default';
+import { ConfigService } from '../../services/config.service';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;
@@ -215,8 +216,9 @@ function getButtonEvent(button: ButtonConfig): ButtonEvent {
 }
 
 function updateInputs(image: Image, configButtons: ButtonsConfig) {
+  const configService = fixture.debugElement.injector.get(ConfigService);
+  configService.set({buttonsConfig: configButtons});
   comp.currentImage = image;
-  comp.buttonsConfig = configButtons;
   comp.ngOnInit();
   fixture.detectChanges();
 }
@@ -303,7 +305,16 @@ function testBtnNumberByStrategy(strategy: ButtonsStrategy, btnDebugElementsCoun
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [UpperButtonsComponent, SizeDirective]
-  }).compileComponents();
+  }).overrideComponent(UpperButtonsComponent, {
+    set: {
+      providers: [
+        {
+          provide: ConfigService,
+          useClass: ConfigService
+        }
+      ]
+    }
+  });
 }
 
 describe('UpperButtonsComponent', () => {
