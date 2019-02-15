@@ -1,6 +1,7 @@
 engines:
   eslint:
     enabled: true
+    channel: eslint-5
 #  tslint:
 #    enabled: true
 #    config: tslint.json
