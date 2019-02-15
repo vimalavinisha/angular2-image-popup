@@ -21,6 +21,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+import { ConfigService } from '../../services/config.service';
 import { BackgroundComponent } from './background.component';
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 
@@ -75,7 +76,16 @@ const DEFAULT_ACCESSIBILITY: AccessibilityConfig = {
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [BackgroundComponent]
-  }).compileComponents();
+  }).overrideComponent(BackgroundComponent, {
+    set: {
+      providers: [
+        {
+          provide: ConfigService,
+          useClass: ConfigService
+        }
+      ]
+    }
+  });
 }
 
 describe('BackgroundComponent', () => {
@@ -92,8 +102,9 @@ describe('BackgroundComponent', () => {
 
   describe('---YES---', () => {
     it(`should display the background with default accessibility config`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({accessibilityConfig: DEFAULT_ACCESSIBILITY});
       comp.isOpen = true;
-      comp.accessibilityConfig = DEFAULT_ACCESSIBILITY;
       fixture.detectChanges();
 
       const element: DebugElement = fixture.debugElement;
@@ -108,9 +119,10 @@ describe('BackgroundComponent', () => {
       const customAccessibilityConfig: AccessibilityConfig = Object.assign({}, DEFAULT_ACCESSIBILITY);
       customAccessibilityConfig.backgroundTitle = 'custom backgroundTitle';
       customAccessibilityConfig.backgroundAriaLabel = 'custom backgroundAriaLabel';
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({accessibilityConfig: customAccessibilityConfig});
 
       comp.isOpen = true;
-      comp.accessibilityConfig = customAccessibilityConfig;
       fixture.detectChanges();
 
       const element: DebugElement = fixture.debugElement;
@@ -124,8 +136,9 @@ describe('BackgroundComponent', () => {
   });
   describe('---NO---', () => {
     it(`shouldn't display the background`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({accessibilityConfig: DEFAULT_ACCESSIBILITY});
       comp.isOpen = false;
-      comp.accessibilityConfig = DEFAULT_ACCESSIBILITY;
       fixture.detectChanges();
 
       const element: DebugElement = fixture.debugElement;
