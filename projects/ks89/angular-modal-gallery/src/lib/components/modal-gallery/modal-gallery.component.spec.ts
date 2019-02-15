@@ -38,6 +38,7 @@ import { KEYBOARD_CONFIGURATION, KeyboardService } from '../../services/keyboard
 import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { GalleryService } from '../../services/gallery.service';
+import { ConfigService } from '../../services/config.service';
 import { IdValidatorService } from '../../services/id-validator.service';
 import { By } from '@angular/platform-browser';
 import { ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
@@ -126,6 +127,10 @@ function initTestBed() {
         {
           provide: GalleryService,
           useClass: GalleryService
+        },
+        {
+          provide: ConfigService,
+          useClass: ConfigService
         },
         {
           provide: KEYBOARD_CONFIGURATION,
@@ -738,7 +743,7 @@ describe('ModalGalleryComponent', () => {
       fixture.detectChanges();
       const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
       galleryService.play(0);
-      expect(comp.configSlide.playConfig.autoPlay).toBeTruthy();
+      expect(comp.slideConfig.playConfig.autoPlay).toBeTruthy();
     });
 
     it(`should call stop and verify that autoPlay is false.`, () => {
@@ -749,7 +754,7 @@ describe('ModalGalleryComponent', () => {
       fixture.detectChanges();
       const galleryService: GalleryService = fixture.debugElement.injector.get(GalleryService);
       galleryService.stop(0);
-      expect(comp.configSlide.playConfig.autoPlay).toBeFalsy();
+      expect(comp.slideConfig.playConfig.autoPlay).toBeFalsy();
     });
 
     const NEW_IMAGE: InternalLibImage = new InternalLibImage(
