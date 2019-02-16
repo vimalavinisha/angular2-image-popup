@@ -36,7 +36,8 @@ import { SizeDirective } from '../../directives/size.directive';
 import { WrapDirective } from '../../directives/wrap.directive';
 import { DirectionDirective } from '../../directives/direction.directive';
 import { ATagBgImageDirective } from '../../directives/a-tag-bg-image.directive';
-import { LineLayout, GridLayout, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { GridLayout, LineLayout, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { ConfigService } from '../../services/config.service';
 
 let comp: PlainGalleryComponent;
 let fixture: ComponentFixture<PlainGalleryComponent>;
@@ -100,7 +101,16 @@ const IMAGES: InternalLibImage[] = [
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [PlainGalleryComponent, SizeDirective, WrapDirective, DirectionDirective, ATagBgImageDirective]
-  }).compileComponents();
+  }).overrideComponent(PlainGalleryComponent, {
+    set: {
+      providers: [
+        {
+          provide: ConfigService,
+          useClass: ConfigService
+        }
+      ]
+    }
+  });
 }
 
 describe('PlainGalleryComponent', () => {
@@ -118,10 +128,10 @@ describe('PlainGalleryComponent', () => {
   describe('---YES---', () => {
 
     it(`should display plain gallery with img tags and click on a thumb`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
       comp.showGallery = true;
       comp.images = IMAGES;
-      // comp.plainGalleryConfig = {};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -206,9 +216,10 @@ describe('PlainGalleryComponent', () => {
     });
 
     it(`should display plain gallery with img tags and custom accessibility config`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({accessibilityConfig: CUSTOM_ACCESSIBILITY});
       comp.showGallery = true;
       comp.images = IMAGES;
-      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -224,17 +235,20 @@ describe('PlainGalleryComponent', () => {
 
     CUSTOM_SIZES.forEach((size: Size, index: number) => {
       it(`should display plain gallery with img tags and custom sizes. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          plainGalleryConfig: {
+            strategy: PlainGalleryStrategy.ROW,
+            layout: new LineLayout(
+              {width: size.width, height: size.height},
+              {length: IMAGES.length, wrap: false},
+              'flex-start'
+            )
+          }
+        });
         comp.showGallery = true;
         comp.images = IMAGES;
-        comp.plainGalleryConfig = {
-          strategy: PlainGalleryStrategy.ROW,
-          layout: new LineLayout(
-            {width: size.width, height: size.height},
-            {length: IMAGES.length, wrap: false},
-            'flex-start'
-          )
-        };
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.ngOnInit();
         fixture.detectChanges();
 
@@ -257,17 +271,20 @@ describe('PlainGalleryComponent', () => {
     });
 
     it(`should display plain gallery row layout with only 2 img tags`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        plainGalleryConfig: {
+          strategy: PlainGalleryStrategy.ROW,
+          layout: new LineLayout(
+            {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
+            {length: 2, wrap: false},
+            'flex-start'
+          )
+        }
+      });
       comp.showGallery = true;
       comp.images = IMAGES;
-      comp.plainGalleryConfig = {
-        strategy: PlainGalleryStrategy.ROW,
-        layout: new LineLayout(
-          {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
-          {length: 2, wrap: false},
-          'flex-start'
-        )
-      };
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -279,17 +296,20 @@ describe('PlainGalleryComponent', () => {
     });
 
     it(`should display plain gallery row layout with img tags and justify space-around`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        plainGalleryConfig: {
+          strategy: PlainGalleryStrategy.ROW,
+          layout: new LineLayout(
+            {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
+            {length: IMAGES.length, wrap: false},
+            'space-around'
+          )
+        }
+      });
       comp.showGallery = true;
       comp.images = IMAGES;
-      comp.plainGalleryConfig = {
-        strategy: PlainGalleryStrategy.ROW,
-        layout: new LineLayout(
-          {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
-          {length: IMAGES.length, wrap: false},
-          'space-around'
-        )
-      };
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -301,17 +321,20 @@ describe('PlainGalleryComponent', () => {
     });
 
     it(`should display plain gallery column layout with only 2 img tags`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        plainGalleryConfig: {
+          strategy: PlainGalleryStrategy.COLUMN,
+          layout: new LineLayout(
+            {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
+            {length: 2, wrap: false},
+            'flex-start'
+          )
+        }
+      });
       comp.showGallery = true;
       comp.images = IMAGES;
-      comp.plainGalleryConfig = {
-        strategy: PlainGalleryStrategy.COLUMN,
-        layout: new LineLayout(
-          {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
-          {length: 2, wrap: false},
-          'flex-start'
-        )
-      };
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -355,13 +378,16 @@ describe('PlainGalleryComponent', () => {
     });
 
     it(`should display plain gallery grid layout`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        plainGalleryConfig: {
+          strategy: PlainGalleryStrategy.GRID,
+          layout: new GridLayout({width: '80px', height: '80px'}, {length: 2, wrap: true})
+        }
+      });
       comp.showGallery = true;
       comp.images = IMAGES;
-      comp.plainGalleryConfig = {
-        strategy: PlainGalleryStrategy.GRID,
-        layout: new GridLayout({width: '80px', height: '80px'}, {length: 2, wrap: true})
-      };
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -378,18 +404,21 @@ describe('PlainGalleryComponent', () => {
     });
 
     it(`should display plain gallery with anchor tags based of input images`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        plainGalleryConfig: {
+          strategy: PlainGalleryStrategy.ROW,
+          layout: new LineLayout(
+            {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
+            {length: IMAGES.length, wrap: true},
+            'flex-start'
+          ),
+          advanced: {aTags: true, additionalBackground: '50% 50%/cover'}
+        }
+      });
       comp.showGallery = true;
       comp.images = IMAGES;
-      comp.plainGalleryConfig = {
-        strategy: PlainGalleryStrategy.ROW,
-        layout: new LineLayout(
-          {width: DEFAULT_PLAIN_SIZE.width, height: DEFAULT_PLAIN_SIZE.height},
-          {length: IMAGES.length, wrap: true},
-          'flex-start'
-        ),
-        advanced: {aTags: true, additionalBackground: '50% 50%/cover'}
-      };
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -470,18 +499,21 @@ describe('PlainGalleryComponent', () => {
 
     CUSTOM_SIZES.forEach((size: Size, index: number) => {
       it(`should display plain gallery with anchor tags and custom sizes. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          plainGalleryConfig: {
+            strategy: PlainGalleryStrategy.ROW,
+            layout: new LineLayout(
+              {width: size.width, height: size.height},
+              {length: IMAGES.length, wrap: false},
+              'flex-start'
+            ),
+            advanced: {aTags: true, additionalBackground: '50% 50%/cover'}
+          }
+        });
         comp.showGallery = true;
         comp.images = IMAGES;
-        comp.plainGalleryConfig = {
-          strategy: PlainGalleryStrategy.ROW,
-          layout: new LineLayout(
-            {width: size.width, height: size.height},
-            {length: IMAGES.length, wrap: false},
-            'flex-start'
-          ),
-          advanced: {aTags: true, additionalBackground: '50% 50%/cover'}
-        };
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.ngOnInit();
         fixture.detectChanges();
 
