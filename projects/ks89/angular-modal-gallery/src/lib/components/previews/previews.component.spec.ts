@@ -32,6 +32,7 @@ import { ImageModalEvent, ModalImage, PlainImage } from '../../model/image.class
 import { SizeDirective } from '../../directives/size.directive';
 import { KS_DEFAULT_SIZE } from '../upper-buttons/upper-buttons-default';
 import { Action } from '../../model/action.enum';
+import { ConfigService } from '../../services/config.service';
 
 interface NavigationTestData {
   initial: {
@@ -210,7 +211,16 @@ function checkPreviewStateAfterClick(previews: DebugElement[], prevValue: Intern
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [PreviewsComponent, SizeDirective]
-  }).compileComponents();
+  }).overrideComponent(PreviewsComponent, {
+    set: {
+      providers: [
+        {
+          provide: ConfigService,
+          useClass: ConfigService
+        }
+      ]
+    }
+  });
 }
 
 describe('PreviewsComponent', () => {
@@ -230,11 +240,14 @@ describe('PreviewsComponent', () => {
     it(`should display previews (first one is active) based of input images`, () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
-      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: PREVIEWS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        slideConfig: SLIDE_CONFIG
+      });
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
-      comp.slideConfig = SLIDE_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -262,11 +275,14 @@ describe('PreviewsComponent', () => {
       // in this example I choose the third image (index = 2) as the current one
       const initialActiveImage = 2; // you can use every value except for 0 and the last one
       const numOfPreviews = 3;
-      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: PREVIEWS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        slideConfig: SLIDE_CONFIG
+      });
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
-      comp.slideConfig = SLIDE_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -294,11 +310,14 @@ describe('PreviewsComponent', () => {
       // in this example I choose the last image as the current one
       const initialActiveImage = IMAGES.length - 1;
       const numOfPreviews = 3;
-      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: PREVIEWS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        slideConfig: SLIDE_CONFIG
+      });
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
-      comp.slideConfig = SLIDE_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -325,13 +344,15 @@ describe('PreviewsComponent', () => {
     it(`should display previews with custom accessibility`, () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
-      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-      // custom accessibility for container and arrows, but not for previews
-      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: PREVIEWS_CONFIG_VISIBLE,
+        // custom accessibility for container and arrows, but not for previews
+        accessibilityConfig: CUSTOM_ACCESSIBILITY,
+        slideConfig: SLIDE_CONFIG
+      });
       comp.currentImage = IMAGES_CUSTOM_ACCESSIBILITY[initialActiveImage];
-      // provide custom accessibility in ModalImage
       comp.images = IMAGES_CUSTOM_ACCESSIBILITY;
-      comp.slideConfig = SLIDE_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -358,11 +379,14 @@ describe('PreviewsComponent', () => {
     it(`should display a custom number of previews without navigation arrows`, () => {
       const initialActiveImage = 0;
       const numOfPreviews = 2;
-      comp.previewConfig = {visible: true, number: 2, arrows: false};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: {visible: true, number: 2, arrows: false},
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        slideConfig: SLIDE_CONFIG
+      });
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
-      comp.slideConfig = SLIDE_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -391,11 +415,14 @@ describe('PreviewsComponent', () => {
       it(`should display previews with custom sizes. Index i=${index}`, () => {
         const initialActiveImage = 0;
         const numOfPreviews = 3;
-        comp.previewConfig = {visible: true, size: size};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          previewConfig: {visible: true, size: size},
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          slideConfig: SLIDE_CONFIG
+        });
         comp.currentImage = IMAGES[initialActiveImage];
         comp.images = IMAGES;
-        comp.slideConfig = SLIDE_CONFIG;
         comp.ngOnInit();
         fixture.detectChanges();
 
@@ -424,11 +451,14 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
       const afterClickActivePreview = 0;
-      comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: PREVIEWS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        slideConfig: SLIDE_CONFIG
+      });
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
-      comp.slideConfig = SLIDE_CONFIG;
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -492,11 +522,14 @@ describe('PreviewsComponent', () => {
 
     NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should navigate previews clicking on left arrow. Test i=${index}`, async(() => {
-        comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          previewConfig: PREVIEWS_CONFIG_VISIBLE,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          slideConfig: SLIDE_CONFIG
+        });
         comp.currentImage = IMAGES[val.initial.activeIndex];
         comp.images = IMAGES;
-        comp.slideConfig = SLIDE_CONFIG;
         comp.ngOnInit();
         fixture.detectChanges();
 
@@ -597,11 +630,14 @@ describe('PreviewsComponent', () => {
 
     [SLIDE_CONFIG, SLIDE_CONFIG_INFINITE].forEach((slideConfig: SlideConfig, index: number) => {
       it(`should navigate next/prev clicking on images for all SlideConfigs. Test i=${index}`, async(() => {
-        comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          previewConfig: PREVIEWS_CONFIG_VISIBLE,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          slideConfig: slideConfig
+        });
         comp.currentImage = IMAGES[0];
         comp.images = IMAGES;
-        comp.slideConfig = slideConfig;
         comp.ngOnInit();
         fixture.detectChanges();
 
@@ -679,7 +715,10 @@ describe('PreviewsComponent', () => {
 
   describe('---NO---', () => {
     it(`shouldn't display previews because visibility is false`, () => {
-      comp.previewConfig = PREVIEWS_CONFIG_HIDDEN;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        previewConfig: PREVIEWS_CONFIG_HIDDEN
+      });
       comp.currentImage = IMAGES[0];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -693,8 +732,8 @@ describe('PreviewsComponent', () => {
       const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
       expect(previewsContainer.name).toBe('nav');
       // null because input accessibility is not provided in this test
-      expect(previewsContainer.attributes['aria-label']).toBeNull();
-      expect(previewsContainer.properties['title']).toBeNull();
+      expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
+      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(0);

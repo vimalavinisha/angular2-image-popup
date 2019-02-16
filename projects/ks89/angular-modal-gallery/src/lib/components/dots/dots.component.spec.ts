@@ -26,6 +26,7 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../components/accessibility-default';
 import { InternalLibImage } from '../../model/image-internal.class';
+import { ConfigService } from '../../services/config.service';
 
 const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_ACCESSIBILITY_CONFIG);
 CUSTOM_ACCESSIBILITY.dotsContainerTitle = 'custom dotsContainerTitle';
@@ -86,7 +87,16 @@ const IMAGES: InternalLibImage[] = [
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [DotsComponent]
-  }).compileComponents();
+  }).overrideComponent(DotsComponent, {
+    set: {
+      providers: [
+        {
+          provide: ConfigService,
+          useClass: ConfigService
+        }
+      ]
+    }
+  });
 }
 
 describe('DotsComponent', () => {
@@ -105,8 +115,11 @@ describe('DotsComponent', () => {
 
     it(`should display dots (first one is active) based of the number of input images`, () => {
       const activeDotIndex = 0;
-      comp.dotsConfig = DOTS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        dotsConfig: DOTS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       comp.currentImage = IMAGES[activeDotIndex];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -139,8 +152,11 @@ describe('DotsComponent', () => {
 
     it(`should display dots (first one is active), because by default dotsConfig are visible`, () => {
       const activeDotIndex = 0;
-      comp.dotsConfig = undefined; // or null, or something not valid
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        dotsConfig: undefined, // or null, or something not valid
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       comp.currentImage = IMAGES[activeDotIndex];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -174,8 +190,11 @@ describe('DotsComponent', () => {
 
     it(`should display dots (first one is active) with custom accessibility`, () => {
       const activeDotIndex = 0;
-      comp.dotsConfig = DOTS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        dotsConfig: DOTS_CONFIG_VISIBLE,
+        accessibilityConfig: CUSTOM_ACCESSIBILITY
+      });
       comp.currentImage = IMAGES[activeDotIndex];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -210,8 +229,11 @@ describe('DotsComponent', () => {
     it(`should display dots and click on one of themem`, () => {
       const indexToClick = 1;
       const activeDotIndex = 0;
-      comp.dotsConfig = DOTS_CONFIG_VISIBLE;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        dotsConfig: DOTS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       comp.currentImage = IMAGES[activeDotIndex];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -236,8 +258,11 @@ describe('DotsComponent', () => {
   describe('---NO---', () => {
 
     it(`shouldn't display dots, because visibility is false.`, () => {
-      comp.dotsConfig = DOTS_CONFIG_HIDDEN;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        dotsConfig: DOTS_CONFIG_VISIBLE,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       comp.ngOnInit();
       fixture.detectChanges();
 
@@ -253,7 +278,10 @@ describe('DotsComponent', () => {
     });
 
     it(`shouldn't display dots, because the array of images as input is empty`, () => {
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       comp.currentImage = null;
       comp.images = [];
       comp.ngOnInit();
@@ -271,7 +299,10 @@ describe('DotsComponent', () => {
     });
 
     it(`shouldn't display dots, because the array of images as input is not valid`, () => {
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       comp.currentImage = null;
       comp.images = null;
       comp.ngOnInit();
@@ -289,7 +320,10 @@ describe('DotsComponent', () => {
     });
 
     it(`shouldn't display active dot when the currentImage is invalid, because 'isActive' method throws a managed error and return false`, () => {
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
       // create a fake image not available in comp.images array
       comp.currentImage = new InternalLibImage(99, IMAGES[0].modal);
       comp.images = IMAGES;
