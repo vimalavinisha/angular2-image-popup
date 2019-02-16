@@ -35,8 +35,8 @@ import { ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { ModalGalleryComponent } from '../modal-gallery/modal-gallery.component';
 import { GalleryService } from '../../services/gallery.service';
+import { ConfigService } from '../../services/config.service';
 
 let comp: CurrentImageComponent;
 let fixture: ComponentFixture<CurrentImageComponent>;
@@ -395,12 +395,16 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [CurrentImageComponent, SizeDirective, LoadingSpinnerComponent, KeyboardNavigationDirective, DescriptionDirective]
-  }).overrideComponent(ModalGalleryComponent, {
+  }).overrideComponent(CurrentImageComponent, {
     set: {
       providers: [
         {
           provide: GalleryService,
           useClass: GalleryService
+        },
+        {
+          provide: ConfigService,
+          useClass: ConfigService
         }
       ]
     }
@@ -423,16 +427,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image with arrows and side previews. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -450,16 +457,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image as base64 with arrows and side previews. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES_BASE64;
         comp.currentImage = IMAGES_BASE64[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES_BASE64[index],
@@ -476,16 +486,19 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`should display current image with arrows and side previews when there is only one image.`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        },
+        slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        keyboardConfig: null
+      });
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.currentImageConfig = <CurrentImageConfig>{
-        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-      };
-      comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.keyboardConfig = null;
       comp.ngOnChanges(<SimpleChanges>{
         currentImage: {
           previousValue: IMAGES[0],
@@ -502,16 +515,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on current image. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -544,16 +560,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on right side preview. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -590,17 +609,20 @@ describe('CurrentImageComponent', () => {
 
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on left side preview. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         const currentIndex: number = IMAGES.length - 1 - index;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[currentIndex],
@@ -636,16 +658,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images to the right using swipe gestures. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -676,17 +701,20 @@ describe('CurrentImageComponent', () => {
 
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should navigate between images to the left using swipe gestures. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         const currentIndex: number = IMAGES.length - 1 - index;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[currentIndex],
@@ -717,17 +745,20 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the left. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
+            invertSwipe: true
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
-          invertSwipe: true
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -758,18 +789,21 @@ describe('CurrentImageComponent', () => {
 
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the right. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
+            invertSwipe: true
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         const currentIndex: number = IMAGES.length - 1 - index;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
-          invertSwipe: true
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[currentIndex],
@@ -800,16 +834,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -829,16 +866,19 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL_HIDEEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is HIDE_IF_EMPTY. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          currentImageConfig: <CurrentImageConfig>{
+            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+            description: <Description>{strategy: DescriptionStrategy.HIDE_IF_EMPTY}
+          },
+          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          keyboardConfig: null
+        });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.currentImageConfig = <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.HIDE_IF_EMPTY}
-        };
-        comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-        comp.keyboardConfig = null;
         comp.ngOnChanges(<SimpleChanges>{
           currentImage: {
             previousValue: IMAGES[index],
@@ -861,16 +901,19 @@ describe('CurrentImageComponent', () => {
     CUSTOM_SLIDE_CONFIG.forEach((slideConfig: SlideConfig, j: number) => {
       TEST_MODEL.forEach((val: TestModel, index: number) => {
         it(`should display current image, arrows and side previews with custom slideConfig. Test i=${index}, j=${j}`, () => {
+          const configService = fixture.debugElement.injector.get(ConfigService);
+          configService.set({
+            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+            currentImageConfig: <CurrentImageConfig>{
+              loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+              description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+            },
+            slideConfig: slideConfig,
+            keyboardConfig: null
+          });
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.currentImageConfig = <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          };
-          comp.slideConfig = slideConfig;
-          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-          comp.keyboardConfig = null;
           comp.ngOnChanges(<SimpleChanges>{
             currentImage: {
               previousValue: IMAGES[index],
@@ -894,16 +937,19 @@ describe('CurrentImageComponent', () => {
     CUSTOM_SLIDE_CONFIG_INFINITE.forEach((slideConfig: SlideConfig, j: number) => {
       TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
         it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
+          const configService = fixture.debugElement.injector.get(ConfigService);
+          configService.set({
+            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+            currentImageConfig: <CurrentImageConfig>{
+              loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+              description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+            },
+            slideConfig: slideConfig,
+            keyboardConfig: null
+          });
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.currentImageConfig = <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          };
-          comp.slideConfig = slideConfig;
-          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-          comp.keyboardConfig = null;
           comp.ngOnChanges(<SimpleChanges>{
             currentImage: {
               previousValue: IMAGES[index],
@@ -931,17 +977,20 @@ describe('CurrentImageComponent', () => {
     CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS.forEach((slideConfig: SlideConfig, j: number) => {
       TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
         it(`should display current image and arrows WITHOUT side previews. Test i=${index}, j=${j}`, () => {
+          const configService = fixture.debugElement.injector.get(ConfigService);
+          configService.set({
+            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+            currentImageConfig: <CurrentImageConfig>{
+              loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+              description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+            },
+            slideConfig: slideConfig,
+            keyboardConfig: null
+          });
           const images = IMAGES;
           comp.images = images;
           comp.currentImage = images[index];
           comp.isOpen = true;
-          comp.currentImageConfig = <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          };
-          comp.slideConfig = slideConfig;
-          comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-          comp.keyboardConfig = null;
           comp.ngOnChanges(<SimpleChanges>{
             currentImage: {
               previousValue: images[index],
@@ -1037,16 +1086,19 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`should display current image with custom accessibility`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: CUSTOM_ACCESSIBILITY,
+        currentImageConfig: <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        },
+        slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        keyboardConfig: null
+      });
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.currentImageConfig = <CurrentImageConfig>{
-        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-      };
-      comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
-      comp.keyboardConfig = null;
       comp.ngOnChanges(<SimpleChanges>{
         currentImage: {
           previousValue: IMAGES[0],
@@ -1070,16 +1122,19 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`should display current image with an array of images with a single element.`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        },
+        slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        keyboardConfig: null
+      });
       comp.images = [IMAGES[0]];
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.currentImageConfig = <CurrentImageConfig>{
-        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-      };
-      comp.slideConfig = <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.keyboardConfig = null;
       comp.ngOnChanges(<SimpleChanges>{
         currentImage: {
           previousValue: IMAGES[0],
@@ -1104,17 +1159,20 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`should display gallery with all defaults and auto-navigate (play enabled).`, fakeAsync(() => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        },
+        slideConfig: <SlideConfig>{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}},
+        keyboardConfig: null
+      });
       comp.id = 0;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.currentImageConfig = <CurrentImageConfig>{
-        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-      };
-      comp.slideConfig = <SlideConfig>{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.keyboardConfig = null;
       fixture.detectChanges();
       const defaultInterval = 5000;
 
@@ -1152,18 +1210,21 @@ describe('CurrentImageComponent', () => {
 
   describe('---NO---', () => {
     it(`cannot navigate from the last image to the first one if infinite sliding is disabled`, () => {
-      const index: number = IMAGES.length - 1;
       const infiniteSliding = false;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        },
+        slideConfig: <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        keyboardConfig: null
+      });
+      const index: number = IMAGES.length - 1;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[index];
       comp.isOpen = true;
-      comp.currentImageConfig = <CurrentImageConfig>{
-        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-      };
-      comp.slideConfig = <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.keyboardConfig = null;
       comp.ngOnChanges(<SimpleChanges>{
         currentImage: {
           previousValue: IMAGES[index],
@@ -1187,18 +1248,21 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`cannot navigate from the first image to the last one if infinite sliding is disabled`, () => {
-      const index = 0;
       const infiniteSliding = false;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: <CurrentImageConfig>{
+          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
+          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
+        },
+        slideConfig: <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        keyboardConfig: null
+      });
+      const index = 0;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[index];
       comp.isOpen = true;
-      comp.currentImageConfig = <CurrentImageConfig>{
-        loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-        description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-      };
-      comp.slideConfig = <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}};
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
-      comp.keyboardConfig = null;
       comp.ngOnChanges(<SimpleChanges>{
         currentImage: {
           previousValue: IMAGES[index],
