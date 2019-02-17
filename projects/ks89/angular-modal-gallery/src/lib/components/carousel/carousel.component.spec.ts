@@ -54,6 +54,7 @@ import { CarouselImageConfig } from '../../model/carousel-image-config.interface
 import { getIndex } from '../../utils/image.util';
 import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
+import { ConfigService } from '../../services/config.service';
 
 let comp: CarouselComponent;
 let fixture: ComponentFixture<CarouselComponent>;
@@ -217,6 +218,10 @@ function initTestBed() {
         {
           provide: GalleryService,
           useClass: GalleryService
+        },
+        {
+          provide: ConfigService,
+          useClass: ConfigService
         },
         {
           provide: KEYBOARD_CONFIGURATION,
