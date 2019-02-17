@@ -31,6 +31,8 @@ import { BreakpointsConfig, CarouselPreviewConfig } from '../../../model/carouse
 import { Action } from '../../../model/action.enum';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MediumMockedBreakpointObserver } from '../../../utils/breakpoint-observer-mock.spec';
+import { ConfigService } from '../../../services/config.service';
+import { DotsConfig } from '../../../model/dots-config.interface';
 
 let comp: CarouselPreviewsComponent;
 let fixture: ComponentFixture<CarouselPreviewsComponent>;
@@ -227,7 +229,7 @@ function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: Inte
   expect(previewElement.styles['background-color']).toBe('transparent');
   expect(previewElement.styles['background-image']).toBe(`url(${imgUrl})`);
   expect(previewElement.styles['background-position']).toBe('center center');
-  expect(previewElement.styles['background-size']).toBe('100% 300px');
+  expect(previewElement.styles['background-size']).toBe('100% 400px');
   expect(previewElement.styles['background-repeat']).toBe('no-repeat');
   expect(previewElement.styles['background-attachment']).toBe('scroll');
   expect(previewElement.properties['title']).toBe(getTitle(previewImage));
@@ -244,6 +246,10 @@ function initTestBed() {
           // by default inject a mocked BreakpointObserver service with Medium size by default
           provide: BreakpointObserver,
           useClass: MediumMockedBreakpointObserver
+        },
+        {
+          provide: ConfigService,
+          useClass: ConfigService
         }
       ]
     }
@@ -286,12 +292,15 @@ describe('CarouselPreviewsComponent', () => {
   describe('---YES---', () => {
 
     it(`should display previews (first one is active) based of input images`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        carouselConfig: CAROUSEL_CONFIG_DEFAULT
+      });
       const initialActiveImage = 0;
       const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
-      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.currentImage = IMAGES[initialActiveImage];
-      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       comp.images = IMAGES;
       fixture.detectChanges();
 
@@ -320,13 +329,16 @@ describe('CarouselPreviewsComponent', () => {
 
     NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should display previews and navigate next clicking on images. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          carouselConfig: CAROUSEL_CONFIG_DEFAULT
+        });
         const initialActiveImage = val.initial.activeIndex; // initial active preview
         const newActiveImage = val.expected.activeIndex; // preview to click => so the next active preview after the click action
         const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
-        comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.currentImage = IMAGES[initialActiveImage];
-        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
         comp.images = IMAGES;
         fixture.detectChanges();
 
@@ -409,13 +421,16 @@ describe('CarouselPreviewsComponent', () => {
 
     NAVIGATION_PREV_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should display previews and navigate prev clicking on images. Test i=${index}`, fakeAsync(() => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          carouselConfig: CAROUSEL_CONFIG_DEFAULT
+        });
         const initialActiveImage = val.initial.activeIndex; // initial active preview
         const newActiveImage = val.expected.activeIndex; // preview to click => so the next active preview after the click action
         const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
-        comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.currentImage = IMAGES[initialActiveImage];
-        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
         comp.images = IMAGES;
         fixture.detectChanges();
         const element: DebugElement = fixture.debugElement;
@@ -506,12 +521,15 @@ describe('CarouselPreviewsComponent', () => {
     });
 
     it(`should display previews and navigate clicking on arrow 'next'`, fakeAsync(() => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        carouselConfig: CAROUSEL_CONFIG_DEFAULT
+      });
       const initialActiveImage = 0; // initial active preview
       const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
-      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.currentImage = IMAGES[initialActiveImage];
-      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       comp.images = IMAGES;
       fixture.detectChanges();
 
@@ -564,13 +582,16 @@ describe('CarouselPreviewsComponent', () => {
         newImage.plain.ariaLabel = 'custom accessibility ariaLabel';
         return newImage;
       });
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+        accessibilityConfig: CUSTOM_ACCESSIBILITY,
+        carouselConfig: CAROUSEL_CONFIG_DEFAULT
+      });
       const numOfPreviews = 4;
       const initialActiveImage = 0;
-      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-      comp.accessibilityConfig = CUSTOM_ACCESSIBILITY;
       comp.currentImage = IMAGES_CUSTOM_ACCESSIBILITY[initialActiveImage];
       comp.images = IMAGES_CUSTOM_ACCESSIBILITY;
-      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       fixture.detectChanges();
 
       const previewImages: InternalLibImage[] = IMAGES_CUSTOM_ACCESSIBILITY.slice(initialActiveImage, numOfPreviews);
@@ -609,10 +630,13 @@ describe('CarouselPreviewsComponent', () => {
         breakpoints: DEFAULT_BREAKPOINTS
       };
       const initialActiveImage = 0;
-      comp.previewConfig = customPreviewConfigFive;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        carouselPreviewsConfig: customPreviewConfigFive,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        carouselConfig: CAROUSEL_CONFIG_DEFAULT
+      });
       comp.currentImage = IMAGES[initialActiveImage];
-      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       comp.images = IMAGES;
       fixture.detectChanges();
 
@@ -645,10 +669,13 @@ describe('CarouselPreviewsComponent', () => {
         const initialActiveImage = 0;
         // create a custom preview config based on the default one, but with different maxHeight
         const CUSTOM_PREVIEW_CONFIG: CarouselPreviewConfig = Object.assign({}, DEFAULT_PREVIEW_CONFIG, {maxHeight: height});
-        comp.previewConfig = CUSTOM_PREVIEW_CONFIG;
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          carouselPreviewsConfig: CUSTOM_PREVIEW_CONFIG,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          carouselConfig: CAROUSEL_CONFIG_DEFAULT
+        });
         comp.currentImage = IMAGES[initialActiveImage];
-        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
         comp.images = IMAGES;
         fixture.detectChanges();
 
@@ -723,12 +750,15 @@ describe('CarouselPreviewsComponent', () => {
 
     [-2, -1, 0].forEach((numberOfPreviews: number, index: number) => {
       it(`should display previews with number <= 0, so it will be forced to the default value. Test i=${index}`, () => {
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.set({
+          carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+          carouselConfig: CAROUSEL_CONFIG_DEFAULT
+        });
         const initialActiveImage = 0;
         const numOfPreviews = 4;
-        comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-        comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
         comp.currentImage = IMAGES[initialActiveImage];
-        comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
         comp.images = IMAGES;
         fixture.detectChanges();
 
@@ -752,10 +782,13 @@ describe('CarouselPreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
       const LEGACY_MODE_CAROUSEL_CONFIG = Object.assign({}, CAROUSEL_CONFIG_DEFAULT, {legacyIE11Mode: true});
-      comp.previewConfig = DEFAULT_PREVIEW_CONFIG;
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        carouselConfig: LEGACY_MODE_CAROUSEL_CONFIG
+      });
       comp.currentImage = IMAGES[initialActiveImage];
-      comp.carouselConfig = LEGACY_MODE_CAROUSEL_CONFIG;
       comp.images = IMAGES;
       fixture.detectChanges();
 
@@ -785,12 +818,15 @@ describe('CarouselPreviewsComponent', () => {
 
   describe('---NO---', () => {
     it(`shouldn't display previews because visibility is false`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.set({
+        carouselPreviewsConfig: <CarouselPreviewConfig>{visible: false}, // hide previews
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        carouselConfig: CAROUSEL_CONFIG_DEFAULT
+      });
       const initialActiveImage = 0;
       const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
-      comp.previewConfig = <CarouselPreviewConfig>{visible: false}; // hide previews
-      comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
       comp.currentImage = IMAGES[initialActiveImage];
-      comp.carouselConfig = CAROUSEL_CONFIG_DEFAULT;
       comp.images = IMAGES;
       fixture.detectChanges();
 

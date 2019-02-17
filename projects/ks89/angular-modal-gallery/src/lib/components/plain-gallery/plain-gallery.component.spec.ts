@@ -46,7 +46,7 @@ const CUSTOM_ACCESSIBILITY: AccessibilityConfig = Object.assign({}, KS_DEFAULT_A
 CUSTOM_ACCESSIBILITY.plainGalleryContentAriaLabel = 'custom plainGalleryContentAriaLabel';
 CUSTOM_ACCESSIBILITY.plainGalleryContentTitle = 'custom plainGalleryContentTitle';
 
-const DEFAULT_PLAIN_SIZE: Size = {height: 'auto', width: '50px'};
+const DEFAULT_PLAIN_SIZE: Size = {width: 'auto', height: '50px'};
 const CUSTOM_SIZE: Size = {height: '40px', width: '40px'};
 const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '40px'};
 const CUSTOM_SIZE_AUTO_WIDTH: Size = {height: '40px', width: 'auto'};
