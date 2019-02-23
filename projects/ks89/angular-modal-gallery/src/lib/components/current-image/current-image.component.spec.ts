@@ -204,9 +204,8 @@ const CUSTOM_SLIDE_CONFIG: SlideConfig[] = [
 const CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS: SlideConfig[] = [
   {infinite: false, sidePreviews: {show: false, size: DEFAULT_SIZE}},
   {infinite: true, sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {infinite: true},
-  {infinite: false}
+  {sidePreviews: {show: false, size: DEFAULT_SIZE}}
+  // if sidePreviews is undefined, by default sidePreviews are enabled
 ];
 
 const CUSTOM_SLIDE_CONFIG_INFINITE: SlideConfig[] = [
@@ -987,14 +986,13 @@ describe('CurrentImageComponent', () => {
             slideConfig: slideConfig,
             keyboardConfig: null
           });
-          const images = IMAGES;
-          comp.images = images;
-          comp.currentImage = images[index];
+          comp.images = IMAGES;
+          comp.currentImage = IMAGES[index];
           comp.isOpen = true;
           comp.ngOnChanges(<SimpleChanges>{
             currentImage: {
-              previousValue: images[index],
-              currentValue: images[index],
+              previousValue: IMAGES[index],
+              currentValue: IMAGES[index],
               firstChange: false,
               isFirstChange: () => false
             }
@@ -1002,7 +1000,7 @@ describe('CurrentImageComponent', () => {
           comp.ngOnInit();
           fixture.detectChanges();
           checkMainContainer();
-          checkCurrentImage(images[index], val);
+          checkCurrentImage(IMAGES[index], val);
 
           // FIXME: this is the updated code to init both isFirstImage and isLastImage
           // let isFirstImage;
@@ -1077,7 +1075,7 @@ describe('CurrentImageComponent', () => {
             ? 'div.current-image-previous.hidden'
             : 'img.inside.current-image-previous'));
           expect(leftPreviewImage).toBeNull();
-          const rightPreviewImage: DebugElement = element.query(By.css((index === images.length - 1) && !slideConfig.infinite
+          const rightPreviewImage: DebugElement = element.query(By.css((index === IMAGES.length - 1) && !slideConfig.infinite
             ? 'div.current-image-next.hidden'
             : 'img.inside.current-image-next'));
           expect(rightPreviewImage).toBeNull();
