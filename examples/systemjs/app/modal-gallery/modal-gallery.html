@@ -4,7 +4,7 @@
 <p>If you want, you can <b>add a random image</b> to every example
   <button (click)="addRandomImage()"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
 </p>
-<p>To open modal gallery with id <input type="number" min="1" max="53" [(ngModel)]="galleryId"> at index <input
+<p>To open modal gallery with id <input type="number" min="1" max="58" [(ngModel)]="galleryId"> at index <input
   type="number" min="1" [(ngModel)]="imageIndex">, click here:
   <button (click)="openModalViaService(galleryId, imageIndex - 1)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open
     id={{galleryId}} at index={{imageIndex}}
@@ -225,23 +225,26 @@
 </section>
 <section>
   <h3>B23 - (id=32) - Simple demo - buttons config CUSTOM but with all default buttons already included in the library</h3>
+  <p><i>I added also 'onButtonBeforeHook' and 'onButtonAfterHook' to support delete button</i></p>
   <br>
   <ks-modal-gallery [id]="32" [modalImages]="images"
                     [currentImageConfig]="{downloadable: true}"
-                    [buttonsConfig]="buttonsConfigCustom"></ks-modal-gallery>
+                    [buttonsConfig]="buttonsConfigCustom"
+                    (buttonBeforeHook)="onButtonBeforeHook($event)"
+                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
 </section>
 <section>
   <h3>B24 - (id=33) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
     5</a></h3>
-  <p><i>Be careful to use the id=37 also in the Component. This is necessary here, because I have many instances of
+  <p><i>Be careful to use the id=33 also in the Component. This is necessary here, because I have many instances of
     angular-modal-gallery in a single page</i></p>
   <br>
   <ks-modal-gallery [id]="33" [modalImages]="images"
                     [currentImageConfig]="{downloadable: true}"
                     [buttonsConfig]="customButtonsFontAwesomeConfig"
                     (show)="onVisibleIndex($event)"
-                    (buttonBeforeHook)="onCustomButtonBeforeHook($event, 37)"
-                    (buttonAfterHook)="onCustomButtonAfterHook($event, 37)"></ks-modal-gallery>
+                    (buttonBeforeHook)="onCustomButtonBeforeHook($event, 33)"
+                    (buttonAfterHook)="onCustomButtonAfterHook($event, 33)"></ks-modal-gallery>
 </section>
 <br>
 <hr>
@@ -409,7 +412,7 @@
   <h3>E3 - (id=56) - AutoPlay demo - with default interval, pauseOnHover disabled and infinite is enabled</h3>
   <br>
   <ks-modal-gallery [id]="56" [modalImages]="images"
-                    [slideConfig]="{infinite: true, playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>
+                    [slideConfig]="{infinite: true, playConfig: {autoPlay: true, interval: 5000, pauseOnHover: false}}"></ks-modal-gallery>
 </section>
 <section>
   <h3>E4 - (id=57) - AutoPlay demo - with interval=1000 interval and pauseOnHover disabled</h3>

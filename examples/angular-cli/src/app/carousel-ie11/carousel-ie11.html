@@ -11,7 +11,7 @@
   <p>Obviously, objectFit is ignored when legacyIE11Mode is enabled</p>
   <br>
   <ks-carousel [id]="300" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
+    [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -20,8 +20,8 @@
   <h3>D2 - (id=301) - carousel example for IE11 with fixed maxWidth (766px), legacyMode enabled and custom previews</h3>
   <br>
   <ks-carousel [id]="301" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
-               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
+    [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+    [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -30,8 +30,8 @@
   <h3>D3 - (id=302) - carousel example for IE11 with description and legacyMode enabled</h3>
   <br>
   <ks-carousel [id]="302" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
-               [carouselImageConfig]="{description: {strategy: 2}}">
+    [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+    [carouselImageConfig]="{description: {strategy: 2}}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>

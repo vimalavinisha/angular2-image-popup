@@ -87,9 +87,9 @@
   <h3>A10 - (id=109) - carousel example (minimal with all defaults) with outputs</h3>
   <br>
   <ks-carousel [id]="109" [images]="imagesRect"
-               (show)="onShow($event)"
-               (firstImage)="onFirstImage($event)"
-               (lastImage)="onLastImage($event)"></ks-carousel>
+    (show)="onShow($event)"
+    (firstImage)="onFirstImage($event)"
+    (lastImage)="onLastImage($event)"></ks-carousel>
 </section>
 <br>
 <br>
@@ -126,21 +126,30 @@
   </ks-carousel>
 </section>
 <br>
+<section>
+  <h3>B4 - (id=113) - carousel example with 7 images and unclickable previews</h3>
+  <br>
+  <ks-carousel [id]="113" [images]="imagesRect"
+               [previewConfig]="{visible: true, number: 7, clickable: false}">
+    <div class="projected">This is my projected content!</div>
+  </ks-carousel>
+</section>
+<br>
 <br>
 
 <h3>Examples with custom current image</h3>
 <section>
-  <h3>C1 - (id=113) - carousel example with invert swipe on touchscreen devices</h3>
+  <h3>C1 - (id=114) - carousel example with invert swipe on touchscreen devices</h3>
   <br>
-  <ks-carousel [id]="113" [images]="imagesRect" [carouselImageConfig]="{invertSwipe: true}">
+  <ks-carousel [id]="114" [images]="imagesRect" [carouselImageConfig]="{invertSwipe: true}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
 <br>
 <section>
-  <h3>C2 - (id=114) - carousel example with description</h3>
+  <h3>C2 - (id=115) - carousel example with description</h3>
   <br>
-  <ks-carousel [id]="114" [images]="imagesRect" [carouselImageConfig]="{description: {strategy: 2}}">
+  <ks-carousel [id]="115" [images]="imagesRect" [carouselImageConfig]="{description: {strategy: 2}}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -153,9 +162,9 @@
 <p>If F1, the maxHeight is 200px, but also the default breakpoints has 200px as maximum size, so the result will be very bad on bigger screen.
   In F2, I'm using a smaller maxHeight, so previews won't be taller than 150px, despite the default breakpoints on bigger screens (200px).</p>
 <section>
-  <h3>F1 - (id=115) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 200px)</h3>
+  <h3>F1 - (id=116) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 200px)</h3>
   <br>
-  <ks-carousel [id]="115" [images]="imagesRect"
+  <ks-carousel [id]="116" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '200px'}">
     <div class="projected">This is my projected content!</div>
@@ -163,9 +172,9 @@
 </section>
 <br>
 <section>
-  <h3>F2 - (id=116) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 150px)</h3>
+  <h3>F2 - (id=117) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 150px)</h3>
   <br>
-  <ks-carousel [id]="116" [images]="imagesRect"
+  <ks-carousel [id]="117" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '150px'}">
     <div class="projected">This is my projected content!</div>
@@ -177,16 +186,16 @@
 <h3>Examples with custom heights for previews (to try responsiveness)</h3>
 <br>
 <section>
-  <h3>G1 - (id=117) - carousel example (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180)</h3>
+  <h3>G1 - (id=118) - carousel example (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180)</h3>
   <br>
-  <ks-carousel [id]="117" [images]="imagesRect"
+  <ks-carousel [id]="118" [images]="imagesRect"
                [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}}"></ks-carousel>
 </section>
 <br>
 <section>
-  <h3>G2 - (id=118) - carousel example with fixed maxWidth (500px) (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100)</h3>
+  <h3>G2 - (id=119) - carousel example with fixed maxWidth (500px) (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100)</h3>
   <br>
-  <ks-carousel [id]="118" [images]="imagesRect"
+  <ks-carousel [id]="119" [images]="imagesRect"
                [carouselConfig]="{maxWidth: '500px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
 </section>

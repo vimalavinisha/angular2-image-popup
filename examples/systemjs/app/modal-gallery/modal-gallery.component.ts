@@ -308,7 +308,12 @@ export class ModalGalleryComponent {
   // array with a single image inside (the first one)
   singleImage: Image[] = [this.images[0]];
 
-  imagesInfiniteAutoAdd: Image[] = [this.images[0]];
+  imagesInfiniteAutoAdd: Image[] = [
+    new Image(0, {
+      img: '../assets/images/gallery/img1.jpg?1',
+      extUrl: 'http://www.google.com'
+    })
+  ];
 
   dotsConfig: DotsConfig = {
     visible: false
@@ -687,6 +692,7 @@ export class ModalGalleryComponent {
     const interval = setInterval(() => {
       const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
       const newImage: Image = new Image(this.imagesInfiniteAutoAdd.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
+      newImage.modal.img += `?${this.imagesInfiniteAutoAdd.length + 1}`;
       this.imagesInfiniteAutoAdd = [...this.imagesInfiniteAutoAdd, newImage];
       this.count++;
       if (this.count === 4) {
