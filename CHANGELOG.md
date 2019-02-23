@@ -34,6 +34,9 @@
 - **support image download also as base64**
 - **add config.service to store and share library configuration** (this is used only inside the library and it's a core feature for future releases like 8.0.0) #180
 
+### Bugfixes
+- **if slideConfig is undefined, side previews should be visible, because they are enabled by default.** Fixed thanks to the new configService and unit testing.
+
 ### Demos
 - fix some issues and update all examples
 - fix example B23 to enable delete button
