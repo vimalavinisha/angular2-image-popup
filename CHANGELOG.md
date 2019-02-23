@@ -29,6 +29,19 @@
 - fix issue #186 about vertical scrolling with carousel, caused by HammerJs (solution received by @mohaxspb as a pull request https://github.com/Ks89/angular-modal-gallery/pull/187)
 
 
+# 7.3.0-rc.1
+### Features
+- **support image download also as base64**
+- **add config.service to store and share library configuration** (this is used only inside the library and it's a core feature for future releases like 8.0.0) #180
+
+### Demos
+- fix some issues and update all examples
+- fix example B23 to enable delete button
+
+### Testing
+- update tests
+
+
 # 7.2.1
 ### Bugfixes
 - fix issue cannot read property 'pauseOnHover' of undefined (requested by @alvinmactal #177)
