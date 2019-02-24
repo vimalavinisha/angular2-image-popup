@@ -232,7 +232,7 @@ on_success:
   # TODO restore compodoc - why on appveyor isn't working???
 #  - npm run docs:compodoc
   # publish test results on codeclimate
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 # on build failure
 #on_failure:
