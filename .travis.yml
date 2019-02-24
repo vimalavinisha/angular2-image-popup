@@ -50,8 +50,8 @@ script:
   - bash travisci/script.sh
 after_success:
   - source travisci/after_success.sh
-#after_script:
-#  - bash travisci/after_script.sh
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 cache:
   apt: true

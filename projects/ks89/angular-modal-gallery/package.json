@@ -8,6 +8,7 @@
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
+  "sideEffect": true,
   "homepage": "https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/",
   "peerDependencies": {
     "@angular/platform-browser": ">=6.0.0",

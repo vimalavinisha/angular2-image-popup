@@ -26,3 +26,9 @@ else
     echo "Installing chrome on $TRAVIS_OS_NAME"
     brew cask install google-chrome
 fi
+
+# codeclimate test reporter
+echo "Preparing codeclimate test reporter - OS is $TRAVIS_OS_NAME"
+curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+chmod +x ./cc-test-reporter
+./cc-test-reporter before-build
