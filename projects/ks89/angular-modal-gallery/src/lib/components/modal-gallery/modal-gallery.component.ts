@@ -231,7 +231,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     private changeDetectorRef: ChangeDetectorRef,
     private idValidatorService: IdValidatorService,
     private configService: ConfigService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
     private overlay: Overlay,
     private previewDialog: FilePreviewOverlayService
   ) {}
