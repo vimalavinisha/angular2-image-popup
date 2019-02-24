@@ -22,6 +22,12 @@ jobs:
           name: node-sass-clean
           command: npm rebuild node-sass --force
       - run:
+          name: init-codeclimate-test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build
+      - run:
           name: npm-install
           command: npm ci
       - save_cache:
@@ -124,7 +130,8 @@ jobs:
 #          command: npm run docs:compodoc
       - run:
           name: run-codeclimate
-          command: npm run codeclimate
+          command: |
+            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
       - run:
           name: run-coveralls
           command: npm run coveralls
