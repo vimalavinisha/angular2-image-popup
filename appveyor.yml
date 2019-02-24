@@ -73,7 +73,7 @@ environment:
   NODE_ENV: test
   CI: yes
   APPVEYOR: yes
-  CODECLIMATE_REPO_TOKEN:
+  CC_TEST_REPORTER_ID:
     secure: 599YTB1w26VDxTafTrBNso5CW8BnztpspX2ajIcowkhI249QaKE+nOjN7oQSN1MMm9k7ekutSCpU185qsG4yvVpg4prdOQUs+VkNtLQgz9s=
   COVERALLS_REPO_TOKEN:
     secure: Edx2E7hPwjoxiEWq2pHhd7iugZKunJrlX/OVlja2dOjGwXe6/QNgJ1lrEdeEFDwB
@@ -99,9 +99,9 @@ install:
   # install nodejs and dependencies both global and local
   # use appveyor-retry to retry if npm ci fails
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
-  - npm install -g npm@6.4.1
+  - npm install -g npm@6.8.0
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g codeclimate-test-reporter @angular/cli@7.0.2
+  - npm install -g @angular/cli@7.3.3
   - npm ci
   # rebuild again node-sass
   - npm rebuild node-sass --force
@@ -190,6 +190,10 @@ test_script:
   # Output useful info for debugging.
   - node --version && npm --version
   - ps: "npm --version # PowerShell" # Pass comment to PS for easier debugging
+  # init codeclimate test reporter
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   # run tests
   - npm run test:ci
   # run e2e tests
@@ -227,8 +231,8 @@ on_success:
   - npm run docs:typedoc
   # TODO restore compodoc - why on appveyor isn't working???
 #  - npm run docs:compodoc
-  - codeclimate-test-reporter < .\coverage\lcov.info
-  - node .\node_modules\codeclimate-test-reporter\bin\codeclimate.js < .\coverage\lcov.info
+  # publish test results on codeclimate
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 # on build failure
 #on_failure:

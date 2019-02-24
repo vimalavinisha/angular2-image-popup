@@ -68,8 +68,7 @@
     "analyze:sonar": "npm run clean && npm test && sonar-scanner -Dsonar.projectKey=angular-modal-gallery -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=ks89-github",
     "analyze:sonar:ci": "npm run clean && npm run test:ci && sonar-scanner -Dsonar.projectKey=angular-modal-gallery -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=ks89-github",
     "check:licenses": "license-checker --exclude 'MIT, MIT OR X11, BSD, ISC, Apache-2.0'",
-    "coveralls": "coveralls < coverage/lcov.info",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "husky": {
     "hooks": {

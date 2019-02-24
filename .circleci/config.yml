@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run:
           name: npm-install-npm-latest
-          command: sudo npm install -g npm@6.4.1
+          command: sudo npm install -g npm@6.8.0
       - run:
           name: npm-install-global
-          command: sudo npm install -g codeclimate-test-reporter @angular/cli@7.0.2
+          command: sudo npm install -g @angular/cli@7.3.3
       - restore_cache:
           key: my-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run:
