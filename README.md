@@ -177,6 +177,7 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 5  | = 6.3.0                     | optional     |
 | Angular 6  | &gt;= 7.0.0                 | optional     |
 | Angular 7  | &gt;= 7.0.0                 | optional     |
+| Angular 8  | &gt;= 7.2.1                 | optional     |
 
 <br>
 
