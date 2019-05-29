@@ -98,7 +98,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.0-beta.16",
     "@angular-devkit/build-ng-packagr": "^0.800.0-beta.16",
-    "@angular/cli": "^8.0.0-beta.16",
+    "@angular/cli": "^8.0.0",
     "@angular/compiler-cli": "~8.0.0-beta.13",
     "@angular/language-service": "~8.0.0-beta.13",
     "@compodoc/compodoc": "^1.1.9",

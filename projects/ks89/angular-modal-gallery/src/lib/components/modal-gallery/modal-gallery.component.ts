@@ -65,7 +65,8 @@ import { IdValidatorService } from '../../services/id-validator.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ConfigService, LibConfig } from '../../services/config.service';
 import { PlayConfig } from '../../model/play-config.interface';
-import { FilePreviewOverlayRef, FilePreviewOverlayService } from '../overlaycontent/file-preview-overlay.service';
+import { ModalOverlayService } from '../overlaycontent/modal-overlay.service';
+import { ModalOverlayRef } from '../overlaycontent/modal-overlay-ref';
 import { Overlay } from '@angular/cdk/overlay';
 
 /**
@@ -233,7 +234,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     private configService: ConfigService,
     private sanitizer: DomSanitizer,
     private overlay: Overlay,
-    private previewDialog: FilePreviewOverlayService
+    private previewDialog: ModalOverlayService
   ) {}
 
   /**
@@ -708,7 +709,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   // showPreview(index: number) {
   //   const imageToShow: Image = this.images[index];
   //   console.log('--imageToShow', imageToShow);
-  //   const dialogRef: FilePreviewOverlayRef = this.previewDialog.open({
+  //   const dialogRef: ModalOverlayRef = this.previewDialog.open({
   //     image: {name: 'aaa', url: <string>imageToShow.modal.img }
   //   });
   // }

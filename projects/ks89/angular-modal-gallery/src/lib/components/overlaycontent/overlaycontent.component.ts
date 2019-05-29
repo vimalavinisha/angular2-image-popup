@@ -1,13 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FILE_PREVIEW_DIALOG_DATA } from './file-preview-overlay.tokens';
+
+import { ModalOverlayRef } from './modal-overlay-ref';
+import { DIALOG_DATA } from './modal-overlay.tokens';
+import { ModalOverlayService } from './modal-overlay.service';
 
 @Component({
   selector: 'ks-app-overlaycontent',
   templateUrl: './overlaycontent.component.html',
-  styleUrls: ['./overlaycontent.component.css']
+  styleUrls: ['./overlaycontent.component.scss']
 })
-export class OverlaycontentComponent implements OnInit {
-  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public image: any) {}
+export class OverlaycontentComponent {
+  image: any;
+  dialogData: ModalOverlayService;
 
-  ngOnInit() {}
+  constructor(private dialogRef: ModalOverlayRef, @Inject(DIALOG_DATA) private dialogContent: ModalOverlayService) {
+    this.dialogData = dialogContent;
+  }
 }

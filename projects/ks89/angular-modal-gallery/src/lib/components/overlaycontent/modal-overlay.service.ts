@@ -1,31 +1,24 @@
-import { Injectable, Inject, OnInit, Injector, ComponentRef } from '@angular/core';
+import { Injectable, Injector, ComponentRef } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 
-import { FILE_PREVIEW_DIALOG_DATA } from './file-preview-overlay.tokens';
+import { DIALOG_DATA } from './modal-overlay.tokens';
 import { OverlaycontentComponent } from './overlaycontent.component';
-
-export class FilePreviewOverlayRef {
-  constructor(private overlayRef: OverlayRef) {}
-
-  close(): void {
-    this.overlayRef.dispose();
-  }
-}
+import { ModalOverlayRef } from './modal-overlay-ref';
 
 export interface Image {
   name: string;
   url: string;
 }
 
-interface FilePreviewDialogConfig {
+interface ModalOverlayConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
   image?: Image;
 }
 
-const DEFAULT_CONFIG: FilePreviewDialogConfig = {
+const DEFAULT_CONFIG: ModalOverlayConfig = {
   hasBackdrop: true,
   backdropClass: 'dark-backdrop',
   panelClass: 'tm-file-preview-dialog-panel',
@@ -33,10 +26,10 @@ const DEFAULT_CONFIG: FilePreviewDialogConfig = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class FilePreviewOverlayService {
+export class ModalOverlayService {
   constructor(private injector: Injector, private overlay: Overlay) {}
 
-  open(config: FilePreviewDialogConfig = {}) {
+  open(config: ModalOverlayConfig = {}) {
     console.log('completed config-', config);
 
     // Override default configuration
@@ -46,22 +39,22 @@ export class FilePreviewOverlayService {
     const overlayRef = this.createOverlay(dialogConfig);
 
     // Instantiate remote control
-    const dialogRef = new FilePreviewOverlayRef(overlayRef);
+    const dialogRef = new ModalOverlayRef(overlayRef);
 
     const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, dialogRef);
 
-    overlayRef.backdropClick().subscribe(_ => dialogRef.close());
+    overlayRef.backdropClick().subscribe(() => dialogRef.close());
 
     console.log('completed open');
     return dialogRef;
   }
 
-  private createOverlay(config: FilePreviewDialogConfig) {
+  private createOverlay(config: ModalOverlayConfig) {
     const overlayConfig = this.getOverlayConfig(config);
     return this.overlay.create(overlayConfig);
   }
 
-  private attachDialogContainer(overlayRef: OverlayRef, config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef) {
+  private attachDialogContainer(overlayRef: OverlayRef, config: ModalOverlayConfig, dialogRef: ModalOverlayRef) {
     const injector = this.createInjector(config, dialogRef);
 
     const containerPortal = new ComponentPortal(OverlaycontentComponent, null, injector);
@@ -70,16 +63,16 @@ export class FilePreviewOverlayService {
     return containerRef.instance;
   }
 
-  private createInjector(config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef): PortalInjector {
+  private createInjector(config: ModalOverlayConfig, dialogRef: ModalOverlayRef): PortalInjector {
     const injectionTokens = new WeakMap();
 
-    injectionTokens.set(FilePreviewOverlayRef, dialogRef);
-    injectionTokens.set(FILE_PREVIEW_DIALOG_DATA, config.image);
+    injectionTokens.set(ModalOverlayRef, dialogRef);
+    injectionTokens.set(DIALOG_DATA, config.image);
 
     return new PortalInjector(this.injector, injectionTokens);
   }
 
-  private getOverlayConfig(config: FilePreviewDialogConfig): OverlayConfig {
+  private getOverlayConfig(config: ModalOverlayConfig): OverlayConfig {
     const positionStrategy = this.overlay
       .position()
       .global()
