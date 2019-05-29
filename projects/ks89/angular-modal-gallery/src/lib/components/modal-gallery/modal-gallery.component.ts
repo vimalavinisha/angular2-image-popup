@@ -187,7 +187,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Reference to the CurrentImageComponent to invoke methods on it.
    */
-  @ViewChild(CurrentImageComponent)
+  @ViewChild(CurrentImageComponent, { static: true })
   currentImageComponent;
 
   /**
