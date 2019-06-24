@@ -1,3 +1,8 @@
+# 7.2.2
+### Bugfixes
+- fix issue about vertical scrolling with carousel, caused by HammerJs (solution received by @mohaxspb as a pull request https://github.com/Ks89/angular-modal-gallery/pull/187)
+
+
 # 7.2.1
 ### Bugfixes
 - fix issue cannot read property 'pauseOnHover' of undefined (requested by @alvinmactal #177)

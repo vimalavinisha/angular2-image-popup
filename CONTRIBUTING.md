@@ -3,7 +3,7 @@ Sometimes, shy developers have really good ideas. So don't be shy and open an is
 If you want to help me, modify the source code, but **before to create a pull request, follow these steps**
 
 **Attention! This is really important**
-Every time you'll run `npm install` inside a demo's folder, you must rebuild all with `npm run build:all`
+Every time you'll run `npm install` inside an example's folder, you must rebuild all with `npm run build:all`
 
 # A. Cleanup and initialization
 1. `npm install -g lite-server @angular/cli@latest`
