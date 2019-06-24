@@ -31,7 +31,9 @@ import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.ser
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 
-export class MyHammerConfig extends HammerGestureConfig {
+// to prevent bad scrolling behaviour on mobile phone with carousels.
+// From @mohaxspb (https://github.com/Ks89/angular-modal-gallery/pull/187)
+class KsHammerGestureConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
     return new Hammer(element, {
       touchAction: 'pan-y'
@@ -49,7 +51,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   providers: [
     {
       provide: HAMMER_GESTURE_CONFIG,
-      useClass: MyHammerConfig
+      useClass: KsHammerGestureConfig
     }
   ]
 })
