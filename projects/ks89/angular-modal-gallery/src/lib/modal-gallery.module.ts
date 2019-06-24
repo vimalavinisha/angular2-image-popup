@@ -33,7 +33,7 @@ import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-br
 
 // to prevent bad scrolling behaviour on mobile phone with carousels.
 // From @mohaxspb (https://github.com/Ks89/angular-modal-gallery/pull/187)
-class KsHammerGestureConfig extends HammerGestureConfig {
+export class KsHammerGestureConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
     return new Hammer(element, {
       touchAction: 'pan-y'
