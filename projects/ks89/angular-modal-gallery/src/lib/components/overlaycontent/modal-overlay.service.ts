@@ -5,17 +5,19 @@ import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { DIALOG_DATA } from './modal-overlay.tokens';
 import { OverlaycontentComponent } from './overlaycontent.component';
 import { ModalOverlayRef } from './modal-overlay-ref';
+import { Image } from '../../model/image.class';
 
-export interface Image {
-  name: string;
-  url: string;
+export interface ModalOverlayInput {
+  id: number;
+  images: Image[];
+  currentImage: Image;
 }
 
 interface ModalOverlayConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
-  image?: Image;
+  image?: ModalOverlayInput;
 }
 
 const DEFAULT_CONFIG: ModalOverlayConfig = {
@@ -27,6 +29,8 @@ const DEFAULT_CONFIG: ModalOverlayConfig = {
 
 @Injectable({ providedIn: 'root' })
 export class ModalOverlayService {
+  private dialogRef;
+
   constructor(private injector: Injector, private overlay: Overlay) {}
 
   open(config: ModalOverlayConfig = {}) {
@@ -39,14 +43,25 @@ export class ModalOverlayService {
     const overlayRef = this.createOverlay(dialogConfig);
 
     // Instantiate remote control
-    const dialogRef = new ModalOverlayRef(overlayRef);
+    this.dialogRef = new ModalOverlayRef(overlayRef);
 
-    const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, dialogRef);
+    const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
 
-    overlayRef.backdropClick().subscribe(() => dialogRef.close());
+    overlayRef.backdropClick().subscribe(() => this.dialogRef.close());
 
     console.log('completed open');
-    return dialogRef;
+    return this.dialogRef;
+  }
+
+  close() {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+      this.dialogRef = null;
+    }
+  }
+
+  isOpen(): boolean {
+    return !!this.dialogRef;
   }
 
   private createOverlay(config: ModalOverlayConfig) {

@@ -234,7 +234,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     private configService: ConfigService,
     private sanitizer: DomSanitizer,
     private overlay: Overlay,
-    private previewDialog: ModalOverlayService
+    private modalGalleryService: ModalOverlayService
   ) {}
 
   /**
@@ -551,8 +551,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    * @param number index of the clicked image
    */
   onShowModalGallery(index: number) {
-    this.showModalGallery(index);
-    // this.showPreview(index);
+    // this.showModalGallery(index);
+    this.showPreview(index);
   }
 
   /**
@@ -706,13 +706,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  // showPreview(index: number) {
-  //   const imageToShow: Image = this.images[index];
-  //   console.log('--imageToShow', imageToShow);
-  //   const dialogRef: ModalOverlayRef = this.previewDialog.open({
-  //     image: {name: 'aaa', url: <string>imageToShow.modal.img }
-  //   });
-  // }
+  showPreview(index: number) {
+    const imageToShow: Image = this.images[index];
+    console.log('--imageToShow', imageToShow);
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      image: {
+        id: this.id,
+        images: this.images,
+        currentImage: this.images[0]
+      }
+    });
+  }
 
   /**
    * Method to convert a base64 to a Blob

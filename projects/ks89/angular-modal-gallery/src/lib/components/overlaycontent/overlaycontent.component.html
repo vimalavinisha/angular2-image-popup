@@ -1,3 +1,38 @@
-<div class="overlay-content">
-  <img [src]="image.url">
+<div id="modal-gallery-wrapper"
+     [attr.aria-label]="accessibilityConfig.modalGalleryContentAriaLabel"
+     [title]="accessibilityConfig.modalGalleryContentTitle"
+     ksClickOutside [clickOutsideEnable]="enableCloseOutside"
+     (clickOutside)="onClickOutside($event)">
+
+  <div id="flex-min-height-ie-fix">
+    <div id="modal-gallery-container">
+
+      <ks-upper-buttons [currentImage]="currentImage"
+                        (delete)="onDelete($event)"
+                        (navigate)="onNavigate($event)"
+                        (download)="onDownload($event)"
+                        (close)="onCloseGallery($event)"
+                        (fullscreen)="onFullScreen($event)"
+                        (customEmit)="onCustomEmit($event)"></ks-upper-buttons>
+
+      <ks-current-image [id]="id"
+                        [images]="images"
+                        [currentImage]="currentImage"
+                        [isOpen]="opened"
+                        (loadImage)="onImageLoad($event)"
+                        (changeImage)="onChangeCurrentImage($event)"
+                        (close)="onCloseGallery($event)"></ks-current-image>
+
+      <div>
+        <ks-dots [images]="images"
+                 [currentImage]="currentImage"
+                 [dotsConfig]="dotsConfig"
+                 (clickDot)="onClickDot($event)"></ks-dots>
+
+        <ks-previews [images]="images"
+                     [currentImage]="currentImage"
+                     (clickPreview)="onClickPreview($event)"></ks-previews>
+      </div>
+    </div>
+  </div>
 </div>
