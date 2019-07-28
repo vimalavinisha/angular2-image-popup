@@ -154,10 +154,6 @@ export class OverlaycontentComponent implements OnDestroy {
    */
   currentImage: InternalLibImage;
   /**
-   * Boolean that it is true if the modal gallery is visible. False by default.
-   */
-  opened = false;
-  /**
    * Boolean to open the modal gallery. False by default.
    */
   showGallery = false;
@@ -377,8 +373,9 @@ export class OverlaycontentComponent implements OnDestroy {
    */
   closeGallery(action: Action = Action.NORMAL, isCalledByService: boolean = false) {
     this.close.emit(new ImageModalEvent(action, true));
-    this.opened = false;
     this.keyboardService.reset();
+
+    this.modalGalleryService.close();
 
     // shows scrollbar
     document.body.style.overflow = 'visible';
@@ -419,7 +416,6 @@ export class OverlaycontentComponent implements OnDestroy {
     if (event && this.enableCloseOutside) {
       console.log('onClickOutside clicked');
       this.closeGallery(Action.CLICK);
-      this.modalGalleryService.close();
     }
   }
 
