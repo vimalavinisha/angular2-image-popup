@@ -67,6 +67,7 @@ import { CarouselImageConfig } from '../../model/carousel-image-config.interface
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
 import { ConfigService, LibConfig } from '../../services/config.service';
+import { ModalOverlayService } from '../overlaycontent/modal-overlay.service';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -277,6 +278,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   constructor(
     @Inject(PLATFORM_ID) private _platformId,
     private _ngZone: NgZone,
+    private modalOverlayService: ModalOverlayService,
     private galleryService: GalleryService,
     private configService: ConfigService,
     private ref: ChangeDetectorRef,
@@ -413,7 +415,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       return;
     }
     const index = getIndex(this.currentImage, this.images);
-    this.galleryService.openGallery(this.id, index);
+    // this.galleryService.openGallery(this.id, index);
+    this.modalOverlayService.open({
+      image: {
+        id: this.id,
+        images: this.images,
+        currentImage: this.images[index]
+      }
+    });
   }
 
   /**
