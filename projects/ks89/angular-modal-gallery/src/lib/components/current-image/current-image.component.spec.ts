@@ -347,7 +347,7 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
   const divNavLeft: DebugElement = aNavLeft.children[0];
   expect(divNavLeft.attributes['aria-hidden']).toBe('true');
   expect(divNavLeft.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'));
-  expect(divNavLeft.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
+  expect(divNavLeft.properties['title']).toBe(isFirstImage ? '' : KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
 
   const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
   expect(aNavRight.name).toBe('a');
@@ -357,7 +357,7 @@ function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
   const divNavRight: DebugElement = aNavRight.children[0];
   expect(divNavRight.attributes['aria-hidden']).toBe('true');
   expect(divNavRight.properties['className']).toBe('inside ' + (isLastImage ? 'empty-arrow-image' : 'right-arrow-image'));
-  expect(divNavRight.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
+  expect(divNavRight.properties['title']).toBe(isLastImage ? '' : KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
 }
 
 function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
