@@ -7,10 +7,10 @@
     <a class="nav-left"
        [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
        [tabindex]="isFirstImage ? -1 : 0" role="button"
-       (click)="onNavigationEvent('left', $event)" (keyup)="onNavigationEvent('left', $event)">
+       (click)="onNavigationEvent('left', $event, normalAction, isFirstImage)" (keyup)="onNavigationEvent('left', $event, normalAction, isFirstImage)">
       <div class="inside {{isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.mainPrevImageTitle"></div>
+           [title]="isFirstImage ? '' : accessibilityConfig.mainPrevImageTitle"></div>
     </a>
 
     <ng-container *ngIf="slideConfig?.sidePreviews?.show">
@@ -83,10 +83,10 @@
     <a class="nav-right"
        [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
        [tabindex]="isLastImage ? -1 : 0" role="button"
-       (click)="onNavigationEvent('right', $event)" (keyup)="onNavigationEvent('right', $event)">
+       (click)="onNavigationEvent('right', $event, normalAction, isLastImage)" (keyup)="onNavigationEvent('right', $event, normalAction, isLastImage)">
       <div class="inside {{isLastImage ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
-           [title]="accessibilityConfig.mainNextImageTitle"></div>
+           [title]="isLastImage ? '' : accessibilityConfig.mainNextImageTitle"></div>
     </a>
   </div>
 </main>

@@ -1,3 +1,8 @@
+# 7.2.3
+### Bugfixes
+- fix issue #188 reported by @jagoda-b: if first/last image, next/prev arrows are invisible but clickable. Also "title" is still visible.
+
+
 # 7.2.2
 ### Bugfixes
 - fix issue #186 about vertical scrolling with carousel, caused by HammerJs (solution received by @mohaxspb as a pull request https://github.com/Ks89/angular-modal-gallery/pull/187)

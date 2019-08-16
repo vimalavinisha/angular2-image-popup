@@ -153,6 +153,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   private stop$ = new Subject<void>();
 
   /**
+   * Enum of type `Action` that represents a normal action.
+   * Declared here to be used inside the template.
+   */
+  normalAction: Action = Action.NORMAL;
+  /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
    */
@@ -448,8 +453,12 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param string direction of the navigation that can be either 'next' or 'prev'
    * @param KeyboardEvent | MouseEvent event payload
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
+   * @param boolean disable to disable navigation
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL) {
+  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL, disable: boolean = false) {
+    if (disable) {
+      return;
+    }
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
       this.nextImage(action);
