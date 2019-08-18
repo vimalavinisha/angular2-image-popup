@@ -29,7 +29,7 @@
     "@angular/router": "^7.1.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
-    "@ks89/angular-modal-gallery": "^7.0.0-beta.3",
+    "@ks89/angular-modal-gallery": "^7.2.3",
     "core-js": "^2.5.7",
     "hammerjs": "^2.0.8",
     "mousetrap": "^1.6.2",

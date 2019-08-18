@@ -1,5 +1,6 @@
 # 7.2.3
 ### Bugfixes
+- fix another issue about side previews, because they where invisible **(IMPORTANT BUG FIX)**
 - fix issue #188 reported by @jagoda-b: if first/last image, next/prev arrows are invisible but clickable. Also "title" is still visible.
 
 
