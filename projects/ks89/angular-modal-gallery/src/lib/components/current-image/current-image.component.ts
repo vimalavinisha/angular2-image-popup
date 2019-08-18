@@ -578,11 +578,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   /**
    * Private method to check if next/prev actions should be blocked.
-   * It checks if configSlide.infinite === false and if the image index is equals to the input parameter.
+   * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
    * If yes, it returns true to say that sliding should be blocked, otherwise not.
    * @param number boundaryIndex that could be either the beginning index (0) or the last index
    *  of images (this.images.length - 1).
-   * @returns boolean true if configSlide.infinite === false and the current index is
+   * @returns boolean true if slideConfig.infinite === false and the current index is
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {

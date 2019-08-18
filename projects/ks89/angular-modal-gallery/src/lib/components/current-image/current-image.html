@@ -13,13 +13,13 @@
            [title]="isFirstImage ? '' : accessibilityConfig.mainPrevImageTitle"></div>
     </a>
 
-    <ng-container *ngIf="configSlide?.sidePreviews?.show">
+    <ng-container *ngIf="slideConfig?.sidePreviews?.show">
       <ng-container *ngIf="getLeftPreviewImage() as leftPreview">
         <img *ngIf="!isFirstImage; else firstImage"
              class="inside current-image-previous"
              [src]="leftPreview.plain?.img ? leftPreview.plain.img : leftPreview.modal.img"
              [hidden]="loading"
-             ksSize [sizeConfig]="{width: configSlide.sidePreviews?.size.width, height: configSlide.sidePreviews?.size.height}"
+             ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"
              [attr.aria-label]="leftPreview.modal.ariaLabel"
              [title]="leftPreview.modal.title ? leftPreview.modal.title : getDescriptionToDisplay(leftPreview)"
              alt="{{leftPreview.modal.alt ? leftPreview.modal.alt : getAltDescriptionByImage(leftPreview)}}"
@@ -27,7 +27,7 @@
              (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)"/>
         <ng-template #firstImage>
           <div class="current-image-previous hidden"
-               ksSize [sizeConfig]="{width: configSlide.sidePreviews?.size.width, height: configSlide.sidePreviews?.size.height}"></div>
+               ksSize [sizeConfig]="{width: slideConfig.sidePreviews?.size.width, height: slideConfig.sidePreviews?.size.height}"></div>
         </ng-template>
       </ng-container>
     </ng-container>
