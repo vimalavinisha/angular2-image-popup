@@ -74,6 +74,10 @@ $figcaption-right: 0;
       @extend .nav;
       margin-right: 5px;
       margin-left: $nav-side-margin;
+
+      &.no-pointer {
+        cursor: default !important;
+      }
     }
   }
 
@@ -87,6 +91,10 @@ $figcaption-right: 0;
       @extend .nav;
       margin-right: $nav-side-margin;
       margin-left: 5px;
+
+      &.no-pointer {
+        cursor: default !important;
+      }
     }
   }
 

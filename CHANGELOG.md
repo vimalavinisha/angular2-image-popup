@@ -1,3 +1,8 @@
+# 7.2.4
+### Bugfixes
+- fix again issue #188 reported by @jagoda-b: if first/last image, next/prev arrows show hand cursor.
+
+
 # 7.2.3
 ### Bugfixes
 - fix another issue about side previews, because they where invisible **(IMPORTANT BUG FIX)**

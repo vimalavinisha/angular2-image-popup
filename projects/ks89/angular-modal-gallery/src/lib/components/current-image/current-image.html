@@ -4,7 +4,7 @@
       [title]="accessibilityConfig.mainContainerTitle">
 
   <div class="left-sub-container">
-    <a class="nav-left"
+    <a class="nav-left {{isFirstImage ? 'no-pointer' : ''}}"
        [attr.aria-label]="accessibilityConfig.mainPrevImageAriaLabel"
        [tabindex]="isFirstImage ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event, normalAction, isFirstImage)" (keyup)="onNavigationEvent('left', $event, normalAction, isFirstImage)">
@@ -80,7 +80,7 @@
                           [accessibilityConfig]="accessibilityConfig"></ks-loading-spinner>
     </ng-container>
 
-    <a class="nav-right"
+    <a class="nav-right {{isFirstImage ? 'no-pointer' : ''}}"
        [attr.aria-label]="accessibilityConfig.mainNextImageAriaLabel"
        [tabindex]="isLastImage ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event, normalAction, isLastImage)" (keyup)="onNavigationEvent('right', $event, normalAction, isLastImage)">
