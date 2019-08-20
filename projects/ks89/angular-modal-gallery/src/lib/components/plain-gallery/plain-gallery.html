@@ -17,7 +17,7 @@
              [title]="imgCol.plain?.title ? imgCol.plain.title : getTitleDisplay(imgCol)"
              alt="{{imgCol.plain?.alt ? imgCol.plain.alt : getAltPlainDescriptionByImage(imgCol)}}"
              [tabIndex]="0" role="img"
-             (click)="showModalGalleryByImage(imgCol)" (keyup)="showModalGalleryByImage(imgCol)"/>
+             (click)="showModalGalleryByImage(imgCol)" (keyup)="onNavigationEvent($event, imgCol)"/>
       </ng-container>
 
       <!-- Add directive to set background with the image url as param to pass thumb or img-->

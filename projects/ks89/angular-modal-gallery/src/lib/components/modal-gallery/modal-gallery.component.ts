@@ -258,7 +258,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
 
   showPreview(index: number) {
     const imageToShow: Image = this.images[index];
-    console.log('--imageToShow', imageToShow);
     const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
       image: {
         id: this.id,

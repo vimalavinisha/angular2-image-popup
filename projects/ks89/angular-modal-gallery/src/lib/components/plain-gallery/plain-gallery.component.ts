@@ -31,6 +31,9 @@ import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGaller
 
 import { getIndex } from '../../utils/image.util';
 import { ConfigService } from '../../services/config.service';
+import { Action } from '../../model/action.enum';
+import { NEXT, PREV } from '../../utils/user-input.util';
+import { AccessibleComponent } from '../accessible.component';
 
 /**
  * Component with the gallery of thumbs.
@@ -45,7 +48,7 @@ import { ConfigService } from '../../services/config.service';
   templateUrl: 'plain-gallery.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlainGalleryComponent implements OnInit, OnChanges {
+export class PlainGalleryComponent extends AccessibleComponent implements OnInit, OnChanges {
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
@@ -122,7 +125,9 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
     advanced: { aTags: false, additionalBackground: '50% 50%/cover' }
   };
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) {
+    super();
+  }
 
   /**
    * Method ´ngOnInit´ to init both `configPlainGallery` calling `initPlainGalleryConfig()`
@@ -177,6 +182,16 @@ export class PlainGalleryComponent implements OnInit, OnChanges {
   showModalGalleryByImage(img: Image) {
     const index: number = this.images.findIndex((val: Image) => val && img && val.id === img.id);
     this.showModalGallery(index);
+  }
+
+  onNavigationEvent(event: KeyboardEvent, img: Image) {
+    // const result: number = super.handleImageEvent(event);
+    // if (result === NEXT) {
+    //   this.showModalGalleryByImage(img);
+    // } else if (result === PREV) {
+    //   // TODO
+    //   // this.showModalGalleryByImage(img);
+    // }
   }
 
   /**
