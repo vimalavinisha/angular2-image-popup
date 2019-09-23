@@ -374,7 +374,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
           )
           .subscribe(() =>
             this._ngZone.run(() => {
-              this.nextImage();
+              if (this.configPlay.autoPlay) {
+                this.nextImage();
+              }
               this.ref.markForCheck();
             })
           );
