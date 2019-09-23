@@ -1,3 +1,8 @@
+# 7.2.5
+### Bugfixes
+- carousel autoPlay ignores configPlay.autoPlay = false. Reported and fixed by @aslubsky (issue #191 and pull request #192)
+
+
 # 7.2.4
 ### Bugfixes
 - fix again issue #188 reported by @jagoda-b: if first/last image, next/prev arrows show hand cursor.
