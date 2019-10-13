@@ -34,7 +34,7 @@ export class ModalOverlayService {
   constructor(private injector: Injector, private overlay: Overlay) {}
 
   open(config: ModalOverlayConfig = {}) {
-    console.log('completed config-', config);
+    // console.log('completed config-', config);
 
     // Override default configuration
     const dialogConfig = { ...DEFAULT_CONFIG, ...config };
@@ -49,7 +49,7 @@ export class ModalOverlayService {
 
     overlayRef.backdropClick().subscribe(() => this.dialogRef.close());
 
-    console.log('completed open');
+    // console.log('completed open');
     return this.dialogRef;
   }
 

@@ -42,10 +42,9 @@ import { InteractionEvent } from '../../model/interaction-event.interface';
 @Component({
   selector: 'ks-app-overlaycontent',
   templateUrl: './overlaycontent.component.html',
-  styleUrls: ['./overlaycontent.component.scss'],
-  providers: [ConfigService]
+  styleUrls: ['./overlaycontent.component.scss']
 })
-export class OverlaycontentComponent implements OnDestroy {
+export class OverlaycontentComponent implements OnInit, OnDestroy {
   /**
    * Reference to the CurrentImageComponent to invoke methods on it.
    */
@@ -186,12 +185,16 @@ export class OverlaycontentComponent implements OnDestroy {
     private overlay: Overlay,
     private modalGalleryService: ModalOverlayService
   ) {
-    console.log('constructed!!!!!!!!!!');
     this.dialogData = dialogContent;
     this.id = (<any>dialogContent).id;
     this.images = (<any>dialogContent).images;
     this.currentImage = (<any>dialogContent).currentImage;
 
+    // console.log('constructor overlaycontent', this.configService.get());
+  }
+
+  ngOnInit(): void {
+    // console.log('init overlaycontent', this.configService.get());
     this.dotsConfig = this.configService.get().dotsConfig;
   }
 

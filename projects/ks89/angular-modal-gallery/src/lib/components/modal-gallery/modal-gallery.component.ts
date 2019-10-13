@@ -66,9 +66,8 @@ import { Overlay } from '@angular/cdk/overlay';
   selector: 'ks-modal-gallery',
   exportAs: 'ksModalGallery',
   styleUrls: ['modal-gallery.scss'],
-  templateUrl: 'modal-gallery.html',
+  templateUrl: 'modal-gallery.html'
   // changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfigService]
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   /**
@@ -226,6 +225,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       currentImageConfig: this.currentImageConfig
     });
 
+    // console.log('modalgallery init this.configService.get', this.configService.get());
+
     // call initImages to init images and to emit `hasData` event
     this.initImages();
   }
@@ -236,6 +237,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   onShowModalGallery(index: number) {
     // this.showModalGallery(index);
+    // console.log('modalgallery onShowModalGallery this.configService.get', this.configService.get());
     this.showPreview(index);
   }
 
@@ -262,7 +264,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       image: {
         id: this.id,
         images: this.images,
-        currentImage: this.images[0]
+        currentImage: imageToShow
       }
     });
   }

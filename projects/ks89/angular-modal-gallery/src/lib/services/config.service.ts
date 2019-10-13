@@ -162,6 +162,7 @@ export class ConfigService {
   }
 
   set(obj: LibConfig): void {
+    console.log('---- setting obj', obj);
     const newConfig: LibConfig = Object.assign({}, this.config);
     if (obj.slideConfig) {
       let playConfig;
@@ -326,6 +327,7 @@ export class ConfigService {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
     }
     this.config = newConfig;
+    console.log('---- set completed with obj', this.config);
   }
 }
 
