@@ -1,7 +1,7 @@
 {
   "name": "@ks89/angular-modal-gallery",
   "version": "8.0.0-alpha.1",
-  "description": "Modal image gallery for Angular >=2",
+  "description": "Image gallery for Angular",
   "license": "MIT",
   "author": "Stefano Cappa",
   "engines": {
@@ -9,12 +9,12 @@
     "npm": ">=6.0.0"
   },
   "sideEffect": true,
-  "homepage": "https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/",
+  "homepage": "https://ks89.github.io/angular-modal-gallery-2018-v8.github.io/",
   "peerDependencies": {
-    "@angular/platform-browser": ">=7.0.0",
-    "@angular/common": ">=7.0.0",
-    "@angular/core": ">=7.0.0",
-    "@angular/cdk": ">=7.0.0",
+    "@angular/platform-browser": ">=8.0.0",
+    "@angular/common": ">=8.0.0",
+    "@angular/core": ">=8.0.0",
+    "@angular/cdk": ">=8.0.0",
     "hammerjs": ">=2.0.0",
     "mousetrap": ">=1.6.1",
     "rxjs": ">=6.0.0"

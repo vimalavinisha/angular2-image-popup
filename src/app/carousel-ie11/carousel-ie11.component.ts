@@ -25,13 +25,14 @@
 import { Component } from '@angular/core';
 
 import { Image } from '@ks89/angular-modal-gallery';
+import { CarouselExampleComponent } from '../carousel/carousel.component';
 
 @Component({
   selector: 'ks-carousel-ie11-page',
   templateUrl: './carousel-ie11.html',
   styleUrls: ['./carousel-ie11.scss']
 })
-export class CarouselIe11Component {
+export class CarouselIe11ExampleComponent {
   imagesRect: Image[] = [
     new Image(
       0,

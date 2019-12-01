@@ -26,7 +26,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DIRECTIVES } from './directives/directives';
-import { COMPONENTS, ModalGalleryComponent, CarouselComponent } from './components/components';
+import { COMPONENTS, CarouselComponent } from './components/components';
 import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
 import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
@@ -50,7 +50,7 @@ export class KsHammerGestureConfig extends HammerGestureConfig {
 @NgModule({
   imports: [CommonModule, OverlayModule],
   declarations: [COMPONENTS, DIRECTIVES],
-  exports: [ModalGalleryComponent, PlainGalleryComponent, CarouselComponent],
+  exports: [PlainGalleryComponent, CarouselComponent],
   providers: [
     {
       provide: HAMMER_GESTURE_CONFIG,

@@ -2,27 +2,27 @@ import { Injectable, Injector, ComponentRef } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 
-import { DIALOG_DATA } from './modal-overlay.tokens';
-import { OverlaycontentComponent } from './overlaycontent.component';
-import { ModalOverlayRef } from './modal-overlay-ref';
+import { DIALOG_DATA } from './modal-gallery.tokens';
+import { ModalGalleryComponent } from './modal-gallery.component';
+import { ModalGalleryRef } from './modal-gallery-ref';
 import { Image } from '../../model/image.class';
 import { LibConfig } from '../../services/config.service';
 
-export interface ModalOverlayInput {
+export interface ModalGalleryInput {
   id: number;
   images: Image[];
   currentImage: Image;
   libConfig?: LibConfig;
 }
 
-export interface ModalOverlayConfig {
+export interface ModalGalleryConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
-  config?: ModalOverlayInput;
+  config?: ModalGalleryInput;
 }
 
-const DEFAULT_CONFIG: ModalOverlayConfig = {
+const DEFAULT_CONFIG: ModalGalleryConfig = {
   hasBackdrop: true,
   backdropClass: 'dark-backdrop',
   panelClass: 'tm-file-preview-dialog-panel',
@@ -30,12 +30,12 @@ const DEFAULT_CONFIG: ModalOverlayConfig = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class ModalOverlayService {
+export class ModalGalleryService {
   private dialogRef;
 
   constructor(private injector: Injector, private overlay: Overlay) {}
 
-  open(config: ModalOverlayConfig = {}) {
+  open(config: ModalGalleryConfig = {}) {
     // console.log('completed config-', config);
 
     // Override default configuration
@@ -45,7 +45,7 @@ export class ModalOverlayService {
     const overlayRef = this.createOverlay(dialogConfig);
 
     // Instantiate remote control
-    this.dialogRef = new ModalOverlayRef(overlayRef);
+    this.dialogRef = new ModalGalleryRef(overlayRef);
 
     const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
 
@@ -66,30 +66,30 @@ export class ModalOverlayService {
     return !!this.dialogRef;
   }
 
-  private createOverlay(config: ModalOverlayConfig) {
+  private createOverlay(config: ModalGalleryConfig) {
     const overlayConfig = this.getOverlayConfig(config);
     return this.overlay.create(overlayConfig);
   }
 
-  private attachDialogContainer(overlayRef: OverlayRef, config: ModalOverlayConfig, dialogRef: ModalOverlayRef) {
+  private attachDialogContainer(overlayRef: OverlayRef, config: ModalGalleryConfig, dialogRef: ModalGalleryRef) {
     const injector = this.createInjector(config, dialogRef);
 
-    const containerPortal = new ComponentPortal(OverlaycontentComponent, null, injector);
-    const containerRef: ComponentRef<OverlaycontentComponent> = overlayRef.attach(containerPortal);
+    const containerPortal = new ComponentPortal(ModalGalleryComponent, null, injector);
+    const containerRef: ComponentRef<ModalGalleryComponent> = overlayRef.attach(containerPortal);
 
     return containerRef.instance;
   }
 
-  private createInjector(overlayConfig: ModalOverlayConfig, dialogRef: ModalOverlayRef): PortalInjector {
+  private createInjector(overlayConfig: ModalGalleryConfig, dialogRef: ModalGalleryRef): PortalInjector {
     const injectionTokens = new WeakMap();
 
-    injectionTokens.set(ModalOverlayRef, dialogRef);
+    injectionTokens.set(ModalGalleryRef, dialogRef);
     injectionTokens.set(DIALOG_DATA, overlayConfig.config);
 
     return new PortalInjector(this.injector, injectionTokens);
   }
 
-  private getOverlayConfig(config: ModalOverlayConfig): OverlayConfig {
+  private getOverlayConfig(config: ModalGalleryConfig): OverlayConfig {
     const positionStrategy = this.overlay
       .position()
       .global()

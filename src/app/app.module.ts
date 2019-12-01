@@ -30,10 +30,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CarouselComponent } from './carousel/carousel.component';
-import { CarouselIe11Component } from './carousel-ie11/carousel-ie11.component';
-import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
-import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
+import { CarouselExampleComponent } from './carousel/carousel.component';
+import { CarouselIe11ExampleComponent } from './carousel-ie11/carousel-ie11.component';
+import { PlainGalleryExampleComponent } from './plain-gallery/plain-gallery.component';
+import { ModalGalleryExampleComponent } from './modal-gallery/modal-gallery.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { IntroHeaderComponent } from './intro-header/intro-header.component';
@@ -41,7 +41,7 @@ import { IntroHeaderComponent } from './intro-header/intro-header.component';
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
 import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap`)
-import { GalleryModule, OverlaycontentComponent } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+import { GalleryModule, ModalGalleryComponent } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
 // ************************ optional font-awesome 5 ************************
@@ -55,10 +55,10 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 @NgModule({
   declarations: [
     AppComponent,
-    CarouselComponent,
-    CarouselIe11Component,
-    PlainGalleryComponent,
-    ModalGalleryComponent,
+    CarouselExampleComponent,
+    CarouselIe11ExampleComponent,
+    PlainGalleryExampleComponent,
+    ModalGalleryExampleComponent,
     NavbarComponent,
     HomeComponent,
     IntroHeaderComponent
@@ -74,6 +74,6 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [OverlaycontentComponent]
+  entryComponents: [ModalGalleryComponent]
 })
 export class AppModule {}

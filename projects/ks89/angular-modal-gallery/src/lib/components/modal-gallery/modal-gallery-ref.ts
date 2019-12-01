@@ -2,7 +2,7 @@ import { OverlayRef } from '@angular/cdk/overlay';
 
 import { Subject } from 'rxjs';
 
-export class ModalOverlayRef {
+export class ModalGalleryRef {
   private action = new Subject<any>();
   action$ = this.action.asObservable();
 

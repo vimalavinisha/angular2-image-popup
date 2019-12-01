@@ -22,7 +22,6 @@
  SOFTWARE.
  */
 
-import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselPreviewsComponent } from './carousel/carousel-previews/carousel-previews.component';
 import { UpperButtonsComponent } from './upper-buttons/upper-buttons.component';
@@ -32,16 +31,14 @@ import { CurrentImageComponent } from './current-image/current-image.component';
 import { LoadingSpinnerComponent } from './current-image/loading-spinner/loading-spinner.component';
 import { AccessibleComponent } from './accessible.component';
 import { PlainGalleryComponent } from './plain-gallery/plain-gallery.component';
-export { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 export { CarouselComponent } from './carousel/carousel.component';
-import { OverlaycontentComponent } from './overlaycontent/overlaycontent.component';
+import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 
 /**
  * Array of all components.
  */
 export const COMPONENTS = [
   PlainGalleryComponent,
-  ModalGalleryComponent,
   CarouselComponent,
   CarouselPreviewsComponent,
   UpperButtonsComponent,
@@ -51,5 +48,5 @@ export const COMPONENTS = [
   LoadingSpinnerComponent,
   AccessibleComponent,
 
-  OverlaycontentComponent
+  ModalGalleryComponent
 ];

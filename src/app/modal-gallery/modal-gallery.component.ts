@@ -43,14 +43,13 @@ import {
   KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
-  // KS_DEFAULT_BTN_ROTATE,
   PreviewConfig,
   LoadingConfig,
   LoadingType,
   CurrentImageConfig,
-  ModalOverlayService,
-  ModalOverlayRef,
-  ModalOverlayConfig
+  ModalGalleryService,
+  ModalGalleryRef,
+  ModalGalleryConfig
 } from '@ks89/angular-modal-gallery';
 
 @Component({
@@ -58,7 +57,7 @@ import {
   templateUrl: './modal-gallery.html',
   styleUrls: ['./modal-gallery.scss']
 })
-export class ModalGalleryComponent {
+export class ModalGalleryExampleComponent {
   imageIndex = 1;
   galleryId = 1;
   isPlaying = true;
@@ -549,7 +548,7 @@ export class ModalGalleryComponent {
 
   private count = 0;
 
-  constructor(private galleryService: GalleryService, private modalGalleryService: ModalOverlayService, private sanitizer: DomSanitizer) {}
+  constructor(private galleryService: GalleryService, private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
   isShownAutoNavigate = false;
@@ -685,7 +684,7 @@ export class ModalGalleryComponent {
 
   openModalViaService(index: number, imagesArrayToUse: Image[]) {
     const imageToShow: Image = imagesArrayToUse[index];
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: 2,
         images: imagesArrayToUse,
@@ -694,12 +693,12 @@ export class ModalGalleryComponent {
           dotsConfig: { visible: false }
         }
       }
-    } as ModalOverlayConfig);
+    } as ModalGalleryConfig);
   }
 
   openModalViaService2(index: number, imagesArrayToUse: Image[]) {
     const imageToShow: Image = imagesArrayToUse[index];
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: 3,
         images: imagesArrayToUse,
@@ -708,12 +707,12 @@ export class ModalGalleryComponent {
           dotsConfig: { visible: true }
         }
       }
-    } as ModalOverlayConfig);
+    } as ModalGalleryConfig);
   }
 
   openModalViaService3(index: number, imagesArrayToUse: Image[]) {
     const imageToShow: Image = imagesArrayToUse[index];
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: 4,
         images: imagesArrayToUse,
@@ -722,7 +721,7 @@ export class ModalGalleryComponent {
           dotsConfig: { visible: false }
         }
       }
-    } as ModalOverlayConfig);
+    } as ModalGalleryConfig);
   }
 
   autoAddImage() {

@@ -33,17 +33,18 @@ import {
   LineLayout,
   PlainGalleryConfig,
   PlainGalleryStrategy,
-  ModalOverlayService,
-  ModalOverlayRef,
+  ModalGalleryService,
+  ModalGalleryRef,
   LibConfig
 } from '@ks89/angular-modal-gallery';
+import { CarouselExampleComponent } from '../carousel/carousel.component';
 
 @Component({
   selector: 'ks-plain-gallery-page',
   templateUrl: './plain-gallery.html',
   styleUrls: ['./plain-gallery.scss']
 })
-export class PlainGalleryComponent {
+export class PlainGalleryExampleComponent {
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -173,13 +174,13 @@ export class PlainGalleryComponent {
     plainGalleryConfig: this.plainGalleryGrid
   };
 
-  constructor(private galleryService: GalleryService, private modalGalleryService: ModalOverlayService, private sanitizer: DomSanitizer) {}
+  constructor(private galleryService: GalleryService, private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   openImageModalRow(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: id,
         images: this.images,
@@ -195,7 +196,7 @@ export class PlainGalleryComponent {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: id,
         images: this.images,
@@ -211,7 +212,7 @@ export class PlainGalleryComponent {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: id,
         images: this.imagesRect,
@@ -235,7 +236,7 @@ export class PlainGalleryComponent {
   }
 
   onShow(id: number, index: number, images: Image[] = this.images) {
-    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id: id,
         images: images,

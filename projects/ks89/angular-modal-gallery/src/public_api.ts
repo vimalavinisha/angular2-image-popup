@@ -75,7 +75,7 @@ export {
   BreakConfig
 } from './lib/model/plain-gallery-config.interface';
 
-export { OverlaycontentComponent } from './lib/components/overlaycontent/overlaycontent.component';
+export { ModalGalleryComponent } from './lib/components/modal-gallery/modal-gallery.component';
 
-export { ModalOverlayService, ModalOverlayConfig } from './lib/components/overlaycontent/modal-overlay.service';
-export { ModalOverlayRef } from './lib/components/overlaycontent/modal-overlay-ref';
+export { ModalGalleryService, ModalGalleryConfig } from './lib/components/modal-gallery/modal-gallery.service';
+export { ModalGalleryRef } from './lib/components/modal-gallery/modal-gallery-ref';
