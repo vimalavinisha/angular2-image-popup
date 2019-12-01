@@ -241,7 +241,7 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
@@ -276,7 +276,7 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 2; // you can use every value except for 0 and the last one
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
@@ -311,7 +311,7 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = IMAGES.length - 1;
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
@@ -345,7 +345,7 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         // custom accessibility for container and arrows, but not for previews
         accessibilityConfig: CUSTOM_ACCESSIBILITY,
@@ -380,7 +380,7 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 2;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: {visible: true, number: 2, arrows: false},
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
@@ -416,7 +416,7 @@ describe('PreviewsComponent', () => {
         const initialActiveImage = 0;
         const numOfPreviews = 3;
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           previewConfig: {visible: true, size: size},
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig: SLIDE_CONFIG
@@ -452,7 +452,7 @@ describe('PreviewsComponent', () => {
       const numOfPreviews = 3;
       const afterClickActivePreview = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
@@ -523,7 +523,7 @@ describe('PreviewsComponent', () => {
     NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should navigate previews clicking on left arrow. Test i=${index}`, async(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig: SLIDE_CONFIG
@@ -631,7 +631,7 @@ describe('PreviewsComponent', () => {
     [SLIDE_CONFIG, SLIDE_CONFIG_INFINITE].forEach((slideConfig: SlideConfig, index: number) => {
       it(`should navigate next/prev clicking on images for all SlideConfigs. Test i=${index}`, async(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig: slideConfig
@@ -716,7 +716,7 @@ describe('PreviewsComponent', () => {
   describe('---NO---', () => {
     it(`shouldn't display previews because visibility is false`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         previewConfig: PREVIEWS_CONFIG_HIDDEN
       });
       comp.currentImage = IMAGES[0];

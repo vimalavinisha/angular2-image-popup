@@ -217,7 +217,7 @@ function getButtonEvent(button: ButtonConfig): ButtonEvent {
 
 function updateInputs(image: Image, configButtons: ButtonsConfig) {
   const configService = fixture.debugElement.injector.get(ConfigService);
-  configService.set({buttonsConfig: configButtons});
+  configService.setConfig(0, {buttonsConfig: configButtons});
   comp.currentImage = image;
   comp.ngOnInit();
   fixture.detectChanges();

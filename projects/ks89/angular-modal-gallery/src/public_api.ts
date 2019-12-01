@@ -47,6 +47,7 @@ export { Size } from './lib/model/size.interface';
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './lib/model/buttons-config.interface';
 
 export { GalleryService } from './lib/services/gallery.service';
+export { LibConfig } from './lib/services/config.service';
 
 export { CurrentImageConfig } from './lib/model/current-image-config.interface';
 
@@ -75,3 +76,6 @@ export {
 } from './lib/model/plain-gallery-config.interface';
 
 export { OverlaycontentComponent } from './lib/components/overlaycontent/overlaycontent.component';
+
+export { ModalOverlayService, ModalOverlayConfig } from './lib/components/overlaycontent/modal-overlay.service';
+export { ModalOverlayRef } from './lib/components/overlaycontent/modal-overlay-ref';

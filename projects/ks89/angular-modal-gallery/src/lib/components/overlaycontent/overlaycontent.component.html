@@ -7,7 +7,8 @@
   <div id="flex-min-height-ie-fix">
     <div id="modal-gallery-container">
 
-      <ks-upper-buttons [currentImage]="currentImage"
+      <ks-upper-buttons [id]="id"
+                        [currentImage]="currentImage"
                         (delete)="onDelete($event)"
                         (navigate)="onNavigate($event)"
                         (download)="onDownload($event)"
@@ -24,12 +25,14 @@
                         (close)="onCloseGallery($event)"></ks-current-image>
 
       <div>
-        <ks-dots [images]="images"
+        <ks-dots [id]="id"
+                 [images]="images"
                  [currentImage]="currentImage"
                  [dotsConfig]="dotsConfig"
                  (clickDot)="onClickDot($event)"></ks-dots>
 
-        <ks-previews [images]="images"
+        <ks-previews [id]="id"
+                     [images]="images"
                      [currentImage]="currentImage"
                      (clickPreview)="onClickPreview($event)"></ks-previews>
       </div>

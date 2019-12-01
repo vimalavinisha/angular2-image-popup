@@ -6,25 +6,27 @@ import { DIALOG_DATA } from './modal-overlay.tokens';
 import { OverlaycontentComponent } from './overlaycontent.component';
 import { ModalOverlayRef } from './modal-overlay-ref';
 import { Image } from '../../model/image.class';
+import { LibConfig } from '../../services/config.service';
 
 export interface ModalOverlayInput {
   id: number;
   images: Image[];
   currentImage: Image;
+  libConfig?: LibConfig;
 }
 
-interface ModalOverlayConfig {
+export interface ModalOverlayConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
-  image?: ModalOverlayInput;
+  config?: ModalOverlayInput;
 }
 
 const DEFAULT_CONFIG: ModalOverlayConfig = {
   hasBackdrop: true,
   backdropClass: 'dark-backdrop',
   panelClass: 'tm-file-preview-dialog-panel',
-  image: null
+  config: null
 };
 
 @Injectable({ providedIn: 'root' })
@@ -78,11 +80,11 @@ export class ModalOverlayService {
     return containerRef.instance;
   }
 
-  private createInjector(config: ModalOverlayConfig, dialogRef: ModalOverlayRef): PortalInjector {
+  private createInjector(overlayConfig: ModalOverlayConfig, dialogRef: ModalOverlayRef): PortalInjector {
     const injectionTokens = new WeakMap();
 
     injectionTokens.set(ModalOverlayRef, dialogRef);
-    injectionTokens.set(DIALOG_DATA, config.image);
+    injectionTokens.set(DIALOG_DATA, overlayConfig.config);
 
     return new PortalInjector(this.injector, injectionTokens);
   }

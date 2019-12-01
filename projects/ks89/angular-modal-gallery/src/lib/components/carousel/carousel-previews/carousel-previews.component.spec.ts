@@ -293,7 +293,7 @@ describe('CarouselPreviewsComponent', () => {
 
     it(`should display previews (first one is active) based of input images`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -330,7 +330,7 @@ describe('CarouselPreviewsComponent', () => {
     NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should display previews and navigate next clicking on images. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -422,7 +422,7 @@ describe('CarouselPreviewsComponent', () => {
     NAVIGATION_PREV_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should display previews and navigate prev clicking on images. Test i=${index}`, fakeAsync(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -522,7 +522,7 @@ describe('CarouselPreviewsComponent', () => {
 
     it(`should display previews and navigate clicking on arrow 'next'`, fakeAsync(() => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -583,7 +583,7 @@ describe('CarouselPreviewsComponent', () => {
         return newImage;
       });
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
         accessibilityConfig: CUSTOM_ACCESSIBILITY,
         carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -631,7 +631,7 @@ describe('CarouselPreviewsComponent', () => {
       };
       const initialActiveImage = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         carouselPreviewsConfig: customPreviewConfigFive,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -670,7 +670,7 @@ describe('CarouselPreviewsComponent', () => {
         // create a custom preview config based on the default one, but with different maxHeight
         const CUSTOM_PREVIEW_CONFIG: CarouselPreviewConfig = Object.assign({}, DEFAULT_PREVIEW_CONFIG, {maxHeight: height});
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           carouselPreviewsConfig: CUSTOM_PREVIEW_CONFIG,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -751,7 +751,7 @@ describe('CarouselPreviewsComponent', () => {
     [-2, -1, 0].forEach((numberOfPreviews: number, index: number) => {
       it(`should display previews with number <= 0, so it will be forced to the default value. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           carouselConfig: CAROUSEL_CONFIG_DEFAULT
@@ -783,7 +783,7 @@ describe('CarouselPreviewsComponent', () => {
       const numOfPreviews = DEFAULT_PREVIEW_CONFIG.number;
       const LEGACY_MODE_CAROUSEL_CONFIG = Object.assign({}, CAROUSEL_CONFIG_DEFAULT, {legacyIE11Mode: true});
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         carouselConfig: LEGACY_MODE_CAROUSEL_CONFIG
@@ -819,7 +819,7 @@ describe('CarouselPreviewsComponent', () => {
   describe('---NO---', () => {
     it(`shouldn't display previews because visibility is false`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         carouselPreviewsConfig: <CarouselPreviewConfig>{visible: false}, // hide previews
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         carouselConfig: CAROUSEL_CONFIG_DEFAULT

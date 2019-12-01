@@ -19,7 +19,7 @@ import { ModalOverlayRef } from './modal-overlay-ref';
 import { DIALOG_DATA } from './modal-overlay.tokens';
 import { ModalOverlayService } from './modal-overlay.service';
 import { Image, ImageModalEvent } from '../../model/image.class';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService, LibConfig } from '../../services/config.service';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
 import { InternalLibImage } from '../../model/image-internal.class';
@@ -156,6 +156,10 @@ export class OverlaycontentComponent implements OnInit, OnDestroy {
    * Boolean to open the modal gallery. False by default.
    */
   showGallery = false;
+  /**
+   * TODO write doc
+   */
+  libConfig: LibConfig;
 
   private galleryServiceNavigateSubscription: Subscription;
   private galleryServiceCloseSubscription: Subscription;
@@ -189,13 +193,12 @@ export class OverlaycontentComponent implements OnInit, OnDestroy {
     this.id = (<any>dialogContent).id;
     this.images = (<any>dialogContent).images;
     this.currentImage = (<any>dialogContent).currentImage;
-
-    // console.log('constructor overlaycontent', this.configService.get());
+    this.libConfig = (<any>dialogContent).libConfig;
+    this.configService.setConfig(this.id, this.libConfig);
   }
 
   ngOnInit(): void {
-    // console.log('init overlaycontent', this.configService.get());
-    this.dotsConfig = this.configService.get().dotsConfig;
+    this.dotsConfig = this.configService.getConfig(this.id).dotsConfig;
   }
 
   /**
@@ -415,9 +418,7 @@ export class OverlaycontentComponent implements OnInit, OnDestroy {
    * @param boolean event payload. True to close the modal gallery, false otherwise
    */
   onClickOutside(event: boolean) {
-    console.log('onClickOutside');
     if (event && this.enableCloseOutside) {
-      console.log('onClickOutside clicked');
       this.closeGallery(Action.CLICK);
     }
   }

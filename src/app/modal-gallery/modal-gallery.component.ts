@@ -47,7 +47,10 @@ import {
   PreviewConfig,
   LoadingConfig,
   LoadingType,
-  CurrentImageConfig
+  CurrentImageConfig,
+  ModalOverlayService,
+  ModalOverlayRef,
+  ModalOverlayConfig
 } from '@ks89/angular-modal-gallery';
 
 @Component({
@@ -546,7 +549,7 @@ export class ModalGalleryComponent {
 
   private count = 0;
 
-  constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
+  constructor(private galleryService: GalleryService, private modalGalleryService: ModalOverlayService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
   isShownAutoNavigate = false;
@@ -680,9 +683,46 @@ export class ModalGalleryComponent {
     this.images = [...this.images, newImage];
   }
 
-  openModalViaService(id: number | undefined, index: number) {
-    console.log('opening gallery with index ' + index);
-    this.galleryService.openGallery(id, index);
+  openModalViaService(index: number, imagesArrayToUse: Image[]) {
+    const imageToShow: Image = imagesArrayToUse[index];
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: 2,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: {
+          dotsConfig: { visible: false }
+        }
+      }
+    } as ModalOverlayConfig);
+  }
+
+  openModalViaService2(index: number, imagesArrayToUse: Image[]) {
+    const imageToShow: Image = imagesArrayToUse[index];
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: 3,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: {
+          dotsConfig: { visible: true }
+        }
+      }
+    } as ModalOverlayConfig);
+  }
+
+  openModalViaService3(index: number, imagesArrayToUse: Image[]) {
+    const imageToShow: Image = imagesArrayToUse[index];
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: 4,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: {
+          dotsConfig: { visible: false }
+        }
+      }
+    } as ModalOverlayConfig);
   }
 
   autoAddImage() {

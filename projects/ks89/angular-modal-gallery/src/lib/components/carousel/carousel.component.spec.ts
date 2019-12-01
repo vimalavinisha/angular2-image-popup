@@ -31,7 +31,6 @@ import { DotsComponent } from '../dots/dots.component';
 import { MaxSizeDirective } from '../../directives/max-size.directive';
 import { PlainGalleryComponent } from '../plain-gallery/plain-gallery.component';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
-import { BackgroundComponent } from '../background/background.component';
 import { UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
 import { CurrentImageComponent } from '../current-image/current-image.component';
 import { LoadingSpinnerComponent } from '../current-image/loading-spinner/loading-spinner.component';
@@ -200,7 +199,7 @@ const DEFAULT_CAROUSEL_CONFIG: CarouselConfig = {
 function initTestBed() {
   return TestBed.configureTestingModule({
     declarations: [
-      ClickOutsideDirective, BackgroundComponent,
+      ClickOutsideDirective,
       UpperButtonsComponent, CurrentImageComponent, LoadingSpinnerComponent,
       PreviewsComponent,
       KeyboardNavigationDirective, ATagBgImageDirective,

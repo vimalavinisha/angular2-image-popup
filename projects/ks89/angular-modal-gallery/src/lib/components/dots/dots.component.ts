@@ -45,6 +45,7 @@ import { ConfigService } from '../../services/config.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DotsComponent extends AccessibleComponent implements OnInit, OnChanges {
+  @Input() id: number;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -100,7 +101,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.accessibilityConfig = this.configService.get().accessibilityConfig;
+    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
     this.configDots = Object.assign({}, this.dotsConfig);
   }
 
@@ -111,7 +112,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   ngOnChanges(changes: SimpleChanges) {
     const dotsConfigChanges: SimpleChange = changes.dotsConfig;
     if (dotsConfigChanges && dotsConfigChanges.currentValue !== dotsConfigChanges.previousValue) {
-      this.configService.set(dotsConfigChanges.currentValue);
+      this.configService.setConfig(this.id, dotsConfigChanges.currentValue);
       this.configDots = dotsConfigChanges.currentValue;
     }
   }

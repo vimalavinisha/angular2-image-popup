@@ -116,7 +116,7 @@ describe('DotsComponent', () => {
     it(`should display dots (first one is active) based of the number of input images`, () => {
       const activeDotIndex = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         dotsConfig: DOTS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
@@ -153,7 +153,7 @@ describe('DotsComponent', () => {
     it(`should display dots (first one is active), because by default dotsConfig are visible`, () => {
       const activeDotIndex = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         dotsConfig: undefined, // or null, or something not valid
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
@@ -191,7 +191,7 @@ describe('DotsComponent', () => {
     it(`should display dots (first one is active) with custom accessibility`, () => {
       const activeDotIndex = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         dotsConfig: DOTS_CONFIG_VISIBLE,
         accessibilityConfig: CUSTOM_ACCESSIBILITY
       });
@@ -230,7 +230,7 @@ describe('DotsComponent', () => {
       const indexToClick = 1;
       const activeDotIndex = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         dotsConfig: DOTS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
@@ -259,7 +259,7 @@ describe('DotsComponent', () => {
 
     it(`shouldn't display dots, because visibility is false.`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         dotsConfig: DOTS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
@@ -279,7 +279,7 @@ describe('DotsComponent', () => {
 
     it(`shouldn't display dots, because the array of images as input is empty`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
       comp.currentImage = null;
@@ -300,7 +300,7 @@ describe('DotsComponent', () => {
 
     it(`shouldn't display dots, because the array of images as input is not valid`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
       comp.currentImage = null;
@@ -321,7 +321,7 @@ describe('DotsComponent', () => {
 
     it(`shouldn't display active dot when the currentImage is invalid, because 'isActive' method throws a managed error and return false`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
       });
       // create a fake image not available in comp.images array

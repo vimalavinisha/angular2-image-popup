@@ -229,10 +229,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.slideConfig = this.configService.get().slideConfig;
-    this.accessibilityConfig = this.configService.get().accessibilityConfig;
-    this.currentImageConfig = this.configService.get().currentImageConfig;
-    this.keyboardConfig = this.configService.get().keyboardConfig;
+    this.slideConfig = this.configService.getConfig(this.id).slideConfig;
+    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
+    this.currentImageConfig = this.configService.getConfig(this.id).currentImageConfig;
+    this.keyboardConfig = this.configService.getConfig(this.id).keyboardConfig;
   }
 
   /**
@@ -253,7 +253,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
     const slideConfig: SimpleChange = changes.slideConfig;
     if (slideConfig && slideConfig.previousValue !== slideConfig.currentValue) {
-      this.slideConfig = this.configService.get().slideConfig;
+      this.slideConfig = this.configService.getConfig(this.id).slideConfig;
     }
   }
 

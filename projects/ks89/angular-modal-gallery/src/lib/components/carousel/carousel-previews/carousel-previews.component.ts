@@ -82,6 +82,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   ariaLabel = `Carousel previews`;
 
   /**
+   * TODO write doc
+   */
+  @Input() id: number;
+  /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
@@ -196,7 +200,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    const libConfig: LibConfig = this.configService.get();
+    const libConfig: LibConfig = this.configService.getConfig(this.id);
     this.carouselConfig = libConfig.carouselConfig;
     this.previewConfig = libConfig.carouselPreviewsConfig;
     this.accessibilityConfig = libConfig.accessibilityConfig;

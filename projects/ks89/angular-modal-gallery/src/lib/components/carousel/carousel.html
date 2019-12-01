@@ -53,7 +53,8 @@
     </a>
 
     <div id="dots">
-      <ks-dots [currentImage]="currentImage"
+      <ks-dots [id]="id"
+               [currentImage]="currentImage"
                [images]="images"
                [dotsConfig]="dotsConfig"
                (clickDot)="onClickDot($event)"></ks-dots>
@@ -112,7 +113,8 @@
       </a>
 
       <div id="dots-ie11">
-        <ks-dots [currentImage]="currentImage"
+        <ks-dots [id]="id"
+                 [currentImage]="currentImage"
                  [images]="images"
                  (clickDot)="onClickDot($event)"></ks-dots>
       </div>
@@ -122,6 +124,7 @@
 
 </main>
 
-<ks-carousel-previews [images]="images"
+<ks-carousel-previews [id]="id"
+                      [images]="images"
                       [currentImage]="currentImage"
                       (clickPreview)="onClickPreview($event)"></ks-carousel-previews>

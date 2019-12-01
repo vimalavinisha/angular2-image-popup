@@ -22,7 +22,6 @@
  SOFTWARE.
  */
 
-import { BackgroundComponent } from './background/background.component';
 import { ModalGalleryComponent } from './modal-gallery/modal-gallery.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselPreviewsComponent } from './carousel/carousel-previews/carousel-previews.component';
@@ -41,7 +40,6 @@ import { OverlaycontentComponent } from './overlaycontent/overlaycontent.compone
  * Array of all components.
  */
 export const COMPONENTS = [
-  BackgroundComponent,
   PlainGalleryComponent,
   ModalGalleryComponent,
   CarouselComponent,

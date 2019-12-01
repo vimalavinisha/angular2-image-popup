@@ -30,7 +30,7 @@ import { Size } from '../../model/size.interface';
 import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
 import { getIndex } from '../../utils/image.util';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService, LibConfig } from '../../services/config.service';
 import { Action } from '../../model/action.enum';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { AccessibleComponent } from '../accessible.component';
@@ -49,6 +49,8 @@ import { AccessibleComponent } from '../accessible.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlainGalleryComponent extends AccessibleComponent implements OnInit, OnChanges {
+  @Input() id: number;
+
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
@@ -59,6 +61,11 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    */
   @Input()
   showGallery: boolean;
+  /**
+   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   */
+  @Input()
+  config: LibConfig;
   /**
    * Output to emit an event when an image is changed.
    */
@@ -136,8 +143,9 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.accessibilityConfig = this.configService.get().accessibilityConfig;
-    this.plainGalleryConfig = this.configService.get().plainGalleryConfig;
+    this.configService.setConfig(this.id, this.config);
+    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
+    this.plainGalleryConfig = this.configService.getConfig(this.id).plainGalleryConfig;
     this.initImageGrid();
   }
 
@@ -157,7 +165,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
       !configChange.firstChange &&
       (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))
     ) {
-      this.plainGalleryConfig = this.configService.get().plainGalleryConfig;
+      this.plainGalleryConfig = this.configService.getConfig(this.id).plainGalleryConfig;
       // this.configPlainGallery = this.initPlainGalleryConfig();
     }
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {

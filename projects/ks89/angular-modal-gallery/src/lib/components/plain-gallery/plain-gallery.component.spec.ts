@@ -129,7 +129,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery with img tags and click on a thumb`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
+      configService.setConfig(0, {accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
       comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -217,7 +217,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery with img tags and custom accessibility config`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({accessibilityConfig: CUSTOM_ACCESSIBILITY});
+      configService.setConfig(0, {accessibilityConfig: CUSTOM_ACCESSIBILITY});
       comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -236,7 +236,7 @@ describe('PlainGalleryComponent', () => {
     CUSTOM_SIZES.forEach((size: Size, index: number) => {
       it(`should display plain gallery with img tags and custom sizes. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           plainGalleryConfig: {
             strategy: PlainGalleryStrategy.ROW,
@@ -272,7 +272,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery row layout with only 2 img tags`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         plainGalleryConfig: {
           strategy: PlainGalleryStrategy.ROW,
@@ -297,7 +297,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery row layout with img tags and justify space-around`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         plainGalleryConfig: {
           strategy: PlainGalleryStrategy.ROW,
@@ -322,7 +322,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery column layout with only 2 img tags`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         plainGalleryConfig: {
           strategy: PlainGalleryStrategy.COLUMN,
@@ -379,7 +379,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery grid layout`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         plainGalleryConfig: {
           strategy: PlainGalleryStrategy.GRID,
@@ -405,7 +405,7 @@ describe('PlainGalleryComponent', () => {
 
     it(`should display plain gallery with anchor tags based of input images`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         plainGalleryConfig: {
           strategy: PlainGalleryStrategy.ROW,
@@ -500,7 +500,7 @@ describe('PlainGalleryComponent', () => {
     CUSTOM_SIZES.forEach((size: Size, index: number) => {
       it(`should display plain gallery with anchor tags and custom sizes. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           plainGalleryConfig: {
             strategy: PlainGalleryStrategy.ROW,

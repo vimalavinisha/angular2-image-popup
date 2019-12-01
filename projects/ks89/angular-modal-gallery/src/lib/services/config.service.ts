@@ -155,15 +155,19 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
  */
 @Injectable()
 export class ConfigService {
-  config: LibConfig = DEFAULT_CONFIG;
+  configMap: Map<number, LibConfig> = new Map<number, LibConfig>();
 
-  get(): LibConfig {
-    return this.config;
+  getConfig(id: number): LibConfig {
+    this.initIfNotExists(id);
+    return this.configMap.get(id);
   }
 
-  set(obj: LibConfig): void {
-    console.log('---- setting obj', obj);
-    const newConfig: LibConfig = Object.assign({}, this.config);
+  setConfig(id: number, obj: LibConfig): void {
+    this.initIfNotExists(id);
+    if (!obj) {
+      return;
+    }
+    const newConfig: LibConfig = Object.assign({}, this.configMap.get(id));
     if (obj.slideConfig) {
       let playConfig;
       let sidePreviews;
@@ -326,8 +330,13 @@ export class ConfigService {
     if (obj.carouselDotsConfig) {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
     }
-    this.config = newConfig;
-    console.log('---- set completed with obj', this.config);
+    this.configMap.set(id, newConfig);
+  }
+
+  private initIfNotExists(id: number) {
+    if (!this.configMap.has(id)) {
+      this.configMap.set(id, DEFAULT_CONFIG);
+    }
   }
 }
 
@@ -337,7 +346,7 @@ export class ConfigService {
  * @returns PlainGalleryConfig the plain gallery configuration
  * @throws an Error if layout and strategy aren't compatible
  */
-function initPlainGalleryConfig(plainGalleryConfig): PlainGalleryConfig {
+function initPlainGalleryConfig(plainGalleryConfig: PlainGalleryConfig): PlainGalleryConfig {
   const newPlayGalleryConfig: PlainGalleryConfig = Object.assign({}, DEFAULT_CONFIG.plainGalleryConfig, plainGalleryConfig);
 
   if (newPlayGalleryConfig.layout instanceof LineLayout) {

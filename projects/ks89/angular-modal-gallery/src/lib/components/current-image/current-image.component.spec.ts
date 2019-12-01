@@ -427,7 +427,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image with arrows and side previews. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -457,7 +457,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image as base64 with arrows and side previews. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -486,7 +486,7 @@ describe('CurrentImageComponent', () => {
 
     it(`should display current image with arrows and side previews when there is only one image.`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         currentImageConfig: <CurrentImageConfig>{
           loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -515,7 +515,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on current image. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -560,7 +560,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on right side preview. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -609,7 +609,7 @@ describe('CurrentImageComponent', () => {
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on left side preview. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -658,7 +658,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images to the right using swipe gestures. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -701,7 +701,7 @@ describe('CurrentImageComponent', () => {
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should navigate between images to the left using swipe gestures. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -745,7 +745,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the left. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -789,7 +789,7 @@ describe('CurrentImageComponent', () => {
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the right. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -834,7 +834,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -866,7 +866,7 @@ describe('CurrentImageComponent', () => {
     TEST_MODEL_HIDEEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is HIDE_IF_EMPTY. Test i=${index}`, () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.set({
+        configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           currentImageConfig: <CurrentImageConfig>{
             loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -901,7 +901,7 @@ describe('CurrentImageComponent', () => {
       TEST_MODEL.forEach((val: TestModel, index: number) => {
         it(`should display current image, arrows and side previews with custom slideConfig. Test i=${index}, j=${j}`, () => {
           const configService = fixture.debugElement.injector.get(ConfigService);
-          configService.set({
+          configService.setConfig(0, {
             accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
             currentImageConfig: <CurrentImageConfig>{
               loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -937,7 +937,7 @@ describe('CurrentImageComponent', () => {
       TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
         it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
           const configService = fixture.debugElement.injector.get(ConfigService);
-          configService.set({
+          configService.setConfig(0, {
             accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
             currentImageConfig: <CurrentImageConfig>{
               loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -977,7 +977,7 @@ describe('CurrentImageComponent', () => {
       TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
         it(`should display current image and arrows WITHOUT side previews. Test i=${index}, j=${j}`, () => {
           const configService = fixture.debugElement.injector.get(ConfigService);
-          configService.set({
+          configService.setConfig(0, {
             accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
             currentImageConfig: <CurrentImageConfig>{
               loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -1085,7 +1085,7 @@ describe('CurrentImageComponent', () => {
 
     it(`should display current image with custom accessibility`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: CUSTOM_ACCESSIBILITY,
         currentImageConfig: <CurrentImageConfig>{
           loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -1121,7 +1121,7 @@ describe('CurrentImageComponent', () => {
 
     it(`should display current image with an array of images with a single element.`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         currentImageConfig: <CurrentImageConfig>{
           loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -1158,7 +1158,7 @@ describe('CurrentImageComponent', () => {
 
     it(`should display gallery with all defaults and auto-navigate (play enabled).`, fakeAsync(() => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         currentImageConfig: <CurrentImageConfig>{
           loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -1210,7 +1210,7 @@ describe('CurrentImageComponent', () => {
     it(`cannot navigate from the last image to the first one if infinite sliding is disabled`, () => {
       const infiniteSliding = false;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         currentImageConfig: <CurrentImageConfig>{
           loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
@@ -1248,7 +1248,7 @@ describe('CurrentImageComponent', () => {
     it(`cannot navigate from the first image to the last one if infinite sliding is disabled`, () => {
       const infiniteSliding = false;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.set({
+      configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         currentImageConfig: <CurrentImageConfig>{
           loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},

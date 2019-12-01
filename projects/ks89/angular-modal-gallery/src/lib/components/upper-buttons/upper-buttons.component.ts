@@ -59,6 +59,7 @@ export interface InternalButtonConfig extends ButtonConfig {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
+  @Input() id: number;
   /**
    * Object of type `Image` that represent the visible image.
    */
@@ -150,7 +151,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.buttonsConfig = this.configService.get().buttonsConfig;
+    this.buttonsConfig = this.configService.getConfig(this.id).buttonsConfig;
     switch (this.buttonsConfig.strategy) {
       case ButtonsStrategy.SIMPLE:
         this.buttons = this.addButtonIds(this.simpleButtonsDefault);

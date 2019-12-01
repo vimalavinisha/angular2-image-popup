@@ -21,7 +21,6 @@ import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angul
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { ModalGalleryComponent } from './modal-gallery.component';
-import { BackgroundComponent } from '../background/background.component';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
 import { LoadingSpinnerComponent } from '../current-image/loading-spinner/loading-spinner.component';
 import { PreviewsComponent } from '../previews/previews.component';
@@ -111,7 +110,7 @@ function getSimpleChangesMock(): SimpleChanges {
 
 function initTestBed() {
   return TestBed.configureTestingModule({
-    declarations: [ModalGalleryComponent, ClickOutsideDirective, BackgroundComponent,
+    declarations: [ModalGalleryComponent, ClickOutsideDirective,
       UpperButtonsComponent, CurrentImageComponent, LoadingSpinnerComponent,
       DotsComponent, PlainGalleryComponent, PreviewsComponent,
       SizeDirective, KeyboardNavigationDirective, ATagBgImageDirective,

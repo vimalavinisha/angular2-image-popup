@@ -26,14 +26,16 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
-  AccessibilityConfig,
   AdvancedLayout,
   GalleryService,
   GridLayout,
   Image,
   LineLayout,
   PlainGalleryConfig,
-  PlainGalleryStrategy
+  PlainGalleryStrategy,
+  ModalOverlayService,
+  ModalOverlayRef,
+  LibConfig
 } from '@ks89/angular-modal-gallery';
 
 @Component({
@@ -42,9 +44,6 @@ import {
   styleUrls: ['./plain-gallery.scss']
 })
 export class PlainGalleryComponent {
-  imageIndex = 1;
-  galleryId = 200;
-
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -158,80 +157,91 @@ export class PlainGalleryComponent {
     new Image(6, { img: '../assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
 
-  accessibilityConfig: AccessibilityConfig = {
-    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
-    backgroundTitle: 'CUSTOM background title',
-
-    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
-    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
-
-    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
-    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
-
-    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
-    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
-
-    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
-    mainContainerTitle: 'CUSTOM main container title',
-    mainPrevImageAriaLabel: 'CUSTOM Previous image',
-    mainPrevImageTitle: 'CUSTOM Previous image',
-    mainNextImageAriaLabel: 'CUSTOM Next image',
-    mainNextImageTitle: 'CUSTOM Next image',
-
-    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
-    dotsContainerTitle: 'CUSTOM dots container title',
-    dotAriaLabel: 'CUSTOM Navigate to image number',
-
-    previewsContainerAriaLabel: 'CUSTOM Image previews',
-    previewsContainerTitle: 'CUSTOM previews title',
-    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
-    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
-    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
-    previewScrollNextTitle: 'CUSTOM Scroll next previews',
-
-    carouselContainerAriaLabel: 'Current image and navigation',
-    carouselContainerTitle: '',
-    carouselPrevImageAriaLabel: 'Previous image',
-    carouselPrevImageTitle: 'Previous image',
-    carouselNextImageAriaLabel: 'Next image',
-    carouselNextImageTitle: 'Next image',
-    carouselPreviewsContainerAriaLabel: 'Image previews',
-    carouselPreviewsContainerTitle: '',
-    carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
-    carouselPreviewScrollPrevTitle: 'Scroll previous previews',
-    carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
-    carouselPreviewScrollNextTitle: 'Scroll next previews'
+  libConfigPlainGalleryRow: LibConfig = {
+    plainGalleryConfig: this.plainGalleryRow
+  };
+  libConfigPlainGalleryRowSpaceAround: LibConfig = {
+    plainGalleryConfig: this.plainGalleryRowSpaceAround
+  };
+  libConfigPlainGalleryRowATags: LibConfig = {
+    plainGalleryConfig: this.plainGalleryRowATags
+  };
+  libConfigPlainGalleryColumn: LibConfig = {
+    plainGalleryConfig: this.plainGalleryColumn
+  };
+  libConfigPlainGalleryGrid: LibConfig = {
+    plainGalleryConfig: this.plainGalleryGrid
   };
 
-  constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
+  constructor(private galleryService: GalleryService, private modalGalleryService: ModalOverlayService, private sanitizer: DomSanitizer) {}
 
-  openImageModalRow(image: Image) {
+  openImageModalRow(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: this.images,
+        currentImage: this.images[index],
+        libConfig: {
+          plainGalleryConfig: this.customPlainGalleryRowConfig
+        }
+      }
+    });
   }
 
-  openImageModalColumn(image: Image) {
+  openImageModalColumn(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: this.images,
+        currentImage: this.images[index],
+        libConfig: {
+          plainGalleryConfig: this.customPlainGalleryColumnConfig
+        }
+      }
+    });
   }
 
-  openImageModalRowDescription(image: Image) {
+  openImageModalRowDescription(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: this.imagesRect,
+        currentImage: this.imagesRect[index],
+        libConfig: {
+          plainGalleryConfig: this.customPlainGalleryRowDescConfig
+        }
+      }
+    });
   }
 
   addRandomImage() {
+    // add to images array
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
+    // add also to imagesRect
+    const imageRectToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
+    const newImageRect: Image = new Image(this.imagesRect.length - 1 + 1, imageRectToCopy.modal, imageRectToCopy.plain);
+    this.imagesRect = [...this.imagesRect, newImageRect];
   }
 
-  openModalViaService(id: number | undefined, index: number) {
-    console.log('opening gallery with index ' + index);
-    this.galleryService.openGallery(id, index);
+  onShow(id: number, index: number, images: Image[] = this.images) {
+    const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: images,
+        currentImage: images[index]
+      }
+    });
   }
 
   trackById(index: number, item: Image) {

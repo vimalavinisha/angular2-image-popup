@@ -48,6 +48,7 @@ import { Size } from '../../model/size.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
+  @Input() id: number;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -121,9 +122,9 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * In particular, it's called only one time!!!
    */
   ngOnInit() {
-    this.accessibilityConfig = this.configService.get().accessibilityConfig;
-    this.slideConfig = this.configService.get().slideConfig;
-    this.previewConfig = this.configService.get().previewConfig;
+    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
+    this.slideConfig = this.configService.getConfig(this.id).slideConfig;
+    this.previewConfig = this.configService.getConfig(this.id).previewConfig;
     this.initPreviews(this.currentImage, this.images);
   }
 

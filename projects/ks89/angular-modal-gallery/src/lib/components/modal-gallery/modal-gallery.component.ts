@@ -214,7 +214,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // init ligConfig with inputs
-    this.configService.set(<LibConfig>{
+    this.configService.setConfig(this.id, <LibConfig>{
       slideConfig: this.slideConfig,
       accessibilityConfig: this.accessibilityConfig,
       previewConfig: this.previewConfig,
@@ -225,7 +225,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
       currentImageConfig: this.currentImageConfig
     });
 
-    // console.log('modalgallery init this.configService.get', this.configService.get());
+    // console.log('modalgallery init this.configService.get', this.configService.get(0));
 
     // call initImages to init images and to emit `hasData` event
     this.initImages();
@@ -237,7 +237,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
    */
   onShowModalGallery(index: number) {
     // this.showModalGallery(index);
-    // console.log('modalgallery onShowModalGallery this.configService.get', this.configService.get());
+    // console.log('modalgallery onShowModalGallery this.configService.get', this.configService.get(0));
     this.showPreview(index);
   }
 
@@ -261,7 +261,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy, OnChanges {
   showPreview(index: number) {
     const imageToShow: Image = this.images[index];
     const dialogRef: ModalOverlayRef = this.modalGalleryService.open({
-      image: {
+      config: {
         id: this.id,
         images: this.images,
         currentImage: imageToShow

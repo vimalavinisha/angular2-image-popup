@@ -32,6 +32,7 @@ import { KeyboardServiceConfig } from './model/keyboard-service-config.interface
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
 import { ConfigService } from './services/config.service';
+import { PlainGalleryComponent } from './components/plain-gallery/plain-gallery.component';
 
 // to prevent bad scrolling behaviour on mobile phone with carousels.
 // From @mohaxspb (https://github.com/Ks89/angular-modal-gallery/pull/187)
@@ -49,7 +50,7 @@ export class KsHammerGestureConfig extends HammerGestureConfig {
 @NgModule({
   imports: [CommonModule, OverlayModule],
   declarations: [COMPONENTS, DIRECTIVES],
-  exports: [ModalGalleryComponent, CarouselComponent],
+  exports: [ModalGalleryComponent, PlainGalleryComponent, CarouselComponent],
   providers: [
     {
       provide: HAMMER_GESTURE_CONFIG,

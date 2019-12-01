@@ -236,7 +236,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.configService.get().carouselPlayConfig.pauseOnHover) {
+    if (!this.configService.getConfig(this.id).carouselPlayConfig.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -247,7 +247,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('mouseleave')
   onMouseLeave() {
-    if (!this.configService.get().carouselPlayConfig.pauseOnHover || !this.configService.get().carouselPlayConfig.autoPlay) {
+    if (!this.configService.getConfig(this.id).carouselPlayConfig.pauseOnHover || !this.configService.getConfig(this.id).carouselPlayConfig.autoPlay) {
       return;
     }
     this.playCarousel();
@@ -258,7 +258,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('keydown.arrowLeft')
   onKeyDownLeft() {
-    if (!this.configService.get().carouselConfig.keyboardEnable) {
+    if (!this.configService.getConfig(this.id).carouselConfig.keyboardEnable) {
       return;
     }
     this.prevImage();
@@ -269,7 +269,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('keydown.arrowRight')
   onKeyDownLRight() {
-    if (!this.configService.get().carouselConfig.keyboardEnable) {
+    if (!this.configService.getConfig(this.id).carouselConfig.keyboardEnable) {
       return;
     }
     this.nextImage();
@@ -292,15 +292,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     // handle changes of dotsConfig
     const configDotsChange: SimpleChange = changes.dotsConfig;
     if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
-      this.configService.set({
+      this.configService.setConfig(this.id, {
         carouselDotsConfig: configDotsChange.currentValue
       });
-      this.configDots = this.configService.get().carouselDotsConfig;
+      this.configDots = this.configService.getConfig(this.id).carouselDotsConfig;
     }
     // handle changes of carouselConfig
     const carouselConfigChange: SimpleChange = changes.carouselConfig;
     if (carouselConfigChange && carouselConfigChange.currentValue !== carouselConfigChange.previousValue) {
-      this.configService.set({
+      this.configService.setConfig(this.id, {
         carouselConfig: carouselConfigChange.currentValue
       });
       this.configCarousel = carouselConfigChange.currentValue;
@@ -311,7 +311,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       const playConfigChangePrev: PlayConfig = playConfigChange.previousValue;
       const playConfigChangeCurr: PlayConfig = playConfigChange.currentValue;
       if (playConfigChangePrev !== playConfigChangeCurr) {
-        this.configService.set({
+        this.configService.setConfig(this.id, {
           carouselPlayConfig: playConfigChange.currentValue
         });
         // this.configPlay = playConfigChange.currentValue;
@@ -329,7 +329,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   ngOnInit() {
     this.currentImage = this.images[0];
 
-    this.configService.set({
+    this.configService.setConfig(this.id, {
       carouselConfig: this.carouselConfig,
       carouselImageConfig: this.carouselImageConfig,
       carouselPlayConfig: this.playConfig,
@@ -337,7 +337,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       carouselDotsConfig: this.dotsConfig,
       accessibilityConfig: this.accessibilityConfig
     });
-    const libConfig: LibConfig = this.configService.get();
+    const libConfig: LibConfig = this.configService.getConfig(this.id);
     this.configCarousel = libConfig.carouselConfig;
     this.configCarouselImage = libConfig.carouselImageConfig;
     this.configPlay = libConfig.carouselPlayConfig;
@@ -354,7 +354,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this._ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => this.configService.get().carouselPlayConfig.interval),
+            map(() => this.configService.getConfig(this.id).carouselPlayConfig.interval),
             filter(interval => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
@@ -411,13 +411,13 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Also, if modalGalleryEnable is true, you can open the modal-gallery.
    */
   onClickCurrentImage() {
-    if (!this.configService.get().carouselConfig.modalGalleryEnable) {
+    if (!this.configService.getConfig(this.id).carouselConfig.modalGalleryEnable) {
       return;
     }
     const index = getIndex(this.currentImage, this.images);
     // this.galleryService.openGallery(this.id, index);
     this.modalOverlayService.open({
-      image: {
+      config: {
         id: this.id,
         images: this.images,
         currentImage: this.images[index]
@@ -434,7 +434,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image = this.currentImage): string {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
     if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
@@ -457,7 +457,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
   swipe(action = this.SWIPE_ACTION.RIGHT) {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
         if (configCurrentImageCarousel.invertSwipe) {
@@ -574,7 +574,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getTitleToDisplay(image: Image = this.currentImage): string {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
     if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
@@ -663,7 +663,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @returns String description built concatenating image fields with a specific logic.
    */
   private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.get().carouselImageConfig;
+    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
     if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
