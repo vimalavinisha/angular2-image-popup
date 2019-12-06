@@ -4,37 +4,27 @@
 <p>If you want, you can <b>add a random image</b> to every example
   <button (click)="addRandomImage()"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add image</button>
 </p>
-<p>NEW OPEN GALLERY DIRECTLY VIA SERVICE specifying the images as input</p>
 <div>
-  <p>images gallery</p>
-  <button (click)="openModalViaService(3, images)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open at index=3</button>
+  <p>Index to open:&nbsp;&nbsp;&nbsp;<input type="number" min="0" [(ngModel)]="imageIndex"></p>
 </div>
 <div>
-  <p>imagesRect images</p>
-  <button (click)="openModalViaService2(1, imagesRect)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open at index=1</button>
-</div>
-<div>
-  <p>imagesMixedSizes images</p>
-  <button (click)="openModalViaService3(2, imagesMixedSizes)"><i class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Open at index=2</button>
+  <p>WARNING: remember to use always different ids across your application!!!</p>
 </div>
 <br>
 <hr>
-<!--<h2>Minimal examples</h2>-->
-<!--<section>-->
-<!--  <h3>A1 - (id=1) - Minimal demo - all defaults</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="1" [modalImages]="images"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>A1bis - (id=2) - Minimal demo - all defaults with rect images</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="2" [modalImages]="imagesRect"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>A1tris - (id=3) - Minimal demo - all defaults with images of different sizes</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="3" [modalImages]="imagesMixedSizes"></ks-modal-gallery>-->
-<!--</section>-->
+<h2>Minimal examples</h2>
+<section>
+  <h3>A1 - (id=1) - Minimal demo - all defaults (images array)</h3>
+  <button (click)="openModal(1, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>A1bis - (id=2) - Minimal demo - all defaults with rect images (imagesRect array)</h3>
+  <button (click)="openModal(2, imagesRect, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>A1tris - (id=3) - Minimal demo - all defaults with images of different sizes (imagesMixedSizes array)</h3>
+  <button (click)="openModal(3, imagesMixedSizes, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+</section>
 <!--<section>-->
 <!--  <h3>A2 - (id=4) - Minimal demo - listen for events</h3>-->
 <!--  <br>-->
@@ -47,57 +37,39 @@
 <!--                    (buttonBeforeHook)="onButtonBeforeHook($event)"-->
 <!--                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>-->
 <!--</section>-->
-<!--<section>-->
-<!--  <h3>A3 - (id=5) - Minimal demo - single image</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="5" [modalImages]="singleImage"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>A4 - (id=6) - Minimal demo - single image with infinite sliding enabled (to fix issue #156)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="6" [modalImages]="singleImage"-->
-<!--                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>A5 - (id=7) - Minimal demo - two images with infinite sliding enabled (to fix issue #156)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="7" [modalImages]="[images[0], images[1]]"-->
-<!--                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>A6 - (id=8) - Minimal demo - three image with infinite sliding enabled (to fix issue #156)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="8" [modalImages]="[images[0], images[1], images[2]]"-->
-<!--                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<br>-->
-<!--<hr>-->
-<!--<br>-->
-<!--<h2>Simple examples</h2>-->
-<!--<section>-->
-<!--  <h3>B1 - (id=9) - Simple demo - only current image and buttons (previews and dots are hidden)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="9" [modalImages]="images"-->
-<!--                    [previewConfig]="{visible: false}"-->
-<!--                    [dotsConfig]="{visible: false}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B2 - (id=10) - Simple demo - only current image (buttons, previews and dots are hidden)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="10" [modalImages]="images"-->
-<!--                    [buttonsConfig]="{visible: false, strategy: 1}"-->
-<!--                    [previewConfig]="{visible: false}"-->
-<!--                    [dotsConfig]="{visible: false}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B3 - (id=11) - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="11" [modalImages]="images"-->
-<!--                    [slideConfig]="{infinite: false, sidePreviews: {show: false}}"-->
-<!--                    [buttonsConfig]="{visible: false, strategy: 1}"-->
-<!--                    [previewConfig]="{visible: false}"-->
-<!--                    [dotsConfig]="{visible: false}"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>A3 - (id=5) - Minimal demo - single image (singleImage array)</h3>
+  <button (click)="openModal(5, singleImage, 0)">Open modal gallery</button>
+</section>
+<section>
+  <h3>A4 - (id=6) - Minimal demo - single image with infinite sliding enabled (to fix issue #156)</h3>
+  <button (click)="openModal(6, singleImage, 0, {slideConfig: {infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}})">Open modal gallery</button>
+</section>
+<section>
+  <h3>A5 - (id=7) - Minimal demo - two images with infinite sliding enabled (to fix issue #156)</h3>
+  <button (click)="openModal(7, [images[0], images[1]], imageIndex, {slideConfig: {infinite: true, sidePreviews: {show: false, size: {width: '100px', height: 'auto'}}}})">Open modal gallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>A6 - (id=8) - Minimal demo - three image with infinite sliding enabled (to fix issue #156)</h3>
+  <button (click)="openModal(8, [images[0], images[1], images[2]], imageIndex, {slideConfig: {infinite: true, sidePreviews: {show: false, size: {width: '100px', height: 'auto'}}}})">Open modal gallery at index={{imageIndex}}</button>
+</section>
+<br>
+<hr>
+<br>
+<h2>Simple examples</h2>
+<section>
+  <h3>B1 - (id=9) - Simple demo - only current image and buttons (previews and dots are hidden)</h3>
+  <button (click)="openModal(9, images, imageIndex, {previewConfig: {visible: false}, dotsConfig: {visible: false}})">Open modal gallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B2 - (id=10) - Simple demo - only current image (buttons, previews and dots are hidden)</h3>
+  <button (click)="openModal(10, images, imageIndex, {buttonsConfig: {visible: false, strategy: 1}, previewConfig: {visible: false}, dotsConfig: {visible: false}})">Open modal gallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B3 - (id=11) - Simple demo - only current image (side previews, buttons, previews and dots are hidden)</h3>
+  <button (click)="openModal(11, images, imageIndex, {buttonsConfig: {visible: false, strategy: 1}, slideConfig: {infinite: false, sidePreviews: {show: false, size: {width: '100px', height: 'auto'}}}, previewConfig: {visible: false}, dotsConfig: {visible: false}})">Open modal
+    gallery at index={{imageIndex}}</button>
+</section>
 <!--<section>-->
 <!--  <h3>B3bis - (id=12) - Simple demo - custom preview size</h3>-->
 <!--  <br>-->

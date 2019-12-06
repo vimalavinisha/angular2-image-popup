@@ -20,6 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+section {
+  width: 100%;
+}
+
+h2, h3, p {
+  margin-left: 20px;
+}
+
 $text-color: #fff;
 $background: rgba(0, 0, 0, .7);
 

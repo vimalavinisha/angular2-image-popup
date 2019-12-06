@@ -49,7 +49,8 @@ import {
   CurrentImageConfig,
   ModalGalleryService,
   ModalGalleryRef,
-  ModalGalleryConfig
+  ModalGalleryConfig,
+  LibConfig
 } from '@ks89/angular-modal-gallery';
 
 @Component({
@@ -677,49 +678,28 @@ export class ModalGalleryExampleComponent {
   }
 
   addRandomImage() {
+    // add to images array
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
+    // add also to imagesRect
+    const imageRectToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
+    const newImageRect: Image = new Image(this.imagesRect.length - 1 + 1, imageRectToCopy.modal, imageRectToCopy.plain);
+    this.imagesRect = [...this.imagesRect, newImageRect];
+    // add also to imagesMixedSizes
+    const imageMixToCopy: Image = this.imagesMixedSizes[Math.floor(Math.random() * this.imagesMixedSizes.length)];
+    const newImageMix: Image = new Image(this.imagesMixedSizes.length - 1 + 1, imageMixToCopy.modal, imageMixToCopy.plain);
+    this.imagesMixedSizes = [...this.imagesMixedSizes, newImageMix];
   }
 
-  openModalViaService(index: number, imagesArrayToUse: Image[]) {
-    const imageToShow: Image = imagesArrayToUse[index];
+  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+    const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: 2,
+        id: id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: {
-          dotsConfig: { visible: false }
-        }
-      }
-    } as ModalGalleryConfig);
-  }
-
-  openModalViaService2(index: number, imagesArrayToUse: Image[]) {
-    const imageToShow: Image = imagesArrayToUse[index];
-    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id: 3,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig: {
-          dotsConfig: { visible: true }
-        }
-      }
-    } as ModalGalleryConfig);
-  }
-
-  openModalViaService3(index: number, imagesArrayToUse: Image[]) {
-    const imageToShow: Image = imagesArrayToUse[index];
-    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id: 4,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig: {
-          dotsConfig: { visible: false }
-        }
+        libConfig: libConfig
       }
     } as ModalGalleryConfig);
   }

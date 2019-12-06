@@ -20,8 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 $text-color: #fff;
 $background: rgba(0, 0, 0, .7);
+
+button {
+  background-color: #0060b7;
+  color: white;
+  height: 25px;
+  width: auto;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0086ff;
+  }
+}
 
 .my-app-custom-plain-container-row {
   align-items: center;
