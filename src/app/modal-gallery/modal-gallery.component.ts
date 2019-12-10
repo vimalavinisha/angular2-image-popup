@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {
@@ -50,18 +50,31 @@ import {
   ModalGalleryService,
   ModalGalleryRef,
   ModalGalleryConfig,
+  InteractionEvent,
   LibConfig
 } from '@ks89/angular-modal-gallery';
+import { Subscription } from 'rxjs';
+
+import { LIBCONFIG_6, LIBCONFIG_7, LIBCONFIG_8, LIBCONFIG_9, LIBCONFIG_10, LIBCONFIG_11, LIBCONFIG_12, LIBCONFIG_14, LIBCONFIG_15 } from './libconfigs';
 
 @Component({
   selector: 'ks-modal-gallery-page',
   templateUrl: './modal-gallery.html',
   styleUrls: ['./modal-gallery.scss']
 })
-export class ModalGalleryExampleComponent {
-  imageIndex = 1;
+export class ModalGalleryExampleComponent implements OnDestroy {
+  imageIndex = 0;
   galleryId = 1;
   isPlaying = true;
+  CONFIG6: LibConfig = LIBCONFIG_6;
+  CONFIG7: LibConfig = LIBCONFIG_7;
+  CONFIG8: LibConfig = LIBCONFIG_8;
+  CONFIG9: LibConfig = LIBCONFIG_9;
+  CONFIG10: LibConfig = LIBCONFIG_10;
+  CONFIG11: LibConfig = LIBCONFIG_11;
+  CONFIG12: LibConfig = LIBCONFIG_12;
+  CONFIG14: LibConfig = LIBCONFIG_14;
+  CONFIG15: LibConfig = LIBCONFIG_15;
 
   images: Image[] = [
     new Image(0, {
@@ -357,7 +370,7 @@ export class ModalGalleryExampleComponent {
 
   customFullDescription: Description = {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    // you should build this value programmaticaly with the result of (show)="..()" event
+    // you should build this value programmatically with the result of (show)="..()" event
     customFullDescription: 'Custom description of the current visible image'
     // if customFullDescription !== undefined, all other fields will be ignored
     // imageText: '',
@@ -367,7 +380,7 @@ export class ModalGalleryExampleComponent {
 
   customFullDescriptionHidden: Description = {
     strategy: DescriptionStrategy.ALWAYS_HIDDEN,
-    // you should build this value programmaticaly with the result of (show)="..()" event
+    // you should build this value programmatically with the result of (show)="..()" event
     customFullDescription: 'Custom description of the current visible image'
     // if customFullDescription !== undefined, all other fields will be ignored
     // imageText: '',
@@ -549,45 +562,20 @@ export class ModalGalleryExampleComponent {
 
   private count = 0;
 
+  // subscriptions to receive events from the gallery
+  // REMEMBER TO call unsubscribe(); in ngOnDestroy (see below)
+  private closeSubscription: Subscription;
+  private showSubscription: Subscription;
+  private firstImageSubscription: Subscription;
+  private lastImageSubscription: Subscription;
+  private hasDataSubscription: Subscription;
+  private buttonBeforeHookSubscription: Subscription;
+  private buttonAfterHookSubscription: Subscription;
+
   constructor(private galleryService: GalleryService, private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
   isShownAutoNavigate = false;
-
-  onButtonBeforeHook(event: ButtonEvent) {
-    console.log('onButtonBeforeHook ', event);
-
-    if (!event || !event.button) {
-      return;
-    }
-
-    // Invoked after a click on a button, but before that the related
-    // action is applied.
-    // For instance: this method will be invoked after a click
-    // of 'close' button, but before that the modal gallery
-    // will be really closed.
-
-    if (event.button.type === ButtonType.DELETE) {
-      // remove the current image and reassign all other to the array of images
-
-      console.log('delete in app with images count ' + this.images.length);
-
-      this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
-    }
-  }
-
-  onButtonAfterHook(event: ButtonEvent) {
-    console.log('onButtonAfterHook ', event);
-
-    if (!event || !event.button) {
-      return;
-    }
-
-    // Invoked after both a click on a button and its related action.
-    // For instance: this method will be invoked after a click
-    // of 'close' button, but before that the modal gallery
-    // will be really closed.
-  }
 
   onCustomButtonBeforeHook(event: ButtonEvent, galleryId: number | undefined) {
     console.log('onCustomButtonBeforeHook with galleryId=' + galleryId + ' and event: ', event);
@@ -613,32 +601,6 @@ export class ModalGalleryExampleComponent {
       return;
     }
     // Invoked after both a click on a button and its related action.
-  }
-
-  onImageLoaded(event: ImageModalEvent) {
-    // angular-modal-gallery will emit this event if it will load successfully input images
-    console.log('onImageLoaded action: ' + Action[event.action]);
-    console.log('onImageLoaded result:' + event.result);
-  }
-
-  onVisibleIndex(event: ImageModalEvent) {
-    console.log('onVisibleIndex action: ' + Action[event.action]);
-    console.log('onVisibleIndex result:' + event.result);
-  }
-
-  onIsFirstImage(event: ImageModalEvent) {
-    console.log('onIsFirstImage onfirst action: ' + Action[event.action]);
-    console.log('onIsFirstImage onfirst result:' + event.result);
-  }
-
-  onIsLastImage(event: ImageModalEvent) {
-    console.log('onIsLastImage onlast action: ' + Action[event.action]);
-    console.log('onIsLastImage onlast result:' + event.result);
-  }
-
-  onCloseImageModal(event: ImageModalEvent) {
-    console.log('onClose action: ' + Action[event.action]);
-    console.log('onClose result:' + event.result);
   }
 
   onShowAutoCloseExample(event: ImageModalEvent, galleryId: number) {
@@ -702,6 +664,58 @@ export class ModalGalleryExampleComponent {
         libConfig: libConfig
       }
     } as ModalGalleryConfig);
+    this.closeSubscription = dialogRef.close$.subscribe((event: ImageModalEvent) => {
+      console.log('close$ galleryId: ' + event.galleryId);
+      console.log('close$ action: ' + Action[event.action]);
+      console.log('close$ result:' + event.result);
+    });
+    this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
+      console.log('show$ galleryId: ' + event.galleryId);
+      console.log('show$ action: ' + Action[event.action]);
+      console.log('show$ result:' + event.result);
+    });
+    this.firstImageSubscription = dialogRef.firstImage$.subscribe((event: ImageModalEvent) => {
+      console.log('firstImage$ galleryId: ' + event.galleryId);
+      console.log('firstImage$ action: ' + Action[event.action]);
+      console.log('firstImage$ result:' + event.result);
+    });
+    this.lastImageSubscription = dialogRef.lastImage$.subscribe((event: ImageModalEvent) => {
+      console.log('lastImage$ galleryId: ' + event.galleryId);
+      console.log('lastImage$ action: ' + Action[event.action]);
+      console.log('lastImage$ result:' + event.result);
+    });
+    this.hasDataSubscription = dialogRef.hasData$.subscribe((event: ImageModalEvent) => {
+      // angular-modal-gallery will emit this event if it will load successfully input images
+      console.log('hasData$ galleryId: ' + event.galleryId);
+      console.log('hasData$ action: ' + Action[event.action]);
+      console.log('hasData$ result:' + event.result);
+    });
+    this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
+      console.log('buttonBeforeHook$ ', event);
+      if (!event || !event.button) {
+        return;
+      }
+      // Invoked after a click on a button, but before that the related
+      // action is applied.
+      // For instance: this method will be invoked after a click
+      // of 'close' button, but before that the modal gallery
+      // will be really closed.
+      if (event.button.type === ButtonType.DELETE) {
+        // remove the current image and reassign all other to the array of images
+        console.log('delete in app with images count ' + this.images.length);
+        this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+      }
+    });
+    this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {
+      console.log('buttonAfterHook$ ', event);
+      if (!event || !event.button) {
+        return;
+      }
+      // Invoked after both a click on a button and its related action.
+      // For instance: this method will be invoked after a click
+      // of 'close' button, but before that the modal gallery
+      // will be really closed.
+    });
   }
 
   autoAddImage() {
@@ -744,5 +758,30 @@ export class ModalGalleryExampleComponent {
     }
     this.isPlaying = !this.isPlaying;
     return this.isPlaying;
+  }
+
+  ngOnDestroy() {
+    // release resources to prevent memory leaks and unexpected behaviours
+    if (this.closeSubscription) {
+      this.closeSubscription.unsubscribe();
+    }
+    if (this.showSubscription) {
+      this.showSubscription.unsubscribe();
+    }
+    if (this.firstImageSubscription) {
+      this.firstImageSubscription.unsubscribe();
+    }
+    if (this.lastImageSubscription) {
+      this.lastImageSubscription.unsubscribe();
+    }
+    if (this.hasDataSubscription) {
+      this.hasDataSubscription.unsubscribe();
+    }
+    if (this.buttonBeforeHookSubscription) {
+      this.buttonBeforeHookSubscription.unsubscribe();
+    }
+    if (this.buttonAfterHookSubscription) {
+      this.buttonAfterHookSubscription.unsubscribe();
+    }
   }
 }
