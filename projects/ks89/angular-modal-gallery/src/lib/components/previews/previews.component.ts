@@ -185,7 +185,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     }
     const result: number = super.handleImageEvent(event);
     if (result === NEXT || result === PREV) {
-      this.clickPreview.emit(new ImageModalEvent(action, getIndex(preview, this.images)));
+      this.clickPreview.emit(new ImageModalEvent(this.id, action, getIndex(preview, this.images)));
     }
   }
 

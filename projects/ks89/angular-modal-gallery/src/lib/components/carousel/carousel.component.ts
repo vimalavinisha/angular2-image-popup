@@ -620,7 +620,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.emitBoundaryEvent(action, index);
 
     // emit current visible image index
-    this.show.emit(new ImageModalEvent(action, index + 1));
+    this.show.emit(new ImageModalEvent(this.id, action, index + 1));
   }
 
   /**
@@ -752,10 +752,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     // to emit first/last event
     switch (indexToCheck) {
       case 0:
-        this.firstImage.emit(new ImageModalEvent(action, true));
+        this.firstImage.emit(new ImageModalEvent(this.id, action, true));
         break;
       case this.images.length - 1:
-        this.lastImage.emit(new ImageModalEvent(action, true));
+        this.lastImage.emit(new ImageModalEvent(this.id, action, true));
         break;
     }
   }

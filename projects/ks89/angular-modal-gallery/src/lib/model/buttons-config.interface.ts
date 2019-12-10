@@ -55,6 +55,7 @@ export interface ButtonEvent {
   button: ButtonConfig;
   image: InternalLibImage | null;
   action: Action;
+  galleryId: number;
 }
 
 /**

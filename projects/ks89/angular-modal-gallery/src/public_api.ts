@@ -53,6 +53,8 @@ export { CurrentImageConfig } from './lib/model/current-image-config.interface';
 
 export { LoadingConfig, LoadingType } from './lib/model/loading-config.interface';
 
+export { InteractionEvent } from './lib/model/interaction-event.interface';
+
 export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './lib/components/accessibility-default';
 export {
   // KS_DEFAULT_BTN_ROTATE,

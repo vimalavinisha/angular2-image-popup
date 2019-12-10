@@ -1,12 +1,15 @@
 import { Injectable, Injector, ComponentRef } from '@angular/core';
-import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+
+import { GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 
 import { DIALOG_DATA } from './modal-gallery.tokens';
 import { ModalGalleryComponent } from './modal-gallery.component';
 import { ModalGalleryRef } from './modal-gallery-ref';
-import { Image } from '../../model/image.class';
+import { Image, ImageModalEvent } from '../../model/image.class';
 import { LibConfig } from '../../services/config.service';
+import { InteractionEvent } from '../../model/interaction-event.interface';
+import { ButtonEvent } from '../../model/buttons-config.interface';
 
 export interface ModalGalleryInput {
   id: number;
@@ -31,47 +34,68 @@ const DEFAULT_CONFIG: ModalGalleryConfig = {
 
 @Injectable({ providedIn: 'root' })
 export class ModalGalleryService {
-  private dialogRef;
+  private dialogRef: ModalGalleryRef;
 
   constructor(private injector: Injector, private overlay: Overlay) {}
 
-  open(config: ModalGalleryConfig = {}) {
-    // console.log('completed config-', config);
-
+  open(config: ModalGalleryConfig = {}): ModalGalleryRef {
     // Override default configuration
     const dialogConfig = { ...DEFAULT_CONFIG, ...config };
-
     // Returns an OverlayRef which is a PortalHost
     const overlayRef = this.createOverlay(dialogConfig);
-
     // Instantiate remote control
     this.dialogRef = new ModalGalleryRef(overlayRef);
 
-    const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
-
-    overlayRef.backdropClick().subscribe(() => this.dialogRef.close());
-
-    // console.log('completed open');
+    const overlayComponent: ModalGalleryComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
+    overlayRef.backdropClick().subscribe(() => this.dialogRef.closeModal());
     return this.dialogRef;
   }
 
-  close() {
+  close(): void {
     if (this.dialogRef) {
-      this.dialogRef.close();
+      this.dialogRef.closeModal();
       this.dialogRef = null;
     }
+  }
+
+  emitClose(event: ImageModalEvent) {
+    this.dialogRef.emitClose(event);
+  }
+
+  emitShow(event: ImageModalEvent) {
+    this.dialogRef.emitShow(event);
+  }
+
+  emitFirstImage(event: ImageModalEvent) {
+    this.dialogRef.emitFirstImage(event);
+  }
+
+  emitLastImage(event: ImageModalEvent) {
+    this.dialogRef.emitLastImage(event);
+  }
+
+  emitHasData(event: ImageModalEvent) {
+    this.dialogRef.emitHasData(event);
+  }
+
+  emitButtonBeforeHook(event: ButtonEvent) {
+    this.dialogRef.emitButtonBeforeHook(event);
+  }
+
+  emitButtonAfterHook(event: ButtonEvent) {
+    this.dialogRef.emitButtonAfterHook(event);
   }
 
   isOpen(): boolean {
     return !!this.dialogRef;
   }
 
-  private createOverlay(config: ModalGalleryConfig) {
+  private createOverlay(config: ModalGalleryConfig): OverlayRef {
     const overlayConfig = this.getOverlayConfig(config);
     return this.overlay.create(overlayConfig);
   }
 
-  private attachDialogContainer(overlayRef: OverlayRef, config: ModalGalleryConfig, dialogRef: ModalGalleryRef) {
+  private attachDialogContainer(overlayRef: OverlayRef, config: ModalGalleryConfig, dialogRef: ModalGalleryRef): ModalGalleryComponent {
     const injector = this.createInjector(config, dialogRef);
 
     const containerPortal = new ComponentPortal(ModalGalleryComponent, null, injector);
@@ -90,18 +114,18 @@ export class ModalGalleryService {
   }
 
   private getOverlayConfig(config: ModalGalleryConfig): OverlayConfig {
-    const positionStrategy = this.overlay
+    const positionStrategy: GlobalPositionStrategy = this.overlay
       .position()
       .global()
       .centerHorizontally()
       .centerVertically();
 
-    const overlayConfig = new OverlayConfig({
+    const overlayConfig: OverlayConfig = new OverlayConfig({
       hasBackdrop: config.hasBackdrop,
       backdropClass: config.backdropClass,
       panelClass: config.panelClass,
       scrollStrategy: this.overlay.scrollStrategies.block(),
-      positionStrategy
+      positionStrategy: positionStrategy
     });
 
     return overlayConfig;

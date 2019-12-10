@@ -294,7 +294,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
     switch (keyCode) {
       case esc:
-        this.close.emit(new ImageModalEvent(Action.KEYBOARD, true));
+        this.close.emit(new ImageModalEvent(this.id, Action.KEYBOARD, true));
         break;
       case right:
         this.nextImage(Action.KEYBOARD);
@@ -444,7 +444,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     const prevImage: InternalLibImage = this.getPrevImage();
     this.loading = !prevImage.previouslyLoaded;
-    this.changeImage.emit(new ImageModalEvent(action, getIndex(prevImage, this.images)));
+    this.changeImage.emit(new ImageModalEvent(this.id, action, getIndex(prevImage, this.images)));
 
     this.start$.next();
   }
@@ -461,7 +461,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
     const nextImage: InternalLibImage = this.getNextImage();
     this.loading = !nextImage.previouslyLoaded;
-    this.changeImage.emit(new ImageModalEvent(action, getIndex(nextImage, this.images)));
+    this.changeImage.emit(new ImageModalEvent(this.id, action, getIndex(nextImage, this.images)));
 
     this.start$.next();
   }

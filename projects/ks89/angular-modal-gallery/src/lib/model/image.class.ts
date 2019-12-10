@@ -72,22 +72,25 @@ export interface PlainImage extends ImageData {
 
 /**
  * Class `ImageEvent` that represents the event payload with the result and the triggered action.
+ * It also contains the source id of the gallery that emitted this event
  */
 export class ImageEvent {
+  galleryId: number;
   action: Action;
   result: number | boolean;
 
-  constructor(action: Action, result: number | boolean) {
+  constructor(galleryId: number, action: Action, result: number | boolean) {
+    this.galleryId = galleryId;
     this.action = action;
     this.result = result;
   }
 }
 
 /**
- * Class `ImageModalEvent` that represents the event payload with the result and the triggered action.
+ * Class `ImageModalEvent` that represents the event payload with galleryId, result and the triggered action.
  */
 export class ImageModalEvent extends ImageEvent {
-  constructor(action: Action, result: number | boolean) {
-    super(action, result);
+  constructor(galleryId: number, action: Action, result: number | boolean) {
+    super(galleryId, action, result);
   }
 }
