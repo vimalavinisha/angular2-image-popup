@@ -55,7 +55,52 @@ import {
 } from '@ks89/angular-modal-gallery';
 import { Subscription } from 'rxjs';
 
-import { LIBCONFIG_6, LIBCONFIG_7, LIBCONFIG_8, LIBCONFIG_9, LIBCONFIG_10, LIBCONFIG_11, LIBCONFIG_12, LIBCONFIG_14, LIBCONFIG_15 } from './libconfigs';
+import {
+  LIBCONFIG_6,
+  LIBCONFIG_7,
+  LIBCONFIG_8,
+  LIBCONFIG_9,
+  LIBCONFIG_10,
+  LIBCONFIG_11,
+  LIBCONFIG_12,
+  LIBCONFIG_14,
+  LIBCONFIG_15,
+  LIBCONFIG_16,
+  LIBCONFIG_17,
+  LIBCONFIG_18,
+  LIBCONFIG_19,
+  LIBCONFIG_20,
+  LIBCONFIG_21,
+  LIBCONFIG_22,
+  LIBCONFIG_23,
+  LIBCONFIG_24,
+  LIBCONFIG_25,
+  LIBCONFIG_26,
+  LIBCONFIG_27,
+  LIBCONFIG_28,
+  LIBCONFIG_29,
+  LIBCONFIG_30,
+  LIBCONFIG_31,
+  LIBCONFIG_32,
+  LIBCONFIG_33,
+  LIBCONFIG_34,
+  LIBCONFIG_35,
+  LIBCONFIG_36,
+  LIBCONFIG_37,
+  LIBCONFIG_38,
+  LIBCONFIG_39,
+  LIBCONFIG_40,
+  LIBCONFIG_41,
+  LIBCONFIG_42,
+  LIBCONFIG_43,
+  LIBCONFIG_44,
+  LIBCONFIG_45,
+  LIBCONFIG_46,
+  LIBCONFIG_47,
+  LIBCONFIG_50,
+  LIBCONFIG_51,
+  LIBCONFIG_52
+} from './libconfigs';
 
 @Component({
   selector: 'ks-modal-gallery-page',
@@ -75,6 +120,41 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   CONFIG12: LibConfig = LIBCONFIG_12;
   CONFIG14: LibConfig = LIBCONFIG_14;
   CONFIG15: LibConfig = LIBCONFIG_15;
+  CONFIG16: LibConfig = LIBCONFIG_16;
+  CONFIG17: LibConfig = LIBCONFIG_17;
+  CONFIG18: LibConfig = LIBCONFIG_18;
+  CONFIG19: LibConfig = LIBCONFIG_19;
+  CONFIG20: LibConfig = LIBCONFIG_20;
+  CONFIG21: LibConfig = LIBCONFIG_21;
+  CONFIG22: LibConfig = LIBCONFIG_22;
+  CONFIG23: LibConfig = LIBCONFIG_23;
+  CONFIG24: LibConfig = LIBCONFIG_24;
+  CONFIG25: LibConfig = LIBCONFIG_25;
+  CONFIG26: LibConfig = LIBCONFIG_26;
+  CONFIG27: LibConfig = LIBCONFIG_27;
+  CONFIG28: LibConfig = LIBCONFIG_28;
+  CONFIG29: LibConfig = LIBCONFIG_29;
+  CONFIG30: LibConfig = LIBCONFIG_30;
+  CONFIG31: LibConfig = LIBCONFIG_31;
+  CONFIG32: LibConfig = LIBCONFIG_32;
+  CONFIG33: LibConfig = LIBCONFIG_33;
+  CONFIG34: LibConfig = LIBCONFIG_34;
+  CONFIG35: LibConfig = LIBCONFIG_35;
+  CONFIG36: LibConfig = LIBCONFIG_36;
+  CONFIG37: LibConfig = LIBCONFIG_37;
+  CONFIG38: LibConfig = LIBCONFIG_38;
+  CONFIG39: LibConfig = LIBCONFIG_39;
+  CONFIG40: LibConfig = LIBCONFIG_40;
+  CONFIG41: LibConfig = LIBCONFIG_41;
+  CONFIG42: LibConfig = LIBCONFIG_42;
+  CONFIG43: LibConfig = LIBCONFIG_43;
+  CONFIG44: LibConfig = LIBCONFIG_44;
+  CONFIG45: LibConfig = LIBCONFIG_45;
+  CONFIG46: LibConfig = LIBCONFIG_46;
+  CONFIG47: LibConfig = LIBCONFIG_47;
+  CONFIG50: LibConfig = LIBCONFIG_50;
+  CONFIG51: LibConfig = LIBCONFIG_51;
+  CONFIG52: LibConfig = LIBCONFIG_52;
 
   images: Image[] = [
     new Image(0, {
@@ -652,6 +732,18 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageMixToCopy: Image = this.imagesMixedSizes[Math.floor(Math.random() * this.imagesMixedSizes.length)];
     const newImageMix: Image = new Image(this.imagesMixedSizes.length - 1 + 1, imageMixToCopy.modal, imageMixToCopy.plain);
     this.imagesMixedSizes = [...this.imagesMixedSizes, newImageMix];
+  }
+
+  openModalNoOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+    const imageToShow: Image = imagesArrayToUse[imageIndex];
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: libConfig
+      }
+    } as ModalGalleryConfig);
   }
 
   openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {

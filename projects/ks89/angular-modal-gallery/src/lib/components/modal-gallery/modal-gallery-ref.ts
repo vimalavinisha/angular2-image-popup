@@ -30,21 +30,27 @@ export class ModalGalleryRef {
   emitClose(event: ImageModalEvent) {
     this.close.next(event);
   }
+
   emitShow(event: ImageModalEvent) {
     this.show.next(event);
   }
+
   emitFirstImage(event: ImageModalEvent) {
     this.firstImage.next(event);
   }
+
   emitLastImage(event: ImageModalEvent) {
     this.lastImage.next(event);
   }
+
   emitHasData(event: ImageModalEvent) {
     this.hasData.next(event);
   }
+
   emitButtonBeforeHook(event: ButtonEvent) {
     this.buttonBeforeHook.next(event);
   }
+
   emitButtonAfterHook(event: ButtonEvent) {
     this.buttonAfterHook.next(event);
   }

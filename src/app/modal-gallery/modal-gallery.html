@@ -15,7 +15,7 @@
 <h2>Minimal examples</h2>
 <section>
   <h3>A1 - (id=1) - Minimal demo - all defaults (images array)</h3>
-  <button (click)="openModal(1, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+  <button (click)="openModalNoOutputs(1, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3>A1bis - (id=2) - Minimal demo - all defaults with rect images (imagesRect array)</h3>
@@ -25,18 +25,10 @@
   <h3>A1tris - (id=3) - Minimal demo - all defaults with images of different sizes (imagesMixedSizes array)</h3>
   <button (click)="openModal(3, imagesMixedSizes, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
 </section>
-<!--<section>-->
-<!--  <h3>A2 - (id=4) - Minimal demo - listen for events</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="4" [modalImages]="images"-->
-<!--                    (hasData)="onImageLoaded($event)"-->
-<!--                    (close)="onCloseImageModal($event)"-->
-<!--                    (show)="onVisibleIndex($event)"-->
-<!--                    (firstImage)="onIsFirstImage($event)"-->
-<!--                    (lastImage)="onIsLastImage($event)"-->
-<!--                    (buttonBeforeHook)="onButtonBeforeHook($event)"-->
-<!--                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>A2 - (id=4) - Minimal demo - listen for events</h3>
+  <button (click)="openModal(4, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+</section>
 <section>
   <h3>A3 - (id=5) - Minimal demo - single image (singleImage array)</h3>
   <button (click)="openModal(5, singleImage, 0)">Open modal gallery</button>
@@ -73,285 +65,210 @@
   <h3>B3bis - (id=12) - Simple demo - custom preview size</h3>
   <button (click)="openModal(12, images, imageIndex, CONFIG12)">Open modalgallery at index={{imageIndex}}</button>
 </section>
-<!--<section>-->
-<!--  <h3>B4 - (id=13) - Simple demo - disable closeOutside</h3>-->
+<section>
+  <h3 style="color: red">B4 - (id=13) - Simple demo - disable closeOutside STILL NOT IMPLEMENTED!!!!</h3>
 <!--  <button (click)="openModal(13, images, imageIndex, ????)">Open modalgallery at index={{imageIndex}}</button>-->
 <!--  [enableCloseOutside]="false"-->
-<!--</section>-->
+</section>
 <section>
-  <h3>B5 - (id=14) - Simple demo - no downloadable at all</h3>
+  <h3 style="color: red">B5 - (id=14) - Simple demo - no downloadable at all</h3>
   <button (click)="openModal(14, images, imageIndex, CONFIG14)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3>B6 - (id=15) - Simple demo - no download button (only with keyboard)</h3>
   <button (click)="openModal(15, images, imageIndex, CONFIG15)">Open modalgallery at index={{imageIndex}}</button>
 </section>
-<!--<section>-->
-<!--  <h3>B7 - (id=16) - Simple demo - download with both button and keyboard</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="16" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{downloadable: true}"-->
-<!--                    [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B8 - (id=17) - Simple demo - infinite sliding but NO side previews</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="17" [modalImages]="images"-->
-<!--                    [slideConfig]="{infinite: true, sidePreviews: {show: false}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B9 - (id=18) - Simple demo - infinite sliding and side previews</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="18" [modalImages]="images"-->
-<!--                    [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B10 - (id=19) - Simple demo - disable loading spinner</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="19" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: false, type: 1}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B11 - (id=20) - Simple demo - loading spinner of type Standard</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="20" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 1}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B12 - (id=21) - Simple demo - loading spinner of type Circular</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="21" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 2}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B13 - (id=22) - Simple demo - loading spinner of type Bars</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="22" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 3}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B14 - (id=23) - Simple demo - loading spinner of type Dots</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="23" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 4}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B15 - (id=24) - Simple demo - loading spinner of type Cube Flipping</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="24" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 5}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B16 - (id=25) - Simple demo - loading spinner of type Circles</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="25" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 6}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B17 - (id=26) - Simple demo - loading spinner of type Explosing Squares</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="26" [modalImages]="imagesForLoadingSpinner"-->
-<!--                    [currentImageConfig]="{loadingConfig: {enable: true, type: 7}}"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>B7 - (id=16) - Simple demo - download with both button and keyboard</h3>
+  <button (click)="openModal(16, images, imageIndex, CONFIG16)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B8 - (id=17) - Simple demo - infinite sliding but NO side previews</h3>
+  <button (click)="openModal(17, images, imageIndex, CONFIG17)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B9 - (id=18) - Simple demo - infinite sliding and side previews</h3>
+  <button (click)="openModal(18, images, imageIndex, CONFIG18)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B10 - (id=19) - Simple demo - disable loading spinner</h3>
+  <button (click)="openModal(19, imagesForLoadingSpinner, imageIndex, CONFIG19)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B11 - (id=20) - Simple demo - loading spinner of type Standard</h3>
+  <button (click)="openModal(20, imagesForLoadingSpinner, imageIndex, CONFIG20)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B12 - (id=21) - Simple demo - loading spinner of type Circular</h3>
+  <button (click)="openModal(21, imagesForLoadingSpinner, imageIndex, CONFIG21)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B13 - (id=22) - Simple demo - loading spinner of type Bars</h3>
+  <button (click)="openModal(22, imagesForLoadingSpinner, imageIndex, CONFIG22)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B14 - (id=23) - Simple demo - loading spinner of type Dots</h3>
+  <button (click)="openModal(23, imagesForLoadingSpinner, imageIndex, CONFIG23)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B15 - (id=24) - Simple demo - loading spinner of type Cube Flipping</h3>
+  <button (click)="openModal(24, imagesForLoadingSpinner, imageIndex, CONFIG24)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B16 - (id=25) - Simple demo - loading spinner of type Circles</h3>
+  <button (click)="openModal(25, imagesForLoadingSpinner, imageIndex, CONFIG25)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B17 - (id=26) - Simple demo - loading spinner of type Explosing Squares</h3>
+  <button (click)="openModal(26, imagesForLoadingSpinner, imageIndex, CONFIG26)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>B18 - (id=27) - Simple demo - buttons config DEFAULT strategy (only close)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="27" [modalImages]="images"-->
-<!--                    [buttonsConfig]="buttonsConfigDefault"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B19 - (id=28) - Simple demo - buttons config SIMPLE strategy (close and download)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="28" [modalImages]="images"-->
-<!--                    [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B20 - (id=29) - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current-->
-<!--    tab)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="29" [modalImages]="images"-->
-<!--                    [buttonsConfig]="buttonsConfigAdvanced"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B21 - (id=30) - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and-->
-<!--    buttonAfterHook (mandatory to handle delete events)</h3>-->
-<!--  <br>-->
+<section>
+  <h3>B18 - (id=27) - Simple demo - buttons config DEFAULT strategy (only close)</h3>
+  <button (click)="openModal(27, images, imageIndex, CONFIG27)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B19 - (id=28) - Simple demo - buttons config SIMPLE strategy (close and download)</h3>
+  <button (click)="openModal(28, images, imageIndex, CONFIG28)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>B20 - (id=29) - Simple demo - buttons config ADVANCED strategy (close, download and exturl in the current
+    tab)</h3>
+  <button (click)="openModal(29, images, imageIndex, CONFIG29)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3 style="color: red">B21 - (id=30) - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
+    buttonAfterHook (mandatory to handle delete events)</h3>
+  <button (click)="openModal(30, images, imageIndex, CONFIG30)">Open modalgallery at index={{imageIndex}}</button>
 <!--  <ks-modal-gallery [id]="30" [modalImages]="images"-->
 <!--                    [buttonsConfig]="buttonsConfigFull"-->
 <!--                    (show)="onVisibleIndex($event)"-->
 <!--                    (buttonBeforeHook)="onButtonBeforeHook($event)"-->
 <!--                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B22 - (id=31) - Simple demo - buttons config CUSTOM strategy with exturl in ANOTHER TAB ('_blank')</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="31" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{downloadable: true}"-->
-<!--                    [buttonsConfig]="customButtonsConfigExtUrlNewTab"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B23 - (id=32) - Simple demo - buttons config CUSTOM but with all default buttons already included in the library</h3>-->
-<!--  <p><i>I added also 'onButtonBeforeHook' and 'onButtonAfterHook' to support delete button</i></p>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="32" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{downloadable: true}"-->
-<!--                    [buttonsConfig]="buttonsConfigCustom"-->
-<!--                    (buttonBeforeHook)="onButtonBeforeHook($event)"-->
-<!--                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>B24 - (id=33) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome-->
-<!--    5</a></h3>-->
-<!--  <p><i>Be careful to use the id=33 also in the Component. This is necessary here, because I have many instances of-->
-<!--    angular-modal-gallery in a single page</i></p>-->
-<!--  <br>-->
+</section>
+<section>
+  <h3>B22 - (id=31) - Simple demo - buttons config CUSTOM strategy with exturl in ANOTHER TAB ('_blank')</h3>
+  <button (click)="openModal(31, images, imageIndex, CONFIG31)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3 style="color: red">B23 - (id=32) - Simple demo - buttons config CUSTOM but with all default buttons already included in the library</h3>
+  <p><i>I added also 'onButtonBeforeHook' and 'onButtonAfterHook' to support delete button</i></p>
+  <button (click)="openModal(32, images, imageIndex, CONFIG32)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3 style="color: red">B24 - (id=33) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
+    5</a></h3>
+  <p><i>Be careful to use the id=33 also in the Component. This is necessary here, because I have many instances of
+    angular-modal-gallery in a single page</i></p>
+  <br>
+  <button (click)="openModal(33, images, imageIndex, CONFIG33)">Open modalgallery at index={{imageIndex}}</button>
+
 <!--  <ks-modal-gallery [id]="33" [modalImages]="images"-->
 <!--                    [currentImageConfig]="{downloadable: true}"-->
 <!--                    [buttonsConfig]="customButtonsFontAwesomeConfig"-->
 <!--                    (show)="onVisibleIndex($event)"-->
 <!--                    (buttonBeforeHook)="onCustomButtonBeforeHook($event, 33)"-->
 <!--                    (buttonAfterHook)="onCustomButtonAfterHook($event, 33)"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<br>-->
-<!--<hr>-->
-<!--<br>-->
-<!--<h2>Advanced examples</h2>-->
-<!--<section>-->
-<!--  <h3>C1 - (id=34) - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="34" [modalImages]="images"-->
-<!--                    [keyboardConfig]="{esc: 81, left: 40, right: 38}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C2 - (id=35) - Advanced demo - custom description always visible</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="35" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{description: customDescription}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C3 - (id=36) - Advanced demo - custom description hide if empty</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="36" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{description: customDescriptionHideIfEmpty}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C4 - (id=37) - Advanced demo - custom description always hidden</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="37" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{description: customFullDescriptionHidden}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C5 - (id=38) - Advanced demo - custom FULL description always visible</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="38" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{description: customFullDescription}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C6 - (id=39) - Advanced demo - custom HTML description always visible</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="39" [modalImages]="imagesHtmlDescriptions"-->
-<!--                    [currentImageConfig]="{description: customDescription}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C7 - (id=40) - Advanced demo - custom description style (always visible)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="40" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{description: customDescriptionStyle}"></ks-modal-gallery>-->
-<!--</section>-->
+</section>
+<br>
+<hr>
+<br>
+<h2>Advanced examples</h2>
+<section>
+  <h3>C1 - (id=34) - Advanced demo - custom keyboard ('up'/'down' arrows and 'q' to close)</h3>
+  <button (click)="openModal(34, images, imageIndex, CONFIG34)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C2 - (id=35) - Advanced demo - custom description always visible</h3>
+  <button (click)="openModal(35, images, imageIndex, CONFIG35)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C3 - (id=36) - Advanced demo - custom description hide if empty</h3>
+  <button (click)="openModal(36, images, imageIndex, CONFIG36)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C4 - (id=37) - Advanced demo - custom description always hidden</h3>
+  <button (click)="openModal(37, images, imageIndex, CONFIG37)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C5 - (id=38) - Advanced demo - custom FULL description always visible</h3>
+  <button (click)="openModal(38, images, imageIndex, CONFIG38)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C6 - (id=39) - Advanced demo - custom HTML description always visible</h3>
+  <button (click)="openModal(39, imagesHtmlDescriptions, imageIndex, CONFIG39)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C7 - (id=40) - Advanced demo - custom description style (always visible)</h3>
+  <button (click)="openModal(40, images, imageIndex, CONFIG40)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>C8 - (id=41) - Advanced demo - preview custom configuration with 1 image (clickable)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="41" [modalImages]="images"-->
-<!--                    [previewConfig]="previewConfigOneImage"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>C8 - (id=41) - Advanced demo - preview custom configuration with 1 image (clickable)</h3>
+  <button (click)="openModal(41, images, imageIndex, CONFIG41)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>C9 - (id=42) - Advanced demo - preview custom configuration with 5 images (clickable)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="42" [modalImages]="imagesRect"-->
-<!--                    [previewConfig]="previewConfigFiveImages"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>C9 - (id=42) - Advanced demo - preview custom configuration with 5 images (clickable)</h3>
+  <button (click)="openModal(42, imagesRect, imageIndex, CONFIG42)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>C10 - (id=43) - Advanced demo - preview custom configuration without arrows (clickable)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="43" [modalImages]="images"-->
-<!--                    [previewConfig]="previewConfigNoArrows"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>C11 - (id=44) - Advanced demo - preview custom configuration not clickable</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="44" [modalImages]="images"-->
-<!--                    [previewConfig]="previewConfigNoClickable"></ks-modal-gallery>-->
-<!--</section>-->
-<!--&lt;!&ndash;<section>&ndash;&gt;-->
-<!--&lt;!&ndash;<h3>C9 - Advanced demo - preview custom configuration always center <span&ndash;&gt;-->
-<!--&lt;!&ndash;style="color:red;">STILL NOT IMPLEMENTED</span></h3>&ndash;&gt;-->
-<!--&lt;!&ndash;<br>&ndash;&gt;-->
-<!--&lt;!&ndash;<ks-modal-gallery [modalImages]="images"&ndash;&gt;-->
-<!--&lt;!&ndash;[previewConfig]="previewConfigAlwaysCenter"></ks-modal-gallery>&ndash;&gt;-->
-<!--&lt;!&ndash;</section>&ndash;&gt;-->
-<!--<section>-->
-<!--  <h3>C12 - (id=45) - Advanced demo - preview custom configuration with custom size</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="45" [modalImages]="images"-->
-<!--                    [previewConfig]="previewConfigCustomSize"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>C10 - (id=43) - Advanced demo - preview custom configuration without arrows (clickable)</h3>
+  <button (click)="openModal(43, images, imageIndex, CONFIG43)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C11 - (id=44) - Advanced demo - preview custom configuration not clickable</h3>
+  <button (click)="openModal(44, images, imageIndex, CONFIG44)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>C12 - (id=45) - Advanced demo - preview custom configuration with custom size</h3>
+  <button (click)="openModal(45, images, imageIndex, CONFIG45)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>C13 - (id=46) - Advanced demo - accessibility config</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="46" [modalImages]="images"-->
-<!--                    [accessibilityConfig]="accessibilityConfig"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>C13 - (id=46) - Advanced demo - accessibility config</h3>
+  <button (click)="openModal(46, images, imageIndex, CONFIG46)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>C14 - (id=47) - Advanced demo - disable clicks on current image in modal-image</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="47" [modalImages]="images" [currentImageConfig]="{navigateOnClick: false}"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>C14 - (id=47) - Advanced demo - disable clicks on current image in modal-image</h3>
+  <button (click)="openModal(47, images, imageIndex, CONFIG47)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>C15 - (id=48) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>-->
-<!--  <p>Attention: please check the console to understand what it's happening!</p>-->
-<!--  <br>-->
+<section>
+  <h3 style="color: red">C15 - (id=48) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>
+  <p>Attention: please check the console to understand what it's happening!</p>
+  <button (click)="openModal(48, images, imageIndex)">Open modalgallery at index={{imageIndex}}</button>
 <!--  <ks-modal-gallery [id]="48" [modalImages]="images" (show)="onShowAutoCloseExample($event, 48)"></ks-modal-gallery>-->
-<!--</section>-->
+</section>
 
-<!--<br>-->
-<!--<hr>-->
-<!--<br>-->
-<!--<h2>Other examples</h2>-->
-<!--<section>-->
-<!--  <h3>D1 - (id=49) - Other demo - base64 images</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="49" [modalImages]="imagesBase64"></ks-modal-gallery>-->
-<!--</section>-->
+<br>
+<hr>
+<br>
+<h2>Other examples</h2>
+<section>
+  <h3>D1 - (id=49) - Other demo - base64 images</h3>
+  <button (click)="openModal(49, imagesBase64, imageIndex)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>D2 - (id=50) - Other demo - custom file name, used when downloaded</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="50" [modalImages]="imagesCustomDownloadFileName"-->
-<!--                    [currentImageConfig]="{downloadable: true}"-->
-<!--                    [buttonsConfig]="buttonsConfigSimple"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>D2 - (id=50) - Other demo - custom file name, used when downloaded</h3>
+  <button (click)="openModal(50, imagesCustomDownloadFileName, imageIndex, CONFIG50)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>D3 - (id=51) - Other demo - invert touchscreen swipe direction</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="51" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{invertSwipe: true}"></ks-modal-gallery>-->
-<!--</section>-->
+<section>
+  <h3>D3 - (id=51) - Other demo - invert touchscreen swipe direction</h3>
+  <button (click)="openModal(51, images, imageIndex, CONFIG51)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
-<!--<section>-->
-<!--  <h3>D4 - (id=52) - Other demo - infinite sliding and automatic add of images when the gallery is visible</h3>-->
-<!--  <br>-->
+<section>
+  <h3 style="color: red">D4 - (id=52) - Other demo - infinite sliding and automatic add of images when the gallery is visible</h3>
+  <button (click)="openModal(52, imagesInfiniteAutoAdd, imageIndex, CONFIG52)">Open modalgallery at index={{imageIndex}}</button>
 <!--  <ks-modal-gallery [id]="52" [modalImages]="imagesInfiniteAutoAdd"-->
 <!--                    [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"-->
 <!--                    (show)="autoAddImage()"></ks-modal-gallery>-->
-<!--</section>-->
+</section>
 
 <!--<section>-->
 <!--  <h3>D5 - (id=53) - Other demo - automatic update of the second image via gallery service (open the second image and wait some seconds to see the result)</h3>-->
