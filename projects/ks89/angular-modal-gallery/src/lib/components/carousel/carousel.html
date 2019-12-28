@@ -70,12 +70,12 @@
                                height: ''}">
 
       <a class="nav-left" *ngIf="configCarousel?.showArrows"
-         [attr.aria-label]="accessibilityConfig.carouselPrevImageAriaLabel"
+         [attr.aria-label]="configAccessibility.carouselPrevImageAriaLabel"
          [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
          (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)">
         <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
              aria-hidden="true"
-             [title]="accessibilityConfig.carouselPrevImageTitle"></div>
+             [title]="configAccessibility.carouselPrevImageTitle"></div>
       </a>
 
       <ng-container *ngTemplateOutlet="content"></ng-container>

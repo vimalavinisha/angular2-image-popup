@@ -69,19 +69,6 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    */
   @Output()
   clickDot: EventEmitter<number> = new EventEmitter<number>();
-
-  /**
-   * Object of type `DotsConfig` used in template.
-   */
-  @Input()
-  dotsConfig: DotsConfig;
-  /**
-   * Output to emit clicks on dots. The payload contains a number that represent
-   * the index of the clicked dot.
-   */
-  @Output()
-  clickDot: EventEmitter<number> = new EventEmitter<number>();
-
   /**
    * Object of type `DotsConfig` used in template.
    */
