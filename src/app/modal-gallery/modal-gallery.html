@@ -15,7 +15,7 @@
 <h2>Minimal examples</h2>
 <section>
   <h3>A1 - (id=1) - Minimal demo - all defaults (images array)</h3>
-  <button (click)="openModalNoOutputs(1, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+  <button (click)="openModal(1, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3>A1bis - (id=2) - Minimal demo - all defaults with rect images (imagesRect array)</h3>
@@ -27,7 +27,7 @@
 </section>
 <section>
   <h3>A2 - (id=4) - Minimal demo - listen for events</h3>
-  <button (click)="openModal(4, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
+  <button (click)="openModalWithOutputs(4, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3>A3 - (id=5) - Minimal demo - single image (singleImage array)</h3>
@@ -139,7 +139,7 @@
 <section>
   <h3 style="color: red">B21 - (id=30) - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
     buttonAfterHook (mandatory to handle delete events)</h3>
-  <button (click)="openModal(30, images, imageIndex, CONFIG30)">Open modalgallery at index={{imageIndex}}</button>
+  <button (click)="openModalWithOutputs(30, images, imageIndex, CONFIG30)">Open modalgallery at index={{imageIndex}}</button>
 <!--  <ks-modal-gallery [id]="30" [modalImages]="images"-->
 <!--                    [buttonsConfig]="buttonsConfigFull"-->
 <!--                    (show)="onVisibleIndex($event)"-->
@@ -161,7 +161,7 @@
   <p><i>Be careful to use the id=33 also in the Component. This is necessary here, because I have many instances of
     angular-modal-gallery in a single page</i></p>
   <br>
-  <button (click)="openModal(33, images, imageIndex, CONFIG33)">Open modalgallery at index={{imageIndex}}</button>
+  <button (click)="openModalWithOutputs(33, images, imageIndex, CONFIG33)">Open modalgallery at index={{imageIndex}}</button>
 
 <!--  <ks-modal-gallery [id]="33" [modalImages]="images"-->
 <!--                    [currentImageConfig]="{downloadable: true}"-->

@@ -734,7 +734,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     this.imagesMixedSizes = [...this.imagesMixedSizes, newImageMix];
   }
 
-  openModalNoOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -746,7 +746,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     } as ModalGalleryConfig);
   }
 
-  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -757,33 +757,23 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       }
     } as ModalGalleryConfig);
     this.closeSubscription = dialogRef.close$.subscribe((event: ImageModalEvent) => {
-      console.log('close$ galleryId: ' + event.galleryId);
-      console.log('close$ action: ' + Action[event.action]);
-      console.log('close$ result:' + event.result);
+      console.log('OUTPUT - close$: ', event);
     });
     this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
-      console.log('show$ galleryId: ' + event.galleryId);
-      console.log('show$ action: ' + Action[event.action]);
-      console.log('show$ result:' + event.result);
+      console.log('OUTPUT - show$: ', event);
     });
     this.firstImageSubscription = dialogRef.firstImage$.subscribe((event: ImageModalEvent) => {
-      console.log('firstImage$ galleryId: ' + event.galleryId);
-      console.log('firstImage$ action: ' + Action[event.action]);
-      console.log('firstImage$ result:' + event.result);
+      console.log('OUTPUT - firstImage$: ', event);
     });
     this.lastImageSubscription = dialogRef.lastImage$.subscribe((event: ImageModalEvent) => {
-      console.log('lastImage$ galleryId: ' + event.galleryId);
-      console.log('lastImage$ action: ' + Action[event.action]);
-      console.log('lastImage$ result:' + event.result);
+      console.log('OUTPUT - lastImage$: ', event);
     });
     this.hasDataSubscription = dialogRef.hasData$.subscribe((event: ImageModalEvent) => {
       // angular-modal-gallery will emit this event if it will load successfully input images
-      console.log('hasData$ galleryId: ' + event.galleryId);
-      console.log('hasData$ action: ' + Action[event.action]);
-      console.log('hasData$ result:' + event.result);
+      console.log('OUTPUT - hasData$: ', event);
     });
     this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
-      console.log('buttonBeforeHook$ ', event);
+      console.log('OUTPUT - buttonBeforeHook$: ', event);
       if (!event || !event.button) {
         return;
       }
@@ -799,7 +789,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       }
     });
     this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {
-      console.log('buttonAfterHook$ ', event);
+      console.log('OUTPUT - buttonAfterHook$:', event);
       if (!event || !event.button) {
         return;
       }
