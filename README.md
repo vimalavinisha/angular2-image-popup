@@ -185,6 +185,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 100 releases in two years**, and more to come... :)
 
+- 12/29/2019 - 7.2.6 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/23/2019 - 7.2.5 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/19/2019 - 7.2.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/18/2019 - 7.2.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -238,7 +239,7 @@ Check `CONTRIBUTING.md` in this repository.
 To understand how to contribute to an open source project, [HERE](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) you can find useful information.
 
 When you create a pull request, please, format your code to be consistent with the existing code. I suggest to use [WebStorm](https://www.jetbrains.com/webstorm/) as IDE and when you commit don't use a third party software, but the official command line `git`.
-In this way, [prettier](https://prettier.io/) will run using my configuration and it will auto-format the code. If it will fail, add files with `git add .` again and retry. 
+In this way, [prettier](https://prettier.io/) will run using my configuration and it will auto-format the code. If it will fail, add files with `git add .` again and retry.
 
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
 

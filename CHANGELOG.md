@@ -1,3 +1,8 @@
+# 7.2.6
+### Bugfixes
+- carousel in IE11 legacy mode shows wrong title on previous arrow (it's the same of next arrow, instead of previous). Fixed by @aslubsky with pull request #199.
+
+
 # 7.2.5
 ### Bugfixes
 - carousel autoPlay ignores configPlay.autoPlay = false. Reported and fixed by @aslubsky (issue #191 and pull request #192)
