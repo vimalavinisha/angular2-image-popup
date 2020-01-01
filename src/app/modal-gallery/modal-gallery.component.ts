@@ -656,15 +656,33 @@ export class ModalGalleryExampleComponent implements OnDestroy {
 
   // this variable is used only for example of auto navigation
   isShownAutoNavigate = false;
+  private timeout;
 
-  onShowAutoCloseExample(event: ImageModalEvent, galleryId: number) {
-    console.log(`onShowAutoCloseExample with id=${galleryId} action: ` + Action[event.action]);
-    console.log('onShowAutoCloseExample result:' + event.result);
-    console.log('Starting timeout of 3 second to close modal gallery automatically');
-    setTimeout(() => {
-      console.log('setTimeout end - closing gallery with id=' + galleryId);
-      this.galleryService.closeGallery(galleryId);
-    }, 3000);
+  openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+    const imageToShow: Image = imagesArrayToUse[imageIndex];
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: libConfig
+      }
+    } as ModalGalleryConfig);
+
+    this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
+      console.log('OUTPUT - show$: ', event);
+      const galleryId: number = event.galleryId;
+      console.log(`onShowAutoCloseExample with id=${galleryId} action: ` + Action[event.action]);
+      console.log('onShowAutoCloseExample result:' + event.result);
+      console.log('Starting timeout of 3 seconds to close modal gallery automatically');
+      // clear previous timeout
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        console.log('setTimeout end - closing gallery with id=' + galleryId);
+        this.modalGalleryService.close();
+        // this.galleryService.closeGallery(galleryId);
+      }, 3000);
+    });
   }
 
   onShowAutoNavigateExample(event: ImageModalEvent, galleryId: number) {
