@@ -125,6 +125,15 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     this.currentImage = (<any>this.dialogContent).currentImage;
     this.libConfig = (<any>this.dialogContent).libConfig;
     this.configService.setConfig(this.id, this.libConfig);
+
+    this.modalGalleryService.updateImages$.subscribe((images: Image[]) => {
+      this.images = images.map((image: Image) => {
+        const newImage: InternalLibImage = Object.assign({}, image, { previouslyLoaded: false });
+        return newImage;
+      });
+      this.initImages();
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   /**

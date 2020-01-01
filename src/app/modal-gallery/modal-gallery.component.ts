@@ -657,32 +657,6 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   // this variable is used only for example of auto navigation
   isShownAutoNavigate = false;
 
-  onCustomButtonBeforeHook(event: ButtonEvent, galleryId: number | undefined) {
-    console.log('onCustomButtonBeforeHook with galleryId=' + galleryId + ' and event: ', event);
-    if (!event || !event.button) {
-      return;
-    }
-    // Invoked after a click on a button, but before that the related
-    // action is applied.
-
-    if (event.button.type === ButtonType.CUSTOM) {
-      console.log('adding a new random image at the end');
-      this.addRandomImage();
-
-      setTimeout(() => {
-        this.galleryService.openGallery(galleryId, this.images.length - 1);
-      }, 0);
-    }
-  }
-
-  onCustomButtonAfterHook(event: ButtonEvent, galleryId: number | undefined) {
-    console.log('onCustomButtonAfterHook with galleryId=' + galleryId + ' and event: ', event);
-    if (!event || !event.button) {
-      return;
-    }
-    // Invoked after both a click on a button and its related action.
-  }
-
   onShowAutoCloseExample(event: ImageModalEvent, galleryId: number) {
     console.log(`onShowAutoCloseExample with id=${galleryId} action: ` + Action[event.action]);
     console.log('onShowAutoCloseExample result:' + event.result);
@@ -786,6 +760,83 @@ export class ModalGalleryExampleComponent implements OnDestroy {
         // remove the current image and reassign all other to the array of images
         console.log('delete in app with images count ' + this.images.length);
         this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+      }
+    });
+    this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {
+      console.log('OUTPUT - buttonAfterHook$:', event);
+      if (!event || !event.button) {
+        return;
+      }
+      // Invoked after both a click on a button and its related action.
+      // For instance: this method will be invoked after a click
+      // of 'close' button, but before that the modal gallery
+      // will be really closed.
+    });
+  }
+
+  openModalWithDeleteButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+    const imageToShow: Image = imagesArrayToUse[imageIndex];
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: libConfig
+      }
+    } as ModalGalleryConfig);
+    this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
+      console.log('OUTPUT - buttonBeforeHook$: ', event);
+      if (!event || !event.button) {
+        return;
+      }
+      // Invoked after a click on a button, but before that the related
+      // action is applied.
+      // For instance: this method will be invoked after a click
+      // of 'close' button, but before that the modal gallery
+      // will be really closed.
+      if (event.button.type === ButtonType.DELETE) {
+        // remove the current image and reassign all other to the array of images
+        console.log('delete in app with images count ' + this.images.length);
+        this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+        this.modalGalleryService.updateModalImages(this.images);
+      }
+    });
+    this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {
+      console.log('OUTPUT - buttonAfterHook$:', event);
+      if (!event || !event.button) {
+        return;
+      }
+      // Invoked after both a click on a button and its related action.
+      // For instance: this method will be invoked after a click
+      // of 'close' button, but before that the modal gallery
+      // will be really closed.
+    });
+  }
+
+  openModalWithAddButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+    const imageToShow: Image = imagesArrayToUse[imageIndex];
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: libConfig
+      }
+    } as ModalGalleryConfig);
+    this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
+      if (!event || !event.button) {
+        return;
+      }
+      // Invoked after a click on a button, but before that the related
+      // action is applied.
+
+      if (event.button.type === ButtonType.CUSTOM) {
+        console.log('adding a new random image at the end');
+        this.addRandomImage();
+        setTimeout(() => {
+          // this.galleryService.openGallery(galleryId, this.images.length - 1);
+          this.modalGalleryService.updateModalImages(this.images);
+        }, 0);
       }
     });
     this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {

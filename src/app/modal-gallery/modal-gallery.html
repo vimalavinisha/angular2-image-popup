@@ -139,12 +139,7 @@
 <section>
   <h3 style="color: red">B21 - (id=30) - Simple demo - buttons config FULL strategy (all buttons) + listen for buttonBeforeHook and
     buttonAfterHook (mandatory to handle delete events)</h3>
-  <button (click)="openModalWithOutputs(30, images, imageIndex, CONFIG30)">Open modalgallery at index={{imageIndex}}</button>
-<!--  <ks-modal-gallery [id]="30" [modalImages]="images"-->
-<!--                    [buttonsConfig]="buttonsConfigFull"-->
-<!--                    (show)="onVisibleIndex($event)"-->
-<!--                    (buttonBeforeHook)="onButtonBeforeHook($event)"-->
-<!--                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>-->
+  <button (click)="openModalWithDeleteButton(30, images, imageIndex, CONFIG30)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3>B22 - (id=31) - Simple demo - buttons config CUSTOM strategy with exturl in ANOTHER TAB ('_blank')</h3>
@@ -152,8 +147,8 @@
 </section>
 <section>
   <h3 style="color: red">B23 - (id=32) - Simple demo - buttons config CUSTOM but with all default buttons already included in the library</h3>
-  <p><i>I added also 'onButtonBeforeHook' and 'onButtonAfterHook' to support delete button</i></p>
-  <button (click)="openModal(32, images, imageIndex, CONFIG32)">Open modalgallery at index={{imageIndex}}</button>
+  <p><i>I added also 'openModalWithDeleteButton' and 'onButtonAfterHook' to support delete button</i></p>
+  <button (click)="openModalWithDeleteButton(32, images, imageIndex, CONFIG32)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3 style="color: red">B24 - (id=33) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome
@@ -161,14 +156,7 @@
   <p><i>Be careful to use the id=33 also in the Component. This is necessary here, because I have many instances of
     angular-modal-gallery in a single page</i></p>
   <br>
-  <button (click)="openModalWithOutputs(33, images, imageIndex, CONFIG33)">Open modalgallery at index={{imageIndex}}</button>
-
-<!--  <ks-modal-gallery [id]="33" [modalImages]="images"-->
-<!--                    [currentImageConfig]="{downloadable: true}"-->
-<!--                    [buttonsConfig]="customButtonsFontAwesomeConfig"-->
-<!--                    (show)="onVisibleIndex($event)"-->
-<!--                    (buttonBeforeHook)="onCustomButtonBeforeHook($event, 33)"-->
-<!--                    (buttonAfterHook)="onCustomButtonAfterHook($event, 33)"></ks-modal-gallery>-->
+  <button (click)="openModalWithAddButton(33, images, imageIndex, CONFIG33)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 <br>
 <hr>

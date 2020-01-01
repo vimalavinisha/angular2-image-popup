@@ -10,6 +10,7 @@ import { Image, ImageModalEvent } from '../../model/image.class';
 import { LibConfig } from '../../services/config.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ButtonEvent } from '../../model/buttons-config.interface';
+import { Subject } from 'rxjs';
 
 export interface ModalGalleryInput {
   id: number;
@@ -34,6 +35,9 @@ const DEFAULT_CONFIG: ModalGalleryConfig = {
 
 @Injectable({ providedIn: 'root' })
 export class ModalGalleryService {
+  private updateImages = new Subject<Image[]>();
+  updateImages$ = this.updateImages.asObservable();
+
   private dialogRef: ModalGalleryRef;
 
   constructor(private injector: Injector, private overlay: Overlay) {}
@@ -56,6 +60,10 @@ export class ModalGalleryService {
       this.dialogRef.closeModal();
       this.dialogRef = null;
     }
+  }
+
+  updateModalImages(images: Image[]) {
+    this.updateImages.next(images);
   }
 
   emitClose(event: ImageModalEvent) {
@@ -86,6 +94,7 @@ export class ModalGalleryService {
     this.dialogRef.emitButtonAfterHook(event);
   }
 
+  // DEPRECATED to remove
   isOpen(): boolean {
     return !!this.dialogRef;
   }
