@@ -252,10 +252,7 @@
 
 <section>
   <h3 style="color: red">D4 - (id=52) - Other demo - infinite sliding and automatic add of images when the gallery is visible</h3>
-  <button (click)="openModal(52, imagesInfiniteAutoAdd, imageIndex, CONFIG52)">Open modalgallery at index={{imageIndex}}</button>
-<!--  <ks-modal-gallery [id]="52" [modalImages]="imagesInfiniteAutoAdd"-->
-<!--                    [slideConfig]="{infinite: true, sidePreviews: {show: true, size: {width: '100px', height: 'auto'}}}"-->
-<!--                    (show)="autoAddImage()"></ks-modal-gallery>-->
+  <button (click)="openModalWithAutoAdd(52, imagesInfiniteAutoAdd, imageIndex, CONFIG52)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 
 <!--<section>-->

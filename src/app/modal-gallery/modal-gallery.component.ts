@@ -869,20 +869,33 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  autoAddImage() {
-    if (this.count !== 0) {
-      return;
-    }
-    const interval = setInterval(() => {
-      const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
-      const newImage: Image = new Image(this.imagesInfiniteAutoAdd.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
-      newImage.modal.img += `?${this.imagesInfiniteAutoAdd.length + 1}`;
-      this.imagesInfiniteAutoAdd = [...this.imagesInfiniteAutoAdd, newImage];
-      this.count++;
-      if (this.count === 4) {
-        clearInterval(interval);
+  openModalWithAutoAdd(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+    const imageToShow: Image = imagesArrayToUse[imageIndex];
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id: id,
+        images: imagesArrayToUse,
+        currentImage: imageToShow,
+        libConfig: libConfig
       }
-    }, 2000);
+    } as ModalGalleryConfig);
+    this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
+      console.log('OUTPUT - show$: ', event);
+      if (this.count !== 0) {
+        return;
+      }
+      const interval = setInterval(() => {
+        const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
+        const newImage: Image = new Image(this.imagesInfiniteAutoAdd.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
+        newImage.modal.img += `?${this.imagesInfiniteAutoAdd.length + 1}`;
+        this.imagesInfiniteAutoAdd = [...this.imagesInfiniteAutoAdd, newImage];
+        this.modalGalleryService.updateModalImages(this.imagesInfiniteAutoAdd);
+        this.count++;
+        if (this.count === 4) {
+          clearInterval(interval);
+        }
+      }, 2000);
+    });
   }
 
   autoUpdateImage(id: number, indexToRefresh: number) {
