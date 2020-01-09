@@ -522,3 +522,34 @@ export const LIBCONFIG_52: LibConfig = {
     }
   }
 };
+
+export const LIBCONFIG_54: LibConfig = {
+  slideConfig: {
+    playConfig: {
+      autoPlay: true,
+      interval: 5000,
+      pauseOnHover: true
+    }
+  }
+};
+
+export const LIBCONFIG_55: LibConfig = {
+  slideConfig: {
+    infinite: true,
+    playConfig: {
+      autoPlay: true,
+      interval: 5000,
+      pauseOnHover: false
+    }
+  }
+};
+
+export const LIBCONFIG_56: LibConfig = {
+  slideConfig: {
+    playConfig: {
+      autoPlay: true,
+      interval: 1000,
+      pauseOnHover: false
+    }
+  }
+};

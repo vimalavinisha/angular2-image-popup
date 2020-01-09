@@ -255,41 +255,29 @@
   <button (click)="openModalWithAutoAdd(52, imagesInfiniteAutoAdd, imageIndex, CONFIG52)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 
-<!--<section>-->
-<!--  <h3>D5 - (id=53) - Other demo - automatic update of the second image via gallery service (open the second image and wait some seconds to see the result)</h3>-->
-<!--  <br>-->
+<section>
+  <h3 style="color: red">D5 - (id=53) - Other demo - automatic update of the second image (index=1) via gallery service (open the second image and wait some seconds to see the result)</h3>
+  <button (click)="openModalWithAutoUpdate(53, images, imageIndex)">Open modalgallery at index={{imageIndex}}</button>
 <!--  <ks-modal-gallery [id]="53" [modalImages]="images" (show)="autoUpdateImage(53, 1)"></ks-modal-gallery>-->
-<!--</section>-->
+</section>
 
-<!--<br>-->
-<!--<hr>-->
-<!--<br>-->
-<!--<h2>AutoPlay examples</h2>-->
-<!--<section>-->
-<!--  <h3>E1 - (id=54) - AutoPlay demo - with default interval and pauseOnHover enabled</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="54" [modalImages]="images"-->
-<!--                    [slideConfig]="{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>E2 - (id=55) - AutoPlay demo - with custom interval and pauseOnHover enabled</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="55" [modalImages]="images"-->
-<!--                    [slideConfig]="{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>E3 - (id=56) - AutoPlay demo - with default interval, pauseOnHover disabled and infinite is enabled</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="56" [modalImages]="images"-->
-<!--                    [slideConfig]="{infinite: true, playConfig: {autoPlay: true, interval: 5000, pauseOnHover: false}}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>E4 - (id=57) - AutoPlay demo - with interval=1000 interval and pauseOnHover disabled</h3>-->
-<!--  <br>-->
-<!--  <p><button (click)="autoPlayButton(57)">{{isPlaying ? 'Pause' : 'Play'}}</button></p>-->
-<!--  <ks-modal-gallery [id]="57" [modalImages]="images"-->
-<!--                    [slideConfig]="{playConfig: {autoPlay: true, interval: 1000, pauseOnHover: false}}"></ks-modal-gallery>-->
-<!--</section>-->
+<br>
+<hr>
+<br>
+<h2>AutoPlay examples</h2>
+<section>
+  <h3>E1 - (id=54) - AutoPlay demo - with interval=5000 and pauseOnHover enabled</h3>
+  <button (click)="openModal(54, images, imageIndex, CONFIG54)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3>E2 - (id=55) - AutoPlay demo - with interval=5000, pauseOnHover disabled and infinite is enabled</h3>
+  <button (click)="openModal(55, images, imageIndex, CONFIG55)">Open modalgallery at index={{imageIndex}}</button>
+</section>
+<section>
+  <h3 style="color: red">E3 - (id=56) - AutoPlay demo - with interval=1000 and pauseOnHover disabled</h3>
+  <p><button (click)="autoPlayButton(56)">{{isPlaying ? 'Pause' : 'Play'}}</button></p>
+  <button (click)="openModal(56, images, imageIndex, CONFIG56)">Open modalgallery at index={{imageIndex}}</button>
+</section>
 
 
 <!--<br>-->
@@ -298,7 +286,7 @@
 <!--<h2>Experimental examples<sup>*</sup></h2>-->
 <!--<p><sup>*</sup> these will be either improved or removed in next versions</p>-->
 <!--<section>-->
-<!--  <h3>F1 - (id=58) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>-->
+<!--  <h3>F1 - (id=57) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>-->
 <!--  <br>-->
 <!--  <ks-modal-gallery [id]="58" [modalImages]="[images[0]]"-->
 <!--                    [keyboardConfig]="null"-->
@@ -306,7 +294,7 @@
 <!--                    [slideConfig]="{infinite: false}"></ks-modal-gallery>-->
 <!--</section>-->
 <!--<section>-->
-<!--  <h3>F2 - (id=59) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>-->
+<!--  <h3>F2 - (id=58) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>-->
 <!--  <br>-->
 <!--  <ks-modal-gallery [id]="59" [modalImages]="sameImages"></ks-modal-gallery>-->
 <!--</section>-->
