@@ -140,6 +140,6 @@
     "tslib": "^1.10.0",
     "tslint": "^5.19.0",
     "typedoc": "^0.15.0",
-    "typescript": "~3.6.4"
+    "typescript": "~3.7.5"
   }
 }
