@@ -153,5 +153,8 @@
       }
     }
   },
-  "defaultProject": "angular-modal-gallery"
+  "defaultProject": "angular-modal-gallery",
+  "cli": {
+    "analytics": false
+  }
 }

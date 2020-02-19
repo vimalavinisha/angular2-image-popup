@@ -78,6 +78,8 @@ export {
 } from './lib/model/plain-gallery-config.interface';
 
 export { ModalGalleryComponent } from './lib/components/modal-gallery/modal-gallery.component';
+export { PlainGalleryComponent } from './lib/components/plain-gallery/plain-gallery.component';
+export { CarouselComponent } from './lib/components/carousel/carousel.component';
 
 export { ModalGalleryService, ModalGalleryConfig } from './lib/components/modal-gallery/modal-gallery.service';
 export { ModalGalleryRef } from './lib/components/modal-gallery/modal-gallery-ref';
