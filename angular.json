@@ -10,7 +10,7 @@
       "prefix": "ks",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "targets": {
@@ -128,6 +128,11 @@
           "options": {
             "tsConfig": "projects/ks89/angular-modal-gallery/tsconfig.lib.json",
             "project": "projects/ks89/angular-modal-gallery/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ks89/angular-modal-gallery/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {

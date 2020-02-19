@@ -13,8 +13,8 @@ const routes: Routes = [
   { path: 'carousel-ie11', component: CarouselIe11Component },
   { path: 'modal', component: ModalGalleryComponent },
   { path: 'plain', component: PlainGalleryComponent },
-  { path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule' },
-  { path: 'lazy/nested', loadChildren: './lazy/lazy.module#LazyModule' }
+  { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule) },
+  { path: 'lazy/nested', loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule) }
 ];
 
 @NgModule({
