@@ -100,6 +100,10 @@ export const LIBCONFIG_12: LibConfig = {
   }
 };
 
+export const LIBCONFIG_13: LibConfig = {
+  enableCloseOutside: false
+};
+
 export const LIBCONFIG_14: LibConfig = {
   currentImageConfig: { downloadable: false },
   buttonsConfig: {

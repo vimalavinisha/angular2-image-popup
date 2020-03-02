@@ -7,7 +7,7 @@ import { DIALOG_DATA } from './modal-gallery.tokens';
 import { ModalGalleryComponent } from './modal-gallery.component';
 import { ModalGalleryRef } from './modal-gallery-ref';
 import { Image, ImageModalEvent } from '../../model/image.class';
-import { LibConfig } from '../../services/config.service';
+import { ConfigService, LibConfig } from '../../services/config.service';
 import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ButtonEvent } from '../../model/buttons-config.interface';
 import { Subject } from 'rxjs';
@@ -40,7 +40,7 @@ export class ModalGalleryService {
 
   private dialogRef: ModalGalleryRef;
 
-  constructor(private injector: Injector, private overlay: Overlay) {}
+  constructor(private injector: Injector, private overlay: Overlay, private configService: ConfigService) {}
 
   open(config: ModalGalleryConfig = {}): ModalGalleryRef {
     // Override default configuration
@@ -51,14 +51,23 @@ export class ModalGalleryService {
     this.dialogRef = new ModalGalleryRef(overlayRef);
 
     const overlayComponent: ModalGalleryComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
-    overlayRef.backdropClick().subscribe(() => this.dialogRef.closeModal());
+    overlayRef.backdropClick().subscribe(() => {
+      this.dialogRef.closeModal();
+    });
     return this.dialogRef;
   }
 
-  close(): void {
-    if (this.dialogRef) {
-      this.dialogRef.closeModal();
-      this.dialogRef = null;
+  close(clickOutside: boolean): void {
+    if (clickOutside) {
+      if (this.dialogRef && this.configService.getConfig(13).enableCloseOutside) {
+        this.dialogRef.closeModal();
+        this.dialogRef = null;
+      }
+    } else {
+      if (this.dialogRef) {
+        this.dialogRef.closeModal();
+        this.dialogRef = null;
+      }
     }
   }
 

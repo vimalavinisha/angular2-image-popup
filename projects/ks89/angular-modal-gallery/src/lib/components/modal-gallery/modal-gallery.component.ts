@@ -325,7 +325,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
-    this.closeGallery(action);
+    this.closeGallery(action, false);
     this.modalGalleryService.emitButtonAfterHook(eventToEmit);
   }
 
@@ -335,11 +335,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * @param Action action type. `Action.NORMAL` by default
    * @param boolean isCalledByService is true if called by gallery.service, otherwise false
    */
-  closeGallery(action: Action = Action.NORMAL, isCalledByService: boolean = false) {
+  closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false, isCalledByService: boolean = false) {
     this.modalGalleryService.emitClose(new ImageModalEvent(this.id, action, true));
     this.keyboardService.reset();
-
-    this.modalGalleryService.close();
+    this.modalGalleryService.close(clickOutside);
 
     // shows scrollbar
     document.body.style.overflow = 'visible';
@@ -406,7 +405,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   onClickOutside(event: boolean) {
     if (event && this.enableCloseOutside) {
-      this.closeGallery(Action.CLICK);
+      this.closeGallery(Action.CLICK, true);
     }
   }
 

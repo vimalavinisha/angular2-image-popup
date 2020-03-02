@@ -73,6 +73,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   CONFIG10: LibConfig = libConfigs.LIBCONFIG_10;
   CONFIG11: LibConfig = libConfigs.LIBCONFIG_11;
   CONFIG12: LibConfig = libConfigs.LIBCONFIG_12;
+  CONFIG13: LibConfig = libConfigs.LIBCONFIG_13;
   CONFIG14: LibConfig = libConfigs.LIBCONFIG_14;
   CONFIG15: LibConfig = libConfigs.LIBCONFIG_15;
   CONFIG16: LibConfig = libConfigs.LIBCONFIG_16;
@@ -637,8 +638,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         console.log('setTimeout end - closing gallery with id=' + galleryId);
-        this.modalGalleryService.close();
-        // this.galleryService.closeGallery(galleryId);
+        this.modalGalleryService.close(false);
       }, 3000);
     });
   }
