@@ -61,12 +61,12 @@ export class ModalGalleryService {
     if (clickOutside) {
       if (this.dialogRef && this.configService.getConfig(id).enableCloseOutside) {
         this.dialogRef.closeModal();
-        this.dialogRef = null;
+        // this.dialogRef = null;
       }
     } else {
       if (this.dialogRef) {
         this.dialogRef.closeModal();
-        this.dialogRef = null;
+        // this.dialogRef = null;
       }
     }
   }
