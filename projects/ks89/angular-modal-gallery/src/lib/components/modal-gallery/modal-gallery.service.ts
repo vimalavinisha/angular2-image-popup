@@ -57,9 +57,9 @@ export class ModalGalleryService {
     return this.dialogRef;
   }
 
-  close(clickOutside: boolean): void {
+  close(id: number, clickOutside: boolean): void {
     if (clickOutside) {
-      if (this.dialogRef && this.configService.getConfig(13).enableCloseOutside) {
+      if (this.dialogRef && this.configService.getConfig(id).enableCloseOutside) {
         this.dialogRef.closeModal();
         this.dialogRef = null;
       }

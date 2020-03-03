@@ -338,7 +338,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false, isCalledByService: boolean = false) {
     this.modalGalleryService.emitClose(new ImageModalEvent(this.id, action, true));
     this.keyboardService.reset();
-    this.modalGalleryService.close(clickOutside);
+    this.modalGalleryService.close(this.id, clickOutside);
 
     // shows scrollbar
     document.body.style.overflow = 'visible';

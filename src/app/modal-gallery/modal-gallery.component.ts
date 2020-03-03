@@ -638,7 +638,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         console.log('setTimeout end - closing gallery with id=' + galleryId);
-        this.modalGalleryService.close(false);
+        this.modalGalleryService.close(galleryId, false);
       }, 3000);
     });
   }

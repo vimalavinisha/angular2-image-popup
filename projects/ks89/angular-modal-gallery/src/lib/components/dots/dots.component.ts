@@ -99,7 +99,6 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   ngOnChanges(changes: SimpleChanges) {
     const dotsConfigChanges: SimpleChange = changes.dotsConfig;
     if (dotsConfigChanges && dotsConfigChanges.currentValue !== dotsConfigChanges.previousValue) {
-      this.configService.setConfig(this.id, dotsConfigChanges.currentValue);
       this.configDots = dotsConfigChanges.currentValue;
     }
   }

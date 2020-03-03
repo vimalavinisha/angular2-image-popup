@@ -169,8 +169,6 @@ export class ConfigService {
     if (!obj) {
       return;
     }
-    console.log('setConfig id', id);
-    console.log('setConfig obj', obj);
 
     const newConfig: LibConfig = Object.assign({}, this.configMap.get(id));
     if (obj.slideConfig) {
@@ -335,18 +333,12 @@ export class ConfigService {
     if (obj.carouselDotsConfig) {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
     }
-    if ((obj.enableCloseOutside === null || obj.enableCloseOutside === undefined) && newConfig.enableCloseOutside === undefined) {
-      console.log('obj.enableCloseOutside forcing default');
+    if (obj.enableCloseOutside === null || obj.enableCloseOutside === undefined) {
       newConfig.enableCloseOutside = DEFAULT_CONFIG.enableCloseOutside;
     } else {
-      console.log('obj.enableCloseOutside defined', obj.enableCloseOutside);
       newConfig.enableCloseOutside = obj.enableCloseOutside;
     }
-    console.log('newConfig', newConfig);
-    newConfig.enableCloseOutside = false;
-    console.log('id', id);
     this.configMap.set(id, newConfig);
-    console.log('this.configMap', this.configMap);
   }
 
   private initIfNotExists(id: number) {
