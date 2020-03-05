@@ -36,7 +36,7 @@ export class MaxSizeDirective implements OnInit, OnChanges {
    * Object of type `MaxSize` to resize the element.
    */
   @Input()
-  sizeConfig: MaxSize;
+  maxSizeConfig: MaxSize;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -62,14 +62,14 @@ export class MaxSizeDirective implements OnInit, OnChanges {
    * Private method to change both max-width and max-height of an element.
    */
   private applyStyle() {
-    if (!this.sizeConfig) {
+    if (!this.maxSizeConfig) {
       return;
     }
-    if (this.sizeConfig.maxWidth) {
-      this.renderer.setStyle(this.el.nativeElement, 'max-width', this.sizeConfig.maxWidth);
+    if (this.maxSizeConfig.maxWidth) {
+      this.renderer.setStyle(this.el.nativeElement, 'max-width', this.maxSizeConfig.maxWidth);
     }
-    if (this.sizeConfig.maxHeight) {
-      this.renderer.setStyle(this.el.nativeElement, 'max-height', this.sizeConfig.maxHeight);
+    if (this.maxSizeConfig.maxHeight) {
+      this.renderer.setStyle(this.el.nativeElement, 'max-height', this.maxSizeConfig.maxHeight);
     }
   }
 }

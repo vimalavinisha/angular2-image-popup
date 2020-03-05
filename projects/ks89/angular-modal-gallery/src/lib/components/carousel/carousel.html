@@ -1,7 +1,7 @@
 <main id="carousel-container"
       [attr.aria-label]="configAccessibility.carouselContainerAriaLabel"
       [title]="configAccessibility.carouselContainerTitle"
-      ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
+      ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth,
                                maxHeight: ''}">
 
 
@@ -27,7 +27,7 @@
 
     <img id="current-image"
          [style.object-fit]="configCarousel?.objectFit"
-         ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth,
+         ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth,
                                   maxHeight: configCarousel?.maxHeight}"
          [src]="currentImage.modal.img"
          [attr.aria-label]="currentImage.modal.ariaLabel"
@@ -89,7 +89,7 @@
            [style.background-attachment]="'scroll'"
            ksSize [sizeConfig]="{width: '100%',
                                  height: configCarousel?.maxHeight}"
-           ksMaxSize [sizeConfig]="{maxWidth: configCarousel?.maxWidth}"
+           ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth}"
            [attr.aria-label]="currentImage.modal.ariaLabel"
            [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
            [tabIndex]="0" role="img"

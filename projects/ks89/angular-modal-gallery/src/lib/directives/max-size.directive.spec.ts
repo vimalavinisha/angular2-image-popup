@@ -39,11 +39,11 @@ const expected: MaxSize[] = [
 @Component({
   selector: 'ks-test-max-size',
   template: `
-    <div ksMaxSize [sizeConfig]="{maxWidth: '100px', maxHeight: '80px'}"></div>
-    <div ksMaxSize [sizeConfig]="{maxWidth: '50px', maxHeight: '20px'}"></div>
-    <div ksMaxSize [sizeConfig]="{maxWidth: '50%', maxHeight: '100%'}"></div>
-    <div ksMaxSize [sizeConfig]="{maxWidth: '', maxHeight: ''}"></div>
-    <div ksMaxSize [sizeConfig]="null"></div>
+    <div ksMaxSize [maxSizeConfig]="{maxWidth: '100px', maxHeight: '80px'}"></div>
+    <div ksMaxSize [maxSizeConfig]="{maxWidth: '50px', maxHeight: '20px'}"></div>
+    <div ksMaxSize [maxSizeConfig]="{maxWidth: '50%', maxHeight: '100%'}"></div>
+    <div ksMaxSize [maxSizeConfig]="{maxWidth: '', maxHeight: ''}"></div>
+    <div ksMaxSize [maxSizeConfig]="null"></div>
   `
 })
 class TestSizeComponent {}
