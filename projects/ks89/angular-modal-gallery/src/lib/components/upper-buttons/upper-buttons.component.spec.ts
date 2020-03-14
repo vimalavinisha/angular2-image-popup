@@ -208,7 +208,7 @@ const EXT_URL_IN_A_NEW_TAB_CASES: ButtonsConfig[] = [
 
 function getButtonEvent(button: ButtonConfig): ButtonEvent {
   return {
-    button: button,
+    button,
     // upper-buttons.component always returns a null image to the main component, so I should test for a null
     image: null,
     action: Action.CLICK
@@ -226,19 +226,19 @@ function updateInputs(image: Image, configButtons: ButtonsConfig) {
 function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
   switch (btnType) {
     case ButtonType.CLOSE:
-      return Object.assign({}, KS_DEFAULT_BTN_CLOSE, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_CLOSE, {size});
     case ButtonType.DOWNLOAD:
-      return Object.assign({}, KS_DEFAULT_BTN_DOWNLOAD, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_DOWNLOAD, {size});
     case ButtonType.EXTURL:
-      return Object.assign({}, KS_DEFAULT_BTN_EXTURL, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_EXTURL, {size});
     case ButtonType.DELETE:
-      return Object.assign({}, KS_DEFAULT_BTN_DELETE, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_DELETE, {size});
     // case ButtonType.REFRESH:
-    //   return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size: size});
+    //   return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size:);
     case ButtonType.FULLSCREEN:
-      return Object.assign({}, KS_DEFAULT_BTN_FULL_SCREEN, {size: size});
+      return Object.assign({}, KS_DEFAULT_BTN_FULL_SCREEN, {size});
     case ButtonType.CUSTOM:
-      return Object.assign({}, CUSTOM_BTN, {size: size});
+      return Object.assign({}, CUSTOM_BTN, {size});
     default:
       fail('this test should run only with known button types');
   }
@@ -343,7 +343,7 @@ describe('UpperButtonsComponent', () => {
 
         testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
-        comp.close.subscribe((res: ButtonEvent) => {
+        comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         // comp.refresh.subscribe((res: ButtonEvent) => {
@@ -388,7 +388,7 @@ describe('UpperButtonsComponent', () => {
 
         testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
-        comp.close.subscribe((res: ButtonEvent) => {
+        comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         // comp.refresh.subscribe((res: ButtonEvent) => {
@@ -437,7 +437,7 @@ describe('UpperButtonsComponent', () => {
           comp.navigate.subscribe((res: ButtonEvent) => {
             fail('navigate output should be never called, because input image is not valid or extUrl is not defined');
           });
-          comp.close.subscribe((res: ButtonEvent) => {
+          comp.closeButton.subscribe((res: ButtonEvent) => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
           });
           // comp.refresh.subscribe((res: ButtonEvent) => {
@@ -478,7 +478,7 @@ describe('UpperButtonsComponent', () => {
         const element: DebugElement = fixture.debugElement;
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
-        comp.close.subscribe((res: ButtonEvent) => {
+        comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         // comp.refresh.subscribe((res: ButtonEvent) => {
@@ -524,7 +524,7 @@ describe('UpperButtonsComponent', () => {
         const element: DebugElement = fixture.debugElement;
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
-        comp.close.subscribe((res: ButtonEvent) => {
+        comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
         // comp.refresh.subscribe((res: ButtonEvent) => {
@@ -570,7 +570,7 @@ describe('UpperButtonsComponent', () => {
         const element: DebugElement = fixture.debugElement;
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
-        comp.close.subscribe((res: ButtonEvent) => {
+        comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[2]));
         });
         // comp.refresh.subscribe((res: ButtonEvent) => {
@@ -662,7 +662,7 @@ describe('UpperButtonsComponent', () => {
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
         expect(btns.length).toBe(1);
 
-        comp.close.subscribe((res: ButtonEvent) => {
+        comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
 

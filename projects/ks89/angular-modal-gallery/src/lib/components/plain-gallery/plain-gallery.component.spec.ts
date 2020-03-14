@@ -208,7 +208,7 @@ describe('PlainGalleryComponent', () => {
       expect(plainImages[4].styles.width).toBe(DEFAULT_PLAIN_SIZE.width);
       expect(plainImages[4].styles.height).toBe(DEFAULT_PLAIN_SIZE.height);
 
-      comp.show.subscribe((res: number) => {
+      comp.showImage.subscribe((res: number) => {
         expect(res).toBe(0);
       });
 
@@ -490,7 +490,7 @@ describe('PlainGalleryComponent', () => {
       expect(plainImages[4].styles.height).toBe(DEFAULT_PLAIN_SIZE.height);
       expect(plainImages[4].styles.background).toBe(`url("${IMAGES[4].plain.img}") 50% 50%/cover`);
 
-      comp.show.subscribe((res: number) => {
+      comp.showImage.subscribe((res: number) => {
         expect(res).toBe(1);
       });
 

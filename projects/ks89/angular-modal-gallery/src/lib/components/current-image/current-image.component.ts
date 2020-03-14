@@ -119,7 +119,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Output to emit an event when the modal gallery is closed. The payload contains an `ImageModalEvent`.
    */
   @Output()
-  close: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  closeGallery: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
 
   /**
    * Subject to play modal-gallery.
@@ -189,7 +189,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     DOWN: 'swipedown'
   };
 
-  constructor(@Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone, private ref: ChangeDetectorRef, private configService: ConfigService) {
+  constructor(@Inject(PLATFORM_ID) private platformId, private ngZone: NgZone, private ref: ChangeDetectorRef, private configService: ConfigService) {
     super();
   }
 
@@ -260,8 +260,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   ngAfterContentInit() {
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
-    if (isPlatformBrowser(this._platformId)) {
-      this._ngZone.runOutsideAngular(() => {
+    if (isPlatformBrowser(this.platformId)) {
+      this.ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
             map(() => this.slideConfig && this.slideConfig.playConfig && this.slideConfig.playConfig.autoPlay && this.slideConfig.playConfig.interval),
@@ -269,7 +269,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
           .subscribe(() =>
-            this._ngZone.run(() => {
+            this.ngZone.run(() => {
               if (!this.isLastImage) {
                 this.nextImage(Action.AUTOPLAY);
               }
@@ -294,7 +294,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
     switch (keyCode) {
       case esc:
-        this.close.emit(new ImageModalEvent(this.id, Action.KEYBOARD, true));
+        this.closeGallery.emit(new ImageModalEvent(this.id, Action.KEYBOARD, true));
         break;
       case right:
         this.nextImage(Action.KEYBOARD);

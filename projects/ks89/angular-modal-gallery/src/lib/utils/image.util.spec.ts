@@ -23,7 +23,7 @@
  */
 
 import { Image } from '../model/image.class';
-import { getIndex } from '../utils/image.util';
+import { getIndex } from './image.util';
 
 const imagesMock: Image[] = [
   new Image(0, {
@@ -96,7 +96,7 @@ describe('image.util', () => {
     });
 
     it(`should throw an error, because the input image hasn't an id`, () => {
-      expect(() => getIndex(<Image>{modal: {img: ''}}, imagesMock)).toThrowError(`A numeric Image 'id' is mandatory`);
+      expect(() => getIndex({modal: {img: ''}} as Image, imagesMock)).toThrowError(`A numeric Image 'id' is mandatory`);
     });
 
     it(`should throw an error, because the Image id must be >= 0`, () => {

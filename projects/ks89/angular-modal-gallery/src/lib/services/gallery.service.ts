@@ -54,8 +54,8 @@ export class GalleryService {
       throw new Error('Cannot open gallery via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
     }
     this.navigate.emit({
-      galleryId: galleryId,
-      index: index
+      galleryId,
+      index
     });
   }
 
@@ -71,8 +71,8 @@ export class GalleryService {
       throw new Error('Cannot navigate via GalleryService with either index<0 or galleryId<0 or galleryId===undefined');
     }
     this.navigate.emit({
-      galleryId: galleryId,
-      index: index
+      galleryId,
+      index
     });
   }
 
@@ -104,9 +104,9 @@ export class GalleryService {
       throw new Error('Cannot update gallery via GalleryService, because image is not valid');
     }
     this.update.emit({
-      galleryId: galleryId,
-      index: index,
-      image: image
+      galleryId,
+      index,
+      image
     });
   }
 
@@ -122,7 +122,7 @@ export class GalleryService {
       throw new Error('Cannot play gallery via GalleryService with galleryId<0 or galleryId===undefined');
     }
     this.autoPlay.emit({
-      galleryId: galleryId,
+      galleryId,
       result: true
     });
   }
@@ -139,7 +139,7 @@ export class GalleryService {
       throw new Error('Cannot stop gallery via GalleryService with galleryId<0 or galleryId===undefined');
     }
     this.autoPlay.emit({
-      galleryId: galleryId,
+      galleryId,
       result: false
     });
   }

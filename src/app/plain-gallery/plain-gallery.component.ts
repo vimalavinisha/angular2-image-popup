@@ -182,7 +182,7 @@ export class PlainGalleryExampleComponent {
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: this.images,
         currentImage: this.images[index],
         libConfig: {
@@ -198,7 +198,7 @@ export class PlainGalleryExampleComponent {
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: this.images,
         currentImage: this.images[index],
         libConfig: {
@@ -214,7 +214,7 @@ export class PlainGalleryExampleComponent {
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: this.imagesRect,
         currentImage: this.imagesRect[index],
         libConfig: {
@@ -238,8 +238,8 @@ export class PlainGalleryExampleComponent {
   onShow(id: number, index: number, images: Image[] = this.images) {
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
-        images: images,
+        id,
+        images,
         currentImage: images[index]
       }
     });

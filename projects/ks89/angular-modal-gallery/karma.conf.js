@@ -31,7 +31,7 @@ const os = require('os');
 console.log(`Starting Karma with isCI=${!!isCI()}`);
 
 function isCI() {
-  return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS || process.env.JENKINS || process.env.CIRCLECI;
+  return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS || process.env.CIRCLECI;
 }
 
 function getBrowsers() {
@@ -46,9 +46,6 @@ function getBrowsers() {
     } else if (process.env.CIRCLECI) {
       // variable defined by CIRCLECI itself
       return ['ChromeHeadless', 'Chrome', 'Firefox'];
-    } else if (process.env.JENKINS) {
-      // var that you must define in you server with Jenkins
-      return ['ChromeHeadless', 'Firefox'];
     }
   } else {
     switch (os.platform()) {
@@ -78,7 +75,6 @@ module.exports = function(config) {
       require('karma-coverage-istanbul-reporter'),
       require('karma-coverage'),
       require('karma-mocha-reporter'),
-      require('karma-sonarqube-unit-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
@@ -90,7 +86,7 @@ module.exports = function(config) {
       fixWebpackSourcePaths: true
     },
     // reporters: ['progress', 'kjhtml'],
-    reporters: ['mocha', 'coverage', 'coverage-istanbul', 'sonarqubeUnit'],
+    reporters: ['mocha', 'coverage', 'coverage-istanbul'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -101,16 +97,6 @@ module.exports = function(config) {
     // required by karma-coverage to show code coverage in console
     coverageReporter: {
       type: 'text-summary'
-    },
-
-    // required by karma-sonarqube-unit-reporter
-    sonarQubeUnitReporter: {
-      sonarQubeVersion: '5.x',
-      outputFile: '/reports/ut_report.xml',
-      overrideTestDescription: true,
-      testPath: 'projects/ks89/angular-modal-gallery/src',
-      testFilePattern: '.spec.ts',
-      useBrowserName: false
     },
 
     customLaunchers: {

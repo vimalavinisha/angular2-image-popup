@@ -49,10 +49,6 @@ docs/
 # Tests
 **/coverage/
 
-# SonarQube
-.scannerwork/
-reports/
-
 # Examples
 examples/systemjs/app/**/*.js
 examples/systemjs/app/**/*.map

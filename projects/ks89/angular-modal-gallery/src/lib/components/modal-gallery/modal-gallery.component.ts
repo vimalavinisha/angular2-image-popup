@@ -113,17 +113,17 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(DIALOG_DATA) private dialogContent: ModalGalleryService,
     private keyboardService: KeyboardService,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: any,
     private changeDetectorRef: ChangeDetectorRef,
     private idValidatorService: IdValidatorService,
     private configService: ConfigService,
     private sanitizer: DomSanitizer,
     private modalGalleryService: ModalGalleryService
   ) {
-    this.id = (<any>this.dialogContent).id;
-    this.images = (<any>this.dialogContent).images;
-    this.currentImage = (<any>this.dialogContent).currentImage;
-    this.libConfig = (<any>this.dialogContent).libConfig;
+    this.id = (this.dialogContent as any).id;
+    this.images = (this.dialogContent as any).images;
+    this.currentImage = (this.dialogContent as any).currentImage;
+    this.libConfig = (this.dialogContent as any).libConfig;
     this.configService.setConfig(this.id, this.libConfig);
 
     this.modalGalleryService.updateImages$.subscribe((images: Image[]) => {
@@ -225,8 +225,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
 
-    const doc: any = <any>document;
-    const docEl: any = <any>document.documentElement;
+    const doc: any = document as any;
+    const docEl: any = document.documentElement as any;
 
     const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement && !doc.mozFullScreenElement && !doc.msFullscreenElement;
 
@@ -384,7 +384,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * @param ImageModalEvent event payload
    */
   onChangeCurrentImage(event: ImageModalEvent) {
-    const newIndex: number = <number>event.result;
+    const newIndex: number = event.result as number;
     if (newIndex < 0 || newIndex >= this.images.length) {
       return;
     }
@@ -502,7 +502,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     let img: string;
     // convert a SafeResourceUrl to a string
     if (typeof this.currentImage.modal.img === 'string') {
-      img = <string>this.currentImage.modal.img;
+      img = this.currentImage.modal.img as string;
     } else {
       // if it's a SafeResourceUrl
       img = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.currentImage.modal.img);
@@ -529,7 +529,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   private downloadImageOnlyIEorEdge() {
     if (isPlatformBrowser(this.platformId)) {
       const req = new XMLHttpRequest();
-      req.open('GET', <string>this.currentImage.modal.img, true);
+      req.open('GET', this.currentImage.modal.img as string, true);
       req.responseType = 'arraybuffer';
       req.onload = event => {
         const blob = new Blob([req.response], { type: 'image/png' });
@@ -563,7 +563,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
       if (isBase64) {
         return `Image-${image.id}.${base64Extension !== '' ? base64Extension : 'png'}`;
       } else {
-        return (<string>image.modal.img).replace(/^.*[\\\/]/, '');
+        return (image.modal.img as string).replace(/^.*[\\\/]/, '');
       }
     } else {
       return image.modal.downloadFileName;

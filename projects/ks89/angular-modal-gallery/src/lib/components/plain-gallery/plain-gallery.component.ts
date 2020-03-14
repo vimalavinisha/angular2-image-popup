@@ -70,7 +70,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * Output to emit an event when an image is changed.
    */
   @Output()
-  show: EventEmitter<number> = new EventEmitter<number>();
+  showImage: EventEmitter<number> = new EventEmitter<number>();
 
   /**
    * Object of type `PlainGalleryConfig` to configure the plain gallery.
@@ -179,7 +179,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * @param number index of the clicked image
    */
   showModalGallery(index: number) {
-    this.show.emit(index);
+    this.showImage.emit(index);
   }
 
   /**

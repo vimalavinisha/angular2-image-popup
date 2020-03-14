@@ -90,7 +90,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Output to emit clicks on close button. The payload contains a `ButtonEvent`.
    */
   @Output()
-  close: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
+  closeButton: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on full-screen button. The payload contains a `ButtonEvent`.
    */
@@ -185,11 +185,11 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
       return;
     }
     const dataToEmit: ButtonEvent = {
-      button: button,
+      button,
       // current image initialized as null
       // (I'll fill this value inside the parent of this component
       image: null,
-      action: action,
+      action,
       galleryId: this.id
     };
     switch (button.type) {
@@ -209,7 +209,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
         this.triggerOnMouseAndKeyboard(this.download, event, dataToEmit);
         break;
       case ButtonType.CLOSE:
-        this.triggerOnMouseAndKeyboard(this.close, event, dataToEmit);
+        this.triggerOnMouseAndKeyboard(this.closeButton, event, dataToEmit);
         break;
       case ButtonType.CUSTOM:
         this.triggerOnMouseAndKeyboard(this.customEmit, event, dataToEmit);

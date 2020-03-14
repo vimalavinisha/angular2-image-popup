@@ -330,9 +330,9 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     const clickedImageIndex: number = this.images.indexOf(preview);
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
-      this.clickPreview.emit(<ImageEvent>{ action: action, result: clickedImageIndex });
+      this.clickPreview.emit({ action, result: clickedImageIndex } as ImageEvent);
     } else if (result === PREV) {
-      this.clickPreview.emit(<ImageEvent>{ action: action, result: clickedImageIndex });
+      this.clickPreview.emit({ action, result: clickedImageIndex } as ImageEvent);
     }
   }
 
@@ -464,14 +464,14 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   private setBeginningIndexesPreviews() {
     this.start = 0;
-    this.end = Math.min(<number>this.previewConfig.number, this.images.length);
+    this.end = Math.min(this.previewConfig.number as number, this.images.length);
   }
 
   /**
    * Private method to init both `start` and `end` to the end.
    */
   private setEndIndexesPreviews() {
-    this.start = this.images.length - 1 - (<number>this.previewConfig.number - 1);
+    this.start = this.images.length - 1 - ((this.previewConfig.number as number) - 1);
     this.end = this.images.length;
   }
 

@@ -549,10 +549,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     size: { width: '30px', height: '30px' }
   };
 
-  currentImageConfigExperimental = <CurrentImageConfig>{
-    loadingConfig: <LoadingConfig>{ enable: true, type: LoadingType.STANDARD },
-    description: <Description>{ strategy: DescriptionStrategy.ALWAYS_VISIBLE }
-  };
+  currentImageConfigExperimental = {
+    loadingConfig: { enable: true, type: LoadingType.STANDARD } as LoadingConfig,
+    description: { strategy: DescriptionStrategy.ALWAYS_VISIBLE } as Description
+  } as CurrentImageConfig;
 
   accessibilityConfig: AccessibilityConfig = {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
@@ -621,10 +621,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
 
@@ -688,10 +688,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
   }
@@ -700,10 +700,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
     this.closeSubscription = dialogRef.close$.subscribe((event: ImageModalEvent) => {
@@ -754,10 +754,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
     this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
@@ -793,10 +793,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
     this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
@@ -831,10 +831,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
     this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
@@ -860,10 +860,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
-        id: id,
+        id,
         images: imagesArrayToUse,
         currentImage: imageToShow,
-        libConfig: libConfig
+        libConfig
       }
     } as ModalGalleryConfig);
     this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {

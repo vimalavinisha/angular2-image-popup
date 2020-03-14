@@ -552,7 +552,7 @@ describe('CarouselComponent', () => {
     it(`should display carousel without dots.`, () => {
       comp.id = 0;
       comp.images = IMAGES;
-      comp.dotsConfig = <DotsConfig>{visible: false};
+      comp.dotsConfig = {visible: false} as DotsConfig;
       fixture.detectChanges();
 
       checkMainContainer();
@@ -692,7 +692,7 @@ describe('CarouselComponent', () => {
       comp.id = 0;
       comp.images = IMAGES;
       comp.carouselConfig =  Object.assign({}, DEFAULT_CAROUSEL_CONFIG, {maxWidth: '766px'});
-      comp.previewConfig = <CarouselPreviewConfig>{number: 5, width: 'auto', maxHeight: '100px'};
+      comp.previewConfig = {number: 5, width: 'auto', maxHeight: '100px'} as CarouselPreviewConfig;
       fixture.detectChanges();
 
       checkMainContainer(comp.carouselConfig.maxWidth);
@@ -711,31 +711,31 @@ describe('CarouselComponent', () => {
 
     const carouselImageConfigs: CarouselImageConfig[] = [
       {
-        description: <Description>{
+        description: {
           strategy: DescriptionStrategy.ALWAYS_VISIBLE,
           imageText: 'Image ',
           numberSeparator: '/',
           beforeTextDescription: ' - ',
           style: defaultDescriptionStyle
-        }
+        } as Description
       },
       {
-        description: <Description>{
+        description: {
           strategy: DescriptionStrategy.ALWAYS_HIDDEN,
           imageText: 'Image ',
           numberSeparator: '/',
           beforeTextDescription: ' - ',
           style: defaultDescriptionStyle
-        }
+        } as Description
       },
       {
-        description: <Description>{
+        description: {
           strategy: DescriptionStrategy.HIDE_IF_EMPTY,
           imageText: 'Image ',
           numberSeparator: '/',
           beforeTextDescription: ' - ',
           style: defaultDescriptionStyle
-        }
+        } as Description
       }
     ];
 

@@ -256,7 +256,7 @@ function initTestBed() {
   });
 }
 
-const CAROUSEL_CONFIG_DEFAULT: CarouselConfig = <CarouselConfig>{
+const CAROUSEL_CONFIG_DEFAULT: CarouselConfig = {
   maxWidth: '100%',
   maxHeight: '400px',
   showArrows: true,
@@ -264,7 +264,7 @@ const CAROUSEL_CONFIG_DEFAULT: CarouselConfig = <CarouselConfig>{
   keyboardEnable: true,
   modalGalleryEnable: false,
   legacyIE11Mode: false
-};
+} as CarouselConfig;
 
 const DEFAULT_BREAKPOINTS: BreakpointsConfig = {xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200};
 const DEFAULT_PREVIEW_CONFIG: CarouselPreviewConfig = {
@@ -375,7 +375,7 @@ describe('CarouselPreviewsComponent', () => {
           // because this operation is done by its parent GalleryComponent
           comp.currentImage = IMAGES[newActiveImage];
 
-          comp.ngOnChanges(<SimpleChanges>{
+          comp.ngOnChanges({
             currentImage: {
               previousValue: IMAGES[initialActiveImage],
               currentValue: IMAGES[newActiveImage],
@@ -388,7 +388,7 @@ describe('CarouselPreviewsComponent', () => {
               firstChange: false,
               isFirstChange: () => false
             }
-          });
+          } as SimpleChanges);
 
           fixture.detectChanges();
           expect(comp.onImageEvent).toHaveBeenCalled();
@@ -476,7 +476,7 @@ describe('CarouselPreviewsComponent', () => {
           // because this operation is done by its parent GalleryComponent
           comp.currentImage = IMAGES[newActiveImage];
 
-          comp.ngOnChanges(<SimpleChanges>{
+          comp.ngOnChanges({
             currentImage: {
               previousValue: IMAGES[initialActiveImage],
               currentValue: IMAGES[newActiveImage],
@@ -489,7 +489,7 @@ describe('CarouselPreviewsComponent', () => {
               firstChange: false,
               isFirstChange: () => false
             }
-          });
+          } as SimpleChanges);
 
           fixture.detectChanges();
           expect(comp.onImageEvent).toHaveBeenCalled();
@@ -820,7 +820,7 @@ describe('CarouselPreviewsComponent', () => {
     it(`shouldn't display previews because visibility is false`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
-        carouselPreviewsConfig: <CarouselPreviewConfig>{visible: false}, // hide previews
+        carouselPreviewsConfig: {visible: false} as CarouselPreviewConfig, // hide previews
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         carouselConfig: CAROUSEL_CONFIG_DEFAULT
       });

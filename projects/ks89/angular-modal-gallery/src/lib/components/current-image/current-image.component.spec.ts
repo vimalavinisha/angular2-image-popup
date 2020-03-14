@@ -264,25 +264,25 @@ const IMAGES: InternalLibImage[] = [
 const IMAGES_BASE64: InternalLibImage[] = [
   new InternalLibImage(0, {
     // modal
-    img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+    img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl,
     extUrl: 'http://www.google.com'
   }),
   new InternalLibImage(1, {
     // modal
-    img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+    img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl,
     description: 'Description 2'
   }),
   new InternalLibImage(
     2,
     {
       // modal
-      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+      img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl,
       description: 'Description 3',
       extUrl: 'http://www.google.com'
     },
     {
       // plain
-      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+      img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl,
       title: 'custom title 2',
       alt: 'custom alt 2',
       ariaLabel: 'arial label 2'
@@ -290,7 +290,7 @@ const IMAGES_BASE64: InternalLibImage[] = [
   ),
   new InternalLibImage(3, {
     // modal
-    img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG=',
+    img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl,
     description: 'Description 4',
     extUrl: 'http://www.google.com'
   }),
@@ -298,11 +298,11 @@ const IMAGES_BASE64: InternalLibImage[] = [
     4,
     {
       // modal
-      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG='
+      img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl
     },
     {
       // plain
-      img: <SafeResourceUrl>'data:image/png;base64,iVBORw0KG='
+      img: 'data:image/png;base64,iVBORw0KG=' as SafeResourceUrl
     }
   )
 ];
@@ -429,24 +429,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -459,24 +459,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES_BASE64;
         comp.currentImage = IMAGES_BASE64[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES_BASE64[index],
             currentValue: IMAGES_BASE64[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -488,24 +488,24 @@ describe('CurrentImageComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        },
-        slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        } as CurrentImageConfig,
+        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
         keyboardConfig: null
       });
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.ngOnChanges(<SimpleChanges>{
+      comp.ngOnChanges({
         currentImage: {
           previousValue: IMAGES[0],
           currentValue: IMAGES[0],
           firstChange: false,
           isFirstChange: () => false
         }
-      });
+      } as SimpleChanges);
       comp.ngOnInit();
       fixture.detectChanges();
       checkMainContainer();
@@ -517,24 +517,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -562,24 +562,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -611,25 +611,25 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         const currentIndex: number = IMAGES.length - 1 - index;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[currentIndex],
             currentValue: IMAGES[currentIndex],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -660,24 +660,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -703,25 +703,25 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         const currentIndex: number = IMAGES.length - 1 - index;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[currentIndex],
             currentValue: IMAGES[currentIndex],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -747,25 +747,25 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description,
             invertSwipe: true
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -791,26 +791,26 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description,
             invertSwipe: true
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         const currentIndex: number = IMAGES.length - 1 - index;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[currentIndex],
             currentValue: IMAGES[currentIndex],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -836,24 +836,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.ALWAYS_HIDDEN}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_HIDDEN} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -868,24 +868,24 @@ describe('CurrentImageComponent', () => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: <CurrentImageConfig>{
-            loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-            description: <Description>{strategy: DescriptionStrategy.HIDE_IF_EMPTY}
-          },
-          slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.HIDE_IF_EMPTY} as Description
+          } as CurrentImageConfig,
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
           keyboardConfig: null
         });
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[index],
             currentValue: IMAGES[index],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         comp.ngOnInit();
         fixture.detectChanges();
         checkMainContainer();
@@ -903,24 +903,24 @@ describe('CurrentImageComponent', () => {
           const configService = fixture.debugElement.injector.get(ConfigService);
           configService.setConfig(0, {
             accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-            currentImageConfig: <CurrentImageConfig>{
-              loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-              description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-            },
-            slideConfig: slideConfig,
+            currentImageConfig: {
+              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+            } as CurrentImageConfig,
+            slideConfig,
             keyboardConfig: null
           });
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.ngOnChanges(<SimpleChanges>{
+          comp.ngOnChanges({
             currentImage: {
               previousValue: IMAGES[index],
               currentValue: IMAGES[index],
               firstChange: false,
               isFirstChange: () => false
             }
-          });
+          } as SimpleChanges);
           comp.ngOnInit();
           fixture.detectChanges();
           checkMainContainer();
@@ -939,24 +939,24 @@ describe('CurrentImageComponent', () => {
           const configService = fixture.debugElement.injector.get(ConfigService);
           configService.setConfig(0, {
             accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-            currentImageConfig: <CurrentImageConfig>{
-              loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-              description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-            },
-            slideConfig: slideConfig,
+            currentImageConfig: {
+              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+            } as CurrentImageConfig,
+            slideConfig,
             keyboardConfig: null
           });
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.ngOnChanges(<SimpleChanges>{
+          comp.ngOnChanges({
             currentImage: {
               previousValue: IMAGES[index],
               currentValue: IMAGES[index],
               firstChange: false,
               isFirstChange: () => false
             }
-          });
+          } as SimpleChanges);
           comp.ngOnInit();
           fixture.detectChanges();
           checkMainContainer();
@@ -979,24 +979,24 @@ describe('CurrentImageComponent', () => {
           const configService = fixture.debugElement.injector.get(ConfigService);
           configService.setConfig(0, {
             accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-            currentImageConfig: <CurrentImageConfig>{
-              loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-              description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-            },
-            slideConfig: slideConfig,
+            currentImageConfig: {
+              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+            } as CurrentImageConfig,
+            slideConfig,
             keyboardConfig: null
           });
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.ngOnChanges(<SimpleChanges>{
+          comp.ngOnChanges({
             currentImage: {
               previousValue: IMAGES[index],
               currentValue: IMAGES[index],
               firstChange: false,
               isFirstChange: () => false
             }
-          });
+          } as SimpleChanges);
           comp.ngOnInit();
           fixture.detectChanges();
           checkMainContainer();
@@ -1087,24 +1087,24 @@ describe('CurrentImageComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
         accessibilityConfig: CUSTOM_ACCESSIBILITY,
-        currentImageConfig: <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        },
-        slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        } as CurrentImageConfig,
+        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
         keyboardConfig: null
       });
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.ngOnChanges(<SimpleChanges>{
+      comp.ngOnChanges({
         currentImage: {
           previousValue: IMAGES[0],
           currentValue: IMAGES[0],
           firstChange: false,
           isFirstChange: () => false
         }
-      });
+      } as SimpleChanges);
       comp.ngOnInit();
       fixture.detectChanges();
       const element: DebugElement = fixture.debugElement;
@@ -1123,24 +1123,24 @@ describe('CurrentImageComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        },
-        slideConfig: <SlideConfig>{infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        } as CurrentImageConfig,
+        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
         keyboardConfig: null
       });
       comp.images = [IMAGES[0]];
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.ngOnChanges(<SimpleChanges>{
+      comp.ngOnChanges({
         currentImage: {
           previousValue: IMAGES[0],
           currentValue: IMAGES[0],
           firstChange: false,
           isFirstChange: () => false
         }
-      });
+      } as SimpleChanges);
       comp.ngOnInit();
       fixture.detectChanges();
       checkMainContainer();
@@ -1160,11 +1160,11 @@ describe('CurrentImageComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        },
-        slideConfig: <SlideConfig>{playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}},
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        } as CurrentImageConfig,
+        slideConfig: {playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}} as SlideConfig,
         keyboardConfig: null
       });
       comp.id = 0;
@@ -1185,14 +1185,14 @@ describe('CurrentImageComponent', () => {
         tick(defaultInterval + 100);
         if (index < IMAGES.length - 1) {
           comp.currentImage = IMAGES[index + 1];
-          comp.ngOnChanges(<SimpleChanges>{
+          comp.ngOnChanges({
             currentImage: {
               previousValue: IMAGES[index],
               currentValue: IMAGES[index + 1],
               firstChange: false,
               isFirstChange: () => false
             }
-          });
+          } as SimpleChanges);
         }
         flush();
         fixture.detectChanges();
@@ -1212,25 +1212,25 @@ describe('CurrentImageComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        },
-        slideConfig: <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        } as CurrentImageConfig,
+        slideConfig: {infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
         keyboardConfig: null
       });
       const index: number = IMAGES.length - 1;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[index];
       comp.isOpen = true;
-      comp.ngOnChanges(<SimpleChanges>{
+      comp.ngOnChanges({
         currentImage: {
           previousValue: IMAGES[index],
           currentValue: IMAGES[index],
           firstChange: false,
           isFirstChange: () => false
         }
-      });
+      } as SimpleChanges);
       comp.ngOnInit();
       fixture.detectChanges();
       checkMainContainer();
@@ -1250,25 +1250,25 @@ describe('CurrentImageComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(0, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: <CurrentImageConfig>{
-          loadingConfig: <LoadingConfig>{enable: true, type: LoadingType.STANDARD},
-          description: <Description>{strategy: DescriptionStrategy.ALWAYS_VISIBLE}
-        },
-        slideConfig: <SlideConfig>{infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}},
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        } as CurrentImageConfig,
+        slideConfig: {infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
         keyboardConfig: null
       });
       const index = 0;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[index];
       comp.isOpen = true;
-      comp.ngOnChanges(<SimpleChanges>{
+      comp.ngOnChanges({
         currentImage: {
           previousValue: IMAGES[index],
           currentValue: IMAGES[index],
           firstChange: false,
           isFirstChange: () => false
         }
-      });
+      } as SimpleChanges);
       comp.ngOnInit();
       fixture.detectChanges();
       checkMainContainer();

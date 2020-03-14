@@ -143,7 +143,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Output to emit an event when an image is changed.
    */
   @Output()
-  show: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  showImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
   /**
    * Output to emit an event when the current image is the first one.
    */
@@ -276,8 +276,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   constructor(
-    @Inject(PLATFORM_ID) private _platformId,
-    private _ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId,
+    private ngZone: NgZone,
     private modalGalleryService: ModalGalleryService,
     private galleryService: GalleryService,
     private configService: ConfigService,
@@ -350,8 +350,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   ngAfterContentInit() {
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
-    if (isPlatformBrowser(this._platformId)) {
-      this._ngZone.runOutsideAngular(() => {
+    if (isPlatformBrowser(this.platformId)) {
+      this.ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
             map(() => this.configService.getConfig(this.id).carouselPlayConfig.interval),
@@ -359,7 +359,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
           .subscribe(() =>
-            this._ngZone.run(() => {
+            this.ngZone.run(() => {
               if (this.configPlay.autoPlay) {
                 this.nextImage();
               }
@@ -529,10 +529,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param event an ImageEvent object with the relative action and the index of the clicked preview.
    */
   onClickPreview(event: ImageEvent) {
-    const imageFound: Image = this.images[<number>event.result];
+    const imageFound: Image = this.images[event.result as number];
     if (!!imageFound) {
       this.manageSlideConfig();
-      this.changeCurrentImage(<Image>imageFound, event.action);
+      this.changeCurrentImage(imageFound, event.action);
     }
   }
 
@@ -620,7 +620,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.emitBoundaryEvent(action, index);
 
     // emit current visible image index
-    this.show.emit(new ImageModalEvent(this.id, action, index + 1));
+    this.showImage.emit(new ImageModalEvent(this.id, action, index + 1));
   }
 
   /**

@@ -125,22 +125,22 @@ export const DEFAULT_CAROUSEL_PREVIEWS_CONFIG: CarouselPreviewConfig = {
 };
 
 const DEFAULT_CONFIG: LibConfig = Object.freeze({
-  slideConfig: <SlideConfig>{
+  slideConfig: {
     infinite: false,
-    playConfig: <PlayConfig>{ autoPlay: false, interval: 5000, pauseOnHover: true },
-    sidePreviews: <SidePreviewsConfig>{ show: true, size: { width: '100px', height: 'auto' } }
-  },
+    playConfig: { autoPlay: false, interval: 5000, pauseOnHover: true } as PlayConfig,
+    sidePreviews: { show: true, size: { width: '100px', height: 'auto' } } as SidePreviewsConfig
+  } as SlideConfig,
   accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-  previewConfig: <PreviewConfig>{
+  previewConfig: {
     visible: true,
     number: 3,
     arrows: true,
     clickable: true,
     // alwaysCenter: false, // TODO still not implemented
     size: DEFAULT_PREVIEW_SIZE
-  },
-  buttonsConfig: <ButtonsConfig>{ visible: true, strategy: ButtonsStrategy.DEFAULT },
-  dotsConfig: <DotsConfig>{ visible: true },
+  } as PreviewConfig,
+  buttonsConfig: { visible: true, strategy: ButtonsStrategy.DEFAULT } as ButtonsConfig,
+  dotsConfig: { visible: true } as DotsConfig,
   plainGalleryConfig: DEFAULT_PLAIN_CONFIG,
   currentImageConfig: DEFAULT_CURRENT_IMAGE_CONFIG,
   keyboardConfig: null, // by default nothing, because the library uses default buttons automatically
@@ -148,7 +148,7 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
   carouselImageConfig: DEFAULT_CAROUSEL_IMAGE_CONFIG,
   carouselPreviewsConfig: DEFAULT_CAROUSEL_PREVIEWS_CONFIG,
   carouselPlayConfig: DEFAULT_CURRENT_CAROUSEL_PLAY,
-  carouselDotsConfig: <DotsConfig>{ visible: true },
+  carouselDotsConfig: { visible: true } as DotsConfig,
   enableCloseOutside: true
 });
 
@@ -201,8 +201,8 @@ export class ConfigService {
       newConfig.accessibilityConfig = Object.assign({}, DEFAULT_CONFIG.accessibilityConfig, obj.accessibilityConfig);
     }
     if (obj.previewConfig) {
-      let size;
-      let number;
+      let size: Size;
+      let num: number;
       if (obj.previewConfig.size) {
         size = Object.assign({}, DEFAULT_CONFIG.previewConfig.size, obj.previewConfig.size);
       } else {
@@ -211,16 +211,16 @@ export class ConfigService {
       if (obj.previewConfig.number) {
         if (obj.previewConfig.number <= 0) {
           // if number is <= 0 reset to default
-          number = DEFAULT_CONFIG.previewConfig.number;
+          num = DEFAULT_CONFIG.previewConfig.number;
         } else {
-          number = obj.previewConfig.number;
+          num = obj.previewConfig.number;
         }
       } else {
-        number = DEFAULT_CONFIG.previewConfig.number;
+        num = DEFAULT_CONFIG.previewConfig.number;
       }
       const newPreviewConfig: PreviewConfig = Object.assign({}, DEFAULT_CONFIG.previewConfig, obj.previewConfig);
       newPreviewConfig.size = size;
-      newPreviewConfig.number = number;
+      newPreviewConfig.number = num;
       newConfig.previewConfig = newPreviewConfig;
     }
     if (obj.buttonsConfig) {
@@ -310,12 +310,12 @@ export class ConfigService {
     }
     if (obj.carouselPreviewsConfig) {
       // check values
-      let number;
-      let breakpoints;
+      let num: number;
+      let breakpoints: BreakpointsConfig;
       if (obj.carouselPreviewsConfig.number <= 0 || !obj.carouselPreviewsConfig.number) {
-        number = DEFAULT_CAROUSEL_PREVIEWS_CONFIG.number;
+        num = DEFAULT_CAROUSEL_PREVIEWS_CONFIG.number;
       } else {
-        number = obj.carouselPreviewsConfig.number;
+        num = obj.carouselPreviewsConfig.number;
       }
       if (obj.carouselPreviewsConfig.breakpoints) {
         breakpoints = Object.assign({}, DEFAULT_CONFIG.carouselPreviewsConfig.breakpoints, obj.carouselPreviewsConfig.breakpoints);
@@ -323,7 +323,7 @@ export class ConfigService {
         breakpoints = DEFAULT_CONFIG.carouselPreviewsConfig.breakpoints;
       }
       newConfig.carouselPreviewsConfig = Object.assign({}, DEFAULT_CONFIG.carouselPreviewsConfig, obj.carouselPreviewsConfig);
-      newConfig.carouselPreviewsConfig.number = number;
+      newConfig.carouselPreviewsConfig.number = num;
       newConfig.carouselPreviewsConfig.breakpoints = breakpoints;
       // Init preview image width based on the number of previews in PreviewConfig
       // Don't move this line above, because I need to be sure that both configPreview.number

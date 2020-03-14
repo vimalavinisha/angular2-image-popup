@@ -143,7 +143,7 @@ export class ModalGalleryService {
       backdropClass: config.backdropClass,
       panelClass: config.panelClass,
       scrollStrategy: this.overlay.scrollStrategies.block(),
-      positionStrategy: positionStrategy
+      positionStrategy
     });
 
     return overlayConfig;

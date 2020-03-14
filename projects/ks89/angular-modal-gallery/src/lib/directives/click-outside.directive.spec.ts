@@ -75,7 +75,7 @@ describe('ClickOutsideDirective', () => {
     return fixture.whenStable().then(() => {
       fixture.detectChanges();
       des = fixture.debugElement.queryAll(By.directive(ClickOutsideDirective));
-      directive = <ClickOutsideDirective>des[0].injector.get(ClickOutsideDirective);
+      directive = des[0].injector.get(ClickOutsideDirective) as ClickOutsideDirective;
     });
   });
 

@@ -417,7 +417,7 @@ describe('PreviewsComponent', () => {
         const numOfPreviews = 3;
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
-          previewConfig: {visible: true, size: size},
+          previewConfig: {visible: true, size},
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig: SLIDE_CONFIG
         });
@@ -634,7 +634,7 @@ describe('PreviewsComponent', () => {
         configService.setConfig(0, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          slideConfig: slideConfig
+          slideConfig
         });
         comp.currentImage = IMAGES[0];
         comp.images = IMAGES;
@@ -682,27 +682,27 @@ describe('PreviewsComponent', () => {
         previews = element.queryAll(By.css('img'));
         fixture.detectChanges();
         // previews[2].nativeElement.click();
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[1],
             currentValue: IMAGES[2],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         checkPreviewStateAfterClick(previews, IMAGES[1], IMAGES[2], 1, 4, 2);
 
         previews = element.queryAll(By.css('img'));
         fixture.detectChanges();
         // previews[2].nativeElement.click();
-        comp.ngOnChanges(<SimpleChanges>{
+        comp.ngOnChanges({
           currentImage: {
             previousValue: IMAGES[3],
             currentValue: IMAGES[4],
             firstChange: false,
             isFirstChange: () => false
           }
-        });
+        } as SimpleChanges);
         checkPreviewStateAfterClick(previews, IMAGES[3], IMAGES[4], 2, 5, 4);
 
         previews = element.queryAll(By.css('img'));

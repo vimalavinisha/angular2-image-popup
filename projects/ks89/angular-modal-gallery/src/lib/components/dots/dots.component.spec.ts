@@ -141,7 +141,7 @@ describe('DotsComponent', () => {
         expect(dot.properties['tabIndex']).toBe(0);
         if (index === activeDotIndex) {
           // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
-          expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
+          expect(dot.classes).toEqual({inside: true, dot: true, active: true});
         } else {
           expect(dot.attributes['class']).toBe('inside dot');
           // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
@@ -179,7 +179,7 @@ describe('DotsComponent', () => {
 
         if (index === activeDotIndex) {
           // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
-          expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
+          expect(dot.classes).toEqual({inside: true, dot: true, active: true});
         } else {
           expect(dot.attributes['class']).toBe('inside dot');
           // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
@@ -217,7 +217,7 @@ describe('DotsComponent', () => {
 
         if (index === activeDotIndex) {
           // I don't know why, but with dot.attributes['class'] I can't see 'active'. In this way it's working!
-          expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
+          expect(dot.classes).toEqual({inside: true, dot: true, active: true});
         } else {
           expect(dot.attributes['class']).toBe('inside dot');
           // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});

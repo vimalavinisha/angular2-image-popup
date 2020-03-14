@@ -57,7 +57,7 @@ export class KeyboardService {
       // To prevent issues with angular-universal on server-side
       if (typeof window !== 'undefined') {
         require('mousetrap');
-        this.mousetrap = new (<any>Mousetrap)();
+        this.mousetrap = new Mousetrap();
       }
     }
   }

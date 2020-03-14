@@ -12,7 +12,7 @@
                         (delete)="onDelete($event)"
                         (navigate)="onNavigate($event)"
                         (download)="onDownload($event)"
-                        (close)="onCloseGallery($event)"
+                        (closeButton)="onCloseGallery($event)"
                         (fullscreen)="onFullScreen($event)"
                         (customEmit)="onCustomEmit($event)"></ks-upper-buttons>
 
@@ -22,7 +22,7 @@
                         [isOpen]="true"
                         (loadImage)="onImageLoad($event)"
                         (changeImage)="onChangeCurrentImage($event)"
-                        (close)="onCloseGallery($event)"></ks-current-image>
+                        (closeGallery)="onCloseGallery($event)"></ks-current-image>
 
       <div>
         <ks-dots [id]="id"

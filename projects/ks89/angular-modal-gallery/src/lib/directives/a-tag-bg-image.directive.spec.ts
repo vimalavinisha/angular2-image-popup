@@ -41,13 +41,13 @@ const expectedPlain: any[] = [
 ];
 
 const expectedModalBase64: any[] = [
-  {image: new Image(0, {img: <SafeResourceUrl>base64}), style: '50% 50% / cover'},
-  {image: new Image(0, {img: <SafeResourceUrl>base64}), style: ''}
+  {image: new Image(0, {img: base64 as SafeResourceUrl}), style: '50% 50% / cover'},
+  {image: new Image(0, {img: base64 as SafeResourceUrl}), style: ''}
 ];
 
 const expectedPlainBase64: any[] = [
-  {image: new Image(1, {img: <SafeResourceUrl>base64}, {img: <SafeResourceUrl>base64}), style: '50% 50% / cover'},
-  {image: new Image(1, {img: <SafeResourceUrl>base64}, {img: <SafeResourceUrl>base64}), style: ''}
+  {image: new Image(1, {img: base64 as SafeResourceUrl}, {img: base64 as SafeResourceUrl}), style: '50% 50% / cover'},
+  {image: new Image(1, {img: base64 as SafeResourceUrl}, {img: base64 as SafeResourceUrl}), style: ''}
 ];
 
 const expectedWrongPlain: any[] = [
@@ -162,24 +162,24 @@ describe('ATagBgImageDirective', () => {
       // const base64String: string = <string>expectedModalBase64[0].modal.img;
       // const path: SafeResourceUrl = <SafeResourceUrl>base64String;
       // const style: string = expectedModalBase64[0].style;
-      expect(des[10].nativeElement.style.background).toContain(`url("${<string>expectedModalBase64[0].image.modal.img}")`.trim());
+      expect(des[10].nativeElement.style.background).toContain(`url("${expectedModalBase64[0].image.modal.img as string}")`.trim());
       expect(des[10].nativeElement.style.background).toContain(`${expectedModalBase64[0].style}`.trim());
-      expect(des[11].nativeElement.style.background).toContain(`url("${<string>expectedModalBase64[1].image.modal.img}")`.trim());
+      expect(des[11].nativeElement.style.background).toContain(`url("${expectedModalBase64[1].image.modal.img as string}")`.trim());
       expect(des[11].nativeElement.style.background).toContain(`${expectedModalBase64[1].style}`.trim());
     });
 
     it(`should check expected results for <main> with an Image (modal + plain) as base64`, () => {
       // when there are both modal and plain, plain wins
-      expect(des[12].nativeElement.style.background).toContain(`url("${<string>expectedPlainBase64[0].image.plain.img}")`.trim());
+      expect(des[12].nativeElement.style.background).toContain(`url("${expectedPlainBase64[0].image.plain.img as string}")`.trim());
       expect(des[12].nativeElement.style.background).toContain(`${expectedPlainBase64[0].style}`.trim());
-      expect(des[13].nativeElement.style.background).toContain(`url("${<string>expectedPlainBase64[1].image.plain.img}")`.trim());
+      expect(des[13].nativeElement.style.background).toContain(`url("${expectedPlainBase64[1].image.plain.img as string}")`.trim());
       expect(des[13].nativeElement.style.background).toContain(`${expectedPlainBase64[1].style}`.trim());
     });
 
     expectedWrongPlain.forEach((val: any, index: number) => {
       it(`should check expected results for <main> with an Image (modal + plain without img) at position ${index}`, () => {
         // plain malformed without an img, so modal wins
-        const base64String: string = <string>val.image.plain.img;
+        const base64String: string = val.image.plain.img as string;
         const path: string = val.image.modal.img;
         const style: string = val.style;
         const prevIndex: number = +expectedModal.length + expectedPlain.length;

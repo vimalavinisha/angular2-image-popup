@@ -5,16 +5,20 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es5",
+    "importHelpers": true,
     "typeRoots": ["node_modules/@types"],
+    "target": "es2015",
     "lib": ["es2018", "dom"],
     "paths": {
-      "@ks89/angular-modal-gallery": ["dist/ks89/angular-modal-gallery"],
-      "@ks89/angular-modal-gallery/*": ["dist/ks89/angular-modal-gallery/*"]
+      "@ks89/angular-modal-gallery": ["dist/ks89/angular-modal-gallery/ks89-angular-modal-gallery", "dist/ks89/angular-modal-gallery"]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

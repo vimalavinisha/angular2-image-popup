@@ -251,14 +251,14 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   private setBeginningIndexesPreviews() {
     this.start = 0;
-    this.end = Math.min(<number>this.previewConfig.number, this.images.length);
+    this.end = Math.min(this.previewConfig.number as number, this.images.length);
   }
 
   /**
    * Private method to init both `start` and `end` to the end.
    */
   private setEndIndexesPreviews() {
-    this.start = this.images.length - 1 - (<number>this.previewConfig.number - 1);
+    this.start = this.images.length - 1 - ((this.previewConfig.number as number) - 1);
     this.end = this.images.length;
   }
 
@@ -266,8 +266,8 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Private method to update both `start` and `end` based on the currentImage.
    */
   private setIndexesPreviews() {
-    this.start = getIndex(this.currentImage, this.images) - Math.floor(<number>this.previewConfig.number / 2);
-    this.end = getIndex(this.currentImage, this.images) + Math.floor(<number>this.previewConfig.number / 2) + 1;
+    this.start = getIndex(this.currentImage, this.images) - Math.floor((this.previewConfig.number as number) / 2);
+    this.end = getIndex(this.currentImage, this.images) + Math.floor((this.previewConfig.number as number) / 2) + 1;
   }
 
   /**
