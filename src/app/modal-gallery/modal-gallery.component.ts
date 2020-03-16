@@ -739,7 +739,6 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       }
     });
     this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {
-      console.log('OUTPUT - buttonAfterHook$:', event);
       if (!event || !event.button) {
         return;
       }
@@ -755,13 +754,13 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
+        images: [...imagesArrayToUse],
+        currentImage: Object.assign({}, imageToShow),
         libConfig
       }
     } as ModalGalleryConfig);
     this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
-      console.log('OUTPUT - buttonBeforeHook$: ', event);
+      console.log('OUTPUT - buttonBeforeHook$:', event);
       if (!event || !event.button) {
         return;
       }
@@ -770,17 +769,16 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       // For instance: this method will be invoked after a click
       // of 'close' button, but before that the modal gallery
       // will be really closed.
-      if (event.button.type === ButtonType.DELETE) {
-        // remove the current image and reassign all other to the array of images
-        console.log('delete in app with images count ' + this.images.length);
-        this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
-        this.modalGalleryService.updateModalImages(this.images);
-      }
     });
     this.buttonAfterHookSubscription = dialogRef.buttonAfterHook$.subscribe((event: ButtonEvent) => {
       console.log('OUTPUT - buttonAfterHook$:', event);
       if (!event || !event.button) {
         return;
+      }
+      if (event.button.type === ButtonType.DELETE) {
+        // remove the current image and reassign all other to the array of images
+        this.images = this.images.filter((val: Image) => event.image && val.id !== event.image.id);
+        this.modalGalleryService.updateModalImages(this.images);
       }
       // Invoked after both a click on a button and its related action.
       // For instance: this method will be invoked after a click
