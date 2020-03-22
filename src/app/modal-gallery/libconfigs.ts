@@ -18,7 +18,8 @@ const DEFAULT_SIZE_PREVIEWS: Size = {
   height: 'auto'
 };
 
-export const LIBCONFIG_6: LibConfig = {
+// Examples A
+export const LIBCONFIG_406: LibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -28,7 +29,7 @@ export const LIBCONFIG_6: LibConfig = {
   }
 };
 
-export const LIBCONFIG_7: LibConfig = {
+export const LIBCONFIG_407: LibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -38,7 +39,7 @@ export const LIBCONFIG_7: LibConfig = {
   }
 };
 
-export const LIBCONFIG_8: LibConfig = {
+export const LIBCONFIG_408: LibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -48,7 +49,8 @@ export const LIBCONFIG_8: LibConfig = {
   }
 };
 
-export const LIBCONFIG_9: LibConfig = {
+// Examples B
+export const LIBCONFIG_500: LibConfig = {
   previewConfig: {
     visible: false
   },
@@ -57,7 +59,7 @@ export const LIBCONFIG_9: LibConfig = {
   }
 };
 
-export const LIBCONFIG_10: LibConfig = {
+export const LIBCONFIG_501: LibConfig = {
   buttonsConfig: {
     visible: false,
     strategy: ButtonsStrategy.DEFAULT
@@ -70,7 +72,7 @@ export const LIBCONFIG_10: LibConfig = {
   }
 };
 
-export const LIBCONFIG_11: LibConfig = {
+export const LIBCONFIG_502: LibConfig = {
   buttonsConfig: {
     visible: false,
     strategy: ButtonsStrategy.DEFAULT
@@ -90,7 +92,7 @@ export const LIBCONFIG_11: LibConfig = {
   }
 };
 
-export const LIBCONFIG_12: LibConfig = {
+export const LIBCONFIG_503: LibConfig = {
   previewConfig: {
     visible: true,
     size: {
@@ -100,11 +102,11 @@ export const LIBCONFIG_12: LibConfig = {
   }
 };
 
-export const LIBCONFIG_13: LibConfig = {
+export const LIBCONFIG_504: LibConfig = {
   enableCloseOutside: false
 };
 
-export const LIBCONFIG_14: LibConfig = {
+export const LIBCONFIG_505: LibConfig = {
   currentImageConfig: { downloadable: false },
   buttonsConfig: {
     visible: true,
@@ -112,7 +114,7 @@ export const LIBCONFIG_14: LibConfig = {
   }
 };
 
-export const LIBCONFIG_15: LibConfig = {
+export const LIBCONFIG_506: LibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -120,7 +122,7 @@ export const LIBCONFIG_15: LibConfig = {
   }
 };
 
-export const LIBCONFIG_16: LibConfig = {
+export const LIBCONFIG_507: LibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -128,7 +130,19 @@ export const LIBCONFIG_16: LibConfig = {
   }
 };
 
-export const LIBCONFIG_17: LibConfig = {
+export const LIBCONFIG_508: LibConfig = {
+  currentImageConfig: { downloadable: true },
+  buttonsConfig: {
+    visible: true,
+    strategy: ButtonsStrategy.SIMPLE
+  },
+  keyboardServiceConfig: {
+    disableSsrWorkaround: false,
+    shortcuts: ['alt+s', 'shift+s']
+  }
+};
+
+export const LIBCONFIG_509: LibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -138,7 +152,7 @@ export const LIBCONFIG_17: LibConfig = {
   }
 };
 
-export const LIBCONFIG_18: LibConfig = {
+export const LIBCONFIG_510: LibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -148,7 +162,7 @@ export const LIBCONFIG_18: LibConfig = {
   }
 };
 
-export const LIBCONFIG_19: LibConfig = {
+export const LIBCONFIG_511: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: false,
@@ -156,7 +170,7 @@ export const LIBCONFIG_19: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_20: LibConfig = {
+export const LIBCONFIG_512: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -164,7 +178,7 @@ export const LIBCONFIG_20: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_21: LibConfig = {
+export const LIBCONFIG_513: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -172,7 +186,7 @@ export const LIBCONFIG_21: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_22: LibConfig = {
+export const LIBCONFIG_514: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -180,7 +194,7 @@ export const LIBCONFIG_22: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_23: LibConfig = {
+export const LIBCONFIG_515: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -188,7 +202,7 @@ export const LIBCONFIG_23: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_24: LibConfig = {
+export const LIBCONFIG_516: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -196,7 +210,7 @@ export const LIBCONFIG_24: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_25: LibConfig = {
+export const LIBCONFIG_517: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -204,7 +218,7 @@ export const LIBCONFIG_25: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_26: LibConfig = {
+export const LIBCONFIG_518: LibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -213,25 +227,25 @@ export const LIBCONFIG_26: LibConfig = {
   }
 };
 
-export const LIBCONFIG_27: LibConfig = {
+export const LIBCONFIG_519: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.DEFAULT
   }
 };
-export const LIBCONFIG_28: LibConfig = {
+export const LIBCONFIG_520: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.SIMPLE
   }
 };
-export const LIBCONFIG_29: LibConfig = {
+export const LIBCONFIG_521: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.ADVANCED
   }
 };
-export const LIBCONFIG_30: LibConfig = {
+export const LIBCONFIG_522: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.FULL
@@ -240,7 +254,7 @@ export const LIBCONFIG_30: LibConfig = {
 
 // default buttons but extUrl will open the link in a new tab instead of the current one
 // this requires to specify all buttons manually (also if they are not really custom)
-export const LIBCONFIG_31: LibConfig = {
+export const LIBCONFIG_523: LibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -263,7 +277,7 @@ export const LIBCONFIG_31: LibConfig = {
   }
 };
 
-export const LIBCONFIG_32: LibConfig = {
+export const LIBCONFIG_524: LibConfig = {
   currentImageConfig: {
     downloadable: true
   },
@@ -281,7 +295,7 @@ export const LIBCONFIG_32: LibConfig = {
   }
 };
 
-export const LIBCONFIG_33: LibConfig = {
+export const LIBCONFIG_525: LibConfig = {
   currentImageConfig: {
     downloadable: true
   },
@@ -321,7 +335,8 @@ export const LIBCONFIG_33: LibConfig = {
   }
 };
 
-export const LIBCONFIG_34: LibConfig = {
+// Examples C
+export const LIBCONFIG_600: LibConfig = {
   keyboardConfig: {
     esc: 81,
     left: 40,
@@ -329,7 +344,7 @@ export const LIBCONFIG_34: LibConfig = {
   }
 };
 
-export const LIBCONFIG_35: LibConfig = {
+export const LIBCONFIG_601: LibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -340,7 +355,7 @@ export const LIBCONFIG_35: LibConfig = {
   }
 };
 
-export const LIBCONFIG_36: LibConfig = {
+export const LIBCONFIG_602: LibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.HIDE_IF_EMPTY,
@@ -351,7 +366,7 @@ export const LIBCONFIG_36: LibConfig = {
   }
 };
 
-export const LIBCONFIG_37: LibConfig = {
+export const LIBCONFIG_603: LibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_HIDDEN,
@@ -365,7 +380,7 @@ export const LIBCONFIG_37: LibConfig = {
   }
 };
 
-export const LIBCONFIG_38: LibConfig = {
+export const LIBCONFIG_604: LibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -379,7 +394,7 @@ export const LIBCONFIG_38: LibConfig = {
   }
 };
 
-export const LIBCONFIG_39: LibConfig = {
+export const LIBCONFIG_605: LibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -390,7 +405,7 @@ export const LIBCONFIG_39: LibConfig = {
   }
 };
 
-export const LIBCONFIG_40: LibConfig = {
+export const LIBCONFIG_606: LibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -413,42 +428,42 @@ export const LIBCONFIG_40: LibConfig = {
   }
 };
 
-export const LIBCONFIG_41: LibConfig = {
+export const LIBCONFIG_607: LibConfig = {
   previewConfig: {
     visible: true,
     number: 1
   }
 };
 
-export const LIBCONFIG_42: LibConfig = {
+export const LIBCONFIG_608: LibConfig = {
   previewConfig: {
     visible: true,
     number: 5
   }
 };
 
-export const LIBCONFIG_43: LibConfig = {
+export const LIBCONFIG_609: LibConfig = {
   previewConfig: {
     visible: true,
     arrows: false
   }
 };
 
-export const LIBCONFIG_44: LibConfig = {
+export const LIBCONFIG_610: LibConfig = {
   previewConfig: {
     visible: true,
     clickable: false
   }
 };
 
-export const LIBCONFIG_45: LibConfig = {
+export const LIBCONFIG_611: LibConfig = {
   previewConfig: {
     visible: true,
     size: { width: '30px', height: '30px' }
   }
 };
 
-export const LIBCONFIG_46: LibConfig = {
+export const LIBCONFIG_612: LibConfig = {
   accessibilityConfig: {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
     backgroundTitle: 'CUSTOM background title',
@@ -495,13 +510,14 @@ export const LIBCONFIG_46: LibConfig = {
   }
 };
 
-export const LIBCONFIG_47: LibConfig = {
+export const LIBCONFIG_613: LibConfig = {
   currentImageConfig: {
     navigateOnClick: false
   }
 };
 
-export const LIBCONFIG_50: LibConfig = {
+// Examples D
+export const LIBCONFIG_701: LibConfig = {
   currentImageConfig: {
     downloadable: true
   },
@@ -511,13 +527,13 @@ export const LIBCONFIG_50: LibConfig = {
   }
 };
 
-export const LIBCONFIG_51: LibConfig = {
+export const LIBCONFIG_702: LibConfig = {
   currentImageConfig: {
     invertSwipe: true
   }
 };
 
-export const LIBCONFIG_52: LibConfig = {
+export const LIBCONFIG_703: LibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -527,7 +543,8 @@ export const LIBCONFIG_52: LibConfig = {
   }
 };
 
-export const LIBCONFIG_54: LibConfig = {
+// Examples E
+export const LIBCONFIG_800: LibConfig = {
   slideConfig: {
     playConfig: {
       autoPlay: true,
@@ -537,7 +554,7 @@ export const LIBCONFIG_54: LibConfig = {
   }
 };
 
-export const LIBCONFIG_55: LibConfig = {
+export const LIBCONFIG_801: LibConfig = {
   slideConfig: {
     infinite: true,
     playConfig: {
@@ -548,7 +565,7 @@ export const LIBCONFIG_55: LibConfig = {
   }
 };
 
-export const LIBCONFIG_56: LibConfig = {
+export const LIBCONFIG_802: LibConfig = {
   slideConfig: {
     playConfig: {
       autoPlay: true,

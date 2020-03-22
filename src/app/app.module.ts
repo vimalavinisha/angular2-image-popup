@@ -70,7 +70,8 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
 
     FormsModule,
     HttpClientModule,
-    GalleryModule.forRoot() // <-------------------------------------------- @ks89/angular-modal-gallery module import
+
+    GalleryModule // <-------------------------------------------- @ks89/angular-modal-gallery module import
   ],
   providers: [],
   bootstrap: [AppComponent],
