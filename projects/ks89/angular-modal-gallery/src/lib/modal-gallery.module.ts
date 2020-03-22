@@ -22,15 +22,13 @@
  SOFTWARE.
  */
 
-import { ModuleWithProviders, NgModule, Injectable } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DIRECTIVES } from './directives/directives';
 import { COMPONENTS, CarouselComponent } from './components/components';
-import { KEYBOARD_CONFIGURATION, KeyboardService } from './services/keyboard.service';
-import { KeyboardServiceConfig } from './model/keyboard-service-config.interface';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
-import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { ConfigService } from './services/config.service';
 import { PlainGalleryComponent } from './components/plain-gallery/plain-gallery.component';
 
@@ -60,35 +58,4 @@ export class KsHammerGestureConfig extends HammerGestureConfig {
     ConfigService
   ]
 })
-export class GalleryModule {
-  /**
-   * Importing with '.forRoot()' is deprecated. I'll provide a new way to do this in next releases.
-   * Will be removed in 8.0.0 or 9.0.0
-   */
-  static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders<GalleryModule> {
-    return {
-      ngModule: GalleryModule,
-      providers: [
-        OverlayContainer,
-        {
-          provide: KEYBOARD_CONFIGURATION,
-          useValue: config ? config : {}
-        },
-        {
-          provide: KeyboardService,
-          useFactory: setupKeyboardService,
-          deps: [KEYBOARD_CONFIGURATION]
-        }
-      ]
-    };
-  }
-}
-
-/**
- * Function to setup the keyboard service inside the `forRoot` method.
- * @param KeyboardServiceConfig injector is an interface of type `KeyboardServiceConfig` to pass data to KeyboardService
- * @returns KeyboardService an instance of the `KeyboardService`
- */
-export function setupKeyboardService(injector: KeyboardServiceConfig): KeyboardService {
-  return new KeyboardService(injector);
-}
+export class GalleryModule {}

@@ -51,11 +51,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   enableCloseOutside = true;
   /**
-   * Interface to configure current image in modal-gallery.
-   * For instance you can disable navigation on click on current image (enabled by default).
-   */
-  currentImageConfig: CurrentImageConfig;
-  /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide dots.
    */
@@ -337,7 +332,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false, isCalledByService: boolean = false) {
     this.modalGalleryService.emitClose(new ImageModalEvent(this.id, action, true));
-    this.keyboardService.reset();
+    this.keyboardService.reset(this.configService.getConfig(this.id));
     this.modalGalleryService.close(this.id, clickOutside);
 
     // shows scrollbar
@@ -362,6 +357,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
+    this.keyboardService.init(this.configService.getConfig(this.id));
     this.keyboardService.add((event: KeyboardEvent, combo: string) => {
       if (event.preventDefault) {
         event.preventDefault();
@@ -370,7 +366,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
         event.returnValue = false;
       }
       this.downloadImage();
-    });
+    }, this.configService.getConfig(this.id));
 
     const currentIndex: number = this.images.indexOf(this.currentImage);
 
@@ -445,7 +441,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * It contains also a logic to enable downloading features also for IE11.
    */
   downloadImage() {
-    if (this.currentImageConfig && !this.currentImageConfig.downloadable) {
+    const currentImageConfig: CurrentImageConfig = this.configService.getConfig(this.id).currentImageConfig;
+    if (currentImageConfig && !currentImageConfig.downloadable) {
       return;
     }
     // If IE11 or Microsoft Edge use msSaveBlob(...)
@@ -464,8 +461,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * This is an Angular's lifecycle hook that is called when this component is destroyed.
    */
   ngOnDestroy() {
-    this.keyboardService.reset();
-
+    if (this.keyboardService) {
+      this.keyboardService.reset(this.configService.getConfig(this.id));
+    }
     this.idValidatorService.remove(this.id);
   }
 
