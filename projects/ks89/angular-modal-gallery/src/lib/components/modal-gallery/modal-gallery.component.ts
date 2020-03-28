@@ -127,6 +127,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
         return newImage;
       });
       this.initImages();
+      this.images.forEach((image: InternalLibImage) => {
+        if (image.id === this.currentImage.id) {
+          this.currentImage = image;
+        }
+      });
       this.changeDetectorRef.markForCheck();
     });
   }

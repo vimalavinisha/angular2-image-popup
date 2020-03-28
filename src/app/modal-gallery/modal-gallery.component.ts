@@ -876,16 +876,22 @@ export class ModalGalleryExampleComponent implements OnDestroy {
         return;
       }
       const indexToRefresh = 1;
-      console.log('updating image at index ' + indexToRefresh + ', after 2 seconds');
       const image: Image = new Image(1, {
         img: '../assets/images/gallery/img5.jpg',
         description: 'Description 2 updated with imag5.jpg'
       });
-      const interval = setInterval(() => {
-        console.log('image updated');
+
+      console.log('updating image at index ' + indexToRefresh + ', after 4 seconds');
+
+      // create the new array of images with the updated image inside
+      const newImages: Image[] = [...this.images];
+      newImages[indexToRefresh] = image;
+
+      const timeout = setTimeout(() => {
         this.galleryService.updateGallery(id, indexToRefresh, image);
-        // this.modalGalleryService.updateModalImages(this.imagesInfiniteAutoAdd);
-      }, 2000);
+        this.modalGalleryService.updateModalImages(newImages);
+        console.log('image updated successfully!');
+      }, 4000);
     });
   }
 
