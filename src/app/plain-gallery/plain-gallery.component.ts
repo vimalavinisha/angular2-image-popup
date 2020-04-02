@@ -27,7 +27,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import {
   AdvancedLayout,
-  GalleryService,
   GridLayout,
   Image,
   LineLayout,
@@ -174,7 +173,7 @@ export class PlainGalleryExampleComponent {
     plainGalleryConfig: this.plainGalleryGrid
   };
 
-  constructor(private galleryService: GalleryService, private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
+  constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   openImageModalRow(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);

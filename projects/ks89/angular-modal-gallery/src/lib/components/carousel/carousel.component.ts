@@ -59,7 +59,6 @@ import { NEXT, PREV } from '../../utils/user-input.util';
 import { DescriptionStrategy } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
-import { GalleryService } from '../../services/gallery.service';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
@@ -279,7 +278,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     @Inject(PLATFORM_ID) private platformId,
     private ngZone: NgZone,
     private modalGalleryService: ModalGalleryService,
-    private galleryService: GalleryService,
     private configService: ConfigService,
     private ref: ChangeDetectorRef,
     // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
@@ -415,7 +413,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       return;
     }
     const index = getIndex(this.currentImage, this.images);
-    // this.galleryService.openGallery(this.id, index);
     this.modalGalleryService.open({
       config: {
         id: this.id,

@@ -35,7 +35,6 @@ import {
   Description,
   DescriptionStrategy,
   DotsConfig,
-  GalleryService,
   Image,
   ImageModalEvent,
   KS_DEFAULT_BTN_CLOSE,
@@ -617,7 +616,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   private buttonBeforeHookSubscription: Subscription;
   private buttonAfterHookSubscription: Subscription;
 
-  constructor(private galleryService: GalleryService, private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
+  constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
   isShownAutoNavigate = false;
@@ -649,31 +648,31 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  onShowAutoNavigateExample(event: ImageModalEvent, galleryId: number) {
-    if (this.isShownAutoNavigate) {
-      // this prevent multiple triggers of this method
-      // this is only an example and shouldn't be done in this way in a real app
-      return;
-    }
-    console.log(`onShowAutoNavigateExample with id=${galleryId} action: ` + Action[event.action]);
-    console.log('onShowAutoNavigateExample result:' + event.result);
-    console.log('Starting timeout of 3 second to navigate to image 0 and then to the next every second automatically');
-    setTimeout(() => {
-      this.isShownAutoNavigate = true;
-      console.log('setTimeout end - navigating to index 0, gallery with id=' + galleryId);
-      this.galleryService.navigateGallery(galleryId, 0);
-
-      setTimeout(() => {
-        console.log('setTimeout end - navigating to index 1, gallery with id=' + galleryId);
-        this.galleryService.navigateGallery(galleryId, 1);
-
-        setTimeout(() => {
-          console.log('setTimeout end - navigating to index 2 (finished :) !), gallery with id=' + galleryId);
-          this.galleryService.navigateGallery(galleryId, 2);
-        }, 3000);
-      }, 3000);
-    }, 3000);
-  }
+  // onShowAutoNavigateExample(event: ImageModalEvent, galleryId: number) {
+  //   if (this.isShownAutoNavigate) {
+  //     // this prevent multiple triggers of this method
+  //     // this is only an example and shouldn't be done in this way in a real app
+  //     return;
+  //   }
+  //   console.log(`onShowAutoNavigateExample with id=${galleryId} action: ` + Action[event.action]);
+  //   console.log('onShowAutoNavigateExample result:' + event.result);
+  //   console.log('Starting timeout of 3 second to navigate to image 0 and then to the next every second automatically');
+  //   setTimeout(() => {
+  //     this.isShownAutoNavigate = true;
+  //     console.log('setTimeout end - navigating to index 0, gallery with id=' + galleryId);
+  //     this.galleryService.navigateGallery(galleryId, 0);
+  //
+  //     setTimeout(() => {
+  //       console.log('setTimeout end - navigating to index 1, gallery with id=' + galleryId);
+  //       this.galleryService.navigateGallery(galleryId, 1);
+  //
+  //       setTimeout(() => {
+  //         console.log('setTimeout end - navigating to index 2 (finished :) !), gallery with id=' + galleryId);
+  //         this.galleryService.navigateGallery(galleryId, 2);
+  //       }, 3000);
+  //     }, 3000);
+  //   }, 3000);
+  // }
 
   addRandomImage() {
     // add to images array
@@ -814,7 +813,6 @@ export class ModalGalleryExampleComponent implements OnDestroy {
         console.log('adding a new random image at the end');
         this.addRandomImage();
         setTimeout(() => {
-          // this.galleryService.openGallery(galleryId, this.images.length - 1);
           this.modalGalleryService.updateModalImages(this.images);
         }, 0);
       }
@@ -887,8 +885,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       const newImages: Image[] = [...this.images];
       newImages[indexToRefresh] = image;
 
-      const timeout = setTimeout(() => {
-        this.galleryService.updateGallery(id, indexToRefresh, image);
+      setTimeout(() => {
         this.modalGalleryService.updateModalImages(newImages);
         console.log('image updated successfully!');
       }, 4000);
@@ -899,14 +896,11 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     return item.id;
   }
 
-  autoPlayButton(id: number) {
-    // FIXME not working in this way!!!!
-    if (this.isPlaying) {
-      this.galleryService.stop(id);
-    } else {
-      this.galleryService.play(id);
-    }
+  autoPlayButton(config: LibConfig) {
     this.isPlaying = !this.isPlaying;
+    if (config && config.slideConfig && config.slideConfig.playConfig) {
+      config.slideConfig.playConfig.autoPlay = this.isPlaying;
+    }
     return this.isPlaying;
   }
 

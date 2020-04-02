@@ -46,7 +46,6 @@ export { Size } from './lib/model/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './lib/model/buttons-config.interface';
 
-export { GalleryService } from './lib/services/gallery.service';
 export { LibConfig } from './lib/services/config.service';
 
 export { CurrentImageConfig } from './lib/model/current-image-config.interface';

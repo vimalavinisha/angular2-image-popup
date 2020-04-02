@@ -8,7 +8,6 @@ import { ModalGalleryComponent } from './modal-gallery.component';
 import { ModalGalleryRef } from './modal-gallery-ref';
 import { Image, ImageModalEvent } from '../../model/image.class';
 import { ConfigService, LibConfig } from '../../services/config.service';
-import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ButtonEvent } from '../../model/buttons-config.interface';
 import { Subject } from 'rxjs';
 
