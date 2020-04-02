@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, 
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { Subscription } from 'rxjs';
+
 import { DIALOG_DATA } from './modal-gallery.tokens';
 import { ModalGalleryService } from './modal-gallery.service';
 import { Image, ImageModalEvent } from '../../model/image.class';
@@ -95,6 +97,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   libConfig: LibConfig;
 
+  private updateImagesSubscription: Subscription;
+
   /**
    * HostListener to catch browser's back button and destroy the gallery.
    * This prevents weired behaviour about scrolling.
@@ -121,7 +125,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     this.libConfig = (this.dialogContent as any).libConfig;
     this.configService.setConfig(this.id, this.libConfig);
 
-    this.modalGalleryService.updateImages$.subscribe((images: Image[]) => {
+    this.updateImagesSubscription = this.modalGalleryService.updateImages$.subscribe((images: Image[]) => {
       this.images = images.map((image: Image) => {
         const newImage: InternalLibImage = Object.assign({}, image, { previouslyLoaded: false });
         return newImage;
@@ -468,6 +472,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.keyboardService) {
       this.keyboardService.reset(this.configService.getConfig(this.id));
+    }
+    if (this.updateImagesSubscription) {
+      this.updateImagesSubscription.unsubscribe();
     }
     this.idValidatorService.remove(this.id);
   }
