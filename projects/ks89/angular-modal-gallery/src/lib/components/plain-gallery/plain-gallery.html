@@ -30,7 +30,7 @@
            [attr.aria-label]="imgCol.plain?.ariaLabel"
            [title]="imgCol.plain?.title ? imgCol.plain.title : getTitleDisplay(imgCol)"
            [tabIndex]="0"
-           (click)="showModalGallery(j)" (keyup)="showModalGallery(j)"></a>
+           (click)="showModalGalleryByImage(imgCol)" (keyup)="onNavigationEvent($event, imgCol)"></a>
       </ng-template>
 
     </ng-container>

@@ -175,15 +175,6 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
 
   /**
    * Method called when you click on an image of the plain (or inline) gallery.
-   * This will emit the show event with the index number as payload.
-   * @param number index of the clicked image
-   */
-  showModalGallery(index: number) {
-    this.showImage.emit(index);
-  }
-
-  /**
-   * Method called when you click on an image of the plain (or inline) gallery.
    * This will emit the show event with the image as payload.
    * @param Image img is the Image to show
    */
@@ -193,13 +184,10 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
   }
 
   onNavigationEvent(event: KeyboardEvent, img: Image) {
-    // const result: number = super.handleImageEvent(event);
-    // if (result === NEXT) {
-    //   this.showModalGalleryByImage(img);
-    // } else if (result === PREV) {
-    //   // TODO
-    //   // this.showModalGalleryByImage(img);
-    // }
+    const result: number = super.handleImageEvent(event);
+    if (result === NEXT) {
+      this.showModalGalleryByImage(img);
+    }
   }
 
   /**
@@ -247,6 +235,15 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    */
   trackById(index: number, item: Image): number {
     return item.id;
+  }
+
+  /**
+   * Method called when you click on an image of the plain (or inline) gallery.
+   * This will emit the show event with the index number as payload.
+   * @param number index of the clicked image
+   */
+  private showModalGallery(index: number) {
+    this.showImage.emit(index);
   }
 
   /**
