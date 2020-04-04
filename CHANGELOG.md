@@ -1,3 +1,7 @@
+# 8.0.0-beta.1
+ TODO TODO TODO
+
+
 # 7.2.7
 ### Bugfixes
 - support Angular 11 preventing a build issue. Fixed by @cihancelen with pull request #216.

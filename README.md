@@ -178,6 +178,7 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 6  | &gt;= 7.0.0                 | optional     |
 | Angular 7  | &gt;= 7.0.0                 | optional     |
 | Angular 8  | &gt;= 7.2.1                 | optional     |
+| Angular 9  | &gt;= 8.0.0                 | optional     |
 
 <br>
 
@@ -185,6 +186,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 100 releases in two years**, and more to come... :)
 
+- 04/**/2020 - 8.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 12/05/2020 - 7.2.7 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 12/29/2019 - 7.2.6 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/23/2019 - 7.2.5 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -271,7 +273,7 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 
 The MIT License (MIT)
 
-Copyright (c) 2017-2019 Stefano Cappa (Ks89)
+Copyright (c) 2017-2020 Stefano Cappa (Ks89)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

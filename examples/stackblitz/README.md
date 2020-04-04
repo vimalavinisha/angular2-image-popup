@@ -1,5 +1,9 @@
 # angular-modal-gallery stackblitz.com demo
 
+angular-modal-gallery 8.x.x official stackblitz demo
+- full size live demo [HERE](https://angular-modal-gallery-v8.stackblitz.io) 
+- editor view [HERE](https://stackblitz.com/edit/angular-modal-gallery-v8)
+
 angular-modal-gallery 7.x.x official stackblitz demo
 - full size live demo [HERE](https://angular-modal-gallery-v7.stackblitz.io) 
 - editor view [HERE](https://stackblitz.com/edit/angular-modal-gallery-v7)
@@ -20,7 +24,7 @@ angular-modal-gallery 4.x.x official stackblitz demo
 ```
  The MIT License (MIT)
 
- Copyright (c) 2017-2019 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2020 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
