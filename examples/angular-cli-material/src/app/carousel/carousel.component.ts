@@ -31,7 +31,7 @@ import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gall
   templateUrl: './carousel.html',
   styleUrls: ['./carousel.scss']
 })
-export class CarouselComponent {
+export class CarouselExampleComponent {
   imageIndex = 1;
   galleryId = 1;
   autoPlay = true;

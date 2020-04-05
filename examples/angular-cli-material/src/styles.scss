@@ -22,11 +22,19 @@
 
 // You can add global styles to this file, and also import other style files
 
-body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0;
-  padding: 0;
+@import "~@angular/cdk/overlay-prebuilt.css";
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
+  background: #000;
+  opacity: 0.85 !important;
 }
+
+.cdk-overlay-container {
+  z-index: 90000 !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // Not required by angular-modal-gallery. Used only in this demo
 .red-text {
@@ -41,3 +49,6 @@ body {
 .center-text {
   text-align: center;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

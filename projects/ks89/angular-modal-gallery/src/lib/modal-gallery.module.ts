@@ -24,13 +24,14 @@
 
 import { NgModule, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DIRECTIVES } from './directives/directives';
-import { COMPONENTS, CarouselComponent } from './components/components';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+
 import { OverlayModule } from '@angular/cdk/overlay';
-import { ConfigService } from './services/config.service';
+
+import { COMPONENTS, CarouselComponent } from './components/components';
 import { PlainGalleryComponent } from './components/plain-gallery/plain-gallery.component';
+import { DIRECTIVES } from './directives/directives';
+import { ConfigService } from './services/config.service';
 
 // to prevent bad scrolling behaviour on mobile phone with carousels.
 // From @mohaxspb (https://github.com/Ks89/angular-modal-gallery/pull/187)
