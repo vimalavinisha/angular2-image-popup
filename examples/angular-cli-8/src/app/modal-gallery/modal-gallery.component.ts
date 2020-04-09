@@ -26,30 +26,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {
-  AccessibilityConfig,
   Action,
   ButtonEvent,
-  ButtonsConfig,
-  ButtonsStrategy,
   ButtonType,
-  Description,
-  DescriptionStrategy,
-  DotsConfig,
   Image,
   ImageModalEvent,
-  KS_DEFAULT_BTN_CLOSE,
-  KS_DEFAULT_BTN_DELETE,
-  KS_DEFAULT_BTN_DOWNLOAD,
-  KS_DEFAULT_BTN_EXTURL,
-  KS_DEFAULT_BTN_FULL_SCREEN,
-  PreviewConfig,
-  LoadingConfig,
-  LoadingType,
-  CurrentImageConfig,
   ModalGalleryService,
   ModalGalleryRef,
   ModalGalleryConfig,
-  InteractionEvent,
   LibConfig
 } from '@ks89/angular-modal-gallery';
 import { Subscription } from 'rxjs';
@@ -119,6 +103,8 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   CONFIG800: LibConfig = libConfigs.LIBCONFIG_800;
   CONFIG801: LibConfig = libConfigs.LIBCONFIG_801;
   CONFIG802: LibConfig = libConfigs.LIBCONFIG_802;
+  // Example F
+  CONFIG900: LibConfig = libConfigs.LIBCONFIG_900;
 
   images: Image[] = [
     new Image(0, {
@@ -375,235 +361,6 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     })
   ];
 
-  dotsConfig: DotsConfig = {
-    visible: false
-  };
-
-  customDescription: Description = {
-    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    imageText: 'Look this image ',
-    numberSeparator: ' of ',
-    beforeTextDescription: ' => '
-  };
-
-  customDescriptionStyle: Description = {
-    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    imageText: 'Look this image ',
-    numberSeparator: ' of ',
-    beforeTextDescription: ' => ',
-    style: {
-      bgColor: 'rgba(255,0,0,.5)',
-      textColor: 'blue',
-      marginTop: '3px',
-      marginBottom: '0px',
-      marginLeft: '5px',
-      marginRight: '5px',
-      position: 'absolute',
-      top: '0px',
-      height: '25px'
-      // be careful to use width, in particular with % values
-    }
-  };
-
-  customDescriptionHideIfEmpty: Description = {
-    strategy: DescriptionStrategy.HIDE_IF_EMPTY,
-    imageText: 'Look this image ',
-    numberSeparator: ' of ',
-    beforeTextDescription: ' => '
-  };
-
-  customFullDescription: Description = {
-    strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    // you should build this value programmatically with the result of (show)="..()" event
-    customFullDescription: 'Custom description of the current visible image'
-    // if customFullDescription !== undefined, all other fields will be ignored
-    // imageText: '',
-    // numberSeparator: '',
-    // beforeTextDescription: '',
-  };
-
-  customFullDescriptionHidden: Description = {
-    strategy: DescriptionStrategy.ALWAYS_HIDDEN,
-    // you should build this value programmatically with the result of (show)="..()" event
-    customFullDescription: 'Custom description of the current visible image'
-    // if customFullDescription !== undefined, all other fields will be ignored
-    // imageText: '',
-    // numberSeparator: '',
-    // beforeTextDescription: '',
-  };
-
-  // customButtonsSize: ButtonSize = {
-  //   width: 10,
-  //   height: 10,
-  //   unit: 'px'
-  // };
-
-  buttonsConfigDefault: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.DEFAULT
-  };
-  buttonsConfigSimple: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.SIMPLE
-  };
-  buttonsConfigAdvanced: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.ADVANCED
-  };
-  buttonsConfigFull: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.FULL
-  };
-  buttonsConfigCustom: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      // KS_DEFAULT_BTN_ROTATE,
-      KS_DEFAULT_BTN_FULL_SCREEN,
-      KS_DEFAULT_BTN_DELETE,
-      KS_DEFAULT_BTN_EXTURL,
-      KS_DEFAULT_BTN_DOWNLOAD,
-      KS_DEFAULT_BTN_CLOSE
-    ]
-  };
-
-  // default buttons but extUrl will open the link in a new tab instead of the current one
-  // this requires to specify all buttons manually (also if they are not really custom)
-  customButtonsConfigExtUrlNewTab: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'ext-url-image',
-        type: ButtonType.EXTURL,
-        extUrlInNewTab: true // <--- this is the important thing to understand this example
-      },
-      {
-        className: 'download-image',
-        type: ButtonType.DOWNLOAD
-      },
-      {
-        className: 'close-image',
-        type: ButtonType.CLOSE
-      }
-    ]
-  };
-
-  customButtonsFontAwesomeConfig: ButtonsConfig = {
-    visible: true,
-    strategy: ButtonsStrategy.CUSTOM,
-    buttons: [
-      {
-        className: 'fas fa-plus white',
-        type: ButtonType.CUSTOM,
-        ariaLabel: 'custom plus aria label',
-        title: 'custom plus title',
-        fontSize: '20px'
-      },
-      {
-        className: 'fas fa-times white',
-        type: ButtonType.CLOSE,
-        ariaLabel: 'custom close aria label',
-        title: 'custom close title',
-        fontSize: '20px'
-      },
-      {
-        className: 'fas fa-download white',
-        type: ButtonType.DOWNLOAD,
-        ariaLabel: 'custom download aria label',
-        title: 'custom download title',
-        fontSize: '20px'
-      },
-      {
-        className: 'fas fa-external-link-alt white',
-        type: ButtonType.EXTURL,
-        ariaLabel: 'custom exturl aria label',
-        title: 'custom exturl title',
-        fontSize: '20px'
-      }
-    ]
-  };
-
-  previewConfigOneImage: PreviewConfig = {
-    visible: true,
-    number: 1
-  };
-
-  previewConfigFiveImages: PreviewConfig = {
-    visible: true,
-    number: 5
-  };
-
-  previewConfigNoArrows: PreviewConfig = {
-    visible: true,
-    arrows: false
-  };
-
-  previewConfigNoClickable: PreviewConfig = {
-    visible: true,
-    clickable: false
-  };
-
-  // TODO still not implemented
-  previewConfigAlwaysCenter: PreviewConfig = {
-    visible: true
-  };
-
-  previewConfigCustomSize: PreviewConfig = {
-    visible: true,
-    size: { width: '30px', height: '30px' }
-  };
-
-  currentImageConfigExperimental = {
-    loadingConfig: { enable: true, type: LoadingType.STANDARD } as LoadingConfig,
-    description: { strategy: DescriptionStrategy.ALWAYS_VISIBLE } as Description
-  } as CurrentImageConfig;
-
-  accessibilityConfig: AccessibilityConfig = {
-    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
-    backgroundTitle: 'CUSTOM background title',
-
-    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
-    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
-
-    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
-    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
-
-    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
-    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
-
-    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
-    mainContainerTitle: 'CUSTOM main container title',
-    mainPrevImageAriaLabel: 'CUSTOM Previous image',
-    mainPrevImageTitle: 'CUSTOM Previous image',
-    mainNextImageAriaLabel: 'CUSTOM Next image',
-    mainNextImageTitle: 'CUSTOM Next image',
-
-    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
-    dotsContainerTitle: 'CUSTOM dots container title',
-    dotAriaLabel: 'CUSTOM Navigate to image number',
-
-    previewsContainerAriaLabel: 'CUSTOM Image previews',
-    previewsContainerTitle: 'CUSTOM previews title',
-    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
-    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
-    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
-    previewScrollNextTitle: 'CUSTOM Scroll next previews',
-
-    carouselContainerAriaLabel: 'Current image and navigation',
-    carouselContainerTitle: '',
-    carouselPrevImageAriaLabel: 'Previous image',
-    carouselPrevImageTitle: 'Previous image',
-    carouselNextImageAriaLabel: 'Next image',
-    carouselNextImageTitle: 'Next image',
-    carouselPreviewsContainerAriaLabel: 'Image previews',
-    carouselPreviewsContainerTitle: '',
-    carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
-    carouselPreviewScrollPrevTitle: 'Scroll previous previews',
-    carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
-    carouselPreviewScrollNextTitle: 'Scroll next previews'
-  };
-
   private count = 0;
 
   // subscriptions to receive events from the gallery
@@ -619,8 +376,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
-  isShownAutoNavigate = false;
-  private timeout;
+  private timeout: any;
 
   openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
@@ -647,32 +403,6 @@ export class ModalGalleryExampleComponent implements OnDestroy {
       }, 3000);
     });
   }
-
-  // onShowAutoNavigateExample(event: ImageModalEvent, galleryId: number) {
-  //   if (this.isShownAutoNavigate) {
-  //     // this prevent multiple triggers of this method
-  //     // this is only an example and shouldn't be done in this way in a real app
-  //     return;
-  //   }
-  //   console.log(`onShowAutoNavigateExample with id=${galleryId} action: ` + Action[event.action]);
-  //   console.log('onShowAutoNavigateExample result:' + event.result);
-  //   console.log('Starting timeout of 3 second to navigate to image 0 and then to the next every second automatically');
-  //   setTimeout(() => {
-  //     this.isShownAutoNavigate = true;
-  //     console.log('setTimeout end - navigating to index 0, gallery with id=' + galleryId);
-  //     this.galleryService.navigateGallery(galleryId, 0);
-  //
-  //     setTimeout(() => {
-  //       console.log('setTimeout end - navigating to index 1, gallery with id=' + galleryId);
-  //       this.galleryService.navigateGallery(galleryId, 1);
-  //
-  //       setTimeout(() => {
-  //         console.log('setTimeout end - navigating to index 2 (finished :) !), gallery with id=' + galleryId);
-  //         this.galleryService.navigateGallery(galleryId, 2);
-  //       }, 3000);
-  //     }, 3000);
-  //   }, 3000);
-  // }
 
   addRandomImage() {
     // add to images array
@@ -892,16 +622,16 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  trackById(index: number, item: Image) {
-    return item.id;
-  }
-
   autoPlayButton(config: LibConfig) {
     this.isPlaying = !this.isPlaying;
     if (config && config.slideConfig && config.slideConfig.playConfig) {
       config.slideConfig.playConfig.autoPlay = this.isPlaying;
     }
     return this.isPlaying;
+  }
+
+  trackById(index: number, item: Image) {
+    return item.id;
   }
 
   ngOnDestroy() {

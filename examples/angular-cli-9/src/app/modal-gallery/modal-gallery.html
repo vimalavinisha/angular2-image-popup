@@ -282,21 +282,16 @@
 </section>
 
 
-<!--<br>-->
-<!--<hr>-->
-<!--<br>-->
-<!--<h2>Experimental examples<sup>*</sup></h2>-->
-<!--<p><sup>*</sup> these will be either improved or removed in next versions</p>-->
-<!--<section>-->
-<!--  <h3>F1 - (id=57) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="58" [modalImages]="[images[0]]"-->
-<!--                    [keyboardConfig]="null"-->
-<!--                    [currentImageConfig]="currentImageConfigExperimental"-->
-<!--                    [slideConfig]="{infinite: false}"></ks-modal-gallery>-->
-<!--</section>-->
-<!--<section>-->
-<!--  <h3>F2 - (id=58) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>-->
-<!--  <br>-->
-<!--  <ks-modal-gallery [id]="59" [modalImages]="sameImages"></ks-modal-gallery>-->
-<!--</section>-->
+<br>
+<hr>
+<br>
+<h2>Experimental examples<sup>*</sup></h2>
+<p><sup>*</sup> these will be either improved or removed in next versions</p>
+<section>
+  <h3>F1 - (id=900) - Experimental demo - infinite sliding with only one image to see if side arrows are hidden</h3>
+  <button (click)="openModal(900, singleImage, 0, CONFIG900)">Open modalgallery</button>
+</section>
+<section>
+  <h3>F2 - (id=901) - Experimental demo - an array of Images with the same source file (different classes/ids and paths with appended '?imageIndex' to prevent caching issues)</h3>
+  <button (click)="openModal(901, sameImages, 0)">Open modalgallery</button>
+</section>

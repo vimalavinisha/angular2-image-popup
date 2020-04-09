@@ -1,7 +1,7 @@
 import {
-  ButtonsConfig,
   ButtonsStrategy,
   ButtonType,
+  Description,
   DescriptionStrategy,
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,
@@ -9,6 +9,7 @@ import {
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
   LibConfig,
+  LoadingConfig,
   LoadingType,
   Size
 } from '@ks89/angular-modal-gallery';
@@ -572,5 +573,16 @@ export const LIBCONFIG_802: LibConfig = {
       interval: 1000,
       pauseOnHover: false
     }
+  }
+};
+
+// Examples F
+export const LIBCONFIG_900: LibConfig = {
+  slideConfig: {
+    infinite: false
+  },
+  currentImageConfig: {
+    loadingConfig: { enable: true, type: LoadingType.STANDARD } as LoadingConfig,
+    description: { strategy: DescriptionStrategy.ALWAYS_VISIBLE } as Description
   }
 };

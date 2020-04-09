@@ -41,7 +41,7 @@ import { IntroHeaderComponent } from './intro-header/intro-header.component';
 // ********************** angular-modal-gallery *****************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
 import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap`)
-import { GalleryModule, ModalGalleryComponent } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
+import { GalleryModule } from '@ks89/angular-modal-gallery'; // <----------------- angular-modal-gallery library import
 // **************************************************************************
 
 // ************************ optional font-awesome 5 ************************
