@@ -52,3 +52,14 @@
                [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
 </section>
 <br>
+<section>
+  <h3>D6 - (id=305) - carousel example for IE11 with fallback images when it's not possible to load normal images (to fix issue #194)</h3>
+  <p>Obviously, objectFit is ignored when legacyIE11Mode is enabled</p>
+  <br>
+  <ks-carousel [id]="305" [images]="fallbackRectImages"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
+    <div class="projected">This is my projected content!</div>
+  </ks-carousel>
+</section>
+<br>
+<br>

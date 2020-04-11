@@ -397,11 +397,17 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * Method used in template to sanitize an url when you need legacyIE11Mode.
    * In this way you can set an url as background of a div.
    * @param unsafeStyle is a string and represents the url to sanitize.
+   * @param unsafeStyleFallback is a string and represents the fallback url to sanitize.
    * @returns a SafeStyle object that can be used in template without problems.
    */
-  sanitizeUrlBgStyle(unsafeStyle: string): SafeStyle {
+  sanitizeUrlBgStyle(unsafeStyle: string, unsafeStyleFallback: string): SafeStyle {
     // Method used only to sanitize background-image style before add it to background property when legacyIE11Mode is enabled
-    return this.sanitizer.bypassSecurityTrustStyle('url(' + unsafeStyle + ')');
+    let bg: string = 'url(' + unsafeStyle + ')';
+    if (!!unsafeStyleFallback) {
+      // if a fallback image is defined, append it. In this way, it will be used by the browser as fallback.
+      bg += ', ' + 'url(' + unsafeStyleFallback + ')';
+    }
+    return this.sanitizer.bypassSecurityTrustStyle(bg);
   }
 
   /**

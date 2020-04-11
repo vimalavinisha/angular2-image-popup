@@ -30,6 +30,7 @@
          ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth,
                                   maxHeight: configCarousel?.maxHeight}"
          [src]="currentImage.modal.img"
+         ksFallbackImage [fallbackImg]="currentImage.modal.fallbackImg"
          [attr.aria-label]="currentImage.modal.ariaLabel"
          [title]="currentImage.modal.title ? currentImage.modal.title : getTitleToDisplay()"
          alt="{{currentImage.modal.alt ? currentImage.modal.alt : getAltDescriptionByImage()}}"
@@ -82,7 +83,7 @@
 
       <div id="current-image-legacy"
            [style.background-color]="'transparent'"
-           [style.background-image]="sanitizeUrlBgStyle(currentImage.modal.img + '')"
+           [style.background-image]="sanitizeUrlBgStyle(currentImage.modal.img + '', currentImage.modal.fallbackImg + '')"
            [style.background-position]="'center center'"
            [style.background-size]="'cover'"
            [style.background-repeat]="'no-repeat'"

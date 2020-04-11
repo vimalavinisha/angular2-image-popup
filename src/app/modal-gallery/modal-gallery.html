@@ -46,6 +46,10 @@
   <h3>A6 - (id=408) - Minimal demo - three image with infinite sliding enabled (to fix issue #156)</h3>
   <button (click)="openModal(408, [images[0], images[1], images[2]], imageIndex, CONFIG408)">Open modal gallery at index={{imageIndex}}</button>
 </section>
+<section>
+  <h3>A7 - (id=409) - Minimal demo - use fallback images when it's not possible to load normal images (to fix issue #194)</h3>
+  <button (click)="openModal(409, fallbackImages, 0)">Open modal gallery</button>
+</section>
 <br>
 <hr>
 <br>

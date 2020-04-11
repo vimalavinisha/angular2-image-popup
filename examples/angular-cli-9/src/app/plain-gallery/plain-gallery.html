@@ -16,6 +16,7 @@
                     [config]="libConfigPlainGalleryRow"
                     (showImage)="onShow(200, $event)"></ks-plain-gallery>
 </section>
+<br>
 <section>
   <h3>P2 - (id=201) - row plain gallery layout space around (limit 2)</h3>
   <br>
@@ -25,6 +26,7 @@
                     [config]="libConfigPlainGalleryRowSpaceAround"
                     (showImage)="onShow(201, $event)"></ks-plain-gallery>
 </section>
+<br>
 <section>
   <h3>P3 - (id=202) - row plain gallery layout with a tags and custom rectangular sizes (limit 4)</h3>
   <br>
@@ -34,6 +36,7 @@
                     [config]="libConfigPlainGalleryRowATags"
                     (showImage)="onShow(202, $event, imagesRect)"></ks-plain-gallery>
 </section>
+<br>
 <section>
   <h3>P4 - (id=203) - column plain gallery layout (limit 3)</h3>
   <br>
@@ -41,8 +44,9 @@
                     [images]="images"
                     [showGallery]="true"
                     [config]="libConfigPlainGalleryColumn"
-                    (showImage)="onShow(203, $event, imagesRect)"></ks-plain-gallery>
+                    (showImage)="onShow(203, $event, images)"></ks-plain-gallery>
 </section>
+<br>
 <section>
   <h3>P5 - (id=204) - grid plain gallery layout and custom size</h3>
   <br>
@@ -50,8 +54,9 @@
                     [images]="images"
                     [showGallery]="true"
                     [config]="libConfigPlainGalleryGrid"
-                    (showImage)="onShow(204, $event, imagesRect)"></ks-plain-gallery>
+                    (showImage)="onShow(204, $event, images)"></ks-plain-gallery>
 </section>
+<br>
 <section>
   <h3>P6 - (id=205) - full custom plain gallery (row) with image pointer</h3>
   <br>
@@ -75,6 +80,7 @@
     </ng-container>
   </div>
 </section>
+<br>
 <section>
   <h3>P7 - (id=206) - full custom plain gallery (column) with image pointer</h3>
   <br>
@@ -98,6 +104,7 @@
     </ng-container>
   </div>
 </section>
+<br>
 <section>
   <h3>P8 - (id=207) - full custom plain gallery (row) with descriptions</h3>
   <br>
@@ -111,4 +118,13 @@
       </figure>
     </ng-container>
   </div>
+</section>
+<br>
+<section>
+  <h3>P9 - (id=208) - row plain gallery layout with fallback images when it's not possible to load normal images (to fix issue #194)</h3>
+  <br>
+  <ks-plain-gallery [id]="208"
+                    [images]="fallbackImages"
+                    [showGallery]="true"
+                    (showImage)="onShow(208, $event, fallbackImages)"></ks-plain-gallery>
 </section>

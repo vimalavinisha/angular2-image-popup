@@ -18,6 +18,7 @@
         <img *ngIf="preview?.modal?.img"
              class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig.clickable ? ' unclickable' : ''}}"
              [src]="preview.plain?.img ? preview.plain.img : preview.modal.img"
+             ksFallbackImage [fallbackImg]="preview.plain?.fallbackImg ? preview.plain.fallbackImg : preview.modal.fallbackImg"
              ksSize [sizeConfig]="{width: previewConfig?.width,
                                    height: previewMaxHeight}"
              [attr.aria-label]="getAriaLabel(preview)"
@@ -30,7 +31,7 @@
         <div *ngIf="preview?.modal?.img"
              class="inside preview-ie11-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig.clickable ? ' unclickable' : ''}}"
              [style.background-color]="'transparent'"
-             [style.background-image]="sanitizeUrlBgStyle(preview.plain?.img ? preview.plain.img : preview.modal.img)"
+             [style.background-image]="sanitizeUrlBgStyle(preview.plain?.img ? preview.plain.img : preview.modal.img, preview.plain?.fallbackImg ? preview.plain.fallbackImg : preview.modal.fallbackImg)"
              [style.background-position]="'center center'"
              [style.background-size]="getIE11LegacyBgSize()"
              [style.background-repeat]="'no-repeat'"

@@ -420,7 +420,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
    * @param boolean disable to disable navigation
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL, disable: boolean = false) {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL, disable: boolean = false) {
     if (disable) {
       return;
     }

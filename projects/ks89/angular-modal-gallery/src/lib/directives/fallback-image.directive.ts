@@ -22,29 +22,27 @@
  SOFTWARE.
  */
 
-import { ClickOutsideDirective } from './click-outside.directive';
-import { SizeDirective } from './size.directive';
-import { KeyboardNavigationDirective } from './keyboard-navigation.directive';
-import { WrapDirective } from './wrap.directive';
-import { DirectionDirective } from './direction.directive';
-import { ATagBgImageDirective } from './a-tag-bg-image.directive';
-import { DescriptionDirective } from './description.directive';
-import { MarginDirective } from './margin.directive';
-import { MaxSizeDirective } from './max-size.directive';
-import { FallbackImageDirective } from './fallback-image.directive';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
-/**
- * Array of all directives.
- */
-export const DIRECTIVES = [
-  ClickOutsideDirective,
-  SizeDirective,
-  KeyboardNavigationDirective,
-  WrapDirective,
-  DirectionDirective,
-  ATagBgImageDirective,
-  DescriptionDirective,
-  MarginDirective,
-  MaxSizeDirective,
-  FallbackImageDirective
-];
+@Directive({
+  selector: '[ksFallbackImage]'
+})
+export class FallbackImageDirective {
+  @Input()
+  fallbackImg: string | SafeResourceUrl;
+
+  @Output()
+  fallbackApplied: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
+
+  @HostListener('error') onError() {
+    if (!this.fallbackImg) {
+      this.fallbackApplied.emit(false);
+      return;
+    }
+    this.renderer.setAttribute(this.el.nativeElement, 'src', this.fallbackImg.toString());
+    this.fallbackApplied.emit(true);
+  }
+}
