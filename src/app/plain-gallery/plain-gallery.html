@@ -128,3 +128,15 @@
                     [showGallery]="true"
                     (showImage)="onShow(208, $event, fallbackImages)"></ks-plain-gallery>
 </section>
+<br>
+<section>
+  <h3>P10 - (id=209) - row plain gallery layout with a tags and custom rectangular sizes (limit 4) + fallback images when it's not possible to load normal images (to fix issue #194)</h3>
+  <br>
+  <ks-plain-gallery [id]="209"
+                    [images]="fallbackImages"
+                    [showGallery]="true"
+                    [config]="libConfigPlainGalleryRowATags"
+                    (showImage)="onShow(209, $event, fallbackImages)"></ks-plain-gallery>
+</section>
+<br>
+<br>

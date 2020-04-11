@@ -75,6 +75,14 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
     }
 
     const imgPath: string | SafeResourceUrl = this.image.plain && this.image.plain.img ? this.image.plain.img : this.image.modal.img;
-    this.renderer.setStyle(this.el.nativeElement, 'background', `url("${imgPath}") ${this.style}`);
+    let bg = `url("${imgPath}") ${this.style}`;
+
+    const fallbackImgPath: string | SafeResourceUrl =
+      this.image.plain && this.image.plain.fallbackImg ? this.image.plain.fallbackImg : this.image.modal.fallbackImg;
+    if (!!fallbackImgPath) {
+      bg += `, url("${fallbackImgPath}") ${this.style}`;
+    }
+
+    this.renderer.setStyle(this.el.nativeElement, 'background', bg);
   }
 }
