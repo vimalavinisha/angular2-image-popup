@@ -15,7 +15,7 @@
              class="image"
              ksSize [sizeConfig]="{width: size?.width, height: size?.height}"
              [attr.aria-label]="imgCol.plain?.ariaLabel"
-             [title]="imgCol.plain?.title ? imgCol.plain.title : getTitleDisplay(imgCol)"
+             [title]="(imgCol.plain?.title || imgCol.plain?.title === '') ? imgCol.plain.title : getTitleDisplay(imgCol)"
              alt="{{imgCol.plain?.alt ? imgCol.plain.alt : getAltPlainDescriptionByImage(imgCol)}}"
              [tabIndex]="0" role="img"
              (click)="showModalGalleryByImage(imgCol)" (keyup)="onNavigationEvent($event, imgCol)"/>
@@ -29,7 +29,7 @@
            ksATagBgImage [image]="imgCol" [style]="plainGalleryConfig.advanced?.additionalBackground"
            ksSize [sizeConfig]="{width: size?.width, height: size?.height}"
            [attr.aria-label]="imgCol.plain?.ariaLabel"
-           [title]="imgCol.plain?.title ? imgCol.plain.title : getTitleDisplay(imgCol)"
+           [title]="(imgCol.plain?.title || imgCol.plain?.title === '') ? imgCol.plain.title : getTitleDisplay(imgCol)"
            [tabIndex]="0"
            (click)="showModalGalleryByImage(imgCol)" (keyup)="onNavigationEvent($event, imgCol)"></a>
       </ng-template>

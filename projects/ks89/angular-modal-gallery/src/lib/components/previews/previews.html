@@ -20,7 +20,7 @@
            ksSize [sizeConfig]="{width: previewConfig.size ? previewConfig.size.width : defaultPreviewSize.width,
                                  height: previewConfig.size ? previewConfig.size.height : defaultPreviewSize.height}"
            [attr.aria-label]="preview.modal.ariaLabel ? preview.modal.ariaLabel : ''"
-           [title]="preview.modal.title ? preview.modal.title : ''"
+           [title]="(preview.modal.title || preview.modal.title === '') ? preview.modal.title : ''"
            alt="{{preview.modal.alt ? preview.modal.alt : ''}}"
            [tabIndex]="0" role="img"
            (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"/>
