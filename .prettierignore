@@ -15,8 +15,8 @@
 **/node_modules/
 reports/
 
-examples/angular-cli/dist/
-examples/angular-cli-6/dist/
+examples/angular-cli-9/dist/
+examples/angular-cli-8/dist/
 examples/angular-cli-material/dist/
 examples/universal/dist/
 examples/universal/server.ts

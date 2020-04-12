@@ -119,10 +119,10 @@ Despite its name, this library is more than for modal galleries, because I'm int
 
 ## :boom: Features :boom:
 - Angular Module to import this library
-- requires IE >= 11 and Angular >= 6
+- requires IE >= 11 and Angular >= 8
 - works with both JIT and AOT compilers
 - supports all **recommended Angular Compiler Options**
-- compliant to Angular Package Format v6 specifications
+- compliant to Angular Package Format v9 specifications
 - **use [Semantic versioning 2.0.0](http://semver.org/)** also known as 'semver'
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
@@ -186,6 +186,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 100 releases in two years**, and more to come... :)
 
+- 04/**/2020 - 8.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/**/2020 - 8.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 12/05/2020 - 7.2.7 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 12/29/2019 - 7.2.6 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

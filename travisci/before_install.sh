@@ -3,7 +3,7 @@
 echo "Before install - OS is $TRAVIS_OS_NAME"
 
 # switch to npm latest
-npm install -g npm@6.8.0
+npm install -g npm@6.14.4
 npm cache verify
 npm prune
 npm update
@@ -29,9 +29,9 @@ echo "Installing global dependencies"
 # install global dependencies
 if [[ $TRAVIS_OS_NAME = 'osx' ]]; then
     echo "Installing $TRAVIS_OS_NAME global dependencies"
-    sudo npm install -g @angular/cli@7.3.3
+    sudo npm install -g @angular/cli@9.1.1
 else
     echo "Installing $TRAVIS_OS_NAME global dependencies"
     # to fix a problem with nodejs 6 on linux
-    npm install -g @angular/cli@7.3.3
+    npm install -g @angular/cli@9.1.1
 fi
