@@ -95,6 +95,44 @@ export class CarouselExampleComponent {
     new Image(6, { img: '/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
 
+  imagesRectNoTitles: Image[] = [
+    new Image(
+      0,
+      { img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg', title: '' }
+    ),
+    new Image(
+      1,
+      { img: '../assets/images/gallery/pexels-photo-47223.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg', title: '' }
+    ),
+    new Image(
+      2,
+      { img: '../assets/images/gallery/pexels-photo-52062.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg', title: '' }
+    ),
+    new Image(
+      3,
+      { img: '../assets/images/gallery/pexels-photo-66943.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg', title: '' }
+    ),
+    new Image(
+      4,
+      { img: '../assets/images/gallery/pexels-photo-93750.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg', title: '' }
+    ),
+    new Image(
+      5,
+      { img: '../assets/images/gallery/pexels-photo-94420.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg', title: '' }
+    ),
+    new Image(
+      6,
+      { img: '../assets/images/gallery/pexels-photo-96947.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg', title: '' }
+    )
+  ];
+
   fallbackRectImages: Image[] = [
     new Image(0, {
       // this file is not available so the browser returns an error

@@ -10,12 +10,12 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "typeRoots": ["node_modules/@types"],
     "target": "es2015",
     "lib": ["es2018", "dom"],
     "paths": {
       "@ks89/angular-modal-gallery": ["dist/ks89/angular-modal-gallery/ks89-angular-modal-gallery", "dist/ks89/angular-modal-gallery"]
-    }
+    },
+    "typeRoots": ["node_modules/@types"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

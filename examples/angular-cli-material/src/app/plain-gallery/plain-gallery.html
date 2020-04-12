@@ -139,4 +139,14 @@
                     (showImage)="onShow(209, $event, fallbackImages)"></ks-plain-gallery>
 </section>
 <br>
+<section>
+  <h3>P11 - (id=210) - row plain gallery layout (limit 2) and custom size + remove <a href="https://www.w3schools.com/tags/att_title.asp">title attribute</a> on images</h3>
+  <br>
+  <ks-plain-gallery [id]="210"
+                    [images]="imagesRectNoTitles"
+                    [showGallery]="true"
+                    [config]="libConfigPlainGalleryRow"
+                    (showImage)="onShow(210, $event, imagesRectNoTitles)"></ks-plain-gallery>
+</section>
+<br>
 <br>
