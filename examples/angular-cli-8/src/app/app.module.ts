@@ -23,10 +23,8 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,11 +63,9 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-
     FormsModule,
-    HttpClientModule,
+
+    AppRoutingModule,
 
     GalleryModule // <-------------------------------------------- @ks89/angular-modal-gallery module import
   ],
