@@ -91,7 +91,7 @@
     '@ks89/angular-modal-gallery': { main: 'bundles/ks89-angular-modal-gallery.umd.min.js', defaultExtension: 'js' }
   };
 
-  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic'];
+  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic', 'router'];
 
   // Individual files (~300 requests):
   function packIndex(pkgName) {
