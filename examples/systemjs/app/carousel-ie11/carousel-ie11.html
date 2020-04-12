@@ -2,7 +2,7 @@
 <br>
 
 <p class="red-text">ATTENTION! Carousel supports Internet Explorer 11 only if you enable legacy mode.
-  For more info, please check the <a href="https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/features/modal-gallery">official documentation.</a>
+  For more info, please check the <a href="https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/features/modal-gallery">official documentation.</a>
 <p class="red-text">In case of legacy mode, you should set an appropriate carouselConfig.maxHeight to look better, that could be different without legacyMode.</p>
 
 <h3>Examples with legacy mode enabled</h3>
@@ -11,7 +11,7 @@
   <p>Obviously, objectFit is ignored when legacyIE11Mode is enabled</p>
   <br>
   <ks-carousel [id]="300" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
+    [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -20,8 +20,8 @@
   <h3>D2 - (id=301) - carousel example for IE11 with fixed maxWidth (766px), legacyMode enabled and custom previews</h3>
   <br>
   <ks-carousel [id]="301" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
-               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
+    [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+    [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -30,8 +30,8 @@
   <h3>D3 - (id=302) - carousel example for IE11 with description and legacyMode enabled</h3>
   <br>
   <ks-carousel [id]="302" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
-               [carouselImageConfig]="{description: {strategy: 2}}">
+    [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
+    [carouselImageConfig]="{description: {strategy: 2}}">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -51,4 +51,23 @@
                [carouselConfig]="{maxWidth: '500px', maxHeight: '333px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}"
                [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
 </section>
+<br>
+<section>
+  <h3>D6 - (id=305) - carousel example for IE11 with fallback images when it's not possible to load normal images (to fix issue #194)</h3>
+  <p>Obviously, objectFit is ignored when legacyIE11Mode is enabled</p>
+  <br>
+  <ks-carousel [id]="305" [images]="fallbackRectImages"
+               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false, legacyIE11Mode: true}">
+    <div class="projected">This is my projected content!</div>
+  </ks-carousel>
+</section>
+<br>
+<section>
+  <h3>D7 - (id=306) - carousel example for IE11 without <a href="https://www.w3schools.com/tags/att_title.asp">title attribute</a> on images</h3>
+  <br>
+  <ks-carousel [id]="306" [images]="imagesRectNoTitles">
+    <div class="projected">This is my projected content!</div>
+  </ks-carousel>
+</section>
+<br>
 <br>

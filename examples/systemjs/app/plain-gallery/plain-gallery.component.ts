@@ -26,25 +26,24 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
-  AccessibilityConfig,
   AdvancedLayout,
-  GalleryService,
   GridLayout,
   Image,
   LineLayout,
   PlainGalleryConfig,
-  PlainGalleryStrategy
+  PlainGalleryStrategy,
+  ModalGalleryService,
+  ModalGalleryRef,
+  LibConfig
 } from '@ks89/angular-modal-gallery';
+import { CarouselExampleComponent } from '../carousel/carousel.component';
 
 @Component({
   selector: 'ks-plain-gallery-page',
   templateUrl: './plain-gallery.html',
   styleUrls: ['./plain-gallery.css']
 })
-export class PlainGalleryComponent {
-  imageIndex = 1;
-  galleryId = 200;
-
+export class PlainGalleryExampleComponent {
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -117,6 +116,45 @@ export class PlainGalleryComponent {
     new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
 
+  fallbackImages: Image[] = [
+    new Image(0, {
+      // this file is not available so the browser returns an error
+      img: '../assets/images/gallery/UNEXISTING_IMG1.jpg',
+      // because the img above doesn't exists, the library will use this file
+      fallbackImg: '../assets/images/gallery/fallback1.jpg'
+    }),
+    new Image(1, {
+      img: '../assets/images/gallery/UNEXISTING_IMG2.jpg',
+      fallbackImg: '../assets/images/gallery/fallback2.jpg'
+    }),
+    new Image(
+      2,
+      {
+        img: '../assets/images/gallery/UNEXISTING_IMG3.jpg',
+        fallbackImg: '../assets/images/gallery/fallback3.jpg'
+      },
+      {
+        img: '../assets/images/gallery/thumbs/UNEXISTING_IMG3.png',
+        fallbackImg: '../assets/images/gallery/fallback3.jpg'
+      }
+    ),
+    new Image(3, {
+      img: '../assets/images/gallery/UNEXISTING_IMG4.jpg',
+      fallbackImg: '../assets/images/gallery/fallback4.jpg'
+    }),
+    new Image(
+      4,
+      {
+        img: '../assets/images/gallery/UNEXISTING_IMG5.jpg',
+        fallbackImg: '../assets/images/gallery/fallback5.jpg'
+      },
+      {
+        img: '../assets/images/gallery/thumbs/UNEXISTING_IMG5.jpg',
+        fallbackImg: '../assets/images/gallery/fallback5.jpg'
+      }
+    )
+  ];
+
   imagesRect: Image[] = [
     new Image(
       0,
@@ -158,80 +196,129 @@ export class PlainGalleryComponent {
     new Image(6, { img: '../assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
 
-  accessibilityConfig: AccessibilityConfig = {
-    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
-    backgroundTitle: 'CUSTOM background title',
+  imagesRectNoTitles: Image[] = [
+    new Image(
+      0,
+      { img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg', title: '' }
+    ),
+    new Image(
+      1,
+      { img: '../assets/images/gallery/pexels-photo-47223.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg', title: '' }
+    ),
+    new Image(
+      2,
+      { img: '../assets/images/gallery/pexels-photo-52062.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg', title: '' }
+    ),
+    new Image(
+      3,
+      { img: '../assets/images/gallery/pexels-photo-66943.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg', title: '' }
+    ),
+    new Image(
+      4,
+      { img: '../assets/images/gallery/pexels-photo-93750.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg', title: '' }
+    ),
+    new Image(
+      5,
+      { img: '../assets/images/gallery/pexels-photo-94420.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg', title: '' }
+    ),
+    new Image(
+      6,
+      { img: '../assets/images/gallery/pexels-photo-96947.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg', title: '' }
+    )
+  ];
 
-    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
-    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
-
-    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
-    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
-
-    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
-    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
-
-    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
-    mainContainerTitle: 'CUSTOM main container title',
-    mainPrevImageAriaLabel: 'CUSTOM Previous image',
-    mainPrevImageTitle: 'CUSTOM Previous image',
-    mainNextImageAriaLabel: 'CUSTOM Next image',
-    mainNextImageTitle: 'CUSTOM Next image',
-
-    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
-    dotsContainerTitle: 'CUSTOM dots container title',
-    dotAriaLabel: 'CUSTOM Navigate to image number',
-
-    previewsContainerAriaLabel: 'CUSTOM Image previews',
-    previewsContainerTitle: 'CUSTOM previews title',
-    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
-    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
-    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
-    previewScrollNextTitle: 'CUSTOM Scroll next previews',
-
-    carouselContainerAriaLabel: 'Current image and navigation',
-    carouselContainerTitle: '',
-    carouselPrevImageAriaLabel: 'Previous image',
-    carouselPrevImageTitle: 'Previous image',
-    carouselNextImageAriaLabel: 'Next image',
-    carouselNextImageTitle: 'Next image',
-    carouselPreviewsContainerAriaLabel: 'Image previews',
-    carouselPreviewsContainerTitle: '',
-    carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
-    carouselPreviewScrollPrevTitle: 'Scroll previous previews',
-    carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
-    carouselPreviewScrollNextTitle: 'Scroll next previews'
+  libConfigPlainGalleryRow: LibConfig = {
+    plainGalleryConfig: this.plainGalleryRow
+  };
+  libConfigPlainGalleryRowSpaceAround: LibConfig = {
+    plainGalleryConfig: this.plainGalleryRowSpaceAround
+  };
+  libConfigPlainGalleryRowATags: LibConfig = {
+    plainGalleryConfig: this.plainGalleryRowATags
+  };
+  libConfigPlainGalleryColumn: LibConfig = {
+    plainGalleryConfig: this.plainGalleryColumn
+  };
+  libConfigPlainGalleryGrid: LibConfig = {
+    plainGalleryConfig: this.plainGalleryGrid
   };
 
-  constructor(private galleryService: GalleryService, private sanitizer: DomSanitizer) {}
+  constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
-  openImageModalRow(image: Image) {
+  openImageModalRow(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id,
+        images: this.images,
+        currentImage: this.images[index],
+        libConfig: {
+          plainGalleryConfig: this.customPlainGalleryRowConfig
+        }
+      }
+    });
   }
 
-  openImageModalColumn(image: Image) {
+  openImageModalColumn(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id,
+        images: this.images,
+        currentImage: this.images[index],
+        libConfig: {
+          plainGalleryConfig: this.customPlainGalleryColumnConfig
+        }
+      }
+    });
   }
 
-  openImageModalRowDescription(image: Image) {
+  openImageModalRowDescription(id: number, image: Image) {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id,
+        images: this.imagesRect,
+        currentImage: this.imagesRect[index],
+        libConfig: {
+          plainGalleryConfig: this.customPlainGalleryRowDescConfig
+        }
+      }
+    });
   }
 
   addRandomImage() {
+    // add to images array
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.images = [...this.images, newImage];
+    // add also to imagesRect
+    const imageRectToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
+    const newImageRect: Image = new Image(this.imagesRect.length - 1 + 1, imageRectToCopy.modal, imageRectToCopy.plain);
+    this.imagesRect = [...this.imagesRect, newImageRect];
   }
 
-  openModalViaService(id: number | undefined, index: number) {
-    console.log('opening gallery with index ' + index);
-    this.galleryService.openGallery(id, index);
+  onShow(id: number, index: number, images: Image[] = this.images) {
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      config: {
+        id,
+        images,
+        currentImage: images[index]
+      }
+    });
   }
 
   trackById(index: number, item: Image) {

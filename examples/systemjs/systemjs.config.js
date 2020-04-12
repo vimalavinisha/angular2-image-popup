@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-(function(global) {
+(function (global) {
   // map tells the System loader where to look for things
   let map = {
     app: 'app',
@@ -32,6 +32,7 @@
     '@angular/cdk/a11y': 'node_modules/@angular/cdk/bundles/cdk-a11y.umd.js',
     '@angular/cdk/accordion': 'node_modules/@angular/cdk/bundles/cdk-accordion.umd.js',
     '@angular/cdk/bidi': 'node_modules/@angular/cdk/bundles/cdk-bidi.umd.js',
+    '@angular/cdk/clipboard': 'node_modules/@angular/cdk/bundles/cdk-clipboard.umd.js',
     '@angular/cdk/coercion': 'node_modules/@angular/cdk/bundles/cdk-coercion.umd.js',
     '@angular/cdk/collections': 'node_modules/@angular/cdk/bundles/cdk-collections.umd.js',
     '@angular/cdk/drag-drop': 'node_modules/@angular/cdk/bundles/cdk-drag-drop.umd.js',
@@ -46,6 +47,8 @@
     '@angular/cdk/table': 'node_modules/@angular/cdk/bundles/cdk-table.umd.js',
     '@angular/cdk/text-field': 'node_modules/@angular/cdk/bundles/cdk-text-field.umd.js',
     '@angular/cdk/tree': 'node_modules/@angular/cdk/bundles/cdk-tree.umd.js',
+
+    'reflect-metadata': 'node_modules/reflect-metadata',
 
     rxjs: 'node_modules/rxjs',
     'rxjs/internal-compatibility': 'node_modules/rxjs/internal-compatibility',
@@ -72,6 +75,9 @@
         }
       }
     },
+
+    'reflect-metadata': { main: 'Reflect.js', defaultExtension: 'js' },
+
     'rxjs/internal-compatibility': { main: 'index.js', defaultExtension: 'js' },
     'rxjs/ajax': { main: 'index.js', defaultExtension: 'js' },
     'rxjs/operators': { main: 'index.js', defaultExtension: 'js' },
@@ -85,7 +91,7 @@
     '@ks89/angular-modal-gallery': { main: 'bundles/ks89-angular-modal-gallery.umd.min.js', defaultExtension: 'js' }
   };
 
-  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'http', 'platform-browser', 'platform-browser-dynamic', 'router'];
+  let ngPackageNames = ['common', 'compiler', 'core', 'forms', 'platform-browser', 'platform-browser-dynamic'];
 
   // Individual files (~300 requests):
   function packIndex(pkgName) {
@@ -107,5 +113,6 @@
     map: map,
     packages: packages
   };
+  console.log('---------> SystemJS config', config);
   System.config(config);
 })(this);
