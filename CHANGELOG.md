@@ -1,5 +1,28 @@
 # 8.0.0-beta.1
- TODO TODO TODO
+### Features
+- Migrate to angular/cdk to fix all issues with angular/material **(Breaking Change)** (fixes #137, #111, #95)
+- Split plain-gallery and modal-gallery decoupling those components. Instead, define new APIs to open modal-gallery as a service **(Breaking Change)**
+- upgrade to Angular 9 and angular-cli 9, removing support for both Angular 6 and 7 **(Breaking Change)**
+- remove Module.forRoot() **(Breaking Change)**
+- move keyboard configuration into libconfig (permits different configuration for every instance of the library). **(Breaking Change)**
+- Add ability to set fallback image #194  **(Breaking Change)**
+- Add a way to disable titles if requested by the user #179 **(Breaking Change)**
+
+### Demos
+- upgrade all examples (except for universal, at the moment)
+- remove angular-cli-6 example and add angular-cli-9
+- upgrade systemjs example
+
+### Internal library changes
+- remove npm's codeclimate coverage reporter to use the new version
+- experiment with Angular IVY
+
+### Known issues
+Still not working with universal (SSR), please be patient!
+
+<br>
+**This is a beta version, with SSR support missing and no documentation at all**
+**If you want to try it, check examples/angular-cli-9 to get tons of working examples**
 
 
 # 7.2.7
