@@ -1,99 +1,60 @@
-/*
- * MIT License
- *
- * Copyright (c) 2017-2019 Stefano Cappa
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-// These are important and needed before anything else
 import 'zone.js/dist/zone-node';
-import 'reflect-metadata';
 
-import { enableProdMode } from '@angular/core';
-
+import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
-import { readFileSync } from 'fs';
-// Express Engine
-import { ngExpressEngine } from '@nguniversal/express-engine';
-// Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
-const domino = require('domino');
+import { AppServerModule } from './src/main.server';
+import { APP_BASE_HREF } from '@angular/common';
+import { existsSync } from 'fs';
 
-// Faster server renders w/ Prod mode (dev mode never needed)
-enableProdMode();
+// The Express app is exported so that it can be used by serverless Functions.
+export function app() {
+  const server = express();
+  const distFolder = join(process.cwd(), 'dist/universal/browser');
+  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
-// Our index.html we'll use as our template
-const template = readFileSync(join(process.cwd(), 'dist', 'browser', 'index.html')).toString();
-const win = domino.createWindow(template);
+  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  server.engine('html', ngExpressEngine({
+    bootstrap: AppServerModule,
+  }));
 
-global['window'] = win;
-Object.defineProperty(win.document.body.style, 'transform', {
-  value: () => {
-    return {
-      enumerable: true,
-      configurable: true
-    };
-  }
-});
-global['document'] = win.document;
-global['CSS'] = null;
+  server.set('view engine', 'html');
+  server.set('views', distFolder);
 
-// WORKAROUND until SSR will support all third-party libraries
-global['Mousetrap'] = function () {
-  this.reset = function () {
-  };
-};
+  // Example Express Rest API endpoints
+  // server.get('/api/**', (req, res) => { });
+  // Serve static files from /browser
+  server.get('*.*', express.static(distFolder, {
+    maxAge: '1y'
+  }));
 
-// Express server
-const app = express();
+  // All regular routes use the Universal engine
+  server.get('*', (req, res) => {
+    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+  });
 
-const PORT = process.env.PORT || 3000;
-const DIST_FOLDER = join(process.cwd(), 'dist');
+  return server;
+}
 
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./server/main');
+function run() {
+  const port = process.env.PORT || 4000;
 
-// Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
-  ]
-}));
+  // Start up the Node server
+  const server = app();
+  server.listen(port, () => {
+    console.log(`Node Express server listening on http://localhost:${port}`);
+  });
+}
 
-app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER, 'browser'));
+// Webpack will replace 'require' with '__webpack_require__'
+// '__non_webpack_require__' is a proxy to Node 'require'
+// The below code is to ensure that the server is run only when not requiring the bundle.
+declare const __non_webpack_require__: NodeRequire;
+const mainModule = __non_webpack_require__.main;
+const moduleFilename = mainModule && mainModule.filename || '';
+if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+  run();
+}
 
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
-
-// Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
-  maxAge: '1y'
-}));
-
-app.get('*', (req, res) => {
-  global['navigator'] = req['headers']['user-agent'];
-  res.render('index', {req});
-});
-
-app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+export * from './src/main.server';

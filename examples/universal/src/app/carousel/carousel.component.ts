@@ -31,7 +31,7 @@ import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gall
   templateUrl: './carousel.html',
   styleUrls: ['./carousel.scss']
 })
-export class CarouselComponent {
+export class CarouselExampleComponent {
   imageIndex = 1;
   galleryId = 1;
   autoPlay = true;
@@ -93,6 +93,83 @@ export class CarouselComponent {
       { img: '/assets/images/gallery/thumbs/t-pexels-photo-94420.jpg' }
     ),
     new Image(6, { img: '/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
+  ];
+
+  imagesRectNoTitles: Image[] = [
+    new Image(
+      0,
+      { img: '../assets/images/gallery/milan-pegasus-gallery-statue.jpg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg', title: '' }
+    ),
+    new Image(
+      1,
+      { img: '../assets/images/gallery/pexels-photo-47223.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-47223.jpg', title: '' }
+    ),
+    new Image(
+      2,
+      { img: '../assets/images/gallery/pexels-photo-52062.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-52062.jpg', title: '' }
+    ),
+    new Image(
+      3,
+      { img: '../assets/images/gallery/pexels-photo-66943.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-66943.jpg', title: '' }
+    ),
+    new Image(
+      4,
+      { img: '../assets/images/gallery/pexels-photo-93750.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-93750.jpg', title: '' }
+    ),
+    new Image(
+      5,
+      { img: '../assets/images/gallery/pexels-photo-94420.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-94420.jpg', title: '' }
+    ),
+    new Image(
+      6,
+      { img: '../assets/images/gallery/pexels-photo-96947.jpeg', title: '' },
+      { img: '../assets/images/gallery/thumbs/t-pexels-photo-96947.jpg', title: '' }
+    )
+  ];
+
+  fallbackRectImages: Image[] = [
+    new Image(0, {
+      // this file is not available so the browser returns an error
+      img: '../assets/images/gallery/UNEXISTING_IMG1.jpg',
+      // because the img above doesn't exists, the library will use this file
+      fallbackImg: '../assets/images/gallery/fallback-carousel1.jpg'
+    }),
+    new Image(1, {
+      img: '../assets/images/gallery/UNEXISTING_IMG2.jpg',
+      fallbackImg: '../assets/images/gallery/fallback-carousel2.jpg'
+    }),
+    new Image(
+      2,
+      {
+        img: '../assets/images/gallery/UNEXISTING_IMG3.jpg',
+        fallbackImg: '../assets/images/gallery/fallback-carousel3.jpg'
+      },
+      {
+        img: '../assets/images/gallery/thumbs/UNEXISTING_IMG3.png',
+        fallbackImg: '../assets/images/gallery/fallback-carousel3.jpg'
+      }
+    ),
+    new Image(3, {
+      img: '../assets/images/gallery/UNEXISTING_IMG4.jpg',
+      fallbackImg: '../assets/images/gallery/fallback-carousel4.jpg'
+    }),
+    new Image(
+      4,
+      {
+        img: '../assets/images/gallery/UNEXISTING_IMG5.jpg',
+        fallbackImg: '../assets/images/gallery/fallback-carousel5.jpg'
+      },
+      {
+        img: '../assets/images/gallery/thumbs/UNEXISTING_IMG5.jpg',
+        fallbackImg: '../assets/images/gallery/fallback-carousel5.jpg'
+      }
+    )
   ];
 
   accessibilityConfig: AccessibilityConfig = {

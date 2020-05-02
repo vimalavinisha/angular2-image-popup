@@ -22,32 +22,28 @@
  * SOFTWARE.
  */
 
-// Load zone.js for the server.
+// These are important and needed before anything else
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
-
 import { enableProdMode } from '@angular/core';
-import { renderModuleFactory } from '@angular/platform-server';
+
+import * as express from 'express';
+import { join } from 'path';
+import { readFileSync } from 'fs';
+// Express Engine
+import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
-import { ROUTES } from './static.paths';
+
+const domino = require('domino');
+
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
-
-const BROWSER_FOLDER = join(process.cwd(), 'browser');
-
-// Load the index.html file containing referances to your application bundle.
-const index = readFileSync(join('browser', 'index.html'), 'utf8');
-const domino = require('domino');
-const win = domino.createWindow(index);
-
-let previousRender = Promise.resolve();
+// Our index.html we'll use as our template
+const template = readFileSync(join(process.cwd(), 'dist', 'browser', 'index.html')).toString();
+const win = domino.createWindow(template);
 
 global['window'] = win;
 Object.defineProperty(win.document.body.style, 'transform', {
@@ -60,28 +56,47 @@ Object.defineProperty(win.document.body.style, 'transform', {
 });
 global['document'] = win.document;
 global['CSS'] = null;
+
 // WORKAROUND until SSR will support all third-party libraries
-global['Mousetrap'] = function() {
-  this.reset = function() {};
+global['Mousetrap'] = function () {
+  this.reset = function () {};
 };
 
-// Iterate each route path
-ROUTES.forEach(route => {
-  const fullPath = join(BROWSER_FOLDER, route);
+// Express server
+const app = express();
 
-  // Make sure the directory structure is there
-  if (!existsSync(fullPath)) {
-    mkdirSync(fullPath);
-  }
+const PORT = process.env.PORT || 3000;
+const DIST_FOLDER = join(process.cwd(), 'dist');
 
-  // Writes rendered HTML to index.html, replacing the file if it already exists.
-  previousRender = previousRender
-    .then(_ =>
-      renderModuleFactory(AppServerModuleNgFactory, {
-        document: index,
-        url: route,
-        extraProviders: [provideModuleMap(LAZY_MODULE_MAP)]
-      })
-    )
-    .then(html => writeFileSync(join(fullPath, 'index.html'), html));
+// * NOTE :: leave this as require() since this file is built Dynamically from webpack
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main');
+
+// Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+app.engine(
+  'html',
+  ngExpressEngine({
+    bootstrap: AppServerModuleNgFactory,
+    providers: [provideModuleMap(LAZY_MODULE_MAP)]
+  })
+);
+
+app.set('view engine', 'html');
+app.set('views', join(DIST_FOLDER, 'browser'));
+
+// Example Express Rest API endpoints
+// app.get('/api/**', (req, res) => { });
+
+// Server static files from /browser
+app.get(
+  '*.*',
+  express.static(join(DIST_FOLDER, 'browser'), {
+    maxAge: '1y'
+  })
+);
+
+app.get('*', (req, res) => {
+  global['navigator'] = req['headers']['user-agent'];
+  res.render('index', { req });
 });
+
+app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
