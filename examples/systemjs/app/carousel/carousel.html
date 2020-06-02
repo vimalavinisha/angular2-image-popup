@@ -120,8 +120,10 @@
 <br>
 <section>
   <h3>B2 - (id=113) - carousel example with fixed maxWidth (766px), custom previews and open modal on click</h3>
+  <p>In case of SystemJS you must pass "[disableSsrWorkaround]="true""</p>
   <br>
   <ks-carousel [id]="113" [images]="imagesRect"
+               [disableSsrWorkaround]="true"
                [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: true, legacyIE11Mode: false}"
                [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
     <div class="projected">This is my projected content!</div>

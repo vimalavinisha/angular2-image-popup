@@ -49,6 +49,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   imageIndex = 0;
   galleryId = 1;
   isPlaying = true;
+
+  // config used only to pass disableSsrWorkaround:true required in case of SystemJS
+  CONFIGBASIC: LibConfig = libConfigs.LIBCONFIG_BASIC;
+
   // Examples A
   CONFIG406: LibConfig = libConfigs.LIBCONFIG_406;
   CONFIG407: LibConfig = libConfigs.LIBCONFIG_407;

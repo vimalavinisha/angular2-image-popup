@@ -235,19 +235,44 @@ export class PlainGalleryExampleComponent {
   ];
 
   libConfigPlainGalleryRow: LibConfig = {
-    plainGalleryConfig: this.plainGalleryRow
+    plainGalleryConfig: this.plainGalleryRow,
+    // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+    keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
   };
   libConfigPlainGalleryRowSpaceAround: LibConfig = {
-    plainGalleryConfig: this.plainGalleryRowSpaceAround
+    plainGalleryConfig: this.plainGalleryRowSpaceAround,
+    // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+    keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
   };
   libConfigPlainGalleryRowATags: LibConfig = {
-    plainGalleryConfig: this.plainGalleryRowATags
+    plainGalleryConfig: this.plainGalleryRowATags,
+    // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+    keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
   };
   libConfigPlainGalleryColumn: LibConfig = {
-    plainGalleryConfig: this.plainGalleryColumn
+    plainGalleryConfig: this.plainGalleryColumn,
+    // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+    keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
   };
   libConfigPlainGalleryGrid: LibConfig = {
-    plainGalleryConfig: this.plainGalleryGrid
+    plainGalleryConfig: this.plainGalleryGrid,
+    // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+    keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
   };
 
   constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
@@ -262,7 +287,12 @@ export class PlainGalleryExampleComponent {
         images: this.images,
         currentImage: this.images[index],
         libConfig: {
-          plainGalleryConfig: this.customPlainGalleryRowConfig
+          plainGalleryConfig: this.customPlainGalleryRowConfig,
+          // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+          keyboardServiceConfig: {
+            shortcuts: ['ctrl+s', 'meta+s'],
+            disableSsrWorkaround: true
+          }
         }
       }
     });
@@ -278,7 +308,12 @@ export class PlainGalleryExampleComponent {
         images: this.images,
         currentImage: this.images[index],
         libConfig: {
-          plainGalleryConfig: this.customPlainGalleryColumnConfig
+          plainGalleryConfig: this.customPlainGalleryColumnConfig,
+          // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+          keyboardServiceConfig: {
+            shortcuts: ['ctrl+s', 'meta+s'],
+            disableSsrWorkaround: true
+          }
         }
       }
     });
@@ -294,7 +329,12 @@ export class PlainGalleryExampleComponent {
         images: this.imagesRect,
         currentImage: this.imagesRect[index],
         libConfig: {
-          plainGalleryConfig: this.customPlainGalleryRowDescConfig
+          plainGalleryConfig: this.customPlainGalleryRowDescConfig,
+          // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+          keyboardServiceConfig: {
+            shortcuts: ['ctrl+s', 'meta+s'],
+            disableSsrWorkaround: true
+          }
         }
       }
     });
@@ -316,7 +356,14 @@ export class PlainGalleryExampleComponent {
       config: {
         id,
         images,
-        currentImage: images[index]
+        currentImage: images[index],
+        libConfig: {
+          // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+          keyboardServiceConfig: {
+            shortcuts: ['ctrl+s', 'meta+s'],
+            disableSsrWorkaround: true
+          }
+        }
       }
     });
   }

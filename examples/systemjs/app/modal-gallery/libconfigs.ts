@@ -20,6 +20,13 @@ const DEFAULT_SIZE_PREVIEWS: Size = {
 };
 
 // Examples A
+export const LIBCONFIG_BASIC: LibConfig = {
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
+  }
+};
 export const LIBCONFIG_406: LibConfig = {
   slideConfig: {
     infinite: true,
@@ -27,6 +34,11 @@ export const LIBCONFIG_406: LibConfig = {
       show: true,
       size: DEFAULT_SIZE_PREVIEWS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -37,6 +49,11 @@ export const LIBCONFIG_407: LibConfig = {
       show: false,
       size: DEFAULT_SIZE_PREVIEWS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -47,6 +64,11 @@ export const LIBCONFIG_408: LibConfig = {
       show: false,
       size: DEFAULT_SIZE_PREVIEWS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -57,6 +79,11 @@ export const LIBCONFIG_500: LibConfig = {
   },
   dotsConfig: {
     visible: false
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -70,6 +97,11 @@ export const LIBCONFIG_501: LibConfig = {
   },
   dotsConfig: {
     visible: false
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -90,6 +122,11 @@ export const LIBCONFIG_502: LibConfig = {
   },
   dotsConfig: {
     visible: false
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -100,11 +137,21 @@ export const LIBCONFIG_503: LibConfig = {
       width: '90px',
       height: 'auto'
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
 export const LIBCONFIG_504: LibConfig = {
-  enableCloseOutside: false
+  enableCloseOutside: false,
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
+  }
 };
 
 export const LIBCONFIG_505: LibConfig = {
@@ -112,6 +159,11 @@ export const LIBCONFIG_505: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.DEFAULT
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -120,6 +172,11 @@ export const LIBCONFIG_506: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.DEFAULT
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -128,6 +185,11 @@ export const LIBCONFIG_507: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.SIMPLE
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -137,9 +199,10 @@ export const LIBCONFIG_508: LibConfig = {
     visible: true,
     strategy: ButtonsStrategy.SIMPLE
   },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
   keyboardServiceConfig: {
-    disableSsrWorkaround: false,
-    shortcuts: ['alt+s', 'shift+s']
+    shortcuts: ['alt+s', 'shift+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -150,6 +213,11 @@ export const LIBCONFIG_509: LibConfig = {
       show: false,
       size: DEFAULT_SIZE_PREVIEWS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -160,6 +228,11 @@ export const LIBCONFIG_510: LibConfig = {
       show: true,
       size: DEFAULT_SIZE_PREVIEWS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -169,6 +242,11 @@ export const LIBCONFIG_511: LibConfig = {
       enable: false,
       type: LoadingType.STANDARD
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_512: LibConfig = {
@@ -177,6 +255,11 @@ export const LIBCONFIG_512: LibConfig = {
       enable: true,
       type: LoadingType.STANDARD
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_513: LibConfig = {
@@ -185,6 +268,11 @@ export const LIBCONFIG_513: LibConfig = {
       enable: true,
       type: LoadingType.CIRCULAR
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_514: LibConfig = {
@@ -193,6 +281,11 @@ export const LIBCONFIG_514: LibConfig = {
       enable: true,
       type: LoadingType.BARS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_515: LibConfig = {
@@ -201,6 +294,11 @@ export const LIBCONFIG_515: LibConfig = {
       enable: true,
       type: LoadingType.DOTS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_516: LibConfig = {
@@ -209,6 +307,11 @@ export const LIBCONFIG_516: LibConfig = {
       enable: true,
       type: LoadingType.CUBE_FLIPPING
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_517: LibConfig = {
@@ -217,6 +320,11 @@ export const LIBCONFIG_517: LibConfig = {
       enable: true,
       type: LoadingType.CIRCLES
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_518: LibConfig = {
@@ -225,6 +333,11 @@ export const LIBCONFIG_518: LibConfig = {
       enable: true,
       type: LoadingType.EXPLOSING_SQUARES
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -232,24 +345,44 @@ export const LIBCONFIG_519: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.DEFAULT
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_520: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.SIMPLE
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_521: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.ADVANCED
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 export const LIBCONFIG_522: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.FULL
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -275,6 +408,11 @@ export const LIBCONFIG_523: LibConfig = {
         type: ButtonType.CLOSE
       }
     ]
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -293,6 +431,11 @@ export const LIBCONFIG_524: LibConfig = {
       KS_DEFAULT_BTN_DOWNLOAD,
       KS_DEFAULT_BTN_CLOSE
     ]
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -333,6 +476,11 @@ export const LIBCONFIG_525: LibConfig = {
         fontSize: '20px'
       }
     ]
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -342,6 +490,11 @@ export const LIBCONFIG_600: LibConfig = {
     esc: 81,
     left: 40,
     right: 38
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -353,6 +506,11 @@ export const LIBCONFIG_601: LibConfig = {
       numberSeparator: ' of ',
       beforeTextDescription: ' => '
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -364,6 +522,11 @@ export const LIBCONFIG_602: LibConfig = {
       numberSeparator: ' of ',
       beforeTextDescription: ' => '
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -378,6 +541,11 @@ export const LIBCONFIG_603: LibConfig = {
       // numberSeparator: '',
       // beforeTextDescription: '',
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -392,6 +560,11 @@ export const LIBCONFIG_604: LibConfig = {
       // numberSeparator: '',
       // beforeTextDescription: '',
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -403,6 +576,11 @@ export const LIBCONFIG_605: LibConfig = {
       numberSeparator: ' of ',
       beforeTextDescription: ' => '
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -426,6 +604,11 @@ export const LIBCONFIG_606: LibConfig = {
         // be careful to use width, in particular with % values
       }
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -433,6 +616,11 @@ export const LIBCONFIG_607: LibConfig = {
   previewConfig: {
     visible: true,
     number: 1
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -440,6 +628,11 @@ export const LIBCONFIG_608: LibConfig = {
   previewConfig: {
     visible: true,
     number: 5
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -447,6 +640,11 @@ export const LIBCONFIG_609: LibConfig = {
   previewConfig: {
     visible: true,
     arrows: false
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -454,6 +652,11 @@ export const LIBCONFIG_610: LibConfig = {
   previewConfig: {
     visible: true,
     clickable: false
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -461,6 +664,11 @@ export const LIBCONFIG_611: LibConfig = {
   previewConfig: {
     visible: true,
     size: { width: '30px', height: '30px' }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -508,12 +716,22 @@ export const LIBCONFIG_612: LibConfig = {
     carouselPreviewScrollPrevTitle: 'Scroll previous previews',
     carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
     carouselPreviewScrollNextTitle: 'Scroll next previews'
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
 export const LIBCONFIG_613: LibConfig = {
   currentImageConfig: {
     navigateOnClick: false
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -525,12 +743,22 @@ export const LIBCONFIG_701: LibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.SIMPLE
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
 export const LIBCONFIG_702: LibConfig = {
   currentImageConfig: {
     invertSwipe: true
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -541,6 +769,11 @@ export const LIBCONFIG_703: LibConfig = {
       show: true,
       size: DEFAULT_SIZE_PREVIEWS
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -552,6 +785,11 @@ export const LIBCONFIG_800: LibConfig = {
       interval: 5000,
       pauseOnHover: true
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -563,6 +801,11 @@ export const LIBCONFIG_801: LibConfig = {
       interval: 5000,
       pauseOnHover: false
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -573,6 +816,11 @@ export const LIBCONFIG_802: LibConfig = {
       interval: 1000,
       pauseOnHover: false
     }
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
 
@@ -584,5 +832,10 @@ export const LIBCONFIG_900: LibConfig = {
   currentImageConfig: {
     loadingConfig: { enable: true, type: LoadingType.STANDARD } as LoadingConfig,
     description: { strategy: DescriptionStrategy.ALWAYS_VISIBLE } as Description
+  },
+  // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+  keyboardServiceConfig: {
+    shortcuts: ['ctrl+s', 'meta+s'],
+    disableSsrWorkaround: true
   }
 };
