@@ -1,3 +1,20 @@
+# 8.0.0-beta.2
+### Features
+- restore Server Side Rendering support with Universal #183. **(Breaking Change)**.
+- Carousel has a new input "[disableSsrWorkaround]="true"" to use modals in carousels with SystemJS **(Breaking Change)**.
+ Also, every time you need to open modal gallery, you must pass to LibConfig this code:
+  ```
+  keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
+  ```
+  
+### Demos
+- update all LibConfigs in SystemJS demo to prevent crashes. Because, now disableSsrWorkaround must be passed manually in every LibConfig. This is a
+ breaking change (see above).
+
+
 # 8.0.0-beta.1
 ### Features
 - Migrate to angular/cdk to fix all issues with angular/material **(Breaking Change)** (fixes #137, #111, #95)
