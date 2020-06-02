@@ -22,7 +22,8 @@
  SOFTWARE.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { LibConfig } from './config.service';
 
@@ -34,17 +35,35 @@ export class KeyboardService {
   /**
    * Private Mousetrap variable to store the instance.
    */
-  private mousetrap: MousetrapInstance;
+  private mousetrap: any;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
   init(config: LibConfig) {
-    // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
-    if (!config.keyboardServiceConfig.disableSsrWorkaround) {
-      // To prevent issues with angular-universal on server-side
-      if (typeof window !== 'undefined') {
-        require('mousetrap');
-        this.mousetrap = new Mousetrap();
+    return new Promise((resolve, reject) => {
+      // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
+      if (!config.keyboardServiceConfig.disableSsrWorkaround) {
+        // To prevent issues with angular-universal on server-side
+        if (isPlatformBrowser(this.platformId)) {
+          import('mousetrap')
+            .then(Mousetrap => {
+              this.mousetrap = Mousetrap;
+              resolve();
+              return;
+            })
+            .catch(err => {
+              reject(err);
+              return;
+            });
+        } else {
+          resolve();
+          return;
+        }
+      } else {
+        resolve();
+        return;
       }
-    }
+    });
   }
 
   /**
@@ -55,7 +74,7 @@ export class KeyboardService {
     // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
     if (!config.keyboardServiceConfig.disableSsrWorkaround) {
       // To prevent issues with angular-universal on server-side
-      if (typeof window !== 'undefined') {
+      if (isPlatformBrowser(this.platformId)) {
         this.mousetrap.bind(config.keyboardServiceConfig.shortcuts, (event: KeyboardEvent, combo: string) => {
           if (event.preventDefault) {
             event.preventDefault();
@@ -77,7 +96,7 @@ export class KeyboardService {
     // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
     if (!config.keyboardServiceConfig.disableSsrWorkaround) {
       // To prevent issues with angular-universal on server-side
-      if (typeof window !== 'undefined') {
+      if (isPlatformBrowser(this.platformId)) {
         this.mousetrap.reset();
       }
     }

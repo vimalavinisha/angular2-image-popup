@@ -40,10 +40,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   id: number;
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
-   */
-  modalImages: Image[];
-  /**
    * Object of type `ButtonsConfig` to show/hide buttons.
    */
   buttonsConfig: ButtonsConfig;
@@ -366,22 +362,22 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
-    this.keyboardService.init(this.configService.getConfig(this.id));
-    this.keyboardService.add((event: KeyboardEvent, combo: string) => {
-      if (event.preventDefault) {
-        event.preventDefault();
-      } else {
-        // internet explorer
-        event.returnValue = false;
-      }
-      this.downloadImage();
-    }, this.configService.getConfig(this.id));
+    this.keyboardService.init(this.configService.getConfig(this.id)).then(() => {
+      this.keyboardService.add((event: KeyboardEvent, combo: string) => {
+        if (event.preventDefault) {
+          event.preventDefault();
+        } else {
+          // internet explorer
+          event.returnValue = false;
+        }
+        this.downloadImage();
+      }, this.configService.getConfig(this.id));
 
-    const currentIndex: number = this.images.indexOf(this.currentImage);
-
-    // emit a new ImageModalEvent with the index of the current image
-    this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
-    this.changeDetectorRef.markForCheck();
+      const currentIndex: number = this.images.indexOf(this.currentImage);
+      // emit a new ImageModalEvent with the index of the current image
+      this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   /**

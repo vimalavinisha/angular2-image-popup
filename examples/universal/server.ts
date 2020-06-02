@@ -4,15 +4,29 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
 
+const domino = require('domino');
+import { existsSync } from 'fs';
+
+const distFolder = join(process.cwd(), 'dist/universal/browser');
+const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+
+const win = domino.createWindow(indexHtml);
+win.Object = Object;
+win.Math = Math;
+
+global['window'] = win;
+global['document'] = win.document;
+global['branch'] = null;
+global['object'] = win.object;
+global['HTMLElement'] = win.HTMLElement;
+global['navigator'] = win.navigator;
+
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
-import { existsSync } from 'fs';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/universal/browser');
-  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
