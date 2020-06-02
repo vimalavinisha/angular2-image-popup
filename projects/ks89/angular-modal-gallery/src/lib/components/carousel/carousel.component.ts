@@ -132,6 +132,11 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   infinite = true;
   /**
+   * TODO add description
+   */
+  @Input()
+  disableSsrWorkaround = false;
+  /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
@@ -333,7 +338,12 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       carouselPlayConfig: this.playConfig,
       carouselPreviewsConfig: this.previewConfig,
       carouselDotsConfig: this.dotsConfig,
-      accessibilityConfig: this.accessibilityConfig
+      accessibilityConfig: this.accessibilityConfig,
+      // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+      keyboardServiceConfig: {
+        shortcuts: ['ctrl+s', 'meta+s'],
+        disableSsrWorkaround: this.disableSsrWorkaround
+      }
     });
     const libConfig: LibConfig = this.configService.getConfig(this.id);
     this.configCarousel = libConfig.carouselConfig;
@@ -423,7 +433,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       config: {
         id: this.id,
         images: this.images,
-        currentImage: this.images[index]
+        currentImage: this.images[index],
+        libConfig: {
+          // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+          keyboardServiceConfig: {
+            shortcuts: ['ctrl+s', 'meta+s'],
+            disableSsrWorkaround: this.disableSsrWorkaround
+          }
+        }
       }
     });
   }
