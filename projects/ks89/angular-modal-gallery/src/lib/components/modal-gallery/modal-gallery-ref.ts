@@ -5,19 +5,19 @@ import { ImageModalEvent } from '../../model/image.class';
 import { ButtonEvent } from '../../model/buttons-config.interface';
 
 export class ModalGalleryRef {
-  private close = new Subject<any>();
+  private close = new Subject<ImageModalEvent>();
   close$ = this.close.asObservable();
-  private show = new Subject<any>();
+  private show = new Subject<ImageModalEvent>();
   show$ = this.show.asObservable();
-  private firstImage = new Subject<any>();
+  private firstImage = new Subject<ImageModalEvent>();
   firstImage$ = this.firstImage.asObservable();
-  private lastImage = new Subject<any>();
+  private lastImage = new Subject<ImageModalEvent>();
   lastImage$ = this.lastImage.asObservable();
-  private hasData = new Subject<any>();
+  private hasData = new Subject<ImageModalEvent>();
   hasData$ = this.hasData.asObservable();
-  private buttonBeforeHook = new Subject<any>();
+  private buttonBeforeHook = new Subject<ButtonEvent>();
   buttonBeforeHook$ = this.buttonBeforeHook.asObservable();
-  private buttonAfterHook = new Subject<any>();
+  private buttonAfterHook = new Subject<ButtonEvent>();
   buttonAfterHook$ = this.buttonAfterHook.asObservable();
 
   constructor(private overlayRef: OverlayRef) {}

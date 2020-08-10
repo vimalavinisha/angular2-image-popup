@@ -21,7 +21,7 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { ModalGalleryService } from './modal-gallery.service';
+import { ModalGalleryInput, ModalGalleryService } from './modal-gallery.service';
 
 @Component({
   selector: 'ks-modal-gallery',
@@ -91,7 +91,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   /**
    * TODO write doc
    */
-  libConfig: LibConfig;
+  libConfig: LibConfig | undefined;
 
   private updateImagesSubscription: Subscription | undefined;
 
@@ -106,19 +106,20 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(DIALOG_DATA) private dialogContent: ModalGalleryService,
+    @Inject(DIALOG_DATA) private dialogContent: ModalGalleryInput,
     private modalGalleryService: ModalGalleryService,
     private keyboardService: KeyboardService,
-    @Inject(PLATFORM_ID) private platformId: any,
+    // tslint:disable-next-line:ban-types
+    @Inject(PLATFORM_ID) private platformId: Object,
     private changeDetectorRef: ChangeDetectorRef,
     private idValidatorService: IdValidatorService,
     private configService: ConfigService,
     private sanitizer: DomSanitizer
   ) {
-    this.id = (this.dialogContent as any).id;
-    this.images = (this.dialogContent as any).images;
-    this.currentImage = (this.dialogContent as any).currentImage;
-    this.libConfig = (this.dialogContent as any).libConfig;
+    this.id = (this.dialogContent as ModalGalleryInput).id;
+    this.images = (this.dialogContent as ModalGalleryInput).images as InternalLibImage[];
+    this.currentImage = (this.dialogContent as ModalGalleryInput).currentImage as InternalLibImage;
+    this.libConfig = (this.dialogContent as ModalGalleryInput).libConfig;
     this.configService.setConfig(this.id, this.libConfig);
 
     this.updateImagesSubscription = this.modalGalleryService.updateImages$.subscribe((images: Image[]) => {
