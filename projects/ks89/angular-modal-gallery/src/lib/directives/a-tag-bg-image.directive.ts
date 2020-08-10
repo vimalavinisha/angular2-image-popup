@@ -38,13 +38,13 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
    * Object of type `Image` that represents the image to add to the `<a>` tag.
    */
   @Input()
-  image: Image;
+  image: Image | undefined;
   /**
    * Additional style to customize the background attribute.
    * Empty string by default.
    */
   @Input()
-  style: string;
+  style: string | undefined;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -53,7 +53,7 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.applyStyle();
   }
 
@@ -62,14 +62,14 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.applyStyle();
   }
 
   /**
    * Private method to add an image as background of an `<a>` tag.
    */
-  private applyStyle() {
+  private applyStyle(): void {
     if (!this.image || (!this.image.plain && !this.image.modal)) {
       return;
     }
@@ -77,7 +77,7 @@ export class ATagBgImageDirective implements OnInit, OnChanges {
     const imgPath: string | SafeResourceUrl = this.image.plain && this.image.plain.img ? this.image.plain.img : this.image.modal.img;
     let bg = `url("${imgPath}") ${this.style}`;
 
-    const fallbackImgPath: string | SafeResourceUrl =
+    const fallbackImgPath: string | SafeResourceUrl | undefined =
       this.image.plain && this.image.plain.fallbackImg ? this.image.plain.fallbackImg : this.image.modal.fallbackImg;
     if (!!fallbackImgPath) {
       bg += `, url("${fallbackImgPath}") ${this.style}`;

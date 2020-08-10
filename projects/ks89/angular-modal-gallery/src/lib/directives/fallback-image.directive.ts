@@ -30,14 +30,14 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 })
 export class FallbackImageDirective {
   @Input()
-  fallbackImg: string | SafeResourceUrl;
+  fallbackImg: string | SafeResourceUrl | undefined;
 
   @Output()
   fallbackApplied: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
-  @HostListener('error') onError() {
+  @HostListener('error') onError(): void {
     if (!this.fallbackImg) {
       this.fallbackApplied.emit(false);
       return;

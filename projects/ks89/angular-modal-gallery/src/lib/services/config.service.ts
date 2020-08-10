@@ -149,7 +149,7 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
   dotsConfig: { visible: true } as DotsConfig,
   plainGalleryConfig: DEFAULT_PLAIN_CONFIG,
   currentImageConfig: DEFAULT_CURRENT_IMAGE_CONFIG,
-  keyboardConfig: null, // by default nothing, because the library uses default buttons automatically
+  keyboardConfig: undefined, // by default nothing, because the library uses default buttons automatically
   carouselConfig: DEFAULT_CURRENT_CAROUSEL_CONFIG,
   carouselImageConfig: DEFAULT_CAROUSEL_IMAGE_CONFIG,
   carouselPreviewsConfig: DEFAULT_CAROUSEL_PREVIEWS_CONFIG,
@@ -166,15 +166,35 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
 export class ConfigService {
   configMap: Map<number, LibConfig> = new Map<number, LibConfig>();
 
-  getConfig(id: number): LibConfig {
+  getConfig(id: number): LibConfig | undefined {
     this.initIfNotExists(id);
     return this.configMap.get(id);
   }
 
-  setConfig(id: number, obj: LibConfig): void {
+  setConfig(id: number, obj: LibConfig | undefined): void {
     this.initIfNotExists(id);
     if (!obj) {
       return;
+    }
+
+    if (
+      !DEFAULT_CONFIG ||
+      !DEFAULT_CONFIG.slideConfig ||
+      !DEFAULT_CONFIG.slideConfig.sidePreviews ||
+      !DEFAULT_CONFIG.previewConfig ||
+      !DEFAULT_CONFIG.previewConfig.size ||
+      !DEFAULT_CONFIG.previewConfig.number ||
+      !DEFAULT_CONFIG.plainGalleryConfig ||
+      !DEFAULT_CONFIG.currentImageConfig ||
+      !DEFAULT_CONFIG.currentImageConfig ||
+      !DEFAULT_CONFIG.currentImageConfig.description ||
+      !DEFAULT_CONFIG.carouselImageConfig ||
+      !DEFAULT_CONFIG.carouselImageConfig.description ||
+      !DEFAULT_CONFIG.carouselPreviewsConfig ||
+      !DEFAULT_CONFIG.carouselPreviewsConfig.breakpoints ||
+      !DEFAULT_CAROUSEL_PREVIEWS_CONFIG.number
+    ) {
+      throw new Error('Internal library error - DEFAULT_CONFIG must be fully initialized!!!');
     }
 
     const newConfig: LibConfig = Object.assign({}, this.configMap.get(id));
@@ -319,7 +339,7 @@ export class ConfigService {
       // check values
       let num: number;
       let breakpoints: BreakpointsConfig;
-      if (obj.carouselPreviewsConfig.number <= 0 || !obj.carouselPreviewsConfig.number) {
+      if (!obj.carouselPreviewsConfig.number || obj.carouselPreviewsConfig.number <= 0) {
         num = DEFAULT_CAROUSEL_PREVIEWS_CONFIG.number;
       } else {
         num = obj.carouselPreviewsConfig.number;
@@ -351,7 +371,7 @@ export class ConfigService {
     this.configMap.set(id, newConfig);
   }
 
-  private initIfNotExists(id: number) {
+  private initIfNotExists(id: number): void {
     if (!this.configMap.has(id)) {
       this.configMap.set(id, DEFAULT_CONFIG);
     }

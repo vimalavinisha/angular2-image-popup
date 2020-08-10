@@ -5,7 +5,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
 import { DIALOG_DATA } from './modal-gallery.tokens';
-import { ModalGalleryService } from './modal-gallery.service';
 import { Image, ImageModalEvent } from '../../model/image.class';
 import { ConfigService, LibConfig } from '../../services/config.service';
 import { DotsConfig } from '../../model/dots-config.interface';
@@ -22,6 +21,7 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { ModalGalleryService } from './modal-gallery.service';
 
 @Component({
   selector: 'ks-modal-gallery',
@@ -32,7 +32,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   /**
    * Reference to the CurrentImageComponent to invoke methods on it.
    */
-  @ViewChild(CurrentImageComponent, { static: true }) currentImageComponent;
+  @ViewChild(CurrentImageComponent, { static: true }) currentImageComponent: CurrentImageComponent | undefined;
 
   /**
    * Unique id (>=0) of the current instance of this library. This is useful when you are using
@@ -42,7 +42,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   /**
    * Object of type `ButtonsConfig` to show/hide buttons.
    */
-  buttonsConfig: ButtonsConfig;
+  buttonsConfig: ButtonsConfig | undefined;
   /**
    * Boolean to enable modal-gallery close behaviour when clicking
    * on the semi-transparent background. Enabled by default.
@@ -52,16 +52,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide dots.
    */
-  dotsConfig: DotsConfig;
+  dotsConfig: DotsConfig | undefined;
   /**
    * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide previews.
    */
-  previewConfig: PreviewConfig;
+  previewConfig: PreviewConfig | undefined;
   /**
    * Object of type `SlideConfig` to init side previews and `infinite sliding`.
    */
-  slideConfig: SlideConfig;
+  slideConfig: SlideConfig | undefined;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
@@ -70,11 +70,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   /**
    * Object of type `KeyboardConfig` to assign custom keys to ESC, RIGHT and LEFT keyboard's actions.
    */
-  keyboardConfig: KeyboardConfig;
+  keyboardConfig: KeyboardConfig | undefined;
   /**
    * Object of type `PlainGalleryConfig` to configure the plain gallery.
    */
-  plainGalleryConfig: PlainGalleryConfig;
+  plainGalleryConfig: PlainGalleryConfig | undefined;
 
   /**
    * Array of `InternalLibImage` representing the model of this library with all images, thumbs and so on.
@@ -93,7 +93,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   libConfig: LibConfig;
 
-  private updateImagesSubscription: Subscription;
+  private updateImagesSubscription: Subscription | undefined;
 
   /**
    * HostListener to catch browser's back button and destroy the gallery.
@@ -101,19 +101,19 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Added to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/159
    */
   @HostListener('window:popstate', ['$event'])
-  onPopState(e: Event) {
+  onPopState(e: Event): void {
     this.closeGallery();
   }
 
   constructor(
     @Inject(DIALOG_DATA) private dialogContent: ModalGalleryService,
+    private modalGalleryService: ModalGalleryService,
     private keyboardService: KeyboardService,
     @Inject(PLATFORM_ID) private platformId: any,
     private changeDetectorRef: ChangeDetectorRef,
     private idValidatorService: IdValidatorService,
     private configService: ConfigService,
-    private sanitizer: DomSanitizer,
-    private modalGalleryService: ModalGalleryService
+    private sanitizer: DomSanitizer
   ) {
     this.id = (this.dialogContent as any).id;
     this.images = (this.dialogContent as any).images;
@@ -152,7 +152,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.dotsConfig = this.configService.getConfig(this.id).dotsConfig;
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.dotsConfig) {
+      throw new Error('Internal library error - libConfig and dotsConfig must be defined');
+    }
+
+    this.dotsConfig = libConfig.dotsConfig;
 
     // call initImages to init images and to emit `hasData` event
     this.initImages();
@@ -163,7 +168,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called by custom upper buttons.
    * @param event ButtonEvent payload
    */
-  onCustomEmit(event: ButtonEvent) {
+  onCustomEmit(event: ButtonEvent): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     this.modalGalleryService.emitButtonAfterHook(eventToEmit);
@@ -221,11 +226,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called by the full-screen upper button.
    * @param ButtonEvent event payload
    */
-  onFullScreen(event: ButtonEvent) {
+  onFullScreen(event: ButtonEvent): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
 
+    // tslint:disable-next-line:no-any
     const doc: any = document as any;
+    // tslint:disable-next-line:no-any
     const docEl: any = document.documentElement as any;
 
     const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement && !doc.mozFullScreenElement && !doc.msFullscreenElement;
@@ -259,7 +266,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called by the delete upper button.
    * @param ButtonEvent event payload
    */
-  onDelete(event: ButtonEvent) {
+  onDelete(event: ButtonEvent): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
 
@@ -267,7 +274,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
       this.closeGallery();
     }
 
-    const imageIndexToDelete: number = this.currentImageComponent.getIndexToDelete(event.image);
+    if (!this.currentImageComponent) {
+      throw new Error('currentImageComponent must be defined');
+    }
+
+    const imageIndexToDelete: number = this.currentImageComponent.getIndexToDelete(event.image as InternalLibImage);
     if (imageIndexToDelete === this.images.length - 1) {
       // last image
       this.currentImageComponent.prevImage();
@@ -282,7 +293,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called by the navigate upper button.
    * @param ButtonEvent event payload
    */
-  onNavigate(event: ButtonEvent) {
+  onNavigate(event: ButtonEvent): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     // To support SSR
@@ -296,21 +307,27 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
           // - https://www.owasp.org/index.php/HTML5_Security_Cheat_Sheet#Tabnabbing
           // - https://medium.com/@jitbit/target-blank-the-most-underestimated-vulnerability-ever-96e328301f4c
           // - https://developer.mozilla.org/en-US/docs/Web/API/Window/open
-          const newWindow = window.open(eventToEmit.image.modal.extUrl, 'noopener,noreferrer,');
-          newWindow.opener = null; // required to prevent security issues
+          const newWindow: Window | null = window.open(eventToEmit.image.modal.extUrl, 'noopener,noreferrer,');
+          // it returns null if the call failed, so I have to do this check
+          if (newWindow) {
+            newWindow.opener = null; // required to prevent security issues
+            // emit only in case of success
+            this.modalGalleryService.emitButtonAfterHook(eventToEmit);
+          }
         } else {
           window.location.href = eventToEmit.image.modal.extUrl;
+          // emit only in case of success
+          this.modalGalleryService.emitButtonAfterHook(eventToEmit);
         }
       }
     }
-    this.modalGalleryService.emitButtonAfterHook(eventToEmit);
   }
 
   /**
    * Method called by the download upper button.
    * @param ButtonEvent event payload
    */
-  onDownload(event: ButtonEvent) {
+  onDownload(event: ButtonEvent): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     this.downloadImage();
@@ -322,7 +339,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * @param ButtonEvent event payload
    * @param Action action that triggered the close method. `Action.NORMAL` by default
    */
-  onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL) {
+  onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     this.closeGallery(action, false);
@@ -335,9 +352,14 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * @param Action action type. `Action.NORMAL` by default
    * @param boolean isCalledByService is true if called by gallery.service, otherwise false
    */
-  closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false, isCalledByService: boolean = false) {
+  closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false, isCalledByService: boolean = false): void {
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
     this.modalGalleryService.emitClose(new ImageModalEvent(this.id, action, true));
-    this.keyboardService.reset(this.configService.getConfig(this.id));
+    this.keyboardService.reset(libConfig);
     this.modalGalleryService.close(this.id, clickOutside);
 
     // shows scrollbar
@@ -358,11 +380,19 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
    * @param number index of the image to show
    */
-  showModalGallery() {
+  showModalGallery(): void {
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
-    this.keyboardService.init(this.configService.getConfig(this.id)).then(() => {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
+    this.keyboardService.init(libConfig).then(() => {
       this.keyboardService.add((event: KeyboardEvent, combo: string) => {
         if (event.preventDefault) {
           event.preventDefault();
@@ -371,7 +401,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
           event.returnValue = false;
         }
         this.downloadImage();
-      }, this.configService.getConfig(this.id));
+      }, libConfig);
 
       const currentIndex: number = this.images.indexOf(this.currentImage);
       // emit a new ImageModalEvent with the index of the current image
@@ -384,7 +414,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called when the image changes and used to update the `currentImage` object.
    * @param ImageModalEvent event payload
    */
-  onChangeCurrentImage(event: ImageModalEvent) {
+  onChangeCurrentImage(event: ImageModalEvent): void {
     const newIndex: number = event.result as number;
     if (newIndex < 0 || newIndex >= this.images.length) {
       return;
@@ -404,7 +434,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * to close the modal gallery if `enableCloseOutside` is true.
    * @param boolean event payload. True to close the modal gallery, false otherwise
    */
-  onClickOutside(event: boolean) {
+  onClickOutside(event: boolean): void {
     if (event && this.enableCloseOutside) {
       this.closeGallery(Action.CLICK, true);
     }
@@ -415,7 +445,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * It sets the previouslyLoaded flag inside the Image to hide loading spinner when displayed again.
    * @param ImageLoadEvent event payload
    */
-  onImageLoad(event: ImageLoadEvent) {
+  onImageLoad(event: ImageLoadEvent): void {
     // sets as previously loaded the image with index specified by `event.status`
     this.images = this.images.map((img: InternalLibImage) => {
       if (img && img.id === event.id) {
@@ -429,7 +459,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called when a dot is clicked and used to update the current image.
    * @param number index of the clicked dot
    */
-  onClickDot(index: number) {
+  onClickDot(index: number): void {
     this.currentImage = this.images[index];
   }
 
@@ -437,7 +467,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method called when an image preview is clicked and used to update the current image.
    * @param Image preview image
    */
-  onClickPreview(event: ImageModalEvent) {
+  onClickPreview(event: ImageModalEvent): void {
     this.onChangeCurrentImage(event);
   }
 
@@ -445,8 +475,16 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method to download the current image, only if `downloadable` is true.
    * It contains also a logic to enable downloading features also for IE11.
    */
-  downloadImage() {
-    const currentImageConfig: CurrentImageConfig = this.configService.getConfig(this.id).currentImageConfig;
+  downloadImage(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
+    const currentImageConfig: CurrentImageConfig | undefined = libConfig.currentImageConfig;
     if (currentImageConfig && !currentImageConfig.downloadable) {
       return;
     }
@@ -465,9 +503,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Method to cleanup resources. In fact, this will reset keyboard's service.
    * This is an Angular's lifecycle hook that is called when this component is destroyed.
    */
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.keyboardService) {
-      this.keyboardService.reset(this.configService.getConfig(this.id));
+      const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+      if (this.id && libConfig) {
+        this.keyboardService.reset(libConfig);
+      }
     }
     if (this.updateImagesSubscription) {
       this.updateImagesSubscription.unsubscribe();
@@ -501,28 +542,28 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   /**
    * Private method to download the current image for all browsers except for IE11.
    */
-  private downloadImageAllBrowsers() {
+  private downloadImageAllBrowsers(): void {
     const link = document.createElement('a');
     let isBase64 = false;
-    let extension: string;
     let img: string;
     // convert a SafeResourceUrl to a string
     if (typeof this.currentImage.modal.img === 'string') {
       img = this.currentImage.modal.img as string;
     } else {
       // if it's a SafeResourceUrl
-      img = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.currentImage.modal.img);
+      img = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.currentImage.modal.img) as string;
     }
     if (img.includes('data:image/') || img.includes(';base64,')) {
-      extension = img.replace('data:image/', '').split(';base64,')[0];
+      const extension: string = img.replace('data:image/', '').split(';base64,')[0];
       const pureBase64: string = img.split(';base64,')[1];
       const blob: Blob = this.base64toBlob(pureBase64, 'image/' + extension);
       link.href = URL.createObjectURL(blob);
       isBase64 = true;
+      link.setAttribute('download', this.getFileName(this.currentImage, isBase64, extension));
     } else {
       link.href = img;
+      link.setAttribute('download', this.getFileName(this.currentImage, isBase64));
     }
-    link.setAttribute('download', this.getFileName(this.currentImage, isBase64, extension));
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -532,7 +573,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Private method to download the current image only for IE11 using
    * custom javascript's methods available only on IE.
    */
-  private downloadImageOnlyIEorEdge() {
+  private downloadImageOnlyIEorEdge(): void {
     if (isPlatformBrowser(this.platformId)) {
       const req = new XMLHttpRequest();
       req.open('GET', this.currentImage.modal.img as string, true);
@@ -580,7 +621,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Private method to initialize `images` as array of `Image`s.
    * Also, it will emit ImageowmodaModalEvent to say that images are loaded.
    */
-  private initImages() {
+  private initImages(): void {
     this.modalGalleryService.emitHasData(new ImageModalEvent(this.id, Action.LOAD, true));
     this.showGallery = this.images.length > 0;
   }
@@ -591,7 +632,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    *  current image to the first one or the last one.
    * @param indexToCheck is the index number of the image (the first or the last one).
    */
-  private emitBoundaryEvent(action: Action, indexToCheck: number) {
+  private emitBoundaryEvent(action: Action, indexToCheck: number): void {
     // to emit first/last event
     switch (indexToCheck) {
       case 0:
@@ -610,14 +651,15 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * Inspired by https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
    * @returns any the result
    */
-  private isIEorEdge(): any {
+  private isIEorEdge(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
-      return window.Blob && window.navigator.msSaveOrOpenBlob;
+      return !!window.Blob && !!window.navigator.msSaveOrOpenBlob;
     }
     if (isPlatformServer(this.platformId)) {
       // server only
       return true;
     }
+    return false;
   }
 }

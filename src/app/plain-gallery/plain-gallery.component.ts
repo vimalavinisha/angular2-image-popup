@@ -265,7 +265,7 @@ export class PlainGalleryExampleComponent {
           plainGalleryConfig: this.customPlainGalleryRowConfig
         }
       }
-    });
+    }) as ModalGalleryRef;
   }
 
   openImageModalColumn(id: number, image: Image) {
@@ -281,7 +281,7 @@ export class PlainGalleryExampleComponent {
           plainGalleryConfig: this.customPlainGalleryColumnConfig
         }
       }
-    });
+    }) as ModalGalleryRef;
   }
 
   openImageModalRowDescription(id: number, image: Image) {
@@ -297,7 +297,7 @@ export class PlainGalleryExampleComponent {
           plainGalleryConfig: this.customPlainGalleryRowDescConfig
         }
       }
-    });
+    }) as ModalGalleryRef;
   }
 
   addRandomImage() {
@@ -318,7 +318,7 @@ export class PlainGalleryExampleComponent {
         images,
         currentImage: images[index]
       }
-    });
+    }) as ModalGalleryRef;
   }
 
   trackById(index: number, item: Image) {

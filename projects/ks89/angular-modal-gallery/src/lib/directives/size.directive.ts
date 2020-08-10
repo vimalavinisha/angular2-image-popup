@@ -36,7 +36,7 @@ export class SizeDirective implements OnInit, OnChanges {
    * Object of type `Size` to resize the element.
    */
   @Input()
-  sizeConfig: Size;
+  sizeConfig: Size | undefined;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -45,7 +45,7 @@ export class SizeDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.applyStyle();
   }
 
@@ -54,14 +54,14 @@ export class SizeDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.applyStyle();
   }
 
   /**
    * Private method to change both width and height of an element.
    */
-  private applyStyle() {
+  private applyStyle(): void {
     if (!this.sizeConfig) {
       return;
     }

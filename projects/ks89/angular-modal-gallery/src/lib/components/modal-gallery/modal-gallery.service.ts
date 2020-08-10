@@ -23,13 +23,15 @@ export interface ModalGalleryConfig {
   hasBackdrop?: boolean;
   backdropClass?: string;
   config?: ModalGalleryInput;
+  dialogRef?: ModalGalleryRef;
 }
 
 const DEFAULT_CONFIG: ModalGalleryConfig = {
   hasBackdrop: true,
   backdropClass: 'dark-backdrop',
   panelClass: 'tm-file-preview-dialog-panel',
-  config: null
+  config: undefined,
+  dialogRef: undefined
 };
 
 @Injectable({ providedIn: 'root' })
@@ -37,11 +39,11 @@ export class ModalGalleryService {
   private updateImages = new Subject<Image[]>();
   updateImages$ = this.updateImages.asObservable();
 
-  private dialogRef: ModalGalleryRef;
+  private dialogRef: ModalGalleryRef | undefined;
 
   constructor(private injector: Injector, private overlay: Overlay, private configService: ConfigService) {}
 
-  open(config: ModalGalleryConfig = {}): ModalGalleryRef {
+  open(config: ModalGalleryConfig = {}): ModalGalleryRef | undefined {
     // Override default configuration
     const dialogConfig = { ...DEFAULT_CONFIG, ...config };
     // Returns an OverlayRef which is a PortalHost
@@ -51,14 +53,17 @@ export class ModalGalleryService {
 
     const overlayComponent: ModalGalleryComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
     overlayRef.backdropClick().subscribe(() => {
-      this.dialogRef.closeModal();
+      if (this.dialogRef) {
+        this.dialogRef.closeModal();
+      }
     });
     return this.dialogRef;
   }
 
   close(id: number, clickOutside: boolean): void {
+    const libConfig: LibConfig | undefined = this.configService.getConfig(id);
     if (clickOutside) {
-      if (this.dialogRef && this.configService.getConfig(id).enableCloseOutside) {
+      if (this.dialogRef && libConfig && libConfig.enableCloseOutside) {
         this.dialogRef.closeModal();
         // this.dialogRef = null;
       }
@@ -70,41 +75,57 @@ export class ModalGalleryService {
     }
   }
 
-  updateModalImages(images: Image[]) {
+  updateModalImages(images: Image[]): void {
     this.updateImages.next(images);
   }
 
-  emitClose(event: ImageModalEvent) {
+  emitClose(event: ImageModalEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitClose(event);
   }
 
-  emitShow(event: ImageModalEvent) {
+  emitShow(event: ImageModalEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitShow(event);
   }
 
-  emitFirstImage(event: ImageModalEvent) {
+  emitFirstImage(event: ImageModalEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitFirstImage(event);
   }
 
-  emitLastImage(event: ImageModalEvent) {
+  emitLastImage(event: ImageModalEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitLastImage(event);
   }
 
-  emitHasData(event: ImageModalEvent) {
+  emitHasData(event: ImageModalEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitHasData(event);
   }
 
-  emitButtonBeforeHook(event: ButtonEvent) {
+  emitButtonBeforeHook(event: ButtonEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitButtonBeforeHook(event);
   }
 
-  emitButtonAfterHook(event: ButtonEvent) {
+  emitButtonAfterHook(event: ButtonEvent): void {
+    if (!this.dialogRef) {
+      return;
+    }
     this.dialogRef.emitButtonAfterHook(event);
-  }
-
-  // DEPRECATED to remove
-  isOpen(): boolean {
-    return !!this.dialogRef;
   }
 
   private createOverlay(config: ModalGalleryConfig): OverlayRef {
@@ -131,11 +152,7 @@ export class ModalGalleryService {
   }
 
   private getOverlayConfig(config: ModalGalleryConfig): OverlayConfig {
-    const positionStrategy: GlobalPositionStrategy = this.overlay
-      .position()
-      .global()
-      .centerHorizontally()
-      .centerVertically();
+    const positionStrategy: GlobalPositionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
 
     const overlayConfig: OverlayConfig = new OverlayConfig({
       hasBackdrop: config.hasBackdrop,

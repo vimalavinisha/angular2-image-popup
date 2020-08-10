@@ -35,12 +35,12 @@ export class WrapDirective implements OnInit, OnChanges {
    * Boolean input that it's true to add 'flex-wrap: wrap', 'flex-wrap: nowrap' otherwise.
    */
   @Input()
-  wrap: boolean;
+  wrap: boolean | undefined;
   /**
    * String input to force the width of the element to be able to see wrapping.
    */
   @Input()
-  width: string;
+  width: string | undefined;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -49,7 +49,7 @@ export class WrapDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.applyStyle();
   }
 
@@ -58,14 +58,14 @@ export class WrapDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.applyStyle();
   }
 
   /**
    * Private method to change both widht and flex-wrap css properties.
    */
-  private applyStyle() {
+  private applyStyle(): void {
     // TODO is this right???? If wrap os false I cannot apply width and flex-wrap
     if (!this.wrap) {
       return;

@@ -35,12 +35,12 @@ export class DirectionDirective implements OnInit, OnChanges {
    * String input to set the css flex-direction of an element.
    */
   @Input()
-  direction: string;
+  direction: string | undefined;
   /**
    * String input to set the css justify-content of an element.
    */
   @Input()
-  justify: string;
+  justify: string | undefined;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -49,7 +49,7 @@ export class DirectionDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.applyStyle();
   }
 
@@ -58,14 +58,14 @@ export class DirectionDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.applyStyle();
   }
 
   /**
    * Private method to change both direction and justify of an element.
    */
-  private applyStyle() {
+  private applyStyle(): void {
     if (!this.direction || !this.justify) {
       return;
     }

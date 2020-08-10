@@ -89,43 +89,43 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * the carousel's feature to open modal gallery.
    */
   @Input()
-  id: number;
+  id: number | undefined;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
-  images: Image[];
+  images: Image[] = [];
   /**
    * Object of type `CarouselConfig` to init CarouselComponent's features.
    * For instance, it contains parameters to change the style, how it navigates and so on.
    */
   @Input()
-  carouselConfig: CarouselConfig;
+  carouselConfig: CarouselConfig | undefined;
   /**
    * Object of type `PlayConfig` to init CarouselComponent's features about auto-play.
    * For instance, it contains parameters to enable/disable autoPlay, interval and so on.
    */
   @Input()
-  playConfig: PlayConfig;
+  playConfig: PlayConfig | undefined;
   /**
    * Interface to configure current image in carousel.
    * For instance you can change the description.
    */
   @Input()
-  carouselImageConfig: CarouselImageConfig;
+  carouselImageConfig: CarouselImageConfig | undefined;
   /**
    * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide previews, change sizes and so on.
    */
   @Input()
-  previewConfig: CarouselPreviewConfig;
+  previewConfig: CarouselPreviewConfig | undefined;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
   @Input()
-  dotsConfig: DotsConfig;
+  dotsConfig: DotsConfig | undefined;
   /**
    * boolean to enable/disable infinite sliding. Enabled by default.
    */
@@ -141,7 +141,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
   @Input()
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig | undefined;
 
   /**
    * Output to emit an event when an image is changed.
@@ -162,23 +162,23 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   /**
    * Object use in template
    */
-  configCarousel: CarouselConfig;
+  configCarousel: CarouselConfig | undefined;
   /**
    * Object use in template
    */
-  configPlay: PlayConfig;
+  configPlay: PlayConfig | undefined;
   /**
    * Object use in template
    */
-  configCarouselImage: CarouselImageConfig;
+  configCarouselImage: CarouselImageConfig | undefined;
   /**
    * Object use in template
    */
-  configPreview: CarouselPreviewConfig;
+  configPreview: CarouselPreviewConfig | undefined;
   /**
    * Object use in template
    */
-  configDots: DotsConfig;
+  configDots: DotsConfig | undefined;
   /**
    * Object use in template
    */
@@ -197,7 +197,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   /**
    * `Image` that is visible right now.
    */
-  currentImage: Image;
+  currentImage: Image | undefined;
   /**
    * Boolean that it's true when you are watching the first image (currently visible).
    * False by default
@@ -208,13 +208,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * False by default
    */
   isLastImage = false;
-  /**
-   * Object of type `PlainGalleryConfig` to force ks-modal-gallery to hide plain-gallery
-   */
-  plainGalleryHidden: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
 
   /**
    * Subject to play the carousel.
@@ -239,8 +232,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Listener to stop the gallery when the mouse pointer is over the current image.
    */
   @HostListener('mouseenter')
-  onMouseEnter() {
-    if (!this.configService.getConfig(this.id).carouselPlayConfig.pauseOnHover) {
+  onMouseEnter(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    if (!libConfig.carouselPlayConfig || !libConfig.carouselPlayConfig.pauseOnHover) {
       return;
     }
     this.stopCarousel();
@@ -250,8 +250,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Listener to play the gallery when the mouse pointer leave the current image.
    */
   @HostListener('mouseleave')
-  onMouseLeave() {
-    if (!this.configService.getConfig(this.id).carouselPlayConfig.pauseOnHover || !this.configService.getConfig(this.id).carouselPlayConfig.autoPlay) {
+  onMouseLeave(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    if (!libConfig.carouselPlayConfig || !libConfig.carouselPlayConfig.pauseOnHover || !libConfig.carouselPlayConfig.autoPlay) {
       return;
     }
     this.playCarousel();
@@ -261,8 +268,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Listener to navigate carousel images with keyboard (left).
    */
   @HostListener('keydown.arrowLeft')
-  onKeyDownLeft() {
-    if (!this.configService.getConfig(this.id).carouselConfig.keyboardEnable) {
+  onKeyDownLeft(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    if (!libConfig.carouselConfig || !libConfig.carouselConfig.keyboardEnable) {
       return;
     }
     this.prevImage();
@@ -272,15 +286,23 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Listener to navigate carousel images with keyboard (right).
    */
   @HostListener('keydown.arrowRight')
-  onKeyDownLRight() {
-    if (!this.configService.getConfig(this.id).carouselConfig.keyboardEnable) {
+  onKeyDownLRight(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    if (!libConfig.carouselConfig || !libConfig.carouselConfig.keyboardEnable) {
       return;
     }
     this.nextImage();
   }
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId,
+    // tslint:disable-next-line:no-any
+    @Inject(PLATFORM_ID) private platformId: any,
     private ngZone: NgZone,
     private modalGalleryService: ModalGalleryService,
     private configService: ConfigService,
@@ -291,14 +313,22 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     super();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
     // handle changes of dotsConfig
     const configDotsChange: SimpleChange = changes.dotsConfig;
     if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
       this.configService.setConfig(this.id, {
         carouselDotsConfig: configDotsChange.currentValue
       });
-      this.configDots = this.configService.getConfig(this.id).carouselDotsConfig;
+      this.configDots = libConfig.carouselDotsConfig;
     }
     // handle changes of carouselConfig
     const carouselConfigChange: SimpleChange = changes.carouselConfig;
@@ -329,7 +359,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    if (!this.images) {
+      throw new Error('Internal library error - images must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
     this.currentImage = this.images[0];
 
     this.configService.setConfig(this.id, {
@@ -345,30 +385,37 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         disableSsrWorkaround: this.disableSsrWorkaround
       }
     });
-    const libConfig: LibConfig = this.configService.getConfig(this.id);
     this.configCarousel = libConfig.carouselConfig;
     this.configCarouselImage = libConfig.carouselImageConfig;
     this.configPlay = libConfig.carouselPlayConfig;
     this.configPreview = libConfig.carouselPreviewsConfig;
     this.configDots = libConfig.carouselDotsConfig;
-    this.configAccessibility = libConfig.accessibilityConfig;
+    this.configAccessibility = libConfig.accessibilityConfig as AccessibilityConfig;
     this.manageSlideConfig();
   }
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
     if (isPlatformBrowser(this.platformId)) {
+      if (!this.id) {
+        throw new Error('Internal library error - id must be defined');
+      }
+      const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+      if (!libConfig || !libConfig.carouselPlayConfig) {
+        throw new Error('Internal library error - libConfig and carouselPlayConfig must be defined');
+      }
       this.ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => this.configService.getConfig(this.id).carouselPlayConfig.interval),
-            filter(interval => interval > 0),
+            map(() => libConfig && libConfig.carouselPlayConfig && libConfig.carouselPlayConfig.interval),
+            // tslint:disable-next-line:no-any
+            filter((interval: any) => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
           .subscribe(() =>
             this.ngZone.run(() => {
-              if (this.configPlay.autoPlay) {
+              if (this.configPlay && this.configPlay.autoPlay) {
                 this.nextImage();
               }
               this.ref.markForCheck();
@@ -401,7 +448,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Method called when a dot is clicked and used to update the current image.
    * @param number index of the clicked dot
    */
-  onClickDot(index: number) {
+  onClickDot(index: number): void {
     this.changeCurrentImage(this.images[index], Action.NORMAL);
   }
 
@@ -411,7 +458,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param KeyboardEvent | MouseEvent event payload
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL) {
+  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL): void {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
       this.nextImage(action);
@@ -424,8 +471,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Method triggered when you click on the current image.
    * Also, if modalGalleryEnable is true, you can open the modal-gallery.
    */
-  onClickCurrentImage() {
-    if (!this.configService.getConfig(this.id).carouselConfig.modalGalleryEnable) {
+  onClickCurrentImage(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.carouselConfig || !this.currentImage) {
+      throw new Error('Internal library error - libConfig, carouselConfig and currentImage must be defined');
+    }
+    if (!libConfig.carouselConfig.modalGalleryEnable) {
       return;
     }
     const index = getIndex(this.currentImage, this.images);
@@ -453,13 +507,22 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @returns String description of the image (or the current image if not provided)
    * @throws an Error if description isn't available
    */
-  getDescriptionToDisplay(image: Image = this.currentImage): string {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
+  getDescriptionToDisplay(image: Image | undefined = this.currentImage): string {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    const configCurrentImageCarousel: CarouselImageConfig | undefined = libConfig.carouselImageConfig;
     if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
-
-    const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
+    if (!image) {
+      throw new Error('Internal library error - image must be defined');
+    }
+    const imageWithoutDescription: boolean = !image || !image.modal || !image.modal.description || image.modal.description === '';
 
     switch (configCurrentImageCarousel.description.strategy) {
       case DescriptionStrategy.HIDE_IF_EMPTY:
@@ -476,8 +539,15 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Method used by Hammerjs to support touch gestures (you can also invert the swipe direction with configCurrentImage.invertSwipe).
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
-  swipe(action = this.SWIPE_ACTION.RIGHT) {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
+  swipe(action = this.SWIPE_ACTION.RIGHT): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.carouselImageConfig) {
+      throw new Error('Internal library error - libConfig and carouselImageConfig must be defined');
+    }
+    const configCurrentImageCarousel: CarouselImageConfig = libConfig.carouselImageConfig;
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
         if (configCurrentImageCarousel.invertSwipe) {
@@ -505,7 +575,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param action Enum of type `Action` that represents the source
    *  action that moved back to the previous image. `Action.NORMAL` by default.
    */
-  prevImage(action: Action = Action.NORMAL) {
+  prevImage(action: Action = Action.NORMAL): void {
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
       return;
@@ -522,7 +592,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param action Enum of type `Action` that represents the source
    *  action that moved to the next image. `Action.NORMAL` by default.
    */
-  nextImage(action: Action = Action.NORMAL) {
+  nextImage(action: Action = Action.NORMAL): void {
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
@@ -548,7 +618,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Method called when an image preview is clicked and used to update the current image.
    * @param event an ImageEvent object with the relative action and the index of the clicked preview.
    */
-  onClickPreview(event: ImageEvent) {
+  onClickPreview(event: ImageEvent): void {
     const imageFound: Image = this.images[event.result as number];
     if (!!imageFound) {
       this.manageSlideConfig();
@@ -559,14 +629,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   /**
    * Method to play carousel.
    */
-  playCarousel() {
+  playCarousel(): void {
     this.start$.next();
   }
 
   /**
    * Stops the carousel from cycling through items.
    */
-  stopCarousel() {
+  stopCarousel(): void {
     this.stop$.next();
   }
 
@@ -577,7 +647,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param Image image to get its alt description. If not provided it will be the current image
    * @returns String alt description of the image (or the current image if not provided)
    */
-  getAltDescriptionByImage(image: Image = this.currentImage): string {
+  getAltDescriptionByImage(image: Image | undefined = this.currentImage): string {
     if (!image) {
       return '';
     }
@@ -593,12 +663,19 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @returns String title of the image based on descriptions
    * @throws an Error if description isn't available
    */
-  getTitleToDisplay(image: Image = this.currentImage): string {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
+  getTitleToDisplay(image: Image | undefined = this.currentImage): string {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.carouselImageConfig) {
+      throw new Error('Internal library error - libConfig and carouselImageConfig must be defined');
+    }
+    const configCurrentImageCarousel: CarouselImageConfig = libConfig.carouselImageConfig;
     if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
     }
-    const imageWithoutDescription: boolean = !image.modal || !image.modal.description || image.modal.description === '';
+    const imageWithoutDescription: boolean = !image || !image.modal || !image.modal.description || image.modal.description === '';
     const description: string = this.buildTextDescription(image, imageWithoutDescription);
     return description;
   }
@@ -623,7 +700,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Method to cleanup resources. In fact, this will stop the carousel.
    * This is an Angular's lifecycle hook that is called when this component is destroyed.
    */
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.stopCarousel();
   }
 
@@ -632,7 +709,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param image an Image object that represents the new image to set as current.
    * @param action Enum of type `Action` that represents the source action that triggered the change.
    */
-  private changeCurrentImage(image: Image, action: Action) {
+  private changeCurrentImage(image: Image, action: Action): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
     this.currentImage = image;
     const index: number = getIndex(image, this.images);
 
@@ -649,6 +729,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * That happens because all modal images are shown like in a circle.
    */
   private getNextImage(): Image {
+    if (!this.currentImage) {
+      throw new Error('Internal library error - currentImage must be defined');
+    }
     const currentIndex: number = getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex >= 0 && currentIndex < this.images.length - 1) {
@@ -665,6 +748,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * That happens because all modal images are shown like in a circle.
    */
   private getPrevImage(): Image {
+    if (!this.currentImage) {
+      throw new Error('Internal library error - currentImage must be defined');
+    }
     const currentIndex: number = getIndex(this.currentImage, this.images);
     let newIndex = 0;
     if (currentIndex > 0 && currentIndex <= this.images.length - 1) {
@@ -682,10 +768,20 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param boolean imageWithoutDescription is a boolean that it's true if the image hasn't a 'modal' description.
    * @returns String description built concatenating image fields with a specific logic.
    */
-  private buildTextDescription(image: Image, imageWithoutDescription: boolean): string {
-    const configCurrentImageCarousel: CarouselImageConfig = this.configService.getConfig(this.id).carouselImageConfig;
+  private buildTextDescription(image: Image | undefined, imageWithoutDescription: boolean): string {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.carouselImageConfig) {
+      throw new Error('Internal library error - libConfig and carouselImageConfig must be defined');
+    }
+    const configCurrentImageCarousel: CarouselImageConfig | undefined = libConfig.carouselImageConfig;
     if (!configCurrentImageCarousel || !configCurrentImageCarousel.description) {
       throw new Error('Description input must be a valid object implementing the Description interface');
+    }
+    if (!image) {
+      throw new Error('Internal library error - image must be defined');
     }
 
     // If customFullDescription use it, otherwise proceed to build a description
@@ -715,7 +811,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * the index of the current image.
    * @param number currentIndex is the index of the current image
    */
-  private handleBoundaries(currentIndex: number) {
+  private handleBoundaries(currentIndex: number): void {
     if (this.images.length === 1) {
       this.isFirstImage = true;
       this.isLastImage = true;
@@ -744,7 +840,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * This is based on the slideConfig input to enable/disable 'infinite sliding'.
    * @param number index of the visible image
    */
-  private manageSlideConfig() {
+  private manageSlideConfig(): void {
+    if (!this.currentImage) {
+      throw new Error('Internal library error - currentImage must be defined');
+    }
     let index: number;
     try {
       index = getIndex(this.currentImage, this.images);
@@ -768,7 +867,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    *  current image to the first one or the last one.
    * @param indexToCheck is the index number of the image (the first or the last one).
    */
-  private emitBoundaryEvent(action: Action, indexToCheck: number) {
+  private emitBoundaryEvent(action: Action, indexToCheck: number): void {
+    if (!this.id) {
+      return;
+    }
     // to emit first/last event
     switch (indexToCheck) {
       case 0:
@@ -790,6 +892,9 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
+    if (!this.currentImage) {
+      throw new Error('Internal library error - currentImage must be defined');
+    }
     return !this.infinite && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }

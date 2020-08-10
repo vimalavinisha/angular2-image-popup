@@ -33,7 +33,7 @@ import { DotsConfig } from '../../model/dots-config.interface';
 
 import { NEXT } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService, LibConfig } from '../../services/config.service';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.
@@ -45,24 +45,24 @@ import { ConfigService } from '../../services/config.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DotsComponent extends AccessibleComponent implements OnInit, OnChanges {
-  @Input() id: number;
+  @Input() id: number | undefined;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
-  currentImage: InternalLibImage;
+  currentImage: InternalLibImage | undefined;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
-  images: InternalLibImage[];
+  images: InternalLibImage[] | undefined;
   /**
    * Object of type `DotsConfig` to init DotsComponent's features.
    * For instance, it contains a param to show/hide this component.
    */
   @Input()
-  dotsConfig: DotsConfig;
+  dotsConfig: DotsConfig | undefined;
   /**
    * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
@@ -72,12 +72,12 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   /**
    * Object of type `DotsConfig` used in template.
    */
-  configDots: DotsConfig;
+  configDots: DotsConfig | undefined;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig | undefined;
 
   constructor(private configService: ConfigService) {
     super();
@@ -87,8 +87,15 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
-    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
+  ngOnInit(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    this.accessibilityConfig = libConfig.accessibilityConfig;
     this.configDots = Object.assign({}, this.dotsConfig);
   }
 
@@ -96,7 +103,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    * Method ´ngOnChanges´ to change `configDots` if the input dotsConfig is changed.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    */
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const dotsConfigChanges: SimpleChange = changes.dotsConfig;
     if (dotsConfigChanges && dotsConfigChanges.currentValue !== dotsConfigChanges.previousValue) {
       this.configDots = dotsConfigChanges.currentValue;
@@ -128,7 +135,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    * @param number index of the dot
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onDotEvent(index: number, event: KeyboardEvent | MouseEvent) {
+  onDotEvent(index: number, event: KeyboardEvent | MouseEvent): void {
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
       this.clickDot.emit(index);

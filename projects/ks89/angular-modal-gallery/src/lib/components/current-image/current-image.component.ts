@@ -59,7 +59,7 @@ import { SlideConfig } from '../../model/slide-config.interface';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService, LibConfig } from '../../services/config.service';
 
 /**
  * Interface to describe the Load Event, used to
@@ -86,23 +86,27 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * the service to call modal gallery without open it manually.
    */
   @Input()
+  // @ts-ignore
   id: number;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
+  // @ts-ignore
   currentImage: InternalLibImage;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
+  // @ts-ignore
   images: InternalLibImage[];
   /**
    * Boolean that it is true if the modal gallery is visible.
    * If yes, also this component should be visible.
    */
   @Input()
+  // @ts-ignore
   isOpen: boolean;
 
   /**
@@ -139,20 +143,20 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig | undefined;
   /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
-  slideConfig: SlideConfig;
+  slideConfig: SlideConfig | undefined;
   /**
    * Object to configure current image in modal-gallery.
    * For instance you can disable navigation on click on current image (enabled by default).
    */
-  currentImageConfig: CurrentImageConfig;
+  currentImageConfig: CurrentImageConfig | undefined;
   /**
    * Object of type `KeyboardConfig` to assign custom keys to both ESC, RIGHT and LEFT keyboard's actions.
    */
-  keyboardConfig: KeyboardConfig;
+  keyboardConfig: KeyboardConfig | undefined;
   /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
@@ -189,7 +193,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     DOWN: 'swipedown'
   };
 
-  constructor(@Inject(PLATFORM_ID) private platformId, private ngZone: NgZone, private ref: ChangeDetectorRef, private configService: ConfigService) {
+  // tslint:disable-next-line:no-any
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private ngZone: NgZone, private ref: ChangeDetectorRef, private configService: ConfigService) {
     super();
   }
 
@@ -197,7 +202,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Listener to stop the gallery when the mouse pointer is over the current image.
    */
   @HostListener('mouseenter')
-  onMouseEnter() {
+  onMouseEnter(): void {
     // if carousel feature is disable, don't do anything in any case
     if (!this.slideConfig || !this.slideConfig.playConfig) {
       return;
@@ -212,7 +217,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Listener to play the gallery when the mouse pointer leave the current image.
    */
   @HostListener('mouseleave')
-  onMouseLeave() {
+  onMouseLeave(): void {
     // if carousel feature is disable, don't do anything in any case
     if (!this.slideConfig || !this.slideConfig.playConfig) {
       return;
@@ -228,11 +233,15 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
-    this.slideConfig = this.configService.getConfig(this.id).slideConfig;
-    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
-    this.currentImageConfig = this.configService.getConfig(this.id).currentImageConfig;
-    this.keyboardConfig = this.configService.getConfig(this.id).keyboardConfig;
+  ngOnInit(): void {
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.buttonsConfig) {
+      throw new Error('Internal library error - libConfig and buttonsConfig must be defined');
+    }
+    this.slideConfig = libConfig.slideConfig;
+    this.accessibilityConfig = libConfig.accessibilityConfig;
+    this.currentImageConfig = libConfig.currentImageConfig;
+    this.keyboardConfig = libConfig.keyboardConfig;
   }
 
   /**
@@ -241,7 +250,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
     const images: SimpleChange = changes.images;
     const currentImage: SimpleChange = changes.currentImage;
 
@@ -253,11 +266,11 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
     const slideConfig: SimpleChange = changes.slideConfig;
     if (slideConfig && slideConfig.previousValue !== slideConfig.currentValue) {
-      this.slideConfig = this.configService.getConfig(this.id).slideConfig;
+      this.slideConfig = libConfig.slideConfig;
     }
   }
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
     if (isPlatformBrowser(this.platformId)) {
@@ -265,7 +278,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
         this.start$
           .pipe(
             map(() => this.slideConfig && this.slideConfig.playConfig && this.slideConfig.playConfig.autoPlay && this.slideConfig.playConfig.interval),
-            filter(interval => interval > 0),
+            // tslint:disable-next-line:no-any
+            filter((interval: any) => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
           .subscribe(() =>
@@ -287,7 +301,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * the key that triggered the keypress event to navigate between images or to close the modal gallery.
    * @param number keyCode of the key that triggered the keypress event
    */
-  onKeyPress(keyCode: number) {
+  onKeyPress(keyCode: number): void {
     const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
     const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
     const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
@@ -366,6 +380,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns Image the image to show as size preview on the left
    */
   getLeftPreviewImage(): Image {
+    if (!this.slideConfig) {
+      throw new Error('Internal library error - slideConfig must be defined');
+    }
     const currentIndex: number = getIndex(this.currentImage, this.images);
     if (currentIndex === 0 && this.slideConfig.infinite) {
       // the current image is the first one,
@@ -382,6 +399,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @returns Image the image to show as size preview on the right
    */
   getRightPreviewImage(): Image {
+    if (!this.slideConfig) {
+      throw new Error('Internal library error - slideConfig must be defined');
+    }
     const currentIndex: number = getIndex(this.currentImage, this.images);
     if (currentIndex === this.images.length - 1 && this.slideConfig.infinite) {
       // the current image is the last one,
@@ -399,7 +419,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param KeyboardEvent | MouseEvent event payload
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
    */
-  onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+  onImageEvent(event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
+    if (!this.currentImageConfig) {
+      throw new Error('Internal library error - currentImageConfig must be defined');
+    }
     // check if triggered by a mouse click
     // If yes, It should block navigation when navigateOnClick is false
     if (action === Action.CLICK && !this.currentImageConfig.navigateOnClick) {
@@ -420,7 +443,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
    * @param boolean disable to disable navigation
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL, disable: boolean = false) {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL, disable: boolean = false): void {
     if (disable) {
       return;
     }
@@ -437,7 +460,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param action Enum of type `Action` that represents the source
    *  action that moved back to the previous image. `Action.NORMAL` by default.
    */
-  prevImage(action: Action = Action.NORMAL) {
+  prevImage(action: Action = Action.NORMAL): void {
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
       return;
@@ -454,7 +477,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * @param action Enum of type `Action` that represents the source
    *  action that moved to the next image. `Action.NORMAL` by default.
    */
-  nextImage(action: Action = Action.NORMAL) {
+  nextImage(action: Action = Action.NORMAL): void {
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
@@ -471,7 +494,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * This method is invoked by the javascript's 'load' event on an img tag.
    * @param Event event that triggered the load
    */
-  onImageLoad(event: Event) {
+  onImageLoad(event: Event): void {
     const loadImageData: ImageLoadEvent = {
       status: true,
       index: getIndex(this.currentImage, this.images),
@@ -487,7 +510,10 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Method used by Hammerjs to support touch gestures (you can also invert the swipe direction with configCurrentImage.invertSwipe).
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
-  swipe(action = this.SWIPE_ACTION.RIGHT) {
+  swipe(action = this.SWIPE_ACTION.RIGHT): void {
+    if (!this.currentImageConfig) {
+      throw new Error('Internal library error - currentImageConfig must be defined');
+    }
     switch (action) {
       case this.SWIPE_ACTION.RIGHT:
         if (this.currentImageConfig.invertSwipe) {
@@ -522,14 +548,14 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Method to play modal gallery.
    */
-  playCarousel() {
+  playCarousel(): void {
     this.start$.next();
   }
 
   /**
    * Stops modal gallery from cycling through items.
    */
-  stopCarousel() {
+  stopCarousel(): void {
     this.stop$.next();
   }
 
@@ -537,7 +563,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Method to cleanup resources. In fact, this will stop the modal gallery.
    * This is an Angular's lifecycle hook that is called when this component is destroyed.
    */
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.stopCarousel();
   }
 
@@ -546,7 +572,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * the index of the current image.
    * @param number currentIndex is the index of the current image
    */
-  private handleBoundaries(currentIndex: number) {
+  private handleBoundaries(currentIndex: number): void {
     if (this.images.length === 1) {
       this.isFirstImage = true;
       this.isLastImage = true;
@@ -658,7 +684,7 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   /**
    * Private method to call handleBoundaries when ngOnChanges is called.
    */
-  private updateIndexes() {
+  private updateIndexes(): void {
     let index: number;
     try {
       index = getIndex(this.currentImage, this.images);

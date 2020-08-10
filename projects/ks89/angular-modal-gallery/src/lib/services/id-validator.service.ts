@@ -39,7 +39,7 @@ export class IdValidatorService {
    * @throws a error with a message if galleryId is neither unique, < 0 or an integer
    */
   checkAndAdd(galleryId: number | undefined): boolean {
-    if (!Number.isInteger(galleryId) || galleryId < 0) {
+    if (galleryId === undefined || !Number.isInteger(galleryId) || galleryId < 0) {
       throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');
     }
     if (this.ids.get(galleryId)) {
@@ -56,7 +56,7 @@ export class IdValidatorService {
    * @throws a error with a message if galleryId is neither integer or < 0
    */
   remove(galleryId: number | undefined): boolean {
-    if (!Number.isInteger(galleryId) || galleryId < 0) {
+    if (galleryId === undefined || !Number.isInteger(galleryId) || galleryId < 0) {
       throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');
     }
     // if (this.ids.find(id => id === galleryId)) {

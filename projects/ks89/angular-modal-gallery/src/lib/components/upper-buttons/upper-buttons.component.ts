@@ -39,7 +39,7 @@ import {
 } from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService, LibConfig } from '../../services/config.service';
 
 /**
  * Internal representation of `ButtonConfig` with an optional `id` field, used by trackId to improve performances.
@@ -59,12 +59,12 @@ export interface InternalButtonConfig extends ButtonConfig {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
-  @Input() id: number;
+  @Input() id: number | undefined;
   /**
    * Object of type `Image` that represent the visible image.
    */
   @Input()
-  currentImage: Image;
+  currentImage: Image | undefined;
 
   /**
    * Output to emit clicks on refresh button. The payload contains a `ButtonEvent`.
@@ -111,12 +111,12 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Object of type `ButtonsConfig` to init UpperButtonsComponent's features.
    * For instance, it contains an array of buttons.
    */
-  buttonsConfig: ButtonsConfig;
+  buttonsConfig: ButtonsConfig | undefined;
   /**
    * Array of `InternalButtonConfig` exposed to the template. This field is initialized
    * applying transformations, default values and so on to the input of the same type.
    */
-  buttons: InternalButtonConfig[];
+  buttons: InternalButtonConfig[] | undefined;
 
   /**
    * Default buttons array for standard configuration
@@ -150,8 +150,15 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
-    this.buttonsConfig = this.configService.getConfig(this.id).buttonsConfig;
+  ngOnInit(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig || !libConfig.buttonsConfig) {
+      throw new Error('Internal library error - libConfig and buttonsConfig must be defined');
+    }
+    this.buttonsConfig = libConfig.buttonsConfig;
     switch (this.buttonsConfig.strategy) {
       case ButtonsStrategy.SIMPLE:
         this.buttons = this.addButtonIds(this.simpleButtonsDefault);
@@ -180,7 +187,10 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param Action action that triggered the source event or `Action.CLICK` if not specified
    * @throws an error if the button type is unknown
    */
-  onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK) {
+  onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
     if (!event) {
       return;
     }
@@ -241,7 +251,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @param KeyboardEvent | MouseEvent event is the source that triggered this method
    * @param ButtonEvent dataToEmit payload to emit
    */
-  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>, event: KeyboardEvent | MouseEvent, dataToEmit: ButtonEvent) {
+  private triggerOnMouseAndKeyboard(emitter: EventEmitter<ButtonEvent>, event: KeyboardEvent | MouseEvent, dataToEmit: ButtonEvent): void {
     if (!emitter) {
       throw new Error(`UpperButtonsComponent unknown emitter in triggerOnMouseAndKeyboard`);
     }

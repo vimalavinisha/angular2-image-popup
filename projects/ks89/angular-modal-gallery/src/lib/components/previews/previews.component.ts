@@ -35,7 +35,7 @@ import { SlideConfig } from '../../model/slide-config.interface';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
 import { Action } from '../../model/action.enum';
-import { ConfigService, DEFAULT_PREVIEW_SIZE } from '../../services/config.service';
+import { ConfigService, DEFAULT_PREVIEW_SIZE, LibConfig } from '../../services/config.service';
 import { Size } from '../../model/size.interface';
 
 /**
@@ -48,18 +48,18 @@ import { Size } from '../../model/size.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
-  @Input() id: number;
+  @Input() id: number | undefined;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
-  currentImage: InternalLibImage;
+  currentImage: InternalLibImage | undefined;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
-  images: InternalLibImage[];
+  images: InternalLibImage[] | undefined;
   /**
    * Output to emit the clicked preview. The payload contains the `ImageEvent` associated to the clicked preview.
    */
@@ -75,16 +75,16 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig | undefined;
   /**
    * Object of type `SlideConfig` to get `infinite sliding`.
    */
-  slideConfig: SlideConfig;
+  slideConfig: SlideConfig | undefined;
   /**
    * Object of type `PreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
    */
-  previewConfig: PreviewConfig;
+  previewConfig: PreviewConfig | undefined;
   /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
@@ -103,10 +103,12 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Start index of the input images used to display previews.
    */
+  // @ts-ignore
   start: number;
   /**
    * End index of the input images used to display previews.
    */
+  // @ts-ignore
   end: number;
 
   defaultPreviewSize: Size = DEFAULT_PREVIEW_SIZE;
@@ -121,10 +123,20 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
-    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
-    this.slideConfig = this.configService.getConfig(this.id).slideConfig;
-    this.previewConfig = this.configService.getConfig(this.id).previewConfig;
+  ngOnInit(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    this.accessibilityConfig = libConfig.accessibilityConfig;
+    this.slideConfig = libConfig.slideConfig;
+    this.previewConfig = libConfig.previewConfig;
+    if (!this.currentImage || !this.images) {
+      throw new Error('Internal library error - currentImage and images must be defined');
+    }
     this.initPreviews(this.currentImage, this.images);
   }
 
@@ -147,7 +159,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const images: SimpleChange = changes.images;
     const currentImage: SimpleChange = changes.currentImage;
 
@@ -179,7 +191,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @param InternalLibImage preview that triggered this method
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
+    if (!this.id || !this.images) {
+      throw new Error('Internal library error - id and images must be defined');
+    }
     if (!this.previewConfig || !this.previewConfig.clickable) {
       return;
     }
@@ -195,7 +210,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @param string direction of the navigation that can be either 'next' or 'prev'
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
       // this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_RIGHT, action: action });
@@ -222,7 +237,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @param InternalLibImage currentImage to decide how to show previews, because I always want to see the current image as highlighted
    * @param InternalLibImage[] images is the array of all images.
    */
-  private initPreviews(currentImage: InternalLibImage, images: InternalLibImage[]) {
+  private initPreviews(currentImage: InternalLibImage, images: InternalLibImage[]): void {
     let index: number;
     try {
       index = getIndex(currentImage, images);
@@ -249,7 +264,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Private method to init both `start` and `end` to the beginning.
    */
-  private setBeginningIndexesPreviews() {
+  private setBeginningIndexesPreviews(): void {
+    if (!this.previewConfig || !this.images) {
+      throw new Error('Internal library error - previewConfig and images must be defined');
+    }
     this.start = 0;
     this.end = Math.min(this.previewConfig.number as number, this.images.length);
   }
@@ -257,7 +275,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Private method to init both `start` and `end` to the end.
    */
-  private setEndIndexesPreviews() {
+  private setEndIndexesPreviews(): void {
+    if (!this.previewConfig || !this.images) {
+      throw new Error('Internal library error - previewConfig and images must be defined');
+    }
     this.start = this.images.length - 1 - ((this.previewConfig.number as number) - 1);
     this.end = this.images.length;
   }
@@ -265,7 +286,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Private method to update both `start` and `end` based on the currentImage.
    */
-  private setIndexesPreviews() {
+  private setIndexesPreviews(): void {
+    if (!this.previewConfig || !this.images || !this.currentImage) {
+      throw new Error('Internal library error - previewConfig, currentImage and images must be defined');
+    }
     this.start = getIndex(this.currentImage, this.images) - Math.floor((this.previewConfig.number as number) / 2);
     this.end = getIndex(this.currentImage, this.images) + Math.floor((this.previewConfig.number as number) / 2) + 1;
   }
@@ -273,7 +297,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Private method to update the visible previews navigating to the right (next).
    */
-  private next() {
+  private next(): void {
+    if (!this.images) {
+      throw new Error('Internal library error - images must be defined');
+    }
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
@@ -292,7 +319,10 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Private method to update the visible previews navigating to the left (previous).
    */
-  private previous() {
+  private previous(): void {
+    if (!this.images) {
+      throw new Error('Internal library error - images must be defined');
+    }
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
       return;
@@ -314,13 +344,19 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * @returns boolean if true block sliding, otherwise not
    */
   private isPreventSliding(boundaryIndex: number): boolean {
+    if (!this.images || !this.currentImage) {
+      throw new Error('Internal library error - images and currentImage must be defined');
+    }
     return !!this.slideConfig && this.slideConfig.infinite === false && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 
   /**
    * Private method to handle navigation changing the previews array and other variables.
    */
-  private updatePreviews(prev: InternalLibImage, current: InternalLibImage) {
+  private updatePreviews(prev: InternalLibImage, current: InternalLibImage): void {
+    if (!this.images) {
+      throw new Error('Internal library error - images must be defined');
+    }
     // to manage infinite sliding I have to reset both `start` and `end` at the beginning
     // to show again previews from the first image.
     // This happens when you navigate over the last image to return to the first one

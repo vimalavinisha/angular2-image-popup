@@ -36,7 +36,7 @@ export class MaxSizeDirective implements OnInit, OnChanges {
    * Object of type `MaxSize` to resize the element.
    */
   @Input()
-  maxSizeConfig: MaxSize;
+  maxSizeConfig: MaxSize | undefined;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -45,7 +45,7 @@ export class MaxSizeDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.applyStyle();
   }
 
@@ -54,14 +54,14 @@ export class MaxSizeDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.applyStyle();
   }
 
   /**
    * Private method to change both max-width and max-height of an element.
    */
-  private applyStyle() {
+  private applyStyle(): void {
     if (!this.maxSizeConfig) {
       return;
     }

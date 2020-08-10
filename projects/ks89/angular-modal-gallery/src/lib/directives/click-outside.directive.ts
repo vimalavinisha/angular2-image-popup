@@ -37,7 +37,7 @@ export class ClickOutsideDirective {
    * Boolean to enable this directive.
    */
   @Input()
-  clickOutsideEnable: boolean;
+  clickOutsideEnable: boolean | undefined;
   /**
    * Output to emit an event if the clicked element class doesn't contain 'inside' or it is 'hidden'. The payload is a boolean.
    */
@@ -49,9 +49,10 @@ export class ClickOutsideDirective {
    * @param MouseEvent event payload received evey click
    */
   @HostListener('click', ['$event'])
-  onClick(event: MouseEvent) {
+  onClick(event: MouseEvent): void {
     event.stopPropagation();
 
+    // tslint:disable-next-line:no-any
     const target: any = event.target;
 
     if (!this.clickOutsideEnable || !target) {

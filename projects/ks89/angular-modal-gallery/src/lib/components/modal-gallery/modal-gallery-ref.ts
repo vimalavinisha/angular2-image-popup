@@ -2,7 +2,6 @@ import { OverlayRef } from '@angular/cdk/overlay';
 
 import { Subject } from 'rxjs';
 import { ImageModalEvent } from '../../model/image.class';
-import { InteractionEvent } from '../../model/interaction-event.interface';
 import { ButtonEvent } from '../../model/buttons-config.interface';
 
 export class ModalGalleryRef {
@@ -27,31 +26,31 @@ export class ModalGalleryRef {
     this.overlayRef.dispose();
   }
 
-  emitClose(event: ImageModalEvent) {
+  emitClose(event: ImageModalEvent): void {
     this.close.next(event);
   }
 
-  emitShow(event: ImageModalEvent) {
+  emitShow(event: ImageModalEvent): void {
     this.show.next(event);
   }
 
-  emitFirstImage(event: ImageModalEvent) {
+  emitFirstImage(event: ImageModalEvent): void {
     this.firstImage.next(event);
   }
 
-  emitLastImage(event: ImageModalEvent) {
+  emitLastImage(event: ImageModalEvent): void {
     this.lastImage.next(event);
   }
 
-  emitHasData(event: ImageModalEvent) {
+  emitHasData(event: ImageModalEvent): void {
     this.hasData.next(event);
   }
 
-  emitButtonBeforeHook(event: ButtonEvent) {
+  emitButtonBeforeHook(event: ButtonEvent): void {
     this.buttonBeforeHook.next(event);
   }
 
-  emitButtonAfterHook(event: ButtonEvent) {
+  emitButtonAfterHook(event: ButtonEvent): void {
     this.buttonAfterHook.next(event);
   }
 }

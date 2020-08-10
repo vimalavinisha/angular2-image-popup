@@ -84,17 +84,21 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * TODO write doc
    */
-  @Input() id: number;
+  @Input()
+  // @ts-ignore
+  id: number;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
+  // @ts-ignore
   currentImage: InternalLibImage;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
+  // @ts-ignore
   images: InternalLibImage[];
 
   /**
@@ -107,17 +111,17 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * Object of type `CarouselConfig` to init CarouselComponent's features.
    * For instance, it contains parameters to change the style, how it navigates and so on.
    */
-  carouselConfig: CarouselConfig;
+  carouselConfig: CarouselConfig | undefined;
   /**
    * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
    * For instance, it contains a param to show/hide this component, sizes.
    */
-  previewConfig: CarouselPreviewConfig;
+  previewConfig: CarouselPreviewConfig | undefined;
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig | undefined;
   /**
    * Enum of type `Action` that represents a mouse click on a button.
    * Declared here to be used inside the template.
@@ -140,13 +144,15 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Start index (inclusive) of the input images used to display previews.
    */
+  // @ts-ignore
   start: number;
   /**
    * End index (non inclusive) of the input images used to display previews.
    */
+  // @ts-ignore
   end: number;
 
-  private breakpointSubscription: Subscription;
+  private readonly breakpointSubscription: Subscription;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -161,7 +167,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
     this.breakpointSubscription = breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
       .subscribe((result: BreakpointState) => {
-        if (!this.previewConfig) {
+        if (!this.previewConfig || !this.previewConfig.breakpoints) {
           return;
         }
         if (result.breakpoints[Breakpoints.XSmall]) {
@@ -182,7 +188,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * Method to update the height of previews, passing the desired height as input.
    * @param configBreakpointHeight is a number that represent the desired height to set.
    */
-  private updateHeight(configBreakpointHeight: number) {
+  private updateHeight(configBreakpointHeight: number): void {
     if (this.previewConfig && this.previewConfig.maxHeight) {
       const heightNum: number = +this.previewConfig.maxHeight.replace('px', '').replace('%', '');
       this.previewMaxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
@@ -199,16 +205,23 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
-    const libConfig: LibConfig = this.configService.getConfig(this.id);
+  ngOnInit(): void {
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
     this.carouselConfig = libConfig.carouselConfig;
     this.previewConfig = libConfig.carouselPreviewsConfig;
     this.accessibilityConfig = libConfig.accessibilityConfig;
 
+    if (!this.previewConfig || !this.previewConfig.maxHeight || !this.previewConfig.breakpoints) {
+      throw new Error('Internal library error - previewConfig must be defined');
+    }
     // change the max-width of this component if there is a specified width !== 100% in carouselConfig
     if (this.carouselConfig && this.carouselConfig.maxWidth !== '100%') {
       this.hostMaxWidth = this.carouselConfig.maxWidth;
     }
+
     this.previewMaxHeight = this.previewConfig.maxHeight;
     // init previews based on currentImage and the full array of images
     this.initPreviews(this.currentImage, this.images);
@@ -252,7 +265,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const simpleChange: SimpleChange = changes.currentImage;
     if (!simpleChange) {
       return;
@@ -299,7 +312,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
         return;
       }
 
-      if (this.previewConfig.number % 2 === 0) {
+      if (this.previewConfig && (this.previewConfig.number as number) % 2 === 0) {
         if (calc > currentIndex) {
           this.previous();
         } else {
@@ -323,7 +336,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param KeyboardEvent | MouseEvent event payload
    * @param Action that triggered this event (Action.NORMAL by default)
    */
-  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL) {
+  onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
     if (!this.previewConfig || !this.previewConfig.clickable) {
       return;
     }
@@ -341,7 +354,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param string direction of the navigation that can be either 'next' or 'prev'
    * @param KeyboardEvent | MouseEvent event payload
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent) {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent): void {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
       this.next();
@@ -440,7 +453,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    * @param InternalLibImage currentImage to decide how to show previews, because I always want to see the current image as highlighted
    * @param InternalLibImage[] images is the array of all images.
    */
-  private initPreviews(currentImage: InternalLibImage, images: InternalLibImage[]) {
+  private initPreviews(currentImage: InternalLibImage, images: InternalLibImage[]): void {
     let index: number;
     try {
       index = getIndex(currentImage, images);
@@ -468,7 +481,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Private method to init both `start` and `end` to the beginning.
    */
-  private setBeginningIndexesPreviews() {
+  private setBeginningIndexesPreviews(): void {
+    if (!this.previewConfig || this.previewConfig.number === undefined) {
+      throw new Error('Internal library error - previewConfig and number must be defined');
+    }
+
     this.start = 0;
     this.end = Math.min(this.previewConfig.number as number, this.images.length);
   }
@@ -476,7 +493,11 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Private method to init both `start` and `end` to the end.
    */
-  private setEndIndexesPreviews() {
+  private setEndIndexesPreviews(): void {
+    if (!this.previewConfig || this.previewConfig.number === undefined) {
+      throw new Error('Internal library error - previewConfig and number must be defined');
+    }
+
     this.start = this.images.length - 1 - ((this.previewConfig.number as number) - 1);
     this.end = this.images.length;
   }
@@ -484,7 +505,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Private method to update the visible previews navigating to the right (next).
    */
-  private next() {
+  private next(): void {
     // check if nextImage should be blocked
     if (this.isPreventSliding(this.images.length - 1)) {
       return;
@@ -503,7 +524,7 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   /**
    * Private method to update the visible previews navigating to the left (previous).
    */
-  private previous() {
+  private previous(): void {
     // check if prevImage should be blocked
     if (this.isPreventSliding(0)) {
       return;

@@ -35,22 +35,22 @@ export class MarginDirective implements OnInit, OnChanges {
    * String to set the margin of an element.
    */
   @Input()
-  marginLeft: string;
+  marginLeft: string | undefined;
   /**
    * String to set the margin of an element.
    */
   @Input()
-  marginRight: string;
+  marginRight: string | undefined;
   /**
    * String to set the margin of an element.
    */
   @Input()
-  marginTop: string;
+  marginTop: string | undefined;
   /**
    * String to set the margin of an element.
    */
   @Input()
-  marginBottom: string;
+  marginBottom: string | undefined;
 
   constructor(private renderer: Renderer2, private el: ElementRef) {}
 
@@ -59,7 +59,7 @@ export class MarginDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
     this.applyStyle();
   }
 
@@ -68,14 +68,14 @@ export class MarginDirective implements OnInit, OnChanges {
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.applyStyle();
   }
 
   /**
    * Private method to change both width and height of an element.
    */
-  private applyStyle() {
+  private applyStyle(): void {
     if (this.marginLeft) {
       this.renderer.setStyle(this.el.nativeElement, 'margin-left', this.marginLeft);
     }

@@ -49,23 +49,23 @@ import { AccessibleComponent } from '../accessible.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlainGalleryComponent extends AccessibleComponent implements OnInit, OnChanges {
-  @Input() id: number;
+  @Input() id: number | undefined;
 
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
   @Input()
-  images: Image[];
+  images: Image[] = [];
   /**
    * Boolean to show/hide plain gallery. If true the plain gallery will be visible, false otherwise.
    */
   @Input()
-  showGallery: boolean;
+  showGallery: boolean | undefined;
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
   @Input()
-  config: LibConfig;
+  config: LibConfig | undefined;
   /**
    * Output to emit an event when an image is changed.
    */
@@ -75,13 +75,13 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
   /**
    * Object of type `PlainGalleryConfig` to configure the plain gallery.
    */
-  plainGalleryConfig: PlainGalleryConfig;
+  plainGalleryConfig: PlainGalleryConfig | undefined;
 
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
    * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  accessibilityConfig: AccessibilityConfig;
+  accessibilityConfig: AccessibilityConfig | undefined;
 
   /**
    * Bi-dimensional array of `Image` object to store images to display as plain gallery.
@@ -91,7 +91,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
   /**
    * Size object used in the template to resize images.
    */
-  size: Size;
+  size: Size | undefined;
   /**
    * Boolean passed as input to `ks-wrap` directive to configure flex-wrap css property.
    * However it's not enough, because you need to limit the width using `widthStyle` public variable.
@@ -107,12 +107,12 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * String passed as input to `ks-direction` directive to set the flex-direction css property.
    * For more info check https://developer.mozilla.org/it/docs/Web/CSS/flex-direction
    */
-  directionStyle: string;
+  directionStyle: string | undefined;
   /**
    * String passed as input to `ks-direction` directive to set the justify-content css property.
    * For more info check https://developer.mozilla.org/it/docs/Web/CSS/justify-content
    */
-  justifyStyle: string;
+  justifyStyle: string | undefined;
 
   /**
    * Default image size object
@@ -142,10 +142,18 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
-  ngOnInit() {
+  ngOnInit(): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
     this.configService.setConfig(this.id, this.config);
-    this.accessibilityConfig = this.configService.getConfig(this.id).accessibilityConfig;
-    this.plainGalleryConfig = this.configService.getConfig(this.id).plainGalleryConfig;
+
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+    this.accessibilityConfig = libConfig.accessibilityConfig;
+    this.plainGalleryConfig = libConfig.plainGalleryConfig;
     this.initImageGrid();
   }
 
@@ -154,7 +162,15 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.id) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
     const imagesChange: SimpleChange = changes.images;
     const configChange: SimpleChange = changes.plainGalleryConfig;
 
@@ -165,7 +181,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
       !configChange.firstChange &&
       (configChange.previousValue !== configChange.currentValue || (!configChange.previousValue && !configChange.currentValue))
     ) {
-      this.plainGalleryConfig = this.configService.getConfig(this.id).plainGalleryConfig;
+      this.plainGalleryConfig = libConfig.plainGalleryConfig;
       // this.configPlainGallery = this.initPlainGalleryConfig();
     }
     if (imagesChange && !imagesChange.firstChange && imagesChange.previousValue !== imagesChange.currentValue) {
@@ -178,12 +194,12 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * This will emit the show event with the image as payload.
    * @param Image img is the Image to show
    */
-  showModalGalleryByImage(img: Image) {
+  showModalGalleryByImage(img: Image): void {
     const index: number = this.images.findIndex((val: Image) => val && img && val.id === img.id);
     this.showModalGallery(index);
   }
 
-  onNavigationEvent(event: KeyboardEvent, img: Image) {
+  onNavigationEvent(event: KeyboardEvent, img: Image): void {
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {
       this.showModalGalleryByImage(img);
@@ -242,7 +258,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * This will emit the show event with the index number as payload.
    * @param number index of the clicked image
    */
-  private showModalGallery(index: number) {
+  private showModalGallery(index: number): void {
     this.showImage.emit(index);
   }
 
@@ -250,7 +266,11 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * Private method to init both `imageGrid` and other style variables,
    * based on the layout type.
    */
-  private initImageGrid() {
+  private initImageGrid(): void {
+    if (!this.plainGalleryConfig) {
+      throw new Error('Internal library error - plainGalleryConfig must be defined');
+    }
+
     // reset the array to prevent issues in case of GridLayout
     this.imageGrid = [];
 

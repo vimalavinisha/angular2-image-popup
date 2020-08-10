@@ -37,6 +37,7 @@ import { ConfigService } from './services/config.service';
 // From @mohaxspb (https://github.com/Ks89/angular-modal-gallery/pull/187)
 @Injectable()
 export class KsHammerGestureConfig extends HammerGestureConfig {
+  // tslint:disable-next-line:typedef
   buildHammer(element: HTMLElement) {
     return new Hammer(element, {
       touchAction: 'pan-y'

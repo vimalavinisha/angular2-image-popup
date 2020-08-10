@@ -29,7 +29,7 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
 })
 export class KeyboardNavigationDirective {
   @Input()
-  isOpen: boolean;
+  isOpen: boolean | undefined;
 
   @Output()
   keyboardNavigation: EventEmitter<number> = new EventEmitter<number>();
@@ -41,7 +41,7 @@ export class KeyboardNavigationDirective {
    * @param e KeyboardEvent caught by the listener.
    */
   @HostListener('window:keydown', ['$event'])
-  onKeyDown(e: KeyboardEvent) {
+  onKeyDown(e: KeyboardEvent): void {
     if (!this.isOpen) {
       return;
     }
