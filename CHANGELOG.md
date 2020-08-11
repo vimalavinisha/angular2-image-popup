@@ -1,3 +1,16 @@
+# 8.0.0-beta.3
+### Features
+- upgrade to Angular 10. **(Breaking Change)**.
+- remove Angular 8 support. **(Breaking Change)**.
+
+### Demos
+- update all examples with Angular 10, except for angular-cli-9
+
+<br>
+**This is a beta version without documentation**
+**If you want to try it, check examples/angular-cli-10 to get tons of working examples**
+
+
 # 8.0.0-beta.2
 ### Features
 - restore Server Side Rendering support with Universal #183. **(Breaking Change)**.
