@@ -179,7 +179,7 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 7  | &gt;= 7.0.0                 | optional     |
 | Angular 8  | &gt;= 7.2.1                 | optional     |
 | Angular 9  | &gt;= 8.0.0                 | optional     |
-| Angular 10  | &gt;= 8.0.0                 | optional     |
+| Angular 10 | &gt;= 8.0.0                 | optional     |
 
 <br>
 
