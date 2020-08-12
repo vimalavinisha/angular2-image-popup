@@ -457,9 +457,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
+  // tslint:disable-next-line:no-any
   private timeout: any;
 
-  openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -485,7 +486,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  addRandomImage() {
+  addRandomImage(): void {
     // add to images array
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
@@ -500,7 +501,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     this.imagesMixedSizes = [...this.imagesMixedSizes, newImageMix];
   }
 
-  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -512,7 +513,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     } as ModalGalleryConfig);
   }
 
-  openModalWithOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -565,7 +566,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithDeleteButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithDeleteButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -603,7 +604,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithAddButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithAddButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -640,7 +641,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithAutoAdd(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithAutoAdd(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -669,7 +670,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithAutoUpdate(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
+  openModalWithAutoUpdate(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
@@ -703,7 +704,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  autoPlayButton(config: LibConfig) {
+  autoPlayButton(config: LibConfig): boolean {
     this.isPlaying = !this.isPlaying;
     if (config && config.slideConfig && config.slideConfig.playConfig) {
       config.slideConfig.playConfig.autoPlay = this.isPlaying;
@@ -711,11 +712,11 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     return this.isPlaying;
   }
 
-  trackById(index: number, item: Image) {
+  trackById(index: number, item: Image): number {
     return item.id;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     // release resources to prevent memory leaks and unexpected behaviours
     if (this.closeSubscription) {
       this.closeSubscription.unsubscribe();

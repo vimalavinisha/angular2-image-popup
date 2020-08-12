@@ -453,6 +453,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
   // this variable is used only for example of auto navigation
+  // tslint:disable-next-line:no-any
   private timeout: any;
 
   openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig) {
