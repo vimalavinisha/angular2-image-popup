@@ -133,7 +133,7 @@ build_script:
   - cd examples/systemjs
   - npm ci
   - cd ../..
-  - cd examples/angular-cli-8
+  - cd examples/angular-cli-10
   - npm ci
   - cd ../..
   - cd examples/angular-cli-9
@@ -157,8 +157,8 @@ build_script:
   - npm run build:dev
   - npm run build:prod
   - cd ../..
-  - # build official angular-cli-8 example
-  - cd examples/angular-cli-8
+  - # build official angular-cli-10 example
+  - cd examples/angular-cli-10
   - npm run build:dev
   - npm run build:prod
   - cd ../..

@@ -53,7 +53,7 @@ docs/
 examples/systemjs/app/**/*.js
 examples/systemjs/app/**/*.map
 examples/angular-cli-9/dist/
-examples/angular-cli-8/dist/
+examples/angular-cli-10/dist/
 examples/angular-cli-material/dist/
 examples/universal/dist/
 examples/universal/out-tsc/
