@@ -57,12 +57,6 @@
     "e2e:ee": "npm run e2e -- --element-explorer=true",
     "e2e:ci": "npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js",
     "lint": "ng lint",
-    "docs": "npm run docs:typedoc && npm run docs:compodoc",
-    "docs:typedoc": "typedoc --out ./docs/typedoc --mode file --target ES6 --exclude **/*.spec.ts ./projects/ks89/angular-modal-gallery",
-    "docs:typedoc:serve": "npm run docs:typedoc && lite-server --baseDir=\"docs/typedoc\"",
-    "docs:compodoc": "compodoc projects/ks89/angular-modal-gallery -p tsconfig.json -d docs/compodoc",
-    "docs:compodoc:serve": "npm run docs:compodoc -- -s",
-    "docs:compodoc:serve:watch": "npm run docs:compodoc -- -s -w",
     "check:licenses": "license-checker --exclude 'MIT, MIT OR X11, BSD, ISC, Apache-2.0'",
     "coveralls": "coveralls < coverage/lcov.info"
   },
@@ -94,7 +88,6 @@
     "@angular-devkit/build-ng-packagr": "~0.1000.5",
     "@angular/cli": "~10.0.5",
     "@angular/compiler-cli": "~10.0.8",
-    "@compodoc/compodoc": "^1.1.10",
     "@types/hammerjs": "^2.0.36",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
@@ -129,7 +122,6 @@
     "snyk": "^1.334.0",
     "ts-node": "~8.3.0",
     "tslint": "^6.1.0",
-    "typedoc": "^0.18.0",
     "typescript": "~3.9.5"
   }
 }

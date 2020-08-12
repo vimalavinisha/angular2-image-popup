@@ -96,9 +96,9 @@ install:
   # install nodejs and dependencies both global and local
   # use appveyor-retry to retry if npm ci fails
   - cmd: appveyor-retry powershell Install-Product node $env:nodejs_version
-  - npm install -g npm@6.8.0
+  - npm install -g npm@6.14.7
   - set PATH=%APPDATA%\npm;%PATH%
-  - npm install -g @angular/cli@7.3.3
+  - npm install -g @angular/cli@10.0.8
   - npm ci
   # rebuild again node-sass
   - npm rebuild node-sass --force
@@ -109,7 +109,6 @@ install:
 #---------------------------------#
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform:
-  - x86
   - x64
 
 build: off
@@ -172,7 +171,7 @@ build_script:
   - npm run build:dev
   - npm run build:prod
   - npm run build:ssr
-  - npm run build:prerender
+  - npm run prerender
   - cd ../..
 
 
@@ -196,8 +195,6 @@ test_script:
   - ./cc-test-reporter before-build
   # run tests
   - npm run test:ci
-  # run e2e tests
-  - npm run e2e:ci
 
 #---------------------------------#
 #      artifacts configuration    #
@@ -228,9 +225,6 @@ deploy_script:
 
 # on successful build
 on_success:
-  - npm run docs:typedoc
-  # TODO restore compodoc - why on appveyor isn't working???
-#  - npm run docs:compodoc
   # publish test results on codeclimate
   - cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 

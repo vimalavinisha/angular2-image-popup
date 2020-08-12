@@ -50,9 +50,8 @@ cd examples/universal
 npm run build:dev
 npm run build:prod
 npm run build:ssr
-npm run build:prerender
+npm run prerender
 cd ../..
 
 echo "testing library on $TRAVIS_OS_NAME"
 npm run test:ci
-npm run e2e:ci
