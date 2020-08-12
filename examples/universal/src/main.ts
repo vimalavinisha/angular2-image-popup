@@ -8,6 +8,10 @@ if (environment.production) {
   enableProdMode();
 }
 
+// ************************ dependencies ************************
+import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
+// **************************************************************
+
 document.addEventListener('DOMContentLoaded', () => {
   platformBrowserDynamic()
     .bootstrapModule(AppModule)
