@@ -28,8 +28,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'ks-navbar',
-  templateUrl: './navbar.html',
-  styleUrls: ['./navbar.scss']
+  templateUrl: 'navbar.html',
+  styleUrls: ['navbar.scss']
 })
 export class NavbarComponent {
   navbarHeight = '56px';
@@ -46,16 +46,16 @@ export class NavbarComponent {
     });
   }
 
-  isNavItemActive(location: string) {
+  isNavItemActive(location: string): string {
     return this.router.url.includes(location) ? 'active' : '';
   }
 
-  onNavigateTo(path: string) {
+  onNavigateTo(path: string): void {
     this.collapsed = false;
     this.router.navigate([path]);
   }
 
-  onToggle() {
+  onToggle(): void {
     this.collapsed = !this.collapsed;
     this.navbarHeight = this.collapsed ? '56px' : '150px';
   }

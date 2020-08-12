@@ -10,6 +10,7 @@ if (environment.production) {
 
 // ************************ dependencies ************************
 import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save hammerjs`)
+import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap`)
 // **************************************************************
 
 document.addEventListener('DOMContentLoaded', () => {

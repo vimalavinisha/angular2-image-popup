@@ -252,7 +252,7 @@ export class PlainGalleryExampleComponent {
 
   constructor(private modalGalleryService: ModalGalleryService, private sanitizer: DomSanitizer) {}
 
-  openImageModalRow(id: number, image: Image) {
+  openImageModalRow(id: number, image: Image): void {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -268,7 +268,7 @@ export class PlainGalleryExampleComponent {
     }) as ModalGalleryRef;
   }
 
-  openImageModalColumn(id: number, image: Image) {
+  openImageModalColumn(id: number, image: Image): void {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
@@ -284,7 +284,7 @@ export class PlainGalleryExampleComponent {
     }) as ModalGalleryRef;
   }
 
-  openImageModalRowDescription(id: number, image: Image) {
+  openImageModalRowDescription(id: number, image: Image): void {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
@@ -300,7 +300,7 @@ export class PlainGalleryExampleComponent {
     }) as ModalGalleryRef;
   }
 
-  addRandomImage() {
+  addRandomImage(): void {
     // add to images array
     const imageToCopy: Image = this.images[Math.floor(Math.random() * this.images.length)];
     const newImage: Image = new Image(this.images.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
@@ -311,7 +311,7 @@ export class PlainGalleryExampleComponent {
     this.imagesRect = [...this.imagesRect, newImageRect];
   }
 
-  onShow(id: number, index: number, images: Image[] = this.images) {
+  onShow(id: number, index: number, images: Image[] = this.images): void {
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       config: {
         id,
@@ -321,7 +321,7 @@ export class PlainGalleryExampleComponent {
     }) as ModalGalleryRef;
   }
 
-  trackById(index: number, item: Image) {
+  trackById(index: number, item: Image): number {
     return item.id;
   }
 

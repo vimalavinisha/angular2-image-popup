@@ -46,16 +46,16 @@ export class NavbarComponent {
     });
   }
 
-  isNavItemActive(location: string) {
+  isNavItemActive(location: string): string {
     return this.router.url.includes(location) ? 'active' : '';
   }
 
-  onNavigateTo(path: string) {
+  onNavigateTo(path: string): void {
     this.collapsed = false;
     this.router.navigate([path]);
   }
 
-  onToggle() {
+  onToggle(): void {
     this.collapsed = !this.collapsed;
     this.navbarHeight = this.collapsed ? '56px' : '150px';
   }
