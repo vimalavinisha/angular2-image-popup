@@ -52,7 +52,8 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master"><img src="https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master" alt="Coveralls Coverage"></a>
 </p>
 <p align="center">
-  <a href="https://stackblitz.com/edit/angular-modal-gallery-v7"><img src="https://img.shields.io/badge/stackblitz-available-orange.svg" alt="Stackblitz"></a>
+  <a href="https://stackblitz.com/edit/angular-modal-gallery-v8"><img src="https://img.shields.io/badge/stackblitz-available-orange.svg" alt="Stackblitz
+  "></a>
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/badge/angular--style--guide-compliant-brightgreen.svg" alt="AngularStyleGuide"></a>
 </p>
 <p align="center">
@@ -122,7 +123,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 - requires IE >= 11 and Angular >= 9
 - works with both JIT and AOT compilers
 - supports all **recommended Angular Compiler Options**
-- compliant to Angular Package Format v9 specifications
+- compliant to Angular Package Format v10 specifications
 - **use [Semantic versioning 2.0.0](http://semver.org/)** also known as 'semver'
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
@@ -138,7 +139,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 - configurable side-previews (visible only on bigger screen)
 - configurable dots navigation (visible only on bigger screen)
 - configurable previews (visible only on bigger screen)
-- and many more... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/))
+- and many more... (check the official documentation [HERE](https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/))
 
 <br>
 
@@ -149,7 +150,8 @@ Despite its name, this library is more than for modal galleries, because I'm int
 - `npm install --save-dev @types/mousetrap @types/hammerjs`
 
 From version @ks89/angular-modal-gallery >= 5.0.0, **font-awesome isn't a mandatory dependency**.
-You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/).
+You can use all default features without font-awesome. For more info, check official [documentation website](https://ks89.github.io/angular-modal
+-gallery-2020-v8.github.io/).
 
 <br>
 
@@ -157,13 +159,13 @@ You can use all default features without font-awesome. For more info, check offi
 
 *Image loading could be slow, because this website is hosted on Github pages*
 
-[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/)
+[OFFICIAL DOCUMENTATION WEBSITE](https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/)
 
 <br>
 
 ## :microphone: **Live demo** :microphone:
 
-[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v7/)
+[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v8/)
 
 <br>
 
@@ -187,6 +189,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 100 releases in two years**, and more to come... :)
 
+- 14/08/2020 - 8.0.0-beta.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 12/08/2020 - 8.0.0-beta.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 06/02/2020 - 8.0.0-beta.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/02/2020 - 8.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -232,12 +235,13 @@ You can use all default features without font-awesome. For more info, check offi
 1. Question: **I have this error: `Cannot find name 'MousetrapInstance'`. What can I do?**<br>
    **Answer**: Simply run `npm i --save-dev @types/mousetrap`
 2. Question: **I have this error: `Error: No provider for KeyboardService`. What can I do?**<br>
-   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/gettingStarted).
+   **Answer**: You forgot to add .forRoot(), so KeyboardService will be never available as a service. Please read section "Installation" [HERE](https
+   ://ks89.github.io/angular-modal-gallery-2020-v8.github.io/gettingStarted).
    This is a common design pattern for Angular libraries. For more info check also [this issue](https://github.com/Ks89/angular-modal-gallery/issues/94).
 3. Question: **How can I remove images using DELETE button without issues?**<br>
    **Answer**: **You cannot change the input image array. Instead, you should reassign it with a newer array** without the deleted element.
    In other words, **you must think in a functional way**, without changing the input array of images.
-   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2018-v7.github.io/demo/buttons-strategies).
+   For more information check this official demo [HERE](https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/demo/buttons-strategies).
 
 <br>
 
