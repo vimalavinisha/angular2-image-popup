@@ -23,14 +23,20 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
-  background: #000;
-  opacity: 0.85 !important;
+/* ***************************************************************** */
+/* *********** required by @ks89/angular-modal-gallery ************* */
+/* ***************************************************************** */
+.ks-modal-gallery-backdrop {
+  background: #000 !important;;
+  opacity: 0.85 !important;;
 }
 
-.cdk-overlay-container {
+.ks-modal-gallery-panel {
   z-index: 90000 !important;
 }
+/* ***************************************************************** */
+/* ***************************************************************** */
+/* ***************************************************************** */
 
 body {
   font-family: "Montserrat", sans-serif;

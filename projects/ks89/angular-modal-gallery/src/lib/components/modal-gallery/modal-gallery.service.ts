@@ -28,8 +28,8 @@ export interface ModalGalleryConfig {
 
 const DEFAULT_CONFIG: ModalGalleryConfig = {
   hasBackdrop: true,
-  backdropClass: 'dark-backdrop',
-  panelClass: 'tm-file-preview-dialog-panel',
+  backdropClass: 'ks-modal-gallery-backdrop',
+  panelClass: 'ks-modal-gallery-panel',
   config: undefined,
   dialogRef: undefined
 };
@@ -47,7 +47,7 @@ export class ModalGalleryService {
     // Override default configuration
     const dialogConfig = { ...DEFAULT_CONFIG, ...config };
     // Returns an OverlayRef which is a PortalHost
-    const overlayRef = this.createOverlay(dialogConfig);
+    const overlayRef: OverlayRef = this.createOverlay(dialogConfig);
     // Instantiate remote control
     this.dialogRef = new ModalGalleryRef(overlayRef);
 

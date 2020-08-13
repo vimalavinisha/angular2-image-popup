@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017-2019 Stefano Cappa
+ * Copyright (c) 2017-2020 Stefano Cappa
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 nav {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 16px;
   padding-right: 16px;
 }
-
 ul {
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 0;
 }
-
 nav.nav-expanded {
   display: flex;
   flex-direction: row;
@@ -49,7 +46,7 @@ nav.nav-expanded {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 10;
 }
 nav.nav-expanded > .navbar-hamburger {
   display: none;
@@ -126,7 +123,6 @@ nav.nav-expanded > #githubButtons {
 nav.nav-expanded > #githubButtons > .github-badge {
   margin-left: 8px;
 }
-
 nav.nav-collapsed {
   display: flex;
   flex-direction: column;
@@ -141,7 +137,7 @@ nav.nav-collapsed {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 10;
 }
 nav.nav-collapsed > .navbar-hamburger {
   display: none;
