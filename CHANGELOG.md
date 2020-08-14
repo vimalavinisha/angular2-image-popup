@@ -1,3 +1,39 @@
+# 8.0.0-beta.4
+### Features
+- new modal-gallery CSS classes used to set the backdrop **(BREAKING CHANGES)**
+  
+  To upgrade from all previous 8.0.0 beta releases, change your global styles.scss from:
+  
+    ```
+    .cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
+      background: #000;
+      opacity: 0.85 !important;
+    }
+    
+    .cdk-overlay-container {
+      z-index: 90000 !important;
+    }
+    ```
+    
+    to :
+    
+    ```
+    .ks-modal-gallery-backdrop {
+      background: #000 !important;;
+      opacity: 0.85 !important;;
+    }
+    
+    .ks-modal-gallery-panel {
+      z-index: 90000 !important;
+    }
+    ```
+
+<br>
+
+**This is a beta version without documentation**
+**If you want to try it, check examples/angular-cli-10 to get tons of working examples**
+
+
 # 8.0.0-beta.3
 ### Features
 - upgrade to Angular 10. **(Breaking Change)**.
