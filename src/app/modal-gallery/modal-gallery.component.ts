@@ -459,12 +459,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig
-      }
+      id,
+      images: imagesArrayToUse,
+      currentImage: imageToShow,
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
 
     this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
@@ -500,24 +498,20 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig
-      }
+      id,
+      images: imagesArrayToUse,
+      currentImage: imageToShow,
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
   }
 
   openModalWithOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig
-      }
+      id,
+      images: imagesArrayToUse,
+      currentImage: imageToShow,
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
     this.closeSubscription = dialogRef.close$.subscribe((event: ImageModalEvent) => {
       console.log('OUTPUT - close$: ', event);
@@ -565,12 +559,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   openModalWithDeleteButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: [...imagesArrayToUse],
-        currentImage: Object.assign({}, imageToShow),
-        libConfig
-      }
+      id,
+      images: [...imagesArrayToUse],
+      currentImage: Object.assign({}, imageToShow),
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
     this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
       console.log('OUTPUT - buttonBeforeHook$:', event);
@@ -603,12 +595,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   openModalWithAddButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig
-      }
+      id,
+      images: imagesArrayToUse,
+      currentImage: imageToShow,
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
     this.buttonBeforeHookSubscription = dialogRef.buttonBeforeHook$.subscribe((event: ButtonEvent) => {
       if (!event || !event.button) {
@@ -640,12 +630,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   openModalWithAutoAdd(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig
-      }
+      id,
+      images: imagesArrayToUse,
+      currentImage: imageToShow,
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
     this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
       console.log('OUTPUT - show$: ', event);
@@ -669,12 +657,10 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   openModalWithAutoUpdate(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: imagesArrayToUse,
-        currentImage: imageToShow,
-        libConfig
-      }
+      id,
+      images: imagesArrayToUse,
+      currentImage: imageToShow,
+      libConfig
     } as ModalGalleryConfig) as ModalGalleryRef;
     this.showSubscription = dialogRef.show$.subscribe((event: ImageModalEvent) => {
       console.log('OUTPUT - show$: ', event);

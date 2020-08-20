@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { DIALOG_DATA } from './modal-gallery.tokens';
 import { Image, ImageModalEvent } from '../../model/image.class';
-import { ConfigService, LibConfig } from '../../services/config.service';
+import { ConfigService } from '../../services/config.service';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
 import { InternalLibImage } from '../../model/image-internal.class';
@@ -21,7 +21,9 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { PlainGalleryConfig } from '../../model/plain-gallery-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { ModalGalleryInput, ModalGalleryService } from './modal-gallery.service';
+import { ModalGalleryService } from './modal-gallery.service';
+import { LibConfig } from '../../model/lib-config.interface';
+import { ModalGalleryConfig } from '../../model/modal-gallery-config.interface';
 
 @Component({
   selector: 'ks-modal-gallery',
@@ -106,7 +108,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    @Inject(DIALOG_DATA) private dialogContent: ModalGalleryInput,
+    @Inject(DIALOG_DATA) private dialogContent: ModalGalleryConfig,
     private modalGalleryService: ModalGalleryService,
     private keyboardService: KeyboardService,
     // tslint:disable-next-line:ban-types
@@ -116,10 +118,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private sanitizer: DomSanitizer
   ) {
-    this.id = (this.dialogContent as ModalGalleryInput).id;
-    this.images = (this.dialogContent as ModalGalleryInput).images as InternalLibImage[];
-    this.currentImage = (this.dialogContent as ModalGalleryInput).currentImage as InternalLibImage;
-    this.libConfig = (this.dialogContent as ModalGalleryInput).libConfig;
+    this.id = (this.dialogContent as ModalGalleryConfig).id;
+    this.images = (this.dialogContent as ModalGalleryConfig).images as InternalLibImage[];
+    this.currentImage = (this.dialogContent as ModalGalleryConfig).currentImage as InternalLibImage;
+    this.libConfig = (this.dialogContent as ModalGalleryConfig).libConfig;
     this.configService.setConfig(this.id, this.libConfig);
 
     this.updateImagesSubscription = this.modalGalleryService.updateImages$.subscribe((images: Image[]) => {
@@ -174,54 +176,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     this.modalGalleryService.emitButtonAfterHook(eventToEmit);
   }
-
-  // TODO implement on refresh
-  // /**
-  //  * Method called by the refresh upper button.
-  //  * STILL NOT IMPLEMENTED, SO DON'T USE IT
-  //  * @param ButtonEvent event payload
-  //  */
-  // onRefresh(event: ButtonEvent) {
-  //   const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-  //
-  //   this.buttonBeforeHook.emit(eventToEmit);
-  //   // console.log('TODO implement on refresh inside the library', eventToEmit);
-  //
-  //   this.currentImage = Object.assign({}, this.currentImage, { previouslyLoaded: false });
-  //
-  //   // TODO add logic to hide and show the current image
-  //
-  //   // console.log('onRefresh', this.currentImage);
-  //
-  //   // const indexNum: number = this.currentImageComponent.getIndex();
-  //
-  //   // this.images = this.images.map((val: InternalLibImage, index: number) => {
-  //   //   if (index !== 2) {
-  //   //     return val;
-  //   //   } else {
-  //   //     const img: InternalLibImage = Object.assign({}, val, {previouslyLoaded: false});
-  //   //     return img;
-  //   //   }
-  //   // });
-  //   //
-  //   // this.closeGallery();
-  //   // this.showModalGallery(2);
-  //
-  //   this.buttonAfterHook.emit(eventToEmit);
-  // }
-
-  // /**
-  //  * Method called by the rotate upper button.
-  //  * @param ButtonEvent event payload
-  //  */
-  // onRotate(event: ButtonEvent) {
-  //   const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
-  //   this.buttonBeforeHook.emit(eventToEmit);
-  //
-  //   // TODO implement rotation logic
-  //
-  //   this.buttonAfterHook.emit(eventToEmit);
-  // }
 
   /**
    * Method called by the full-screen upper button.

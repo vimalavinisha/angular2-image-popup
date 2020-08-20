@@ -22,15 +22,12 @@
  SOFTWARE.
  */
 
-/**
- * Interface `KeyboardServiceConfig` to pass data to `KeyboardService`
- * adding shortcuts based on https://craig.is/killing/mice
- */
-export interface KeyboardServiceConfig {
-  shortcuts: Array<string> | string;
+import { Image } from './image.class';
+import { LibConfig } from './lib-config.interface';
 
-  // this is a workaround requested by @mlc-mlapis here:
-  // https://github.com/Ks89/angular-modal-gallery/issues/142
-  // I don't want to document this, because it will be removed when it will be available a window mock on server-side
-  disableSsrWorkaround?: boolean;
+export interface ModalGalleryConfig {
+  id: number;
+  images: Image[];
+  currentImage: Image;
+  libConfig?: LibConfig;
 }

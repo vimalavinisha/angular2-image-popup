@@ -26,38 +26,19 @@ import { Injectable } from '@angular/core';
 import { SidePreviewsConfig, SlideConfig } from '../model/slide-config.interface';
 import { PlayConfig } from '../model/play-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../components/accessibility-default';
-import { AccessibilityConfig } from '../model/accessibility.interface';
 import { PreviewConfig } from '../model/preview-config.interface';
 import { Size } from '../model/size.interface';
 import { ButtonsConfig, ButtonsStrategy } from '../model/buttons-config.interface';
 import { DotsConfig } from '../model/dots-config.interface';
 import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../model/plain-gallery-config.interface';
 import { CurrentImageConfig } from '../model/current-image-config.interface';
-import { KeyboardConfig } from '../model/keyboard-config.interface';
 import { LoadingConfig, LoadingType } from '../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../model/description.interface';
 import { CarouselConfig } from '../model/carousel-config.interface';
 import { CarouselImageConfig } from '../model/carousel-image-config.interface';
 import { BreakpointsConfig, CarouselPreviewConfig } from '../model/carousel-preview-config.interface';
 import { KeyboardServiceConfig } from '../model/keyboard-service-config.interface';
-
-export interface LibConfig {
-  slideConfig?: SlideConfig;
-  accessibilityConfig?: AccessibilityConfig;
-  previewConfig?: PreviewConfig;
-  buttonsConfig?: ButtonsConfig;
-  dotsConfig?: DotsConfig;
-  plainGalleryConfig?: PlainGalleryConfig;
-  currentImageConfig?: CurrentImageConfig;
-  keyboardConfig?: KeyboardConfig;
-  carouselConfig?: CarouselConfig;
-  carouselImageConfig?: CarouselImageConfig;
-  carouselPreviewsConfig?: CarouselPreviewConfig;
-  carouselPlayConfig?: PlayConfig;
-  carouselDotsConfig?: DotsConfig;
-  enableCloseOutside?: boolean;
-  keyboardServiceConfig?: KeyboardServiceConfig;
-}
+import { LibConfig } from '../model/lib-config.interface';
 
 export const DEFAULT_PREVIEW_SIZE: Size = { height: '50px', width: 'auto' };
 export const DEFAULT_LAYOUT: LineLayout = new LineLayout(DEFAULT_PREVIEW_SIZE, { length: -1, wrap: false }, 'flex-start');

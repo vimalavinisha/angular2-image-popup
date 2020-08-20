@@ -52,21 +52,23 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { AccessibleComponent } from '../accessible.component';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
-import { Image, ImageEvent, ImageModalEvent } from '../../model/image.class';
+import { Image, ImageEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { DescriptionStrategy } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
-import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
-import { ConfigService, LibConfig } from '../../services/config.service';
+import { ConfigService } from '../../services/config.service';
 import { ModalGalleryService } from '../modal-gallery/modal-gallery.service';
+import { LibConfig } from '../../model/lib-config.interface';
+import { ModalGalleryConfig } from '../../model/modal-gallery-config.interface';
+import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -147,17 +149,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Output to emit an event when an image is changed.
    */
   @Output()
-  showImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  showImage: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
   /**
    * Output to emit an event when the current image is the first one.
    */
   @Output()
-  firstImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  firstImage: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
   /**
    * Output to emit an event when the current image is the last one.
    */
   @Output()
-  lastImage: EventEmitter<ImageModalEvent> = new EventEmitter<ImageModalEvent>();
+  lastImage: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
 
   /**
    * Object use in template
@@ -484,19 +486,17 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     }
     const index = getIndex(this.currentImage, this.images);
     this.modalGalleryService.open({
-      config: {
-        id: this.id,
-        images: this.images,
-        currentImage: this.images[index],
-        libConfig: {
-          // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
-          keyboardServiceConfig: {
-            shortcuts: ['ctrl+s', 'meta+s'],
-            disableSsrWorkaround: this.disableSsrWorkaround
-          }
-        }
-      }
-    });
+      id: this.id,
+      images: this.images,
+      currentImage: this.images[index],
+      libConfig: {
+        // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
+        keyboardServiceConfig: {
+          shortcuts: ['ctrl+s', 'meta+s'],
+          disableSsrWorkaround: this.disableSsrWorkaround
+        } as KeyboardServiceConfig
+      } as LibConfig
+    } as ModalGalleryConfig);
   }
 
   /**
@@ -720,7 +720,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.emitBoundaryEvent(action, index);
 
     // emit current visible image index
-    this.showImage.emit(new ImageModalEvent(this.id, action, index + 1));
+    this.showImage.emit(new ImageEvent(this.id, action, index + 1));
   }
 
   /**
@@ -874,10 +874,10 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     // to emit first/last event
     switch (indexToCheck) {
       case 0:
-        this.firstImage.emit(new ImageModalEvent(this.id, action, true));
+        this.firstImage.emit(new ImageEvent(this.id, action, true));
         break;
       case this.images.length - 1:
-        this.lastImage.emit(new ImageModalEvent(this.id, action, true));
+        this.lastImage.emit(new ImageEvent(this.id, action, true));
         break;
     }
   }

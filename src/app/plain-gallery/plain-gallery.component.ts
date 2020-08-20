@@ -257,13 +257,11 @@ export class PlainGalleryExampleComponent {
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: this.images,
-        currentImage: this.images[index],
-        libConfig: {
-          plainGalleryConfig: this.customPlainGalleryRowConfig
-        }
+      id,
+      images: this.images,
+      currentImage: this.images[index],
+      libConfig: {
+        plainGalleryConfig: this.customPlainGalleryRowConfig
       }
     }) as ModalGalleryRef;
   }
@@ -273,13 +271,11 @@ export class PlainGalleryExampleComponent {
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
     this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: this.images,
-        currentImage: this.images[index],
-        libConfig: {
-          plainGalleryConfig: this.customPlainGalleryColumnConfig
-        }
+      id,
+      images: this.images,
+      currentImage: this.images[index],
+      libConfig: {
+        plainGalleryConfig: this.customPlainGalleryColumnConfig
       }
     }) as ModalGalleryRef;
   }
@@ -289,13 +285,11 @@ export class PlainGalleryExampleComponent {
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
     this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images: this.imagesRect,
-        currentImage: this.imagesRect[index],
-        libConfig: {
-          plainGalleryConfig: this.customPlainGalleryRowDescConfig
-        }
+      id,
+      images: this.imagesRect,
+      currentImage: this.imagesRect[index],
+      libConfig: {
+        plainGalleryConfig: this.customPlainGalleryRowDescConfig
       }
     }) as ModalGalleryRef;
   }
@@ -313,11 +307,9 @@ export class PlainGalleryExampleComponent {
 
   onShow(id: number, index: number, images: Image[] = this.images): void {
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
-      config: {
-        id,
-        images,
-        currentImage: images[index]
-      }
+      id,
+      images,
+      currentImage: images[index]
     }) as ModalGalleryRef;
   }
 

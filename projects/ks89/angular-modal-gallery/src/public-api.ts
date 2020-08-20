@@ -46,7 +46,9 @@ export { Size } from './lib/model/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './lib/model/buttons-config.interface';
 
-export { LibConfig } from './lib/services/config.service';
+export { LibConfig } from './lib/model/lib-config.interface';
+
+export { ModalGalleryConfig } from './lib/model/modal-gallery-config.interface';
 
 export { CurrentImageConfig } from './lib/model/current-image-config.interface';
 
@@ -80,5 +82,5 @@ export { ModalGalleryComponent } from './lib/components/modal-gallery/modal-gall
 export { PlainGalleryComponent } from './lib/components/plain-gallery/plain-gallery.component';
 export { CarouselComponent } from './lib/components/carousel/carousel.component';
 
-export { ModalGalleryService, ModalGalleryConfig } from './lib/components/modal-gallery/modal-gallery.service';
+export { ModalGalleryService } from './lib/components/modal-gallery/modal-gallery.service';
 export { ModalGalleryRef } from './lib/components/modal-gallery/modal-gallery-ref';

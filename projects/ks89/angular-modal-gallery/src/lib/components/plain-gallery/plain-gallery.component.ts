@@ -30,10 +30,10 @@ import { Size } from '../../model/size.interface';
 import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
 import { getIndex } from '../../utils/image.util';
-import { ConfigService, LibConfig } from '../../services/config.service';
-import { Action } from '../../model/action.enum';
-import { NEXT, PREV } from '../../utils/user-input.util';
+import { ConfigService } from '../../services/config.service';
+import { NEXT } from '../../utils/user-input.util';
 import { AccessibleComponent } from '../accessible.component';
+import { LibConfig } from '../../model/lib-config.interface';
 
 /**
  * Component with the gallery of thumbs.
@@ -113,24 +113,6 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * For more info check https://developer.mozilla.org/it/docs/Web/CSS/justify-content
    */
   justifyStyle: string | undefined;
-
-  /**
-   * Default image size object
-   */
-  private defaultSize: Size = { width: '50px', height: 'auto' };
-  /**
-   * Default layout config object
-   * Note that length=-1 means infinity
-   */
-  private defaultLayout: LineLayout = new LineLayout(this.defaultSize, { length: -1, wrap: false }, 'flex-start');
-  /**
-   * Default plain gallery config object
-   */
-  private defaultPlainConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.ROW,
-    layout: this.defaultLayout,
-    advanced: { aTags: false, additionalBackground: '50% 50%/cover' }
-  };
 
   constructor(private configService: ConfigService) {
     super();

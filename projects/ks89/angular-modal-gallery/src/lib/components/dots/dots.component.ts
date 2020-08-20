@@ -33,7 +33,8 @@ import { DotsConfig } from '../../model/dots-config.interface';
 
 import { NEXT } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
-import { ConfigService, LibConfig } from '../../services/config.service';
+import { ConfigService } from '../../services/config.service';
+import { LibConfig } from '../../model/lib-config.interface';
 
 /**
  * Component with clickable dots (small circles) to navigate between images inside the modal gallery.

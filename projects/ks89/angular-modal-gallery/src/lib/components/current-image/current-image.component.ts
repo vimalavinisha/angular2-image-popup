@@ -59,7 +59,8 @@ import { SlideConfig } from '../../model/slide-config.interface';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { getIndex } from '../../utils/image.util';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { ConfigService, LibConfig } from '../../services/config.service';
+import { ConfigService } from '../../services/config.service';
+import { LibConfig } from '../../model/lib-config.interface';
 
 /**
  * Interface to describe the Load Event, used to

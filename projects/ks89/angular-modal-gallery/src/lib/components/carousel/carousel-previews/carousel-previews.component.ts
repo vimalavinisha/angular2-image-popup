@@ -52,7 +52,8 @@ import { CarouselConfig } from '../../../model/carousel-config.interface';
 import { NEXT, PREV } from '../../../utils/user-input.util';
 import { getIndex } from '../../../utils/image.util';
 import { Action } from '../../../model/action.enum';
-import { ConfigService, LibConfig } from '../../../services/config.service';
+import { ConfigService } from '../../../services/config.service';
+import { LibConfig } from '../../../model/lib-config.interface';
 
 /**
  * Default max height of previews.

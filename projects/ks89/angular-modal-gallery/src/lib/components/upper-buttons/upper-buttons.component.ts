@@ -39,7 +39,8 @@ import {
 } from './upper-buttons-default';
 
 import { NEXT } from '../../utils/user-input.util';
-import { ConfigService, LibConfig } from '../../services/config.service';
+import { ConfigService } from '../../services/config.service';
+import { LibConfig } from '../../model/lib-config.interface';
 
 /**
  * Internal representation of `ButtonConfig` with an optional `id` field, used by trackId to improve performances.

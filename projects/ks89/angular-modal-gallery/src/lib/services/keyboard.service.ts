@@ -25,7 +25,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-import { LibConfig } from './config.service';
+import { LibConfig } from '../model/lib-config.interface';
 
 /**
  * Service to intercept ctrl+s (or cmd+s on macOS) using a third-party library, called Mousetrap.
