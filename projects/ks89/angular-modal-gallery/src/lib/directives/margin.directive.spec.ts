@@ -45,6 +45,7 @@ const expected: Margin[] = [
   { top: '0px', bottom: '2px' },
   { top: '0px', bottom: '-7px' },
   { left: '2px', right: '2px', top: '0px', bottom: '2px' },
+  // @ts-ignore
   { left: undefined, right: null, top: undefined, bottom: null },
   {}
 ];
@@ -119,7 +120,7 @@ describe('MarginDirective', () => {
     });
 
     it('should check expected results for bare <div> without this directive', () => {
-      expect(bareElement.properties['ksMargin']).toBeUndefined();
+      expect(bareElement.properties.ksMargin).toBeUndefined();
     });
   });
 });

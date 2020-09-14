@@ -26,39 +26,50 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, SafeResourceUrl } from '@angular/platform-browser';
 import { ATagBgImageDirective } from './a-tag-bg-image.directive';
-import { Image } from '../model/image.class';
+import { Image, PlainImage } from '../model/image.class';
+
+interface TestModel {
+  image: Image;
+  style: string;
+}
 
 const base64: SafeResourceUrl = 'data:image/png;base64,iVBORw0KG=';
 
-const expectedModal: any[] = [
+const expectedModal: TestModel[] = [
   {image: new Image(0, {img: 'path'}), style: '50% 50% / cover'},
   {image: new Image(0, {img: 'path'}), style: ''}
 ];
 
-const expectedPlain: any[] = [
+const expectedPlain: TestModel[] = [
   {image: new Image(1, {img: 'path'}, {img: 'plainPath'}), style: '50% 50% / cover'},
   {image: new Image(1, {img: 'path'}, {img: 'plainPath'}), style: ''}
 ];
 
-const expectedModalBase64: any[] = [
+const expectedModalBase64: TestModel[] = [
   {image: new Image(0, {img: base64 as SafeResourceUrl}), style: '50% 50% / cover'},
   {image: new Image(0, {img: base64 as SafeResourceUrl}), style: ''}
 ];
 
-const expectedPlainBase64: any[] = [
+const expectedPlainBase64: TestModel[] = [
   {image: new Image(1, {img: base64 as SafeResourceUrl}, {img: base64 as SafeResourceUrl}), style: '50% 50% / cover'},
   {image: new Image(1, {img: base64 as SafeResourceUrl}, {img: base64 as SafeResourceUrl}), style: ''}
 ];
 
-const expectedWrongPlain: any[] = [
+const expectedWrongPlain: TestModel[] = [
+  // @ts-ignore
   {image: new Image(2, {img: 'path'}, {img: null}), style: '50% 50% / cover'},
+  // @ts-ignore
   {image: new Image(3, {img: 'path'}, {img: undefined}), style: '50% 50% / cover'}
 ];
 
-const expectedWithNoImages: any[] = [
+const expectedWithNoImages: TestModel[] = [
+  // @ts-ignore
   {image: null, style: '50% 50% / cover'},
+  // @ts-ignore
   {image: null, style: ''},
+  // @ts-ignore
   {image: undefined, style: '50% 50% / cover'},
+  // @ts-ignore
   {image: undefined, style: ''}
 ];
 
@@ -90,8 +101,11 @@ class TestATagBgImageComponent {
 
   images: Image[] = [
     new Image(0, {img: 'path'}),
+    // @ts-ignore
     new Image(1, {img: 'path'}, {img: 'plainPath'}),
+    // @ts-ignore
     new Image(2, {img: 'path'}, {img: null}),
+    // @ts-ignore
     new Image(3, {img: 'path'}, {img: undefined}),
     new Image(4, {img: this.base64}),
     new Image(5, {img: this.base64}, {img: this.base64}),
@@ -136,20 +150,20 @@ describe('ATagBgImageDirective', () => {
     // others prepend 'localhost:port' to the path.
     // So, I decided to use 'toContain', ignoring all other stuff.
 
-    expectedModal.forEach((val: any, index: number) => {
+    expectedModal.forEach((val: TestModel, index: number) => {
       it(`should check expected results for <main> with an Image (only modal) at position ${index}`, () => {
         // no plain image, only modal
-        const path: string = val.image.modal.img;
+        const path: string | SafeResourceUrl = val.image.modal.img;
         const style: string = val.style;
         expect(des[index].nativeElement.style.background).toContain(`url("${path}")`.trim());
         expect(des[index].nativeElement.style.background).toContain(`${style}`.trim());
       });
     });
 
-    expectedPlain.forEach((val: any, index: number) => {
+    expectedPlain.forEach((val: TestModel, index: number) => {
       it(`should check expected results for <main> with an Image (modal + plain) at position ${index}`, () => {
         // when there are both modal and plain, plain wins
-        const path: string = val.image.plain.img;
+        const path: string | SafeResourceUrl = (val.image.plain as PlainImage).img;
         const style: string = val.style;
         const prevIndex: number = expectedModal.length;
         expect(des[index + prevIndex].nativeElement.style.background).toContain(`url("${path}")`.trim());
@@ -170,17 +184,17 @@ describe('ATagBgImageDirective', () => {
 
     it(`should check expected results for <main> with an Image (modal + plain) as base64`, () => {
       // when there are both modal and plain, plain wins
-      expect(des[12].nativeElement.style.background).toContain(`url("${expectedPlainBase64[0].image.plain.img as string}")`.trim());
+      expect(des[12].nativeElement.style.background).toContain(`url("${(expectedPlainBase64[0].image.plain as PlainImage).img as string}")`.trim());
       expect(des[12].nativeElement.style.background).toContain(`${expectedPlainBase64[0].style}`.trim());
-      expect(des[13].nativeElement.style.background).toContain(`url("${expectedPlainBase64[1].image.plain.img as string}")`.trim());
+      expect(des[13].nativeElement.style.background).toContain(`url("${(expectedPlainBase64[1].image.plain as PlainImage).img as string}")`.trim());
       expect(des[13].nativeElement.style.background).toContain(`${expectedPlainBase64[1].style}`.trim());
     });
 
-    expectedWrongPlain.forEach((val: any, index: number) => {
+    expectedWrongPlain.forEach((val: TestModel, index: number) => {
       it(`should check expected results for <main> with an Image (modal + plain without img) at position ${index}`, () => {
         // plain malformed without an img, so modal wins
-        const base64String: string = val.image.plain.img as string;
-        const path: string = val.image.modal.img;
+        const base64String: string = (val.image.plain as PlainImage).img as string;
+        const path: string | SafeResourceUrl = val.image.modal.img;
         const style: string = val.style;
         const prevIndex: number = +expectedModal.length + expectedPlain.length;
         expect(des[index + prevIndex].nativeElement.style.background).toContain(`url("${path}")`.trim());
@@ -188,7 +202,7 @@ describe('ATagBgImageDirective', () => {
       });
     });
 
-    expectedWithNoImages.forEach((val: any, index: number) => {
+    expectedWithNoImages.forEach((val: TestModel, index: number) => {
       it(`should check expected results for <main> when input Image is not valid at position ${index}`, () => {
         // no input image
         const style: string = val.style;
@@ -198,7 +212,7 @@ describe('ATagBgImageDirective', () => {
     });
 
     it('should check expected results for bare <div> without this directive', () => {
-      expect(bareElement.properties['ksATagBgImage']).toBeUndefined();
+      expect(bareElement.properties.ksATagBgImage).toBeUndefined();
     });
   });
 });

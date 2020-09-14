@@ -27,7 +27,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DirectionDirective } from './direction.directive';
 
-const expected: any[] = [
+interface TestModel {
+  direction: string;
+  justify: string;
+}
+
+const expected: TestModel[] = [
   // direction can be: row | row-reverse | column | column-reverse
   // justify can be: flex-start | flex-end | center | space-between | space-around | space-evenly
   {direction: 'row', justify: 'flex-start'},
@@ -90,7 +95,7 @@ describe('DirectionDirective', () => {
       expect(des.length).toBe(expected.length);
     });
 
-    expected.forEach((val: any, index: number) => {
+    expected.forEach((val: TestModel, index: number) => {
       it(`should check expected results for <div> at position ${index}`, () => {
         expect(des[index].nativeElement.style['flex-direction']).toBe(val.direction);
         expect(des[index].nativeElement.style['justify-content']).toBe(val.justify);
@@ -98,7 +103,7 @@ describe('DirectionDirective', () => {
     });
 
     it('should check expected results for bare <div> without this directive', () => {
-      expect(bareElement.properties['ksDirection']).toBeUndefined();
+      expect(bareElement.properties.ksDirection).toBeUndefined();
     });
   });
 });

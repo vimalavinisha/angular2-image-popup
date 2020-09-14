@@ -88,10 +88,12 @@ describe('image.util', () => {
     });
 
     it(`should throw an error, because the input image is not valid`, () => {
+      // @ts-ignore
       expect(() => getIndex(null, imagesMock)).toThrowError(`image must be a valid Image object`);
     });
 
     it(`should throw an error, because the input array of images is not valid`, () => {
+      // @ts-ignore
       expect(() => getIndex(imgToSearch, null)).toThrowError(`arrayOfImages must be a valid Image[]`);
     });
 

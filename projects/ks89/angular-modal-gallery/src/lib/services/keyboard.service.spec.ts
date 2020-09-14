@@ -30,7 +30,7 @@ import { KeyboardServiceConfig } from '../model/keyboard-service-config.interfac
 
 const KEYBOARD_CONFIGURATION = new InjectionToken<KeyboardServiceConfig>('KEYBOARD_CONFIGURATION');
 
-function setupRouter(injector: KeyboardServiceConfig) {
+function setupRouter(injector: KeyboardServiceConfig): KeyboardService {
   return new KeyboardService(injector);
 }
 
@@ -64,7 +64,7 @@ describe('KeyboardService', () => {
     describe('#reset()', () => {
       it('should call reset',
         inject([KeyboardService], (service: KeyboardService) => {
-          service.reset();
+          service.reset({});
         })
       );
     });
@@ -72,7 +72,7 @@ describe('KeyboardService', () => {
     describe('#add()', () => {
       it('should call add',
         inject([KeyboardService], (service: KeyboardService) => {
-          service.add(() => null);
+          service.add(() => null, {});
         })
       );
     });
@@ -106,7 +106,7 @@ describe('KeyboardService', () => {
     describe('#reset()', () => {
       it('should call reset',
         inject([KeyboardService], (service: KeyboardService) => {
-          service.reset();
+          service.reset({});
         })
       );
     });
@@ -114,7 +114,7 @@ describe('KeyboardService', () => {
     describe('#add()', () => {
       it('should call add',
         inject([KeyboardService], (service: KeyboardService) => {
-          service.add(() => null);
+          service.add(() => null, {});
         })
       );
     });

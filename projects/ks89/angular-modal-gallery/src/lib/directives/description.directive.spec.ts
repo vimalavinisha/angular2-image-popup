@@ -54,6 +54,7 @@ const expected: Description[] = [
     style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
   },
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {}},
+  // @ts-ignore
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: null},
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
 ];
@@ -117,6 +118,7 @@ class TestDescriptionComponent {
       style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
     },
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {}},
+    // @ts-ignore
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: null},
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
   ];
@@ -177,7 +179,7 @@ describe('DescriptionDirective', () => {
     });
 
     it('should check expected results for bare <figcaption> without this directive', () => {
-      expect(bareElement.properties['ksDescription']).toBeUndefined();
+      expect(bareElement.properties.ksDescription).toBeUndefined();
     });
   });
 });

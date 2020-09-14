@@ -31,7 +31,7 @@ import { By } from '@angular/platform-browser';
   selector: 'ks-test-click-outside',
   template: `
     <div id="modal-gallery-wrapper"
-         ksClickOutside [clickOutsideEnable]="enableCloseOutside"
+         ksClickOutside [clickOutsideEnable]="true"
          (clickOutside)="onClickOutside($event)">
 
       <div class="ng-overlay"></div>
@@ -51,7 +51,7 @@ import { By } from '@angular/platform-browser';
 class TestClickOutsideComponent {
   @Output() clicked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onClickOutside(event: boolean) {
+  onClickOutside(event: boolean): void {
     this.clicked.emit(event);
   }
 }
@@ -91,8 +91,8 @@ describe('ClickOutsideDirective', () => {
     it(`should check for ksClickOutside`, () => {
       const clickOutsideDirective: DebugElement = fixture.debugElement.query(By.directive(ClickOutsideDirective));
       expect(clickOutsideDirective.name).toBe('div');
-      expect(clickOutsideDirective.attributes['id']).toBe('modal-gallery-wrapper');
-      expect(clickOutsideDirective.attributes['ksClickOutside']).toBe('');
+      expect(clickOutsideDirective.attributes.id).toBe('modal-gallery-wrapper');
+      expect(clickOutsideDirective.attributes.ksClickOutside).toBe('');
     });
 
     it(`should close the modal gallery after a click`, () => {

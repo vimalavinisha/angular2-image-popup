@@ -26,6 +26,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { WrapDirective } from './wrap.directive';
 
+interface TestModel {
+  width: string;
+  wrap: boolean;
+  wrapStyle: string;
+}
+
 @Component({
   selector: 'ks-test-wrap',
   template: `
@@ -40,7 +46,7 @@ let comp: TestWrapComponent;
 let des: DebugElement[] = [];
 let bareElement: DebugElement;
 
-const expected: any = [
+const expected: TestModel[] = [
   {width: '100px', wrap: true, wrapStyle: 'wrap'},
   {width: '', wrap: false, wrapStyle: ''}
 ];
@@ -73,7 +79,7 @@ describe('WrapDirective', () => {
       expect(des.length).toBe(2);
     });
 
-    expected.forEach((val: any, index: number) => {
+    expected.forEach((val: TestModel, index: number) => {
       it(`should check expected results for <div> at position ${index}`, () => {
         expect(des[index].nativeElement.style.width).toBe(val.width);
         expect(des[index].nativeElement.style['flex-wrap']).toBe(val.wrapStyle);
@@ -81,7 +87,7 @@ describe('WrapDirective', () => {
     });
 
     it('should check expected results for bare <div> without this directive', () => {
-      expect(bareElement.properties['ksWrap']).toBeUndefined();
+      expect(bareElement.properties.ksWrap).toBeUndefined();
     });
   });
 });

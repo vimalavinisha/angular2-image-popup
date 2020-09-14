@@ -27,11 +27,11 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { IdValidatorService } from './id-validator.service';
 
 const validIds: number[] = [0, 1, 2, 3, 500, 900, 1000];
-const notValidIds: number[] = [-12, -50, -1, undefined, null, NaN];
+const notValidIds: number[] = [-12, -50, -1, NaN];
 
 const errorMessage = 'You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template';
 
-function getErrorNotUnique(galleryId: number) {
+function getErrorNotUnique(galleryId: number): string {
   return `Cannot create gallery with id=${galleryId} because already used in your application. This must be a unique integer >= 0`;
 }
 

@@ -95,7 +95,7 @@ describe('SizeDirective', () => {
     });
 
     it('should check expected results for bare <div> without this directive', () => {
-      expect(bareElement.properties['ksSize']).toBeUndefined();
+      expect(bareElement.properties.ksSize).toBeUndefined();
     });
   });
 });
