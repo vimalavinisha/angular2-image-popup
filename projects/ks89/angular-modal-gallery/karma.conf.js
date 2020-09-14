@@ -60,7 +60,7 @@ function getBrowsers() {
   }
 }
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -84,6 +84,12 @@ module.exports = function(config) {
       dir: require('path').join(__dirname, '../../../coverage'),
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
+      // thresholds: {
+      //   statements: 80,
+      //   lines: 80,
+      //   branches: 80,
+      //   functions: 80
+      // }
     },
     // reporters: ['progress', 'kjhtml'],
     reporters: ['mocha', 'coverage', 'coverage-istanbul'],
@@ -93,6 +99,7 @@ module.exports = function(config) {
     autoWatch: true,
     browsers: getBrowsers(),
     singleRun: false,
+    // restartOnFileChange: true,
 
     // required by karma-coverage to show code coverage in console
     coverageReporter: {
