@@ -28,7 +28,7 @@ import { WrapDirective } from './wrap.directive';
 
 interface TestModel {
   width: string;
-  wrap: boolean;
+  wrap: boolean | undefined;
   wrapStyle: string;
 }
 
@@ -37,6 +37,7 @@ interface TestModel {
   template: `
     <div ksWrap [wrap]="true" [width]="'100px'"></div>
     <div ksWrap [wrap]="false" [width]="'100px'"></div>
+    <div ksWrap [wrap]="undefined" [width]="'100px'"></div>
   `
 })
 class TestWrapComponent {}
@@ -48,7 +49,8 @@ let bareElement: DebugElement;
 
 const expected: TestModel[] = [
   {width: '100px', wrap: true, wrapStyle: 'wrap'},
-  {width: '', wrap: false, wrapStyle: ''}
+  {width: '', wrap: false, wrapStyle: ''},
+  {width: '', wrap: undefined, wrapStyle: ''},
 ];
 
 describe('WrapDirective', () => {
@@ -76,7 +78,7 @@ describe('WrapDirective', () => {
     beforeEach(() => fixture.detectChanges());
 
     it('should have this directive', () => {
-      expect(des.length).toBe(2);
+      expect(des.length).toBe(3);
     });
 
     expected.forEach((val: TestModel, index: number) => {

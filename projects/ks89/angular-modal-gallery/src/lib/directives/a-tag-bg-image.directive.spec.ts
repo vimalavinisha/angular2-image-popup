@@ -73,8 +73,13 @@ const expectedWithNoImages: TestModel[] = [
   {image: undefined, style: ''}
 ];
 
+const expectedPlainWithFallback: TestModel[] = [
+  {image: new Image(1, {img: 'path'}, {img: 'plainPath', fallbackImg: 'fallbackmodal.jpg'}), style: '50% 50% / cover'}
+];
+
 const length: number = expectedModal.length + expectedPlain.length + expectedWrongPlain.length +
-  expectedWithNoImages.length + expectedModalBase64.length + expectedPlainBase64.length;
+  expectedWithNoImages.length + expectedModalBase64.length + expectedPlainBase64.length +
+  expectedPlainWithFallback.length;
 
 @Component({
   selector: 'ks-test-atagbgimage',
@@ -94,6 +99,9 @@ const length: number = expectedModal.length + expectedPlain.length + expectedWro
     <div ksATagBgImage [image]="images[4]" [style]="''"></div>
     <div ksATagBgImage [image]="images[5]" [style]="'50% 50% / cover'"></div>
     <div ksATagBgImage [image]="images[5]" [style]="''"></div>
+
+    <!-- tests with fallback image -->
+    <div ksATagBgImage [image]="expectedPlainWithFallback[0]" [style]="''"></div>
   `
 })
 class TestATagBgImageComponent {
@@ -108,7 +116,11 @@ class TestATagBgImageComponent {
     // @ts-ignore
     new Image(3, {img: 'path'}, {img: undefined}),
     new Image(4, {img: this.base64}),
-    new Image(5, {img: this.base64}, {img: this.base64}),
+    new Image(5, {img: this.base64}, {img: this.base64})
+  ];
+
+  expectedPlainWithFallback: Image[] = [
+    new Image(1, {img: 'path'}, {img: 'plainPath', fallbackImg: 'fallbackmodal.jpg'})
   ];
 }
 
@@ -208,6 +220,12 @@ describe('ATagBgImageDirective', () => {
         const style: string = val.style;
         const prevIndex: number = +expectedModal.length + expectedPlain.length + expectedWrongPlain.length;
         expect(des[index + prevIndex].nativeElement.style.background).toBe('');
+      });
+    });
+
+    expectedPlainWithFallback.forEach((val: TestModel, index: number) => {
+      it(`should check expected results for <main> when plain image has a fallback image ${index}`, () => {
+        expect(des[index].nativeElement.style.background).toContain(`url("${'path'}")`.trim());
       });
     });
 
