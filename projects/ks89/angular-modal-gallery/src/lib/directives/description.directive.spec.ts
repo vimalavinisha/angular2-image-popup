@@ -27,11 +27,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DescriptionDirective } from './description.directive';
 import { Description, DescriptionStrategy } from '../model/description.interface';
+import { ComponentFixtureAutoDetect } from '@angular/core/testing';
 
-const expected: Description[] = [
+const expected: Description[] | undefined[] = [
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white', marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
+    style: {bgColor: 'rgba(0, 0, 0, 0.5)', textColor: 'white', marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
   },
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -39,11 +40,11 @@ const expected: Description[] = [
   },
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+    style: {bgColor: 'rgba(0, 0, 0, 0.5)', textColor: 'white'}
   },
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    style: {bgColor: 'rbga(255,0,0,.5)', marginBottom: '0px'}
+    style: {bgColor: 'rgba(255, 0, 0, .5)', marginBottom: '0px'}
   },
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -51,11 +52,9 @@ const expected: Description[] = [
   },
   {
     strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-    style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+    style: {bgColor: 'rgba(0, 0, 0, 0.5)', textColor: 'white'}
   },
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {}},
-  // @ts-ignore
-  {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: null},
   {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
 ];
 
@@ -86,16 +85,13 @@ const expected: Description[] = [
     <figure>
       <figcaption ksDescription [description]="descriptions[7]"></figcaption>
     </figure>
-    <figure>
-      <figcaption ksDescription [description]="descriptions[8]"></figcaption>
-    </figure>
   `
 })
 class TestDescriptionComponent {
-  descriptions: Description[] = [
+  descriptions: Description[] | undefined[] = [
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white', marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
+      style: {bgColor: 'rgba(0, 0, 0, 0.5)', textColor: 'white', marginTop: '0px', marginBottom: '5px', marginLeft: '0px', marginRight: '0px'}
     },
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -103,11 +99,11 @@ class TestDescriptionComponent {
     },
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+      style: {bgColor: 'rgba(0, 0, 0, 0.5)', textColor: 'white'}
     },
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      style: {bgColor: 'rbga(255,0,0,.5)', marginBottom: '0px'}
+      style: {bgColor: 'rgba(255, 0, 0, .5)', marginBottom: '0px'}
     },
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -115,11 +111,9 @@ class TestDescriptionComponent {
     },
     {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
-      style: {bgColor: 'rbga(0,0,0,.5)', textColor: 'white'}
+      style: {bgColor: 'rgba(0, 0, 0, 0.5)', textColor: 'white'}
     },
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: {}},
-    // @ts-ignore
-    {strategy: DescriptionStrategy.ALWAYS_VISIBLE, style: null},
     {strategy: DescriptionStrategy.ALWAYS_VISIBLE}
   ];
 }
@@ -131,20 +125,23 @@ let bareElement: DebugElement;
 
 describe('DescriptionDirective', () => {
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      declarations: [TestDescriptionComponent, DescriptionDirective]
-    }); // not necessary with webpack .compileComponents();
+    await TestBed.configureTestingModule({
+      declarations: [TestDescriptionComponent, DescriptionDirective],
+      providers: [
+        {provide: ComponentFixtureAutoDetect, useValue: true}
+      ]
+    }).compileComponents();
     fixture = TestBed.createComponent(TestDescriptionComponent);
     comp = fixture.componentInstance;
+    fixture.detectChanges(); // initial binding
+
+    await fixture.whenStable();
 
     fixture.detectChanges();
-    return fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      bareElement = fixture.debugElement.query(By.css('figcaption:not(ksDescription)'));
-      des = fixture.debugElement.queryAll(By.directive(DescriptionDirective));
-    });
+    bareElement = fixture.debugElement.query(By.css('figcaption:not(ksDescription)'));
+    des = fixture.debugElement.queryAll(By.directive(DescriptionDirective));
   });
 
   it('can instantiate it', () => expect(comp).not.toBeNull());
@@ -159,7 +156,7 @@ describe('DescriptionDirective', () => {
 
     expected.forEach((val: Description, index: number) => {
       it(`should check expected results for <figcaption> at position ${index}`, () => {
-        if (val && val.style) {
+        if (val && val.style && val.style.bgColor && val.style.textColor) {
           expect(des[index].styles.background).toBe(val.style.bgColor);
           expect(des[index].styles.color).toBe(val.style.textColor);
 
