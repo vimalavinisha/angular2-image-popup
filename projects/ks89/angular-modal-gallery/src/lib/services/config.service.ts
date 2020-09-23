@@ -341,7 +341,7 @@ export class ConfigService {
     if (obj.carouselDotsConfig) {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
     }
-    if (obj.enableCloseOutside === null || obj.enableCloseOutside === undefined) {
+    if (obj.enableCloseOutside === undefined) {
       newConfig.enableCloseOutside = DEFAULT_CONFIG.enableCloseOutside;
     } else {
       newConfig.enableCloseOutside = obj.enableCloseOutside;

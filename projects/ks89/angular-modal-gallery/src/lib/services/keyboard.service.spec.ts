@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
+import { waitForAsync, inject, TestBed } from '@angular/core/testing';
 import { InjectionToken } from '@angular/core';
 
 import { KeyboardService } from './keyboard.service';
@@ -38,7 +38,7 @@ describe('KeyboardService', () => {
 
   describe('KeyboardService WITHOUT external config via forRoot()', () => {
     beforeEach(
-      async(() => {
+      waitForAsync(() => {
         TestBed.configureTestingModule({
           providers: [
             {
@@ -80,7 +80,7 @@ describe('KeyboardService', () => {
 
   describe('KeyboardService WITH external config via forRoot()', () => {
     beforeEach(
-      async(() => {
+      waitForAsync(() => {
         TestBed.configureTestingModule({
           providers: [
             {

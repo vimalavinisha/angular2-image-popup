@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IdValidatorService } from './id-validator.service';
 
@@ -37,7 +37,7 @@ function getErrorNotUnique(galleryId: number): string {
 
 describe('IdValidatorService', () => {
   beforeEach(
-    async(() => {
+    waitForAsync(() => {
       TestBed.configureTestingModule({
         providers: [IdValidatorService]
       });
