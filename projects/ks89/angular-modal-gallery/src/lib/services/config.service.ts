@@ -110,22 +110,24 @@ export const DEFAULT_KEYBOARD_SERVICE_CONFIG: KeyboardServiceConfig = {
   shortcuts: ['ctrl+s', 'meta+s'],
   disableSsrWorkaround: false
 };
+export const DEFAULT_SLIDE_CONFIG: SlideConfig = {
+  infinite: false,
+  playConfig: { autoPlay: false, interval: 5000, pauseOnHover: true } as PlayConfig,
+  sidePreviews: { show: true, size: { width: '100px', height: 'auto' } } as SidePreviewsConfig
+};
+export const DEFAULT_PREVIEW_CONFIG: PreviewConfig = {
+  visible: true,
+  number: 3,
+  arrows: true,
+  clickable: true,
+  // alwaysCenter: false, // TODO still not implemented
+  size: DEFAULT_PREVIEW_SIZE
+};
 
 const DEFAULT_CONFIG: LibConfig = Object.freeze({
-  slideConfig: {
-    infinite: false,
-    playConfig: { autoPlay: false, interval: 5000, pauseOnHover: true } as PlayConfig,
-    sidePreviews: { show: true, size: { width: '100px', height: 'auto' } } as SidePreviewsConfig
-  } as SlideConfig,
+  slideConfig: DEFAULT_SLIDE_CONFIG,
   accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-  previewConfig: {
-    visible: true,
-    number: 3,
-    arrows: true,
-    clickable: true,
-    // alwaysCenter: false, // TODO still not implemented
-    size: DEFAULT_PREVIEW_SIZE
-  } as PreviewConfig,
+  previewConfig: DEFAULT_PREVIEW_CONFIG,
   buttonsConfig: { visible: true, strategy: ButtonsStrategy.DEFAULT } as ButtonsConfig,
   dotsConfig: { visible: true } as DotsConfig,
   plainGalleryConfig: DEFAULT_PLAIN_CONFIG,
