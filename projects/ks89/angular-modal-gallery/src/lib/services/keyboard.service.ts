@@ -64,9 +64,9 @@ export class KeyboardService {
 
   /**
    * Method to add a lister for ctrl+s/cmd+s keyboard events.
-   * @param (e: ExtendedKeyboardEvent, combo: string) => any onBind callback function to add shortcuts
+   * @param (e: KeyboardEvent, combo: string) => any onBind callback function to add shortcuts
    */
-  add(onBind: (e: ExtendedKeyboardEvent, combo: string) => any) {
+  add(onBind: (e: KeyboardEvent, combo: string) => any) {
     // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
     if (this.config && !this.config.disableSsrWorkaround) {
       // To prevent issues with angular-universal on server-side
