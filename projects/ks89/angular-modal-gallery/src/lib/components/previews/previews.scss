@@ -53,6 +53,8 @@ $nav-side-margin: 10px;
       display: none;
     }
   }
+
+  // TODO improve this code
   .previews-container.mobile-visible {
     align-items: center;
     animation: fadein-semi-visible08 $preview-container-fade-in-time;

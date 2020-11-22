@@ -1,12 +1,13 @@
 # 8.0.0-beta.5
 ### Features
+- add new param to previewConfig to display previews on small screens #213 (pull request #214 by vlafranca)
 - remove the useless nested 'config' object in ModalGalleryConfig interface.
 
   To upgrade from all previous 8.0.0 beta releases, change all .open(...) methods passing an object without the nested 'config' object
 
 <br>
 
-**This is a beta version without documentation**
+**This is a beta version without a documentation**
 **If you want to try it, check examples/angular-cli-10 to get tons of working examples**
 
 

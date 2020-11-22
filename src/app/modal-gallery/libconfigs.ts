@@ -336,6 +336,13 @@ export const LIBCONFIG_525: LibConfig = {
   }
 };
 
+export const LIBCONFIG_526: LibConfig = {
+  previewConfig: {
+    visible: true,
+    mobileVisible: true
+  }
+};
+
 // Examples C
 export const LIBCONFIG_600: LibConfig = {
   keyboardConfig: {

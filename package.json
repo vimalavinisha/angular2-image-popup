@@ -66,7 +66,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "^10.2.0",
+    "@angular/cdk": "^11.0.0",
     "@angular/common": "~11.0.2",
     "@angular/compiler": "~11.0.2",
     "@angular/core": "~11.0.2",
