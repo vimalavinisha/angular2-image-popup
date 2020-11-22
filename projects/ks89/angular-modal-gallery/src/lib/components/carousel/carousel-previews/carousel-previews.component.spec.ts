@@ -17,7 +17,7 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { By, SafeResourceUrl } from '@angular/platform-browser';
 import { CarouselPreviewsComponent } from './carousel-previews.component';
@@ -278,7 +278,7 @@ const DEFAULT_PREVIEW_CONFIG: CarouselPreviewConfig = {
 };
 
 describe('CarouselPreviewsComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     return initTestBed();
   }));
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import 'hammerjs';
 import 'mousetrap';
@@ -43,7 +43,7 @@ function initTestBed() {
 }
 
 describe('AccessibleComponent', () => {
-  beforeEach(async(() => initTestBed()));
+  beforeEach(waitForAsync(() => initTestBed()));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccessibleComponent);

@@ -17,7 +17,7 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -224,7 +224,7 @@ function initTestBed() {
 }
 
 describe('PreviewsComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     return initTestBed();
   }));
 
@@ -521,7 +521,7 @@ describe('PreviewsComponent', () => {
     // });
 
     NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
-      it(`should navigate previews clicking on left arrow. Test i=${index}`, async(() => {
+      it(`should navigate previews clicking on left arrow. Test i=${index}`, waitForAsync(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,
@@ -629,7 +629,7 @@ describe('PreviewsComponent', () => {
     // });
 
     [SLIDE_CONFIG, SLIDE_CONFIG_INFINITE].forEach((slideConfig: SlideConfig, index: number) => {
-      it(`should navigate next/prev clicking on images for all SlideConfigs. Test i=${index}`, async(() => {
+      it(`should navigate next/prev clicking on images for all SlideConfigs. Test i=${index}`, waitForAsync(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
         configService.setConfig(0, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,

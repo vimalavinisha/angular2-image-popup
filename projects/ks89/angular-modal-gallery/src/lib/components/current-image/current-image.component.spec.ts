@@ -17,7 +17,7 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { By, SafeResourceUrl } from '@angular/platform-browser';
 import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../components/accessibility-default';
@@ -411,7 +411,7 @@ function initTestBed() {
 }
 
 describe('CurrentImageComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     return initTestBed();
   }));
 

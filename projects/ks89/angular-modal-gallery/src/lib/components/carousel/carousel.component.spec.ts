@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -455,7 +455,7 @@ function checkPreviews(numPreviews: number, isFirstImage: boolean, isLastImage: 
 }
 
 describe('CarouselComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     return initTestBed();
   }));
 
