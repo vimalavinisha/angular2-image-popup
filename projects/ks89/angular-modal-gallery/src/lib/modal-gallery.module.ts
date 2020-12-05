@@ -60,7 +60,7 @@ export class GalleryModule {
    * Importing with '.forRoot()' is deprecated. I'll provide a new way to do this in next releases.
    * Will be removed in 8.0.0 or 9.0.0
    */
-  static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders {
+  static forRoot(config?: KeyboardServiceConfig): ModuleWithProviders<GalleryModule> {
     return {
       ngModule: GalleryModule,
       providers: [
