@@ -1,3 +1,8 @@
+# 7.2.7
+### Bugfixes
+- support Angular 11 preventing a build issue. Fixed by @cihancelen with pull request #216.
+
+
 # 7.2.6
 ### Bugfixes
 - carousel in IE11 legacy mode shows wrong title on previous arrow (it's the same of next arrow, instead of previous). Fixed by @aslubsky with pull request #199.
