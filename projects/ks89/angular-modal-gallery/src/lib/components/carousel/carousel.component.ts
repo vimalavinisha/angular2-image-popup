@@ -460,7 +460,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param KeyboardEvent | MouseEvent event payload
    * @param Action action that triggered the event or `Action.NORMAL` if not provided
    */
-  onNavigationEvent(direction: string, event: KeyboardEvent, action: Action = Action.NORMAL): void {
+  onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
       this.nextImage(action);
