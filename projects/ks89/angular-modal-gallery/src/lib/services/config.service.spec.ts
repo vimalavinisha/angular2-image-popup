@@ -159,11 +159,10 @@ describe('ConfigService', () => {
             };
             service.setConfig(1, inputConfig);
             const result: LibConfig | undefined = service.getConfig(1);
-            expect(result?.accessibilityConfig?.backgroundAriaLabel).toEqual(inputConfig.accessibilityConfig?.backgroundAriaLabel);
-            delete result?.accessibilityConfig?.backgroundAriaLabel;
-            const clonedDefault: AccessibilityConfig = cloneDeep(KS_DEFAULT_ACCESSIBILITY_CONFIG);
-            delete clonedDefault?.backgroundAriaLabel;
-            expect(result?.accessibilityConfig).toEqual(clonedDefault);
+            if (!result || !result.accessibilityConfig || !inputConfig || !inputConfig.accessibilityConfig) {
+              throw new Error('Interrupted test, because of some undefined values');
+            }
+            expect(result.accessibilityConfig.backgroundAriaLabel).toEqual(inputConfig.accessibilityConfig.backgroundAriaLabel);
           })
         );
       });

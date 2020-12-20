@@ -47,7 +47,7 @@
     "copy:dist:examples": "npm run copy:dist:systemjs && npm run copy:dist:angular-cli-10 && npm run copy:dist:angular-cli-9 && npm run copy:dist:angular-cli-material && npm run copy:dist:universal",
     "copy:build": "cpr dist/ks89/angular-modal-gallery @ks89/angular-modal-gallery -o",
     "copy:other": "cpr README.md @ks89/angular-modal-gallery/README.md -o && cpr LICENSE @ks89/angular-modal-gallery/LICENSE -o && cpr CHANGELOG.md @ks89/angular-modal-gallery/CHANGELOG.md -o && cpr CONTRIBUTING.md @ks89/angular-modal-gallery/CONTRIBUTING.md -o",
-    "pretest": "npm run clean:coverage",
+    "pretest": "npm run clean:coverage && npm run lint",
     "test": "ng test @ks89/angular-modal-gallery --watch=false --code-coverage=true",
     "test:snyk": "snyk test && npm run test",
     "test:watch": "ng test @ks89/angular-modal-gallery --watch=true --code-coverage=true",
