@@ -1,3 +1,14 @@
+# 8.0.0-beta.6
+### Features
+
+STILL WORK IN PROGRESS
+
+<br>
+
+**This is a beta version without a documentation**
+**If you want to try it, check examples/angular-cli-10 to get tons of working examples**
+
+
 # 8.0.0-beta.5
 ### Features
 - add new param to previewConfig to display previews on small screens #213 (pull request #214 by vlafranca)

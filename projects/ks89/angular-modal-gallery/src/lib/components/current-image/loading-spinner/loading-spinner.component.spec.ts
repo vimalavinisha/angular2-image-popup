@@ -17,14 +17,14 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { LoadingSpinnerComponent } from './loading-spinner.component';
 import { AccessibilityConfig } from '../../../model/accessibility.interface';
 import { LoadingConfig, LoadingType } from '../../../model/loading-config.interface';
-import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../../components/accessibility-default';
+import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../accessibility-default';
 
 let comp: LoadingSpinnerComponent;
 let fixture: ComponentFixture<LoadingSpinnerComponent>;
@@ -43,18 +43,15 @@ const VISIBLE_CONFIG: LoadingConfig[] = [
   {enable: true, type: LoadingType.EXPLOSING_SQUARES}
 ];
 
-function initTestBed() {
-  return TestBed.configureTestingModule({
+function initTestBed(): void {
+  TestBed.configureTestingModule({
     declarations: [LoadingSpinnerComponent]
-  }).compileComponents();
+  });
 }
 
 describe('LoadingSpinnerComponent', () => {
-  beforeEach(waitForAsync(() => {
-    return initTestBed();
-  }));
-
   beforeEach(() => {
+    initTestBed();
     fixture = TestBed.createComponent(LoadingSpinnerComponent);
     comp = fixture.componentInstance;
   });
@@ -73,7 +70,7 @@ describe('LoadingSpinnerComponent', () => {
         expect(spinnerContainer).not.toBeUndefined();
         expect(spinnerContainer.name).toBe('div');
         expect(spinnerContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.loadingSpinnerAriaLabel);
-        expect(spinnerContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.loadingSpinnerTitle);
+        expect(spinnerContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.loadingSpinnerTitle);
 
         switch (loadingConfig.type) {
           case LoadingType.STANDARD:
@@ -153,7 +150,7 @@ describe('LoadingSpinnerComponent', () => {
         expect(spinnerContainer).not.toBeUndefined();
         expect(spinnerContainer.name).toBe('div');
         expect(spinnerContainer.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.loadingSpinnerAriaLabel);
-        expect(spinnerContainer.properties['title']).toBe(CUSTOM_ACCESSIBILITY.loadingSpinnerTitle);
+        expect(spinnerContainer.properties.title).toBe(CUSTOM_ACCESSIBILITY.loadingSpinnerTitle);
 
         switch (loadingConfig.type) {
           case LoadingType.STANDARD:

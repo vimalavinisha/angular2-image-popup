@@ -17,24 +17,25 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Image } from '../../model/image.class';
 import { InternalButtonConfig, UpperButtonsComponent } from './upper-buttons.component';
-import { SizeDirective } from '../../directives/size.directive';
+import { Image } from '../../model/image.class';
 import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType } from '../../model/buttons-config.interface';
-import { Action } from '../../model/action.enum';
 import { Size } from '../../model/size.interface';
 import { KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_FULL_SCREEN, KS_DEFAULT_SIZE } from './upper-buttons-default';
+import { Action } from '../../model/action.enum';
 import { ConfigService } from '../../services/config.service';
+import { SizeDirective } from '../../directives/size.directive';
 
 let comp: UpperButtonsComponent;
 let fixture: ComponentFixture<UpperButtonsComponent>;
+const GALLERY_ID = 1;
 
-const BAD_IMAGE: any = new Image(0, null);
+// const BAD_IMAGE: Image = new Image(0, null);
 
 const IMAGE_EXTURL: Image = new Image(0, {
   img: '../../../../../apps/src/assets/images/gallery/img1.jpg',
@@ -46,7 +47,7 @@ const IMAGE_NO_EXTURL: Image = new Image(0, {
   img: '../../../../../apps/src/assets/images/gallery/img1.jpg'
 });
 
-const NO_EXTURL_CASES: Image[] = [IMAGE_NO_EXTURL, BAD_IMAGE];
+const NO_EXTURL_CASES: Image[] = [IMAGE_NO_EXTURL/*, BAD_IMAGE*/];
 
 const CUSTOM_SIZE: Size = {height: '40px', width: '40px'};
 const CUSTOM_SIZE_AUTO_HEIGHT: Size = {height: 'auto', width: '40px'};
@@ -94,13 +95,6 @@ const CUSTOM_FA_BUTTONS: ButtonConfig[] = [
     title: 'custom close title',
     fontSize: '20px'
   },
-  // {
-  //   className: 'fa fa-refresh white',
-  //   type: ButtonType.REFRESH,
-  //   ariaLabel: 'custom refresh aria label',
-  //   title: 'custom refresh title',
-  //   fontSize: '20px'
-  // },
   {
     className: 'fa fa-download white',
     type: ButtonType.DOWNLOAD,
@@ -157,7 +151,7 @@ const CUSTOM_CASES: ButtonsConfig[] = [
   {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
-    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, /* KS_DEFAULT_BTN_REFRESH*/
+    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE,
       KS_DEFAULT_BTN_DELETE, KS_DEFAULT_BTN_EXTURL, KS_DEFAULT_BTN_CLOSE]
   }
 ];
@@ -166,24 +160,21 @@ const CUSTOM_SIZES: ButtonsConfig[] = [
   {
     visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [
       buildBtnWithCustomSize(ButtonType.DOWNLOAD, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.CLOSE, CUSTOM_SIZE),
-      // buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE),
       buildBtnWithCustomSize(ButtonType.CUSTOM, CUSTOM_SIZE), buildBtnWithCustomSize(ButtonType.DELETE, CUSTOM_SIZE)]
   },
   {
     visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [
       buildBtnWithCustomSize(ButtonType.DOWNLOAD, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.CLOSE, CUSTOM_SIZE_AUTO_HEIGHT),
-      // buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE_AUTO_HEIGHT),
       buildBtnWithCustomSize(ButtonType.CUSTOM, CUSTOM_SIZE_AUTO_HEIGHT), buildBtnWithCustomSize(ButtonType.DELETE, CUSTOM_SIZE_AUTO_HEIGHT)]
   },
   {
     visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [
       buildBtnWithCustomSize(ButtonType.DOWNLOAD, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.CLOSE, CUSTOM_SIZE_AUTO_WIDTH),
-      // buildBtnWithCustomSize(ButtonType.EXTURL, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.REFRESH, CUSTOM_SIZE_AUTO_WIDTH),
       buildBtnWithCustomSize(ButtonType.CUSTOM, CUSTOM_SIZE_AUTO_WIDTH), buildBtnWithCustomSize(ButtonType.DELETE, CUSTOM_SIZE_AUTO_WIDTH)]
   }
 ];
 
-const CUSTOM_FA_CASES: ButtonsConfig[] = [{visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: CUSTOM_FA_BUTTONS}];
+const CUSTOM_FA_CASE: ButtonsConfig = {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: CUSTOM_FA_BUTTONS};
 
 const NOT_VALID_BTN_TYPE_CASES: ButtonsConfig[] = [
   {visible: true, strategy: ButtonsStrategy.CUSTOM, buttons: [WRONG_TYPE_BTN]}
@@ -202,12 +193,13 @@ const EXT_URL_IN_A_NEW_TAB_CASES: ButtonsConfig[] = [
   {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
-    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, /* KS_DEFAULT_BTN_REFRESH, */ KS_DEFAULT_BTN_DELETE, EXTURL_BTN_NEW_TAB]
+    buttons: [KS_DEFAULT_BTN_DOWNLOAD, KS_DEFAULT_BTN_CLOSE, KS_DEFAULT_BTN_DELETE, EXTURL_BTN_NEW_TAB]
   }
 ];
 
 function getButtonEvent(button: ButtonConfig): ButtonEvent {
   return {
+    galleryId: GALLERY_ID,
     button,
     // upper-buttons.component always returns a null image to the main component, so I should test for a null
     image: null,
@@ -215,15 +207,16 @@ function getButtonEvent(button: ButtonConfig): ButtonEvent {
   };
 }
 
-function updateInputs(image: Image, configButtons: ButtonsConfig) {
+function updateInputs(image: Image, configButtons: ButtonsConfig): void {
   const configService = fixture.debugElement.injector.get(ConfigService);
-  configService.setConfig(0, {buttonsConfig: configButtons});
+  configService.setConfig(GALLERY_ID, {buttonsConfig: configButtons});
+  comp.id = GALLERY_ID;
   comp.currentImage = image;
   comp.ngOnInit();
   fixture.detectChanges();
 }
 
-function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
+function buildBtnWithCustomSize(btnType: ButtonType, size: Size): ButtonConfig {
   switch (btnType) {
     case ButtonType.CLOSE:
       return Object.assign({}, KS_DEFAULT_BTN_CLOSE, {size});
@@ -233,30 +226,55 @@ function buildBtnWithCustomSize(btnType: ButtonType, size: Size) {
       return Object.assign({}, KS_DEFAULT_BTN_EXTURL, {size});
     case ButtonType.DELETE:
       return Object.assign({}, KS_DEFAULT_BTN_DELETE, {size});
-    // case ButtonType.REFRESH:
-    //   return Object.assign({}, KS_DEFAULT_BTN_REFRESH, {size:);
     case ButtonType.FULLSCREEN:
       return Object.assign({}, KS_DEFAULT_BTN_FULL_SCREEN, {size});
     case ButtonType.CUSTOM:
       return Object.assign({}, CUSTOM_BTN, {size});
     default:
-      fail('this test should run only with known button types');
+      throw new Error('this test should run only with known button types');
   }
 }
 
-function testCurrentHtmlBtn(btnDebugElement: DebugElement, btnIndex: number, size: Size) {
-  const currentButton: InternalButtonConfig = comp.buttons[btnIndex];
-  expect(btnDebugElement.name).toBe('a');
-  expect(btnDebugElement.attributes['class']).toBe('upper-button');
-  expect(btnDebugElement.attributes['kssize']).not.toBeNull();
-  expect(btnDebugElement.attributes['sizeConfig']).toBeUndefined();
-  if (size) {
-    expect(btnDebugElement.styles.width).toBe(size.width);
-    expect(btnDebugElement.styles.height).toBe(size.height);
+function testCurrentHtmlBtn(btnDebugElement: DebugElement, btnIndex: number, size: Size, withFontAwesome: boolean = false): void {
+  if (!comp.buttons || !comp.buttons[btnIndex]) {
+    throw new Error('There is something wrong in this test, because currentButton must be defined!');
   }
-  expect(btnDebugElement.attributes['aria-label']).toBe(currentButton.ariaLabel);
-  expect(btnDebugElement.attributes['role']).toBe('button');
-  expect(btnDebugElement.properties['tabIndex']).toBe(0);
+  const currentButton: InternalButtonConfig = comp.buttons[btnIndex] as InternalButtonConfig;
+  expect(btnDebugElement.name).toBe('a');
+  expect(btnDebugElement.attributes.class).toBe('upper-button');
+  expect(btnDebugElement.attributes.kssize).not.toBeNull();
+  expect(btnDebugElement.attributes.sizeConfig).toBeUndefined();
+  if (size) {
+    // I don't know why I cannot retrieve styles from btnDebugElement, so I decided to
+    // get elements via Directive.
+    const sizes: DebugElement[] = fixture.debugElement.queryAll(By.directive(SizeDirective));
+    let width = '';
+    let height = '';
+    const split: string[] | undefined = sizes[0].attributes.style?.split(';');
+    if (!split) {
+      throw new Error('This test expects to check styles applies by ksSize directive');
+    }
+    split.pop(); // remove last element because it contains ''
+    if (!withFontAwesome) {
+      split.forEach((item: string) => {
+        if (item.trim().startsWith('width:')) {
+          width = item.replace('width:', '').trim();
+        } else if (item.trim().startsWith('height:')) {
+          height = item.replace('height:', '').trim();
+        }
+      });
+      expect(width).toBe(size.width);
+      expect(height).toBe(size.height);
+    } else {
+      expect(split.length).toBe(1);
+      const fontSize: string = split[0].replace('font-size:', '').trim();
+      // TODO improve this check because here I'm using always FA buttons with the same size
+      expect(fontSize).toBe(CUSTOM_FA_BUTTONS[0]?.fontSize as string);
+    }
+  }
+  expect(btnDebugElement.attributes['aria-label']).toBe(currentButton.ariaLabel ? currentButton.ariaLabel : null);
+  expect(btnDebugElement.attributes.role).toBe('button');
+  expect(btnDebugElement.properties.tabIndex).toBe(0);
   // expect(btnDebugElement.properties['hidden']).toBe(false);
 
   // console.log('btnDebugElement.attributes ' + btnIndex, btnDebugElement.attributes);
@@ -273,13 +291,28 @@ function testCurrentHtmlBtn(btnDebugElement: DebugElement, btnIndex: number, siz
   const childrenElements: DebugElement[] = btnDebugElement.children;
   expect(childrenElements.length).toBe(1);
   expect(childrenElements[0].attributes['aria-hidden']).toBe('true');
-  expect(childrenElements[0].properties['className']).toBe('inside ' + currentButton.className);
-  expect(childrenElements[0].properties['title']).toBe(currentButton.title);
+  expect(containsClasses(childrenElements[0].properties.className, currentButton.className + ' inside')).toBeTrue();
+  expect(childrenElements[0].properties.title).toBe(currentButton.title);
   // console.log('childrenElements.attributes ' + btnIndex, childrenElements[0].attributes);
   // console.log('childrenElements.properties ' + btnIndex, childrenElements[0].properties);
 }
 
-function testBtnNumberByStrategy(strategy: ButtonsStrategy, btnDebugElementsCount: number) {
+function containsClasses(actualClasses: string, expectedClasses: string): boolean {
+  const actual: string[] = actualClasses.split(' ');
+  const expected: string[] = expectedClasses.split(' ');
+  let count = 0;
+  if (actual.length !== expected.length) {
+    return false;
+  }
+  expected.forEach((item: string) => {
+    if (actual.includes(item)) {
+      count++;
+    }
+  });
+  return count === expected.length;
+}
+
+function testBtnNumberByStrategy(strategy: ButtonsStrategy, btnDebugElementsCount: number): void {
   switch (strategy) {
     case ButtonsStrategy.DEFAULT:
       expect(btnDebugElementsCount).toBe(1);
@@ -291,19 +324,18 @@ function testBtnNumberByStrategy(strategy: ButtonsStrategy, btnDebugElementsCoun
       expect(btnDebugElementsCount).toBe(3);
       break;
     case ButtonsStrategy.FULL:
-      expect(btnDebugElementsCount).toBe(5); // with refresh this must be 5
+      expect(btnDebugElementsCount).toBe(5);
       break;
     case ButtonsStrategy.CUSTOM:
       // no constraints with custom strategy
       break;
     default:
       fail('input strategy is not allowed');
-      break;
   }
 }
 
-function initTestBed() {
-  return TestBed.configureTestingModule({
+function initTestBed(): void {
+  TestBed.configureTestingModule({
     declarations: [UpperButtonsComponent, SizeDirective]
   }).overrideComponent(UpperButtonsComponent, {
     set: {
@@ -318,11 +350,8 @@ function initTestBed() {
 }
 
 describe('UpperButtonsComponent', () => {
-  beforeEach(waitForAsync(() => {
-    return initTestBed();
-  }));
-
   beforeEach(() => {
+    initTestBed();
     fixture = TestBed.createComponent(UpperButtonsComponent);
     comp = fixture.componentInstance;
   });
@@ -343,12 +372,10 @@ describe('UpperButtonsComponent', () => {
 
         testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
+        comp.id = GALLERY_ID;
         comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        // comp.refresh.subscribe((res: ButtonEvent) => {
-        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -362,13 +389,12 @@ describe('UpperButtonsComponent', () => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
         });
 
-        // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
           testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
-        // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
+        // iterate over all buttons from LEFT TO RIGHT
         // clicking all of them
         btns.forEach((debugElement: DebugElement) => {
           debugElement.nativeElement.click();
@@ -388,12 +414,10 @@ describe('UpperButtonsComponent', () => {
 
         testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
+        comp.id = GALLERY_ID;
         comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        // comp.refresh.subscribe((res: ButtonEvent) => {
-        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -407,13 +431,12 @@ describe('UpperButtonsComponent', () => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
         });
 
-        // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
           testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
-        // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
+        // iterate over all buttons from LEFT TO RIGHT
         // clicking all of them
         btns.forEach((debugElement: DebugElement) => {
           debugElement.nativeElement.click();
@@ -434,15 +457,13 @@ describe('UpperButtonsComponent', () => {
 
           testBtnNumberByStrategy(currentButtonConfig.strategy, btns.length);
 
+          comp.id = GALLERY_ID;
           comp.navigate.subscribe((res: ButtonEvent) => {
             fail('navigate output should be never called, because input image is not valid or extUrl is not defined');
           });
           comp.closeButton.subscribe((res: ButtonEvent) => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
           });
-          // comp.refresh.subscribe((res: ButtonEvent) => {
-          //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-          // });
           comp.delete.subscribe((res: ButtonEvent) => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
           });
@@ -453,13 +474,13 @@ describe('UpperButtonsComponent', () => {
             expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_FULL_SCREEN));
           });
 
-          // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
+          // iterate over all buttons from LEFT TO RIGHT
           // testing html elements, attributes and properties
           btns.forEach((debugElement: DebugElement, btnIndex: number) => {
             testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
           });
 
-          // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
+          // iterate over all buttons from LEFT TO RIGHT
           // clicking all of them
           btns.forEach((debugElement: DebugElement) => {
             debugElement.nativeElement.click();
@@ -478,12 +499,10 @@ describe('UpperButtonsComponent', () => {
         const element: DebugElement = fixture.debugElement;
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
+        comp.id = GALLERY_ID;
         comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        // comp.refresh.subscribe((res: ButtonEvent) => {
-        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -524,12 +543,10 @@ describe('UpperButtonsComponent', () => {
         const element: DebugElement = fixture.debugElement;
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
+        comp.id = GALLERY_ID;
         comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
-        // comp.refresh.subscribe((res: ButtonEvent) => {
-        //   expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_REFRESH));
-        // });
         comp.delete.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_DELETE));
         });
@@ -560,50 +577,46 @@ describe('UpperButtonsComponent', () => {
       });
     });
 
-    CUSTOM_FA_CASES.forEach((currentButtonConfig: ButtonsConfig, index: number) => {
-      it(`should display custom buttons (with different types) with FontAwesome and subscribe to click events. Test i=${index}`, () => {
-        updateInputs(IMAGE_EXTURL, currentButtonConfig);
+    it(`should display custom buttons (with different types) with FontAwesome and subscribe to click events.`, () => {
+      updateInputs(IMAGE_EXTURL, CUSTOM_FA_CASE);
 
-        // expect a valid ButtonStrategy because passed to this test as input (via currentButtonConfig)
-        expect(ButtonsStrategy[currentButtonConfig.strategy]).not.toBeUndefined();
+      // expect a valid ButtonStrategy because passed to this test as input (via currentButtonConfig)
+      expect(ButtonsStrategy[CUSTOM_FA_CASE.strategy]).not.toBeUndefined();
 
-        const element: DebugElement = fixture.debugElement;
-        const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
+      const element: DebugElement = fixture.debugElement;
+      const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
 
-        comp.closeButton.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[2]));
-        });
-        // comp.refresh.subscribe((res: ButtonEvent) => {
-        //   expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[3]));
-        // });
-        comp.delete.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[1]));
-        });
-        comp.navigate.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[4]));
-        });
-        comp.download.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[3]));
-        });
-        comp.customEmit.subscribe((res: ButtonEvent) => {
-          expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[0]));
-        });
+      comp.id = GALLERY_ID;
+      comp.closeButton.subscribe((res: ButtonEvent) => {
+        expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[2]));
+      });
+      comp.delete.subscribe((res: ButtonEvent) => {
+        expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[1]));
+      });
+      comp.navigate.subscribe((res: ButtonEvent) => {
+        expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[4]));
+      });
+      comp.download.subscribe((res: ButtonEvent) => {
+        expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[3]));
+      });
+      comp.customEmit.subscribe((res: ButtonEvent) => {
+        expect(res).toEqual(getButtonEvent(CUSTOM_FA_BUTTONS[0]));
+      });
 
-        // iterate over all buttons from LEFT TO RIGHT
-        // testing html elements, attributes and properties
-        btns.forEach((debugElement: DebugElement, btnIndex: number) => {
-          testCurrentHtmlBtn(debugElement, btnIndex, null);
-        });
+      // iterate over all buttons from LEFT TO RIGHT
+      // testing html elements, attributes and properties
+      btns.forEach((debugElement: DebugElement, btnIndex: number) => {
+        testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE, true);
+      });
 
-        // iterate over all buttons from LEFT TO RIGHT
-        // clicking all of them
-        btns.forEach((debugElement: DebugElement) => {
-          debugElement.nativeElement.click();
-        });
+      // iterate over all buttons from LEFT TO RIGHT
+      // clicking all of them
+      btns.forEach((debugElement: DebugElement) => {
+        debugElement.nativeElement.click();
       });
     });
 
-    CUSTOM_SIZES.forEach((currentButtonConfig: ButtonsConfig, index: number) => {
+    [CUSTOM_SIZES[0]].forEach((currentButtonConfig: ButtonsConfig, index: number) => {
       it(`should display custom buttons (with different types) with custom sizes. Test i=${index}`, () => {
         updateInputs(IMAGE_EXTURL, currentButtonConfig);
 
@@ -662,17 +675,18 @@ describe('UpperButtonsComponent', () => {
         const btns: DebugElement[] = element.queryAll(By.css('a.upper-button'));
         expect(btns.length).toBe(1);
 
+        comp.id = GALLERY_ID;
         comp.closeButton.subscribe((res: ButtonEvent) => {
           expect(res).toEqual(getButtonEvent(KS_DEFAULT_BTN_CLOSE));
         });
 
-        // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
+        // iterate over all buttons from LEFT TO RIGHT
         // testing html elements, attributes and properties
         btns.forEach((debugElement: DebugElement, btnIndex: number) => {
           testCurrentHtmlBtn(debugElement, btnIndex, KS_DEFAULT_SIZE);
         });
 
-        // iterate over all buttons from LEFT TO RIGHT (from 'refresh' -> to 'close')
+        // iterate over all buttons from LEFT TO RIGHT
         // clicking all of them
         btns.forEach((debugElement: DebugElement) => {
           debugElement.nativeElement.click();
