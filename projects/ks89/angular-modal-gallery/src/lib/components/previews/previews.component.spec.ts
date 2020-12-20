@@ -33,6 +33,7 @@ import { SizeDirective } from '../../directives/size.directive';
 import { KS_DEFAULT_SIZE } from '../upper-buttons/upper-buttons-default';
 import { Action } from '../../model/action.enum';
 import { ConfigService } from '../../services/config.service';
+import { FallbackImageDirective } from '../../directives/fallback-image.directive';
 
 interface NavigationTestData {
   initial: {
@@ -46,6 +47,8 @@ interface NavigationTestData {
     activeIndex: number
   };
 }
+
+const GALLERY_ID = 1;
 
 let comp: PreviewsComponent;
 let fixture: ComponentFixture<PreviewsComponent>;
@@ -148,46 +151,79 @@ const NAVIGATION_PREV_PREVIEWS: NavigationTestData[] = [
 ];
 
 function checkArrows(arrows: DebugElement[], first: boolean, last: boolean,
-                     accessibility: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG) {
+                     accessibility: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG): void {
   const prevArrowClass = first ? 'inside empty-arrow-preview-image' : 'inside left-arrow-preview-image';
   const nextArrowClass = last ? 'inside empty-arrow-preview-image' : 'inside right-arrow-preview-image';
   expect(arrows.length).toBe(2);
-  expect(arrows[0].attributes['class']).toBe('nav-left');
-  expect(arrows[0].attributes['role']).toBe('button');
+  expect(arrows[0].attributes.class).toBe('nav-left');
+  expect(arrows[0].attributes.role).toBe('button');
   expect(arrows[0].attributes['aria-label']).toBe(accessibility.previewScrollPrevAriaLabel);
-  expect(arrows[0].properties['tabIndex']).toBe(first ? -1 : 0); // because with the first image, prev arrow is hidden
+  expect(arrows[0].properties.tabIndex).toBe(first ? -1 : 0); // because with the first image, prev arrow is hidden
   expect(arrows[0].children[0].attributes['aria-hidden']).toBe('true');
-  expect(arrows[0].children[0].properties['title']).toBe(accessibility.previewScrollPrevTitle);
-  expect(arrows[0].children[0].properties['className']).toBe(prevArrowClass); // 'inside left-arrow-preview-image');
-  expect(arrows[1].attributes['class']).toBe('nav-right');
-  expect(arrows[1].attributes['role']).toBe('button');
+  expect(arrows[0].children[0].properties.title).toBe(accessibility.previewScrollPrevTitle);
+  expect(containsClasses(arrows[0].children[0].properties.className, prevArrowClass)).toBeTrue();
+  expect(arrows[1].attributes.class).toBe('nav-right');
+  expect(arrows[1].attributes.role).toBe('button');
   expect(arrows[1].attributes['aria-label']).toBe(accessibility.previewScrollNextAriaLabel);
-  expect(arrows[1].properties['tabIndex']).toBe(last ? -1 : 0);
+  expect(arrows[1].properties.tabIndex).toBe(last ? -1 : 0);
   expect(arrows[1].children[0].attributes['aria-hidden']).toBe('true');
-  expect(arrows[1].children[0].properties['title']).toBe(accessibility.previewScrollNextTitle);
-  expect(arrows[1].children[0].properties['className']).toBe(nextArrowClass);
+  expect(arrows[1].children[0].properties.title).toBe(accessibility.previewScrollNextTitle);
+  expect(containsClasses(arrows[1].children[0].properties.className, nextArrowClass)).toBeTrue();
 }
 
-function checkPreview(previewElement: DebugElement, previewImage: InternalLibImage, isActive: boolean, size: Size = DEFAULT_PREVIEW_SIZE) {
-  const currentPlainImg: PlainImage = previewImage.plain;
-  const currentModalImg: ModalImage = previewImage.modal;
+function checkPreview(previewElement: DebugElement, previewImage: InternalLibImage, isActive: boolean, size: Size = DEFAULT_PREVIEW_SIZE): void {
+  const currentPlainImg: PlainImage | undefined = previewImage.plain;
+  const currentModalImg: ModalImage | undefined = previewImage.modal;
   expect(previewElement.name).toBe('img');
-  expect(previewElement.attributes['role']).toBe('img');
+  expect(previewElement.attributes.role).toBe('img');
   expect(previewElement.attributes['aria-label']).toBe(currentModalImg.ariaLabel ? currentModalImg.ariaLabel : '');
-  expect(previewElement.attributes['ksSize']).toBe('');
-  expect(previewElement.styles.width).toBe(size.width);
-  expect(previewElement.styles.height).toBe(size.height);
-  // console.log('previewElement.properties[\'className\']', previewElement);
-  // expect(previewElement.properties['className']).toBe('inside preview-image ' + (isActive ? 'active' : ''));
-  expect(previewElement.properties['src']).toBe(currentPlainImg && currentPlainImg.img ? currentPlainImg.img : currentModalImg.img);
-  expect(previewElement.properties['title']).toBe(currentModalImg.title ? currentModalImg.title : '');
-  expect(previewElement.properties['alt']).toBe(currentModalImg.alt ? currentModalImg.alt : '');
-  expect(previewElement.properties['tabIndex']).toBe(0);
-  // expect(previewElement.properties['className']).toBe('inside preview-image ' + (isActive ? 'active' : ''));
+  expect(previewElement.attributes.ksSize).toBe('');
+  if (size) {
+    // I don't know why I cannot retrieve styles from btnDebugElement, so I decided to
+    // get elements via Directive.
+    const sizes: DebugElement[] = fixture.debugElement.queryAll(By.directive(SizeDirective));
+    let width = '';
+    let height = '';
+    const split: string[] | undefined = sizes[0].attributes.style?.split(';');
+    if (!split) {
+      throw new Error('This test expects to check styles applied by ksSize directive');
+    }
+    split.pop(); // remove last element because it contains ''
+    split.forEach((item: string) => {
+      if (item.trim().startsWith('width:')) {
+        width = item.replace('width:', '').trim();
+      } else if (item.trim().startsWith('height:')) {
+        height = item.replace('height:', '').trim();
+      }
+    });
+    expect(width).toBe(size.width);
+    expect(height).toBe(size.height);
+  }
+  // expect(previewElement.properties.className).toBe('inside preview-image ' + (isActive ? 'active' : ''));
+  expect(previewElement.properties.src).toBe(currentPlainImg && currentPlainImg.img ? currentPlainImg.img : currentModalImg.img);
+  expect(previewElement.properties.title).toBe(currentModalImg.title ? currentModalImg.title : '');
+  expect(previewElement.properties.alt).toBe(currentModalImg.alt ? currentModalImg.alt : '');
+  expect(previewElement.properties.tabIndex).toBe(0);
+  // expect(previewElement.properties.className).toBe('inside preview-image ' + (isActive ? 'active' : ''));
+}
+
+function containsClasses(actualClasses: string, expectedClasses: string): boolean {
+  const actual: string[] = actualClasses.split(' ');
+  const expected: string[] = expectedClasses.split(' ');
+  let count = 0;
+  if (actual.length !== expected.length) {
+    return false;
+  }
+  expected.forEach((item: string) => {
+    if (actual.includes(item)) {
+      count++;
+    }
+  });
+  return count === expected.length;
 }
 
 function checkPreviewStateAfterClick(previews: DebugElement[], prevValue: InternalLibImage, currValue: InternalLibImage,
-                                     start: number, end: number, activeIndex: number = 0) {
+                                     start: number, end: number, activeIndex: number = 0): void {
   fixture.detectChanges();
   // comp.ngOnChanges(<SimpleChanges>{
   //   currentImage: {
@@ -197,20 +233,14 @@ function checkPreviewStateAfterClick(previews: DebugElement[], prevValue: Intern
   //     isFirstChange: () => false
   //   }
   // });
-  // console.log('[[[[[[[[[[[ s', start);
-  // console.log('[[[[[[[[[[[ cs', comp.start);
-  // console.log('[[[[[[[[[[[ e', end);
-  // console.log('[[[[[[[[[[[ ce', comp.end);
-  // console.log('[[[[[[[[[[[ activeIndex', activeIndex);
-  // console.log('[[[[[[[[[[[ ???', IMAGES.slice(start, end));
   expect(comp.start).toBe(start);
   expect(comp.end).toBe(end);
   expect(comp.previews).toEqual(IMAGES.slice(start, end));
 }
 
-function initTestBed() {
-  return TestBed.configureTestingModule({
-    declarations: [PreviewsComponent, SizeDirective]
+function initTestBed(): void {
+  TestBed.configureTestingModule({
+    declarations: [PreviewsComponent, SizeDirective, FallbackImageDirective]
   }).overrideComponent(PreviewsComponent, {
     set: {
       providers: [
@@ -224,11 +254,8 @@ function initTestBed() {
 }
 
 describe('PreviewsComponent', () => {
-  beforeEach(waitForAsync(() => {
-    return initTestBed();
-  }));
-
   beforeEach(() => {
+    initTestBed();
     fixture = TestBed.createComponent(PreviewsComponent);
     comp = fixture.componentInstance;
   });
@@ -241,11 +268,12 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -259,7 +287,7 @@ describe('PreviewsComponent', () => {
       const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
       expect(previewsContainer.name).toBe('nav');
       expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+      expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(numOfPreviews);
@@ -276,11 +304,12 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 2; // you can use every value except for 0 and the last one
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -294,7 +323,7 @@ describe('PreviewsComponent', () => {
       const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
       expect(previewsContainer.name).toBe('nav');
       expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+      expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(numOfPreviews);
@@ -311,11 +340,12 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = IMAGES.length - 1;
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -329,7 +359,7 @@ describe('PreviewsComponent', () => {
       const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
       expect(previewsContainer.name).toBe('nav');
       expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+      expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(numOfPreviews);
@@ -345,12 +375,13 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 3;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         // custom accessibility for container and arrows, but not for previews
         accessibilityConfig: CUSTOM_ACCESSIBILITY,
         slideConfig: SLIDE_CONFIG
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES_CUSTOM_ACCESSIBILITY[initialActiveImage];
       comp.images = IMAGES_CUSTOM_ACCESSIBILITY;
       comp.ngOnInit();
@@ -364,7 +395,7 @@ describe('PreviewsComponent', () => {
       const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
       expect(previewsContainer.name).toBe('nav');
       expect(previewsContainer.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(CUSTOM_ACCESSIBILITY.previewsContainerTitle);
+      expect(previewsContainer.properties.title).toBe(CUSTOM_ACCESSIBILITY.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(numOfPreviews);
@@ -380,11 +411,12 @@ describe('PreviewsComponent', () => {
       const initialActiveImage = 0;
       const numOfPreviews = 2;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: {visible: true, number: 2, arrows: false},
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -399,7 +431,7 @@ describe('PreviewsComponent', () => {
       const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
       expect(previewsContainer.name).toBe('nav');
       expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+      expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(numOfPreviews);
@@ -416,11 +448,12 @@ describe('PreviewsComponent', () => {
         const initialActiveImage = 0;
         const numOfPreviews = 3;
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
+        configService.setConfig(GALLERY_ID, {
           previewConfig: {visible: true, size},
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig: SLIDE_CONFIG
         });
+        comp.id = GALLERY_ID;
         comp.currentImage = IMAGES[initialActiveImage];
         comp.images = IMAGES;
         comp.ngOnInit();
@@ -434,7 +467,7 @@ describe('PreviewsComponent', () => {
         const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
         expect(previewsContainer.name).toBe('nav');
         expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-        expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+        expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
         const previews: DebugElement[] = element.queryAll(By.css('img'));
         expect(previews.length).toBe(numOfPreviews);
@@ -452,18 +485,19 @@ describe('PreviewsComponent', () => {
       const numOfPreviews = 3;
       const afterClickActivePreview = 0;
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: PREVIEWS_CONFIG_VISIBLE,
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
         slideConfig: SLIDE_CONFIG
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES[initialActiveImage];
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
 
       comp.clickPreview.subscribe((res: ImageModalEvent) => {
-        const event: ImageModalEvent = new ImageModalEvent(Action.CLICK, afterClickActivePreview);
+        const event: ImageModalEvent = new ImageModalEvent(GALLERY_ID, Action.CLICK, afterClickActivePreview);
         expect(res).toEqual(event);
       });
 
@@ -498,7 +532,6 @@ describe('PreviewsComponent', () => {
     //   fixture.detectChanges();
     //
     //   comp.clickPreview.subscribe((res: InternalLibImage) => {
-    //     console.log('----- comp.clickPreview.subscribe' + res, IMAGES[afterClickActivePreview]);
     //     fail('I should go here');
     //     expect(res).toEqual(IMAGES[afterClickActivePreview]);
     //   });
@@ -523,11 +556,12 @@ describe('PreviewsComponent', () => {
     NAVIGATION_NEXT_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
       it(`should navigate previews clicking on left arrow. Test i=${index}`, waitForAsync(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
+        configService.setConfig(GALLERY_ID, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig: SLIDE_CONFIG
         });
+        comp.id = GALLERY_ID;
         comp.currentImage = IMAGES[val.initial.activeIndex];
         comp.images = IMAGES;
         comp.ngOnInit();
@@ -577,7 +611,7 @@ describe('PreviewsComponent', () => {
 
     // TODO
     // NAVIGATION_PREV_PREVIEWS.forEach((val: NavigationTestData, index: number) => {
-    //   it(`should navigate back previews clicking on right arrow. Test i=${index}`, async(() => {
+    //   it(`should navigate back previews clicking on right arrow. Test i=${index}`, waitForAsync(() => {
     //     comp.previewConfig = PREVIEWS_CONFIG_VISIBLE;
     //     comp.accessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
     //     comp.currentImage = IMAGES[val.initial.activeIndex];
@@ -631,11 +665,12 @@ describe('PreviewsComponent', () => {
     [SLIDE_CONFIG, SLIDE_CONFIG_INFINITE].forEach((slideConfig: SlideConfig, index: number) => {
       it(`should navigate next/prev clicking on images for all SlideConfigs. Test i=${index}`, waitForAsync(() => {
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
+        configService.setConfig(GALLERY_ID, {
           previewConfig: PREVIEWS_CONFIG_VISIBLE,
           accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
           slideConfig
         });
+        comp.id = GALLERY_ID;
         comp.currentImage = IMAGES[0];
         comp.images = IMAGES;
         comp.ngOnInit();
@@ -675,8 +710,6 @@ describe('PreviewsComponent', () => {
         // }
         // images = IMAGESò.slice(1, 4);
         // for (let i = 0; i < images.length; i++) {
-        //   console.log('previews[i] ', previews[i].properties['className']);
-        //   console.log('images[i] ', images[i]);
         //   checkPreview(previews[i], images[i], i === 2, DEFAULT_PREVIEW_SIZE);
         // }
         previews = element.queryAll(By.css('img'));
@@ -716,9 +749,10 @@ describe('PreviewsComponent', () => {
   describe('---NO---', () => {
     it(`shouldn't display previews because visibility is false`, () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
+      configService.setConfig(GALLERY_ID, {
         previewConfig: PREVIEWS_CONFIG_HIDDEN
       });
+      comp.id = GALLERY_ID;
       comp.currentImage = IMAGES[0];
       comp.images = IMAGES;
       comp.ngOnInit();
@@ -733,7 +767,7 @@ describe('PreviewsComponent', () => {
       expect(previewsContainer.name).toBe('nav');
       // null because input accessibility is not provided in this test
       expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
+      expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
 
       const previews: DebugElement[] = element.queryAll(By.css('img'));
       expect(previews.length).toBe(0);
