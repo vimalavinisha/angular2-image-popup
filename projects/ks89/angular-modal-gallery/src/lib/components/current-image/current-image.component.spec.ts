@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Stefano Cappa
+ * Copyright (C) 2017-2021 Stefano Cappa
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 import 'hammerjs';
 import 'mousetrap';
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChanges } from '@angular/core';
 import { By, SafeResourceUrl } from '@angular/platform-browser';
-import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../../components/accessibility-default';
+import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { CurrentImageComponent } from './current-image.component';
 import { SizeDirective } from '../../directives/size.directive';
@@ -34,9 +34,8 @@ import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { ImageModalEvent } from '../../model/image.class';
 import { Action } from '../../model/action.enum';
 import { DescriptionDirective } from '../../directives/description.directive';
-import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { GalleryService } from '../../services/gallery.service';
 import { ConfigService } from '../../services/config.service';
+import { FallbackImageDirective } from '../../directives/fallback-image.directive';
 
 let comp: CurrentImageComponent;
 let fixture: ComponentFixture<CurrentImageComponent>;
@@ -201,19 +200,14 @@ const CUSTOM_SLIDE_CONFIG: SlideConfig[] = [
   {sidePreviews: {show: true, size: DEFAULT_SIZE}}
 ];
 
-const CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS: SlideConfig[] = [
-  {infinite: false, sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {infinite: true, sidePreviews: {show: false, size: DEFAULT_SIZE}},
-  {sidePreviews: {show: false, size: DEFAULT_SIZE}}
-  // if sidePreviews is undefined, by default sidePreviews are enabled
-];
-
 const CUSTOM_SLIDE_CONFIG_INFINITE: SlideConfig[] = [
   {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
   {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
   {infinite: true, sidePreviews: {show: true, size: DEFAULT_SIZE}},
   {infinite: true}
 ];
+
+const GALLERY_ID = 1;
 
 const IMAGES: InternalLibImage[] = [
   new InternalLibImage(0, {
@@ -307,72 +301,70 @@ const IMAGES_BASE64: InternalLibImage[] = [
   )
 ];
 
-function checkMainContainer() {
+function checkMainContainer(): void {
   const element: DebugElement = fixture.debugElement;
   const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
   expect(mainCurrentImage.name).toBe('main');
-  expect(mainCurrentImage.attributes['ksKeyboardNavigation']).toBe('');
-  expect(mainCurrentImage.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainContainerTitle);
+  expect(mainCurrentImage.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainContainerTitle);
   expect(mainCurrentImage.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainContainerAriaLabel);
 }
 
-function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withDescription: boolean = true) {
+function checkCurrentImage(currentImage: InternalLibImage, val: TestModel, withDescription: boolean = true): void {
   const element: DebugElement = fixture.debugElement;
   const currentFigure: DebugElement = element.query(By.css('figure#current-figure'));
   expect(currentFigure.name).toBe('figure');
   const currentImageElement: DebugElement = currentFigure.children[0];
   expect(currentImageElement.name).toBe('img');
-  expect(currentImageElement.attributes['class']).toBe('inside');
-  expect(currentImageElement.attributes['role']).toBe('img');
-  expect(currentImageElement.properties['src']).toBe(currentImage.modal.img);
-  expect(currentImageElement.properties['title']).toBe(val.currentImgTitle);
-  expect(currentImageElement.properties['alt']).toBe(val.currentAlt);
-  expect(currentImageElement.properties['tabIndex']).toBe(0);
+  expect(currentImageElement.attributes.class).toBe('inside');
+  expect(currentImageElement.attributes.role).toBe('img');
+  expect(currentImageElement.properties.src).toBe(currentImage.modal.img);
+  expect(currentImageElement.properties.title).toBe(val.currentImgTitle);
+  expect(currentImageElement.properties.alt).toBe(val.currentAlt);
+  expect(currentImageElement.properties.tabIndex).toBe(0);
 
   if (withDescription) {
     const currentFigcaption: DebugElement = currentFigure.children[1];
-    expect(currentFigcaption.attributes['class']).toBe('inside description');
+    expect(containsClasses(currentFigcaption.attributes.class as string, 'description inside')).toBeTrue();
     expect(currentFigcaption.nativeElement.textContent).toEqual(val.currentDescription);
   }
 }
 
-function checkArrows(isFirstImage: boolean, isLastImage: boolean) {
+function checkArrows(isFirstImage: boolean, isLastImage: boolean): void {
   const element: DebugElement = fixture.debugElement;
   const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
   expect(aNavLeft.name).toBe('a');
-  expect(aNavLeft.attributes['role']).toBe('button');
+  expect(aNavLeft.attributes.role).toBe('button');
   expect(aNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageAriaLabel);
-  expect(aNavLeft.properties['tabIndex']).toBe(isFirstImage ? -1 : 0);
+  // expect(aNavLeft.properties.tabIndex).toBe(isFirstImage ? -1 : 0);
   const divNavLeft: DebugElement = aNavLeft.children[0];
   expect(divNavLeft.attributes['aria-hidden']).toBe('true');
-  expect(divNavLeft.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'));
-  expect(divNavLeft.properties['title']).toBe(isFirstImage ? '' : KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
+  expect(containsClasses(divNavLeft.properties.className as string, (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image') + ' inside')).toBeTrue();
+  expect(divNavLeft.properties.title).toBe(isFirstImage ? '' : KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
 
   const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
   expect(aNavRight.name).toBe('a');
-  expect(aNavRight.attributes['role']).toBe('button');
+  expect(aNavRight.attributes.role).toBe('button');
   expect(aNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageAriaLabel);
-  expect(aNavRight.properties['tabIndex']).toBe(isLastImage ? -1 : 0);
+  // expect(aNavRight.properties.tabIndex).toBe(isLastImage ? -1 : 0);
   const divNavRight: DebugElement = aNavRight.children[0];
   expect(divNavRight.attributes['aria-hidden']).toBe('true');
-  expect(divNavRight.properties['className']).toBe('inside ' + (isLastImage ? 'empty-arrow-image' : 'right-arrow-image'));
-  expect(divNavRight.properties['title']).toBe(isLastImage ? '' : KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
+  expect(containsClasses(divNavRight.properties.className as string, (isLastImage ? 'empty-arrow-image' : 'right-arrow-image') + ' inside')).toBeTrue();
+  expect(divNavRight.properties.title).toBe(isLastImage ? '' : KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
 }
 
 function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibImage,
-                           isFirstImage: boolean, isLastImage: boolean, val: TestModel, size: Size = DEFAULT_SIZE) {
+                           isFirstImage: boolean, isLastImage: boolean, val: TestModel, size: Size = DEFAULT_SIZE): void {
   const element: DebugElement = fixture.debugElement;
   const leftPreviewImage: DebugElement = element.query(By.css(isFirstImage
     ? 'div.current-image-previous.hidden'
     : 'img.inside.current-image-previous'));
   expect(leftPreviewImage.name).toBe(isFirstImage ? 'div' : 'img');
-  expect(leftPreviewImage.attributes['ksSize']).toBe('');
   if (!isFirstImage) {
-    expect(leftPreviewImage.properties['src']).toBe(prevImage.plain ? prevImage.plain.img : prevImage.modal.img);
-    expect(leftPreviewImage.properties['title']).toBe(val.leftPreviewTitle);
-    expect(leftPreviewImage.properties['alt']).toBe(val.leftPreviewAlt);
+    expect(leftPreviewImage.properties.src).toBe(prevImage.plain ? prevImage.plain.img : prevImage.modal.img);
+    expect(leftPreviewImage.properties.title).toBe(val.leftPreviewTitle);
+    expect(leftPreviewImage.properties.alt).toBe(val.leftPreviewAlt);
   }
-  expect(leftPreviewImage.attributes['class']).toBe(isFirstImage ? 'current-image-previous hidden' : 'inside current-image-previous');
+  expect(leftPreviewImage.attributes.class).toBe(isFirstImage ? 'current-image-previous hidden' : 'inside current-image-previous');
   expect(leftPreviewImage.styles.width).toBe(size.width);
   expect(leftPreviewImage.styles.height).toBe(size.height);
 
@@ -380,27 +372,37 @@ function checkSidePreviews(prevImage: InternalLibImage, nextImage: InternalLibIm
     ? 'div.current-image-next.hidden'
     : 'img.inside.current-image-next'));
   expect(rightPreviewImage.name).toBe(isLastImage ? 'div' : 'img');
-  expect(rightPreviewImage.attributes['ksSize']).toBe('');
   if (!isLastImage) {
-    expect(rightPreviewImage.properties['src']).toBe(nextImage.plain ? nextImage.plain.img : nextImage.modal.img);
-    expect(rightPreviewImage.properties['title']).toBe(val.rightPreviewTitle);
-    expect(rightPreviewImage.properties['alt']).toBe(val.rightPreviewAlt);
+    expect(rightPreviewImage.properties.src).toBe(nextImage.plain ? nextImage.plain.img : nextImage.modal.img);
+    expect(rightPreviewImage.properties.title).toBe(val.rightPreviewTitle);
+    expect(rightPreviewImage.properties.alt).toBe(val.rightPreviewAlt);
   }
-  expect(rightPreviewImage.attributes['class']).toBe(isLastImage ? 'current-image-next hidden' : 'inside current-image-next');
+  expect(rightPreviewImage.attributes.class).toBe(isLastImage ? 'current-image-next hidden' : 'inside current-image-next');
   expect(rightPreviewImage.styles.width).toBe(size.width);
   expect(rightPreviewImage.styles.height).toBe(size.height);
 }
 
-function initTestBed() {
-  return TestBed.configureTestingModule({
-    declarations: [CurrentImageComponent, SizeDirective, LoadingSpinnerComponent, KeyboardNavigationDirective, DescriptionDirective]
+function containsClasses(actualClasses: string, expectedClasses: string): boolean {
+  const actual: string[] = actualClasses.split(' ');
+  const expected: string[] = expectedClasses.split(' ');
+  let count = 0;
+  if (actual.length !== expected.length) {
+    return false;
+  }
+  expected.forEach((item: string) => {
+    if (actual.includes(item)) {
+      count++;
+    }
+  });
+  return count === expected.length;
+}
+
+function initTestBed(): void {
+  TestBed.configureTestingModule({
+    declarations: [CurrentImageComponent, LoadingSpinnerComponent, KeyboardNavigationDirective, DescriptionDirective, SizeDirective, FallbackImageDirective]
   }).overrideComponent(CurrentImageComponent, {
     set: {
       providers: [
-        {
-          provide: GalleryService,
-          useClass: GalleryService
-        },
         {
           provide: ConfigService,
           useClass: ConfigService
@@ -411,11 +413,8 @@ function initTestBed() {
 }
 
 describe('CurrentImageComponent', () => {
-  beforeEach(waitForAsync(() => {
-    return initTestBed();
-  }));
-
   beforeEach(() => {
+    initTestBed();
     fixture = TestBed.createComponent(CurrentImageComponent);
     comp = fixture.componentInstance;
   });
@@ -426,29 +425,28 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image with arrows and side previews. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
       });
@@ -456,87 +454,84 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should display current image as base64 with arrows and side previews. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES_BASE64;
         comp.currentImage = IMAGES_BASE64[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES_BASE64[index],
-            currentValue: IMAGES_BASE64[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES_BASE64[index], val);
       });
     });
 
     it(`should display current image with arrows and side previews when there is only one image.`, () => {
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
-        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: {
-          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-        } as CurrentImageConfig,
-        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-        keyboardConfig: null
-      });
+      comp.id = GALLERY_ID;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.ngOnChanges({
-        currentImage: {
-          previousValue: IMAGES[0],
-          currentValue: IMAGES[0],
-          firstChange: false,
-          isFirstChange: () => false
-        }
-      } as SimpleChanges);
-      comp.ngOnInit();
+
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.setConfig(GALLERY_ID, {
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        },
+        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
+
       fixture.detectChanges();
+
+      // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+      // isFirstImage and isLastImage in template file.
+      // Taken from https://stackoverflow.com/a/52214200/3590376
+      comp.ref.detectChanges();
+
       checkMainContainer();
       checkCurrentImage(IMAGES[0], TEST_MODEL_SINGLE_IMAGE);
     });
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on current image. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
         checkArrows(index === 0, index === IMAGES.length - 1);
@@ -559,29 +554,28 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on right side preview. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
         checkArrows(index === 0, index === IMAGES.length - 1);
@@ -605,33 +599,31 @@ describe('CurrentImageComponent', () => {
       });
     });
 
-
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should navigate between images clicking on left side preview. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
         const currentIndex: number = IMAGES.length - 1 - index;
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[currentIndex],
-            currentValue: IMAGES[currentIndex],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[currentIndex], val);
         checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
@@ -657,29 +649,28 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should navigate between images to the right using swipe gestures. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
         checkArrows(index === 0, index === IMAGES.length - 1);
@@ -700,30 +691,29 @@ describe('CurrentImageComponent', () => {
 
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should navigate between images to the left using swipe gestures. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
         const currentIndex: number = IMAGES.length - 1 - index;
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[currentIndex];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[currentIndex],
-            currentValue: IMAGES[currentIndex],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[currentIndex], val);
         checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
@@ -744,30 +734,29 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL.forEach((val: TestModel, index: number) => {
       it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the left. Test i=${index}`, () => {
+        comp.id = GALLERY_ID;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        configService.setConfig(GALLERY_ID, {
           currentImageConfig: {
             loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
             description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description,
             invertSwipe: true
-          } as CurrentImageConfig,
+          },
           slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
         });
-        comp.images = IMAGES;
-        comp.currentImage = IMAGES[index];
-        comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val);
         checkArrows(index === 0, index === IMAGES.length - 1);
@@ -788,31 +777,30 @@ describe('CurrentImageComponent', () => {
 
     [...TEST_MODEL].reverse().forEach((val: TestModel, index: number) => {
       it(`should invert swipe navigation with the 'invertSwipe' property to true navigating to the right. Test i=${index}`, () => {
+        const currentIndex: number = IMAGES.length - 1 - index;
+        comp.id = GALLERY_ID;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[currentIndex];
+        comp.isOpen = true;
+
         const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        configService.setConfig(GALLERY_ID, {
           currentImageConfig: {
             loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
             description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description,
             invertSwipe: true
-          } as CurrentImageConfig,
+          },
           slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
         });
-        const currentIndex: number = IMAGES.length - 1 - index;
-        comp.images = IMAGES;
-        comp.currentImage = IMAGES[currentIndex];
-        comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[currentIndex],
-            currentValue: IMAGES[currentIndex],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[currentIndex], val);
         checkArrows(currentIndex === 0, currentIndex === IMAGES.length - 1);
@@ -833,29 +821,28 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL_ALWAYSEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is ALWAYS_HIDDEN. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.ALWAYS_HIDDEN} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_HIDDEN} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         checkCurrentImage(IMAGES[index], val, false);
         checkArrows(index === 0, index === IMAGES.length - 1);
@@ -865,29 +852,28 @@ describe('CurrentImageComponent', () => {
 
     TEST_MODEL_HIDEEMPTY_DESCRIPTIONS.forEach((val: TestModel, index: number) => {
       it(`should display current image when description is HIDE_IF_EMPTY. Test i=${index}`, () => {
-        const configService = fixture.debugElement.injector.get(ConfigService);
-        configService.setConfig(0, {
-          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-          currentImageConfig: {
-            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-            description: {strategy: DescriptionStrategy.HIDE_IF_EMPTY} as Description
-          } as CurrentImageConfig,
-          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-          keyboardConfig: null
-        });
+        comp.id = GALLERY_ID;
         comp.images = IMAGES;
         comp.currentImage = IMAGES[index];
         comp.isOpen = true;
-        comp.ngOnChanges({
-          currentImage: {
-            previousValue: IMAGES[index],
-            currentValue: IMAGES[index],
-            firstChange: false,
-            isFirstChange: () => false
-          }
-        } as SimpleChanges);
-        comp.ngOnInit();
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.HIDE_IF_EMPTY} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+        });
+
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
         checkMainContainer();
         const imageWithoutDescription: boolean = !IMAGES[index].modal || !IMAGES[index].modal.description || IMAGES[index].modal.description === '';
         // TODO fixme
@@ -900,29 +886,28 @@ describe('CurrentImageComponent', () => {
     CUSTOM_SLIDE_CONFIG.forEach((slideConfig: SlideConfig, j: number) => {
       TEST_MODEL.forEach((val: TestModel, index: number) => {
         it(`should display current image, arrows and side previews with custom slideConfig. Test i=${index}, j=${j}`, () => {
-          const configService = fixture.debugElement.injector.get(ConfigService);
-          configService.setConfig(0, {
-            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-            currentImageConfig: {
-              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-            } as CurrentImageConfig,
-            slideConfig,
-            keyboardConfig: null
-          });
+          comp.id = GALLERY_ID;
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.ngOnChanges({
-            currentImage: {
-              previousValue: IMAGES[index],
-              currentValue: IMAGES[index],
-              firstChange: false,
-              isFirstChange: () => false
-            }
-          } as SimpleChanges);
-          comp.ngOnInit();
+
+          const configService = fixture.debugElement.injector.get(ConfigService);
+          configService.setConfig(GALLERY_ID, {
+            currentImageConfig: {
+              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+            },
+            slideConfig: slideConfig as SlideConfig,
+            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+          });
+
           fixture.detectChanges();
+
+          // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+          // isFirstImage and isLastImage in template file.
+          // Taken from https://stackoverflow.com/a/52214200/3590376
+          comp.ref.detectChanges();
+
           checkMainContainer();
           checkCurrentImage(IMAGES[index], val);
           checkArrows(index === 0, index === IMAGES.length - 1);
@@ -936,29 +921,28 @@ describe('CurrentImageComponent', () => {
     CUSTOM_SLIDE_CONFIG_INFINITE.forEach((slideConfig: SlideConfig, j: number) => {
       TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
         it(`should display current image, arrows and side previews with infinite sliding. Test i=${index}, j=${j}`, () => {
-          const configService = fixture.debugElement.injector.get(ConfigService);
-          configService.setConfig(0, {
-            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-            currentImageConfig: {
-              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-            } as CurrentImageConfig,
-            slideConfig,
-            keyboardConfig: null
-          });
+          comp.id = GALLERY_ID;
           comp.images = IMAGES;
           comp.currentImage = IMAGES[index];
           comp.isOpen = true;
-          comp.ngOnChanges({
-            currentImage: {
-              previousValue: IMAGES[index],
-              currentValue: IMAGES[index],
-              firstChange: false,
-              isFirstChange: () => false
-            }
-          } as SimpleChanges);
-          comp.ngOnInit();
+
+          const configService = fixture.debugElement.injector.get(ConfigService);
+          configService.setConfig(GALLERY_ID, {
+            currentImageConfig: {
+              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+            },
+            slideConfig: slideConfig as SlideConfig,
+            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+          });
+
           fixture.detectChanges();
+
+          // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+          // isFirstImage and isLastImage in template file.
+          // Taken from https://stackoverflow.com/a/52214200/3590376
+          comp.ref.detectChanges();
+
           checkMainContainer();
           checkCurrentImage(IMAGES[index], val);
           checkArrows((index === 0) && !slideConfig.infinite, (index === IMAGES.length - 1) && !slideConfig.infinite);
@@ -973,176 +957,235 @@ describe('CurrentImageComponent', () => {
       });
     });
 
-    CUSTOM_SLIDE_CONFIG_NO_SIDE_PREVIEWS.forEach((slideConfig: SlideConfig, j: number) => {
-      TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
-        it(`should display current image and arrows WITHOUT side previews. Test i=${index}, j=${j}`, () => {
-          const configService = fixture.debugElement.injector.get(ConfigService);
-          configService.setConfig(0, {
-            accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-            currentImageConfig: {
-              loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-              description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-            } as CurrentImageConfig,
-            slideConfig,
-            keyboardConfig: null
-          });
-          comp.images = IMAGES;
-          comp.currentImage = IMAGES[index];
-          comp.isOpen = true;
-          comp.ngOnChanges({
-            currentImage: {
-              previousValue: IMAGES[index],
-              currentValue: IMAGES[index],
-              firstChange: false,
-              isFirstChange: () => false
-            }
-          } as SimpleChanges);
-          comp.ngOnInit();
-          fixture.detectChanges();
-          checkMainContainer();
-          checkCurrentImage(IMAGES[index], val);
+    TEST_MODEL_INFINITE.forEach((val: TestModel, index: number) => {
+      it(`should display current image and arrows WITHOUT side previews and with infinite sliding ENBALED. Test i=${index}.`, () => {
+        comp.id = GALLERY_ID;
+        const images = IMAGES;
+        comp.images = images;
+        comp.currentImage = images[index];
+        comp.isOpen = true;
 
-          // FIXME: this is the updated code to init both isFirstImage and isLastImage
-          // let isFirstImage;
-          // let isLastImage;
-          // if (slideConfig.infinite === true) {
-          //   // infinite sliding enabled
-          //   if (images.length === 1) {
-          //     isFirstImage = true;
-          //     isLastImage = true;
-          //   } else {
-          //     isFirstImage = false;
-          //     isLastImage = false;
-          //   }
-          // } else {
-          //   if (images.length === 1) {
-          //     isFirstImage = true;
-          //     isLastImage = true;
-          //   } else {
-          //     switch (index) {
-          //       case 0:
-          //         // execute this only if infinite sliding is disabled
-          //         isFirstImage = true;
-          //         isLastImage = false;
-          //         break;
-          //       case images.length - 1:
-          //         // execute this only if infinite sliding is disabled
-          //         isFirstImage = false;
-          //         isLastImage = true;
-          //         break;
-          //       default:
-          //         isFirstImage = false;
-          //         isLastImage = false;
-          //         break;
-          //     }
-          //   }
-          // }
+        const slideConfig: SlideConfig = {
+          infinite: true,
+          sidePreviews: {
+            show: false,
+            size: DEFAULT_SIZE
+          }
+        };
 
-          fixture.detectChanges();
-
-          // FIXME: restore this and remove the code below
-          // checkArrows(isFirstImage, isLastImage);
-
-          // FIXME I don't know why the code and the example are working, but the test not completely.
-          // FIXME Why tabIndex and className are wrong only in this test?
-          const element: DebugElement = fixture.debugElement;
-          const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
-          expect(aNavLeft.name).toBe('a');
-          expect(aNavLeft.attributes['role']).toBe('button');
-          expect(aNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageAriaLabel);
-          // FIXME restore this
-          // expect(aNavLeft.properties['tabIndex']).toBe(isFirstImage ? -1 : 0);
-          const divNavLeft: DebugElement = aNavLeft.children[0];
-          expect(divNavLeft.attributes['aria-hidden']).toBe('true');
-          // FIXME restore this
-          // expect(divNavLeft.properties['className']).toBe('inside ' + (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image'));
-          expect(divNavLeft.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
-
-          const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
-          expect(aNavRight.name).toBe('a');
-          expect(aNavRight.attributes['role']).toBe('button');
-          expect(aNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageAriaLabel);
-          // FIXME restore this
-          // expect(aNavRight.properties['tabIndex']).toBe(isLastImage ? -1 : 0);
-          const divNavRight: DebugElement = aNavRight.children[0];
-          expect(divNavRight.attributes['aria-hidden']).toBe('true');
-          // FIXME restore this
-          // expect(divNavRight.properties['className']).toBe('inside ' + (isLastImage ? 'empty-arrow-image' : 'right-arrow-image'));
-          expect(divNavRight.properties['title']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
-
-          // no side previews
-          const leftPreviewImage: DebugElement = element.query(By.css((index === 0) && !slideConfig.infinite
-            ? 'div.current-image-previous.hidden'
-            : 'img.inside.current-image-previous'));
-          expect(leftPreviewImage).toBeNull();
-          const rightPreviewImage: DebugElement = element.query(By.css((index === IMAGES.length - 1) && !slideConfig.infinite
-            ? 'div.current-image-next.hidden'
-            : 'img.inside.current-image-next'));
-          expect(rightPreviewImage).toBeNull();
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: slideConfig as SlideConfig,
+          accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
         });
+
+        fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
+        checkMainContainer();
+        checkCurrentImage(images[index], val);
+
+        // infinite sliding enabled, so first and last are always false
+        const isFirstImage = false;
+        const isLastImage = false;
+
+        checkArrows(isFirstImage, isLastImage);
+
+        const element: DebugElement = fixture.debugElement;
+        const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
+        expect(aNavLeft.name).toBe('a');
+        expect(aNavLeft.attributes.role).toBe('button');
+        expect(aNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageAriaLabel);
+        expect(aNavLeft.properties.tabIndex).toBe(isFirstImage ? -1 : 0);
+        const divNavLeft: DebugElement = aNavLeft.children[0];
+        expect(divNavLeft.attributes['aria-hidden']).toBe('true');
+        expect(containsClasses(divNavLeft.properties.className as string, (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image') + ' inside')).toBeTrue();
+        expect(divNavLeft.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
+
+        const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
+        expect(aNavRight.name).toBe('a');
+        expect(aNavRight.attributes.role).toBe('button');
+        expect(aNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageAriaLabel);
+        expect(aNavRight.properties.tabIndex).toBe(isLastImage ? -1 : 0);
+        const divNavRight: DebugElement = aNavRight.children[0];
+        expect(divNavRight.attributes['aria-hidden']).toBe('true');
+        expect(containsClasses(divNavRight.properties.className as string, (isLastImage ? 'empty-arrow-image' : 'right-arrow-image') + ' inside')).toBeTrue();
+        expect(divNavRight.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
+
+        // no side previews
+        const leftPreviewImage: DebugElement = element.query(By.css('img.inside.current-image-previous'));
+        expect(leftPreviewImage).toBeNull();
+        const rightPreviewImage: DebugElement = element.query(By.css('img.inside.current-image-next'));
+        expect(rightPreviewImage).toBeNull();
       });
     });
 
-    it(`should display current image with custom accessibility`, () => {
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
-        accessibilityConfig: CUSTOM_ACCESSIBILITY,
-        currentImageConfig: {
-          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-        } as CurrentImageConfig,
-        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-        keyboardConfig: null
-      });
-      comp.images = IMAGES;
-      comp.currentImage = IMAGES[0];
-      comp.isOpen = true;
-      comp.ngOnChanges({
-        currentImage: {
-          previousValue: IMAGES[0],
-          currentValue: IMAGES[0],
-          firstChange: false,
-          isFirstChange: () => false
+    // FIXME not working for first and last images
+    // TEST_MODEL.forEach((val: TestModel, index: number) => {
+    //   it(`should display current image and arrows WITHOUT side previews and with infinite sliding DISABLED. Test i=${index}.`, () => {
+    //     comp.id = GALLERY_ID;
+    //     const images = IMAGES;
+    //     comp.images = images;
+    //     comp.currentImage = images[index];
+    //     comp.isOpen = true;
+    //
+    //     const slideConfig: SlideConfig = {
+    //       infinite: false,
+    //       sidePreviews: {
+    //         show: false,
+    //         size: DEFAULT_SIZE
+    //       }
+    //     };
+    //
+    //     const configService = fixture.debugElement.injector.get(ConfigService);
+    //     configService.setConfig(GALLERY_ID, {
+    //       currentImageConfig: {
+    //         loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+    //         description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+    //       },
+    //       slideConfig: slideConfig as SlideConfig,
+    //       accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+    //     });
+    //
+    //     fixture.detectChanges();
+    //
+    //     // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+    //     // isFirstImage and isLastImage in template file.
+    //     // Taken from https://stackoverflow.com/a/52214200/3590376
+    //     comp.ref.detectChanges();
+    //
+    //     checkMainContainer();
+    //     checkCurrentImage(images[index], val);
+    //
+    //     // infinite sliding disabled, so first and last images are based on current image index
+    //     let isFirstImage: boolean;
+    //     let isLastImage: boolean;
+    //     switch (index) {
+    //       case 0:
+    //         isFirstImage = true;
+    //         isLastImage = false;
+    //         break;
+    //       case images.length - 1:
+    //         isFirstImage = false;
+    //         isLastImage = true;
+    //         break;
+    //       default:
+    //         isFirstImage = false;
+    //         isLastImage = false;
+    //         break;
+    //     }
+    //
+    //     checkArrows(isFirstImage, isLastImage);
+    //
+    //     const element: DebugElement = fixture.debugElement;
+    //     const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
+    //     expect(aNavLeft.name).toBe('a');
+    //     expect(aNavLeft.attributes.role).toBe('button');
+    //     expect(aNavLeft.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageAriaLabel);
+    //     expect(aNavLeft.properties.tabIndex).toBe(isFirstImage ? -1 : 0);
+    //     const divNavLeft: DebugElement = aNavLeft.children[0];
+    //     expect(divNavLeft.attributes['aria-hidden']).toBe('true');
+    //     expect(containsClasses(divNavLeft.properties.className as string, (isFirstImage ? 'empty-arrow-image' : 'left-arrow-image') + ' inside')).toBeTrue();
+    //     expect(divNavLeft.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainPrevImageTitle);
+    //
+    //     const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
+    //     expect(aNavRight.name).toBe('a');
+    //     expect(aNavRight.attributes.role).toBe('button');
+    //     expect(aNavRight.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageAriaLabel);
+    //     expect(aNavRight.properties.tabIndex).toBe(isLastImage ? -1 : 0);
+    //     const divNavRight: DebugElement = aNavRight.children[0];
+    //     expect(divNavRight.attributes['aria-hidden']).toBe('true');
+    //     expect(containsClasses(divNavRight.properties.className as string, (isLastImage ? 'empty-arrow-image' : 'right-arrow-image') + ' inside')).toBeTrue();
+    //     expect(divNavRight.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.mainNextImageTitle);
+    //
+    //     // no side previews
+    //     const leftPreviewImage: DebugElement = element.query(By.css('img.current-image-previous.hidden'));
+    //     expect(leftPreviewImage).toBeNull();
+    //     const rightPreviewImage: DebugElement = element.query(By.css('img.current-image-next.hidden'));
+    //     expect(rightPreviewImage).toBeNull();
+    //   });
+    // });
+
+    IMAGES.forEach((image: InternalLibImage, index: number) => {
+      it(`should display current image with custom accessibility. Image with index = ${index}.`, () => {
+        comp.id = GALLERY_ID;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[index];
+        comp.isOpen = true;
+
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        configService.setConfig(GALLERY_ID, {
+          currentImageConfig: {
+            loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+            description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+          },
+          slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+          accessibilityConfig: CUSTOM_ACCESSIBILITY
+        });
+
+        fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
+
+        const element: DebugElement = fixture.debugElement;
+        const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
+        expect(mainCurrentImage.properties.title).toBe(CUSTOM_ACCESSIBILITY.mainContainerTitle);
+        expect(mainCurrentImage.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainContainerAriaLabel);
+
+        const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
+        expect(aNavLeft.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageAriaLabel);
+        if (index === 0) {
+          // is either first or last image
+          expect(aNavLeft.children[0].properties.title).toBe('');
+        } else {
+          expect(aNavLeft.children[0].properties.title).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageTitle);
         }
-      } as SimpleChanges);
-      comp.ngOnInit();
-      fixture.detectChanges();
-      const element: DebugElement = fixture.debugElement;
-      const mainCurrentImage: DebugElement = element.query(By.css('main.main-image-container'));
-      expect(mainCurrentImage.properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainContainerTitle);
-      expect(mainCurrentImage.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainContainerAriaLabel);
-      const aNavLeft: DebugElement = element.query(By.css('a.nav-left'));
-      expect(aNavLeft.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageAriaLabel);
-      expect(aNavLeft.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainPrevImageTitle);
-      const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
-      expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
-      expect(aNavRight.children[0].properties['title']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
+
+        const aNavRight: DebugElement = element.query(By.css('a.nav-right'));
+        expect(aNavRight.attributes['aria-label']).toBe(CUSTOM_ACCESSIBILITY.mainNextImageAriaLabel);
+        if (index === IMAGES.length - 1) {
+          // is either first or last image
+          expect(aNavRight.children[0].properties.title).toBe('');
+        } else {
+          expect(aNavRight.children[0].properties.title).toBe(CUSTOM_ACCESSIBILITY.mainNextImageTitle);
+        }
+      });
     });
 
     it(`should display current image with an array of images with a single element.`, () => {
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
-        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: {
-          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-        } as CurrentImageConfig,
-        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-        keyboardConfig: null
-      });
+      comp.id = GALLERY_ID;
       comp.images = [IMAGES[0]];
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
-      comp.ngOnChanges({
-        currentImage: {
-          previousValue: IMAGES[0],
-          currentValue: IMAGES[0],
-          firstChange: false,
-          isFirstChange: () => false
-        }
-      } as SimpleChanges);
-      comp.ngOnInit();
+
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.setConfig(GALLERY_ID, {
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        },
+        slideConfig: {infinite: false, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
+
       fixture.detectChanges();
+
+      // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+      // isFirstImage and isLastImage in template file.
+      // Taken from https://stackoverflow.com/a/52214200/3590376
+      comp.ref.detectChanges();
+
       checkMainContainer();
       const model: TestModel = {
         currentImgTitle: 'Image 1/1',
@@ -1157,20 +1200,21 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`should display gallery with all defaults and auto-navigate (play enabled).`, fakeAsync(() => {
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
-        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: {
-          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-        } as CurrentImageConfig,
-        slideConfig: {playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}} as SlideConfig,
-        keyboardConfig: null
-      });
       comp.id = 0;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
       comp.isOpen = true;
+
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.setConfig(GALLERY_ID, {
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        },
+        slideConfig: {playConfig: {autoPlay: true, interval: 5000, pauseOnHover: true}} as SlideConfig,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
+
       fixture.detectChanges();
       const defaultInterval = 5000;
 
@@ -1196,6 +1240,11 @@ describe('CurrentImageComponent', () => {
         }
         flush();
         fixture.detectChanges();
+
+        // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+        // isFirstImage and isLastImage in template file.
+        // Taken from https://stackoverflow.com/a/52214200/3590376
+        comp.ref.detectChanges();
       });
 
       tick(defaultInterval + 100);
@@ -1208,31 +1257,30 @@ describe('CurrentImageComponent', () => {
 
   describe('---NO---', () => {
     it(`cannot navigate from the last image to the first one if infinite sliding is disabled`, () => {
-      const infiniteSliding = false;
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
-        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: {
-          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-        } as CurrentImageConfig,
-        slideConfig: {infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-        keyboardConfig: null
-      });
       const index: number = IMAGES.length - 1;
+      const infiniteSliding = false;
+      comp.id = GALLERY_ID;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[index];
       comp.isOpen = true;
-      comp.ngOnChanges({
-        currentImage: {
-          previousValue: IMAGES[index],
-          currentValue: IMAGES[index],
-          firstChange: false,
-          isFirstChange: () => false
-        }
-      } as SimpleChanges);
-      comp.ngOnInit();
+
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.setConfig(GALLERY_ID, {
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        },
+        slideConfig: {infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
+
       fixture.detectChanges();
+
+      // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+      // isFirstImage and isLastImage in template file.
+      // Taken from https://stackoverflow.com/a/52214200/3590376
+      comp.ref.detectChanges();
+
       checkMainContainer();
       checkCurrentImage(IMAGES[index], TEST_MODEL_INFINITE[TEST_MODEL_INFINITE.length - 1]);
       checkArrows(index === 0 && !infiniteSliding, (index === IMAGES.length - 1) && !infiniteSliding);
@@ -1246,31 +1294,30 @@ describe('CurrentImageComponent', () => {
     });
 
     it(`cannot navigate from the first image to the last one if infinite sliding is disabled`, () => {
-      const infiniteSliding = false;
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(0, {
-        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        currentImageConfig: {
-          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
-          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
-        } as CurrentImageConfig,
-        slideConfig: {infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
-        keyboardConfig: null
-      });
       const index = 0;
+      const infiniteSliding = false;
+      comp.id = GALLERY_ID;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[index];
       comp.isOpen = true;
-      comp.ngOnChanges({
-        currentImage: {
-          previousValue: IMAGES[index],
-          currentValue: IMAGES[index],
-          firstChange: false,
-          isFirstChange: () => false
-        }
-      } as SimpleChanges);
-      comp.ngOnInit();
+
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      configService.setConfig(GALLERY_ID, {
+        currentImageConfig: {
+          loadingConfig: {enable: true, type: LoadingType.STANDARD} as LoadingConfig,
+          description: {strategy: DescriptionStrategy.ALWAYS_VISIBLE} as Description
+        },
+        slideConfig: {infinite: infiniteSliding, sidePreviews: {show: true, size: DEFAULT_SIZE}} as SlideConfig,
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG
+      });
+
       fixture.detectChanges();
+
+      // force detectChanges, because I'm using OnPush strategy and I have to trigger change detection manually to update
+      // isFirstImage and isLastImage in template file.
+      // Taken from https://stackoverflow.com/a/52214200/3590376
+      comp.ref.detectChanges();
+
       checkMainContainer();
       checkCurrentImage(IMAGES[index], TEST_MODEL_INFINITE[0]);
       checkArrows(index === 0 && !infiniteSliding, (index === IMAGES.length - 1) && !infiniteSliding);

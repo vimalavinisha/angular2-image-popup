@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (c) 2017-2020 Stefano Cappa (Ks89)
+ Copyright (C) 2017-2021 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -194,8 +194,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     DOWN: 'swipedown'
   };
 
+  // use public ChangeDetectorRef to be able to call it from spec files to trigger change detection
   // tslint:disable-next-line:no-any
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private ngZone: NgZone, private ref: ChangeDetectorRef, private configService: ConfigService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private ngZone: NgZone, public ref: ChangeDetectorRef, private configService: ConfigService) {
     super();
   }
 
@@ -577,27 +578,31 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     if (this.images.length === 1) {
       this.isFirstImage = true;
       this.isLastImage = true;
+      this.ref.markForCheck();
       return;
     }
     if (!this.slideConfig || this.slideConfig.infinite === true) {
       // infinite sliding enabled
       this.isFirstImage = false;
       this.isLastImage = false;
+      this.ref.markForCheck();
     } else {
+      // execute this only if infinite sliding is disabled
       switch (currentIndex) {
         case 0:
-          // execute this only if infinite sliding is disabled
           this.isFirstImage = true;
           this.isLastImage = false;
+          this.ref.markForCheck();
           break;
         case this.images.length - 1:
-          // execute this only if infinite sliding is disabled
           this.isFirstImage = false;
           this.isLastImage = true;
+          this.ref.markForCheck();
           break;
         default:
           this.isFirstImage = false;
           this.isLastImage = false;
+          this.ref.markForCheck();
           break;
       }
     }
@@ -686,15 +691,14 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * Private method to call handleBoundaries when ngOnChanges is called.
    */
   private updateIndexes(): void {
-    let index: number;
     try {
-      index = getIndex(this.currentImage, this.images);
+      if (this.isOpen) {
+        const index: number = getIndex(this.currentImage, this.images);
+        this.handleBoundaries(index);
+      }
     } catch (err) {
       console.error('Cannot get the current image index in current-image');
       throw err;
-    }
-    if (this.isOpen) {
-      this.handleBoundaries(index);
     }
   }
 }
