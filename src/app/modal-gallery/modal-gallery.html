@@ -8,7 +8,7 @@
   <p>Index to open:&nbsp;&nbsp;&nbsp;<input type="number" min="0" [(ngModel)]="imageIndex"></p>
 </div>
 <div>
-  <p>WARNING: remember to use always different ids across your application!!!</p>
+  <p><b>WARNING: remember to use always different ids across your application!!!</b></p>
 </div>
 <br>
 <hr>
@@ -27,7 +27,7 @@
 </section>
 <section>
   <h3>A2 - (id=403) - Minimal demo - listen for events</h3>
-  <p><i>I added also 'openModalWithOutputs' to listen for events</i></p>
+  <p><i>I added 'openModalWithOutputs()' public method to listen for events</i></p>
   <button (click)="openModalWithOutputs(404, images, imageIndex)">Open modal gallery at index={{imageIndex}}</button>
 </section>
 <section>
@@ -147,7 +147,7 @@
 </section>
 <section>
   <h3>B21 - (id=522) - Simple demo - buttons config FULL strategy (all buttons)</h3>
-  <p><i>I added also 'openModalWithDeleteButton' to support delete button</i></p>
+  <p><i>I added also 'openModalWithDeleteButton()' public method to support delete button</i></p>
   <button (click)="openModalWithDeleteButton(522, images, imageIndex, CONFIG522)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 <section>
@@ -156,12 +156,12 @@
 </section>
 <section>
   <h3>B23 - (id=524) - Simple demo - buttons config CUSTOM but with all default buttons already included in the library</h3>
-  <p><i>I added also 'openModalWithDeleteButton' to support delete button</i></p>
+  <p><i>I added also 'openModalWithDeleteButton()' public method to support delete button</i></p>
   <button (click)="openModalWithDeleteButton(524, images, imageIndex, CONFIG524)">Open modalgallery at index={{imageIndex}}</button>
 </section>
 <section>
   <h3>B24 - (id=525) - Simple demo - buttons config CUSTOM strategy with <a href="https://fontawesome.com/">Font Awesome 5</a></h3>
-  <p><i>I added also 'openModalWithAddButton' to support delete button</i></p>
+  <p><i>I added also 'openModalWithAddButton()' public method to support delete button</i></p>
   <br>
   <button (click)="openModalWithAddButton(525, images, imageIndex, CONFIG525)">Open modalgallery at index={{imageIndex}}</button>
 </section>
@@ -238,7 +238,7 @@
 </section>
 
 <section>
-  <h3>C15 - (id=614) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService's close method</h3>
+  <h3>C15 - (id=614) - Advanced demo - after 3 seconds it closes modal gallery automatically with galleryService close method</h3>
   <p>Attention: please check the console to understand what it's happening!</p>
   <p>Timer will clear and restart every time you show another image!</p>
   <button (click)="openModalWithAutoClose(614, images, imageIndex)">Open modalgallery at index={{imageIndex}}</button>
