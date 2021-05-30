@@ -339,7 +339,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     // hides scrollbar
     document.body.style.overflow = 'hidden';
 
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -431,7 +431,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * It contains also a logic to enable downloading features also for IE11.
    */
   downloadImage(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);

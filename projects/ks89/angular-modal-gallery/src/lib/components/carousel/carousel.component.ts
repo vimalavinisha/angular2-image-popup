@@ -235,7 +235,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('mouseenter')
   onMouseEnter(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -253,7 +253,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('mouseleave')
   onMouseLeave(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -271,7 +271,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('keydown.arrowLeft')
   onKeyDownLeft(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -289,7 +289,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    */
   @HostListener('keydown.arrowRight')
   onKeyDownLRight(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -316,7 +316,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -362,7 +362,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   }
 
   ngOnInit(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     if (!this.images) {
@@ -400,7 +400,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular
     if (isPlatformBrowser(this.platformId)) {
-      if (!this.id) {
+      if (this.id === null || this.id === undefined) {
         throw new Error('Internal library error - id must be defined');
       }
       const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -474,7 +474,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Also, if modalGalleryEnable is true, you can open the modal-gallery.
    */
   onClickCurrentImage(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -508,7 +508,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getDescriptionToDisplay(image: Image | undefined = this.currentImage): string {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -540,7 +540,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param action String that represent the direction of the swipe action. 'swiperight' by default.
    */
   swipe(action = this.SWIPE_ACTION.RIGHT): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -664,7 +664,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @throws an Error if description isn't available
    */
   getTitleToDisplay(image: Image | undefined = this.currentImage): string {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -710,7 +710,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param action Enum of type `Action` that represents the source action that triggered the change.
    */
   private changeCurrentImage(image: Image, action: Action): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     this.currentImage = image;
@@ -769,7 +769,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @returns String description built concatenating image fields with a specific logic.
    */
   private buildTextDescription(image: Image | undefined, imageWithoutDescription: boolean): string {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -868,7 +868,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param indexToCheck is the index number of the image (the first or the last one).
    */
   private emitBoundaryEvent(action: Action, indexToCheck: number): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       return;
     }
     // to emit first/last event

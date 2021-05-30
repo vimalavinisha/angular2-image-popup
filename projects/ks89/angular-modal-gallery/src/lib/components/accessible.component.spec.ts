@@ -208,6 +208,7 @@ describe('AccessibleComponent', () => {
 
   describe('---Unknown image event---', () => {
     it(`should handle image event, but since it's not permitted, the result should be NOTHING`, () => {
+      // tslint:disable-next-line:no-any
       const unrecognizedEvent: any = new FocusEvent('click', {
         relatedTarget: null
       });

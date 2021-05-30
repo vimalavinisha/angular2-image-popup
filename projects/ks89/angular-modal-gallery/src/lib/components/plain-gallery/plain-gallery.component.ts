@@ -125,7 +125,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     this.configService.setConfig(this.id, this.config);
@@ -145,7 +145,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(changes: SimpleChanges): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);

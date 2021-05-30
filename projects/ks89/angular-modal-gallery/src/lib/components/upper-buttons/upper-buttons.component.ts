@@ -152,7 +152,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * In particular, it's called only one time!!!
    */
   ngOnInit(): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
@@ -189,7 +189,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * @throws an error if the button type is unknown
    */
   onEvent(button: InternalButtonConfig, event: KeyboardEvent | MouseEvent, action: Action = Action.CLICK): void {
-    if (!this.id) {
+    if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
     if (!event) {

@@ -16,7 +16,7 @@
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
-import { DebugElement } from '@angular/core';
+import { DebugElement, SimpleChanges } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import 'hammerjs';
@@ -55,6 +55,8 @@ import { ConfigService } from '../../services/config.service';
 import { FallbackImageDirective } from '../../directives/fallback-image.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ModalGalleryService } from '../modal-gallery/modal-gallery.service';
+import { LoadingConfig, LoadingType } from '../../model/loading-config.interface';
+import { SlideConfig } from '../../model/slide-config.interface';
 
 const GALLERY_ID = 1;
 
@@ -862,6 +864,37 @@ describe('CarouselComponent', () => {
     //   discardPeriodicTasks();
     //   // });
     // }));
+
+    // TODO improve this adding more cases to cover all lines of code
+    it(`should open carousel calling also ngOnChanges.`, fakeAsync(() => {
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.ngOnChanges({
+        currentImage: {
+          previousValue: IMAGES[0],
+          currentValue: IMAGES[0],
+          firstChange: false,
+          isFirstChange: () => false
+        }
+      } as SimpleChanges);
+      fixture.detectChanges();
+      const defaultInterval = 5000;
+
+      TEST_MODEL.forEach((val: TestModel, index: number) => {
+        checkMainContainer();
+        checkCurrentImage(IMAGES[index], val);
+        checkArrows(false, false);
+        tick(defaultInterval + 100);
+        flush();
+        fixture.detectChanges();
+      });
+
+      tick(defaultInterval + 100);
+      flush();
+      fixture.detectChanges();
+
+      discardPeriodicTasks();
+    }));
   });
 
   describe('---ERRORS---', () => {
