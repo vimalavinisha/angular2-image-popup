@@ -317,8 +317,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     this.keyboardService.reset(libConfig);
     this.modalGalleryService.close(this.id, clickOutside);
 
+    // TODO: check if this is really useful also with CDK. It causes some troubles when you try to close the gallery via close method
     // shows scrollbar
-    document.body.style.overflow = 'visible';
+    // document.body.style.overflow = 'visible';
 
     if (isCalledByService) {
       // the following is required, otherwise the view will not be updated
@@ -336,8 +337,9 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * @param number index of the image to show
    */
   showModalGallery(): void {
+    // TODO: check if this is really useful also with CDK. It causes some troubles when you try to close the gallery via close method
     // hides scrollbar
-    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = 'hidden';
 
     if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
