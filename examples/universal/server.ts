@@ -19,7 +19,7 @@ global['object'] = win.object;
 global['HTMLElement'] = win.HTMLElement;
 global['navigator'] = win.navigator;
 
-import 'zone.js/dist/zone-node';
+import 'zone.js/node';
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 
