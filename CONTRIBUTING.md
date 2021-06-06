@@ -1,4 +1,4 @@
-Sometimes, shy developers have really good ideas. So don't be shy and open an issue! :)
+Sometimes, shy developers have wonderful ideas. So don't be shy and open an issue! :)
 
 If you want to help me, modify the source code, but **before to create a pull request, follow these steps**
 

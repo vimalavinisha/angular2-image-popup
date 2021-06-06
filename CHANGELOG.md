@@ -1,4 +1,4 @@
-# 8.0.0-beta.6
+# 8.0.0-rc.1
 ### Features
 
 STILL WORK IN PROGRESS
