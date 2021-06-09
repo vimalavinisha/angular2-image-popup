@@ -8,7 +8,7 @@ import { DIALOG_DATA } from './modal-gallery.tokens';
 import { Image, ImageModalEvent } from '../../model/image.class';
 import { ConfigService } from '../../services/config.service';
 import { DotsConfig } from '../../model/dots-config.interface';
-import { ButtonEvent, ButtonsConfig } from '../../model/buttons-config.interface';
+import { ButtonConfig, ButtonEvent, ButtonsConfig, ButtonType } from '../../model/buttons-config.interface';
 import { InternalLibImage } from '../../model/image-internal.class';
 import { Action } from '../../model/action.enum';
 import { CurrentImageComponent, ImageLoadEvent } from '../current-image/current-image.component';
@@ -294,11 +294,26 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * @param ButtonEvent event payload
    * @param Action action that triggered the close method. `Action.NORMAL` by default
    */
-  onCloseGallery(event: ButtonEvent, action: Action = Action.NORMAL): void {
+  onCloseGalleryButton(event: ButtonEvent, action: Action = Action.NORMAL): void {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     this.closeGallery(action, false);
     this.modalGalleryService.emitButtonAfterHook(eventToEmit);
+  }
+
+  onCloseGallery(event: ImageModalEvent, action: Action = Action.NORMAL): void {
+    // remap ImageModalEvent to ButtonEvent
+    const buttonEvent: ButtonEvent = {
+      button: {
+        type: ButtonType.CLOSE
+      } as ButtonConfig,
+      image: null,
+      action: event.action,
+      galleryId: event.galleryId
+    };
+    this.modalGalleryService.emitButtonBeforeHook(buttonEvent);
+    this.closeGallery(action, false);
+    this.modalGalleryService.emitButtonAfterHook(buttonEvent);
   }
 
   /**

@@ -1,6 +1,13 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@ks89/angular-modal-gallery": [
+        "dist/ks89/angular-modal-gallery/ks89-angular-modal-gallery",
+        "dist/ks89/angular-modal-gallery"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -13,16 +20,22 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2017",
     "module": "es2020",
-    "lib": ["es2018", "dom"],
-    "paths": {
-      "@ks89/angular-modal-gallery": ["dist/ks89/angular-modal-gallery/ks89-angular-modal-gallery", "dist/ks89/angular-modal-gallery"]
-    },
-    "typeRoots": ["node_modules/@types"]
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
-    "strictTemplates": true
+    "strictInputAccessModifiers": true,
+
+    /* THIS SHOULD BE FORCED TO TRUE IN THE FUTURE (VERSION 9.0.0 OF THE LIBRARY)*/
+    "strictTemplates": false
   }
 }

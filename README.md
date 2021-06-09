@@ -37,8 +37,6 @@ Despite its name, this library is more than for modal galleries, because I'm int
 </p>
 <p align="center">
   <a href="https://travis-ci.org/Ks89/angular-modal-gallery"><img src="https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master" alt=""></a>
-  <a href="https://ci.appveyor.com/project/Ks89/angular-modal-gallery/branch/master"><img src="https://ci.appveyor.com/api/projects/status/ikp5qqr9aci2s0ae/branch/master?svg=true" alt=""></a>
-  <a href="https://circleci.com/gh/Ks89/angular-modal-gallery"><img src="https://circleci.com/gh/Ks89/angular-modal-gallery.svg?style=svg" alt=""></a>
 </p>
 <p align="center">
   <a href="https://snyk.io/test/github/ks89/angular-modal-gallery"><img src="https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg" alt="Known Vulnerabilities"></a>

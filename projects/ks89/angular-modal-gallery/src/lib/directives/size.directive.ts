@@ -42,7 +42,7 @@ export class SizeDirective implements OnInit, OnChanges {
 
   /**
    * Method ´ngOnInit´ to apply the style of this directive.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * This is an Angular lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called only one time!!!
    */
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class SizeDirective implements OnInit, OnChanges {
 
   /**
    * Method ´ngOnChanges´ to apply the style of this directive.
-   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   * This is an Angular lifecycle hook, so its called automatically by Angular itself.
    * In particular, it's called when any data-bound property of a directive changes!!!
    */
   ngOnChanges(): void {
@@ -66,7 +66,11 @@ export class SizeDirective implements OnInit, OnChanges {
       return;
     }
     // apply [style.width]
-    this.renderer.setStyle(this.el.nativeElement, 'width', this.sizeConfig.width);
-    this.renderer.setStyle(this.el.nativeElement, 'height', this.sizeConfig.height);
+    if (this.sizeConfig.width) {
+      this.renderer.setStyle(this.el.nativeElement, 'width', this.sizeConfig.width);
+    }
+    if (this.sizeConfig.height) {
+      this.renderer.setStyle(this.el.nativeElement, 'height', this.sizeConfig.height);
+    }
   }
 }

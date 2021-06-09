@@ -36,21 +36,22 @@ export class KeyboardService {
    * Private Mousetrap variable to store the instance.
    */
   // tslint:disable-next-line:no-any
-  private mousetrap: any;
+  private mousetrapInstance: any;
 
   // tslint:disable-next-line:no-any
   constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
-  // tslint:disable-next-line:no-any
-  init(config: LibConfig): any {
+  init(config: LibConfig): Promise<void> {
     return new Promise((resolve, reject) => {
       // temporary workaround to fix this issue: https://github.com/Ks89/angular-modal-gallery/issues/142
       if (config.keyboardServiceConfig && !config.keyboardServiceConfig.disableSsrWorkaround) {
         // To prevent issues with angular-universal on server-side
         if (isPlatformBrowser(this.platformId)) {
           import('mousetrap')
-            .then(Mousetrap => {
-              this.mousetrap = Mousetrap;
+            // tslint:disable-next-line:no-any
+            .then((loaded: any) => {
+              // in this case, the .default is required for Typescript Dynamic Imports
+              this.mousetrapInstance = loaded.default;
               resolve();
               return;
             })
@@ -79,7 +80,7 @@ export class KeyboardService {
     if (config.keyboardServiceConfig && !config.keyboardServiceConfig.disableSsrWorkaround) {
       // To prevent issues with angular-universal on server-side
       if (isPlatformBrowser(this.platformId)) {
-        this.mousetrap.bind(config.keyboardServiceConfig.shortcuts, (event: KeyboardEvent, combo: string) => {
+        this.mousetrapInstance.bind(config.keyboardServiceConfig.shortcuts, (event: KeyboardEvent, combo: string) => {
           if (event.preventDefault) {
             event.preventDefault();
           } else {
@@ -101,7 +102,7 @@ export class KeyboardService {
     if (config.keyboardServiceConfig && !config.keyboardServiceConfig.disableSsrWorkaround) {
       // To prevent issues with angular-universal on server-side
       if (isPlatformBrowser(this.platformId)) {
-        this.mousetrap.reset();
+        this.mousetrapInstance.reset();
       }
     }
   }

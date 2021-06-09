@@ -1,7 +1,7 @@
 <div [attr.aria-label]="accessibilityConfig?.loadingSpinnerAriaLabel"
      [title]="accessibilityConfig?.loadingSpinnerTitle">
 
-  <ng-container [ngSwitch]="loadingConfig.type">
+  <ng-container [ngSwitch]="loadingConfig?.type">
     <ng-container *ngSwitchCase="loadingStandard">
       <div class="cssload-loader">
         <div class="cssload-inner cssload-one"></div>
@@ -44,8 +44,5 @@
         <span></span>
       </div>
     </ng-container>
-    <!--<ng-container *ngSwitchDefault>-->
-    <!---->
-    <!--</ng-container>-->
   </ng-container>
 </div>

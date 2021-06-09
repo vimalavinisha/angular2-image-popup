@@ -31,33 +31,11 @@ const os = require('os');
 console.log(`Starting Karma with isCI=${!!isCI()}`);
 
 function isCI() {
-  return process.env.CI || process.env.APPVEYOR || process.env.TRAVIS || process.env.CIRCLECI;
+  return process.env.CI || process.env.TRAVIS;
 }
 
 function getBrowsers() {
-  if (process.env.CI) {
-    if (process.env.APPVEYOR) {
-      // variable defined by APPVEYOR itself
-      // only for AppVeyor
-      return ['Chrome', 'Firefox' /*, 'IE'*/];
-    } else if (process.env.TRAVIS) {
-      // variable defined by TRAVIS itself
-      return ['ChromeHeadless', 'Chrome', 'Firefox'];
-    } else if (process.env.CIRCLECI) {
-      // variable defined by CIRCLECI itself
-      return ['ChromeHeadless', 'Chrome', 'Firefox'];
-    }
-  } else {
-    switch (os.platform()) {
-      case 'win32': // Windows
-        return ['ChromeHeadless', 'Chrome', 'Firefox', 'IE' /*,'Edge'*/];
-      case 'darwin': // macOS
-        return ['ChromeHeadless' /*, 'Chrome', 'Firefox'*/ /*, 'Safari'*/];
-      default:
-        // other (linux, freebsd, openbsd, sunos, aix)
-        return ['ChromeHeadless', 'Chrome', 'Firefox'];
-    }
-  }
+  return ['ChromeHeadless'];
 }
 
 module.exports = function (config) {
@@ -67,10 +45,6 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-edge-launcher'),
-      require('karma-firefox-launcher'),
-      require('karma-ie-launcher'),
-      require('karma-safari-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('karma-coverage'),
@@ -120,7 +94,7 @@ module.exports = function (config) {
       }
     }
 
-    // For AppVeyor and TravisCI to prevent timeouts
+    // For TravisCI to prevent timeouts
     // browserNoActivityTimeout: 60000
   });
 };

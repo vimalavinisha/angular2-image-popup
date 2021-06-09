@@ -7,13 +7,18 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": ["node", "mousetrap", "hammerjs"],
-    "lib": ["dom", "es2018"]
+    "types": [
+      "node",
+      "mousetrap",
+      "hammerjs"
+    ],
+    "lib": [
+      "dom",
+      "es2018"
+    ]
   },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
-  },
-  "exclude": ["src/test.ts", "**/*.spec.ts"]
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts"
+  ]
 }

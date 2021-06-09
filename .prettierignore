@@ -1,13 +1,10 @@
 /.git/
 /.idea/
 
-/.circleci/
-/appveyor.yml
 /travisci/
 /.travis.yml
 
 /.github/
-/.scannerwork/
 /@ks89/
 /coverage/
 /docs/
@@ -17,6 +14,8 @@ reports/
 
 examples/angular-cli-9/dist/
 examples/angular-cli-10/dist/
+examples/angular-cli-11/dist/
+examples/angular-cli-12/dist/
 examples/angular-cli-material/dist/
 examples/universal/dist/
 examples/universal/server.ts

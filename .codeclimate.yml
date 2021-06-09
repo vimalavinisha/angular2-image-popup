@@ -2,9 +2,6 @@ engines:
   eslint:
     enabled: true
     channel: eslint-5
-#  tslint:
-#    enabled: true
-#    config: tslint.json
   fixme:
     enabled: true
     config:
@@ -31,11 +28,9 @@ ratings:
 exclude_paths:
 - "@ks89"
 - "node_modules/"
-- ".circleci/"
 - ".github/"
 - "travisci/"
 - ".travis.yml"
-- "appveyor.yml"
 - ".sass-lint.yml"
 - ".editorconfig"
 - ".npmignore"
