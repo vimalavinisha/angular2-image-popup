@@ -1,7 +1,8 @@
+import 'zone.js/dist/zone-node';
+
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
-
 const domino = require('domino');
 import { existsSync } from 'fs';
 
@@ -14,12 +15,13 @@ win.Math = Math;
 
 global['window'] = win;
 global['document'] = win.document;
+// @ts-ignore
 global['branch'] = null;
+// @ts-ignore
 global['object'] = win.object;
 global['HTMLElement'] = win.HTMLElement;
 global['navigator'] = win.navigator;
 
-import 'zone.js/node';
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 
