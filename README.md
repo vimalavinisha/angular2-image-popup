@@ -118,10 +118,10 @@ Despite its name, this library is more than for modal galleries, because I'm int
 
 ## :boom: Features :boom:
 - Angular Module to import this library
-- requires IE >= 11 and Angular >= 9
+- requires IE >= 11 and Angular >= 12
 - works with both JIT and AOT compilers
 - supports all **recommended Angular Compiler Options**
-- compliant to Angular Package Format v10 specifications
+- compliant to Angular Package Format v12 specifications
 - **use [Semantic versioning 2.0.0](http://semver.org/)** also known as 'semver'
 - official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
@@ -175,12 +175,13 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 2  | = 3.3.5                     | &gt;= 4.0.0  |
 | Angular 4  | = 5.7.1                     | optional     |
 | Angular 5  | = 6.3.0                     | optional     |
-| Angular 6  | &gt;= 7.0.0                 | optional     |
-| Angular 7  | &gt;= 7.0.0                 | optional     |
-| Angular 8  | &gt;= 7.2.1                 | optional     |
-| Angular 9  | &gt;= 8.0.0                 | optional     |
-| Angular 10 | &gt;= 8.0.0                 | optional     |
-| Angular 11 | &gt;= 8.0.0                 | optional     |
+| Angular 6  | = 7.2.7                     | optional     |
+| Angular 7  | = 7.2.7                     | optional     |
+| Angular 8  | = 7.2.7                     | optional     |
+| Angular 9  | = 7.2.7                     | optional     |
+| Angular 10 | = 7.2.7                     | optional     |
+| Angular 11 | = 7.2.7                     | optional     |
+| Angular 12 | &gt;= 8.0.0                 | optional     |
 
 <br>
 
@@ -188,7 +189,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 100 releases in two years**, and more to come... :)
 
-- ??/??/2021 - 8.0.0-beta.6 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 06/11/2021 - 8.0.0-rc.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/22/2020 - 8.0.0-beta.5 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/14/2020 - 8.0.0-beta.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/12/2020 - 8.0.0-beta.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -281,7 +282,7 @@ Also, if you want to generate the `internal library documentation`, run `npm run
 
 The MIT License (MIT)
 
-Copyright (c) 2017-2020 Stefano Cappa (Ks89)
+Copyright (c) 2017-2021 Stefano Cappa (Ks89)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

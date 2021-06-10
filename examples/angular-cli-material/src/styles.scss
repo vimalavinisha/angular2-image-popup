@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (C) 2017-2021 Stefano Cappa (Ks89)
+// Copyright (c) 2017-2021 Stefano Cappa (Ks89)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,11 @@
 // *****************************************************************
 // *****************************************************************
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
 // Not required by angular-modal-gallery. Used only in this demo
 .red-text {
@@ -56,6 +59,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .center-text {
   text-align: center;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (C) 2017-2021 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2020 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
  */
 
 import { Component, Inject } from '@angular/core';
-
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
@@ -33,8 +32,8 @@ export interface DialogData {
 
 @Component({
   selector: 'ks-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
   // ----------------------------------------------------
@@ -46,8 +45,8 @@ export class AppComponent {
     { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' }
   ];
 
-  animal: string;
-  name: string;
+  animal: string | undefined;
+  name: string | undefined;
 
   constructor(public dialog: MatDialog) {}
 
@@ -57,7 +56,7 @@ export class AppComponent {
       data: { name: this.name, animal: this.animal }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed');
       this.animal = result;
     });
@@ -79,3 +78,4 @@ export class DialogOverviewExampleDialog {
 }
 // ----------------------------------------------------
 // ----------------------------------------------------
+

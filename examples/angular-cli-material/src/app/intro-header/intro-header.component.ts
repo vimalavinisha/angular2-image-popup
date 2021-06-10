@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (C) 2017-2021 Stefano Cappa
+ * Copyright (c) 2017-2019 Stefano Cappa
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'ks-intro-header',
-  templateUrl: './intro-header.html',
-  styleUrls: ['./intro-header.scss']
+  templateUrl: 'intro-header.html',
+  styleUrls: ['intro-header.scss']
 })
 export class IntroHeaderComponent {}

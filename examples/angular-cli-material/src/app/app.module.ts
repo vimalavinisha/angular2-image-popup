@@ -23,10 +23,8 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,8 +45,9 @@ import { GalleryModule } from '@ks89/angular-modal-gallery'; // <---------------
 
 // ************************ optional font-awesome 5 ************************
 // to install use both `npm i --save @fortawesome/fontawesome-svg-core` and `npm i --save @fortawesome/free-solid-svg-icons`
-import { dom, library } from '@fortawesome/fontawesome-svg-core';
-import { faDownload, faExternalLinkAlt, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faExternalLinkAlt, faPlus, faTimes, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 library.add(faExternalLinkAlt, faPlus, faTimes, faDownload);
 dom.watch(); // Kicks off the process of finding <i> tags and replacing with <svg>
 // *************************************************************************
@@ -76,7 +75,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
 
     MatButtonModule,
     MatGridListModule,
@@ -88,7 +86,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
     GalleryModule // <-------------------------------------------- @ks89/angular-modal-gallery module import
   ],
-  entryComponents: [AppComponent, DialogOverviewExampleDialog],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

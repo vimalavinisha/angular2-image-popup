@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (C) 2017-2021 Stefano Cappa (Ks89)
+ Copyright (c) 2017-2020 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -217,34 +217,34 @@ export class CarouselExampleComponent {
     carouselPreviewScrollNextTitle: 'Scroll next previews'
   };
 
-  addRandomImage() {
+  addRandomImage(): void {
     const imageToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
     const newImage: Image = new Image(this.imagesRect.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
     this.imagesRect = [...this.imagesRect, newImage];
   }
 
-  onChangeAutoPlay() {
+  onChangeAutoPlay(): void {
     this.autoPlay = !this.autoPlay;
   }
 
-  onChangeShowArrows() {
+  onChangeShowArrows(): void {
     this.showArrows = !this.showArrows;
   }
 
-  onChangeShowDots() {
+  onChangeShowDots(): void {
     this.showDots = !this.showDots;
   }
 
   // output evets
-  onShow(event: ImageEvent) {
+  onShow(event: ImageEvent): void {
     console.log('show', event);
   }
 
-  onFirstImage(event: ImageEvent) {
+  onFirstImage(event: ImageEvent): void {
     console.log('firstImage', event);
   }
 
-  onLastImage(event: ImageEvent) {
+  onLastImage(event: ImageEvent): void {
     console.log('lastImage', event);
   }
 }
