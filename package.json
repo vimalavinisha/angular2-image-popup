@@ -50,9 +50,6 @@
     "test:snyk": "snyk test && npm run test",
     "test:watch": "ng test @ks89/angular-modal-gallery --watch=true --code-coverage=true",
     "test:ci": "ng test @ks89/angular-modal-gallery --watch=false --no-progress --code-coverage=true",
-    "e2e": "ng e2e",
-    "e2e:ee": "npm run e2e -- --element-explorer=true",
-    "e2e:ci": "npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js",
     "lint": "ng lint",
     "check:licenses": "license-checker --exclude 'MIT, MIT OR X11, BSD, ISC, Apache-2.0'",
     "coveralls": "coveralls < coverage/lcov.info"

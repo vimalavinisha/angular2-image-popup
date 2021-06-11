@@ -4,13 +4,7 @@ echo "preparing build on $TRAVIS_OS_NAME"
 
 npm run clean:all
 
-cd examples/systemjs
-npm ci
-cd ../..
-cd examples/angular-cli-9
-npm ci
-cd ../..
-cd examples/angular-cli-10
+cd examples/angular-cli-12
 npm ci
 cd ../..
 cd examples/angular-cli-material
@@ -27,14 +21,8 @@ echo "building the main angular-cli example with ng-packagr on $TRAVIS_OS_NAME"
 npm run build:main:dev
 npm run build:main:prod
 
-echo "building official angular-cli-9 example on $TRAVIS_OS_NAME"
-cd examples/angular-cli-9
-npm run build:dev
-npm run build:prod
-cd ../..
-
-echo "building official angular-cli-10 example on $TRAVIS_OS_NAME"
-cd examples/angular-cli-10
+echo "building official angular-cli-12 example on $TRAVIS_OS_NAME"
+cd examples/angular-cli-12
 npm run build:dev
 npm run build:prod
 cd ../..

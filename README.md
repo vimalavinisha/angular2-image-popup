@@ -118,12 +118,12 @@ Despite its name, this library is more than for modal galleries, because I'm int
 
 ## :boom: Features :boom:
 - Angular Module to import this library
-- requires IE >= 11 and Angular >= 12
-- works with both JIT and AOT compilers
+- requires Angular >= 12 (IE11 is supported but deprecated)
+- IVY compatibility
 - supports all **recommended Angular Compiler Options**
 - compliant to Angular Package Format v12 specifications
 - **use [Semantic versioning 2.0.0](http://semver.org/)** also known as 'semver'
-- official examples with `angular-cli`, `angular-cli + material`, `SystemJS` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
+- official examples with `angular-cli`, `angular-cli + material` and `angular-universal` [HERE](https://github.com/Ks89/angular-modal-gallery/tree/master/examples)
 - unit testing with high % coverage
 - **Server Side Rendering** support with angular-universal
 - Web Accessibility features, like ARIA support and [toptal.com](https://www.toptal.com/designers/colorfilter) criteria (tested with `Sim Daltonism` for macOS)
@@ -183,13 +183,15 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 11 | = 7.2.7                     | optional     |
 | Angular 12 | &gt;= 8.0.0                 | optional     |
 
+*Version 8.0.0 requires at least Angular 12.*
+
 <br>
 
 ## :fire: News :fire:
 
 **More than 100 releases in two years**, and more to come... :)
 
-- 06/11/2021 - 8.0.0-rc.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- 06/??/2021 - 8.0.0-rc.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 11/22/2020 - 8.0.0-beta.5 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/14/2020 - 8.0.0-beta.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/12/2020 - 8.0.0-beta.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -252,7 +254,7 @@ Check `CONTRIBUTING.md` in this repository.
 To understand how to contribute to an open source project, [HERE](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) you can find useful information.
 
 When you create a pull request, please, format your code to be consistent with the existing code. I suggest to use [WebStorm](https://www.jetbrains.com/webstorm/) as IDE and when you commit don't use a third party software, but the official command line `git`.
-In this way, [prettier](https://prettier.io/) will run using my configuration and it will auto-format the code. If it will fail, add files with `git add .` again and retry.
+In this way, [prettier](https://prettier.io/) will run using my configuration, and it will auto-format the code. If it will fail, add files with `git add .` again and retry.
 
 Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
 

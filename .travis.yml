@@ -51,10 +51,6 @@ cache:
   bundler: true
   directories:
     - ./node_modules
-    - ./examples/angular-cli-9/node_modules
-    - ./examples/angular-cli-10/node_modules
-    - ./examples/angular-cli-11/node_modules
     - ./examples/angular-cli-12/node_modules
     - ./examples/angular-cli-material/node_modules
-    - ./examples/systemjs/node_modules
     - ./examples/universal/node_modules
