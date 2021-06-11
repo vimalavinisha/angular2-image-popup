@@ -24,14 +24,3 @@ else
     echo "CI = $CI"
     echo "Exporting env variables - done"
 fi
-
-echo "Installing global dependencies"
-# install global dependencies
-if [[ $TRAVIS_OS_NAME = 'osx' ]]; then
-    echo "Installing $TRAVIS_OS_NAME global dependencies"
-    sudo npm install -g @angular/cli@12.0.3
-else
-    echo "Installing $TRAVIS_OS_NAME global dependencies"
-    # to fix a problem with nodejs 6 on linux
-    npm install -g @angular/cli@12.0.3
-fi

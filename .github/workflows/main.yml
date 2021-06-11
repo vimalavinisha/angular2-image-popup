@@ -7,6 +7,7 @@ on:
     - 'examples/angular-cli-12/node_modules'
     - 'examples/angular-cli-material/node_modules'
     - 'examples/universal/node_modules'
+    - 'travisci'
 
 jobs:
 
@@ -32,8 +33,8 @@ jobs:
       run: |
         npm install -g npm@7
         npm cache verify
-        npm prune
-        npm update
+#        npm prune
+#        npm update
 
     - name: Installling all deps
       run: |

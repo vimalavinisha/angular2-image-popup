@@ -4,13 +4,7 @@ node_js:
 
 os:
   - linux
-dist: trusty # to use Ubuntu 14.04
-
-# temporary fix to prevent an issue related to chrome headless. I should restore this to false as soon as possible.
-# also I should remove these 2 commands from before_script
-# 1. sudo chown root /opt/google/chrome/chrome-sandbox
-# 2. sudo chmod 4755 /opt/google/chrome/chrome-sandbox
-sudo: true
+dist: xenial # to use Ubuntu 16.04
 
 git:
   depth: 3
@@ -22,11 +16,7 @@ env:
 
 addons:
   firefox: latest
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+  chrome: stable
 
 matrix:
   fast_finish: true
@@ -54,3 +44,4 @@ cache:
     - ./examples/angular-cli-12/node_modules
     - ./examples/angular-cli-material/node_modules
     - ./examples/universal/node_modules
+    - ./.github
