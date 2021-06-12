@@ -6,7 +6,7 @@
 - remove `document.body.style.overflow = ...` to prevent weird behaviour. @angular/cdk is enough to block window scrolling.
 
 ### CI
-- remove all CIs and use only Github Actions
+- remove all CIs to use only Github Actions
 
 ### Tests
 - upgrade unit testing
