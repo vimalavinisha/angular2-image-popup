@@ -50,10 +50,7 @@ docs/
 **/coverage/
 
 # Examples
-examples/systemjs/app/**/*.js
-examples/systemjs/app/**/*.map
-examples/angular-cli-9/dist/
-examples/angular-cli-10/dist/
+examples/angular-cli-12/dist/
 examples/angular-cli-material/dist/
 examples/universal/dist/
 examples/universal/out-tsc/

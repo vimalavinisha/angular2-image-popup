@@ -1,12 +1,33 @@
 # 8.0.0-rc.1
 ### Features
+- upgrade project to Angular 12. This is the minimum required version from now. **BREAKING CHANGE**
 
-STILL WORK IN PROGRESS
+### Bugfixes
+- remove `document.body.style.overflow = ...` to prevent weird behaviour. @angular/cdk is enough to block window scrolling.
+
+### CI
+- remove all CIs and use only Github Actions
+
+### Tests
+- upgrade unit testing
+
+### Examples
+- remove SystemJS example
+- upgrade all angular-cli examples to Angular 12, because it's the minimum required version from now
+
+### Docs
+- first public live version of [documentation website](https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/)
+- improved doc website adding a more step-by-step introduction to the key concepts of the library
+
+## DEPRECATION WARNINGS
+
+**Attention! Angular support for Microsoft's Internet Explorer 11 (IE11) is deprecated and will be removed in Angular v13.**
+**For the same reason, from angular-modal-gallery 8.0.0, IE11 has been deprecated.**
+**At the moment it's still working, but it will be removed in angular-modal-gallery 9.0.0.**
 
 <br>
 
 **This is a beta version without a documentation**
-**If you want to try it, check examples/angular-cli-10 to get tons of working examples**
 
 
 # 8.0.0-beta.5

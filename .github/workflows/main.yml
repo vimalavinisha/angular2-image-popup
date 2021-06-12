@@ -3,11 +3,11 @@ name: angular-modal-gallery
 on:
   push:
     paths-ignore:
-    - 'node_modules'
-    - 'examples/angular-cli-12/node_modules'
-    - 'examples/angular-cli-material/node_modules'
-    - 'examples/universal/node_modules'
-    - 'travisci'
+      - 'node_modules'
+      - 'examples/angular-cli-12/node_modules'
+      - 'examples/angular-cli-material/node_modules'
+      - 'examples/universal/node_modules'
+      - 'travisci'
 
 jobs:
 
@@ -19,55 +19,64 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [ 14.x ]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Switch to a specific npm version
-      run: |
-        npm install -g npm@7
-        npm cache verify
-#        npm prune
-#        npm update
+      - name: Switch to a specific npm version
+        run: |
+          npm install -g npm@7
+          npm cache verify
+      #        npm prune
+      #        npm update
 
-    - name: Installling all deps
-      run: |
-        cd examples/angular-cli-12
-        npm ci
-        cd ../..
-        cd examples/angular-cli-material
-        npm ci
-        cd ../..
-        cd examples/universal
-        npm ci
-        cd ../..
+      - name: Installling all deps
+        run: |
+          cd examples/angular-cli-12
+          npm ci
+          cd ../..
+          cd examples/angular-cli-material
+          npm ci
+          cd ../..
+          cd examples/universal
+          npm ci
+          cd ../..
 
-    - name: Building web applications
-      run: |
-        npm run build:all
-        npm run build:main:dev
-        npm run build:main:prod
-        cd examples/angular-cli-12
-        npm run build:dev
-        npm run build:prod
-        cd ../..
-        cd examples/angular-cli-material
-        npm run build:dev
-        npm run build:prod
-        cd ../..
-        cd examples/universal
-        npm run build:dev
-        npm run build:prod
-        npm run build:ssr
-        npm run prerender
-        cd ../..
+      - name: Building main web app
+        run: |
+          npm run build:all
+          npm run build:main:dev
+          npm run build:main:prod
 
-    - name: Running tests
-      run: |
-        npm run test:ci
+      - name: Building angular-cli example
+        run: |
+          cd examples/angular-cli-12
+          npm run build:dev
+          npm run build:prod
+          cd ../..
+
+      - name: Building angular-cli-material example
+        run: |
+          cd examples/angular-cli-material
+          npm run build:dev
+          npm run build:prod
+          cd ../..
+
+      - name: Building universal example
+        run: |
+          cd examples/universal
+          npm run build:dev
+          npm run build:prod
+          npm run build:ssr
+          npm run prerender
+          cd ../..
+
+      - name: Running tests
+        run: |
+          npm run test:ci

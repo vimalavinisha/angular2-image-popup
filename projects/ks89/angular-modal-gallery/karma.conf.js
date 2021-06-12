@@ -93,8 +93,5 @@ module.exports = function (config) {
         ]
       }
     }
-
-    // For TravisCI to prevent timeouts
-    // browserNoActivityTimeout: 60000
   });
 };

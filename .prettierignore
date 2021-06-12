@@ -1,9 +1,6 @@
 /.git/
 /.idea/
 
-/travisci/
-/.travis.yml
-
 /.github/
 /@ks89/
 /coverage/
@@ -12,16 +9,11 @@
 **/node_modules/
 reports/
 
-examples/angular-cli-9/dist/
-examples/angular-cli-10/dist/
-examples/angular-cli-11/dist/
 examples/angular-cli-12/dist/
 examples/angular-cli-material/dist/
 examples/universal/dist/
 examples/universal/server.ts
 examples/universal/out-tsc/
-examples/systemjs/app/*.js
-examples/systemjs/app/*.js.map
 
 **/*.spec.ts
 **/e2e/
