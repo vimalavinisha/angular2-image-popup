@@ -45,8 +45,6 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a>
 </p>
 <p align="center">
-  <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/gpa.svg" alt="Code Climate"></a>
-  <a href="https://codeclimate.com/github/Ks89/angular-modal-gallery/coverage"><img src="https://codeclimate.com/github/Ks89/angular-modal-gallery/badges/coverage.svg" alt="ode Climate Coverage"></a>
   <a href="https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master"><img src="https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master" alt="Coveralls Coverage"></a>
 </p>
 <p align="center">
