@@ -14,7 +14,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 <ul>
   <li><b>plain-gallery</b>: shows either a row, a column or a grid of <b>clickable thumbnails</b> using pure flexbox</li>
 <li><b>modal-gallery</b>: is the core part of this project and display a <b>modal window with full screen images</b>, <b>buttons</b>, the <b>current image</b> and optionally, also navigation <b>dots</b> and <b>previews</b></li>
-<li><b>carousel</b>: is the new feature introduced in 7.0.0 to show a configurable plain carousel (not modal) with auto-play and other cool features</li>
+<li><b>carousel</b>: shows a configurable plain carousel (not modal) with auto-play and other cool features</li>
 </ul>
 <p><b>@ks89/angular-modal-gallery</b> supports also <b>keyboard shortcuts</b>, <b>swipe gestures</b> and <b>mouse events</b>.</p>
 <br>
@@ -36,7 +36,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg?style=flat-square" alt="Downloads/year"></a>
 </p>
 <p align="center">
-  <a href="https://travis-ci.org/Ks89/angular-modal-gallery"><img src="https://travis-ci.org/Ks89/angular-modal-gallery.svg?branch=master" alt=""></a>
+  [![angular-modal-gallery](https://github.com/Ks89/angular-modal-gallery/actions/workflows/main.yml/badge.svg)](https://github.com/Ks89/angular-modal-gallery/actions/workflows/main.yml)
 </p>
 <p align="center">
   <a href="https://snyk.io/test/github/ks89/angular-modal-gallery"><img src="https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg" alt="Known Vulnerabilities"></a>
