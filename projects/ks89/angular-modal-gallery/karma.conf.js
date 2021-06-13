@@ -26,18 +26,6 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-const os = require('os');
-
-console.log(`Starting Karma with isCI=${!!isCI()}`);
-
-function isCI() {
-  return process.env.CI || process.env.TRAVIS;
-}
-
-function getBrowsers() {
-  return ['ChromeHeadless'];
-}
-
 module.exports = function (config) {
   config.set({
     basePath: '',
@@ -46,39 +34,56 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
       require('karma-coverage'),
       require('karma-mocha-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client: {
+      jasmine: {
+        // you can add configuration options for Jasmine here
+        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
+        // for example, you can disable the random execution with `random: false`
+        // or set a specific seed with `seed: 4321`
+      },
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../../../coverage'),
-      reports: ['html', 'lcovonly'],
-      fixWebpackSourcePaths: true
-      // thresholds: {
-      //   statements: 80,
-      //   lines: 80,
-      //   branches: 80,
-      //   functions: 80
+    jasmineHtmlReporter: {
+      suppressAll: true // removes the duplicated traces
+    },
+    coverageReporter: {
+      dir: require('path').join(__dirname, '../../../coverage/ks89/angular-modal-gallery'),
+      subdir: '.',
+      reporters: [
+        // To use coveralls and other tools I need lcov coverage.
+        // I can use lcovonly to get the right file, however I also want the html output.
+        // type: 'lcov' contains both outputs 'html' and 'lcovonly'!!!
+        // { type: 'html' },
+        { type: 'lcov' },
+        { type: 'text-summary' }
+      ],
+      // check: {
+      //   global: {
+      //     statements: 80,
+      //     branches: 80,
+      //     functions: 80,
+      //     lines: 80
+      //   }
+      // },
+      // watermarks: {
+      //   statements: [ 50, 75 ],
+      //   functions: [ 50, 75 ],
+      //   branches: [ 50, 75 ],
+      //   lines: [ 50, 75 ]
       // }
     },
-    // reporters: ['progress', 'kjhtml'],
-    reporters: ['mocha', 'coverage', 'coverage-istanbul'],
+    reporters: ['mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: getBrowsers(),
+    browsers: ['ChromeHeadless'],
     singleRun: false,
-    // restartOnFileChange: true,
-
-    // required by karma-coverage to show code coverage in console
-    coverageReporter: {
-      type: 'text-summary'
-    },
+    restartOnFileChange: false,
 
     customLaunchers: {
       ChromeHeadless: {
