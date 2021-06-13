@@ -37,6 +37,7 @@ jobs:
 
       - name: Installling all deps
         run: |
+          npm ci
           cd examples/angular-cli-12
           npm ci
           cd ../..
@@ -55,7 +56,6 @@ jobs:
 
       - name: Building angular-cli example
         run: |
-          pwd
           cd examples/angular-cli-12
           npm run build:dev
           npm run build:prod
