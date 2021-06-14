@@ -79,6 +79,7 @@ jobs:
       - name: Running tests
         uses: nick-invision/retry@v2.4.0
         with:
+          timeout_minutes: 5
           max_attempts: 5
           retry_on: error
           command: npm run test
