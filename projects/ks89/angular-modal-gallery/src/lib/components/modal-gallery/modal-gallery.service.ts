@@ -1,7 +1,7 @@
 import { Injectable, Injector, ComponentRef } from '@angular/core';
 
 import { GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 
 import { Subject } from 'rxjs';
 
@@ -125,21 +125,18 @@ export class ModalGalleryService {
   }
 
   private attachDialogContainer(overlayRef: OverlayRef, config: ModalGalleryConfig, dialogRef: ModalGalleryRef): ModalGalleryComponent {
-    const injector = this.createInjector(config, dialogRef);
+    const injector: Injector = Injector.create({
+      parent: this.injector,
+      providers: [
+        { provide: ModalGalleryRef, useValue: dialogRef },
+        { provide: DIALOG_DATA, useValue: config }
+      ]
+    });
 
     const containerPortal = new ComponentPortal(ModalGalleryComponent, null, injector);
     const containerRef: ComponentRef<ModalGalleryComponent> = overlayRef.attach(containerPortal);
 
     return containerRef.instance;
-  }
-
-  private createInjector(config: ModalGalleryConfig, dialogRef: ModalGalleryRef): PortalInjector {
-    const injectionTokens = new WeakMap();
-
-    injectionTokens.set(ModalGalleryRef, dialogRef);
-    injectionTokens.set(DIALOG_DATA, config);
-
-    return new PortalInjector(this.injector, injectionTokens);
   }
 
   private getOverlayConfig(): OverlayConfig {
