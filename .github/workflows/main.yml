@@ -77,8 +77,12 @@ jobs:
           cd ../..
 
       - name: Running tests
-        run: |
-          npm run test:ci
+        uses: nick-invision/retry@v2.4.0
+        with:
+          timeout_seconds: 15
+          max_attempts: 5
+          retry_on: error
+          command: npm run test:ci
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
