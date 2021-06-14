@@ -82,6 +82,7 @@ jobs:
           timeout_minutes: 5
           max_attempts: 5
           retry_on: error
+          polling_interval_seconds: 60
           command: npm run test
 
       - name: Coveralls
