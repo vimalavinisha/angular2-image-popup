@@ -82,7 +82,7 @@ jobs:
           timeout_seconds: 15
           max_attempts: 5
           retry_on: error
-          command: npm run test:ci
+          command: npm run test
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
