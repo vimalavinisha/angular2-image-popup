@@ -46,7 +46,6 @@
     "pretest": "npm run clean:coverage",
     "test": "ng test @ks89/angular-modal-gallery --watch=false",
     "test:watch": "ng test @ks89/angular-modal-gallery --watch=true",
-    "test:ci": "ng test @ks89/angular-modal-gallery --watch=false --no-progress",
     "check:licenses": "license-checker --exclude 'MIT, MIT OR X11, BSD, ISC, Apache-2.0'",
     "coveralls": "coveralls < coverage/ks89/angular-modal-gallery/lcov.info"
   },

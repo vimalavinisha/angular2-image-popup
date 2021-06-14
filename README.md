@@ -36,7 +36,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/npm/dy/@ks89/angular-modal-gallery.svg?style=flat-square" alt="Downloads/year"></a>
 </p>
 <p align="center">
-  [![angular-modal-gallery](https://github.com/Ks89/angular-modal-gallery/actions/workflows/main.yml/badge.svg)](https://github.com/Ks89/angular-modal-gallery/actions/workflows/main.yml)
+  <a href="https://github.com/Ks89/angular-modal-gallery/actions/workflows/main.yml"><img src="https://github.com/Ks89/angular-modal-gallery/actions/workflows/main.yml/badge.svg" alt="Github Actions CI result"></a>
 </p>
 <p align="center">
   <a href="https://snyk.io/test/github/ks89/angular-modal-gallery"><img src="https://snyk.io/test/github/ks89/angular-modal-gallery/badge.svg" alt="Known Vulnerabilities"></a>
