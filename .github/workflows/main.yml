@@ -74,7 +74,7 @@ jobs:
           npm run build:dev
           npm run build:prod
           npm run build:ssr
-          npm run prerender
+#          npm run prerender
           cd ../..
 
       - name: Running tests
