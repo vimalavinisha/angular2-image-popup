@@ -74,11 +74,30 @@ jobs:
           npm run build:dev
           npm run build:prod
           npm run build:ssr
+
+          # try to run prerender script multiple times before failing
+          n=0
+          until [ $n -ge 5 ]
+          do
+            echo "npm test with n=$n"
+            npm run prerender && break
+            n=$[$n+1]
+            sleep 3
+          done
+
           cd ../..
 
       - name: Running tests
         run: |
-          npm run test
+          # try to run test script multiple times before failing
+          n=0
+          until [ $n -ge 5 ]
+          do
+            echo "npm test with n=$n"
+            npm test && break
+            n=$[$n+1]
+            sleep 3
+          done
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
