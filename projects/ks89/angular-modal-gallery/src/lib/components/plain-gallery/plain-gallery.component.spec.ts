@@ -38,6 +38,7 @@ import { DirectionDirective } from '../../directives/direction.directive';
 import { ATagBgImageDirective } from '../../directives/a-tag-bg-image.directive';
 import { GridLayout, LineLayout, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 import { ConfigService } from '../../services/config.service';
+import { FallbackImageDirective } from '../../directives/fallback-image.directive';
 
 let comp: PlainGalleryComponent;
 let fixture: ComponentFixture<PlainGalleryComponent>;
@@ -102,7 +103,7 @@ const IMAGES: InternalLibImage[] = [
 
 function initTestBed(): void {
   TestBed.configureTestingModule({
-    declarations: [PlainGalleryComponent, SizeDirective, WrapDirective, DirectionDirective, ATagBgImageDirective]
+    declarations: [PlainGalleryComponent, SizeDirective, WrapDirective, DirectionDirective, ATagBgImageDirective, FallbackImageDirective]
   }).overrideComponent(PlainGalleryComponent, {
     set: {
       providers: [

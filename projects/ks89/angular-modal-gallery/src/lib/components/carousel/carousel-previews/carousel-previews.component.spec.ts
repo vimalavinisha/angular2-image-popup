@@ -32,6 +32,7 @@ import { Action } from '../../../model/action.enum';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MediumMockedBreakpointObserver } from '../../../utils/breakpoint-observer-mock.spec';
 import { ConfigService } from '../../../services/config.service';
+import { FallbackImageDirective } from '../../../directives/fallback-image.directive';
 
 let comp: CarouselPreviewsComponent;
 let fixture: ComponentFixture<CarouselPreviewsComponent>;
@@ -252,7 +253,7 @@ function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: Inte
 
 function initTestBed(): void {
   TestBed.configureTestingModule({
-    declarations: [CarouselPreviewsComponent, SizeDirective]
+    declarations: [CarouselPreviewsComponent, SizeDirective, FallbackImageDirective]
   }).overrideComponent(CarouselPreviewsComponent, {
     set: {
       providers: [

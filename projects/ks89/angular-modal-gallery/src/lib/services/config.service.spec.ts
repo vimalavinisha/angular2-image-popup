@@ -816,7 +816,7 @@ describe('ConfigService', () => {
         inject([ConfigService], (service: ConfigService) => {
           service.setConfig(1, undefined);
           const result: LibConfig | undefined = service.getConfig(1);
-          console.log('result', result);
+          // console.log('result', result);
         })
       );
     });
