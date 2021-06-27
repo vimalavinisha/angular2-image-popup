@@ -56,12 +56,10 @@ export class ModalGalleryService {
     if (clickOutside) {
       if (this.dialogRef && libConfig && libConfig.enableCloseOutside) {
         this.dialogRef.closeModal();
-        // this.dialogRef = null;
       }
     } else {
       if (this.dialogRef) {
         this.dialogRef.closeModal();
-        // this.dialogRef = null;
       }
     }
   }
