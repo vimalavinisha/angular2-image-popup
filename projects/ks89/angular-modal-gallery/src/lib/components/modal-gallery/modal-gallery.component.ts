@@ -151,7 +151,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     if ((!this.id && this.id !== 0) || this.id < 0) {
       throw new Error(
         `'[id]="a number >= 0"' is a mandatory input in angular-modal-gallery.` +
-          `If you are using multiple instances of this library, please be sure to use different ids`
+        `If you are using multiple instances of this library, please be sure to use different ids`
       );
     }
 
@@ -344,45 +344,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Method to show the modal gallery displaying the image with
-   * the index specified as input parameter.
-   * It will also register a new `keyboardService` to catch keyboard's events to download the current
-   * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
-   * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
-   * @param number index of the image to show
-   */
-  showModalGallery(): void {
-    // TODO: check if this is really useful also with CDK. It causes some troubles when you try to close the gallery via close method
-    // hides scrollbar
-    // document.body.style.overflow = 'hidden';
-
-    if (this.id === null || this.id === undefined) {
-      throw new Error('Internal library error - id must be defined');
-    }
-    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
-    if (!libConfig) {
-      throw new Error('Internal library error - libConfig must be defined');
-    }
-
-    this.keyboardService.init(libConfig).then(() => {
-      this.keyboardService.add((event: KeyboardEvent, combo: string) => {
-        if (event.preventDefault) {
-          event.preventDefault();
-        } else {
-          // internet explorer
-          event.returnValue = false;
-        }
-        this.downloadImage();
-      }, libConfig);
-
-      const currentIndex: number = this.images.indexOf(this.currentImage);
-      // emit a new ImageModalEvent with the index of the current image
-      this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
-      this.changeDetectorRef.markForCheck();
-    });
-  }
-
-  /**
    * Method called when the image changes and used to update the `currentImage` object.
    * @param ImageModalEvent event payload
    */
@@ -437,17 +398,73 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
 
   /**
    * Method called when an image preview is clicked and used to update the current image.
-   * @param Image preview image
+   * @param ImageModalEvent preview image
    */
   onClickPreview(event: ImageModalEvent): void {
     this.onChangeCurrentImage(event);
   }
 
   /**
+   * Method to cleanup resources. In fact, this will reset keyboard's service.
+   * This is an Angular's lifecycle hook that is called when this component is destroyed.
+   */
+  ngOnDestroy(): void {
+    if (this.keyboardService) {
+      const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+      if (this.id && libConfig) {
+        this.keyboardService.reset(libConfig);
+      }
+    }
+    if (this.updateImagesSubscription) {
+      this.updateImagesSubscription.unsubscribe();
+    }
+    this.idValidatorService.remove(this.id);
+  }
+
+  /**
+   * Method to show the modal gallery displaying the image with
+   * the index specified as input parameter.
+   * It will also register a new `keyboardService` to catch keyboard's events to download the current
+   * image with keyboard's shortcuts. This service, will be removed either when modal gallery component
+   * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
+   * @param number index of the image to show
+   */
+  private showModalGallery(): void {
+    // TODO: check if this is really useful also with CDK. It causes some troubles when you try to close the gallery via close method
+    // hides scrollbar
+    // document.body.style.overflow = 'hidden';
+
+    if (this.id === null || this.id === undefined) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
+    this.keyboardService.init(libConfig).then(() => {
+      this.keyboardService.add((event: KeyboardEvent, combo: string) => {
+        if (event.preventDefault) {
+          event.preventDefault();
+        } else {
+          // internet explorer
+          event.returnValue = false;
+        }
+        this.downloadImage();
+      }, libConfig);
+
+      const currentIndex: number = this.images.indexOf(this.currentImage);
+      // emit a new ImageModalEvent with the index of the current image
+      this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
+      this.changeDetectorRef.markForCheck();
+    });
+  }
+
+  /**
    * Method to download the current image, only if `downloadable` is true.
    * It contains also a logic to enable downloading features also for IE11.
    */
-  downloadImage(): void {
+  private downloadImage(): void {
     if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
@@ -469,23 +486,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
       // for all other browsers
       this.downloadImageAllBrowsers();
     }
-  }
-
-  /**
-   * Method to cleanup resources. In fact, this will reset keyboard's service.
-   * This is an Angular's lifecycle hook that is called when this component is destroyed.
-   */
-  ngOnDestroy(): void {
-    if (this.keyboardService) {
-      const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
-      if (this.id && libConfig) {
-        this.keyboardService.reset(libConfig);
-      }
-    }
-    if (this.updateImagesSubscription) {
-      this.updateImagesSubscription.unsubscribe();
-    }
-    this.idValidatorService.remove(this.id);
   }
 
   /**
