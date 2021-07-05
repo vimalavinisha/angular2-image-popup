@@ -25,6 +25,9 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 
+/**
+ * Directive to add fallback image if the original one is not reachable.
+ */
 @Directive({
   selector: '[ksFallbackImage]'
 })

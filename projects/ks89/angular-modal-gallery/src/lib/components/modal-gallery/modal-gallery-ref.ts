@@ -28,6 +28,10 @@ import { Subject } from 'rxjs';
 import { ImageModalEvent } from '../../model/image.class';
 import { ButtonEvent } from '../../model/buttons-config.interface';
 
+/**
+ * Class that represents the modal dialog instance.
+ * It is returned by the open method.
+ */
 export class ModalGalleryRef {
   private close = new Subject<ImageModalEvent>();
   close$ = this.close.asObservable();
@@ -46,34 +50,65 @@ export class ModalGalleryRef {
 
   constructor(private overlayRef: OverlayRef) {}
 
+  /**
+   * Close modal dialog, disposing the Overlay.
+   */
   closeModal(): void {
     this.overlayRef.dispose();
   }
 
+  /**
+   * Method to emit close event.
+   * @param event ImageModalEvent event payload
+   */
   emitClose(event: ImageModalEvent): void {
     this.close.next(event);
   }
 
+  /**
+   * Method to emit show event.
+   * @param event ImageModalEvent event payload
+   */
   emitShow(event: ImageModalEvent): void {
     this.show.next(event);
   }
 
+  /**
+   * Method to emit firstImage event.
+   * @param event ImageModalEvent event payload
+   */
   emitFirstImage(event: ImageModalEvent): void {
     this.firstImage.next(event);
   }
 
+  /**
+   * Method to emit lastImage event.
+   * @param event ImageModalEvent event payload
+   */
   emitLastImage(event: ImageModalEvent): void {
     this.lastImage.next(event);
   }
 
+  /**
+   * Method to emit hasData event.
+   * @param event ImageModalEvent event payload
+   */
   emitHasData(event: ImageModalEvent): void {
     this.hasData.next(event);
   }
 
+  /**
+   * Method to emit buttonBeforeHook event.
+   * @param event ImageModalEvent event payload
+   */
   emitButtonBeforeHook(event: ButtonEvent): void {
     this.buttonBeforeHook.next(event);
   }
 
+  /**
+   * Method to emit buttonAfterHook event.
+   * @param event ImageModalEvent event payload
+   */
   emitButtonAfterHook(event: ButtonEvent): void {
     this.buttonAfterHook.next(event);
   }

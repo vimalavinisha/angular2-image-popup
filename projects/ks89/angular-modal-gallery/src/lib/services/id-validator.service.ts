@@ -52,16 +52,14 @@ export class IdValidatorService {
   /**
    * Method to remove a reserved id. In this way you are able to use the id again for another instance of the library.
    * @param galleryId number or undefined that represents the unique id of the gallery.
-   * @return boolean true if success. false is never returned, instead an exception is thrown
+   * @return boolean true if success. false is never returned, instead an exception is thrown*
    * @throws a error with a message if galleryId is neither integer or < 0
+   * * this should be improved without return true, because it doesn't make sense! :(
    */
   remove(galleryId: number | undefined): boolean {
     if (galleryId === undefined || !Number.isInteger(galleryId) || galleryId < 0) {
       throw new Error('You must provide a valid [id]="unique integer > 0 here" to the gallery/carousel in your template');
     }
-    // if (this.ids.find(id => id === galleryId)) {
-    //   throw new Error(`Cannot create gallery with id=${galleryId} because already used in your application. This must be a unique number >= 0.`);
-    // }
     this.ids.delete(galleryId);
     return true;
   }

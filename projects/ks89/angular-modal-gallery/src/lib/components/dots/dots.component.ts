@@ -46,7 +46,12 @@ import { LibConfig } from '../../model/lib-config.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DotsComponent extends AccessibleComponent implements OnInit, OnChanges {
-  @Input() id: number | undefined;
+  /**
+   * Unique id (>=0) of the current instance of this library. This is required when you are using
+   * the service to call modal gallery.
+   */
+  @Input()
+  id: number | undefined;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -64,12 +69,14 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
    */
   @Input()
   dotsConfig: DotsConfig | undefined;
+
   /**
    * Output to emit clicks on dots. The payload contains a number that represent
    * the index of the clicked dot.
    */
   @Output()
   clickDot: EventEmitter<number> = new EventEmitter<number>();
+
   /**
    * Object of type `DotsConfig` used in template.
    */
@@ -83,6 +90,7 @@ export class DotsComponent extends AccessibleComponent implements OnInit, OnChan
   constructor(private configService: ConfigService) {
     super();
   }
+
   /**
    * Method ´ngOnInit´ to build `configDots` applying a default value.
    * This is an Angular's lifecycle hook, so its called automatically by Angular itself.

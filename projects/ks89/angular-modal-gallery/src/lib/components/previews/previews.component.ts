@@ -49,7 +49,12 @@ import { LibConfig } from '../../model/lib-config.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PreviewsComponent extends AccessibleComponent implements OnInit, OnChanges {
-  @Input() id: number | undefined;
+  /**
+   * Unique id (>=0) of the current instance of this library. This is required when you are using
+   * the service to call modal gallery.
+   */
+  @Input()
+  id: number | undefined;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
@@ -61,16 +66,12 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    */
   @Input()
   images: InternalLibImage[] | undefined;
+
   /**
    * Output to emit the clicked preview. The payload contains the `ImageEvent` associated to the clicked preview.
    */
   @Output()
   clickPreview: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
-  // /**
-  //  * Output to emit the clicked arrow. The payload contains which arrow (left or right).
-  //  */
-  // @Output()
-  // clickArrow: EventEmitter<InteractionEvent> = new EventEmitter<InteractionEvent>();
 
   /**
    * Object of type `AccessibilityConfig` to init custom accessibility features.
@@ -104,12 +105,12 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
   /**
    * Start index of the input images used to display previews.
    */
-  // @ts-ignore
+    // @ts-ignore
   start: number;
   /**
    * End index of the input images used to display previews.
    */
-  // @ts-ignore
+    // @ts-ignore
   end: number;
 
   defaultPreviewSize: Size = DEFAULT_PREVIEW_SIZE;
@@ -153,7 +154,6 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
     return preview.id === this.currentImage.id;
   }
 
-  // TODO improve this method to simplify the sourcecode + remove duplicated codelines
   /**
    * Method ´ngOnChanges´ to update `previews` array.
    * Also, both `start` and `end` local variables will be updated accordingly.
@@ -191,6 +191,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * This will trigger the `clickpreview` output with the input preview as its payload.
    * @param InternalLibImage preview that triggered this method
    * @param KeyboardEvent | MouseEvent event payload
+   * @param Action action that triggered the source event or `Action.NORMAL` if not specified
    */
   onImageEvent(preview: InternalLibImage, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
     if (!this.id || !this.images) {
@@ -210,14 +211,13 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
    * It also emits an event to specify which arrow.
    * @param string direction of the navigation that can be either 'next' or 'prev'
    * @param KeyboardEvent | MouseEvent event payload
+   * @param Action action that triggered the source event or `Action.NORMAL` if not specified
    */
   onNavigationEvent(direction: string, event: KeyboardEvent | MouseEvent, action: Action = Action.NORMAL): void {
     const result: number = super.handleNavigationEvent(direction, event);
     if (result === NEXT) {
-      // this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_RIGHT, action: action });
       this.next();
     } else if (result === PREV) {
-      // this.clickArrow.emit(<InteractionEvent>{ source: 'modal-previews', payload: DIRECTION_LEFT, action: action });
       this.previous();
     }
   }

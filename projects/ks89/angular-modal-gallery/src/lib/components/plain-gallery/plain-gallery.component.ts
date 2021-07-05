@@ -49,7 +49,12 @@ import { LibConfig } from '../../model/lib-config.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlainGalleryComponent extends AccessibleComponent implements OnInit, OnChanges {
-  @Input() id: number | undefined;
+  /**
+   * Unique id (>=0) of the current instance of this library. This is required when you are using
+   * the service to call modal gallery.
+   */
+  @Input()
+  id: number | undefined;
 
   /**
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
@@ -66,6 +71,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    */
   @Input()
   config: LibConfig | undefined;
+
   /**
    * Output to emit an event when an image is changed.
    */
@@ -181,6 +187,12 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
     this.showModalGallery(index);
   }
 
+  /**
+   * Method called when you navigate between images.
+   * This will emit the show event with the image as payload.
+   * @param KeyboardEvent event that triggered the navigation
+   * @param Image img is the Image to show
+   */
   onNavigationEvent(event: KeyboardEvent, img: Image): void {
     const result: number = super.handleImageEvent(event);
     if (result === NEXT) {

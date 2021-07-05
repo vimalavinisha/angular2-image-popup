@@ -60,7 +60,12 @@ export interface InternalButtonConfig extends ButtonConfig {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpperButtonsComponent extends AccessibleComponent implements OnInit {
-  @Input() id: number | undefined;
+  /**
+   * Unique id (>=0) of the current instance of this library. This is required when you are using
+   * the service to call modal gallery.
+   */
+  @Input()
+  id: number | undefined;
   /**
    * Object of type `Image` that represent the visible image.
    */
@@ -97,11 +102,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    */
   @Output()
   fullscreen: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
-  // /**
-  //  * Output to emit clicks on rotate button. The payload contains a `ButtonEvent`.
-  //  */
-  // @Output()
-  // rotate: EventEmitter<ButtonEvent> = new EventEmitter<ButtonEvent>();
   /**
    * Output to emit clicks on all custom buttons. The payload contains a `ButtonEvent`.
    */
@@ -135,7 +135,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
    * Default buttons array for full configuration
    */
   private fullButtonsDefault: ButtonConfig[] = [
-    /*KS_DEFAULT_BTN_REFRESH, */
     KS_DEFAULT_BTN_FULL_SCREEN,
     KS_DEFAULT_BTN_DELETE,
     ...this.advancedButtonsDefault
@@ -204,9 +203,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
       galleryId: this.id
     };
     switch (button.type) {
-      // case ButtonType.REFRESH:
-      //   this.triggerOnMouseAndKeyboard(this.refresh, event, dataToEmit);
-      //   break;
       case ButtonType.DELETE:
         this.triggerOnMouseAndKeyboard(this.delete, event, dataToEmit);
         break;
@@ -228,9 +224,6 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
       case ButtonType.FULLSCREEN:
         this.triggerOnMouseAndKeyboard(this.fullscreen, event, dataToEmit);
         break;
-      // case ButtonType.ROTATE:
-      //   this.triggerOnMouseAndKeyboard(this.rotate, event, dataToEmit);
-      //   break;
       default:
         throw new Error(`Unknown button's type into ButtonConfig`);
     }
@@ -277,7 +270,7 @@ export class UpperButtonsComponent extends AccessibleComponent implements OnInit
 
   /**
    * Private method to validate custom buttons received as input.
-   * @param ButtonConfig[] buttons config array
+   * @param ButtonConfig[] buttons config array. [] by default.
    * @returns ButtonConfig[] the same input buttons config array
    * @throws an error is exists a button with an unknown type
    */

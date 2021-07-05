@@ -87,27 +87,27 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
    * the service to call modal gallery without open it manually.
    */
   @Input()
-  // @ts-ignore
+    // @ts-ignore
   id: number;
   /**
    * Object of type `InternalLibImage` that represent the visible image.
    */
   @Input()
-  // @ts-ignore
+    // @ts-ignore
   currentImage: InternalLibImage;
   /**
    * Array of `InternalLibImage` that represent the model of this library with all images,
    * thumbs and so on.
    */
   @Input()
-  // @ts-ignore
+    // @ts-ignore
   images: InternalLibImage[];
   /**
    * Boolean that it is true if the modal gallery is visible.
    * If yes, also this component should be visible.
    */
   @Input()
-  // @ts-ignore
+    // @ts-ignore
   isOpen: boolean;
 
   /**
@@ -196,7 +196,8 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
 
   // use public ChangeDetectorRef to be able to call it from spec files to trigger change detection
   // tslint:disable-next-line:no-any
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private ngZone: NgZone, public ref: ChangeDetectorRef, private configService: ConfigService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private ngZone: NgZone,
+              public ref: ChangeDetectorRef, private configService: ConfigService) {
     super();
   }
 
@@ -272,6 +273,9 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
     }
   }
 
+  /**
+   * This is an Angular's lifecycle hook, so its called automatically by Angular itself.
+   */
   ngAfterContentInit(): void {
     // interval doesn't play well with SSR and protractor,
     // so we should run it in the browser and outside Angular

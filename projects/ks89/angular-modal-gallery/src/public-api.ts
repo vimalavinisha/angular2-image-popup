@@ -58,13 +58,11 @@ export { InteractionEvent } from './lib/model/interaction-event.interface';
 
 export { KS_DEFAULT_ACCESSIBILITY_CONFIG } from './lib/components/accessibility-default';
 export {
-  // KS_DEFAULT_BTN_ROTATE,
   KS_DEFAULT_BTN_FULL_SCREEN,
   KS_DEFAULT_BTN_CLOSE,
   KS_DEFAULT_BTN_DELETE,
   KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
-  // KS_DEFAULT_BTN_REFRESH,
   KS_DEFAULT_SIZE
 } from './lib/components/upper-buttons/upper-buttons-default';
 

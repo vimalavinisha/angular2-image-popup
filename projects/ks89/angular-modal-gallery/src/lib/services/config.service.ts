@@ -120,7 +120,6 @@ export const DEFAULT_PREVIEW_CONFIG: PreviewConfig = {
   number: 3,
   arrows: true,
   clickable: true,
-  // alwaysCenter: false, // TODO still not implemented
   size: DEFAULT_PREVIEW_SIZE
 };
 
