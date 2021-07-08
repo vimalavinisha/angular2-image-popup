@@ -26,6 +26,8 @@ import 'hammerjs';
 import 'mousetrap';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import Spy = jasmine.Spy;
+
 import { DebugElement } from '@angular/core';
 
 import { AccessibilityConfig } from '../../model/accessibility.interface';
@@ -191,6 +193,8 @@ describe('ModalGalleryComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
+      const hasDataSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitHasData');
+
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
       comp.images = IMAGES;
@@ -201,13 +205,14 @@ describe('ModalGalleryComponent', () => {
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
-      console.log('modalGallery', modalGallery);
+      expect(hasDataSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call onCustomEmit`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
       const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+      const dialogRef: ModalGalleryConfig = fixture.debugElement.injector.get(DIALOG_DATA);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -218,6 +223,9 @@ describe('ModalGalleryComponent', () => {
       const element: DebugElement = fixture.debugElement;
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
+
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
 
       const EVENT: ButtonEvent = {
         button: {
@@ -228,6 +236,9 @@ describe('ModalGalleryComponent', () => {
         galleryId: GALLERY_ID
       };
       comp.onCustomEmit(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
     });
 
     // it(`should display modal gallery and call onFullScreen`, () => {
@@ -271,6 +282,9 @@ describe('ModalGalleryComponent', () => {
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
       const EVENT: ButtonEvent = {
         button: {
           type: ButtonType.DELETE
@@ -280,6 +294,9 @@ describe('ModalGalleryComponent', () => {
         galleryId: GALLERY_ID
       };
       comp.onDelete(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
     });
 
     // it(`should display modal gallery and call onNavigate`, () => {
@@ -323,6 +340,9 @@ describe('ModalGalleryComponent', () => {
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
       const EVENT: ButtonEvent = {
         button: {
           type: ButtonType.DOWNLOAD
@@ -332,6 +352,9 @@ describe('ModalGalleryComponent', () => {
         galleryId: GALLERY_ID
       };
       comp.onDownload(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call onCloseGalleryButton`, () => {
@@ -349,6 +372,9 @@ describe('ModalGalleryComponent', () => {
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
       const EVENT: ButtonEvent = {
         button: {
           type: ButtonType.CLOSE
@@ -358,6 +384,9 @@ describe('ModalGalleryComponent', () => {
         galleryId: GALLERY_ID
       };
       comp.onCloseGalleryButton(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call onCloseGallery`, () => {
@@ -375,12 +404,18 @@ describe('ModalGalleryComponent', () => {
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
       const EVENT: ImageModalEvent = {
         action: Action.NORMAL,
         galleryId: GALLERY_ID,
         result: true
       };
       comp.onCloseGallery(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call closeGallery`, () => {
@@ -398,7 +433,40 @@ describe('ModalGalleryComponent', () => {
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
+      const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
+      const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
+
       comp.closeGallery(Action.NORMAL, true, false);
+
+      expect(emitCloseSpy).toHaveBeenCalled();
+      expect(closeSpy).toHaveBeenCalled();
+    });
+
+    it(`should display modal gallery and call onChangeCurrentImage`, () => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+
+      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      const emitShowSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
+
+      const EVENT: ImageModalEvent = {
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID,
+        result: 1
+      };
+      comp.onChangeCurrentImage(EVENT);
+
+      expect(emitShowSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call onClickOutside`, () => {
