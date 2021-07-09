@@ -20,6 +20,12 @@ on:
   schedule:
     - cron: '38 16 * * 3'
 
+paths:
+  - projects
+paths-ignore:
+  - examples
+  - src
+
 jobs:
   analyze:
     name: Analyze
@@ -28,10 +34,6 @@ jobs:
       actions: read
       contents: read
       security-events: write
-
-    paths-ignore:
-      - examples
-      - src
 
     strategy:
       fail-fast: false
