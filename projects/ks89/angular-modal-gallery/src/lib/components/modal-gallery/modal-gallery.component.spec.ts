@@ -61,7 +61,6 @@ import { ButtonConfig, ButtonEvent, ButtonType } from '../../model/buttons-confi
 import { Action } from '../../model/action.enum';
 import { ImageModalEvent } from '../../model/image.class';
 import { CurrentImageConfig } from '../../model/current-image-config.interface';
-import { Image } from '@ks89/angular-modal-gallery';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -232,7 +231,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       const hasDataSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitHasData');
 
@@ -252,8 +250,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onCustomEmit`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
-      const dialogRef: ModalGalleryConfig = fixture.debugElement.injector.get(DIALOG_DATA);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -282,36 +278,33 @@ describe('ModalGalleryComponent', () => {
       expect(afterHookSpy).toHaveBeenCalled();
     });
 
-    // it(`should display modal gallery and call onFullScreen`, () => {
-    //   const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
-    //   const configService = fixture.debugElement.injector.get(ConfigService);
-    //   const keyboardService = fixture.debugElement.injector.get(KeyboardService);
-    //
-    //   configService.setConfig(GALLERY_ID, {accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
-    //   comp.id = GALLERY_ID;
-    //   comp.images = IMAGES;
-    //   comp.currentImage = IMAGES[0];
-    //   fixture.detectChanges();
-    //
-    //   const element: DebugElement = fixture.debugElement;
-    //   const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-    //   expect(modalGallery).not.toBeNull();
-    //
-    //   const EVENT: ButtonEvent = {
-    //     button: {
-    //       type: ButtonType.FULLSCREEN
-    //     } as ButtonConfig,
-    //     image: IMAGES[0] as InternalLibImage,
-    //     action: Action.NORMAL,
-    //     galleryId: GALLERY_ID
-    //   };
-    //   comp.onFullScreen(EVENT);
-    // });
+    it(`should display modal gallery and call onFullScreen`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+
+      configService.setConfig(GALLERY_ID, {accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      const EVENT: ButtonEvent = {
+        button: {
+          type: ButtonType.FULLSCREEN
+        } as ButtonConfig,
+        image: IMAGES[0] as InternalLibImage,
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID
+      };
+      comp.onFullScreen(EVENT);
+    });
 
     it(`should display modal gallery and call onDelete`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -343,7 +336,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onDelete with only 1 image`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -374,36 +366,37 @@ describe('ModalGalleryComponent', () => {
       expect(emitCloseSpy).toHaveBeenCalled();
     });
 
-    // it(`should display modal gallery and call onNavigate`, () => {
-    //   const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
-    //   const configService = fixture.debugElement.injector.get(ConfigService);
-    //   const keyboardService = fixture.debugElement.injector.get(KeyboardService);
-    //
-    //   configService.setConfig(GALLERY_ID, {accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
-    //   comp.id = GALLERY_ID;
-    //   comp.images = IMAGES;
-    //   comp.currentImage = IMAGES[0];
-    //   fixture.detectChanges();
-    //
-    //   const element: DebugElement = fixture.debugElement;
-    //   const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-    //   expect(modalGallery).not.toBeNull();
-    //
-    //   const EVENT: ButtonEvent = {
-    //     button: {
-    //       type: ButtonType.EXTURL
-    //     } as ButtonConfig,
-    //     image: IMAGES[0] as InternalLibImage,
-    //     action: Action.NORMAL,
-    //     galleryId: GALLERY_ID
-    //   };
-    //   comp.onNavigate(EVENT);
-    // });
+    it(`should display modal gallery and call onNavigate`, () => {
+      const configService = fixture.debugElement.injector.get(ConfigService);
+
+      configService.setConfig(GALLERY_ID, {accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      // replace updateLocationHref() method in component with an empty function
+      // to bypass window.location.href that causes test failures
+      spyOn(comp, 'updateLocationHref').and.callFake(() => {});
+
+      const EVENT: ButtonEvent = {
+        button: {
+          type: ButtonType.EXTURL
+        } as ButtonConfig,
+        image: IMAGES[0] as InternalLibImage,
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID
+      };
+      comp.onNavigate(EVENT);
+    });
 
     it(`should display modal gallery and call onDownload with downloadable = true`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
@@ -440,7 +433,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onDownload with downloadable = true and SafeResourceUrl img url as base64`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
       const sanitizer = fixture.debugElement.injector.get(DomSanitizer);
 
       const base64Image: SafeResourceUrl = sanitizer.bypassSecurityTrustResourceUrl(base64String);
@@ -507,7 +499,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onDownload with downloadable = true and custom downloadFileName`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
@@ -544,7 +535,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onCloseGalleryButton`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -576,7 +566,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onCloseGallery`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -606,7 +595,6 @@ describe('ModalGalleryComponent', () => {
       it(`should display modal gallery and call closeGallery. Test with isCalledByService = ${isCalledByService}`, () => {
         const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
         const configService = fixture.debugElement.injector.get(ConfigService);
-        const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
         configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
         comp.id = GALLERY_ID;
@@ -632,7 +620,6 @@ describe('ModalGalleryComponent', () => {
       it(`should display modal gallery and call onChangeCurrentImage with Image at index = ${index}`, () => {
         const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
         const configService = fixture.debugElement.injector.get(ConfigService);
-        const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
         configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
         comp.id = GALLERY_ID;
@@ -660,7 +647,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onClickOutside`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -682,9 +668,7 @@ describe('ModalGalleryComponent', () => {
     });
 
     it(`should display modal gallery and call onImageLoad`, () => {
-      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -706,9 +690,7 @@ describe('ModalGalleryComponent', () => {
     });
 
     it(`should display modal gallery and call onClickDot`, () => {
-      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -724,9 +706,7 @@ describe('ModalGalleryComponent', () => {
     });
 
     it(`should display modal gallery and call onClickPreview`, () => {
-      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -750,7 +730,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and updateImages via modalGalleryService`, () => {
       const modalGalleryService: ModalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService: ConfigService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService: KeyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -773,7 +752,6 @@ describe('ModalGalleryComponent', () => {
       it(`should display modal gallery and call onChangeCurrentImage without changing image, because index ${index} is out of bound.`, () => {
         const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
         const configService = fixture.debugElement.injector.get(ConfigService);
-        const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
         configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
         comp.id = GALLERY_ID;
@@ -801,7 +779,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onClickOutside, but enableCloseOutside is false`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -826,7 +803,6 @@ describe('ModalGalleryComponent', () => {
     it(`should display modal gallery and call onDownload with downloadable = false`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
       configService.setConfig(GALLERY_ID, {
         accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,

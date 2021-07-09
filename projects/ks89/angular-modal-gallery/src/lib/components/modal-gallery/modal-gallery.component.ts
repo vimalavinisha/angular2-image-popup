@@ -191,6 +191,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
 
     const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement && !doc.mozFullScreenElement && !doc.msFullscreenElement;
 
+    // TODO add .then to promises, for instance requestFullscreen() returns a Promise
     if (fullscreenDisabled) {
       if (docEl.requestFullscreen) {
         docEl.requestFullscreen();
@@ -269,12 +270,21 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
             this.modalGalleryService.emitButtonAfterHook(eventToEmit);
           }
         } else {
-          window.location.href = eventToEmit.image.modal.extUrl;
+          this.updateLocationHref(eventToEmit.image.modal.extUrl);
           // emit only in case of success
           this.modalGalleryService.emitButtonAfterHook(eventToEmit);
         }
       }
     }
+  }
+
+  /**
+   * This method is defined to be spied and replaced in unit testing with a fake method call.
+   * It must be public to be able to use jasmine spyOn method.
+   * @param newHref string new url
+   */
+  updateLocationHref(newHref: string) {
+    window.location.href = newHref;
   }
 
   /**
