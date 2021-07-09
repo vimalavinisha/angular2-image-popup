@@ -191,10 +191,10 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
    */
   private updateHeight(configBreakpointHeight: number): void {
     if (this.previewConfig && this.previewConfig.maxHeight) {
-      const heightNum: number = +this.previewConfig.maxHeight.replace('px', '').replace('%', '');
+      const heightNum: number = +this.previewConfig.maxHeight.replace('/px/g', '').replace('/%/g', '');
       this.previewMaxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     } else {
-      const heightNum: number = +DEFAULT_MAX_HEIGHT.replace('px', '').replace('%', '');
+      const heightNum: number = +DEFAULT_MAX_HEIGHT.replace('/px/g', '').replace('/%/g', '');
       this.previewMaxHeight = Math.min(configBreakpointHeight, heightNum) + 'px';
     }
     this.ref.markForCheck();
