@@ -56,10 +56,12 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 import { LoadingSpinnerComponent } from '../current-image/loading-spinner/loading-spinner.component';
 import { DescriptionDirective } from '../../directives/description.directive';
 import { KeyboardNavigationDirective } from '../../directives/keyboard-navigation.directive';
-import { By } from '@angular/platform-browser';
+import { By, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ButtonConfig, ButtonEvent, ButtonType } from '../../model/buttons-config.interface';
 import { Action } from '../../model/action.enum';
 import { ImageModalEvent } from '../../model/image.class';
+import { CurrentImageConfig } from '../../model/current-image-config.interface';
+import { Image } from '@ks89/angular-modal-gallery';
 
 let comp: ModalGalleryComponent;
 let fixture: ComponentFixture<ModalGalleryComponent>;
@@ -121,6 +123,45 @@ const IMAGES: InternalLibImage[] = [
     }
   )
 ];
+
+const IMAGES_CUSTOM_DOWNLOAD_FILENAME: InternalLibImage[] = [
+  new InternalLibImage(0, {
+    // modal
+    img: '../assets/images/gallery/img1.jpg',
+    extUrl: 'http://www.google.com',
+    downloadFileName: 'a.png'
+  }),
+  new InternalLibImage(1, {
+    // modal
+    img: '../assets/images/gallery/img2.png',
+    description: 'Description 2',
+    downloadFileName: 'b.png'
+  })
+];
+
+// example of a png converted into base64 using https://www.base64-image.de/ or other similar websites
+const base64String =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABN0lEQV' +
+  'R4nO3SQQ2AQBDAwAVlaMEhCkAV' +
+  'b2RcQmcU9NEZAAAAAOD/tvN675k5VoewxLOvLmAtA8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0C' +
+  'cAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4g' +
+  'wQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGSDOAHEGiDNAnAHiDBBngDgDxBkgzgBxBogzQJwB4gwQZ4A4A8QZIM4AcQaIM0CcAeIMEGeAOAPEGQAAAAAA4Pc+8asEoPPGq' +
+  'xUAAAAASUVORK5CYII';
+
+const base64RedString =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAY1BMVEX/AAD/////WVn/+vr/qan/Nzf/ERH/2tr/s7P/KSn/' +
+  '7+//vr7/0ND/W1v/6+v/m5v/4+P/U1P/HR3/o6P/rq7/g4P/k5P/t7f/dXX/SEj/zMz/ZWX/h4f/bm7/amr/np7/yMhDG/2oAAAC8ElEQVR4nO3dC3KqQBCF4WkHERHFRyKIL/' +
+  'a/ymDuVYMMFipTbbfnW8H5S4lQVGUMaWe4B3iHQvlQKB8K5UOhfCiUD4XyoVA+FJ7Myijd5dvBO9nmuzQqZ68X2mI9NO9suC7s84VxNuAO6GSQxU8VJvuQe3pn4T55uLDYcK9+' +
+  '0KZ4qDB574vPbej+HF2Fcc499km563p0FAbcQ18QdCi0B+6VLzk0fjtuC0dj7o0vGo/uF064B/agvFcYca/rRdReeOTe1pNjW6HkP6J1gbtQwzV4NnEVJtyrepU0C2M599ldhH' +
+  'GjcMq9qWfT28KUe1Hv0nrhnHuPB/Na4YJ7jgeLv4UZ9xovsmuhXXKP8WJpL4Ur7i2erC6Fun4Kr8Jz4Rf3Em++/hdKf+htN/5XqOuGtC75LfzmnuHR96nQ6v2SVl9TWxVq/pKevq' +
+  'aG1twjvFpXhTLeLz1rQMZyb/DMmhH3BM9GRudjxVVmtN51n62M1DdpXeVG2rveR22MxLe9jxgazfdsJ2Oj9en3THsfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
+  'AAAAAAAAAAAAAAgHba/+98+AFnI+g/30L/GSX6z5nRf1aQ/vOe9J/Zpf/cNf1n533A+Yf6z7DUfw6p/rNkVX9Nkw850/kDzuXWf7Y6ab37Xl0K7ZJ7ixdLeykknQ8YGV0LacG9xo' +
+  'MF/S2cc8/xYF4rpJR7T+9SqhfSlHtRz6Z0Wxjr+lEM40ahstvThJqFNOFe1aMJuQop4N7Vm4DchXTkXtaTI7UVUsS9rRcRtRequBZLuldII+mPw+MR3S8ke+De+JKDvQ1qFMr+kx' +
+  'o0cxyFFEt945bHjhpXYXV/I/HN8DBxtrgLiQpp74Y3RUtJW2H1Oe7l3IuHe/fnd7+wuh4zGe+lBpnr+utSWLHF+r0vyeG6aPw+PFT4a1ZG6S7fDt7JNt+lUTnrsL5LoWwolA+F8q' +
+  'FQPhTKh0L5UCgfCuVDoXw/lnQz7dm7GjoAAAAASUVORK5CYII=';
+const base64GreenString =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAgMAAADQNkYNAAAADFBMVEUAAAAy/ysy/ysy/ysyTcibAAAAA3RSTlMA2r/af0d' +
+  'WAAAAQUlEQVRo3u3YMREAMAzEsJAMyZJsMXy3XORdBFySJK3qxFXH1Y1DEARBEARBEARBEARBEARBkNmk436mvSRJ0o4eOKL2P81eyn8AAAAASUVORK5CYII=';
 
 class KeyboardServiceMock {
   init(config: LibConfig): Promise<void> {
@@ -299,6 +340,40 @@ describe('ModalGalleryComponent', () => {
       expect(afterHookSpy).toHaveBeenCalled();
     });
 
+    it(`should display modal gallery and call onDelete with only 1 image`, () => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+
+      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+      comp.id = GALLERY_ID;
+      comp.images = [IMAGES[0]]; // only 1 image
+      comp.currentImage = IMAGES[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+      const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
+
+      const EVENT: ButtonEvent = {
+        button: {
+          type: ButtonType.DELETE
+        } as ButtonConfig,
+        image: IMAGES[0] as InternalLibImage,
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID
+      };
+      comp.onDelete(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
+      expect(emitCloseSpy).toHaveBeenCalled();
+    });
+
     // it(`should display modal gallery and call onNavigate`, () => {
     //   const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
     //   const configService = fixture.debugElement.injector.get(ConfigService);
@@ -325,12 +400,17 @@ describe('ModalGalleryComponent', () => {
     //   comp.onNavigate(EVENT);
     // });
 
-    it(`should display modal gallery and call onDownload`, () => {
+    it(`should display modal gallery and call onDownload with downloadable = true`, () => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
       const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
-      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+      configService.setConfig(GALLERY_ID, {
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: {
+          downloadable: true
+        } as CurrentImageConfig
+      });
       comp.id = GALLERY_ID;
       comp.images = IMAGES;
       comp.currentImage = IMAGES[0];
@@ -348,6 +428,110 @@ describe('ModalGalleryComponent', () => {
           type: ButtonType.DOWNLOAD
         } as ButtonConfig,
         image: IMAGES[0] as InternalLibImage,
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID
+      };
+      comp.onDownload(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
+    });
+
+    it(`should display modal gallery and call onDownload with downloadable = true and SafeResourceUrl img url as base64`, () => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+      const sanitizer = fixture.debugElement.injector.get(DomSanitizer);
+
+      const base64Image: SafeResourceUrl = sanitizer.bypassSecurityTrustResourceUrl(base64String);
+      const base64RedImage: SafeResourceUrl = sanitizer.bypassSecurityTrustResourceUrl(base64RedString);
+      const base64GreenImage: SafeResourceUrl = sanitizer.bypassSecurityTrustResourceUrl(base64GreenString);
+
+      const imagesBase64: InternalLibImage[] = [
+        new InternalLibImage(0, {
+          img: base64Image,
+          extUrl: 'http://www.google.com'
+        }),
+        new InternalLibImage(1, {
+          img: base64GreenImage,
+          description: 'Description 2'
+        }),
+        new InternalLibImage(
+          2,
+          {
+            img: base64RedImage,
+            description: 'Description 3',
+            extUrl: 'http://www.google.com'
+          },
+          {
+            img: base64RedImage,
+            title: 'custom title 2',
+            alt: 'custom alt 2',
+            ariaLabel: 'arial label 2'
+          }
+        )
+      ];
+
+      configService.setConfig(GALLERY_ID, {
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: {
+          downloadable: true
+        } as CurrentImageConfig
+      });
+      comp.id = GALLERY_ID;
+      comp.images = imagesBase64;
+      comp.currentImage = imagesBase64[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
+      const EVENT: ButtonEvent = {
+        button: {
+          type: ButtonType.DOWNLOAD
+        } as ButtonConfig,
+        image: imagesBase64[0] as InternalLibImage,
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID
+      };
+      comp.onDownload(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
+    });
+
+    it(`should display modal gallery and call onDownload with downloadable = true and custom downloadFileName`, () => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+
+      configService.setConfig(GALLERY_ID, {
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: {
+          downloadable: true
+        } as CurrentImageConfig
+      });
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES_CUSTOM_DOWNLOAD_FILENAME;
+      comp.currentImage = IMAGES_CUSTOM_DOWNLOAD_FILENAME[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
+      const EVENT: ButtonEvent = {
+        button: {
+          type: ButtonType.DOWNLOAD
+        } as ButtonConfig,
+        image: IMAGES_CUSTOM_DOWNLOAD_FILENAME[0] as InternalLibImage,
         action: Action.NORMAL,
         galleryId: GALLERY_ID
       };
@@ -418,55 +602,59 @@ describe('ModalGalleryComponent', () => {
       expect(afterHookSpy).toHaveBeenCalled();
     });
 
-    it(`should display modal gallery and call closeGallery`, () => {
-      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+    [true, false].forEach(isCalledByService => {
+      it(`should display modal gallery and call closeGallery. Test with isCalledByService = ${isCalledByService}`, () => {
+        const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
-      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
-      comp.id = GALLERY_ID;
-      comp.images = IMAGES;
-      comp.currentImage = IMAGES[0];
-      fixture.detectChanges();
+        configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+        comp.id = GALLERY_ID;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[0];
+        fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+        const element: DebugElement = fixture.debugElement;
+        const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+        expect(modalGallery).not.toBeNull();
 
-      const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
-      const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
+        const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
+        const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
 
-      comp.closeGallery(Action.NORMAL, true, false);
+        comp.closeGallery(Action.NORMAL, true, isCalledByService);
 
-      expect(emitCloseSpy).toHaveBeenCalled();
-      expect(closeSpy).toHaveBeenCalled();
+        expect(emitCloseSpy).toHaveBeenCalled();
+        expect(closeSpy).toHaveBeenCalled();
+      });
     });
 
-    it(`should display modal gallery and call onChangeCurrentImage`, () => {
-      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+    [0, 1, IMAGES.length - 1].forEach(index => {
+      it(`should display modal gallery and call onChangeCurrentImage with Image at index = ${index}`, () => {
+        const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        const keyboardService = fixture.debugElement.injector.get(KeyboardService);
 
-      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
-      comp.id = GALLERY_ID;
-      comp.images = IMAGES;
-      comp.currentImage = IMAGES[0];
-      fixture.detectChanges();
+        configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+        comp.id = GALLERY_ID;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[0];
+        fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+        const element: DebugElement = fixture.debugElement;
+        const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+        expect(modalGallery).not.toBeNull();
 
-      const emitShowSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
+        const emitShowSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
 
-      const EVENT: ImageModalEvent = {
-        action: Action.NORMAL,
-        galleryId: GALLERY_ID,
-        result: 1
-      };
-      comp.onChangeCurrentImage(EVENT);
+        const EVENT: ImageModalEvent = {
+          action: Action.NORMAL,
+          galleryId: GALLERY_ID,
+          result: index
+        };
+        comp.onChangeCurrentImage(EVENT);
 
-      expect(emitShowSpy).toHaveBeenCalled();
+        expect(emitShowSpy).toHaveBeenCalled();
+      });
     });
 
     it(`should display modal gallery and call onClickOutside`, () => {
@@ -480,11 +668,17 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
+      const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
+      const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
+
       const element: DebugElement = fixture.debugElement;
       const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
       expect(modalGallery).not.toBeNull();
 
       comp.onClickOutside(true);
+
+      expect(emitCloseSpy).toHaveBeenCalled();
+      expect(closeSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call onImageLoad`, () => {
@@ -570,6 +764,100 @@ describe('ModalGalleryComponent', () => {
 
       // change IMAGES array pushing a new Image (equals to the first one)
       modalGalleryService.updateModalImages([...IMAGES, IMAGES[0]]);
+    });
+  });
+
+  describe('---NO---', () => {
+
+    [-1, IMAGES.length + 1].forEach(index => {
+      it(`should display modal gallery and call onChangeCurrentImage without changing image, because index ${index} is out of bound.`, () => {
+        const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+        const configService = fixture.debugElement.injector.get(ConfigService);
+        const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+
+        configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+        comp.id = GALLERY_ID;
+        comp.images = IMAGES;
+        comp.currentImage = IMAGES[0];
+        fixture.detectChanges();
+
+        const element: DebugElement = fixture.debugElement;
+        const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+        expect(modalGallery).not.toBeNull();
+
+        const emitShowSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
+
+        const EVENT: ImageModalEvent = {
+          action: Action.NORMAL,
+          galleryId: GALLERY_ID,
+          result: index
+        };
+        comp.onChangeCurrentImage(EVENT);
+
+        expect(emitShowSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    it(`should display modal gallery and call onClickOutside, but enableCloseOutside is false`, () => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+
+      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      comp.enableCloseOutside = false;
+      fixture.detectChanges();
+
+      const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
+      const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      comp.onClickOutside(true);
+
+      expect(emitCloseSpy).not.toHaveBeenCalled();
+      expect(closeSpy).not.toHaveBeenCalled();
+    });
+
+    it(`should display modal gallery and call onDownload with downloadable = false`, () => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+      const keyboardService = fixture.debugElement.injector.get(KeyboardService);
+
+      configService.setConfig(GALLERY_ID, {
+        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
+        currentImageConfig: {
+          downloadable: false
+        } as CurrentImageConfig
+      });
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[0];
+      fixture.detectChanges();
+
+      const element: DebugElement = fixture.debugElement;
+      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+      expect(modalGallery).not.toBeNull();
+
+      const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
+      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
+
+      const EVENT: ButtonEvent = {
+        button: {
+          type: ButtonType.DOWNLOAD
+        } as ButtonConfig,
+        image: IMAGES[0] as InternalLibImage,
+        action: Action.NORMAL,
+        galleryId: GALLERY_ID
+      };
+      comp.onDownload(EVENT);
+
+      expect(beforeHookSpy).toHaveBeenCalled();
+      expect(afterHookSpy).toHaveBeenCalled();
     });
   });
 });
