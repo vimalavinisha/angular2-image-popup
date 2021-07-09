@@ -12,7 +12,7 @@ jobs:
 
   angular-modal-gallery:
     name: "angular-modal-gallery"
-    timeout-minutes: 10
+    timeout-minutes: 50
 
     runs-on: ubuntu-latest
 
