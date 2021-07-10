@@ -8,7 +8,7 @@
   <!-- Workaround to support 2 ng-content in the same template in 2 ngIf (https://github.com/angular/angular/issues/22972) -->
   <ng-template #content><ng-content></ng-content></ng-template>
 
-  <figure class="current-figure"
+  <figure class="current-figure" *ngIf="currentImage && currentImage.modal"
           ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
                                 height: ''}">
 

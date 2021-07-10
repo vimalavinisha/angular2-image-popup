@@ -29,7 +29,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselExampleComponent } from './carousel/carousel.component';
-import { CarouselIe11ExampleComponent } from './carousel-ie11/carousel-ie11.component';
 import { PlainGalleryExampleComponent } from './plain-gallery/plain-gallery.component';
 import { ModalGalleryExampleComponent } from './modal-gallery/modal-gallery.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -54,7 +53,6 @@ dom.watch(); // Kicks off the process of finding <i> tags and replacing with <sv
   declarations: [
     AppComponent,
     CarouselExampleComponent,
-    CarouselIe11ExampleComponent,
     PlainGalleryExampleComponent,
     ModalGalleryExampleComponent,
     NavbarComponent,

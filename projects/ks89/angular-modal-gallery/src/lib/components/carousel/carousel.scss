@@ -88,14 +88,6 @@ $figcaption-right: 0;
       display: block;
     }
 
-    > #current-image-legacy {
-      // max width is applied via Angular
-      width: 100%;
-      // max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
     > figcaption {
       padding: $figcaption-padding;
       position: $figcaption-position;

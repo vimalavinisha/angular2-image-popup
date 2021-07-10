@@ -30,7 +30,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DialogOverviewExampleDialog } from './app.component';
 import { CarouselExampleComponent } from './carousel/carousel.component';
-import { CarouselIe11ExampleComponent } from './carousel-ie11/carousel-ie11.component';
 import { PlainGalleryExampleComponent } from './plain-gallery/plain-gallery.component';
 import { ModalGalleryExampleComponent } from './modal-gallery/modal-gallery.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -62,7 +61,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   declarations: [
     AppComponent,
     CarouselExampleComponent,
-    CarouselIe11ExampleComponent,
     PlainGalleryExampleComponent,
     ModalGalleryExampleComponent,
     NavbarComponent,
