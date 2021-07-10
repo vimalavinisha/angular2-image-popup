@@ -252,9 +252,7 @@ Check `CONTRIBUTING.md` in this repository.
 To understand how to contribute to an open source project, [HERE](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) you can find useful information.
 
 When you create a pull request, please, format your code to be consistent with the existing code. I suggest to use [WebStorm](https://www.jetbrains.com/webstorm/) as IDE and when you commit don't use a third party software, but the official command line `git`.
-In this way, [prettier](https://prettier.io/) will run using my configuration, and it will auto-format the code. If it will fail, add files with `git add .` again and retry.
-
-Also, if you want to generate the `internal library documentation`, run `npm run docs` and open `./docs/typedoc/index.html`.
+In this way, [prettier](https://prettier.io/) will run using my configuration, and it will auto-format the code. If it fails, add files with `git add .` again and retry.
 
 <br>
 
