@@ -1,3 +1,68 @@
+# 8.0.0
+
+### Features
+
+- Migrate to angular/cdk to fix all issues with angular/material **(Breaking Change)** (fixes #137, #111, #95)
+- Split plain-gallery and modal-gallery decoupling those components. Instead, define new APIs to open modal-gallery as a service **(Breaking Change)**
+- upgrade to Angular 12 and angular-cli 12
+- Force Angular >= 12 as minimum supported version. **(Breaking Change)**.
+- remove support to both Angular 6, 7, 8, 9, 10 and 11 **(Breaking Change)**
+- remove Module.forRoot() **(Breaking Change)**
+- move keyboard configuration into libconfig (permits different configuration for every instance of the library). **(Breaking Change)**
+- use IVY as recommended by Angular team ('partial' in tsconfig)
+- Add ability to set fallback image #194  **(Breaking Change)**
+- Add a way to disable titles if requested by the user #179 **(Breaking Change)**
+- remove size from plainGallery Image interface #206 **(Breaking Change)** - reported by @studiocuboweb
+- add new param to previewConfig to display previews on small screens #213 (pull request #214 by vlafranca)
+- Change the background color of modal gallery #225 (requested by @danurasenan here)
+- Carousel has a new input "[disableSsrWorkaround]="true"" to use modals in carousels with SystemJS **(Breaking Change)**.
+  Also, every time you need to open modal gallery, you must pass to LibConfig this code:
+  ```
+  keyboardServiceConfig: {
+      shortcuts: ['ctrl+s', 'meta+s'],
+      disableSsrWorkaround: true
+    }
+  ```
+- new modal-gallery CSS classes used to set the backdrop **(BREAKING CHANGES)**
+
+    ```
+    .ks-modal-gallery-backdrop {
+      background: #000 !important;;
+      opacity: 0.85 !important;;
+    }
+    
+    .ks-modal-gallery-panel {
+      z-index: 90000 !important;
+    }
+    ```
+
+### CI
+- remove AppVeyor
+- remove CircleCi
+- remove Travis Ci
+- add Github Actions Ci
+- add Github CodeQL
+- remove npm's codeclimate coverage reporter to use the new version
+- add Security Policy in SECURITY.MD 
+
+### Tests
+- update tests to the new APIs and components
+
+### Examples
+- upgrade all examples with Angular 12
+- remove SystemJS example
+- create new stackblitz example
+
+### Docs
+- new doc website [HERE](https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/)
+
+## DEPRECATION WARNINGS
+
+**Attention! Angular support for Microsoft's Internet Explorer 11 (IE11) is deprecated and will be removed in Angular v13.**
+**For the same reason, from angular-modal-gallery 8.0.0, IE11 has been deprecated.**
+**At the moment it's still working, but it will be removed in angular-modal-gallery 9.0.0.**
+
+
 # 8.0.0-rc.1
 ### Features
 - upgrade project to Angular 12. This is the minimum required version from now. **BREAKING CHANGE**
