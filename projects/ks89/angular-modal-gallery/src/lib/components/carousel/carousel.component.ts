@@ -62,7 +62,6 @@ import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
 import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
 import { ConfigService } from '../../services/config.service';
 import { ModalGalleryService } from '../modal-gallery/modal-gallery.service';
@@ -308,9 +307,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     private ngZone: NgZone,
     private modalGalleryService: ModalGalleryService,
     private configService: ConfigService,
-    private ref: ChangeDetectorRef,
-    // sanitizer is used only to sanitize style before add it to background property when legacyIE11Mode is enabled
-    private sanitizer: DomSanitizer
+    private ref: ChangeDetectorRef
   ) {
     super();
   }
@@ -427,23 +424,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
         this.start$.next();
       });
     }
-  }
-
-  /**
-   * Method used in template to sanitize an url when you need legacyIE11Mode.
-   * In this way you can set an url as background of a div.
-   * @param unsafeStyle is a string and represents the url to sanitize.
-   * @param unsafeStyleFallback is a string and represents the fallback url to sanitize.
-   * @returns a SafeStyle object that can be used in template without problems.
-   */
-  sanitizeUrlBgStyle(unsafeStyle: string, unsafeStyleFallback: string): SafeStyle {
-    // Method used only to sanitize background-image style before add it to background property when legacyIE11Mode is enabled
-    let bg: string = 'url(' + unsafeStyle + ')';
-    if (!!unsafeStyleFallback) {
-      // if a fallback image is defined, append it. In this way, it will be used by the browser as fallback.
-      bg += ', ' + 'url(' + unsafeStyleFallback + ')';
-    }
-    return this.sanitizer.bypassSecurityTrustStyle(bg);
   }
 
   /**

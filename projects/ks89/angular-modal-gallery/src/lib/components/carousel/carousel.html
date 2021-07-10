@@ -8,9 +8,7 @@
   <!-- Workaround to support 2 ng-content in the same template in 2 ngIf (https://github.com/angular/angular/issues/22972) -->
   <ng-template #content><ng-content></ng-content></ng-template>
 
-  <!-- Normal figure used by all browsers except for IE11, because
-    it doesn't support object-fit cover.-->
-  <figure class="current-figure" *ngIf="configCarousel?.legacyIE11Mode === false; else legacyMode"
+  <figure class="current-figure"
           ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
                                 height: ''}">
 
@@ -62,66 +60,6 @@
     </div>
 
   </figure>
-
-  <!-- Legacy mode to support img cover also on IE11,
-    because it doesn't support natively object-fit cover. -->
-  <ng-template #legacyMode>
-    <div class="current-figure"
-         ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
-                               height: ''}">
-
-      <a class="nav-left" *ngIf="configCarousel?.showArrows"
-         [attr.aria-label]="configAccessibility.carouselPrevImageAriaLabel"
-         [tabindex]="isLastImage && !infinite ? -1 : 0" role="button"
-         (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)">
-        <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
-             aria-hidden="true"
-             [title]="configAccessibility.carouselPrevImageTitle"></div>
-      </a>
-
-      <ng-container *ngTemplateOutlet="content"></ng-container>
-
-      <div id="current-image-legacy"
-           [style.background-color]="'transparent'"
-           [style.background-image]="sanitizeUrlBgStyle(currentImage.modal.img + '', currentImage.modal.fallbackImg + '')"
-           [style.background-position]="'center center'"
-           [style.background-size]="'cover'"
-           [style.background-repeat]="'no-repeat'"
-           [style.background-attachment]="'scroll'"
-           ksSize [sizeConfig]="{width: '100%',
-                                 height: configCarousel?.maxHeight}"
-           ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth}"
-           [attr.aria-label]="currentImage.modal.ariaLabel"
-           [title]="(currentImage.modal.title || currentImage.modal.title === '') ? currentImage.modal.title : getTitleToDisplay()"
-           [tabIndex]="0" role="img"
-           (click)="onClickCurrentImage()"
-           (swipeleft)="swipe($event.type)"
-           (swiperight)="swipe($event.type)">
-
-        <div *ngIf="getDescriptionToDisplay() !== ''"
-             class="description-ie11"
-             ksDescription [description]="configCarouselImage?.description"
-             [innerHTML]="getDescriptionToDisplay()"></div>
-      </div>
-
-      <a class="nav-right" *ngIf="configCarousel?.showArrows"
-         [attr.aria-label]="configAccessibility.carouselNextImageAriaLabel"
-         [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
-         (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)">
-        <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
-             aria-hidden="true"
-             [title]="configAccessibility.carouselNextImageTitle"></div>
-      </a>
-
-      <div id="dots-ie11">
-        <ks-dots [id]="id"
-                 [currentImage]="currentImage"
-                 [images]="images"
-                 (clickDot)="onClickDot($event)"></ks-dots>
-      </div>
-
-    </div>
-  </ng-template>
 
 </main>
 

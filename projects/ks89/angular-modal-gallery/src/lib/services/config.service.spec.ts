@@ -631,8 +631,7 @@ describe('ConfigService', () => {
                 showArrows: false,
                 objectFit: 'cover',
                 keyboardEnable: false,
-                modalGalleryEnable: false,
-                legacyIE11Mode: true
+                modalGalleryEnable: false
               } as CarouselConfig
             };
             service.setConfig(1, inputConfig);

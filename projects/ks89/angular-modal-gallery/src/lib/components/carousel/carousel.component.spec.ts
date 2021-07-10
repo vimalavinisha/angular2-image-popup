@@ -196,8 +196,7 @@ const DEFAULT_CAROUSEL_CONFIG: CarouselConfig = {
   showArrows: true,
   objectFit: 'cover',
   keyboardEnable: true,
-  modalGalleryEnable: false,
-  legacyIE11Mode: false
+  modalGalleryEnable: false
 };
 
 function containsClasses(actualClasses: string, expectedClasses: string): boolean {
@@ -297,53 +296,6 @@ function checkCurrentImage(currentImage: Image, val: TestModel, withDots: boolea
         // expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
       } else {
         // TODO tests aren't restarting from image 0 so I have to admit both active and inactive dots
-        expect(containsClasses(dot.attributes.class as string, 'inside dot') ||
-          containsClasses(dot.attributes.class as string, 'inside dot active')).toBeTrue();
-        // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
-      }
-      expect(dot.attributes['aria-label']).toBe(accessibilityConfig.dotAriaLabel + ' ' + (index + 1));
-    });
-  }
-}
-
-function checkCurrentImageIe11Legacy(currentImage: Image, val: TestModel, withDots: boolean = true, withArrows: boolean = true,
-                                     accessibilityConfig: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG): void  {
-  const element: DebugElement = fixture.debugElement;
-  const currentFigure: DebugElement = element.query(By.css('div.current-figure'));
-  expect(currentFigure.name).toBe('div');
-  const currentImageElement: DebugElement = currentFigure.children[withArrows ? 1 : 0]; // 0 and 2 are the arrows
-  expect(currentImageElement.name).toBe('div');
-  expect(currentImageElement.attributes.id).toBe('current-image-legacy');
-  expect(currentImageElement.attributes.role).toBe('img');
-  expect(currentImageElement.styles['background-color']).toBe('transparent');
-  expect(currentImageElement.styles['background-image']).toBe(`url("${currentImage.modal.img}"), url("undefined")`);
-  expect(currentImageElement.styles['background-position']).toBe('center center');
-  expect(currentImageElement.styles['background-size']).toBe('cover');
-  expect(currentImageElement.styles['background-repeat']).toBe('no-repeat');
-  expect(currentImageElement.styles['background-attachment']).toBe('scroll');
-  expect(currentImageElement.properties.title).toBe(val.currentImgTitle);
-  expect(currentImageElement.properties.tabIndex).toBe(0);
-
-  if (withDots) {
-    const dotsMainContainer: DebugElement = element.query(By.css('div#dots-ie11'));
-    expect(dotsMainContainer.name).toBe('div');
-    const dotsContainer: DebugElement = element.query(By.css('nav.dots-container'));
-    expect(dotsContainer.name).toBe('nav');
-    expect(dotsContainer.attributes['aria-label']).toBe(accessibilityConfig.dotsContainerAriaLabel);
-    expect(dotsContainer.properties.title).toBe(accessibilityConfig.dotsContainerTitle);
-    const dots: DebugElement[] = dotsContainer.children;
-    expect(dots.length).toBe(IMAGES.length);
-
-    const activeDotIndex = 0;
-    dots.forEach((dot: DebugElement, index: number) => {
-      expect(dot.name).toBe('div');
-      expect(dot.attributes.role).toBe('navigation');
-      expect(dot.properties.tabIndex).toBe(0);
-      if (index === activeDotIndex) {
-        // I don't know why, but with dot.attributes.class I can't see 'active'. In this way it's working!
-        // TODO fix this because is not working as expected. This line is ok, but tests aren't restarting from image 0
-        // expect(dot.classes).toEqual({'inside': true, 'dot': true, 'active': true});
-      } else {
         expect(containsClasses(dot.attributes.class as string, 'inside dot') ||
           containsClasses(dot.attributes.class as string, 'inside dot active')).toBeTrue();
         // or like above: expect(dot.classes).toEqual({'inside': true, 'dot': true});
@@ -579,36 +531,6 @@ describe('CarouselComponent', () => {
 
       checkMainContainer();
       checkCurrentImage(IMAGES[0], TEST_MODEL[0], false, false);
-
-      discardPeriodicTasks();
-    }));
-
-    it(`should display carousel with legacyIe11Mode enabled and auto-navigate.`, fakeAsync(() => {
-      comp.id = GALLERY_ID;
-      comp.images = IMAGES;
-      comp.infinite = false;
-      comp.carouselConfig = Object.assign({}, DEFAULT_CAROUSEL_CONFIG, {legacyIE11Mode: true});
-      comp.ngOnInit();
-      fixture.detectChanges();
-
-      const defaultInterval = 5000;
-
-      TEST_MODEL.forEach((val: TestModel, index: number) => {
-        checkMainContainer();
-        checkCurrentImageIe11Legacy(IMAGES[index], val);
-        // checkArrows(index === 0, index === 6);
-        tick(defaultInterval + 100);
-        flush();
-        fixture.detectChanges();
-      });
-
-      // infinite sliding is disabled, so after the next interval, current image must be still the last one
-      checkMainContainer();
-      checkCurrentImageIe11Legacy(IMAGES[6], TEST_MODEL[6]);
-      // checkArrows(false, true);
-      tick(defaultInterval + 100);
-      flush();
-      fixture.detectChanges();
 
       discardPeriodicTasks();
     }));

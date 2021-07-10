@@ -468,7 +468,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
 
   /**
    * Method to download the current image, only if `downloadable` is true.
-   * It contains also a logic to enable downloading features also for IE11.
    * @private
    */
   private downloadImage(): void {
@@ -484,15 +483,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     if (currentImageConfig && !currentImageConfig.downloadable) {
       return;
     }
-    // If IE11 or Microsoft Edge use msSaveBlob(...)
-    if (this.isIEorEdge()) {
-      // I cannot use fetch API because IE11 doesn't support it,
-      // so I have to switch to XMLHttpRequest
-      this.downloadImageOnlyIEorEdge();
-    } else {
-      // for all other browsers
-      this.downloadImageAllBrowsers();
-    }
+    this.downloadImageAllBrowsers();
   }
 
   /**
@@ -521,7 +512,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Private method to download the current image for all browsers except for IE11.
+   * Private method to download the current image for all browsers.
    * @private
    */
   private downloadImageAllBrowsers(): void {
@@ -549,24 +540,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
-
-  /**
-   * Private method to download the current image only for IE11 using
-   * custom javascript's methods available only on IE.
-   * @private
-   */
-  private downloadImageOnlyIEorEdge(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const req = new XMLHttpRequest();
-      req.open('GET', this.currentImage.modal.img as string, true);
-      req.responseType = 'arraybuffer';
-      req.onload = event => {
-        const blob = new Blob([req.response], { type: 'image/png' });
-        window.navigator.msSaveBlob(blob, this.getFileName(this.currentImage));
-      };
-      req.send();
-    }
   }
 
   /**
@@ -629,25 +602,5 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
         this.modalGalleryService.emitLastImage(new ImageModalEvent(this.id, action, true));
         break;
     }
-  }
-
-  /**
-   * Private method to check if this library is running on
-   * Microsoft browsers or not (i.e. it detects both IE11 and Edge)
-   * supporting also Server-Side Rendering.
-   * Inspired by https://msdn.microsoft.com/it-it/library/hh779016(v=vs.85).aspx
-   * @returns boolean true if IE11 or Edge, false otherwise
-   * @private
-   */
-  private isIEorEdge(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      // if both Blob constructor and msSaveOrOpenBlob are supported by the current browser
-      return !!window.Blob && !!window.navigator.msSaveOrOpenBlob;
-    }
-    if (isPlatformServer(this.platformId)) {
-      // server only
-      return true;
-    }
-    return false;
   }
 }

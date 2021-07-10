@@ -232,27 +232,6 @@ function checkPreview(previewElement: DebugElement, previewImage: InternalLibIma
   expect(previewElement.properties.tabIndex).toBe(0);
 }
 
-function checkPreviewIe11Legacy(previewElement: DebugElement, previewImage: InternalLibImage, isActive: boolean, width: string = DEFAULT_WIDTH, height: string = DEFAULT_HEIGHT): void {
-  const currentPlainImg: PlainImage | undefined = previewImage.plain;
-  const currentModalImg: ModalImage = previewImage.modal;
-  const imgUrl: string | SafeResourceUrl = (currentPlainImg && currentPlainImg.img) ? currentPlainImg.img : currentModalImg.img;
-  expect(previewElement.name).toBe('div');
-  expect(previewElement.attributes.role).toBe('img');
-  expect(previewElement.attributes['aria-label']).toBe(getAriaLabel(previewImage));
-  expect(previewElement.styles.width).toBe(width);
-  // FIXME why is not working?
-  // expect(previewElement.styles.height).toBe(height);
-  expect(containsClasses(previewElement.properties.className, 'inside preview-ie11-image' + (isActive ? ' active' : ''))).toBeTrue();
-  expect(previewElement.styles['background-color']).toBe('transparent');
-  expect(previewElement.styles['background-image']).toBe(`url("${imgUrl}")`);
-  expect(previewElement.styles['background-position']).toBe('center center');
-  expect(previewElement.styles['background-size']).toBe('100% 400px');
-  expect(previewElement.styles['background-repeat']).toBe('no-repeat');
-  expect(previewElement.styles['background-attachment']).toBe('scroll');
-  expect(previewElement.properties.title).toBe(getTitle(previewImage));
-  expect(previewElement.properties.tabIndex).toBe(0);
-}
-
 function initTestBed(): void {
   TestBed.configureTestingModule({
     declarations: [CarouselPreviewsComponent, SizeDirective, FallbackImageDirective]
@@ -279,8 +258,7 @@ const CAROUSEL_CONFIG_DEFAULT: CarouselConfig = {
   showArrows: true,
   objectFit: 'cover',
   keyboardEnable: true,
-  modalGalleryEnable: false,
-  legacyIE11Mode: false
+  modalGalleryEnable: false
 } as CarouselConfig;
 
 const DEFAULT_BREAKPOINTS: BreakpointsConfig = {xSmall: 100, small: 100, medium: 150, large: 200, xLarge: 200};
@@ -799,44 +777,6 @@ describe('CarouselPreviewsComponent', () => {
         expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
         const previews: DebugElement[] = element.queryAll(By.css('img'));
         expect(previews.length).toBe(numOfPreviews);
-      });
-    });
-
-    it(`should display previews (first one is active) based of input images with ie11LegacyMode enabled`, () => {
-      const initialActiveImage = 0;
-      const numOfPreviews: number = DEFAULT_PREVIEW_CONFIG.number as number;
-      const LEGACY_MODE_CAROUSEL_CONFIG = Object.assign({}, CAROUSEL_CONFIG_DEFAULT, {legacyIE11Mode: true});
-      const configService = fixture.debugElement.injector.get(ConfigService);
-      configService.setConfig(GALLERY_ID, {
-        carouselPreviewsConfig: DEFAULT_PREVIEW_CONFIG,
-        accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG,
-        carouselConfig: LEGACY_MODE_CAROUSEL_CONFIG
-      });
-      comp.id = GALLERY_ID;
-      comp.currentImage = IMAGES[initialActiveImage];
-      comp.images = IMAGES;
-      fixture.detectChanges();
-
-      expect(comp.start).toBe(initialActiveImage);
-      expect(comp.end).toBe(numOfPreviews);
-      expect(comp.previews).toEqual(IMAGES.slice(initialActiveImage, numOfPreviews));
-
-      const element: DebugElement = fixture.debugElement;
-
-      const arrows: DebugElement[] = element.queryAll(By.css('a'));
-      checkArrows(arrows, true, false);
-
-      const previewsContainer: DebugElement = element.query(By.css('nav.previews-container'));
-      expect(previewsContainer.name).toBe('nav');
-      expect(previewsContainer.attributes['aria-label']).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerAriaLabel);
-      expect(previewsContainer.properties.title).toBe(KS_DEFAULT_ACCESSIBILITY_CONFIG.previewsContainerTitle);
-
-      const previews: DebugElement[] = element.queryAll(By.directive(SizeDirective));
-      expect(previews.length).toBe(numOfPreviews);
-
-      const previewImages: InternalLibImage[] = IMAGES.slice(initialActiveImage, numOfPreviews);
-      previews.forEach((preview: DebugElement, i: number) => {
-        checkPreviewIe11Legacy(preview, previewImages[i], i === initialActiveImage, DEFAULT_WIDTH, DEFAULT_HEIGHT);
       });
     });
   });

@@ -94,14 +94,6 @@ $figcaption-right: 0;
       // max-width: 100%;
       height: auto;
       display: block;
-
-      > .description-ie11 {
-        bottom: 0;
-        width: 100%;
-        position: absolute;
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
     }
 
     > figcaption {
@@ -118,12 +110,6 @@ $figcaption-right: 0;
     }
 
     > #dots {
-      position: absolute;
-      bottom: $dots-bottom-position;
-      width: 100%;
-    }
-
-    > #dots-ie11 {
       position: absolute;
       bottom: $dots-bottom-position;
       width: 100%;

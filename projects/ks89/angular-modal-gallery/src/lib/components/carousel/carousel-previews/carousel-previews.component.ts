@@ -425,20 +425,6 @@ export class CarouselPreviewsComponent extends AccessibleComponent implements On
   }
 
   /**
-   * Method to get the background-size value when IE11LegacyMode is enabled.
-   * This prevent weired behaviour on IE11 when previews are really small, but original images (.png/.jgp/...) are big.
-   * Using 'cover' it's not enough, because it's causing empty background in some cases.
-   * After some experiments, I decided to use the double of the height and auto as width.
-   */
-  getIE11LegacyBgSize(): string {
-    if (this.previewConfig && this.previewConfig.maxHeight) {
-      const bgHeight: number = +this.previewConfig.maxHeight.replace('px', '');
-      return '100% ' + bgHeight * 2 + 'px';
-    }
-    return 'cover';
-  }
-
-  /**
    * Method to cleanup resources. In fact, it cleans breakpointSubscription.
    * This is an Angular's lifecycle hook that is called when this component is destroyed.
    */

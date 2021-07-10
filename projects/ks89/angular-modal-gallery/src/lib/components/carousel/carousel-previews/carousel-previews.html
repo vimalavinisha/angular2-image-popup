@@ -14,37 +14,17 @@
 
   <div class="preview-inner-container">
     <ng-container *ngFor="let preview of previews; trackBy: trackById; let index = index">
-      <ng-container *ngIf="!carouselConfig?.legacyIE11Mode; else legacyMode">
-        <img *ngIf="preview?.modal?.img"
-             class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig?.clickable ? ' unclickable' : ''}}"
-             [src]="preview.plain?.img ? preview.plain?.img : preview.modal.img"
-             ksFallbackImage [fallbackImg]="preview.plain?.fallbackImg ? preview.plain?.fallbackImg : preview.modal.fallbackImg"
-             ksSize [sizeConfig]="{width: previewConfig?.width!,
-                                   height: previewMaxHeight}"
-             [attr.aria-label]="getAriaLabel(preview)"
-             [title]="getTitle(preview)"
-             alt="{{getAlt(preview)}}"
-             [tabIndex]="0" role="img"
-             (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"/>
-      </ng-container>
-      <ng-template #legacyMode>
-        <div *ngIf="preview?.modal?.img"
-             class="inside preview-ie11-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig?.clickable ? ' unclickable' : ''}}"
-             [style.background-color]="'transparent'"
-             [style.background-image]="sanitizeUrlBgStyle(
-              preview.plain?.img ? preview.plain?.img : preview.modal.img,
-              preview.plain?.fallbackImg ? preview.plain?.fallbackImg : preview.modal.fallbackImg)"
-             [style.background-position]="'center center'"
-             [style.background-size]="getIE11LegacyBgSize()"
-             [style.background-repeat]="'no-repeat'"
-             [style.background-attachment]="'scroll'"
-             ksSize [sizeConfig]="{width: previewConfig?.width!,
+      <img *ngIf="preview?.modal?.img"
+           class="inside preview-image{{isActive(preview) ? ' active' : ''}}{{!previewConfig?.clickable ? ' unclickable' : ''}}"
+           [src]="preview.plain?.img ? preview.plain?.img : preview.modal.img"
+           ksFallbackImage [fallbackImg]="preview.plain?.fallbackImg ? preview.plain?.fallbackImg : preview.modal.fallbackImg"
+           ksSize [sizeConfig]="{width: previewConfig?.width!,
                                  height: previewMaxHeight}"
-             [attr.aria-label]="getAriaLabel(preview)"
-             [title]="getTitle(preview)"
-             [tabIndex]="0" role="img"
-             (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"></div>
-      </ng-template>
+           [attr.aria-label]="getAriaLabel(preview)"
+           [title]="getTitle(preview)"
+           alt="{{getAlt(preview)}}"
+           [tabIndex]="0" role="img"
+           (click)="onImageEvent(preview, $event, clickAction)" (keyup)="onImageEvent(preview, $event, keyboardAction)"/>
     </ng-container>
   </div>
 

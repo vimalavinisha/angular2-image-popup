@@ -87,8 +87,7 @@ export const DEFAULT_CURRENT_CAROUSEL_CONFIG: CarouselConfig = {
   showArrows: true,
   objectFit: 'cover',
   keyboardEnable: true,
-  modalGalleryEnable: false,
-  legacyIE11Mode: false
+  modalGalleryEnable: false
 };
 export const DEFAULT_CURRENT_CAROUSEL_PLAY: PlayConfig = {
   autoPlay: true,
