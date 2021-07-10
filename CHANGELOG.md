@@ -51,7 +51,7 @@
 ### Examples
 - upgrade all examples with Angular 12
 - remove SystemJS example
-- create new stackblitz example
+- create new stackblitz example with Angular 12 and Ivy enabled
 
 ### Docs
 - new doc website [HERE](https://ks89.github.io/angular-modal-gallery-2020-v8.github.io/)
