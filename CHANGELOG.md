@@ -1,6 +1,13 @@
 # 9.0.0-beta.1
 
-TODO
+### Features
+
+- remove legacy mode in carousels (drop IE11) #235 **(BREAKING CHANGE)**
+- cleanup download image code in modal-gallery.component (drop IE11 and Edge legacy) #228 **(BREAKING CHANGE)**
+
+### Docs
+
+- upgrade doc website to bootstrap 5.x.x #236
 
 
 # 8.0.1
