@@ -24,8 +24,6 @@
 
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 
-import cloneDeep from 'lodash-es/cloneDeep';
-
 import {
   ConfigService,
   DEFAULT_CAROUSEL_BREAKPOINTS,
