@@ -4,6 +4,14 @@
 
 - remove legacy mode in carousels (drop IE11) #235 **(BREAKING CHANGE)**
 - cleanup download image code in modal-gallery.component (drop IE11 and Edge legacy) #228 **(BREAKING CHANGE)**
+- make LibConfig interface private, to expose ModalLibConfig, PlainLibConfig and CarouselLibConfig #232 **(BREAKING CHANGE)**
+- requestFullscreen and exitFullscreen return promises.
+  It's not easy to manage all cases in the right way, so at the moment I added only an error in case of catch clause #233 **(BREAKING CHANGE)**
+- Remove AdvancedLayout from PlainGallery, because already unused in v8.x.x #238 **(BREAKING CHANGE)**
+
+### Tests
+
+- improve modal-gallery.component tests to validate also html elements #231
 
 ### Docs
 
