@@ -217,6 +217,26 @@ function initTestBed(): void {
   });
 }
 
+function checkElements (fixture: ComponentFixture<ModalGalleryComponent>) {
+  const element: DebugElement = fixture.debugElement;
+  const modalGalleryWrapper: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
+  expect(modalGalleryWrapper).not.toBeNull();
+
+  const fixMinHeight: DebugElement = modalGalleryWrapper.children[0];
+  const modalGalleryContainer: DebugElement = fixMinHeight.children[0];
+  const list: DebugElement[] = modalGalleryContainer.children;
+  expect(list.length).toEqual(3);
+
+  const buttonsContainer: DebugElement = modalGalleryContainer.query(By.css('header.buttons-container'));
+  const mainImageContainer: DebugElement = modalGalleryContainer.query(By.css('main.main-image-container'));
+  const dotsContainer: DebugElement = modalGalleryContainer.query(By.css('nav.dots-container'));
+  const previewsContainer: DebugElement = modalGalleryContainer.query(By.css('nav.previews-container'));
+  expect(buttonsContainer).not.toBeNull();
+  expect(mainImageContainer).not.toBeNull();
+  expect(dotsContainer).not.toBeNull();
+  expect(previewsContainer).not.toBeNull();
+}
+
 describe('ModalGalleryComponent', () => {
   beforeEach(() => {
     initTestBed();
@@ -240,9 +260,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       expect(hasDataSpy).toHaveBeenCalled();
     });
@@ -257,9 +275,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -287,9 +303,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const EVENT: ButtonEvent = {
         button: {
@@ -312,9 +326,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -343,9 +355,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -375,9 +385,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       // replace updateLocationHref() method in component with an empty function
       // to bypass window.location.href that causes test failures
@@ -409,9 +417,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -475,9 +481,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = imagesBase64[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -511,9 +515,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES_CUSTOM_DOWNLOAD_FILENAME[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -542,9 +544,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -573,9 +573,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
@@ -657,9 +655,7 @@ describe('ModalGalleryComponent', () => {
       const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
       const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       comp.onClickOutside(true);
 
@@ -676,9 +672,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const EVENT: ImageLoadEvent = {
         status: true,
@@ -698,9 +692,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       comp.onClickDot(1);
     });
@@ -714,9 +706,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const EVENT: ImageModalEvent = {
         action: Action.NORMAL,
@@ -737,9 +727,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       // change IMAGES array pushing a new Image (equals to the first one)
       modalGalleryService.updateModalImages([...IMAGES, IMAGES[0]]);
@@ -759,9 +747,7 @@ describe('ModalGalleryComponent', () => {
         comp.currentImage = IMAGES[0];
         fixture.detectChanges();
 
-        const element: DebugElement = fixture.debugElement;
-        const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-        expect(modalGallery).not.toBeNull();
+        checkElements(fixture);
 
         const emitShowSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
 
@@ -790,9 +776,7 @@ describe('ModalGalleryComponent', () => {
       const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
       const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       comp.onClickOutside(true);
 
@@ -815,9 +799,7 @@ describe('ModalGalleryComponent', () => {
       comp.currentImage = IMAGES[0];
       fixture.detectChanges();
 
-      const element: DebugElement = fixture.debugElement;
-      const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-      expect(modalGallery).not.toBeNull();
+      checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
       const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');

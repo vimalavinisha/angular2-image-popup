@@ -506,9 +506,9 @@ describe('ConfigService', () => {
           inject([ConfigService], (service: ConfigService) => {
             const inputConfig: LibConfig = {
               keyboardConfig: {
-                esc: 10,
-                right: 11,
-                left: 12
+                esc: 'KeyQ',
+                right: 'KeyW',
+                left: 'KeyE'
               } as KeyboardConfig
             };
             service.setConfig(1, inputConfig);
