@@ -32,7 +32,7 @@ export class KeyboardNavigationDirective {
   isOpen: boolean | undefined;
 
   @Output()
-  keyboardNavigation: EventEmitter<number> = new EventEmitter<number>();
+  keyboardNavigation: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Listener to catch keyboard's events and call the right method based on the key.
@@ -45,6 +45,6 @@ export class KeyboardNavigationDirective {
     if (!this.isOpen) {
       return;
     }
-    this.keyboardNavigation.emit(e.keyCode);
+    this.keyboardNavigation.emit(e.code);
   }
 }

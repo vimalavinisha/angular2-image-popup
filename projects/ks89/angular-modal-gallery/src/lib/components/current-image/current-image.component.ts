@@ -303,16 +303,16 @@ export class CurrentImageComponent extends AccessibleComponent implements OnInit
   }
 
   /**
-   * Method to handle keypress based on the `keyboardConfig` input. It gets the keyCode of
+   * Method to handle keypress based on the `keyboardConfig` input. It gets the code of
    * the key that triggered the keypress event to navigate between images or to close the modal gallery.
-   * @param number keyCode of the key that triggered the keypress event
+   * @param code string of the key that triggered the keypress event
    */
-  onKeyPress(keyCode: number): void {
-    const esc: number = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
-    const right: number = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
-    const left: number = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
+  onKeyPress(code: string): void {
+    const esc: string = this.keyboardConfig && this.keyboardConfig.esc ? this.keyboardConfig.esc : Keyboard.ESC;
+    const right: string = this.keyboardConfig && this.keyboardConfig.right ? this.keyboardConfig.right : Keyboard.RIGHT_ARROW;
+    const left: string = this.keyboardConfig && this.keyboardConfig.left ? this.keyboardConfig.left : Keyboard.LEFT_ARROW;
 
-    switch (keyCode) {
+    switch (code) {
       case esc:
         this.closeGallery.emit(new ImageModalEvent(this.id, Action.KEYBOARD, true));
         break;

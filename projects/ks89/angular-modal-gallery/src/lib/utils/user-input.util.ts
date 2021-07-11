@@ -25,56 +25,73 @@
 /**
  * Key of the keyboard's key `enter`
  */
-export const ENTER_KEY = 'Enter';
+export const ENTER_KEY: string = 'Enter';
 /**
  * Code of the keyboard's key `enter`
  */
-export const ENTER_CODE = 'Enter';
+export const ENTER_CODE: string = 'Enter';
 
+/**
+ * Key of the keyboard's key `esc`
+ */
+export const ESC_KEY: string = 'Escape';
+/**
+ * Code of the keyboard's key `esc`
+ */
+export const ESC_CODE: string = 'Escape';
 /**
  * Key of the keyboard's key 'right arrow'
  */
-export const RIGHT_ARROW_KEY = 'ArrowRight';
+export const RIGHT_ARROW_KEY: string = 'ArrowRight';
 /**
  * Code of the keyboard's key 'right arrow'
  */
-export const RIGHT_ARROW_CODE = 'ArrowRight';
-/**
- * KeyCode of the keyboard's key 'right arrow'
- * Used in unit tests only
- */
-export const RIGHT_ARROW_KEYCODE = 39;
-
+export const RIGHT_ARROW_CODE: string = 'ArrowRight';
 /**
  * Key of the keyboard's key 'left arrow'
  */
-export const LEFT_ARROW_KEY = 'ArrowLeft';
+export const LEFT_ARROW_KEY: string = 'ArrowLeft';
 /**
  * Code of the keyboard's key 'left arrow'
  */
-export const LEFT_ARROW_CODE = 'ArrowLeft';
+export const LEFT_ARROW_CODE: string = 'ArrowLeft';
 /**
- * KeyCode of the keyboard's key 'left arrow'
- * Used in unit tests only
+ * Key of the keyboard's key 'left arrow'
  */
-export const LEFT_ARROW_KEYCODE = 37;
-
+export const UP_ARROW_KEY: string = 'ArrowUp';
+/**
+ * Code of the keyboard's key 'left arrow'
+ */
+export const UP_ARROW_CODE: string = 'ArrowUp';
+/**
+ * Key of the keyboard's key 'left arrow'
+ */
+export const DOWN_ARROW_KEY: string = 'ArrowDown';
+/**
+ * Code of the keyboard's key 'left arrow'
+ */
+export const DOWN_ARROW_CODE: string = 'ArrowDown';
 /**
  * Key of the keyboard's key `space`
  */
-export const SPACE_KEY = '';
+export const SPACE_KEY : string= '';
 /**
  * Code of the keyboard's key `space`
  */
-export const SPACE_CODE = 'Space';
-/**
- * KeyCode of the keyboard's key 'space'
- * Used in unit tests only
- */
-export const SPACE_KEYCODE = 32;
+export const SPACE_CODE: string = 'Space';
 
 /**
- * KeyCode of the main mouse button
+ * Const to represent the right direction
+ */
+export const DIRECTION_RIGHT: string = 'right';
+/**
+ * Const to represent the left direction
+ */
+export const DIRECTION_LEFT: string = 'left';
+
+
+/**
+ * Keycode of the main mouse button
  */
 export const MOUSE_MAIN_BUTTON_CLICK = 0;
 
@@ -90,12 +107,3 @@ export const PREV = -1;
  * Const NOTHING to represents a situation when it isn't both NEXT and PREV
  */
 export const NOTHING = 0;
-
-/**
- * Const to represent the right direction
- */
-export const DIRECTION_RIGHT = 'right';
-/**
- * Const to represent the left direction
- */
-export const DIRECTION_LEFT = 'left';

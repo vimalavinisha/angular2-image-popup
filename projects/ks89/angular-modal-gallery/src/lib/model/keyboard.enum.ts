@@ -23,12 +23,22 @@
  */
 
 /**
- * Enum `Keyboard` with keys and their relative key codes.
+ * Enum `Keyboard` with keys and their relative codes.
  */
-export enum Keyboard {
-  ESC = 27,
-  LEFT_ARROW = 37,
-  RIGHT_ARROW = 39,
-  UP_ARROW = 38,
-  DOWN_ARROW = 40
-}
+import { DOWN_ARROW_CODE, ESC_CODE, LEFT_ARROW_CODE, RIGHT_ARROW_CODE, UP_ARROW_CODE } from '../utils/user-input.util';
+
+type Keyboard = Readonly<{
+  ESC: typeof ESC_CODE,
+  LEFT_ARROW: typeof LEFT_ARROW_CODE,
+  RIGHT_ARROW: typeof RIGHT_ARROW_CODE,
+  UP_ARROW: typeof UP_ARROW_CODE,
+  DOWN_ARROW: typeof DOWN_ARROW_CODE
+}>;
+
+export const Keyboard: Keyboard = {
+  ESC: ESC_CODE,
+  LEFT_ARROW: LEFT_ARROW_CODE,
+  RIGHT_ARROW: RIGHT_ARROW_CODE,
+  UP_ARROW: UP_ARROW_CODE,
+  DOWN_ARROW: DOWN_ARROW_CODE
+};

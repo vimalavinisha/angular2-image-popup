@@ -23,10 +23,10 @@
  */
 
 /**
- * Interface `KeyboardConfig` to assign custom keyCodes to ESC, RIGHT and LEFT keyboard's actions.
+ * Interface `KeyboardConfig` to assign custom codes to ESC, RIGHT and LEFT keyboard's actions.
  */
 export interface KeyboardConfig {
-  esc?: number;
-  right?: number;
-  left?: number;
+  esc?: string;
+  right?: string;
+  left?: string;
 }

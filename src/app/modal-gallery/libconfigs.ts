@@ -346,9 +346,9 @@ export const LIBCONFIG_526: ModalLibConfig = {
 // Examples C
 export const LIBCONFIG_600: ModalLibConfig = {
   keyboardConfig: {
-    esc: 81,
-    left: 40,
-    right: 38
+    esc: 'KeyQ',
+    left: 'ArrowDown',
+    right: 'ArrowUp'
   }
 };
 

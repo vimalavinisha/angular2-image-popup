@@ -59,7 +59,7 @@ export class AccessibleComponent {
 
   /**
    * Method to handle events over an image, for instance a keypress with the Keyboard or a Mouse click.
-   * @param KeyboardEvent | MouseEvent event payload
+   * @param event KeyboardEvent | MouseEvent payload
    * @returns number 1 for NEXT and 0 for NOTHING
    */
   handleImageEvent(event: KeyboardEvent | MouseEvent): number {
@@ -76,7 +76,7 @@ export class AccessibleComponent {
 
   /**
    * Private method to handle keyboard events over an image.
-   * @param KeyboardEvent event payload
+   * @param event KeyboardEvent payload
    * @returns number 1 for NEXT and 0 for NOTHING
    */
   private handleImageKeyboardEvent(event: KeyboardEvent): number {

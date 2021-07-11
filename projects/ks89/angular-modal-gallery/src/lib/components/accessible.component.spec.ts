@@ -31,9 +31,6 @@ import {
   SPACE_CODE,
   SPACE_KEY
 } from '../utils/user-input.util';
-import { DotsComponent } from './dots/dots.component';
-import { ConfigService } from '../services/config.service';
-
 
 let comp: AccessibleComponent;
 let fixture: ComponentFixture<AccessibleComponent>;
