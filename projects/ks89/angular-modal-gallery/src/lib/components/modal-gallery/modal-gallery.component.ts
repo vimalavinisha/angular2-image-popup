@@ -189,27 +189,36 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-any
     const docEl: any = document.documentElement as any;
 
-    const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement && !doc.mozFullScreenElement && !doc.msFullscreenElement;
+    const fullscreenDisabled: boolean = !doc.fullscreenElement && !doc.webkitFullscreenElement;
 
-    // TODO add .then to promises, for instance requestFullscreen() returns a Promise
+    // In Safari `requestFullscreen` and `exitFullscreen` are undefined. Safari requires the prefixed version `webkit-`
+    // and it doesn't return promises.
+
+    // I cannot call `emitButtonAfterHook` only if requestFullScreen is successful, because there are no guarantees across browsers and
+    // I should also handle the case with keyboard "esc" button.
+
     if (fullscreenDisabled) {
       if (docEl.requestFullscreen) {
-        docEl.requestFullscreen();
+        docEl.requestFullscreen()
+          .then(() => {
+          })
+          .catch(() => {
+            console.error('Cannot request full screen');
+          });
       } else if (docEl.webkitRequestFullscreen) {
+        // For Safari and it doesn't return a promise
         docEl.webkitRequestFullscreen();
-      } else if (docEl.mozRequestFullScreen) {
-        docEl.mozRequestFullScreen();
-      } else if (docEl.msRequestFullscreen) {
-        docEl.msRequestFullscreen();
       }
     } else {
       if (doc.exitFullscreen) {
-        doc.exitFullscreen();
-      } else if (doc.msExitFullscreen) {
-        doc.msExitFullscreen();
-      } else if (doc.mozCancelFullScreen) {
-        doc.mozCancelFullScreen();
+        doc.exitFullscreen()
+          .then(() => {
+          })
+          .catch(() => {
+            console.error('Cannot request exit full screen');
+          });
       } else if (doc.webkitExitFullscreen) {
+        // For Safari and it doesn't return a promise
         doc.webkitExitFullscreen();
       }
     }
