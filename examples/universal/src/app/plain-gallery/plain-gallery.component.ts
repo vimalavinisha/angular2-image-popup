@@ -26,7 +26,6 @@ import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
-  AdvancedLayout,
   GridLayout,
   Image,
   LineLayout,
@@ -34,7 +33,7 @@ import {
   PlainGalleryStrategy,
   ModalGalleryService,
   ModalGalleryRef,
-  LibConfig
+  PlainLibConfig
 } from '@ks89/angular-modal-gallery';
 import { CarouselExampleComponent } from '../carousel/carousel.component';
 
@@ -44,21 +43,6 @@ import { CarouselExampleComponent } from '../carousel/carousel.component';
   styleUrls: ['./plain-gallery.scss']
 })
 export class PlainGalleryExampleComponent {
-  customPlainGalleryRowConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-
-  customPlainGalleryColumnConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-
-  customPlainGalleryRowDescConfig: PlainGalleryConfig = {
-    strategy: PlainGalleryStrategy.CUSTOM,
-    layout: new AdvancedLayout(-1, true)
-  };
-
   plainGalleryRow: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.ROW,
     layout: new LineLayout({ width: '80px', height: '80px' }, { length: 2, wrap: true }, 'flex-start')
@@ -234,19 +218,19 @@ export class PlainGalleryExampleComponent {
     )
   ];
 
-  libConfigPlainGalleryRow: LibConfig = {
+  libConfigPlainGalleryRow: PlainLibConfig = {
     plainGalleryConfig: this.plainGalleryRow
   };
-  libConfigPlainGalleryRowSpaceAround: LibConfig = {
+  libConfigPlainGalleryRowSpaceAround: PlainLibConfig = {
     plainGalleryConfig: this.plainGalleryRowSpaceAround
   };
-  libConfigPlainGalleryRowATags: LibConfig = {
+  libConfigPlainGalleryRowATags: PlainLibConfig = {
     plainGalleryConfig: this.plainGalleryRowATags
   };
-  libConfigPlainGalleryColumn: LibConfig = {
+  libConfigPlainGalleryColumn: PlainLibConfig = {
     plainGalleryConfig: this.plainGalleryColumn
   };
-  libConfigPlainGalleryGrid: LibConfig = {
+  libConfigPlainGalleryGrid: PlainLibConfig = {
     plainGalleryConfig: this.plainGalleryGrid
   };
 
@@ -255,42 +239,30 @@ export class PlainGalleryExampleComponent {
   openImageModalRow(id: number, image: Image): void {
     console.log('Opening modal gallery from custom plain gallery row, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
       images: this.images,
-      currentImage: this.images[index],
-      libConfig: {
-        plainGalleryConfig: this.customPlainGalleryRowConfig
-      }
+      currentImage: this.images[index]
     }) as ModalGalleryRef;
   }
 
   openImageModalColumn(id: number, image: Image): void {
     console.log('Opening modal gallery from custom plain gallery column, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.images);
-    this.customPlainGalleryColumnConfig = Object.assign({}, this.customPlainGalleryColumnConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
       images: this.images,
-      currentImage: this.images[index],
-      libConfig: {
-        plainGalleryConfig: this.customPlainGalleryColumnConfig
-      }
+      currentImage: this.images[index]
     }) as ModalGalleryRef;
   }
 
   openImageModalRowDescription(id: number, image: Image): void {
     console.log('Opening modal gallery from custom plain gallery row and description, with image: ', image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.imagesRect);
-    this.customPlainGalleryRowDescConfig = Object.assign({}, this.customPlainGalleryRowDescConfig, { layout: new AdvancedLayout(index, true) });
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
       images: this.imagesRect,
-      currentImage: this.imagesRect[index],
-      libConfig: {
-        plainGalleryConfig: this.customPlainGalleryRowDescConfig
-      }
+      currentImage: this.imagesRect[index]
     }) as ModalGalleryRef;
   }
 

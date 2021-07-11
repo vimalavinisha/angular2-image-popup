@@ -36,20 +36,37 @@ import { CarouselPreviewConfig } from './carousel-preview-config.interface';
 import { PlayConfig } from './play-config.interface';
 import { KeyboardServiceConfig } from './keyboard-service-config.interface';
 
-export interface LibConfig {
-  slideConfig?: SlideConfig;
+export interface AccessibleLibConfig {
   accessibilityConfig?: AccessibilityConfig;
+}
+
+export interface CommonLibConfig {
   previewConfig?: PreviewConfig;
-  buttonsConfig?: ButtonsConfig;
   dotsConfig?: DotsConfig;
-  plainGalleryConfig?: PlainGalleryConfig;
-  currentImageConfig?: CurrentImageConfig;
-  keyboardConfig?: KeyboardConfig;
+  slideConfig?: SlideConfig;
+}
+
+export interface KeyboardServiceLibConfig {
+  keyboardServiceConfig?: KeyboardServiceConfig;
+}
+
+export interface CarouselLibConfig extends CommonLibConfig, AccessibleLibConfig, KeyboardServiceLibConfig {
   carouselConfig?: CarouselConfig;
   carouselImageConfig?: CarouselImageConfig;
   carouselPreviewsConfig?: CarouselPreviewConfig;
   carouselPlayConfig?: PlayConfig;
   carouselDotsConfig?: DotsConfig;
-  enableCloseOutside?: boolean;
-  keyboardServiceConfig?: KeyboardServiceConfig;
 }
+
+export interface ModalLibConfig extends CommonLibConfig, AccessibleLibConfig, KeyboardServiceLibConfig {
+  enableCloseOutside?: boolean;
+  keyboardConfig?: KeyboardConfig;
+  currentImageConfig?: CurrentImageConfig;
+  buttonsConfig?: ButtonsConfig;
+}
+
+export interface PlainLibConfig extends AccessibleLibConfig {
+  plainGalleryConfig?: PlainGalleryConfig;
+}
+
+export interface LibConfig extends ModalLibConfig, PlainLibConfig, CarouselLibConfig {}

@@ -8,9 +8,9 @@ import {
   KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
-  LibConfig,
   LoadingConfig,
   LoadingType,
+  ModalLibConfig,
   Size
 } from '@ks89/angular-modal-gallery';
 
@@ -20,7 +20,7 @@ const DEFAULT_SIZE_PREVIEWS: Size = {
 };
 
 // Examples A
-export const LIBCONFIG_406: LibConfig = {
+export const LIBCONFIG_406: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -30,7 +30,7 @@ export const LIBCONFIG_406: LibConfig = {
   }
 };
 
-export const LIBCONFIG_407: LibConfig = {
+export const LIBCONFIG_407: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -40,7 +40,7 @@ export const LIBCONFIG_407: LibConfig = {
   }
 };
 
-export const LIBCONFIG_408: LibConfig = {
+export const LIBCONFIG_408: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -51,7 +51,7 @@ export const LIBCONFIG_408: LibConfig = {
 };
 
 // Examples B
-export const LIBCONFIG_500: LibConfig = {
+export const LIBCONFIG_500: ModalLibConfig = {
   previewConfig: {
     visible: false
   },
@@ -60,7 +60,7 @@ export const LIBCONFIG_500: LibConfig = {
   }
 };
 
-export const LIBCONFIG_501: LibConfig = {
+export const LIBCONFIG_501: ModalLibConfig = {
   buttonsConfig: {
     visible: false,
     strategy: ButtonsStrategy.DEFAULT
@@ -73,7 +73,7 @@ export const LIBCONFIG_501: LibConfig = {
   }
 };
 
-export const LIBCONFIG_502: LibConfig = {
+export const LIBCONFIG_502: ModalLibConfig = {
   buttonsConfig: {
     visible: false,
     strategy: ButtonsStrategy.DEFAULT
@@ -93,7 +93,7 @@ export const LIBCONFIG_502: LibConfig = {
   }
 };
 
-export const LIBCONFIG_503: LibConfig = {
+export const LIBCONFIG_503: ModalLibConfig = {
   previewConfig: {
     visible: true,
     size: {
@@ -103,11 +103,11 @@ export const LIBCONFIG_503: LibConfig = {
   }
 };
 
-export const LIBCONFIG_504: LibConfig = {
+export const LIBCONFIG_504: ModalLibConfig = {
   enableCloseOutside: false
 };
 
-export const LIBCONFIG_505: LibConfig = {
+export const LIBCONFIG_505: ModalLibConfig = {
   currentImageConfig: { downloadable: false },
   buttonsConfig: {
     visible: true,
@@ -115,7 +115,7 @@ export const LIBCONFIG_505: LibConfig = {
   }
 };
 
-export const LIBCONFIG_506: LibConfig = {
+export const LIBCONFIG_506: ModalLibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -123,7 +123,7 @@ export const LIBCONFIG_506: LibConfig = {
   }
 };
 
-export const LIBCONFIG_507: LibConfig = {
+export const LIBCONFIG_507: ModalLibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -131,7 +131,7 @@ export const LIBCONFIG_507: LibConfig = {
   }
 };
 
-export const LIBCONFIG_508: LibConfig = {
+export const LIBCONFIG_508: ModalLibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -143,7 +143,7 @@ export const LIBCONFIG_508: LibConfig = {
   }
 };
 
-export const LIBCONFIG_509: LibConfig = {
+export const LIBCONFIG_509: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -153,7 +153,7 @@ export const LIBCONFIG_509: LibConfig = {
   }
 };
 
-export const LIBCONFIG_510: LibConfig = {
+export const LIBCONFIG_510: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -163,7 +163,7 @@ export const LIBCONFIG_510: LibConfig = {
   }
 };
 
-export const LIBCONFIG_511: LibConfig = {
+export const LIBCONFIG_511: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: false,
@@ -171,7 +171,7 @@ export const LIBCONFIG_511: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_512: LibConfig = {
+export const LIBCONFIG_512: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -179,7 +179,7 @@ export const LIBCONFIG_512: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_513: LibConfig = {
+export const LIBCONFIG_513: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -187,7 +187,7 @@ export const LIBCONFIG_513: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_514: LibConfig = {
+export const LIBCONFIG_514: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -195,7 +195,7 @@ export const LIBCONFIG_514: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_515: LibConfig = {
+export const LIBCONFIG_515: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -203,7 +203,7 @@ export const LIBCONFIG_515: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_516: LibConfig = {
+export const LIBCONFIG_516: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -211,7 +211,7 @@ export const LIBCONFIG_516: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_517: LibConfig = {
+export const LIBCONFIG_517: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -219,7 +219,7 @@ export const LIBCONFIG_517: LibConfig = {
     }
   }
 };
-export const LIBCONFIG_518: LibConfig = {
+export const LIBCONFIG_518: ModalLibConfig = {
   currentImageConfig: {
     loadingConfig: {
       enable: true,
@@ -228,25 +228,25 @@ export const LIBCONFIG_518: LibConfig = {
   }
 };
 
-export const LIBCONFIG_519: LibConfig = {
+export const LIBCONFIG_519: ModalLibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.DEFAULT
   }
 };
-export const LIBCONFIG_520: LibConfig = {
+export const LIBCONFIG_520: ModalLibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.SIMPLE
   }
 };
-export const LIBCONFIG_521: LibConfig = {
+export const LIBCONFIG_521: ModalLibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.ADVANCED
   }
 };
-export const LIBCONFIG_522: LibConfig = {
+export const LIBCONFIG_522: ModalLibConfig = {
   buttonsConfig: {
     visible: true,
     strategy: ButtonsStrategy.FULL
@@ -255,7 +255,7 @@ export const LIBCONFIG_522: LibConfig = {
 
 // default buttons but extUrl will open the link in a new tab instead of the current one
 // this requires to specify all buttons manually (also if they are not really custom)
-export const LIBCONFIG_523: LibConfig = {
+export const LIBCONFIG_523: ModalLibConfig = {
   currentImageConfig: { downloadable: true },
   buttonsConfig: {
     visible: true,
@@ -278,7 +278,7 @@ export const LIBCONFIG_523: LibConfig = {
   }
 };
 
-export const LIBCONFIG_524: LibConfig = {
+export const LIBCONFIG_524: ModalLibConfig = {
   currentImageConfig: {
     downloadable: true
   },
@@ -296,7 +296,7 @@ export const LIBCONFIG_524: LibConfig = {
   }
 };
 
-export const LIBCONFIG_525: LibConfig = {
+export const LIBCONFIG_525: ModalLibConfig = {
   currentImageConfig: {
     downloadable: true
   },
@@ -336,7 +336,7 @@ export const LIBCONFIG_525: LibConfig = {
   }
 };
 
-export const LIBCONFIG_526: LibConfig = {
+export const LIBCONFIG_526: ModalLibConfig = {
   previewConfig: {
     visible: true,
     mobileVisible: true
@@ -344,7 +344,7 @@ export const LIBCONFIG_526: LibConfig = {
 };
 
 // Examples C
-export const LIBCONFIG_600: LibConfig = {
+export const LIBCONFIG_600: ModalLibConfig = {
   keyboardConfig: {
     esc: 81,
     left: 40,
@@ -352,7 +352,7 @@ export const LIBCONFIG_600: LibConfig = {
   }
 };
 
-export const LIBCONFIG_601: LibConfig = {
+export const LIBCONFIG_601: ModalLibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -363,7 +363,7 @@ export const LIBCONFIG_601: LibConfig = {
   }
 };
 
-export const LIBCONFIG_602: LibConfig = {
+export const LIBCONFIG_602: ModalLibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.HIDE_IF_EMPTY,
@@ -374,7 +374,7 @@ export const LIBCONFIG_602: LibConfig = {
   }
 };
 
-export const LIBCONFIG_603: LibConfig = {
+export const LIBCONFIG_603: ModalLibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_HIDDEN,
@@ -388,7 +388,7 @@ export const LIBCONFIG_603: LibConfig = {
   }
 };
 
-export const LIBCONFIG_604: LibConfig = {
+export const LIBCONFIG_604: ModalLibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -402,7 +402,7 @@ export const LIBCONFIG_604: LibConfig = {
   }
 };
 
-export const LIBCONFIG_605: LibConfig = {
+export const LIBCONFIG_605: ModalLibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -413,7 +413,7 @@ export const LIBCONFIG_605: LibConfig = {
   }
 };
 
-export const LIBCONFIG_606: LibConfig = {
+export const LIBCONFIG_606: ModalLibConfig = {
   currentImageConfig: {
     description: {
       strategy: DescriptionStrategy.ALWAYS_VISIBLE,
@@ -436,42 +436,42 @@ export const LIBCONFIG_606: LibConfig = {
   }
 };
 
-export const LIBCONFIG_607: LibConfig = {
+export const LIBCONFIG_607: ModalLibConfig = {
   previewConfig: {
     visible: true,
     number: 1
   }
 };
 
-export const LIBCONFIG_608: LibConfig = {
+export const LIBCONFIG_608: ModalLibConfig = {
   previewConfig: {
     visible: true,
     number: 5
   }
 };
 
-export const LIBCONFIG_609: LibConfig = {
+export const LIBCONFIG_609: ModalLibConfig = {
   previewConfig: {
     visible: true,
     arrows: false
   }
 };
 
-export const LIBCONFIG_610: LibConfig = {
+export const LIBCONFIG_610: ModalLibConfig = {
   previewConfig: {
     visible: true,
     clickable: false
   }
 };
 
-export const LIBCONFIG_611: LibConfig = {
+export const LIBCONFIG_611: ModalLibConfig = {
   previewConfig: {
     visible: true,
     size: { width: '30px', height: '30px' }
   }
 };
 
-export const LIBCONFIG_612: LibConfig = {
+export const LIBCONFIG_612: ModalLibConfig = {
   accessibilityConfig: {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
     backgroundTitle: 'CUSTOM background title',
@@ -518,14 +518,14 @@ export const LIBCONFIG_612: LibConfig = {
   }
 };
 
-export const LIBCONFIG_613: LibConfig = {
+export const LIBCONFIG_613: ModalLibConfig = {
   currentImageConfig: {
     navigateOnClick: false
   }
 };
 
 // Examples D
-export const LIBCONFIG_701: LibConfig = {
+export const LIBCONFIG_701: ModalLibConfig = {
   currentImageConfig: {
     downloadable: true
   },
@@ -535,13 +535,13 @@ export const LIBCONFIG_701: LibConfig = {
   }
 };
 
-export const LIBCONFIG_702: LibConfig = {
+export const LIBCONFIG_702: ModalLibConfig = {
   currentImageConfig: {
     invertSwipe: true
   }
 };
 
-export const LIBCONFIG_703: LibConfig = {
+export const LIBCONFIG_703: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     sidePreviews: {
@@ -552,7 +552,7 @@ export const LIBCONFIG_703: LibConfig = {
 };
 
 // Examples E
-export const LIBCONFIG_800: LibConfig = {
+export const LIBCONFIG_800: ModalLibConfig = {
   slideConfig: {
     playConfig: {
       autoPlay: true,
@@ -562,7 +562,7 @@ export const LIBCONFIG_800: LibConfig = {
   }
 };
 
-export const LIBCONFIG_801: LibConfig = {
+export const LIBCONFIG_801: ModalLibConfig = {
   slideConfig: {
     infinite: true,
     playConfig: {
@@ -573,7 +573,7 @@ export const LIBCONFIG_801: LibConfig = {
   }
 };
 
-export const LIBCONFIG_802: LibConfig = {
+export const LIBCONFIG_802: ModalLibConfig = {
   slideConfig: {
     playConfig: {
       autoPlay: true,
@@ -584,7 +584,7 @@ export const LIBCONFIG_802: LibConfig = {
 };
 
 // Examples F
-export const LIBCONFIG_900: LibConfig = {
+export const LIBCONFIG_900: ModalLibConfig = {
   slideConfig: {
     infinite: false
   },

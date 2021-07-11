@@ -35,7 +35,7 @@ export interface PlainGalleryConfig {
 
 /**
  * Interface `PlainGalleryLayout` to configure the layout. This interface isn't used directly, instead
- * refers to either `LineLayout`, `GridLayout` or `AdvancedLayout`.
+ * refers to either `LineLayout`, `GridLayout`.
  */
 // tslint:disable-next-line no-empty-interface
 export interface PlainGalleryLayout {}
@@ -65,19 +65,6 @@ export class GridLayout implements PlainGalleryLayout {
   constructor(size: Size, breakConfig: BreakConfig) {
     this.size = size;
     this.breakConfig = breakConfig;
-  }
-}
-
-/**
- * Class `AdvancedLayout` to configure a fully custom plain gallery.
- */
-export class AdvancedLayout implements PlainGalleryLayout {
-  modalOpenerByIndex: number;
-  hideDefaultPlainGallery: boolean;
-
-  constructor(modalOpenerByIndex: number, hideDefaultPlainGallery: boolean) {
-    this.modalOpenerByIndex = modalOpenerByIndex;
-    this.hideDefaultPlainGallery = hideDefaultPlainGallery;
   }
 }
 

@@ -30,7 +30,7 @@ import { PreviewConfig } from '../model/preview-config.interface';
 import { Size } from '../model/size.interface';
 import { ButtonsConfig, ButtonsStrategy } from '../model/buttons-config.interface';
 import { DotsConfig } from '../model/dots-config.interface';
-import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../model/plain-gallery-config.interface';
+import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../model/plain-gallery-config.interface';
 import { CurrentImageConfig } from '../model/current-image-config.interface';
 import { LoadingConfig, LoadingType } from '../model/loading-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../model/description.interface';
@@ -246,7 +246,7 @@ export class ConfigService {
         advanced = DEFAULT_CONFIG.plainGalleryConfig.advanced;
       }
       if (obj.plainGalleryConfig.layout) {
-        // it isn't mandatory to use assign, because obj.plainGalleryConfig.layout is an instance of class (LineaLayout, GridLayout, AdvancedLayout)
+        // it isn't mandatory to use assign, because obj.plainGalleryConfig.layout is an instance of class (LineaLayout, GridLayout)
         layout = obj.plainGalleryConfig.layout;
       } else {
         layout = DEFAULT_CONFIG.plainGalleryConfig.layout;
@@ -386,12 +386,6 @@ function initPlainGalleryConfig(plainGalleryConfig: PlainGalleryConfig): PlainGa
     }
     // force wrap for grid layout
     newPlayGalleryConfig.layout.breakConfig.wrap = true;
-  }
-
-  if (newPlayGalleryConfig.layout instanceof AdvancedLayout) {
-    if (newPlayGalleryConfig.strategy !== PlainGalleryStrategy.CUSTOM) {
-      throw new Error('AdvancedLayout requires CUSTOM strategy');
-    }
   }
   return newPlayGalleryConfig;
 }

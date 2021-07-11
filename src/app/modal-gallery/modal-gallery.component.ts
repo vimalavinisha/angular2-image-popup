@@ -34,7 +34,7 @@ import {
   ModalGalleryService,
   ModalGalleryRef,
   ModalGalleryConfig,
-  LibConfig
+  ModalLibConfig
 } from '@ks89/angular-modal-gallery';
 import { Subscription } from 'rxjs';
 
@@ -50,62 +50,62 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   galleryId = 1;
   isPlaying = true;
   // Examples A
-  CONFIG406: LibConfig = libConfigs.LIBCONFIG_406;
-  CONFIG407: LibConfig = libConfigs.LIBCONFIG_407;
-  CONFIG408: LibConfig = libConfigs.LIBCONFIG_408;
+  CONFIG406: ModalLibConfig = libConfigs.LIBCONFIG_406;
+  CONFIG407: ModalLibConfig = libConfigs.LIBCONFIG_407;
+  CONFIG408: ModalLibConfig = libConfigs.LIBCONFIG_408;
   // Examples B
-  CONFIG500: LibConfig = libConfigs.LIBCONFIG_500;
-  CONFIG501: LibConfig = libConfigs.LIBCONFIG_501;
-  CONFIG502: LibConfig = libConfigs.LIBCONFIG_502;
-  CONFIG503: LibConfig = libConfigs.LIBCONFIG_503;
-  CONFIG504: LibConfig = libConfigs.LIBCONFIG_504;
-  CONFIG505: LibConfig = libConfigs.LIBCONFIG_505;
-  CONFIG506: LibConfig = libConfigs.LIBCONFIG_506;
-  CONFIG507: LibConfig = libConfigs.LIBCONFIG_507;
-  CONFIG508: LibConfig = libConfigs.LIBCONFIG_508;
-  CONFIG509: LibConfig = libConfigs.LIBCONFIG_509;
-  CONFIG510: LibConfig = libConfigs.LIBCONFIG_510;
-  CONFIG511: LibConfig = libConfigs.LIBCONFIG_511;
-  CONFIG512: LibConfig = libConfigs.LIBCONFIG_512;
-  CONFIG513: LibConfig = libConfigs.LIBCONFIG_513;
-  CONFIG514: LibConfig = libConfigs.LIBCONFIG_514;
-  CONFIG515: LibConfig = libConfigs.LIBCONFIG_515;
-  CONFIG516: LibConfig = libConfigs.LIBCONFIG_516;
-  CONFIG517: LibConfig = libConfigs.LIBCONFIG_517;
-  CONFIG518: LibConfig = libConfigs.LIBCONFIG_518;
-  CONFIG519: LibConfig = libConfigs.LIBCONFIG_519;
-  CONFIG520: LibConfig = libConfigs.LIBCONFIG_520;
-  CONFIG521: LibConfig = libConfigs.LIBCONFIG_521;
-  CONFIG522: LibConfig = libConfigs.LIBCONFIG_522;
-  CONFIG523: LibConfig = libConfigs.LIBCONFIG_523;
-  CONFIG524: LibConfig = libConfigs.LIBCONFIG_524;
-  CONFIG525: LibConfig = libConfigs.LIBCONFIG_525;
-  CONFIG526: LibConfig = libConfigs.LIBCONFIG_526;
+  CONFIG500: ModalLibConfig = libConfigs.LIBCONFIG_500;
+  CONFIG501: ModalLibConfig = libConfigs.LIBCONFIG_501;
+  CONFIG502: ModalLibConfig = libConfigs.LIBCONFIG_502;
+  CONFIG503: ModalLibConfig = libConfigs.LIBCONFIG_503;
+  CONFIG504: ModalLibConfig = libConfigs.LIBCONFIG_504;
+  CONFIG505: ModalLibConfig = libConfigs.LIBCONFIG_505;
+  CONFIG506: ModalLibConfig = libConfigs.LIBCONFIG_506;
+  CONFIG507: ModalLibConfig = libConfigs.LIBCONFIG_507;
+  CONFIG508: ModalLibConfig = libConfigs.LIBCONFIG_508;
+  CONFIG509: ModalLibConfig = libConfigs.LIBCONFIG_509;
+  CONFIG510: ModalLibConfig = libConfigs.LIBCONFIG_510;
+  CONFIG511: ModalLibConfig = libConfigs.LIBCONFIG_511;
+  CONFIG512: ModalLibConfig = libConfigs.LIBCONFIG_512;
+  CONFIG513: ModalLibConfig = libConfigs.LIBCONFIG_513;
+  CONFIG514: ModalLibConfig = libConfigs.LIBCONFIG_514;
+  CONFIG515: ModalLibConfig = libConfigs.LIBCONFIG_515;
+  CONFIG516: ModalLibConfig = libConfigs.LIBCONFIG_516;
+  CONFIG517: ModalLibConfig = libConfigs.LIBCONFIG_517;
+  CONFIG518: ModalLibConfig = libConfigs.LIBCONFIG_518;
+  CONFIG519: ModalLibConfig = libConfigs.LIBCONFIG_519;
+  CONFIG520: ModalLibConfig = libConfigs.LIBCONFIG_520;
+  CONFIG521: ModalLibConfig = libConfigs.LIBCONFIG_521;
+  CONFIG522: ModalLibConfig = libConfigs.LIBCONFIG_522;
+  CONFIG523: ModalLibConfig = libConfigs.LIBCONFIG_523;
+  CONFIG524: ModalLibConfig = libConfigs.LIBCONFIG_524;
+  CONFIG525: ModalLibConfig = libConfigs.LIBCONFIG_525;
+  CONFIG526: ModalLibConfig = libConfigs.LIBCONFIG_526;
   // Examples C
-  CONFIG600: LibConfig = libConfigs.LIBCONFIG_600;
-  CONFIG601: LibConfig = libConfigs.LIBCONFIG_601;
-  CONFIG602: LibConfig = libConfigs.LIBCONFIG_602;
-  CONFIG603: LibConfig = libConfigs.LIBCONFIG_603;
-  CONFIG604: LibConfig = libConfigs.LIBCONFIG_604;
-  CONFIG605: LibConfig = libConfigs.LIBCONFIG_605;
-  CONFIG606: LibConfig = libConfigs.LIBCONFIG_606;
-  CONFIG607: LibConfig = libConfigs.LIBCONFIG_607;
-  CONFIG608: LibConfig = libConfigs.LIBCONFIG_608;
-  CONFIG609: LibConfig = libConfigs.LIBCONFIG_609;
-  CONFIG610: LibConfig = libConfigs.LIBCONFIG_610;
-  CONFIG611: LibConfig = libConfigs.LIBCONFIG_611;
-  CONFIG612: LibConfig = libConfigs.LIBCONFIG_612;
-  CONFIG613: LibConfig = libConfigs.LIBCONFIG_613;
+  CONFIG600: ModalLibConfig = libConfigs.LIBCONFIG_600;
+  CONFIG601: ModalLibConfig = libConfigs.LIBCONFIG_601;
+  CONFIG602: ModalLibConfig = libConfigs.LIBCONFIG_602;
+  CONFIG603: ModalLibConfig = libConfigs.LIBCONFIG_603;
+  CONFIG604: ModalLibConfig = libConfigs.LIBCONFIG_604;
+  CONFIG605: ModalLibConfig = libConfigs.LIBCONFIG_605;
+  CONFIG606: ModalLibConfig = libConfigs.LIBCONFIG_606;
+  CONFIG607: ModalLibConfig = libConfigs.LIBCONFIG_607;
+  CONFIG608: ModalLibConfig = libConfigs.LIBCONFIG_608;
+  CONFIG609: ModalLibConfig = libConfigs.LIBCONFIG_609;
+  CONFIG610: ModalLibConfig = libConfigs.LIBCONFIG_610;
+  CONFIG611: ModalLibConfig = libConfigs.LIBCONFIG_611;
+  CONFIG612: ModalLibConfig = libConfigs.LIBCONFIG_612;
+  CONFIG613: ModalLibConfig = libConfigs.LIBCONFIG_613;
   // Examples D
-  CONFIG701: LibConfig = libConfigs.LIBCONFIG_701;
-  CONFIG702: LibConfig = libConfigs.LIBCONFIG_702;
-  CONFIG703: LibConfig = libConfigs.LIBCONFIG_703;
+  CONFIG701: ModalLibConfig = libConfigs.LIBCONFIG_701;
+  CONFIG702: ModalLibConfig = libConfigs.LIBCONFIG_702;
+  CONFIG703: ModalLibConfig = libConfigs.LIBCONFIG_703;
   // Examples E
-  CONFIG800: LibConfig = libConfigs.LIBCONFIG_800;
-  CONFIG801: LibConfig = libConfigs.LIBCONFIG_801;
-  CONFIG802: LibConfig = libConfigs.LIBCONFIG_802;
+  CONFIG800: ModalLibConfig = libConfigs.LIBCONFIG_800;
+  CONFIG801: ModalLibConfig = libConfigs.LIBCONFIG_801;
+  CONFIG802: ModalLibConfig = libConfigs.LIBCONFIG_802;
   // Example F
-  CONFIG900: LibConfig = libConfigs.LIBCONFIG_900;
+  CONFIG900: ModalLibConfig = libConfigs.LIBCONFIG_900;
 
   images: Image[] = [
     new Image(0, {
@@ -457,7 +457,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   // tslint:disable-next-line:no-any
   private timeout: any;
 
-  openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModalWithAutoClose(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -496,7 +496,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     this.imagesMixedSizes = [...this.imagesMixedSizes, newImageMix];
   }
 
-  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -506,7 +506,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     } as ModalGalleryConfig) as ModalGalleryRef;
   }
 
-  openModalWithOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModalWithOutputs(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -557,7 +557,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithDeleteButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModalWithDeleteButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -593,7 +593,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithAddButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModalWithAddButton(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -628,7 +628,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithAutoAdd(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModalWithAutoAdd(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -655,7 +655,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  openModalWithAutoUpdate(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: LibConfig): void {
+  openModalWithAutoUpdate(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,
@@ -687,7 +687,7 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     });
   }
 
-  autoPlayButton(config: LibConfig): boolean {
+  autoPlayButton(config: ModalLibConfig): boolean {
     this.isPlaying = !this.isPlaying;
     if (config && config.slideConfig && config.slideConfig.playConfig) {
       config.slideConfig.playConfig.autoPlay = this.isPlaying;

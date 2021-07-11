@@ -46,7 +46,7 @@ export { Size } from './lib/model/size.interface';
 
 export { ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from './lib/model/buttons-config.interface';
 
-export { LibConfig } from './lib/model/lib-config.interface';
+export { ModalLibConfig, PlainLibConfig, CarouselLibConfig } from './lib/model/lib-config.interface';
 
 export { ModalGalleryConfig } from './lib/model/modal-gallery-config.interface';
 
@@ -71,7 +71,6 @@ export {
   PlainGalleryLayout,
   LineLayout,
   GridLayout,
-  AdvancedLayout,
   PlainGalleryStrategy,
   BreakConfig
 } from './lib/model/plain-gallery-config.interface';

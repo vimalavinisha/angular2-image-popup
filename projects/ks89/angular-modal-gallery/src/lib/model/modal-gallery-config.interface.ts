@@ -23,11 +23,11 @@
  */
 
 import { Image } from './image.class';
-import { LibConfig } from './lib-config.interface';
+import { ModalLibConfig } from './lib-config.interface';
 
 export interface ModalGalleryConfig {
   id: number;
   images: Image[];
   currentImage: Image;
-  libConfig?: LibConfig;
+  libConfig?: ModalLibConfig;
 }

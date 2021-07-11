@@ -27,13 +27,13 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 import { AccessibilityConfig } from '../../model/accessibility.interface';
 import { Image } from '../../model/image.class';
 import { Size } from '../../model/size.interface';
-import { AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
+import { GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../../model/plain-gallery-config.interface';
 
 import { getIndex } from '../../utils/image.util';
 import { ConfigService } from '../../services/config.service';
 import { NEXT } from '../../utils/user-input.util';
 import { AccessibleComponent } from '../accessible.component';
-import { LibConfig } from '../../model/lib-config.interface';
+import { PlainLibConfig, LibConfig } from '../../model/lib-config.interface';
 
 /**
  * Component with the gallery of thumbs.
@@ -70,7 +70,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
    * Array of `Image` that represent the model of this library with all images, thumbs and so on.
    */
   @Input()
-  config: LibConfig | undefined;
+  config: PlainLibConfig | undefined;
 
   /**
    * Output to emit an event when an image is changed.
@@ -308,10 +308,6 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
       this.wrapStyle = layout.breakConfig.wrap;
 
       this.directionStyle = 'row';
-    }
-
-    if (this.plainGalleryConfig.layout instanceof AdvancedLayout) {
-      this.imageGrid = [this.images];
     }
   }
 }

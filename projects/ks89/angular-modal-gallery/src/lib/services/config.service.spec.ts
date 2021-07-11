@@ -56,7 +56,7 @@ import { KeyboardServiceConfig } from '../model/keyboard-service-config.interfac
 import { CarouselPreviewConfig } from '../model/carousel-preview-config.interface';
 import { CarouselImageConfig } from '../model/carousel-image-config.interface';
 import { Description, DescriptionStrategy, DescriptionStyle } from '../model/description.interface';
-import { AdvancedConfig, AdvancedLayout, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../model/plain-gallery-config.interface';
+import { AdvancedConfig, GridLayout, LineLayout, PlainGalleryConfig, PlainGalleryStrategy } from '../model/plain-gallery-config.interface';
 import { CurrentImageConfig } from '../model/current-image-config.interface';
 import { LoadingConfig, LoadingType } from '../model/loading-config.interface';
 import { SidePreviewsConfig, SlideConfig } from '../model/slide-config.interface';
@@ -860,19 +860,6 @@ describe('ConfigService', () => {
               } as PlainGalleryConfig
             };
             expect(() => service.setConfig(1, inputConfig)).toThrowError('GridLayout requires GRID strategy');
-          })
-        );
-
-        it(`should throw an error because 'AdvancedLayout requires CUSTOM strategy'`,
-          inject([ConfigService], (service: ConfigService) => {
-            const inputConfig: LibConfig = {
-              plainGalleryConfig: {
-                strategy: PlainGalleryStrategy.GRID,
-                layout: new AdvancedLayout(1, false),
-                advanced: {aTags: true, additionalBackground: '10% 10%/cover'} as AdvancedConfig
-              } as PlainGalleryConfig
-            };
-            expect(() => service.setConfig(1, inputConfig)).toThrowError('AdvancedLayout requires CUSTOM strategy');
           })
         );
       });
