@@ -1,9 +1,6 @@
 <h2 class="title">Carousel</h2>
 <br>
 
-<p class="red-text">ATTENTION! Carousel supports Internet Explorer 11 only if you enable legacy mode.
-  For more info, please check the <a href="https://ks89.github.io/angular-modal-gallery-2020-v8.github.io">official documentation</a>
-
 <h3>Basic examples</h3>
 <br>
 <section>
@@ -23,7 +20,7 @@
 <section>
   <h3>A3 - (id=102) - carousel example without previews</h3>
   <br>
-  <ks-carousel [id]="102" [images]="imagesRect" [previewConfig]="{visible: false}">
+  <ks-carousel [id]="102" [images]="imagesRect" [config]="LIBCONFIG102">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -31,7 +28,7 @@
 <section>
   <h3>A4 - (id=103) - carousel example without infinite sliding</h3>
   <br>
-  <ks-carousel [id]="103" [images]="imagesRect" [infinite]="false">
+  <ks-carousel [id]="103" [images]="imagesRect" [config]="LIBCONFIG103">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -39,7 +36,7 @@
 <section>
   <h3>A5 - (id=104) - carousel example without dots</h3>
   <br>
-  <ks-carousel [id]="104" [images]="imagesRect" [dotsConfig]="{visible: false}">
+  <ks-carousel [id]="104" [images]="imagesRect" [config]="LIBCONFIG104">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -47,8 +44,7 @@
 <section>
   <h3>A6 - (id=105) - carousel example without auto-play (but all other playConfig properties have default values)</h3>
   <br>
-  <ks-carousel [id]="105" [images]="imagesRect"
-               [playConfig]="{autoPlay: false, interval: 5000, pauseOnHover: true}">
+  <ks-carousel [id]="105" [images]="imagesRect" [config]="LIBCONFIG105">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -56,7 +52,7 @@
 <section>
   <h3>A7 - (id=106) - carousel example with a custom playConfig (10s of interval and pauseOnHover disabled)</h3>
   <br>
-  <ks-carousel [id]="106" [images]="imagesRect" [playConfig]="{autoPlay: true, interval: 10000, pauseOnHover: false}">
+  <ks-carousel [id]="106" [images]="imagesRect" [config]="LIBCONFIG106">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -64,7 +60,7 @@
 <section>
   <h3>A8 - (id=107) - carousel example with a custom previewConfig (7 previews with 'auto' width and 100px of height)</h3>
   <br>
-  <ks-carousel [id]="107" [images]="imagesRect" [previewConfig]="{visible: true, number: 7, width: 'auto', maxHeight: '100px'}">
+  <ks-carousel [id]="107" [images]="imagesRect" [config]="LIBCONFIG107">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -75,10 +71,7 @@
   <p>Show Arrows: <button class="btn btn-primary" (click)="onChangeShowArrows()">{{showArrows ? 'Hide Arrows' : 'Show Arrows'}}</button></p>
   <p>Show Dots: <button class="btn btn-primary" (click)="onChangeShowDots()">{{showDots ? 'Hide Dots' : 'Show Dots'}}</button></p>
   <br>
-  <ks-carousel [id]="108" [images]="imagesRect"
-               [playConfig]="{autoPlay: autoPlay, interval: 3000, pauseOnHover: true}"
-               [carouselConfig]="{maxWidth: '100%', maxHeight: '400px', showArrows: showArrows, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false}"
-               [dotsConfig]="{visible: showDots}">
+  <ks-carousel [id]="108" [images]="imagesRect" [config]="getLibConfig108(autoPlay, showArrows, showDots)">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -87,7 +80,7 @@
   <h3>A10 - (id=109) - carousel example (minimal with all defaults) with outputs</h3>
   <br>
   <ks-carousel [id]="109" [images]="imagesRect"
-    (showImage)="onShow($event)"
+    (changeImage)="onShow($event)"
     (firstImage)="onFirstImage($event)"
     (lastImage)="onLastImage($event)"></ks-carousel>
 </section>
@@ -111,9 +104,7 @@
   <h3>B1 - (id=112) - carousel example with fixed maxWidth (766px) and custom previews</h3>
   <p>By default, on bigger screen, previews will have height = 200px. If you want you can customize it or also change all breakpoint widths.</p>
   <br>
-  <ks-carousel [id]="112" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false}"
-               [previewConfig]="{visible: true, number: 5}">
+  <ks-carousel [id]="112" [images]="imagesRect" [config]="LIBCONFIG112">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -121,9 +112,7 @@
 <section>
   <h3>B2 - (id=113) - carousel example with fixed maxWidth (766px), custom previews and open modal on click</h3>
   <br>
-  <ks-carousel [id]="113" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: true}"
-               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
+  <ks-carousel [id]="113" [images]="imagesRect" [config]="LIBCONFIG113" (showImage)="openModal($event, 113)">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -131,9 +120,7 @@
 <section>
   <h3>B3 - (id=114) - carousel example with fixed maxWidth (766px), custom previews and keyboard navigation disabled (for example left/right arrows)</h3>
   <br>
-  <ks-carousel [id]="114" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: false, modalGalleryEnable: false}"
-               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '100px'}">
+  <ks-carousel [id]="114" [images]="imagesRect" [config]="LIBCONFIG114">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -141,8 +128,7 @@
 <section>
   <h3>B4 - (id=115) - carousel example with 7 images and unclickable previews</h3>
   <br>
-  <ks-carousel [id]="115" [images]="imagesRect"
-               [previewConfig]="{visible: true, number: 7, clickable: false}">
+  <ks-carousel [id]="115" [images]="imagesRect" [config]="LIBCONFIG115">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -153,7 +139,7 @@
 <section>
   <h3>C1 - (id=116) - carousel example with invert swipe on touchscreen devices</h3>
   <br>
-  <ks-carousel [id]="116" [images]="imagesRect" [carouselImageConfig]="{invertSwipe: true}">
+  <ks-carousel [id]="116" [images]="imagesRect" [config]="LIBCONFIG116">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -161,7 +147,7 @@
 <section>
   <h3>C2 - (id=117) - carousel example with description</h3>
   <br>
-  <ks-carousel [id]="117" [images]="imagesRect" [carouselImageConfig]="{description: {strategy: 2}}">
+  <ks-carousel [id]="117" [images]="imagesRect" [config]="LIBCONFIG117">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -176,9 +162,7 @@
 <section>
   <h3>F1 - (id=118) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 200px)</h3>
   <br>
-  <ks-carousel [id]="118" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false}"
-               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '200px'}">
+  <ks-carousel [id]="118" [images]="imagesRect" [config]="LIBCONFIG118">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -186,9 +170,7 @@
 <section>
   <h3>F2 - (id=119) - carousel example with fixed maxWidth (766px) and custom previews (maxHeight 150px)</h3>
   <br>
-  <ks-carousel [id]="119" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '766px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false}"
-               [previewConfig]="{visible: true, number: 5, width: 'auto', maxHeight: '150px'}">
+  <ks-carousel [id]="119" [images]="imagesRect" [config]="LIBCONFIG119">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>
@@ -200,16 +182,13 @@
 <section>
   <h3>G1 - (id=120) - carousel example (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180)</h3>
   <br>
-  <ks-carousel [id]="120" [images]="imagesRect"
-               [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 80, large: 150, xLarge: 180}}"></ks-carousel>
+  <ks-carousel [id]="120" [images]="imagesRect" [config]="LIBCONFIG120"></ks-carousel>
 </section>
 <br>
 <section>
   <h3>G2 - (id=121) - carousel example with fixed maxWidth (500px) (previews with different heights based on the window's width: xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100)</h3>
   <br>
-  <ks-carousel [id]="121" [images]="imagesRect"
-               [carouselConfig]="{maxWidth: '500px', maxHeight: '400px', showArrows: true, objectFit: 'cover', keyboardEnable: true, modalGalleryEnable: false}"
-               [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"></ks-carousel>
+  <ks-carousel [id]="121" [images]="imagesRect" [config]="LIBCONFIG121"></ks-carousel>
 </section>
 <br>
 <br>

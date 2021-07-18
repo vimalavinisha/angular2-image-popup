@@ -56,6 +56,7 @@ export interface CarouselLibConfig extends CommonLibConfig, AccessibleLibConfig,
   carouselPreviewsConfig?: CarouselPreviewConfig;
   carouselPlayConfig?: PlayConfig;
   carouselDotsConfig?: DotsConfig;
+  carouselSlideInfinite?: boolean;
 }
 
 export interface ModalLibConfig extends CommonLibConfig, AccessibleLibConfig, KeyboardServiceLibConfig {

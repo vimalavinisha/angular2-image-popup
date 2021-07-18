@@ -67,13 +67,13 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
   @Input()
   showGallery: boolean | undefined;
   /**
-   * Array of `Image` that represent the model of this library with all images, thumbs and so on.
+   * PlainLibConfig object to configure plain-gallery.
    */
   @Input()
   config: PlainLibConfig | undefined;
 
   /**
-   * Output to emit an event when an image is changed.
+   * Output to emit an event when an image is clicked.
    */
   @Output()
   showImage: EventEmitter<number> = new EventEmitter<number>();

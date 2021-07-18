@@ -1,7 +1,7 @@
 <main id="carousel-container"
-      [attr.aria-label]="configAccessibility.carouselContainerAriaLabel"
-      [title]="configAccessibility.carouselContainerTitle"
-      ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth,
+      [attr.aria-label]="accessibilityConfig?.carouselContainerAriaLabel"
+      [title]="accessibilityConfig?.carouselContainerTitle"
+      ksMaxSize [maxSizeConfig]="{maxWidth: carouselConfig?.maxWidth,
                                maxHeight: ''}">
 
 
@@ -9,24 +9,24 @@
   <ng-template #content><ng-content></ng-content></ng-template>
 
   <figure class="current-figure" *ngIf="currentImage && currentImage.modal"
-          ksSize [sizeConfig]="{width: configCarousel?.maxWidth,
+          ksSize [sizeConfig]="{width: carouselConfig?.maxWidth,
                                 height: ''}">
 
-    <a class="nav-left" *ngIf="configCarousel?.showArrows"
-       [attr.aria-label]="configAccessibility.carouselPrevImageAriaLabel"
-       [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
+    <a class="nav-left" *ngIf="carouselConfig?.showArrows"
+       [attr.aria-label]="accessibilityConfig?.carouselPrevImageAriaLabel"
+       [tabIndex]="isLastImage && !carouselSlideInfinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('left', $event, clickAction)" (keyup)="onNavigationEvent('left', $event, keyboardAction)">
-      <div class="inside {{(isFirstImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
+      <div class="inside {{(isFirstImage && !carouselSlideInfinite) || !carouselConfig.showArrows ? 'empty-arrow-image' : 'left-arrow-image'}}"
            aria-hidden="true"
-           [title]="configAccessibility.carouselPrevImageTitle"></div>
+           [title]="accessibilityConfig?.carouselPrevImageTitle"></div>
     </a>
 
     <ng-container *ngTemplateOutlet="content"></ng-container>
 
     <img id="current-image"
-         [style.object-fit]="configCarousel?.objectFit"
-         ksMaxSize [maxSizeConfig]="{maxWidth: configCarousel?.maxWidth,
-                                  maxHeight: configCarousel?.maxHeight}"
+         [style.object-fit]="carouselConfig?.objectFit"
+         ksMaxSize [maxSizeConfig]="{maxWidth: carouselConfig?.maxWidth,
+                                  maxHeight: carouselConfig?.maxHeight}"
          [src]="currentImage.modal.img"
          ksFallbackImage [fallbackImg]="currentImage.modal.fallbackImg"
          [attr.aria-label]="currentImage.modal.ariaLabel"
@@ -39,23 +39,23 @@
 
     <figcaption *ngIf="getDescriptionToDisplay() !== ''"
                 class="description"
-                ksDescription [description]="configCarouselImage?.description"
+                ksDescription [description]="carouselImageConfig?.description"
                 [innerHTML]="getDescriptionToDisplay()"></figcaption>
 
-    <a class="nav-right" *ngIf="configCarousel?.showArrows"
-       [attr.aria-label]="configAccessibility.carouselNextImageAriaLabel"
-       [tabIndex]="isLastImage && !infinite ? -1 : 0" role="button"
+    <a class="nav-right" *ngIf="carouselConfig?.showArrows"
+       [attr.aria-label]="accessibilityConfig?.carouselNextImageAriaLabel"
+       [tabIndex]="isLastImage && !carouselSlideInfinite ? -1 : 0" role="button"
        (click)="onNavigationEvent('right', $event, clickAction)" (keyup)="onNavigationEvent('right', $event, keyboardAction)">
-      <div class="inside {{(isLastImage && !infinite) || !configCarousel.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
+      <div class="inside {{(isLastImage && !carouselSlideInfinite) || !carouselConfig.showArrows ? 'empty-arrow-image' : 'right-arrow-image'}}"
            aria-hidden="true"
-           [title]="configAccessibility.carouselNextImageTitle"></div>
+           [title]="accessibilityConfig?.carouselNextImageTitle"></div>
     </a>
 
     <div id="dots">
       <ks-dots [id]="id"
                [currentImage]="currentImage"
                [images]="images"
-               [dotsConfig]="dotsConfig"
+               [dotsConfig]="carouselDotsConfig"
                (clickDot)="onClickDot($event)"></ks-dots>
     </div>
 

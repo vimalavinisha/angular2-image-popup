@@ -58,16 +58,11 @@ import { getIndex } from '../../utils/image.util';
 import { NEXT, PREV } from '../../utils/user-input.util';
 import { DescriptionStrategy } from '../../model/description.interface';
 import { DotsConfig } from '../../model/dots-config.interface';
-import { KS_DEFAULT_ACCESSIBILITY_CONFIG } from '../accessibility-default';
-import { PlayConfig } from '../../model/play-config.interface';
 import { CarouselConfig } from '../../model/carousel-config.interface';
 import { CarouselImageConfig } from '../../model/carousel-image-config.interface';
-import { CarouselPreviewConfig } from '../../model/carousel-preview-config.interface';
 import { ConfigService } from '../../services/config.service';
 import { ModalGalleryService } from '../modal-gallery/modal-gallery.service';
-import { LibConfig } from '../../model/lib-config.interface';
-import { ModalGalleryConfig } from '../../model/modal-gallery-config.interface';
-import { KeyboardServiceConfig } from '../../model/keyboard-service-config.interface';
+import { CarouselLibConfig, LibConfig } from '../../model/lib-config.interface';
 
 /**
  * Component with configurable inline/plain carousel.
@@ -98,57 +93,21 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   @Input()
   images: Image[] = [];
   /**
-   * Object of type `CarouselConfig` to init CarouselComponent's features.
-   * For instance, it contains parameters to change the style, how it navigates and so on.
+   * CarouselLibConfig object to configure carousel.
    */
   @Input()
-  carouselConfig: CarouselConfig | undefined;
-  /**
-   * Object of type `PlayConfig` to init CarouselComponent's features about auto-play.
-   * For instance, it contains parameters to enable/disable autoPlay, interval and so on.
-   */
-  @Input()
-  playConfig: PlayConfig | undefined;
-  /**
-   * Interface to configure current image in carousel.
-   * For instance you can change the description.
-   */
-  @Input()
-  carouselImageConfig: CarouselImageConfig | undefined;
-  /**
-   * Object of type `CarouselPreviewConfig` to init PreviewsComponent's features.
-   * For instance, it contains a param to show/hide previews, change sizes and so on.
-   */
-  @Input()
-  previewConfig: CarouselPreviewConfig | undefined;
-  /**
-   * Object of type `DotsConfig` to init DotsComponent's features.
-   * For instance, it contains a param to show/hide this component.
-   */
-  @Input()
-  dotsConfig: DotsConfig | undefined;
-  /**
-   * boolean to enable/disable infinite sliding. Enabled by default.
-   */
-  @Input()
-  infinite = true;
-  /**
-   * TODO add description
-   */
-  @Input()
-  disableSsrWorkaround = false;
-  /**
-   * Object of type `AccessibilityConfig` to init custom accessibility features.
-   * For instance, it contains titles, alt texts, aria-labels and so on.
-   */
-  @Input()
-  accessibilityConfig: AccessibilityConfig | undefined;
+  config: CarouselLibConfig | undefined;
 
   /**
-   * Output to emit an event when an image is changed.
+   * Output to emit an event when an image is clicked.
    */
   @Output()
-  showImage: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
+  showImage: EventEmitter<number> = new EventEmitter<number>();
+  /**
+   * Output to emit an event when current image is changed.
+   */
+  @Output()
+  changeImage: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
   /**
    * Output to emit an event when the current image is the first one.
    */
@@ -161,29 +120,29 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
   lastImage: EventEmitter<ImageEvent> = new EventEmitter<ImageEvent>();
 
   /**
-   * Object use in template
+   * Object of type `CarouselConfig` to init CarouselComponent's features.
+   * For instance, it contains parameters to change the style, how it navigates and so on.
    */
-  configCarousel: CarouselConfig | undefined;
+  carouselConfig: CarouselConfig | undefined;
+
   /**
-   * Object use in template
+   * Object of type `DotsConfig` to init DotsComponent's features.
+   * For instance, it contains a param to show/hide this component.
    */
-  configPlay: PlayConfig | undefined;
+  carouselDotsConfig: DotsConfig | undefined;
   /**
-   * Object use in template
+   * Object of type `AccessibilityConfig` to init custom accessibility features.
+   * For instance, it contains titles, alt texts, aria-labels and so on.
    */
-  configCarouselImage: CarouselImageConfig | undefined;
+  accessibilityConfig: AccessibilityConfig | undefined;
   /**
-   * Object use in template
+   * Object of type `CarouselImageConfig` to configure the current image of the carousel.
    */
-  configPreview: CarouselPreviewConfig | undefined;
+  carouselImageConfig: CarouselImageConfig | undefined;
   /**
-   * Object use in template
+   * Enable/disable infinite sliding.
    */
-  configDots: DotsConfig | undefined;
-  /**
-   * Object use in template
-   */
-  configAccessibility: AccessibilityConfig = KS_DEFAULT_ACCESSIBILITY_CONFIG;
+  carouselSlideInfinite: boolean | undefined;
 
   /**
    * Enum of type `Action` that represents a mouse click on a button.
@@ -312,52 +271,6 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     super();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.id === null || this.id === undefined) {
-      throw new Error('Internal library error - id must be defined');
-    }
-    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
-    if (!libConfig) {
-      throw new Error('Internal library error - libConfig must be defined');
-    }
-
-    // handle changes of dotsConfig
-    const configDotsChange: SimpleChange = changes.dotsConfig;
-    if (configDotsChange && configDotsChange.currentValue !== configDotsChange.previousValue) {
-      this.configService.setConfig(this.id, {
-        carouselDotsConfig: configDotsChange.currentValue
-      });
-      this.configDots = libConfig.carouselDotsConfig;
-    }
-    // handle changes of carouselConfig
-    const carouselConfigChange: SimpleChange = changes.carouselConfig;
-    if (carouselConfigChange && carouselConfigChange.currentValue !== carouselConfigChange.previousValue) {
-      this.configService.setConfig(this.id, {
-        carouselConfig: carouselConfigChange.currentValue
-      });
-      this.configCarousel = carouselConfigChange.currentValue;
-    }
-    // handle changes of playConfig starting/stopping the carousel accordingly
-    const playConfigChange: SimpleChange = changes.playConfig;
-    if (playConfigChange) {
-      const playConfigChangePrev: PlayConfig = playConfigChange.previousValue;
-      const playConfigChangeCurr: PlayConfig = playConfigChange.currentValue;
-      if (playConfigChangePrev !== playConfigChangeCurr) {
-        this.configService.setConfig(this.id, {
-          carouselPlayConfig: playConfigChange.currentValue
-        });
-        // this.configPlay = playConfigChange.currentValue;
-        // if autoplay is enabled, and this is not the
-        // first change (to prevent multiple starts at the beginning)
-        if (playConfigChangeCurr.autoPlay && !playConfigChange.isFirstChange()) {
-          this.start$.next();
-        } else {
-          this.stopCarousel();
-        }
-      }
-    }
-  }
-
   ngOnInit(): void {
     if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
@@ -365,32 +278,76 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     if (!this.images) {
       throw new Error('Internal library error - images must be defined');
     }
+    this.configService.setConfig(this.id, this.config);
+
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
     if (!libConfig) {
       throw new Error('Internal library error - libConfig must be defined');
     }
-    this.currentImage = this.images[0];
 
-    this.configService.setConfig(this.id, {
-      carouselConfig: this.carouselConfig,
-      carouselImageConfig: this.carouselImageConfig,
-      carouselPlayConfig: this.playConfig,
-      carouselPreviewsConfig: this.previewConfig,
-      carouselDotsConfig: this.dotsConfig,
-      accessibilityConfig: this.accessibilityConfig,
-      // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
-      keyboardServiceConfig: {
-        shortcuts: ['ctrl+s', 'meta+s'],
-        disableSsrWorkaround: this.disableSsrWorkaround
-      }
-    });
-    this.configCarousel = libConfig.carouselConfig;
-    this.configCarouselImage = libConfig.carouselImageConfig;
-    this.configPlay = libConfig.carouselPlayConfig;
-    this.configPreview = libConfig.carouselPreviewsConfig;
-    this.configDots = libConfig.carouselDotsConfig;
-    this.configAccessibility = libConfig.accessibilityConfig as AccessibilityConfig;
+    this.currentImage = this.images[0];
+    this.carouselDotsConfig = libConfig.carouselDotsConfig;
+    this.accessibilityConfig = libConfig.accessibilityConfig;
+    this.carouselSlideInfinite = libConfig.carouselSlideInfinite;
+    this.carouselConfig = libConfig.carouselConfig;
+    this.carouselImageConfig = libConfig.carouselImageConfig;
+
     this.manageSlideConfig();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.id === null || this.id === undefined) {
+      throw new Error('Internal library error - id must be defined');
+    }
+
+    // this.configService.setConfig(this.id, this.config);
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
+
+    const configChange: SimpleChange = changes.config;
+
+    // handle changes of dotsConfig.visible
+    if (configChange &&
+      !configChange.firstChange &&
+      (configChange.previousValue.carouselDotsConfig?.visible !== configChange.currentValue.carouselDotsConfig?.visible || (!configChange.previousValue.carouselDotsConfig && !configChange.currentValue.carouselDotsConfig))
+    ) {
+      this.configService.setConfig(this.id, {
+        carouselDotsConfig: configChange.currentValue?.carouselDotsConfig
+      });
+      this.carouselDotsConfig = configChange.currentValue?.carouselDotsConfig;
+      this.ref.markForCheck();
+    }
+    // handle changes of carouselConfig.showArrows
+    if (configChange &&
+      !configChange.firstChange &&
+      (configChange.previousValue.carouselConfig?.showArrows !== configChange.currentValue.carouselConfig?.showArrows || (!configChange.previousValue.carouselConfig && !configChange.currentValue.carouselConfig))
+    ) {
+      this.configService.setConfig(this.id, {
+        carouselConfig: configChange.currentValue?.carouselConfig
+      });
+      this.carouselConfig = configChange.currentValue?.carouselConfig;
+      this.ref.markForCheck();
+    }
+    // handle changes of playConfig starting/stopping the carousel accordingly
+    if (configChange &&
+      !configChange.firstChange &&
+      (configChange.previousValue.carouselPlayConfig?.autoPlay !== configChange.currentValue.carouselPlayConfig?.autoPlay || (!configChange.previousValue.carouselPlayConfig && !configChange.currentValue.carouselPlayConfig))
+    ) {
+      this.configService.setConfig(this.id, {
+        carouselPlayConfig: configChange.currentValue?.carouselPlayConfig
+      });
+      // this.configPlay = playConfigChange.currentValue;
+      // if autoplay is enabled, and this is not the
+      // first change (to prevent multiple starts at the beginning)
+      if (configChange.currentValue.carouselPlayConfig?.autoPlay && !configChange.firstChange) {
+        this.start$.next();
+      } else {
+        this.stopCarousel();
+      }
+      this.ref.markForCheck();
+    }
   }
 
   ngAfterContentInit(): void {
@@ -407,14 +364,14 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       this.ngZone.runOutsideAngular(() => {
         this.start$
           .pipe(
-            map(() => libConfig && libConfig.carouselPlayConfig && libConfig.carouselPlayConfig.interval),
+            map(() => libConfig?.carouselPlayConfig?.interval),
             // tslint:disable-next-line:no-any
             filter((interval: any) => interval > 0),
             switchMap(interval => timer(interval).pipe(takeUntil(this.stop$)))
           )
           .subscribe(() =>
             this.ngZone.run(() => {
-              if (this.configPlay && this.configPlay.autoPlay) {
+              if (libConfig.carouselPlayConfig?.autoPlay) {
                 this.nextImage();
               }
               this.ref.markForCheck();
@@ -465,18 +422,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       return;
     }
     const index = getIndex(this.currentImage, this.images);
-    this.modalGalleryService.open({
-      id: this.id,
-      images: this.images,
-      currentImage: this.images[index],
-      libConfig: {
-        // this custom config with 'disableSsrWorkaround: true' is required in case of SystemJS
-        keyboardServiceConfig: {
-          shortcuts: ['ctrl+s', 'meta+s'],
-          disableSsrWorkaround: this.disableSsrWorkaround
-        } as KeyboardServiceConfig
-      } as LibConfig
-    } as ModalGalleryConfig);
+    this.showImage.emit(index);
   }
 
   /**
@@ -700,7 +646,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     this.emitBoundaryEvent(action, index);
 
     // emit current visible image index
-    this.showImage.emit(new ImageEvent(this.id, action, index + 1));
+    this.changeImage.emit(new ImageEvent(this.id, action, index + 1));
   }
 
   /**
@@ -821,6 +767,13 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * @param number index of the visible image
    */
   private manageSlideConfig(): void {
+    if (this.id === null || this.id === undefined) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
     if (!this.currentImage) {
       throw new Error('Internal library error - currentImage must be defined');
     }
@@ -832,7 +785,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       throw err;
     }
 
-    if (this.infinite === true) {
+    if (libConfig.carouselSlideInfinite === true) {
       // enable infinite sliding
       this.isFirstImage = false;
       this.isLastImage = false;
@@ -864,17 +817,24 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
 
   /**
    * Private method to check if next/prev actions should be blocked.
-   * It checks if slideConfig.infinite === false and if the image index is equals to the input parameter.
+   * It checks if carouselSlideInfinite === false and if the image index is equals to the input parameter.
    * If yes, it returns true to say that sliding should be blocked, otherwise not.
    * @param number boundaryIndex that could be either the beginning index (0) or the last index
    *  of images (this.images.length - 1).
-   * @returns boolean true if slideConfig.infinite === false and the current index is
+   * @returns boolean true if carouselSlideInfinite === false and the current index is
    *  either the first or the last one.
    */
   private isPreventSliding(boundaryIndex: number): boolean {
+    if (this.id === null || this.id === undefined) {
+      throw new Error('Internal library error - id must be defined');
+    }
+    const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
+    if (!libConfig) {
+      throw new Error('Internal library error - libConfig must be defined');
+    }
     if (!this.currentImage) {
       throw new Error('Internal library error - currentImage must be defined');
     }
-    return !this.infinite && getIndex(this.currentImage, this.images) === boundaryIndex;
+    return !libConfig.carouselSlideInfinite && getIndex(this.currentImage, this.images) === boundaryIndex;
   }
 }

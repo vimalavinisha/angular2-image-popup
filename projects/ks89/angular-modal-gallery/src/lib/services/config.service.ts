@@ -136,6 +136,7 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
   carouselPreviewsConfig: DEFAULT_CAROUSEL_PREVIEWS_CONFIG,
   carouselPlayConfig: DEFAULT_CURRENT_CAROUSEL_PLAY,
   carouselDotsConfig: { visible: true } as DotsConfig,
+  carouselSlideInfinite: true,
   enableCloseOutside: true,
   keyboardServiceConfig: DEFAULT_KEYBOARD_SERVICE_CONFIG
 });
@@ -340,6 +341,11 @@ export class ConfigService {
     }
     if (obj.carouselDotsConfig) {
       newConfig.carouselDotsConfig = Object.assign({}, DEFAULT_CONFIG.carouselDotsConfig, obj.carouselDotsConfig);
+    }
+    if (obj.carouselSlideInfinite === undefined) {
+      newConfig.carouselSlideInfinite = DEFAULT_CONFIG.carouselSlideInfinite;
+    } else {
+      newConfig.carouselSlideInfinite = obj.carouselSlideInfinite;
     }
     if (obj.enableCloseOutside === undefined) {
       newConfig.enableCloseOutside = DEFAULT_CONFIG.enableCloseOutside;
