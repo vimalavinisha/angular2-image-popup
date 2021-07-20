@@ -131,7 +131,6 @@ describe('PlainGalleryComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(GALLERY_ID, {accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG});
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -215,7 +214,6 @@ describe('PlainGalleryComponent', () => {
       const configService = fixture.debugElement.injector.get(ConfigService);
       configService.setConfig(GALLERY_ID, {accessibilityConfig: CUSTOM_ACCESSIBILITY});
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -245,7 +243,6 @@ describe('PlainGalleryComponent', () => {
           }
         });
         comp.id = GALLERY_ID;
-        comp.showGallery = true;
         comp.images = IMAGES;
         comp.ngOnInit();
         fixture.detectChanges();
@@ -282,7 +279,6 @@ describe('PlainGalleryComponent', () => {
         }
       });
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -308,7 +304,6 @@ describe('PlainGalleryComponent', () => {
         }
       });
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -334,7 +329,6 @@ describe('PlainGalleryComponent', () => {
         }
       });
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -386,7 +380,6 @@ describe('PlainGalleryComponent', () => {
         }
       });
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -418,7 +411,6 @@ describe('PlainGalleryComponent', () => {
         }
       });
       comp.id = GALLERY_ID;
-      comp.showGallery = true;
       comp.images = IMAGES;
       comp.ngOnInit();
       fixture.detectChanges();
@@ -509,7 +501,6 @@ describe('PlainGalleryComponent', () => {
           }
         });
         comp.id = GALLERY_ID;
-        comp.showGallery = true;
         comp.images = IMAGES;
         comp.ngOnInit();
         fixture.detectChanges();

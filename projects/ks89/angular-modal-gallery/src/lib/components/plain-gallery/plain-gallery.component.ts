@@ -62,11 +62,6 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
   @Input()
   images: Image[] = [];
   /**
-   * Boolean to show/hide plain gallery. If true the plain gallery will be visible, false otherwise.
-   */
-  @Input()
-  showGallery: boolean | undefined;
-  /**
    * PlainLibConfig object to configure plain-gallery.
    */
   @Input()
