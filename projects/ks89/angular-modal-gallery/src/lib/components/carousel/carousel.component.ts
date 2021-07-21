@@ -102,7 +102,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
    * Output to emit an event when an image is clicked.
    */
   @Output()
-  showImage: EventEmitter<number> = new EventEmitter<number>();
+  clickImage: EventEmitter<number> = new EventEmitter<number>();
   /**
    * Output to emit an event when current image is changed.
    */
@@ -422,7 +422,7 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
       return;
     }
     const index = getIndex(this.currentImage, this.images);
-    this.showImage.emit(index);
+    this.clickImage.emit(index);
   }
 
   /**

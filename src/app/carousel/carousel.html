@@ -112,7 +112,7 @@
 <section>
   <h3>B2 - (id=113) - carousel example with fixed maxWidth (766px), custom previews and open modal on click</h3>
   <br>
-  <ks-carousel [id]="113" [images]="imagesRect" [config]="LIBCONFIG113" (showImage)="openModal($event, 113)">
+  <ks-carousel [id]="113" [images]="imagesRect" [config]="LIBCONFIG113" (clickImage)="openModal($event, 113)">
     <div class="projected">This is my projected content!</div>
   </ks-carousel>
 </section>

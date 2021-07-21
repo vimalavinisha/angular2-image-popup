@@ -59,6 +59,7 @@ export class ModalGalleryService {
   /**
    * Method to close a modal gallery previously opened.
    * @param id Unique identifier of the modal gallery
+   * @param clickOutside boolean is true if closed clicking on the modal backdrop, false otherwise.
    */
   close(id: number, clickOutside: boolean): void {
     const libConfig: LibConfig | undefined = this.configService.getConfig(id);
