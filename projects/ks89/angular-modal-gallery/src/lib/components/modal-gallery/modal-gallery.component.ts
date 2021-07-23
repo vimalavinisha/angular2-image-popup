@@ -592,6 +592,10 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
   private initImages(): void {
     this.modalGalleryService.emitHasData(new ImageModalEvent(this.id, Action.LOAD, true));
     this.showGallery = this.images.length > 0;
+
+    const currentIndex: number = this.images.indexOf(this.currentImage);
+    // emit first/last event based on newIndex value
+    this.emitBoundaryEvent(Action.NORMAL, currentIndex);
   }
 
   /**
