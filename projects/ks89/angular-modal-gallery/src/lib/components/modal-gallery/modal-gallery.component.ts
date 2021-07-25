@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, SecurityContext, ViewChild } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component,
+  HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, SecurityContext, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
@@ -28,7 +29,8 @@ import { ModalGalleryConfig } from '../../model/modal-gallery-config.interface';
 @Component({
   selector: 'ks-modal-gallery',
   templateUrl: './modal-gallery.component.html',
-  styleUrls: ['./modal-gallery.component.scss']
+  styleUrls: ['./modal-gallery.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalGalleryComponent implements OnInit, OnDestroy {
   /**
@@ -134,7 +136,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
           this.currentImage = image;
         }
       });
-      this.changeDetectorRef.markForCheck();
+      // this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -161,9 +163,12 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
 
     this.dotsConfig = libConfig.dotsConfig;
 
-    // call initImages to init images and to emit `hasData` event
-    this.initImages();
-    this.showModalGallery();
+    this.registerKeyboardService();
+    // this.changeDetectorRef.markForCheck();
+
+    setTimeout(() => {
+      this.initImages();
+    }, 0);
   }
 
   /**
@@ -359,7 +364,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     if (isCalledByService) {
       // the following is required, otherwise the view will not be updated
       // this happens only if called by gallery.service
-      this.changeDetectorRef.markForCheck();
+      // this.changeDetectorRef.markForCheck();
     }
   }
 
@@ -375,11 +380,11 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
 
     this.currentImage = this.images[newIndex];
 
-    // emit first/last event based on newIndex value
-    this.emitBoundaryEvent(event.action, newIndex);
-
     // emit current visible image index
     this.modalGalleryService.emitShow(new ImageModalEvent(this.id, event.action, newIndex + 1));
+
+    // emit first/last event based on newIndex value
+    this.emitBoundaryEvent(event.action, newIndex);
   }
 
   /**
@@ -448,7 +453,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * will be destroyed or when the gallery is closed invoking the `closeGallery` method.
    * @private
    */
-  private showModalGallery(): void {
+  private registerKeyboardService(): void {
     if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
@@ -467,11 +472,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
         }
         this.downloadImage();
       }, libConfig);
-
-      const currentIndex: number = this.images.indexOf(this.currentImage);
-      // emit a new ImageModalEvent with the index of the current image
-      this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
-      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -591,11 +591,13 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   private initImages(): void {
     this.modalGalleryService.emitHasData(new ImageModalEvent(this.id, Action.LOAD, true));
-    this.showGallery = this.images.length > 0;
-
     const currentIndex: number = this.images.indexOf(this.currentImage);
+    // emit a new ImageModalEvent with the index of the current image
+    this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(Action.NORMAL, currentIndex);
+    this.showGallery = this.images.length > 0;
+    // this.changeDetectorRef.markForCheck();
   }
 
   /**
