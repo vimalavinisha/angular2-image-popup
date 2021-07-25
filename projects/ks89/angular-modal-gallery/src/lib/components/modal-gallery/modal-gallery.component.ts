@@ -321,7 +321,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     const eventToEmit: ButtonEvent = this.getButtonEventToEmit(event);
     this.modalGalleryService.emitButtonBeforeHook(eventToEmit);
     this.closeGallery(action, false);
-    this.modalGalleryService.emitButtonAfterHook(eventToEmit);
   }
 
   /**
