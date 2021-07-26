@@ -248,11 +248,13 @@ describe('ModalGalleryComponent', () => {
 
   describe('---YES---', () => {
 
-    it(`should display modal gallery`, () => {
+    it(`should display modal gallery - first image`, (done) => {
       const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
       const configService = fixture.debugElement.injector.get(ConfigService);
 
       const hasDataSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitHasData');
+      const showSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
+      const firstImageSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitFirstImage');
 
       configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
       comp.id = GALLERY_ID;
@@ -262,7 +264,36 @@ describe('ModalGalleryComponent', () => {
 
       checkElements(fixture);
 
-      expect(hasDataSpy).toHaveBeenCalled();
+      setTimeout(() => {
+        expect(hasDataSpy).toHaveBeenCalled();
+        expect(showSpy).toHaveBeenCalled();
+        expect(firstImageSpy).toHaveBeenCalled();
+        done();
+      }, 500);
+    });
+
+    it(`should display modal gallery - last image`, (done) => {
+      const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
+      const configService = fixture.debugElement.injector.get(ConfigService);
+
+      const hasDataSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitHasData');
+      const showSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitShow');
+      const lastImageSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitLastImage');
+
+      configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
+      comp.id = GALLERY_ID;
+      comp.images = IMAGES;
+      comp.currentImage = IMAGES[IMAGES.length - 1];
+      fixture.detectChanges();
+
+      checkElements(fixture);
+
+      setTimeout(() => {
+        expect(hasDataSpy).toHaveBeenCalled();
+        expect(showSpy).toHaveBeenCalled();
+        expect(lastImageSpy).toHaveBeenCalled();
+        done();
+      }, 500);
     });
 
     it(`should display modal gallery and call onCustomEmit`, () => {
@@ -547,7 +578,6 @@ describe('ModalGalleryComponent', () => {
       checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
-      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
 
       const EVENT: ButtonEvent = {
         button: {
@@ -560,7 +590,6 @@ describe('ModalGalleryComponent', () => {
       comp.onCloseGalleryButton(EVENT);
 
       expect(beforeHookSpy).toHaveBeenCalled();
-      expect(afterHookSpy).toHaveBeenCalled();
     });
 
     it(`should display modal gallery and call onCloseGallery`, () => {
@@ -576,7 +605,6 @@ describe('ModalGalleryComponent', () => {
       checkElements(fixture);
 
       const beforeHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonBeforeHook');
-      const afterHookSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitButtonAfterHook');
 
       const EVENT: ImageModalEvent = {
         action: Action.NORMAL,
@@ -586,32 +614,6 @@ describe('ModalGalleryComponent', () => {
       comp.onCloseGallery(EVENT);
 
       expect(beforeHookSpy).toHaveBeenCalled();
-      expect(afterHookSpy).toHaveBeenCalled();
-    });
-
-    [true, false].forEach(isCalledByService => {
-      it(`should display modal gallery and call closeGallery. Test with isCalledByService = ${isCalledByService}`, () => {
-        const modalGalleryService = fixture.debugElement.injector.get(ModalGalleryService);
-        const configService = fixture.debugElement.injector.get(ConfigService);
-
-        configService.setConfig(GALLERY_ID, { accessibilityConfig: KS_DEFAULT_ACCESSIBILITY_CONFIG });
-        comp.id = GALLERY_ID;
-        comp.images = IMAGES;
-        comp.currentImage = IMAGES[0];
-        fixture.detectChanges();
-
-        const element: DebugElement = fixture.debugElement;
-        const modalGallery: DebugElement = element.query(By.css('div#modal-gallery-wrapper'));
-        expect(modalGallery).not.toBeNull();
-
-        const emitCloseSpy: Spy<any> = spyOn<any>(modalGalleryService, 'emitClose');
-        const closeSpy: Spy<any> = spyOn<any>(modalGalleryService, 'close');
-
-        comp.closeGallery(Action.NORMAL, true, isCalledByService);
-
-        expect(emitCloseSpy).toHaveBeenCalled();
-        expect(closeSpy).toHaveBeenCalled();
-      });
     });
 
     [0, 1, IMAGES.length - 1].forEach(index => {

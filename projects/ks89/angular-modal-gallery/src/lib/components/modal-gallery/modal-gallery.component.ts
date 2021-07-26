@@ -136,7 +136,7 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
           this.currentImage = image;
         }
       });
-      // this.changeDetectorRef.markForCheck();
+      this.changeDetectorRef.markForCheck();
     });
   }
 
@@ -164,7 +164,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     this.dotsConfig = libConfig.dotsConfig;
 
     this.registerKeyboardService();
-    // this.changeDetectorRef.markForCheck();
 
     setTimeout(() => {
       this.initImages();
@@ -347,9 +346,8 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    * It also reset the `keyboardService` to prevent multiple listeners.
    * @param action Action action type. `Action.NORMAL` by default
    * @param clickOutside boolean that is true if called clicking on the modal background. False by default.
-   * @param isCalledByService boolean isCalledByService is true if called by gallery.service, otherwise false. False by default.
    */
-  closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false, isCalledByService: boolean = false): void {
+  closeGallery(action: Action = Action.NORMAL, clickOutside: boolean = false): void {
     const libConfig: LibConfig | undefined = this.configService.getConfig(this.id);
     if (!libConfig) {
       throw new Error('Internal library error - libConfig must be defined');
@@ -358,12 +356,6 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
     this.modalGalleryService.emitClose(new ImageModalEvent(this.id, action, true));
     this.keyboardService.reset(libConfig);
     this.modalGalleryService.close(this.id, clickOutside);
-
-    if (isCalledByService) {
-      // the following is required, otherwise the view will not be updated
-      // this happens only if called by gallery.service
-      // this.changeDetectorRef.markForCheck();
-    }
   }
 
   /**
@@ -589,13 +581,15 @@ export class ModalGalleryComponent implements OnInit, OnDestroy {
    */
   private initImages(): void {
     this.modalGalleryService.emitHasData(new ImageModalEvent(this.id, Action.LOAD, true));
+
     const currentIndex: number = this.images.indexOf(this.currentImage);
     // emit a new ImageModalEvent with the index of the current image
     this.modalGalleryService.emitShow(new ImageModalEvent(this.id, Action.LOAD, currentIndex + 1));
+
     // emit first/last event based on newIndex value
     this.emitBoundaryEvent(Action.NORMAL, currentIndex);
+
     this.showGallery = this.images.length > 0;
-    // this.changeDetectorRef.markForCheck();
   }
 
   /**
