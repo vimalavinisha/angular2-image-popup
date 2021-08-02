@@ -275,8 +275,8 @@ export class CarouselComponent extends AccessibleComponent implements OnInit, Af
     if (this.id === null || this.id === undefined) {
       throw new Error('Internal library error - id must be defined');
     }
-    if (!this.images) {
-      throw new Error('Internal library error - images must be defined');
+    if (!this.images || this.images.length === 0) {
+      throw new Error('Internal library error - images array must be defined and with at least an element');
     }
     this.configService.setConfig(this.id, this.config);
 

@@ -73,7 +73,7 @@ export class CarouselExampleComponent {
       maxHeight: '100px'
     }
   };
-  LIBCONFIG112: CarouselLibConfig = {
+  LIBCONFIG113: CarouselLibConfig = {
     carouselPreviewsConfig: {
       visible: true,
       number: 5
@@ -87,7 +87,7 @@ export class CarouselExampleComponent {
       modalGalleryEnable: false
     }
   };
-  LIBCONFIG113: CarouselLibConfig = {
+  LIBCONFIG114: CarouselLibConfig = {
     carouselPreviewsConfig: {
       visible: true,
       number: 5,
@@ -103,7 +103,7 @@ export class CarouselExampleComponent {
       modalGalleryEnable: true
     }
   };
-  LIBCONFIG114: CarouselLibConfig = {
+  LIBCONFIG115: CarouselLibConfig = {
     carouselPreviewsConfig: {
       visible: true,
       number: 5,
@@ -119,39 +119,23 @@ export class CarouselExampleComponent {
       modalGalleryEnable: false
     }
   };
-  LIBCONFIG115: CarouselLibConfig = {
+  LIBCONFIG116: CarouselLibConfig = {
     carouselPreviewsConfig: {
       visible: true,
       number: 7,
       clickable: false
     }
   };
-  LIBCONFIG116: CarouselLibConfig = {
+  LIBCONFIG117: CarouselLibConfig = {
     carouselImageConfig: {
       invertSwipe: true
     }
   };
-  LIBCONFIG117: CarouselLibConfig = {
+  LIBCONFIG118: CarouselLibConfig = {
     carouselImageConfig: {
       description: {
         strategy: 2
       }
-    }
-  };
-  LIBCONFIG118: CarouselLibConfig = {
-    carouselConfig: {
-      maxWidth: '766px',
-      maxHeight: '400px',
-      showArrows: true,
-      objectFit: 'cover',
-      keyboardEnable: true,
-      modalGalleryEnable: false
-    },
-    carouselPreviewsConfig: {
-      visible: true,
-      number: 5,
-      width: 'auto',
-      maxHeight: '200px'
     }
   };
   LIBCONFIG119: CarouselLibConfig = {
@@ -167,10 +151,26 @@ export class CarouselExampleComponent {
       visible: true,
       number: 5,
       width: 'auto',
-      maxHeight: '150px'
+      maxHeight: '200px'
     }
   };
   LIBCONFIG120: CarouselLibConfig = {
+    carouselConfig: {
+      maxWidth: '766px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: true,
+      modalGalleryEnable: false
+    },
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 5,
+      width: 'auto',
+      maxHeight: '150px'
+    }
+  };
+  LIBCONFIG121: CarouselLibConfig = {
     carouselPreviewsConfig: {
       visible: true,
       breakpoints: {
@@ -182,7 +182,7 @@ export class CarouselExampleComponent {
       }
     }
   };
-  LIBCONFIG121: CarouselLibConfig = {
+  LIBCONFIG122: CarouselLibConfig = {
     carouselPreviewsConfig: {
       visible: true,
       breakpoints: {
@@ -259,6 +259,8 @@ export class CarouselExampleComponent {
     ),
     new Image(6, { img: '/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
+
+  emptyImagesArray: Image[] = [];
 
   imagesRectNoTitles: Image[] = [
     new Image(
