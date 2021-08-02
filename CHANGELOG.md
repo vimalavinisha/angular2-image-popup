@@ -3,11 +3,25 @@
 ### Features
 
 - remove legacy mode in carousels (drop IE11) #235 **(BREAKING CHANGE)**
+- remove keyCode in keyboard-navigation-directive, because deprecated #200 **(BREAKING CHANGE)**
 - cleanup download image code in modal-gallery.component (drop IE11 and Edge legacy) #228 **(BREAKING CHANGE)**
-- make LibConfig interface private, to expose ModalLibConfig, PlainLibConfig and CarouselLibConfig #232 **(BREAKING CHANGE)**
-- requestFullscreen and exitFullscreen return promises.
+- requestFullscreen and exitFullscreen return promises. **(BREAKING CHANGE)**
   It's not easy to manage all cases in the right way, so at the moment I added only an error in case of catch clause #233 **(BREAKING CHANGE)**
 - Remove AdvancedLayout from PlainGallery, because already unused in v8.x.x #238 **(BREAKING CHANGE)**
+- make LibConfig interface private, to expose ModalLibConfig, PlainLibConfig and CarouselLibConfig #232 **(BREAKING CHANGE)**
+- carousel component accepts CarouselLibConfig as input instead of all parameters to be consistent with changes made in v8.0.0 #229 **(BREAKING CHANGE)**
+- remove [showGallery] input from plain-gallery component, because it's unused #239 **(BREAKING CHANGE)**
+- rename (showImage) output into (clickImage) for both plain-gallery and carousel #240 **(BREAKING CHANGE)**
+- when modal-gallery opens with image index 0 or length - 1, it emits first/last Image events #241 **(BREAKING CHANGE)**
+- remove emitButtonAfterHook in closeGallery methods **(BREAKING CHANGE)**
+
+### Bugfixes
+
+- improve error message if you pass an empty array of images to the carousel #209
+
+### Examples
+
+- add examples with 0 images to modal-gallery, carousel and plain-gallery #242
 
 ### Tests
 
@@ -16,6 +30,9 @@
 ### Docs
 
 - upgrade doc website to bootstrap 5.x.x #236
+- many fixes to the API and examples input tables (errors made with 8.0.0)
+- general improvement to the doc to show default values in a cleaner way
+- remove LibConfig interface and use the newer interfaces
 
 
 # 8.0.1
