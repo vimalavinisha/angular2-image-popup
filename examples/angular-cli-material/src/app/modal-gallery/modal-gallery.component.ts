@@ -138,6 +138,8 @@ export class ModalGalleryExampleComponent implements OnDestroy {
     new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
 
+  emptyImagesArray: Image[] = [];
+
   imagesRectNoTitles: Image[] = [
     new Image(
       0,
@@ -497,6 +499,14 @@ export class ModalGalleryExampleComponent implements OnDestroy {
   }
 
   openModal(id: number, imagesArrayToUse: Image[], imageIndex: number, libConfig?: ModalLibConfig): void {
+    if(imagesArrayToUse.length === 0) {
+      console.error('Cannot open modal-gallery because images array cannot be empty');
+      return;
+    }
+    if(imageIndex > imagesArrayToUse.length - 1) {
+      console.error('Cannot open modal-gallery because imageIndex must be valid');
+      return;
+    }
     const imageToShow: Image = imagesArrayToUse[imageIndex];
     const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
       id,

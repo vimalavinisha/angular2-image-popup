@@ -8,9 +8,9 @@ import {
   KS_DEFAULT_BTN_DOWNLOAD,
   KS_DEFAULT_BTN_EXTURL,
   KS_DEFAULT_BTN_FULL_SCREEN,
-  ModalLibConfig,
   LoadingConfig,
   LoadingType,
+  ModalLibConfig,
   Size
 } from '@ks89/angular-modal-gallery';
 

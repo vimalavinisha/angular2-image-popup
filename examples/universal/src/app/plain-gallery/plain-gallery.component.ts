@@ -35,7 +35,6 @@ import {
   ModalGalleryRef,
   PlainLibConfig
 } from '@ks89/angular-modal-gallery';
-import { CarouselExampleComponent } from '../carousel/carousel.component';
 
 @Component({
   selector: 'ks-plain-gallery-page',
@@ -99,6 +98,8 @@ export class PlainGalleryExampleComponent {
     }),
     new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
+
+  emptyImagesArray: Image[] = [];
 
   fallbackImages: Image[] = [
     new Image(0, {

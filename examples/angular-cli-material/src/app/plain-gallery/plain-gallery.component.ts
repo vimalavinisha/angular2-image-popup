@@ -99,6 +99,8 @@ export class PlainGalleryExampleComponent {
     new Image(4, { img: '../assets/images/gallery/img5.jpg' }, { img: '../assets/images/gallery/thumbs/img5.jpg' })
   ];
 
+  emptyImagesArray: Image[] = [];
+
   fallbackImages: Image[] = [
     new Image(0, {
       // this file is not available so the browser returns an error

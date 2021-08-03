@@ -12,9 +12,8 @@
   <br>
   <ks-plain-gallery [id]="200"
                     [images]="images"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryRow"
-                    (showImage)="onShow(200, $event)"></ks-plain-gallery>
+                    (clickImage)="onShow(200, $event)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -22,9 +21,8 @@
   <br>
   <ks-plain-gallery [id]="201"
                     [images]="images"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryRowSpaceAround"
-                    (showImage)="onShow(201, $event)"></ks-plain-gallery>
+                    (clickImage)="onShow(201, $event)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -32,9 +30,8 @@
   <br>
   <ks-plain-gallery [id]="202"
                     [images]="imagesRect"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryRowATags"
-                    (showImage)="onShow(202, $event, imagesRect)"></ks-plain-gallery>
+                    (clickImage)="onShow(202, $event, imagesRect)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -42,9 +39,8 @@
   <br>
   <ks-plain-gallery [id]="203"
                     [images]="images"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryColumn"
-                    (showImage)="onShow(203, $event, images)"></ks-plain-gallery>
+                    (clickImage)="onShow(203, $event, images)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -52,9 +48,8 @@
   <br>
   <ks-plain-gallery [id]="204"
                     [images]="images"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryGrid"
-                    (showImage)="onShow(204, $event, images)"></ks-plain-gallery>
+                    (clickImage)="onShow(204, $event, images)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -125,8 +120,7 @@
   <br>
   <ks-plain-gallery [id]="208"
                     [images]="fallbackImages"
-                    [showGallery]="true"
-                    (showImage)="onShow(208, $event, fallbackImages)"></ks-plain-gallery>
+                    (clickImage)="onShow(208, $event, fallbackImages)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -134,9 +128,8 @@
   <br>
   <ks-plain-gallery [id]="209"
                     [images]="fallbackImages"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryRowATags"
-                    (showImage)="onShow(209, $event, fallbackImages)"></ks-plain-gallery>
+                    (clickImage)="onShow(209, $event, fallbackImages)"></ks-plain-gallery>
 </section>
 <br>
 <section>
@@ -144,9 +137,16 @@
   <br>
   <ks-plain-gallery [id]="210"
                     [images]="imagesRectNoTitles"
-                    [showGallery]="true"
                     [config]="libConfigPlainGalleryRow"
-                    (showImage)="onShow(210, $event, imagesRectNoTitles)"></ks-plain-gallery>
+                    (clickImage)="onShow(210, $event, imagesRectNoTitles)"></ks-plain-gallery>
+</section>
+<br>
+<section>
+  <h3>P12 - (id=211) - row plain gallery layout with an empty images array</h3>
+  <br>
+  <ks-plain-gallery [id]="211"
+                    [images]="emptyImagesArray"
+                    (clickImage)="onShow(211, $event, emptyImagesArray)"></ks-plain-gallery>
 </section>
 <br>
 <br>

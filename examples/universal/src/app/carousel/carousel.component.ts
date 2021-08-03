@@ -24,7 +24,7 @@
 
 import { Component } from '@angular/core';
 
-import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gallery';
+import { AccessibilityConfig, CarouselLibConfig, Image, ImageEvent, ModalGalleryConfig, ModalGalleryRef, ModalGalleryService, ModalLibConfig } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'ks-carousel-page',
@@ -37,6 +37,171 @@ export class CarouselExampleComponent {
   autoPlay = true;
   showArrows = true;
   showDots = true;
+
+  LIBCONFIG102: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: false
+    }
+  };
+  LIBCONFIG103: CarouselLibConfig = {
+    carouselSlideInfinite: false
+  };
+  LIBCONFIG104: CarouselLibConfig = {
+    carouselDotsConfig: {
+      visible: false
+    }
+  };
+  LIBCONFIG105: CarouselLibConfig = {
+    carouselPlayConfig: {
+      autoPlay: false,
+      interval: 5000,
+      pauseOnHover: true
+    }
+  };
+  LIBCONFIG106: CarouselLibConfig = {
+    carouselPlayConfig: {
+      autoPlay: true,
+      interval: 10000,
+      pauseOnHover: false
+    }
+  };
+  LIBCONFIG107: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 7,
+      width: 'auto',
+      maxHeight: '100px'
+    }
+  };
+  LIBCONFIG113: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 5
+    },
+    carouselConfig: {
+      maxWidth: '766px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: true,
+      modalGalleryEnable: false
+    }
+  };
+  LIBCONFIG114: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 5,
+      width: 'auto',
+      maxHeight: '100px'
+    },
+    carouselConfig: {
+      maxWidth: '766px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: true,
+      modalGalleryEnable: true
+    }
+  };
+  LIBCONFIG115: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 5,
+      width: 'auto',
+      maxHeight: '100px'
+    },
+    carouselConfig: {
+      maxWidth: '766px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: false,
+      modalGalleryEnable: false
+    }
+  };
+  LIBCONFIG116: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 7,
+      clickable: false
+    }
+  };
+  LIBCONFIG117: CarouselLibConfig = {
+    carouselImageConfig: {
+      invertSwipe: true
+    }
+  };
+  LIBCONFIG118: CarouselLibConfig = {
+    carouselImageConfig: {
+      description: {
+        strategy: 2
+      }
+    }
+  };
+  LIBCONFIG119: CarouselLibConfig = {
+    carouselConfig: {
+      maxWidth: '766px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: true,
+      modalGalleryEnable: false
+    },
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 5,
+      width: 'auto',
+      maxHeight: '200px'
+    }
+  };
+  LIBCONFIG120: CarouselLibConfig = {
+    carouselConfig: {
+      maxWidth: '766px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: true,
+      modalGalleryEnable: false
+    },
+    carouselPreviewsConfig: {
+      visible: true,
+      number: 5,
+      width: 'auto',
+      maxHeight: '150px'
+    }
+  };
+  LIBCONFIG121: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      breakpoints: {
+        xSmall: 50,
+        small: 60,
+        medium: 80,
+        large: 150,
+        xLarge: 180
+      }
+    }
+  };
+  LIBCONFIG122: CarouselLibConfig = {
+    carouselPreviewsConfig: {
+      visible: true,
+      breakpoints: {
+        xSmall: 50,
+        small: 60,
+        medium: 70,
+        large: 80,
+        xLarge: 100
+      }
+    },
+    carouselConfig: {
+      maxWidth: '500px',
+      maxHeight: '400px',
+      showArrows: true,
+      objectFit: 'cover',
+      keyboardEnable: true,
+      modalGalleryEnable: false
+    }
+  };
 
   imagesRect: Image[] = [
     new Image(
@@ -94,6 +259,8 @@ export class CarouselExampleComponent {
     ),
     new Image(6, { img: '/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: '/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   ];
+
+  emptyImagesArray: Image[] = [];
 
   imagesRectNoTitles: Image[] = [
     new Image(
@@ -217,6 +384,8 @@ export class CarouselExampleComponent {
     carouselPreviewScrollNextTitle: 'Scroll next previews'
   };
 
+  constructor(private modalGalleryService: ModalGalleryService) {}
+
   addRandomImage(): void {
     const imageToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
     const newImage: Image = new Image(this.imagesRect.length - 1 + 1, imageToCopy.modal, imageToCopy.plain);
@@ -246,5 +415,35 @@ export class CarouselExampleComponent {
 
   onLastImage(event: ImageEvent): void {
     console.log('lastImage', event);
+  }
+
+  getLibConfig108(autoPlay: boolean, showArrows: boolean, showDots: boolean): CarouselLibConfig {
+    return {
+      carouselDotsConfig: {
+        visible: showDots
+      },
+      carouselPlayConfig: {
+        autoPlay: autoPlay,
+        interval: 3000,
+        pauseOnHover: true
+      },
+      carouselConfig: {
+        maxWidth: '100%',
+        maxHeight: '400px',
+        showArrows: showArrows,
+        objectFit: 'cover',
+        keyboardEnable: true,
+        modalGalleryEnable: false
+      }
+    } as CarouselLibConfig;
+  }
+
+  openModal(imageIndex: number, id: number): void {
+    const imageToShow: Image = this.imagesRect[imageIndex];
+    const dialogRef: ModalGalleryRef = this.modalGalleryService.open({
+      id,
+      images: this.imagesRect,
+      currentImage: imageToShow
+    } as ModalGalleryConfig) as ModalGalleryRef;
   }
 }
