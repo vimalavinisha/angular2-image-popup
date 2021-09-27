@@ -1,3 +1,10 @@
+# 8.0.1
+
+### Bugfixes
+
+- fix `config.service.ts` adding `providedIn: 'root'` to the service (fixes #244) reported by @dreiquevada
+
+
 # 8.0.0
 
 ### Features

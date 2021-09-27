@@ -31,7 +31,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { COMPONENTS, CarouselComponent } from './components/components';
 import { PlainGalleryComponent } from './components/plain-gallery/plain-gallery.component';
 import { DIRECTIVES } from './directives/directives';
-import { ConfigService } from './services/config.service';
 
 // to prevent bad scrolling behaviour on mobile phone with carousels.
 // From @mohaxspb (https://github.com/Ks89/angular-modal-gallery/pull/187)
@@ -56,8 +55,7 @@ export class KsHammerGestureConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: KsHammerGestureConfig
-    },
-    ConfigService
+    }
   ]
 })
 export class GalleryModule {}

@@ -144,7 +144,7 @@ const DEFAULT_CONFIG: LibConfig = Object.freeze({
 /**
  * Service to handle library configuration in a unique place
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ConfigService {
   configMap: Map<number, LibConfig> = new Map<number, LibConfig>();
 
