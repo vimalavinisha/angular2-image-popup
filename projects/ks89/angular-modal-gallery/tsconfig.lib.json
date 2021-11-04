@@ -3,7 +3,6 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../../out-tsc/lib",
-    "target": "es2015",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
@@ -11,10 +10,6 @@
       "node",
       "mousetrap",
       "hammerjs"
-    ],
-    "lib": [
-      "dom",
-      "es2018"
     ]
   },
   "exclude": [

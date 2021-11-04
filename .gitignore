@@ -42,6 +42,7 @@ Thumbs.db
 **/.awcache
 **/dll
 **/@ks89/
+.angular/
 
 # Docs
 docs/
