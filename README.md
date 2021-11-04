@@ -48,8 +48,6 @@ Despite its name, this library is more than for modal galleries, because I'm int
   <a href="https://coveralls.io/github/Ks89/angular-modal-gallery?branch=master"><img src="https://coveralls.io/repos/github/Ks89/angular-modal-gallery/badge.svg?branch=master" alt="Coveralls Coverage"></a>
 </p>
 <p align="center">
-  <a href="https://stackblitz.com/edit/angular-modal-gallery-v9"><img src="https://img.shields.io/badge/stackblitz-available-orange.svg" alt="Stackblitz
-  "></a>
   <a href="https://www.npmjs.com/package/@ks89/angular-modal-gallery"><img src="https://img.shields.io/badge/angular--style--guide-compliant-brightgreen.svg" alt="AngularStyleGuide"></a>
 </p>
 <p align="center">
@@ -70,13 +68,12 @@ Despite its name, this library is more than for modal galleries, because I'm int
 2. **[Features](#boom-features-boom)**
 3. **[Installation](#package-installation-package)**
 4. **[OFFICIAL DOCUMENTATION](#book-documentation-book)**
-5. **[Live demo](#microphone-live-demo-microphone)**
-6. **[Choose the version](#warning-choose-the-version-warning)**
-7. **[News](#fire-news-fire)**
-8. **[FAQS](#question-faqs-question)**
-9. **[Contributing](#computer-contributing-computer)**
-10. **[A big thank you to](#sparkling_heart-a-big-thank-you-to-sparkling_heart)**
-11. **[License](#copyright-license-copyright)**
+5. **[Choose the version](#warning-choose-the-version-warning)**
+6. **[News](#fire-news-fire)**
+7. **[FAQS](#question-faqs-question)**
+8. **[Contributing](#computer-contributing-computer)**
+9. **[A big thank you to](#sparkling_heart-a-big-thank-you-to-sparkling_heart)**
+10. **[License](#copyright-license-copyright)**
 
 <br>
 
@@ -158,12 +155,6 @@ You can use all default features without font-awesome. For more info, check offi
 
 <br>
 
-## :microphone: **Live demo** :microphone:
-
-[OFFICIAL LIVE DEMO](https://stackblitz.com/edit/angular-modal-gallery-v9/)
-
-<br>
-
 ## :warning: Choose the right version :warning:
 
 |            | @ks89/angular-modal-gallery | font-awesome |
@@ -178,7 +169,7 @@ You can use all default features without font-awesome. For more info, check offi
 | Angular 9  | = 7.2.7                     | optional     |
 | Angular 10 | = 7.2.7                     | optional     |
 | Angular 11 | = 7.2.7                     | optional     |
-| Angular 12 | = 8.0.0                     | optional     |
+| Angular 12 | = 8.0.1                     | optional     |
 | Angular 13 | &gt;= 9.0.0                 | optional     |
 
 *Version 8.0.0 requires at least Angular 12.*

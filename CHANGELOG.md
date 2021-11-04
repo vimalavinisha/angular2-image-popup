@@ -22,6 +22,7 @@
 ### Examples
 
 - add examples with 0 images to modal-gallery, carousel and plain-gallery #242
+- remove stackblitz demo because not working properly like with version 8.0.0
 
 ### Tests
 
