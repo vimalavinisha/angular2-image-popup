@@ -13,8 +13,15 @@ import 'hammerjs'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm
 import 'mousetrap'; // Mandatory for angular-modal-gallery 3.x.x or greater (`npm i --save mousetrap`)
 // **************************************************************
 
-document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic()
-    .bootstrapModule(AppModule)
+function bootstrap() {
+  platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.error(err));
-});
+};
+
+
+if (document.readyState === 'complete') {
+  bootstrap();
+} else {
+  document.addEventListener('DOMContentLoaded', bootstrap);
+}
+
