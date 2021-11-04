@@ -1,4 +1,6 @@
-# 9.0.0-beta.1
+# 9.0.0
+ 
+**Migrate from 8.0.0 to 9.0.0 - Check the official guide [HERE](https://ks89.github.io/angular-modal-gallery-2021-v9.github.io/)**
 
 ### Features
 
@@ -11,7 +13,8 @@
 - make LibConfig interface private, to expose ModalLibConfig, PlainLibConfig and CarouselLibConfig #232 **(BREAKING CHANGE)**
 - carousel component accepts CarouselLibConfig as input instead of all parameters to be consistent with changes made in v8.0.0 #229 **(BREAKING CHANGE)**
 - remove [showGallery] input from plain-gallery component, because it's unused #239 **(BREAKING CHANGE)**
-- rename (showImage) output into (clickImage) for both plain-gallery and carousel #240 **(BREAKING CHANGE)**
+- rename (showImage) output into (clickImage) for plain-gallery #240 **(BREAKING CHANGE)**
+- rename (showImage) output into (changeImage) for carousel #240 **(BREAKING CHANGE)**
 - when modal-gallery opens with image index 0 or length - 1, it emits first/last Image events #241 **(BREAKING CHANGE)**
 - remove emitButtonAfterHook in closeGallery methods **(BREAKING CHANGE)**
 
@@ -34,6 +37,8 @@
 - many fixes to the API and examples input tables (errors made with 8.0.0)
 - general improvement to the doc to show default values in a cleaner way
 - remove LibConfig interface and use the newer interfaces
+
+**Migrate from 8.0.0 to 9.0.0 - Check the official guide [HERE](https://ks89.github.io/angular-modal-gallery-2021-v9.github.io/)**
 
 
 # 8.0.1
