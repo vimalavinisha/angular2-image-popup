@@ -12,9 +12,9 @@
 - Remove AdvancedLayout from PlainGallery, because already unused in v8.x.x #238 **(BREAKING CHANGE)**
 - make LibConfig interface private, to expose ModalLibConfig, PlainLibConfig and CarouselLibConfig #232 **(BREAKING CHANGE)**
 - carousel component accepts CarouselLibConfig as input instead of all parameters to be consistent with changes made in v8.0.0 #229 **(BREAKING CHANGE)**
-- remove [showGallery] input from plain-gallery component, because it's unused #239 **(BREAKING CHANGE)**
-- rename (showImage) output into (clickImage) for plain-gallery #240 **(BREAKING CHANGE)**
-- rename (showImage) output into (changeImage) for carousel #240 **(BREAKING CHANGE)**
+- remove `[showGallery]` input from plain-gallery component, because it's unused #239 **(BREAKING CHANGE)**
+- rename `(showImage)` output into `(clickImage)` for plain-gallery #240 **(BREAKING CHANGE)**
+- rename `(showImage)` output into `(changeImage)` for carousel #240 **(BREAKING CHANGE)**
 - when modal-gallery opens with image index 0 or length - 1, it emits first/last Image events #241 **(BREAKING CHANGE)**
 - remove emitButtonAfterHook in closeGallery methods **(BREAKING CHANGE)**
 
@@ -33,6 +33,7 @@
 
 ### Docs
 
+- migration guide from 8.0.0 to 9.0.0
 - upgrade doc website to bootstrap 5.x.x #236
 - many fixes to the API and examples input tables (errors made with 8.0.0)
 - general improvement to the doc to show default values in a cleaner way
