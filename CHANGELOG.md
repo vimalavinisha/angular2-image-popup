@@ -1,3 +1,10 @@
+# 9.0.1
+
+### Bugfixes
+
+- update some old links to doc website
+
+
 # 9.0.0
  
 **Migrate from 8.0.0 to 9.0.0 - Check the official guide [HERE](https://ks89.github.io/angular-modal-gallery-2021-v9.github.io/)**
