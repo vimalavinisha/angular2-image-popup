@@ -1,3 +1,10 @@
+# 9.1.0-beta.1
+
+### Features
+
+- modal gallery previews can be customized using a template #254 (see example F3 - (id=902) in this repository), implemented by @locinus
+
+
 # 9.0.1
 
 ### Bugfixes
