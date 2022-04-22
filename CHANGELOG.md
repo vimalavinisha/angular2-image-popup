@@ -1,3 +1,16 @@
+# 9.1.0-beta.2
+
+Pull request #257 by @locinus
+Simplifies and uniformizes the calculation of previews indexes, in the different navigation cases (changes of current images, uses of previews arrows).
+
+### Bugfixes
+
+- clicking the right image arrow always shifts the displayed previews, even in cases where it shouldn't, for instance for n>=3 and current=0 (root cause of 'clipping' effects when navigating away from first/last preview)
+- the number of displayed previews sometimes oscillate between n (number of requested previews in config) and n-1/n+1 while navigating (for example for n=4 or n=5)
+- when opening the modal and navigating to the last preview by clicking on the right preview arrow, it's impossible to then click on the left preview arrow (same from last to first and clicking on the right preview arrow)
+- In infinite sliding, the left and right preview arrows should be always visible (except if nbPreviews < nbImages)
+
+
 # 9.1.0-beta.1
 
 ### Features
@@ -13,7 +26,7 @@
 
 
 # 9.0.0
- 
+
 **Migrate from 8.0.0 to 9.0.0 - Check the official guide [HERE](https://ks89.github.io/angular-modal-gallery-2021-v9.github.io/)**
 
 ### Features
@@ -95,7 +108,7 @@
       background: #000 !important;;
       opacity: 0.85 !important;;
     }
-    
+
     .ks-modal-gallery-panel {
       z-index: 90000 !important;
     }
@@ -108,7 +121,7 @@
 - add Github Actions Ci
 - add Github CodeQL
 - remove npm's codeclimate coverage reporter to use the new version
-- add Security Policy in SECURITY.MD 
+- add Security Policy in SECURITY.MD
 
 ### Tests
 - update tests to the new APIs and components
@@ -176,28 +189,28 @@
 # 8.0.0-beta.4
 ### Features
 - new modal-gallery CSS classes used to set the backdrop **(BREAKING CHANGES)**
-  
+
   To upgrade from all previous 8.0.0 beta releases, change your global styles.scss from:
-  
+
     ```
     .cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
       background: #000;
       opacity: 0.85 !important;
     }
-    
+
     .cdk-overlay-container {
       z-index: 90000 !important;
     }
     ```
-    
+
     to :
-    
+
     ```
     .ks-modal-gallery-backdrop {
       background: #000 !important;;
       opacity: 0.85 !important;;
     }
-    
+
     .ks-modal-gallery-panel {
       z-index: 90000 !important;
     }
@@ -233,7 +246,7 @@
       disableSsrWorkaround: true
     }
   ```
-  
+
 ### Demos
 - update all LibConfigs in SystemJS demo to prevent crashes. Because, now disableSsrWorkaround must be passed manually in every LibConfig. This is a
  breaking change (see above).
