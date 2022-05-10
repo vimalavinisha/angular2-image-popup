@@ -1,3 +1,22 @@
+# 9.1.0
+
+A special thanks to @locinus for PRs #254 and #257
+
+### Features
+
+- modal gallery previews can be customized using a template #254 (see example F3 - (id=902) in this repository), implemented by @locinus
+
+
+### Bugfixes
+
+- clicking the right image arrow always shifts the displayed previews, even in cases where it shouldn't, for instance for n>=3 and current=0 (root cause of 'clipping' effects when navigating away from first/last preview) #257, implemented 
+  by @locinus
+- the number of displayed previews sometimes oscillate between n (number of requested previews in config) and n-1/n+1 while navigating (for example for n=4 or n=5) #257, implemented by @locinus
+- when opening the modal and navigating to the last preview by clicking on the right preview arrow, it's impossible to then click on the left preview arrow (same from last to first and clicking on the right preview arrow) #257, implemented 
+  by @locinus
+- In infinite sliding, the left and right preview arrows should be always visible (except if nbPreviews < nbImages) #257, implemented by @locinus
+
+
 # 9.1.0-beta.2
 
 Pull request #257 by @locinus

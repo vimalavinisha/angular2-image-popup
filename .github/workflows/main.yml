@@ -35,7 +35,7 @@ jobs:
       #        npm prune
       #        npm update
 
-      - name: Installling all deps
+      - name: Installing all deps
         run: |
           npm ci
           cd examples/angular-cli-13
