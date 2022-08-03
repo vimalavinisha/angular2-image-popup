@@ -30,9 +30,7 @@ If your problem is still present, fell free to open an issue with this template.
 
 ## Minimal reproduction of the problem with instructions
 <!--
-For bug reports please provide the *STEPS TO REPRODUCE* and a *MINIMAL LIVE DEMO* of the problem on StackBlitz.com or plnkr.co...-->
-
-My official live example on StackBlitz (based on https://stackblitz.com/edit/angular-modal-gallery-v7) is: <!-- add your public link here -->
+For bug reports please provide the *STEPS TO REPRODUCE* and a *MINIMAL LIVE DEMO REPOSITORY* of the problem -->
 
 
 ## What is the motivation / use case for changing the behavior?
