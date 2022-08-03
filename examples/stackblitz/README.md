@@ -1,6 +1,6 @@
 # angular-modal-gallery stackblitz.com demo
 
-angular-modal-gallery 8.x.x and 9.x.x official stackblitz demos
+angular-modal-gallery 8.x.x, 9.x.x and 10.x.x official stackblitz demos
 - not available because stackblitz is not working properly with modal-gallery component
 
 angular-modal-gallery 7.x.x official stackblitz demo
@@ -23,7 +23,7 @@ angular-modal-gallery 4.x.x official stackblitz demo
 ```
  The MIT License (MIT)
 
- Copyright (C) 2017-2021 Stefano Cappa (Ks89)
+ Copyright (C) 2017-2022 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
