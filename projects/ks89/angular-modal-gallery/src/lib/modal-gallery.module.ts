@@ -37,7 +37,7 @@ import { DIRECTIVES } from './directives/directives';
 @Injectable()
 export class KsHammerGestureConfig extends HammerGestureConfig {
   // tslint:disable-next-line:typedef
-  buildHammer(element: HTMLElement) {
+  override buildHammer(element: HTMLElement) {
     return new Hammer(element, {
       touchAction: 'pan-y'
     });

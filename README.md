@@ -158,22 +158,24 @@ You can use all default features without font-awesome. For more info, check offi
 ## :warning: Choose the right version :warning:
 
 |            | @ks89/angular-modal-gallery | font-awesome |
-| ---------- | :---:                       | :---:        |
-| AngularJS  | NOT SUPPORTED               |              |
-| Angular 2  | = 3.3.5                     | &gt;= 4.0.0  |
-| Angular 4  | = 5.7.1                     | optional     |
-| Angular 5  | = 6.3.0                     | optional     |
-| Angular 6  | = 7.2.7                     | optional     |
-| Angular 7  | = 7.2.7                     | optional     |
-| Angular 8  | = 7.2.7                     | optional     |
-| Angular 9  | = 7.2.7                     | optional     |
-| Angular 10 | = 7.2.7                     | optional     |
-| Angular 11 | = 7.2.7                     | optional     |
-| Angular 12 | = 8.0.1                     | optional     |
-| Angular 13 | &gt;= 9.0.0                 | optional     |
+|------------|:---------------------------:| :---:        |
+| AngularJS  |        NOT SUPPORTED        |              |
+| Angular 2  |           = 3.3.5           | &gt;= 4.0.0  |
+| Angular 4  |           = 5.7.1           | optional     |
+| Angular 5  |           = 6.3.0           | optional     |
+| Angular 6  |           = 7.2.7           | optional     |
+| Angular 7  |           = 7.2.7           | optional     |
+| Angular 8  |           = 7.2.7           | optional     |
+| Angular 9  |           = 7.2.7           | optional     |
+| Angular 10 |           = 7.2.7           | optional     |
+| Angular 11 |           = 7.2.7           | optional     |
+| Angular 12 |           = 8.0.1           | optional     |
+| Angular 13 |         &gt;= 9.0.0         | optional     |
+| Angular 14 |        &gt;= 10.0.0         | optional     |
 
 *Version 8.0.0 requires at least Angular 12.*
 *Version 9.0.0 requires at least Angular 13.*
+*Version 10.0.0 requires at least Angular 14.*
 
 <br>
 
@@ -181,6 +183,7 @@ You can use all default features without font-awesome. For more info, check offi
 
 **More than 100 releases in two years**, and more to come... :)
 
+- 08/04/2022 - 10.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 05/10/2022 - 9.1.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/23/2022 - 9.1.0-beta.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 04/14/2022 - 9.1.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

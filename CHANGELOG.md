@@ -1,3 +1,10 @@
+# 10.0.0
+
+### Features
+
+- Angular 14 is required **(BREAKING CHANGE)**
+
+
 # 9.1.0
 
 A special thanks to @locinus for PRs #254 and #257
