@@ -5,7 +5,7 @@
 Only these versions are supported with security updates:
 
 | Version | Supported          |
-| ------- | ------------------ |
+|---------|--------------------|
 | 1.x.x   | :x:                |
 | 2.x.x   | :x:                |
 | 3.x.x   | :x:                |
@@ -14,8 +14,9 @@ Only these versions are supported with security updates:
 | 6.x.x   | :x:                |
 | 7.x.x   | :x:                |
 | 8.x.x   | :x:                |
-| 9.x.x   | :white_check_mark: |
+| 9.x.x   | :x:                |
+| 10.x.x  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
-To report a vulnerability, please don't open public issues, but send me an email privately.
+To report a vulnerability, please don't open public issues, but email me privately.
