@@ -1,3 +1,10 @@
+# 10.0.0
+
+### Features
+
+- Angular 15 is required **(BREAKING CHANGE)**
+
+
 # 10.0.0-rc.1
 
 ### Features

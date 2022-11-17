@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
 
- Copyright (C) 2017-2021 Stefano Cappa (Ks89)
+ Copyright (C) 2017-2022 Stefano Cappa (Ks89)
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -230,7 +230,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Indicates if the previews 'left arrow' should be displayed or not.
-   * @returns 
+   * @returns
    */
   displayLeftPreviewsArrow(): boolean {
     // Don't show arrows if requested previews number equals or is greated than total number of imgaes
@@ -242,7 +242,7 @@ export class PreviewsComponent extends AccessibleComponent implements OnInit, On
 
   /**
    * Indicates if the previews 'right arrow' should be displayed or not.
-   * @returns 
+   * @returns
    */
   displayRightPreviewsArrow(): boolean {
     // Don't show arrows if requested previews number equals or is greated than total number of imgaes

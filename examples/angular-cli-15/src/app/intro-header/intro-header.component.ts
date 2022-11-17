@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2017-2019 Stefano Cappa
+ * Copyright (c) 2017-2022 Stefano Cappa
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,40 +23,10 @@
  */
 
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'ks-navbar',
-  templateUrl: 'navbar.html',
-  styleUrls: ['navbar.scss']
+  selector: 'ks-intro-header',
+  templateUrl: 'intro-header.html',
+  styleUrls: ['intro-header.scss']
 })
-export class NavbarComponent {
-  navbarHeight = '56px';
-  // path: string = PATH + '/assets/amg.svg';
-
-  collapsed = false;
-
-  constructor(private router: Router, breakpointObserver: BreakpointObserver) {
-    breakpointObserver.observe(['(min-width: 990px)']).subscribe(result => {
-      if (result.matches) {
-        console.log('min width 990px');
-        this.collapsed = false;
-      }
-    });
-  }
-
-  isNavItemActive(location: string): string {
-    return this.router.url.includes(location) ? 'active' : '';
-  }
-
-  onNavigateTo(path: string): void {
-    this.collapsed = false;
-    this.router.navigate([path]);
-  }
-
-  onToggle(): void {
-    this.collapsed = !this.collapsed;
-    this.navbarHeight = this.collapsed ? '56px' : '150px';
-  }
-}
+export class IntroHeaderComponent {}

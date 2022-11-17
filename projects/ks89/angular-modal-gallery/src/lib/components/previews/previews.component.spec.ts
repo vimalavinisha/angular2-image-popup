@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2021 Stefano Cappa
+ * Copyright (C) 2017-2022 Stefano Cappa
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -271,10 +271,10 @@ class PreviewsTemplateComponent1 {
 function initTestBed(): void {
   TestBed.configureTestingModule({
     declarations: [
-      PreviewsComponent, 
-      SizeDirective, 
-      FallbackImageDirective, 
-      PreviewsTemplateComponent0, 
+      PreviewsComponent,
+      SizeDirective,
+      FallbackImageDirective,
+      PreviewsTemplateComponent0,
       PreviewsTemplateComponent1,
     ]
   }).overrideComponent(PreviewsComponent, {
@@ -953,7 +953,7 @@ describe('PreviewsComponent', () => {
       // click right again and check previews have changed accordingly
       rightArrow.click();
       checkPreviewStateAfterClick(previews, IMAGES[0], IMAGES[0], 1, 4, 0);
-      
+
     });
 
     it('should always display previews navigation arrows, in infinite sliding mode (nbPreviews < nbImages)', () => {

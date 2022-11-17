@@ -4,7 +4,6 @@
   "compilerOptions": {
     "paths": {
       "@ks89/angular-modal-gallery": [
-        "dist/ks89/angular-modal-gallery/ks89-angular-modal-gallery",
         "dist/ks89/angular-modal-gallery"
       ]
     },
@@ -13,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": false,  // should become false
+    "noPropertyAccessFromIndexSignature": false,  // FIXME should become false
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -22,10 +21,11 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
-    "module": "es2020",
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
     "lib": [
-      "es2020",
+      "ES2022",
       "dom"
     ],
     "typeRoots": [
@@ -37,7 +37,7 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
 
-    /* THIS SHOULD BE FORCED TO TRUE IN THE FUTURE (VERSION 9.0.0 OF THE LIBRARY)*/
+    // FIXME THIS SHOULD BE FORCED TO TRUE IN THE FUTURE VERSIONS OF THE LIBRARY
     "strictTemplates": false
   }
 }
