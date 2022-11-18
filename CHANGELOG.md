@@ -1,3 +1,10 @@
+# 10.0.1
+
+### Bugfixes
+
+- fix examples, readme file and Github Action workflow
+
+
 # 10.0.0
 
 ### Features
