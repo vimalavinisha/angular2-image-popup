@@ -28,9 +28,7 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
 // Inspired from https://stackblitz.com/edit/angular-swipe-events-with-hostlistner?file=src%2Fapp%2Fapp.component.ts
 
 /**
- * Directive to close the modal gallery clicking on the semi-transparent background.
- * In fact, it listens for a click on all elements that aren't 'inside' and it emits
- * an event using `@Output clickOutside`.
+ * Directive to manage swipe events on touch devices.
  */
 @Directive({
   selector: '[ksSwipe]'
@@ -39,18 +37,22 @@ export class SwipeDirective {
   defaultTouch = { x: 0, y: 0, time: 0 };
 
   /**
+   * Output to emit swipe left event. Payload is empty.
    */
   @Output()
   swipeLeft: EventEmitter<void> = new EventEmitter<void>();
   /**
+   * Output to emit swipe right event. Payload is empty.
    */
   @Output()
   swipeRight: EventEmitter<void> = new EventEmitter<void>();
   /**
+   * Output to emit swipe up event. Payload is empty.
    */
   @Output()
   swipeUp: EventEmitter<void> = new EventEmitter<void>();
   /**
+   * Output to emit swipe down event. Payload is empty.
    */
   @Output()
   swipeDown: EventEmitter<void> = new EventEmitter<void>();
