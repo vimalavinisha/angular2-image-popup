@@ -24,13 +24,22 @@
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
+/**
+ * Directive to manage keyboard navigation.
+ */
 @Directive({
   selector: '[ksKeyboardNavigation]'
 })
 export class KeyboardNavigationDirective {
+  /**
+   * Boolean input to skip keyboard navigation.
+   */
   @Input()
   isOpen: boolean | undefined;
 
+  /**
+   * Output to emit keyboard `code` of the pressed key (keydown).
+   */
   @Output()
   keyboardNavigation: EventEmitter<string> = new EventEmitter<string>();
 
