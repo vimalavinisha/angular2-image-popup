@@ -1,3 +1,22 @@
+# 11.1.0
+
+### Features
+
+- add sources to improve LCP, loading and fetchpriority attributes #260 (implemented by @luca-peruzzo)
+
+### Tests
+
+- add missing `keyboard-navigation.directive` test file
+
+### Examples
+
+- fix bad 'add image' button CSS in all examples
+
+### Docs
+
+- fix bad docs in `swipe.directive`
+
+
 # 11.1.0-rc.1
 
 ### Features
