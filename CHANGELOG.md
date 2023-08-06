@@ -1,3 +1,10 @@
+# 11.1.0-rc.1
+
+### Features
+
+- add sources to improve LCP, loading and fetchpriority attributes #260 (implemented by @luca-peruzzo)
+
+
 # 11.0.0
 
 **Migrate from 10.0.0 to 11.0.0 - Check the official guide [HERE](https://ks89.github.io/angular-modal-gallery-2023-v11.github.io/)**

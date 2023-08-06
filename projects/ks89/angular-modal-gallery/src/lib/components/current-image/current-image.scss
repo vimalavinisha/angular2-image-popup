@@ -109,7 +109,7 @@ $figcaption-right: 0;
         // display: block;
         // don't use this
         // Bootstrap 4 img-fluid class uses max-width: 100% and height: auto
-        width: 100%;
+        max-width: 100%; // `width: 100%` is ok on Chrome and Firefox, but not on Safari
         height: auto;
         display: block;
         &.unclickable {
