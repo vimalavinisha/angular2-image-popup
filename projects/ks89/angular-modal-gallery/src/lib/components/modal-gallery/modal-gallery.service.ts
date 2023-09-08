@@ -1,15 +1,13 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import { Subject } from 'rxjs';
 
-import {GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
-
-import {Subject} from 'rxjs';
-import {ModalGalleryComponent} from './modal-gallery.component';
-import {ModalGalleryRef} from './modal-gallery-ref';
-import {Image, ImageModalEvent} from '../../model/image.class';
-import {ConfigService} from '../../services/config.service';
-import {ButtonEvent} from '../../model/buttons-config.interface';
-import {ModalGalleryConfig} from '../../model/modal-gallery-config.interface';
-import {LibConfig} from '../../model/lib-config.interface';
+import { ModalGalleryRef } from './modal-gallery-ref';
+import { Image, ImageModalEvent } from '../../model/image.class';
+import { ConfigService } from '../../services/config.service';
+import { ButtonEvent } from '../../model/buttons-config.interface';
+import { ModalGalleryConfig } from '../../model/modal-gallery-config.interface';
+import { LibConfig } from '../../model/lib-config.interface';
 
 // private interface used only in this file
 interface ModalDialogConfig {
@@ -44,7 +42,7 @@ const DEFAULT_DIALOG_CONFIG: ModalDialogConfig = {
   panelClass: 'ks-modal-gallery-panel'
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class ModalGalleryService {
   private updateImages = new Subject<Image[]>();
   updateImages$ = this.updateImages.asObservable();
@@ -53,7 +51,8 @@ export class ModalGalleryService {
 
   public triggerAttachToOverlay = new EventEmitter<AttachToOverlayPayload>();
 
-  constructor(private overlay: Overlay, private configService: ConfigService) {}
+  constructor(private overlay: Overlay, private configService: ConfigService) {
+  }
 
   /**
    * Method to open modal gallery passing the configuration
@@ -197,15 +196,12 @@ export class ModalGalleryService {
    */
   private getOverlayConfig(): OverlayConfig {
     const positionStrategy: GlobalPositionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
-
-    const overlayConfig: OverlayConfig = new OverlayConfig({
+    return new OverlayConfig({
       hasBackdrop: DEFAULT_DIALOG_CONFIG.hasBackdrop,
       backdropClass: DEFAULT_DIALOG_CONFIG.backdropClass,
       panelClass: DEFAULT_DIALOG_CONFIG.panelClass,
       scrollStrategy: this.overlay.scrollStrategies.block(),
       positionStrategy
     });
-
-    return overlayConfig;
   }
 }
