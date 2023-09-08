@@ -72,7 +72,7 @@ Despite its name, this library is more than for modal galleries, because I'm int
 6. **[News](#fire-news-fire)**
 7. **[FAQS](#question-faqs-question)**
 8. **[Contributing](#computer-contributing-computer)**
-9. **[A big thank you to](#sparkling_heart-a-big-thank-you-to-sparkling_heart)**
+9. **[A big 'thank you' to](#sparkling_heart-a-big-thank-you-to-sparkling_heart)**
 10. **[License](#copyright-license-copyright)**
 
 <br>
@@ -166,15 +166,10 @@ From version @ks89/angular-modal-gallery >= 11.0.0, **mousetrap and hammerjs hav
 | Angular 10 |           = 7.2.7           | optional     |
 | Angular 11 |           = 7.2.7           | optional     |
 | Angular 12 |           = 8.0.1           | optional     |
-| Angular 13 |         &gt;= 9.0.0         | optional     |
-| Angular 14 |         &gt;= 9.0.0         | optional     |
-| Angular 15 |        &gt;= 10.0.0         | optional     |
+| Angular 13 |           = 9.1.0           | optional     |
+| Angular 14 |           = 9.1.0           | optional     |
+| Angular 15 |          = 10.0.1           | optional     |
 | Angular 16 |        &gt;= 11.0.0         | optional     |
-
-*Version 8.0.0 requires at least Angular 12.*
-*Version 9.0.0 requires at least Angular 13.*
-*Version 10.0.0 requires at least Angular 15.*
-*Version 11.0.0 requires at least Angular 16.*
 
 <br>
 
@@ -182,6 +177,7 @@ From version @ks89/angular-modal-gallery >= 11.0.0, **mousetrap and hammerjs hav
 
 **More than 100 releases in two years**, and more to come... :)
 
+- 09/08/2023 - 11.1.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/16/2023 - 11.1.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 08/06/2023 - 11.1.0-rc.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 07/08/2023 - 11.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
@@ -196,12 +192,7 @@ From version @ks89/angular-modal-gallery >= 11.0.0, **mousetrap and hammerjs hav
 - 11/06/2021 - 9.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 09/27/2021 - 8.0.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - 07/10/2021 - 8.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/13/2021 - 8.0.0-rc.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 11/22/2020 - 8.0.0-beta.5 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/14/2020 - 8.0.0-beta.4 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 08/12/2020 - 8.0.0-beta.3 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 06/02/2020 - 8.0.0-beta.2 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
-- 05/02/2020 - 8.0.0-beta.1 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
+- - ... (many beta 8.x.x versions)
 - 12/05/2020 - 7.2.7 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)
 - - ... (many minor 7.x.x versions)
 - 12/06/2018 - 7.0.0 - @ks89/angular-modal-gallery - [HERE](https://github.com/Ks89/angular-modal-gallery/releases)

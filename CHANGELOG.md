@@ -1,3 +1,10 @@
+# 11.1.1
+
+### Refactor
+
+- remove circular dependency between ModalGalleryService and ModalGalleryComponent #262 (implemented by @StenCalDabran)
+
+
 # 11.1.0
 
 ### Features

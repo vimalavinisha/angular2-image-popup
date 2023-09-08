@@ -1,6 +1,6 @@
 {
   "name": "angular-modal-gallery",
-  "version": "11.1.0",
+  "version": "11.1.1",
   "description": "Image gallery for Angular",
   "license": "MIT",
   "author": "Stefano Cappa",
@@ -43,10 +43,11 @@
     "copy:dist:examples": "npm run copy:dist:angular-cli-16 && npm run copy:dist:angular-cli-material && npm run copy:dist:universal",
     "copy:build": "cpr dist/ks89/angular-modal-gallery @ks89/angular-modal-gallery -o",
     "copy:other": "cpr README.md @ks89/angular-modal-gallery/README.md -o && cpr LICENSE @ks89/angular-modal-gallery/LICENSE -o && cpr CHANGELOG.md @ks89/angular-modal-gallery/CHANGELOG.md -o && cpr CONTRIBUTING.md @ks89/angular-modal-gallery/CONTRIBUTING.md -o",
-    "pretest": "npm run clean:coverage",
+    "pretest": "npm run clean:coverage && npm run check:circulardeps",
     "test": "ng test @ks89/angular-modal-gallery --watch=false",
     "test:watch": "ng test @ks89/angular-modal-gallery --watch=true",
     "check:licenses": "license-checker --exclude 'MIT, MIT OR X11, BSD, ISC, Apache-2.0'",
+    "check:circulardeps": "npx madge --circular --extensions ts ./",
     "coveralls": "coveralls < coverage/ks89/angular-modal-gallery/lcov.info"
   },
   "husky": {
@@ -89,6 +90,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "license-checker": "^25.0.1",
     "lite-server": "^2.6.1",
+    "madge": "^6.1.0",
     "ng-packagr": "^16.0.1",
     "prettier": "^2.8.8",
     "pretty-quick": "^3.1.3",
