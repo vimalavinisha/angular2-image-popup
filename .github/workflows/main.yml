@@ -87,17 +87,12 @@ jobs:
 
           cd ../..
 
-      - name: Running tests
-        run: |
-          # try to run test script multiple times before failing
-          n=0
-          until [ $n -ge 5 ]
-          do
-            echo "npm test with n=$n"
-            npm test && break
-            n=$[$n+1]
-            sleep 3
-          done
+      - name: Running tests (with retry on failure)
+        uses: nick-fields/retry@v2
+        with:
+          max_attempts: 5
+          command: |
+            npm test
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
