@@ -91,6 +91,7 @@ jobs:
         uses: nick-fields/retry@v2
         with:
           max_attempts: 5
+          timeout_minutes: 10
           command: |
             npm test
 
