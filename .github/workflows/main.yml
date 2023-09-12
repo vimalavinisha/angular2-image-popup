@@ -12,7 +12,7 @@ jobs:
 
   angular-modal-gallery:
     name: "angular-modal-gallery"
-    timeout-minutes: 50
+    timeout-minutes: 20
 
     runs-on: ubuntu-latest
 
@@ -21,7 +21,7 @@ jobs:
         node-version: [ 18.x ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -30,10 +30,8 @@ jobs:
 
       - name: Switch to a specific npm version
         run: |
-          npm install -g npm@8
+          npm install -g npm@9
           npm cache verify
-      #        npm prune
-      #        npm update
 
       - name: Installing all deps
         run: |
@@ -90,7 +88,7 @@ jobs:
       - name: Running tests (with retry on failure)
         uses: nick-fields/retry@v2
         with:
-          max_attempts: 5
+          max_attempts: 3
           timeout_minutes: 10
           command: |
             npm test
