@@ -1,9 +1,14 @@
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { AttachToOverlayService } from './attach-to-overlay.service';
 import { ModalGalleryService } from './modal-gallery.service';
-import { OverlayModule, OverlayRef } from '@angular/cdk/overlay';
+import { OverlayModule, OverlayRef } from "@angular/cdk/overlay";
 import { Image } from '../../model/image.class';
 import { ModalGalleryRef } from './modal-gallery-ref';
+import { ModalGalleryComponent } from './modal-gallery.component';
+import { UpperButtonsComponent } from '../upper-buttons/upper-buttons.component';
+import { CurrentImageComponent } from '../current-image/current-image.component';
+import { DotsComponent } from '../dots/dots.component';
+import { PreviewsComponent } from '../previews/previews.component';
 
 const IMAGES: Image[] = [
   new Image(0, {
@@ -55,6 +60,9 @@ describe('AttachToOverlayService', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [OverlayModule],
+      declarations: [ModalGalleryComponent, UpperButtonsComponent,
+        CurrentImageComponent, DotsComponent, PreviewsComponent
+      ],
       providers: [
         AttachToOverlayService,
         {
