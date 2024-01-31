@@ -1,3 +1,10 @@
+# 11.1.2
+
+### Bugfixes
+
+- fix ngOnChanges method to access changes.config and not changes.plainGalleryConfig (always undefined) #268 (reported by @Dea1100)
+
+
 # 11.1.1
 
 ### Refactor

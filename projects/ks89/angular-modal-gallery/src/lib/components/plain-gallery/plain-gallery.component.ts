@@ -155,8 +155,7 @@ export class PlainGalleryComponent extends AccessibleComponent implements OnInit
     }
 
     const imagesChange: SimpleChange = changes.images;
-    const configChange: SimpleChange = changes.plainGalleryConfig;
-
+    const configChange: SimpleChange = changes.config;
     // I'm using !change.firstChange because the first time will be called both onInit and onChange and I don't
     // want to execute initialization two times.
     if (
